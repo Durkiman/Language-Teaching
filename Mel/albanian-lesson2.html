@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Çka don? — What do you want?</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #12100E;
+  --paper: #F7F3EE;
+  --red: #C8372D;
+  --amber: #D9922A;
+  --blue: #2563A8;
+  --sage: #5C7A5F;
+  --muted: #8A7E74;
+  --line: rgba(0,0,0,0.09);
+  --card-bg: #FFFFFF;
+  --highlight: #FFF4E0;
+  --correction-bg: #FFF8F0;
+  --correction-border: #D9922A;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Subtle lined-paper texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 31px,
+    rgba(0,0,0,0.04) 31px,
+    rgba(0,0,0,0.04) 32px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  left: 52px;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: rgba(200,55,45,0.12);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* SCREENS */
+.screen { display: none; position: relative; z-index: 1; min-height: 100vh; padding: 32px 24px 100px; max-width: 640px; margin: 0 auto; }
+.screen.active { display: block; }
+
+/* HEADER */
+.lesson-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 28px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  width: 100%;
+}
+
+.lesson-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); }
+
+h1 {
+  font-family: 'Lora', serif;
+  font-size: clamp(2.4rem, 7vw, 3.6rem);
+  line-height: 1.05;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+h1 .accent { color: var(--red); font-style: italic; }
+
+.sub-title {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 32px;
+  font-weight: 300;
+}
+
+/* VOCAB INTRO CARDS */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.vocab-card {
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.vocab-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--red);
+  border-radius: 3px 0 0 3px;
+}
+.vocab-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+.vocab-alb { font-family: 'Lora', serif; font-size: 1.2rem; font-weight: 600; color: var(--ink); }
+.vocab-en { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+.vocab-fr { font-size: 0.75rem; color: var(--blue); margin-top: 2px; font-style: italic; }
+.vocab-example { font-size: 0.78rem; color: var(--sage); margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--line); display: none; line-height: 1.5; }
+.vocab-card.open .vocab-example { display: block; }
+.vocab-card.open { background: var(--highlight); }
+
+/* STRUCTURE BOX */
+.structure-box {
+  background: var(--ink);
+  color: white;
+  border-radius: 14px;
+  padding: 20px 22px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.structure-box::before {
+  content: '⬡';
+  position: absolute;
+  right: 16px; top: 10px;
+  font-size: 5rem;
+  opacity: 0.04;
+  line-height: 1;
+}
+.structure-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 10px; }
+.structure-formula {
+  font-family: 'Lora', serif;
+  font-size: 1.3rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+.structure-formula .slot { color: var(--amber); font-style: italic; }
+.structure-examples { font-size: 0.82rem; color: rgba(255,255,255,0.65); line-height: 1.9; }
+.structure-examples strong { color: white; }
+
+/* SPEAK FIRST CARDS */
+.challenge-card {
+  background: var(--card-bg);
+  border: 1.5px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 16px;
+  transition: all 0.3s;
+  position: relative;
+}
+.challenge-card.revealed { border-color: var(--sage); background: #F6FBF6; }
+
+.challenge-num {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.situation-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 6px;
+}
+
+.situation-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink);
+  margin-bottom: 4px;
+  font-weight: 400;
+}
+.situation-fr {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 18px;
+}
+
+/* SPEAK PROMPT */
+.speak-prompt {
+  background: var(--highlight);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  font-size: 0.88rem;
+  color: var(--amber);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.speak-wave {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+.speak-wave span {
+  display: block;
+  width: 3px;
+  background: var(--amber);
+  border-radius: 2px;
+  animation: wave 1.2s ease-in-out infinite;
+}
+.speak-wave span:nth-child(1) { height: 8px; animation-delay: 0s; }
+.speak-wave span:nth-child(2) { height: 16px; animation-delay: 0.15s; }
+.speak-wave span:nth-child(3) { height: 12px; animation-delay: 0.3s; }
+.speak-wave span:nth-child(4) { height: 20px; animation-delay: 0.45s; }
+.speak-wave span:nth-child(5) { height: 10px; animation-delay: 0.6s; }
+@keyframes wave { 0%,100% { transform: scaleY(0.5); } 50% { transform: scaleY(1.2); } }
+
+/* BUTTONS */
+.btn-row { display: flex; gap: 10px; margin-bottom: 12px; }
+.btn {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 11px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.18s;
+  flex: 1;
+}
+.btn-try {
+  background: var(--red);
+  color: white;
+}
+.btn-try:hover { background: #a82d24; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(200,55,45,0.3); }
+.btn-hint {
+  background: transparent;
+  color: var(--amber);
+  border: 1.5px solid var(--amber);
+  flex: 0 0 auto;
+}
+.btn-hint:hover { background: var(--highlight); }
+.btn-hint:disabled { opacity: 0.3; cursor: default; }
+.btn-next {
+  background: var(--sage);
+  color: white;
+  width: 100%;
+  padding: 14px;
+  font-size: 0.95rem;
+  border-radius: 12px;
+  display: none;
+}
+.btn-next:hover { background: #4a6a4d; }
+
+/* HINT BOX */
+.hint-box {
+  background: #FFF8E8;
+  border: 1px dashed var(--amber);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.85rem;
+  color: var(--amber);
+  line-height: 1.6;
+  margin-bottom: 12px;
+  display: none;
+}
+.hint-box.show { display: block; }
+
+/* ANSWER REVEAL */
+.answer-reveal {
+  display: none;
+  margin-top: 4px;
+}
+.answer-reveal.show { display: block; }
+
+.answer-alb {
+  font-family: 'Lora', serif;
+  font-size: 1.5rem;
+  color: var(--ink);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+.answer-en {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.answer-breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.chunk {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  text-align: center;
+}
+.chunk .c-alb { font-weight: 600; color: var(--ink); }
+.chunk .c-en { color: var(--muted); }
+
+.answer-fr {
+  font-size: 0.8rem;
+  color: var(--blue);
+  font-style: italic;
+  padding: 8px 12px;
+  background: #EEF4FF;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  line-height: 1.5;
+}
+
+.self-check {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 14px;
+}
+
+/* CORRECTION LOG */
+.correction-section {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 100;
+  pointer-events: none;
+}
+.correction-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--correction-border);
+  color: white;
+  font-family: 'Sora', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px 20px 0 0;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  pointer-events: all;
+  transition: background 0.2s;
+  width: fit-content;
+  min-width: 200px;
+}
+.correction-toggle:hover { background: #c07a1a; }
+.correction-toggle .badge {
+  background: white;
+  color: var(--amber);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 10px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.correction-panel {
+  background: var(--correction-bg);
+  border-top: 2px solid var(--correction-border);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+  pointer-events: all;
+}
+.correction-panel.open { max-height: 420px; overflow-y: auto; }
+
+.correction-inner {
+  padding: 16px 20px 20px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+.correction-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.correction-add-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.correction-input {
+  flex: 1;
+  font-family: 'Sora', sans-serif;
+  font-size: 0.85rem;
+  padding: 9px 12px;
+  border: 1.5px solid var(--correction-border);
+  border-radius: 8px;
+  background: white;
+  color: var(--ink);
+  outline: none;
+}
+.correction-input:focus { border-color: var(--amber); }
+.correction-add-btn {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 9px 14px;
+  background: var(--amber);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.correction-add-btn:hover { background: #c07a1a; }
+
+.correction-empty {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-style: italic;
+  text-align: center;
+  padding: 12px 0;
+}
+
+.correction-item {
+  background: white;
+  border: 1px solid rgba(217,146,42,0.25);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  animation: slideUp 0.25s ease;
+}
+@keyframes slideUp { from { transform: translateY(8px); opacity:0; } to { transform: translateY(0); opacity:1; } }
+
+.correction-text { flex: 1; font-size: 0.85rem; line-height: 1.5; color: var(--ink); }
+.correction-dismiss {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0 2px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: color 0.15s;
+}
+.correction-dismiss:hover { color: var(--red); }
+
+/* PROGRESS */
+.progress-strip {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 28px;
+}
+.progress-pip {
+  flex: 1;
+  height: 4px;
+  background: var(--line);
+  border-radius: 2px;
+  transition: background 0.4s;
+}
+.progress-pip.done { background: var(--sage); }
+.progress-pip.active { background: var(--red); }
+
+/* FINAL */
+.final-card {
+  background: var(--ink);
+  color: white;
+  border-radius: 18px;
+  padding: 32px 28px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.final-card h2 { font-family: 'Lora', serif; font-size: 1.8rem; margin-bottom: 12px; }
+.final-card p { font-size: 0.9rem; opacity: 0.75; line-height: 1.7; }
+
+.takehome-phrase {
+  font-family: 'Lora', serif;
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  color: var(--red);
+  text-align: center;
+  margin: 20px 0 6px;
+  line-height: 1.3;
+}
+.takehome-sub { text-align: center; color: var(--muted); font-size: 0.9rem; margin-bottom: 24px; }
+
+.attempt-row { display: flex; justify-content: center; gap: 12px; margin-bottom: 14px; }
+.attempt-pip { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: all 0.3s; }
+.attempt-pip.done { background: var(--red); border-color: var(--red); }
+
+.say-btn {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto 12px;
+  padding: 15px;
+  background: var(--red);
+  color: white;
+  font-family: 'Sora', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.say-btn:hover:not(:disabled) { background: #a82d24; transform: scale(1.02); }
+.say-btn:disabled { opacity: 0.4; cursor: default; transform: none; }
+.say-btn.pulse { animation: sayPulse 1s ease infinite; }
+@keyframes sayPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(200,55,45,0.35); } 50% { box-shadow: 0 0 0 12px rgba(200,55,45,0); } }
+
+.btn-restart {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Sora', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: all 0.2s;
+}
+.btn-restart:hover { border-color: var(--muted); color: var(--ink); }
+
+/* CONFETTI */
+.confetti-piece {
+  position: fixed;
+  border-radius: 2px;
+  animation: confFall 2.8s ease-in forwards;
+  z-index: 9999;
+  pointer-events: none;
+}
+@keyframes confFall { 0% { transform: translateY(-10px) rotate(0deg); opacity:1; } 100% { transform: translateY(110vh) rotate(540deg); opacity:0; } }
+
+.hidden { display: none !important; }
+.mt12 { margin-top: 12px; }
+.mt24 { margin-top: 24px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ SCREEN: WELCOME -->
+<div class="screen active" id="s-welcome">
+
+  <div class="lesson-tag">
+    <span class="dot"></span>
+    Shqip me Zemër &nbsp;·&nbsp; Lesson 2
+  </div>
+
+  <h1>Çka<br><span class="accent">don?</span></h1>
+  <p class="sub-title">What do you want? Today you speak <em>before</em> you're ready — and that's exactly the point.</p>
+
+  <div class="structure-box">
+    <div class="structure-label">The structure</div>
+    <div class="structure-formula">
+      <span class="slot">Du / Don / Doni</span> + <span class="slot">me + verb</span>
+    </div>
+    <div class="structure-examples">
+      <strong>Du me hangër.</strong> — I want to eat.<br>
+      <strong>Don me shku?</strong> — Do you want to go?<br>
+      <strong>S'du me fol tash.</strong> — I don't want to talk now.<br>
+      <strong>A don kafe?</strong> — Do you want coffee?
+    </div>
+  </div>
+
+  <div class="section-label" style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Tap to explore — key words</div>
+  <div class="vocab-grid">
+    <div class="vocab-card" onclick="this.classList.toggle('open')">
+      <div class="vocab-alb">Du</div>
+      <div class="vocab-en">I want</div>
+      <div class="vocab-fr">Je veux</div>
+      <div class="vocab-example">Du me hangër bukë. — I want to eat bread.<br>S'du tash. — I don't want to (now).</div>
+    </div>
+    <div class="vocab-card" onclick="this.classList.toggle('open')">
+      <div class="vocab-alb">Don</div>
+      <div class="vocab-en">You want / He/She wants</div>
+      <div class="vocab-fr">Tu veux / Il·elle veut</div>
+      <div class="vocab-example">A don kafe? — Do you want coffee?<br>Don me shku? — Do you want to go?</div>
+    </div>
+    <div class="vocab-card" onclick="this.classList.toggle('open')">
+      <div class="vocab-alb">Dumë</div>
+      <div class="vocab-en">We want</div>
+      <div class="vocab-fr">Nous voulons</div>
+      <div class="vocab-example">Dumë me shku bashkë. — We want to go together.</div>
+    </div>
+    <div class="vocab-card" onclick="this.classList.toggle('open')">
+      <div class="vocab-alb">S'du / Nuk du</div>
+      <div class="vocab-en">I don't want</div>
+      <div class="vocab-fr">Je ne veux pas</div>
+      <div class="vocab-example">S'du me hangër tash. — I don't want to eat now.<br>Jo, s'du. — No, I don't want to.</div>
+    </div>
+    <div class="vocab-card" onclick="this.classList.toggle('open')">
+      <div class="vocab-alb">me + verb</div>
+      <div class="vocab-en">infinitive marker</div>
+      <div class="vocab-fr">équivalent de "de + infinitif"</div>
+      <div class="vocab-example">me hangër — to eat<br>me shku — to go<br>me fol — to talk<br>me pi — to drink</div>
+    </div>
+    <div class="vocab-card" onclick="this.classList.toggle('open')">
+      <div class="vocab-alb">A don...?</div>
+      <div class="vocab-en">Do you want...?</div>
+      <div class="vocab-fr">Tu veux... ? / Veux-tu... ?</div>
+      <div class="vocab-example">A don kafe ose çaj? — Do you want coffee or tea?<br>A don me vij? — Do you want to come?</div>
+    </div>
+  </div>
+
+  <button class="btn btn-try" style="width:100%; margin-top:8px; padding:16px; font-size:1rem; border-radius:12px" onclick="startChallenges()">Fillojmë — Let's speak →</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ SCREEN: CHALLENGES -->
+<div class="screen" id="s-challenges">
+
+  <div class="lesson-tag">
+    <span class="dot"></span>
+    Speak first · Then see
+  </div>
+
+  <div class="progress-strip" id="progress-strip"></div>
+
+  <div id="challenge-area"></div>
+
+  <div id="all-done" class="hidden">
+    <div class="final-card">
+      <h2>Shumë mirë! 🎉</h2>
+      <p>You spoke before you were ready — every single time.<br>That is exactly how fluency is built.</p>
+    </div>
+
+    <p style="text-align:center; color:var(--muted); font-size:0.85rem; margin-bottom:16px">Your phrase to keep from today:</p>
+    <div class="takehome-phrase" id="takehome-alb">Du me fol shqip me zemër.</div>
+    <div class="takehome-sub">I want to speak Albanian with heart.</div>
+
+    <div class="attempt-row">
+      <div class="attempt-pip" id="ap1">1</div>
+      <div class="attempt-pip" id="ap2">2</div>
+      <div class="attempt-pip" id="ap3">3</div>
+    </div>
+    <button class="say-btn pulse" id="say-btn" onclick="doAttempt()">▶ Say it out loud!</button>
+    <p id="say-tip" class="hidden" style="text-align:center;font-size:0.8rem;color:var(--muted);margin-bottom:12px">
+      💡 <strong>Du</strong> = I want &nbsp;·&nbsp; <strong>me fol</strong> = to speak &nbsp;·&nbsp; <strong>me zemër</strong> = with heart
+    </p>
+
+    <button class="btn-restart" onclick="restartAll()">↩ Start again</button>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════ CORRECTION LOG (FIXED BOTTOM) -->
+<div class="correction-section" id="correction-section">
+  <button class="correction-toggle" id="correction-toggle" onclick="togglePanel()">
+    📝 Teacher notes &nbsp;<span class="badge" id="correction-count">0</span>
+  </button>
+  <div class="correction-panel" id="correction-panel">
+    <div class="correction-inner">
+      <div class="correction-title">
+        <span>Corrections to review</span>
+        <span style="font-size:0.75rem;color:var(--muted);font-weight:400;font-style:italic">tap × to dismiss each one</span>
+      </div>
+      <div class="correction-add-form">
+        <input class="correction-input" id="correction-input" placeholder="Note a correction here…" onkeydown="if(event.key==='Enter')addCorrection()" />
+        <button class="correction-add-btn" onclick="addCorrection()">+ Add</button>
+      </div>
+      <div id="correction-list">
+        <div class="correction-empty" id="correction-empty">No corrections yet. Add one above.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── DATA ─────────────────────────────────────────────────────────────────────
+
+const challenges = [
+  {
+    num: "01",
+    situation: "Durim's mother offers you tea or coffee. You want coffee.",
+    situationFR: "La maman de Durim te propose du thé ou du café. Tu veux du café.",
+    hint: "Start with <strong>Du</strong> (I want) and add <strong>kafe</strong> (coffee).",
+    answer: "Du kafe, faleminderit!",
+    answerEN: "I want coffee, thank you!",
+    chunks: [
+      { alb: "Du", en: "I want" },
+      { alb: "kafe", en: "coffee" },
+      { alb: "faleminderit", en: "thank you" }
+    ],
+    fr: "🇫🇷 Contrairement au français, pas besoin de 'du' partitif — 'Du kafe' suffit!",
+    selfCheck: "Did you say it before reading? Even one word counts. ✓"
+  },
+  {
+    num: "02",
+    situation: "You want to say: 'I don't want to eat now, I'm not hungry.'",
+    situationFR: "Tu veux dire : 'Je ne veux pas manger maintenant, je n'ai pas faim.'",
+    hint: "<strong>S'du me hangër</strong> = I don't want to eat. <strong>S'kam uri</strong> = I'm not hungry.",
+    answer: "S'du me hangër tash, s'kam uri.",
+    answerEN: "I don't want to eat now, I'm not hungry.",
+    chunks: [
+      { alb: "S'du", en: "I don't want" },
+      { alb: "me hangër", en: "to eat" },
+      { alb: "tash", en: "now" },
+      { alb: "s'kam uri", en: "I'm not hungry" }
+    ],
+    fr: "🇫🇷 S' = ne pas (contraction de 'nuk'). Uri = faim — littéralement 'je n'ai pas faim'.",
+    selfCheck: "Don't worry if you forgot s'kam uri — the first part is the win here."
+  },
+  {
+    num: "03",
+    situation: "Ask Durim's father if he wants to watch a film tonight.",
+    situationFR: "Demande au papa de Durim s'il veut regarder un film ce soir.",
+    hint: "<strong>A don me shiku film sonte?</strong> — A = question marker. Shiku = watch. Sonte = tonight.",
+    answer: "A don me shiku film sonte?",
+    answerEN: "Do you want to watch a film tonight?",
+    chunks: [
+      { alb: "A", en: "question marker" },
+      { alb: "don", en: "you want" },
+      { alb: "me shiku", en: "to watch" },
+      { alb: "film", en: "film" },
+      { alb: "sonte", en: "tonight" }
+    ],
+    fr: "🇫🇷 'A' en début de phrase = marqueur interrogatif, comme l'inversion en français.",
+    selfCheck: "Did you get 'A' at the start? That's the key pattern for questions."
+  },
+  {
+    num: "04",
+    situation: "You and Durim both want to go out for a walk. Express this for both of you.",
+    situationFR: "Toi et Durim voulez tous les deux sortir vous promener. Exprime ça pour vous deux.",
+    hint: "<strong>Dumë</strong> = we want. <strong>me dalë</strong> = to go out. <strong>bashkë</strong> = together.",
+    answer: "Dumë me dalë bashkë.",
+    answerEN: "We want to go out together.",
+    chunks: [
+      { alb: "Dumë", en: "we want" },
+      { alb: "me dalë", en: "to go out" },
+      { alb: "bashkë", en: "together" }
+    ],
+    fr: "🇫🇷 Dumë = nous voulons. Notez que 'me dalë' est l'infinitif de 'dal' (je sors).",
+    selfCheck: "Three words. Short, complete, real. That's a full sentence."
+  },
+  {
+    num: "05",
+    situation: "Durim asks what you want to do next weekend. Tell him you want to go to Kosovo.",
+    situationFR: "Durim te demande ce que tu veux faire le prochain week-end. Dis-lui que tu veux aller au Kosovo.",
+    hint: "<strong>Du me shku Kosovë</strong> — me shku = to go. No preposition needed before country names.",
+    answer: "Du me shku Kosovë në vikend.",
+    answerEN: "I want to go to Kosovo this weekend.",
+    chunks: [
+      { alb: "Du", en: "I want" },
+      { alb: "me shku", en: "to go" },
+      { alb: "Kosovë", en: "Kosovo" },
+      { alb: "në vikend", en: "at the weekend" }
+    ],
+    fr: "🇫🇷 Pas de préposition 'à/en' avant les pays en albanais du Kosovo — juste le nom!",
+    selfCheck: "This one is personal. Make it real — and mean it when you say it. 🇽🇰"
+  },
+  {
+    num: "06",
+    situation: "Roleplay — Durim's mother asks you: 'A don me njet?' (Do you want to stay?) What do you say?",
+    situationFR: "Jeu de rôle — La maman de Durim te demande : 'A don me njet ?' (Tu veux rester ?) Que réponds-tu ?",
+    hint: "You can say <strong>Po, du me njet</strong> (yes) or <strong>Jo, s'du tash</strong> (no, not now). Make a choice!",
+    answer: "Po, du me njet! / Jo, s'du tash, duhet me shku.",
+    answerEN: "Yes, I want to stay! / No, I don't want to now, I have to go.",
+    chunks: [
+      { alb: "Po, du me njet", en: "Yes, I want to stay" },
+      { alb: "Jo, s'du tash", en: "No, I don't want now" },
+      { alb: "duhet me shku", en: "I have to go" }
+    ],
+    fr: "🇫🇷 Deux options — choisissez ! L'important c'est de répondre, pas de perfectionner.",
+    selfCheck: "There's no wrong answer here — both sentences work. The courage to choose is the exercise."
+  }
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let currentChallenge = 0;
+let attemptsDone = 0;
+let corrections = [];
+let panelOpen = false;
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+function startChallenges() {
+  goScreen('s-challenges');
+  renderProgress();
+  renderChallenge(0);
+}
+
+function goScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ─── PROGRESS ─────────────────────────────────────────────────────────────────
+function renderProgress() {
+  const strip = document.getElementById('progress-strip');
+  strip.innerHTML = '';
+  challenges.forEach((_, i) => {
+    const pip = document.createElement('div');
+    pip.className = 'progress-pip' + (i < currentChallenge ? ' done' : i === currentChallenge ? ' active' : '');
+    pip.id = `pip-${i}`;
+    strip.appendChild(pip);
+  });
+}
+
+function updateProgress(idx) {
+  challenges.forEach((_, i) => {
+    const pip = document.getElementById(`pip-${i}`);
+    if (!pip) return;
+    pip.className = 'progress-pip' + (i < idx ? ' done' : i === idx ? ' active' : '');
+  });
+}
+
+// ─── CHALLENGE RENDER ─────────────────────────────────────────────────────────
+function renderChallenge(idx) {
+  const area = document.getElementById('challenge-area');
+  document.getElementById('all-done').classList.add('hidden');
+
+  if (idx >= challenges.length) {
+    area.innerHTML = '';
+    document.getElementById('all-done').classList.remove('hidden');
+    launchConfetti();
+    return;
+  }
+
+  const c = challenges[idx];
+  area.innerHTML = `
+    <div class="challenge-card" id="ccard-${idx}">
+      <div class="challenge-num">Challenge ${c.num} / 0${challenges.length}</div>
+
+      <div class="situation-label">The situation</div>
+      <div class="situation-text">${c.situation}</div>
+      <div class="situation-fr">${c.situationFR}</div>
+
+      <div class="speak-prompt">
+        <div class="speak-wave">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        Say it out loud now — then tap "I tried it"
+      </div>
+
+      <div class="hint-box" id="hint-${idx}">${c.hint}</div>
+
+      <div class="btn-row">
+        <button class="btn btn-try" id="try-btn-${idx}" onclick="revealAnswer(${idx})">I tried it →</button>
+        <button class="btn btn-hint" id="hint-btn-${idx}" onclick="showHint(${idx})">Hint</button>
+      </div>
+
+      <div class="answer-reveal" id="reveal-${idx}">
+        <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sage);font-weight:600;margin-bottom:10px">The answer</div>
+        <div class="answer-alb">${c.answer}</div>
+        <div class="answer-en">${c.answerEN}</div>
+        <div class="answer-breakdown">${c.chunks.map(ch => `<div class="chunk"><div class="c-alb">${ch.alb}</div><div class="c-en">${ch.en}</div></div>`).join('')}</div>
+        <div class="answer-fr">${c.fr}</div>
+        <div class="self-check">🪞 ${c.selfCheck}</div>
+        <button class="btn btn-next" id="next-btn-${idx}" onclick="nextChallenge(${idx})">
+          ${idx + 1 < challenges.length ? 'Next challenge →' : 'Finish →'}
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function showHint(idx) {
+  document.getElementById(`hint-${idx}`).classList.add('show');
+  document.getElementById(`hint-btn-${idx}`).disabled = true;
+}
+
+function revealAnswer(idx) {
+  const reveal = document.getElementById(`reveal-${idx}`);
+  const tryBtn = document.getElementById(`try-btn-${idx}`);
+  const hintBtn = document.getElementById(`hint-btn-${idx}`);
+  const card = document.getElementById(`ccard-${idx}`);
+  const nextBtn = document.getElementById(`next-btn-${idx}`);
+
+  reveal.classList.add('show');
+  card.classList.add('revealed');
+  tryBtn.disabled = true;
+  tryBtn.textContent = '✓ Done';
+  hintBtn.disabled = true;
+  nextBtn.style.display = 'block';
+
+  // scroll reveal into view
+  setTimeout(() => reveal.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+}
+
+function nextChallenge(idx) {
+  currentChallenge = idx + 1;
+  updateProgress(currentChallenge);
+  renderChallenge(currentChallenge);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── TAKE HOME ────────────────────────────────────────────────────────────────
+function doAttempt() {
+  if (attemptsDone >= 3) return;
+  attemptsDone++;
+  const pips = ['ap1','ap2','ap3'];
+  document.getElementById(pips[attemptsDone-1]).classList.add('done');
+  document.getElementById(pips[attemptsDone-1]).textContent = '✓';
+  document.getElementById('say-tip').classList.remove('hidden');
+
+  const btn = document.getElementById('say-btn');
+  if (attemptsDone === 1) { btn.textContent = '▶ Louder this time!'; }
+  else if (attemptsDone === 2) { btn.textContent = '▶ Own it — last one!'; }
+  else {
+    btn.textContent = '✓ Wonderful.';
+    btn.disabled = true;
+    btn.classList.remove('pulse');
+  }
+}
+
+// ─── CORRECTION LOG ───────────────────────────────────────────────────────────
+function togglePanel() {
+  panelOpen = !panelOpen;
+  const panel = document.getElementById('correction-panel');
+  panel.classList.toggle('open', panelOpen);
+}
+
+function addCorrection() {
+  const input = document.getElementById('correction-input');
+  const text = input.value.trim();
+  if (!text) return;
+  corrections.push({ id: Date.now(), text });
+  input.value = '';
+  renderCorrections();
+  if (!panelOpen) togglePanel();
+}
+
+function dismissCorrection(id) {
+  corrections = corrections.filter(c => c.id !== id);
+  renderCorrections();
+}
+
+function renderCorrections() {
+  const list = document.getElementById('correction-list');
+  const empty = document.getElementById('correction-empty');
+  const badge = document.getElementById('correction-count');
+
+  badge.textContent = corrections.length;
+
+  if (corrections.length === 0) {
+    list.innerHTML = '';
+    list.appendChild(empty);
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+  list.innerHTML = corrections.map(c => `
+    <div class="correction-item" id="ci-${c.id}">
+      <div class="correction-text">${c.text}</div>
+      <button class="correction-dismiss" onclick="dismissCorrection(${c.id})" title="Dismiss">×</button>
+    </div>
+  `).join('');
+}
+
+// ─── CONFETTI ─────────────────────────────────────────────────────────────────
+function launchConfetti() {
+  const colors = ['#C8372D','#D9922A','#2563A8','#5C7A5F','#D4AF37'];
+  for (let i = 0; i < 55; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.cssText = `left:${Math.random()*100}vw;top:-10px;background:${colors[Math.floor(Math.random()*colors.length)]};width:${6+Math.random()*7}px;height:${6+Math.random()*7}px;border-radius:${Math.random()>0.5?'50%':'2px'};animation-delay:${Math.random()*0.8}s;animation-duration:${2.2+Math.random()*1.5}s;`;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4500);
+  }
+}
+
+// ─── RESTART ──────────────────────────────────────────────────────────────────
+function restartAll() {
+  currentChallenge = 0;
+  attemptsDone = 0;
+  goScreen('s-welcome');
+}
+</script>
+
+</body>
+</html>

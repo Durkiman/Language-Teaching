@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shqip me Zemër — Albanian with Heart</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rust: #C0392B;
+    --gold: #D4A853;
+    --cream: #FAF5EC;
+    --dark: #1A1207;
+    --brown: #6B4C2A;
+    --terracotta: #B5622B;
+    --sage: #7A8C6E;
+    --light-gold: #F5E6C0;
+    --muted: #8C7B6B;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* BACKGROUND PATTERN */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(192,57,43,0.06) 0%, transparent 50%),
+      radial-gradient(circle at 85% 80%, rgba(212,168,83,0.08) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C0392B' fill-opacity='0.03'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* SCREENS */
+  .screen { display: none; position: relative; z-index: 1; min-height: 100vh; padding: 24px 20px; max-width: 680px; margin: 0 auto; }
+  .screen.active { display: flex; flex-direction: column; }
+
+  /* HEADER BADGE */
+  .flag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--rust);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-bottom: 24px;
+    align-self: flex-start;
+  }
+
+  /* KOSOVO SVG FLAG */
+  .ks-flag {
+    width: 28px; height: 19px;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+
+  /* TITLES */
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    line-height: 1.1;
+    color: var(--dark);
+    margin-bottom: 12px;
+  }
+  h1 em { color: var(--rust); font-style: italic; }
+  h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 8px; }
+  .subtitle { color: var(--muted); font-size: 1rem; line-height: 1.6; margin-bottom: 32px; }
+
+  /* ORNAMENT */
+  .ornament {
+    width: 60px; height: 3px;
+    background: linear-gradient(90deg, var(--rust), var(--gold));
+    border-radius: 2px;
+    margin-bottom: 24px;
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 2px;
+    margin-bottom: 32px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--rust), var(--gold));
+    border-radius: 2px;
+    transition: width 0.6s ease;
+  }
+
+  /* CARDS */
+  .card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+  .btn-primary {
+    background: var(--rust);
+    color: white;
+    width: 100%;
+    font-size: 1.05rem;
+    padding: 16px;
+  }
+  .btn-primary:hover { background: #a93226; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(192,57,43,0.3); }
+  .btn-secondary {
+    background: var(--light-gold);
+    color: var(--brown);
+    border: 1px solid var(--gold);
+  }
+  .btn-secondary:hover { background: var(--gold); color: white; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+  .btn-ghost:hover { color: var(--dark); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+  /* RECALL INPUT */
+  .recall-area {
+    width: 100%;
+    min-height: 120px;
+    border: 2px solid rgba(0,0,0,0.1);
+    border-radius: 12px;
+    padding: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    resize: vertical;
+    transition: border-color 0.2s;
+    background: white;
+  }
+  .recall-area:focus { outline: none; border-color: var(--gold); }
+
+  /* RECALL BUBBLES */
+  .recall-bubbles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+    min-height: 40px;
+  }
+  .bubble {
+    background: var(--light-gold);
+    border: 1px solid var(--gold);
+    color: var(--brown);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    animation: popIn 0.3s ease;
+  }
+  @keyframes popIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  /* PHRASE GAME */
+  .phrase-card {
+    background: white;
+    border-radius: 16px;
+    border: 2px solid rgba(0,0,0,0.07);
+    padding: 28px 24px;
+    text-align: center;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .phrase-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--rust), var(--gold));
+  }
+  .phrase-arabic {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--dark);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .phrase-context {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+  .answer-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .option-btn {
+    padding: 12px 10px;
+    border-radius: 10px;
+    border: 2px solid rgba(0,0,0,0.1);
+    background: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1.3;
+  }
+  .option-btn:hover:not(:disabled) { border-color: var(--gold); background: var(--light-gold); }
+  .option-btn.correct { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; }
+  .option-btn.wrong { background: #fdecea; border-color: var(--rust); color: var(--rust); }
+  .option-btn:disabled { cursor: default; }
+
+  /* FEEDBACK MESSAGE */
+  .feedback-msg {
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    display: none;
+  }
+  .feedback-msg.show { display: block; }
+  .feedback-msg.correct { background: #e8f5e9; color: #2e7d32; border-left: 3px solid #4caf50; }
+  .feedback-msg.wrong { background: #fdecea; color: #c0392b; border-left: 3px solid var(--rust); }
+
+  /* GRAMMAR */
+  .noun-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: center;
+  }
+  .noun-word {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--dark);
+  }
+  .noun-tag {
+    font-size: 0.75rem;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+    display: inline-block;
+  }
+  .masc { background: #dbeafe; color: #1e40af; }
+  .fem { background: #fce7f3; color: #9d174d; }
+  .noun-def {
+    font-size: 1rem;
+    color: var(--rust);
+    font-weight: 500;
+  }
+  .grammar-rule {
+    background: var(--light-gold);
+    border-left: 3px solid var(--gold);
+    padding: 12px 16px;
+    border-radius: 0 10px 10px 0;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin-bottom: 14px;
+    color: var(--brown);
+  }
+  .fr-note {
+    font-size: 0.8rem;
+    color: var(--sage);
+    font-style: italic;
+    margin-top: 4px;
+  }
+
+  /* TAKE-HOME PHRASE */
+  .big-phrase {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    color: var(--rust);
+    text-align: center;
+    line-height: 1.3;
+    margin: 20px 0 8px;
+  }
+  .phrase-translation {
+    text-align: center;
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 24px;
+  }
+  .mic-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 0 auto 16px;
+    width: 100%;
+    max-width: 300px;
+    padding: 16px;
+    background: var(--rust);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .mic-btn:hover { background: #a93226; transform: scale(1.02); }
+  .mic-btn.pulsing {
+    animation: pulse 1s infinite;
+    background: #a93226;
+  }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(192,57,43,0.4); } 50% { box-shadow: 0 0 0 12px rgba(192,57,43,0); } }
+
+  .attempt-counter {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    letter-spacing: 4px;
+  }
+
+  /* SCORE */
+  .score-circle {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: conic-gradient(var(--rust) 0deg, var(--gold) 180deg, var(--light-gold) 180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    position: relative;
+  }
+  .score-inner {
+    width: 90px; height: 90px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .score-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--rust); line-height: 1; }
+  .score-label { font-size: 0.65rem; color: var(--muted); letter-spacing: 1px; }
+
+  /* CELEBRATION */
+  .confetti-piece {
+    position: fixed;
+    width: 8px; height: 8px;
+    border-radius: 2px;
+    animation: fall 2.5s ease-in forwards;
+    z-index: 999;
+  }
+  @keyframes fall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* PROGRESS DOTS */
+  .dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.12);
+    transition: all 0.3s;
+  }
+  .dot.active { background: var(--rust); transform: scale(1.3); }
+  .dot.done { background: var(--gold); }
+
+  /* CULTURAL QUOTE */
+  .quote-block {
+    border-left: 3px solid var(--rust);
+    padding: 10px 16px;
+    margin: 20px 0;
+    font-style: italic;
+    color: var(--brown);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* UTILITY */
+  .spacer { flex: 1; }
+  .text-center { text-align: center; }
+  .mt-8 { margin-top: 8px; }
+  .mt-16 { margin-top: 16px; }
+  .mt-24 { margin-top: 24px; }
+  .flex-row { display: flex; align-items: center; gap: 10px; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- SCREEN 1: WELCOME -->
+<div class="screen active" id="screen-welcome">
+  <div class="flag-badge">
+    <svg class="ks-flag" viewBox="0 0 42 28" xmlns="http://www.w3.org/2000/svg">
+      <rect width="42" height="28" fill="#244AA5"/>
+      <path d="M19 5 L23 5 L22 9 L26 9 L22 14 L24 14 L21 19 L18 14 L20 14 L16 9 L20 9 Z" fill="#D4AF37"/>
+      <path d="M8 18 Q10.5 16 13 18 Q15.5 16 18 18 Q20.5 16 23 18 Q25.5 16 28 18 Q30.5 16 33 18 L33 20 Q30.5 18 28 20 Q25.5 18 23 20 Q20.5 18 18 20 Q15.5 18 13 20 Q10.5 18 8 20 Z" fill="#D4AF37"/>
+    </svg>
+    Shqip me Zemër · Lesson 1
+  </div>
+
+  <h1>Mirë se<br><em>erdhe.</em></h1>
+  <div class="ornament"></div>
+
+  <p class="subtitle">Welcome back. Six months is a long time — but your Albanian is still in there. Today we're going to find it together.</p>
+
+  <div class="quote-block">
+    "Gjuha është pasqyra e shpirtit."<br>
+    <span style="font-style:normal; font-size:0.82rem; color: var(--muted);">Language is the mirror of the soul. — Albanian proverb</span>
+  </div>
+
+  <div class="card" style="background: var(--light-gold); border: 1px solid var(--gold);">
+    <div class="section-label">What we'll do today</div>
+    <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 10px;">
+      <div class="flex-row"><span style="color:var(--rust); font-size:1.1rem">①</span><span><strong>Warm-up</strong> — What do you remember?</span></div>
+      <div class="flex-row"><span style="color:var(--rust); font-size:1.1rem">②</span><span><strong>Phrases</strong> — Meeting the family</span></div>
+      <div class="flex-row"><span style="color:var(--rust); font-size:1.1rem">③</span><span><strong>Grammar</strong> — One thing that clicks</span></div>
+      <div class="flex-row"><span style="color:var(--rust); font-size:1.1rem">④</span><span><strong>Take-home</strong> — Your phrase to keep</span></div>
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+  <button class="btn btn-primary" onclick="goTo('screen-recall')">Fillojmë! — Let's begin →</button>
+</div>
+
+<!-- SCREEN 2: FREE RECALL -->
+<div class="screen" id="screen-recall">
+  <div class="dots">
+    <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+
+  <div class="section-label">Part 1 of 4 · Warm-up</div>
+  <h2>Çka kujtoni?<br><span style="font-size:1rem; color:var(--muted); font-family:'DM Sans'">What do you remember?</span></h2>
+  <div class="ornament" style="width:40px"></div>
+
+  <p class="subtitle" style="margin-bottom: 20px;">Without looking at any notes — type any Albanian words or phrases that come to mind. There are no wrong answers here. Just write what surfaces.</p>
+
+  <div class="card" style="padding:16px">
+    <textarea class="recall-area" id="recall-input" placeholder="Mirëdita... faleminderit... shkova..." oninput="updateBubbles()"></textarea>
+    <div class="recall-bubbles" id="bubbles"></div>
+  </div>
+
+  <div id="recall-encouragement" class="hidden" style="text-align:center; color:var(--sage); font-style:italic; margin-top:8px; font-size:0.9rem"></div>
+
+  <div class="spacer"></div>
+  <button class="btn btn-primary" id="recall-next-btn" onclick="finishRecall()" style="margin-top:16px">Shko përpara — Continue →</button>
+  <button class="btn btn-ghost text-center" onclick="goTo('screen-phrases')" style="margin-top:8px; width:100%">Skip this step</button>
+</div>
+
+<!-- SCREEN 3: FAMILY PHRASES GAME -->
+<div class="screen" id="screen-phrases">
+  <div class="dots">
+    <div class="dot done"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+
+  <div class="section-label">Part 2 of 4 · Phrases</div>
+  <h2>Te familja<br><span style="font-size:1rem; color:var(--muted); font-family:'DM Sans'">Meeting the family</span></h2>
+  <div class="ornament" style="width:40px"></div>
+
+  <p style="color:var(--muted); font-size:0.9rem; margin-bottom:20px;">You're at the door. Durim's parents are there. What do you say? Match each situation to the right phrase.</p>
+
+  <div id="phrase-game-area"></div>
+
+  <div id="phrase-score-area" class="hidden">
+    <div class="card text-center" style="background: var(--light-gold); border: 1px solid var(--gold);">
+      <div style="font-size:2rem; margin-bottom:8px" id="phrase-emoji"></div>
+      <div style="font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--rust)" id="phrase-score-text"></div>
+      <div style="color:var(--muted); font-size:0.88rem; margin-top:6px" id="phrase-score-sub"></div>
+    </div>
+    <button class="btn btn-primary" onclick="goTo('screen-grammar')" style="margin-top:16px">Vazhdo — Next →</button>
+  </div>
+</div>
+
+<!-- SCREEN 4: GRAMMAR MOMENT -->
+<div class="screen" id="screen-grammar">
+  <div class="dots">
+    <div class="dot done"></div><div class="dot done"></div><div class="dot active"></div><div class="dot"></div>
+  </div>
+
+  <div class="section-label">Part 3 of 4 · Grammar</div>
+  <h2>Emrat e shquar<br><span style="font-size:1rem; color:var(--muted); font-family:'DM Sans'">Definite nouns — how it works</span></h2>
+  <div class="ornament" style="width:40px"></div>
+
+  <div class="grammar-rule">
+    In Albanian, the definite article goes <strong>at the end</strong> of the noun — not in front like in French or English.<br>
+    <span class="fr-note">🇫🇷 French: <em>le pain</em> → Albanian: <em>buka</em> (bread + a)</span>
+  </div>
+
+  <div class="grammar-rule" style="border-color: var(--rust); background: #fdecea30;">
+    <strong>Masculine nouns</strong> add <strong>-i</strong> (or <strong>-u</strong> after k, g, h)<br>
+    <strong>Feminine nouns</strong> add <strong>-a</strong> (or <strong>-ja</strong>)<br>
+    <span class="fr-note">Think of it like: noun + article fused together</span>
+  </div>
+
+  <div id="noun-table" class="card" style="padding:20px">
+    <!-- dynamically filled -->
+  </div>
+
+  <div id="grammar-quiz" style="margin-top:16px"></div>
+
+  <div class="spacer"></div>
+  <button class="btn btn-primary" id="grammar-next" onclick="goTo('screen-takehome')" style="margin-top:16px; display:none">Vazhdo — Continue →</button>
+</div>
+
+<!-- SCREEN 5: TAKE-HOME PHRASE -->
+<div class="screen" id="screen-takehome">
+  <div class="dots">
+    <div class="dot done"></div><div class="dot done"></div><div class="dot done"></div><div class="dot active"></div>
+  </div>
+
+  <div class="section-label">Part 4 of 4 · Your phrase to keep</div>
+  <h2>Fjalia jote<br><span style="font-size:1rem; color:var(--muted); font-family:'DM Sans'">Your sentence</span></h2>
+  <div class="ornament" style="width:40px"></div>
+
+  <p style="color:var(--muted); font-size:0.9rem; margin-bottom:20px;">This is your phrase to carry out of today's lesson. Say it out loud — three times, a little louder each time.</p>
+
+  <div class="card" style="border: 2px solid var(--gold);">
+    <div class="big-phrase" id="takehome-phrase">Na po shkojmë bashkë!</div>
+    <div class="phrase-translation" id="takehome-translation">We're going together!</div>
+
+    <div class="attempt-counter" id="attempt-dots">○ ○ ○</div>
+
+    <button class="mic-btn" id="say-btn" onclick="recordAttempt()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+      I said it! ✓
+    </button>
+
+    <div id="pronunciation-tip" class="hidden" style="font-size:0.82rem; color:var(--brown); text-align:center; padding: 8px; background: var(--light-gold); border-radius:8px; margin-top:8px">
+      💡 <strong>Na</strong> = we &nbsp;·&nbsp; <strong>po</strong> = present marker &nbsp;·&nbsp; <strong>shkojmë</strong> = go &nbsp;·&nbsp; <strong>bashkë</strong> = together
+    </div>
+  </div>
+
+  <div id="final-message" class="hidden card" style="text-align:center; background: linear-gradient(135deg, var(--rust), var(--terracotta)); color:white; border:none; margin-top:16px">
+    <div style="font-size:2.5rem; margin-bottom:8px">🎉</div>
+    <div style="font-family:'Playfair Display',serif; font-size:1.3rem; margin-bottom:8px">Shumë mirë! Wonderful!</div>
+    <div style="font-size:0.9rem; opacity:0.9; line-height:1.6">You came back. You spoke. You remembered more than you thought.<br>That's what today was about.</div>
+  </div>
+
+  <div id="final-summary" class="hidden card" style="margin-top:16px">
+    <div class="section-label">What you used today</div>
+    <div style="margin-top:12px; display:flex; flex-direction:column; gap:8px" id="summary-list"></div>
+  </div>
+
+  <button class="btn btn-primary hidden" id="restart-btn" onclick="restart()" style="margin-top:16px">Start again →</button>
+</div>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────────────
+
+const phraseQuestions = [
+  {
+    situation: "You arrive at the door. You see Durim's mother for the first time today.",
+    situationFR: "Tu arrives. Tu vois la maman de Durim pour la première fois aujourd'hui.",
+    correct: "Mirëdita!",
+    options: ["Natën e mirë!", "Mirëdita!", "Shihemi javën tjetër!", "Faleminderit!"],
+    feedback: "Mirëdita = Good day! Perfect for a daytime greeting. 🌤",
+    feedbackFR: "C'est comme 'Bonjour' — utilisé en journée."
+  },
+  {
+    situation: "She offers you coffee. You want to say 'Thank you!'",
+    situationFR: "Elle t'offre un café. Tu veux dire 'Merci !'",
+    correct: "Faleminderit!",
+    options: ["Më falni!", "S'ka përse!", "Faleminderit!", "Te lutem!"],
+    feedback: "Faleminderit! — Thank you! You'll use this a hundred times. 🙏",
+    feedbackFR: "C'est l'un des premiers mots à maîtriser — indispensable !"
+  },
+  {
+    situation: "You didn't quite catch what she said. How do you ask her to slow down?",
+    situationFR: "Tu n'as pas bien compris ce qu'elle a dit. Comment lui demandes-tu de parler plus lentement ?",
+    correct: "S'po kuptoj mirë.",
+    options: ["Nuk punoj sot.", "S'po kuptoj mirë.", "Po shkoj në shpi.", "A po mëson shqip?"],
+    feedback: "S'po kuptoj mirë = I don't understand well. Super useful! Don't be shy to use it.",
+    feedbackFR: "S' = contraction de 'nuk' (ne pas). Po = marqueur du présent continu."
+  },
+  {
+    situation: "You want to tell her: 'I am learning Albanian.'",
+    situationFR: "Tu veux lui dire : 'J'apprends l'albanais.'",
+    correct: "Po mësoj shqip.",
+    options: ["Po mësoj shqip.", "Unë flas shqip.", "Jam mirë, faleminderit.", "S'di shqip."],
+    feedback: "Po mësoj shqip! She will LOVE hearing this. 💛",
+    feedbackFR: "Mësoj = j'apprends. Le 'po' devant montre que c'est en cours."
+  },
+  {
+    situation: "It's time to leave. You say goodbye until next Saturday.",
+    situationFR: "C'est l'heure de partir. Tu dis au revoir jusqu'à samedi prochain.",
+    correct: "Shihemi të shtunën!",
+    options: ["Shihemi javën tjetër!", "Shihemi të shtunën!", "Na po shkojmë!", "Mirëmëngjes!"],
+    feedback: "Shihemi të shtunën = See you on Saturday! Perfect exit line. 👋",
+    feedbackFR: "Shihemi = on se voit. E shtunë = samedi. Note the -n ending for 'on Saturday'."
+  }
+];
+
+const nounExamples = [
+  { indef: "bukë", def: "buka", meaning: "bread / le pain", gender: "F", rule: "ë → a" },
+  { indef: "libër", def: "libri", meaning: "book / le livre", gender: "M", rule: "+ i" },
+  { indef: "park", def: "parku", meaning: "park / le parc", gender: "M", rule: "k → u" },
+  { indef: "shtëpi", def: "shtëpia", meaning: "house / la maison", gender: "F", rule: "+ a" },
+  { indef: "kafe", def: "kafeja", meaning: "coffee / le café", gender: "F", rule: "+ ja" },
+];
+
+const grammarQuizItems = [
+  { indef: "kerr", meaning: "car (ends in -rr)", gender: "M", answer: "kerri", options: ["kerra", "kerri", "kerru"], hint: "masculine + -i" },
+  { indef: "banak", meaning: "counter / comptoir", gender: "M", answer: "banaku", options: ["banaki", "banaka", "banaku"], hint: "ends in K → -u" },
+  { indef: "mollë", meaning: "apple / pomme", gender: "F", answer: "molla", options: ["molli", "mollët", "molla"], hint: "feminine -ë → -a" },
+];
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let phraseIndex = 0;
+let phraseScore = 0;
+let grammarAnswered = 0;
+let attemptCount = 0;
+
+// ─── NAVIGATION ──────────────────────────────────────────────────────────────
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+
+  if (id === 'screen-phrases') renderPhraseQuestion(0);
+  if (id === 'screen-grammar') renderGrammarScreen();
+  if (id === 'screen-takehome') renderTakeHome();
+}
+
+// ─── RECALL ──────────────────────────────────────────────────────────────────
+function updateBubbles() {
+  const raw = document.getElementById('recall-input').value;
+  const words = raw.split(/[\s,;.!?]+/).filter(w => w.trim().length > 1);
+  const container = document.getElementById('bubbles');
+  container.innerHTML = '';
+  words.forEach(w => {
+    const b = document.createElement('span');
+    b.className = 'bubble';
+    b.textContent = w;
+    container.appendChild(b);
+  });
+
+  const enc = document.getElementById('recall-encouragement');
+  if (words.length >= 3 && words.length < 8) {
+    enc.textContent = `${words.length} words — already great! Keep going if you can.`;
+    enc.classList.remove('hidden');
+  } else if (words.length >= 8) {
+    enc.textContent = `${words.length} words! Incredible — your memory is stronger than you think. 🌟`;
+    enc.classList.remove('hidden');
+  } else {
+    enc.classList.add('hidden');
+  }
+}
+
+function finishRecall() {
+  const raw = document.getElementById('recall-input').value.trim();
+  const words = raw.split(/[\s,;.!?]+/).filter(w => w.trim().length > 1);
+  const list = document.getElementById('summary-list');
+  if (words.length > 0) {
+    const item = document.createElement('div');
+    item.style.cssText = 'font-size:0.9rem; color:var(--brown); padding:6px 0; border-bottom:1px solid rgba(0,0,0,0.06)';
+    item.innerHTML = `<strong>Warm-up:</strong> You remembered ${words.length} word(s) on your own.`;
+    list.appendChild(item);
+  }
+  goTo('screen-phrases');
+}
+
+// ─── PHRASES GAME ────────────────────────────────────────────────────────────
+function renderPhraseQuestion(idx) {
+  const area = document.getElementById('phrase-game-area');
+  if (idx >= phraseQuestions.length) {
+    showPhraseScore();
+    return;
+  }
+  const q = phraseQuestions[idx];
+  const shuffled = [...q.options].sort(() => Math.random() - 0.5);
+
+  area.innerHTML = `
+    <div class="section-label" style="margin-bottom:8px">Question ${idx+1} of ${phraseQuestions.length}</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${(idx/phraseQuestions.length)*100}%"></div></div>
+    <div class="phrase-card">
+      <div class="phrase-context">🏠 ${q.situation}</div>
+      <div class="phrase-arabic">What do you say?</div>
+      <div style="font-size:0.8rem;color:var(--muted);font-style:italic;margin-bottom:16px">${q.situationFR}</div>
+      <div class="answer-options" id="options-${idx}">
+        ${shuffled.map(o => `<button class="option-btn" onclick="selectOption(this,'${o.replace(/'/g,"\\'")}',${idx})">${o}</button>`).join('')}
+      </div>
+      <div class="feedback-msg" id="feedback-${idx}"></div>
+    </div>
+  `;
+}
+
+function selectOption(btn, choice, idx) {
+  const q = phraseQuestions[idx];
+  const allBtns = document.querySelectorAll(`#options-${idx} .option-btn`);
+  allBtns.forEach(b => b.disabled = true);
+  const fb = document.getElementById(`feedback-${idx}`);
+  fb.classList.add('show');
+
+  if (choice === q.correct) {
+    btn.classList.add('correct');
+    phraseScore++;
+    fb.className = 'feedback-msg show correct';
+    fb.innerHTML = `✓ Saktë! &nbsp;${q.feedback}<br><span class="fr-note">🇫🇷 ${q.feedbackFR}</span>`;
+  } else {
+    btn.classList.add('wrong');
+    allBtns.forEach(b => { if (b.textContent === q.correct) b.classList.add('correct'); });
+    fb.className = 'feedback-msg show wrong';
+    fb.innerHTML = `The right answer is <strong>${q.correct}</strong>. ${q.feedback}<br><span class="fr-note">🇫🇷 ${q.feedbackFR}</span>`;
+  }
+
+  setTimeout(() => {
+    phraseIndex = idx + 1;
+    renderPhraseQuestion(phraseIndex);
+  }, 2400);
+}
+
+function showPhraseScore() {
+  document.getElementById('phrase-game-area').innerHTML = '';
+  const area = document.getElementById('phrase-score-area');
+  area.classList.remove('hidden');
+  const pct = phraseScore / phraseQuestions.length;
+  let emoji, text, sub;
+  if (pct >= 0.8) { emoji='🌟'; text=`${phraseScore}/${phraseQuestions.length} — Bravo!`; sub="Your Albanian is still very much alive."; }
+  else if (pct >= 0.5) { emoji='💛'; text=`${phraseScore}/${phraseQuestions.length} — Good!`; sub="A few to review — that's exactly what today is for."; }
+  else { emoji='🔥'; text=`${phraseScore}/${phraseQuestions.length} — Keep going!`; sub="These phrases will feel natural very soon."; }
+  document.getElementById('phrase-emoji').textContent = emoji;
+  document.getElementById('phrase-score-text').textContent = text;
+  document.getElementById('phrase-score-sub').textContent = sub;
+
+  const list = document.getElementById('summary-list');
+  const item = document.createElement('div');
+  item.style.cssText = 'font-size:0.9rem;color:var(--brown);padding:6px 0;border-bottom:1px solid rgba(0,0,0,0.06)';
+  item.innerHTML = `<strong>Family phrases:</strong> ${phraseScore}/${phraseQuestions.length} correct.`;
+  list.appendChild(item);
+}
+
+// ─── GRAMMAR ─────────────────────────────────────────────────────────────────
+function renderGrammarScreen() {
+  const table = document.getElementById('noun-table');
+  table.innerHTML = `
+    <div class="section-label" style="margin-bottom:14px">Examples from your vocabulary list</div>
+    ${nounExamples.map(n => `
+      <div class="noun-row">
+        <div>
+          <div class="noun-word">${n.indef}</div>
+          <div style="font-size:0.78rem;color:var(--muted)">${n.meaning}</div>
+        </div>
+        <span class="noun-tag ${n.gender === 'M' ? 'masc' : 'fem'}">${n.gender === 'M' ? 'masc.' : 'fem.'}</span>
+        <div class="noun-def">${n.def} <span style="font-size:0.75rem;color:var(--muted)">(${n.rule})</span></div>
+      </div>
+    `).join('<hr style="border:none;border-top:1px solid rgba(0,0,0,0.05);margin:2px 0">')}
+  `;
+
+  renderGrammarQuiz(0);
+}
+
+function renderGrammarQuiz(idx) {
+  const area = document.getElementById('grammar-quiz');
+  if (idx >= grammarQuizItems.length) {
+    area.innerHTML = `<div class="card" style="background:var(--light-gold);border:1px solid var(--gold);text-align:center"><div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--rust)">Shumë mirë! All done!</div><div style="font-size:0.88rem;color:var(--brown);margin-top:6px">You've got the pattern. It becomes automatic with practice.</div></div>`;
+    document.getElementById('grammar-next').style.display = 'block';
+
+    const list = document.getElementById('summary-list');
+    const item = document.createElement('div');
+    item.style.cssText = 'font-size:0.9rem;color:var(--brown);padding:6px 0;border-bottom:1px solid rgba(0,0,0,0.06)';
+    item.innerHTML = `<strong>Grammar:</strong> Definite noun forms — masculine & feminine.`;
+    list.appendChild(item);
+    return;
+  }
+  const q = grammarQuizItems[idx];
+  area.innerHTML = `
+    <div class="card">
+      <div class="section-label">Quick check ${idx+1}/${grammarQuizItems.length}</div>
+      <div style="margin:12px 0;font-size:1rem">Make <strong>${q.indef}</strong> <em>(${q.meaning})</em> definite:</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        ${q.options.map(o => `<button class="option-btn" style="flex:1;min-width:80px" onclick="checkGrammar(this,'${o}','${q.answer}',${idx},'${q.hint}')">${o}</button>`).join('')}
+      </div>
+      <div id="gfeedback-${idx}" class="feedback-msg"></div>
+    </div>
+  `;
+}
+
+function checkGrammar(btn, choice, answer, idx, hint) {
+  const fb = document.getElementById(`gfeedback-${idx}`);
+  document.querySelectorAll(`#grammar-quiz .option-btn`).forEach(b => b.disabled = true);
+  fb.classList.add('show');
+  if (choice === answer) {
+    btn.classList.add('correct');
+    fb.className = 'feedback-msg show correct';
+    fb.innerHTML = `✓ Saktë! <em>${hint}</em>`;
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('#grammar-quiz .option-btn').forEach(b => { if (b.textContent === answer) b.classList.add('correct'); });
+    fb.className = 'feedback-msg show wrong';
+    fb.innerHTML = `It's <strong>${answer}</strong>. Rule: ${hint}`;
+  }
+  setTimeout(() => renderGrammarQuiz(idx + 1), 2000);
+}
+
+// ─── TAKE HOME ───────────────────────────────────────────────────────────────
+function renderTakeHome() {
+  attemptCount = 0;
+  document.getElementById('attempt-dots').textContent = '○ ○ ○';
+  document.getElementById('final-message').classList.add('hidden');
+  document.getElementById('final-summary').classList.add('hidden');
+  document.getElementById('restart-btn').classList.add('hidden');
+  document.getElementById('pronunciation-tip').classList.add('hidden');
+  document.getElementById('say-btn').classList.remove('pulsing');
+}
+
+function recordAttempt() {
+  if (attemptCount >= 3) return;
+  attemptCount++;
+  const dots = ['● ○ ○', '● ● ○', '● ● ●'];
+  const btn = document.getElementById('say-btn');
+  document.getElementById('attempt-dots').textContent = dots[attemptCount - 1];
+  document.getElementById('pronunciation-tip').classList.remove('hidden');
+
+  if (attemptCount < 3) {
+    btn.classList.add('pulsing');
+    btn.textContent = attemptCount === 1 ? '▶ Say it louder! ✓' : '▶ One more time — own it! ✓';
+    setTimeout(() => btn.classList.remove('pulsing'), 600);
+  } else {
+    btn.textContent = '✓ Done!';
+    btn.disabled = true;
+    setTimeout(() => {
+      launchConfetti();
+      document.getElementById('final-message').classList.remove('hidden');
+      document.getElementById('final-summary').classList.remove('hidden');
+      document.getElementById('restart-btn').classList.remove('hidden');
+    }, 400);
+  }
+}
+
+// ─── CONFETTI ────────────────────────────────────────────────────────────────
+function launchConfetti() {
+  const colors = ['#C0392B','#D4A853','#7A8C6E','#B5622B','#244AA5','#D4AF37'];
+  for (let i = 0; i < 60; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.cssText = `
+      left:${Math.random()*100}vw;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      animation-delay:${Math.random()*0.8}s;
+      animation-duration:${2 + Math.random()*1.5}s;
+      width:${6+Math.random()*6}px;
+      height:${6+Math.random()*6}px;
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+    `;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4000);
+  }
+}
+
+// ─── RESTART ─────────────────────────────────────────────────────────────────
+function restart() {
+  phraseIndex = 0; phraseScore = 0; grammarAnswered = 0; attemptCount = 0;
+  document.getElementById('recall-input').value = '';
+  document.getElementById('bubbles').innerHTML = '';
+  document.getElementById('recall-encouragement').classList.add('hidden');
+  document.getElementById('phrase-score-area').classList.add('hidden');
+  document.getElementById('summary-list').innerHTML = '';
+  goTo('screen-welcome');
+}
+</script>
+</body>
+</html>
