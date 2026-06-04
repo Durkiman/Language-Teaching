@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Micha – Mission 2: Introduce Yourself!</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow:  #FFD93D;
+    --orange:  #FF6B35;
+    --blue:    #1E90FF;
+    --blue2:   #00C4FF;
+    --green:   #06D6A0;
+    --red:     #EF233C;
+    --purple:  #9B5DE5;
+    --dark:    #0D0D1A;
+    --card:    #1A1A2E;
+    --card2:   #16213E;
+    --white:   #F8F9FA;
+    --muted:   rgba(248,249,250,0.55);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--dark);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse at 15% 10%, rgba(255,107,53,.18) 0%, transparent 45%),
+      radial-gradient(ellipse at 85% 85%, rgba(30,144,255,.18) 0%, transparent 45%),
+      radial-gradient(ellipse at 50% 50%, rgba(155,93,229,.10) 0%, transparent 65%);
+    pointer-events: none; z-index: 0;
+  }
+
+  /* STARS */
+  .stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .star {
+    position: absolute; width: 3px; height: 3px; border-radius: 50%;
+    background: var(--yellow); opacity: .5;
+    animation: twinkle var(--d,3s) infinite alternate;
+  }
+  @keyframes twinkle { from {opacity:.1;transform:scale(.8)} to {opacity:.9;transform:scale(1.3)} }
+
+  .wrap { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 0 16px 70px; }
+
+  /* ─── HEADER ─── */
+  .header {
+    text-align: center;
+    padding: 36px 0 28px;
+    animation: dropIn .5s ease both;
+  }
+  @keyframes dropIn { from {opacity:0;transform:translateY(-28px)} to {opacity:1;transform:translateY(0)} }
+
+  .badge {
+    display: inline-block;
+    background: var(--orange);
+    color: var(--dark);
+    font-size: 11px; font-weight: 800;
+    letter-spacing: 3px; text-transform: uppercase;
+    padding: 5px 14px; border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(38px, 9vw, 62px);
+    color: var(--yellow);
+    letter-spacing: 3px;
+    text-shadow: 4px 4px 0 rgba(0,0,0,.5);
+    line-height: 1;
+  }
+  .header p {
+    margin-top: 10px; font-size: 15px;
+    color: var(--muted); font-weight: 600;
+  }
+
+  /* ─── SECTION DIVIDER ─── */
+  .section-head {
+    display: flex; align-items: center; gap: 12px;
+    margin: 36px 0 16px;
+  }
+  .section-icon {
+    width: 42px; height: 42px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .icon-intro  { background: linear-gradient(135deg, var(--orange), var(--yellow)); }
+  .icon-vocab  { background: linear-gradient(135deg, var(--blue), var(--blue2)); }
+  .icon-notes  { background: linear-gradient(135deg, var(--purple), #c77dff); }
+
+  .section-info {}
+  .section-tag {
+    font-size: 10px; font-weight: 800; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 2px;
+  }
+  .section-title {
+    font-family: 'Bangers', cursive;
+    font-size: 24px; letter-spacing: 1.5px; color: var(--white);
+  }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+  .card-title {
+    font-size: 11px; font-weight: 800;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--yellow); margin-bottom: 14px;
+    opacity: .85;
+  }
+
+  /* ─── SPEECH BUBBLES (intro prompts) ─── */
+  .bubble-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .bubble {
+    background: var(--card2);
+    border: 1.5px solid rgba(255,255,255,.1);
+    border-radius: 14px;
+    padding: 14px 16px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .bubble-num {
+    background: var(--orange);
+    color: var(--dark);
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800; flex-shrink: 0;
+  }
+  .bubble-text { font-size: 14px; line-height: 1.55; }
+  .bubble-text strong { color: var(--yellow); }
+  .bubble-hint { font-size: 12px; color: var(--muted); margin-top: 4px; font-style: italic; }
+
+  /* ─── VOCAB FLIP CARDS ─── */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+    gap: 10px; margin-top: 4px;
+  }
+  .vcard {
+    border-radius: 12px;
+    padding: 14px 15px;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+    border: 1.5px solid rgba(255,255,255,.1);
+    min-height: 84px;
+    background: var(--card2);
+  }
+  .vcard:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.4); }
+  .vcard.flipped { background: linear-gradient(135deg, #0d3b66, #1565c0); border-color: var(--blue2); }
+  .vcard .front .ve { font-size: 14px; font-weight: 800; color: var(--white); margin-bottom: 4px; }
+  .vcard .front .vex { font-size: 11px; color: var(--muted); font-style: italic; line-height: 1.4; }
+  .vcard .back { display: none; }
+  .vcard.flipped .front { display: none; }
+  .vcard.flipped .back { display: block; }
+  .vcard .back .vfr { font-size: 14px; font-weight: 800; color: var(--blue2); margin-bottom: 4px; }
+  .vcard .back .vhint { font-size: 11px; color: rgba(255,255,255,.75); line-height: 1.4; }
+  .tap-hint { font-size: 11px; color: var(--muted); text-align: center; margin-top: 10px; font-style: italic; }
+
+  /* ─── TEACHER NOTES ─── */
+  .note-area {
+    width: 100%;
+    background: rgba(255,255,255,.05);
+    border: 1.5px solid rgba(255,255,255,.12);
+    border-radius: 10px;
+    padding: 12px 15px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    color: var(--white);
+    resize: vertical;
+    min-height: 64px;
+    transition: border-color .2s;
+  }
+  .note-area:focus { outline: none; border-color: var(--blue2); }
+  .note-area::placeholder { color: rgba(255,255,255,.3); }
+  .note-label {
+    font-size: 12px; font-weight: 700; color: var(--muted);
+    margin-bottom: 7px; letter-spacing: .5px;
+  }
+  .note-block { margin-bottom: 14px; }
+
+  /* ─── STAR RATING ─── */
+  .star-rate { display: flex; gap: 10px; margin-top: 8px; }
+  .star-btn {
+    font-size: 28px; cursor: pointer;
+    transition: transform .15s;
+    filter: grayscale(1) opacity(.4);
+    background: none; border: none;
+  }
+  .star-btn.lit { filter: none; }
+  .star-btn:hover, .star-btn.lit { transform: scale(1.2); }
+
+  /* ─── REVIEW BOX ─── */
+  .review-box {
+    background: linear-gradient(135deg, #0f2044, #1a1a2e);
+    border: 1.5px solid rgba(255,215,61,.3);
+    border-radius: 16px;
+    padding: 20px 22px;
+    margin-bottom: 14px;
+  }
+  .review-box .card-title { color: var(--yellow); }
+  .review-list { list-style: none; margin-top: 8px; }
+  .review-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    font-size: 14px; color: rgba(248,249,250,.8);
+    display: flex; gap: 10px; align-items: flex-start; line-height: 1.5;
+  }
+  .review-list li:last-child { border-bottom: none; }
+  .review-list li::before { content: '→'; color: var(--yellow); font-weight: 800; flex-shrink: 0; }
+
+  /* ─── FINISH BANNER ─── */
+  .finish {
+    text-align: center;
+    padding: 28px 20px;
+    background: var(--card);
+    border-radius: 16px;
+    border: 1.5px solid rgba(255,255,255,.08);
+    margin-top: 10px;
+  }
+  .finish-title {
+    font-family: 'Bangers', cursive;
+    font-size: 32px; letter-spacing: 2px;
+    color: var(--yellow);
+    text-shadow: 3px 3px 0 rgba(0,0,0,.4);
+    margin-bottom: 6px;
+  }
+  .finish-sub { font-size: 13px; color: var(--muted); }
+
+  /* ─── PROGRESS DOT NAV ─── */
+  .dot-nav {
+    display: flex; justify-content: center; gap: 8px;
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(13,13,26,.9);
+    backdrop-filter: blur(8px);
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(255,255,255,.2);
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .dot.active { background: var(--yellow); transform: scale(1.3); }
+  .dot.done { background: var(--green); }
+
+  /* ─── CONFETTI ─── */
+  .confetti-wrap { position: fixed; inset: 0; pointer-events: none; z-index: 999; overflow: hidden; }
+  .cp {
+    position: absolute; width: 9px; height: 9px; top: -9px;
+    animation: fall linear both; border-radius: 2px;
+  }
+  @keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+
+  @media (max-width: 480px) {
+    .vocab-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+<div class="confetti-wrap" id="confetti"></div>
+
+<!-- STICKY DOT NAV -->
+<nav class="dot-nav">
+  <div class="dot active" title="Intro" onclick="scrollTo('s0')"></div>
+  <div class="dot" title="Vocab" onclick="scrollTo('s1')"></div>
+  <div class="dot" title="Notes" onclick="scrollTo('s2')"></div>
+</nav>
+
+<div class="wrap">
+
+  <!-- ══════════════════════════════
+       HEADER
+  ══════════════════════════════ -->
+  <div class="header">
+    <div class="badge">🎮 Mission 2 · Micha</div>
+    <h1>INTRODUCE<br>YOURSELF!</h1>
+    <p>Reading &amp; Speaking · ~15 min</p>
+  </div>
+
+  <!-- ══════════════════════════════
+       SECTION 0 — SELF-INTRO
+  ══════════════════════════════ -->
+  <div id="s0">
+    <div class="section-head">
+      <div class="section-icon icon-intro">🎤</div>
+      <div class="section-info">
+        <div class="section-tag">Part 1 · ~10 min</div>
+        <div class="section-title">Your Introduction</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🗣️ Speak — You go first!</div>
+      <div class="bubble-list">
+
+        <div class="bubble">
+          <div class="bubble-num">1</div>
+          <div class="bubble-text">
+            <strong>Say your name and age.</strong>
+            <div class="bubble-hint">💬 "My name is… / I'm … years old."</div>
+          </div>
+        </div>
+
+        <div class="bubble">
+          <div class="bubble-num">2</div>
+          <div class="bubble-text">
+            <strong>Where are you from?</strong>
+            <div class="bubble-hint">💬 "I come from… / I'm from…"</div>
+          </div>
+        </div>
+
+        <div class="bubble">
+          <div class="bubble-num">3</div>
+          <div class="bubble-text">
+            <strong>What do you like doing? (hobbies)</strong>
+            <div class="bubble-hint">💬 "I love… / In my free time I…"</div>
+          </div>
+        </div>
+
+        <div class="bubble">
+          <div class="bubble-num">4</div>
+          <div class="bubble-text">
+            <strong>What's your favourite game or brawler?</strong>
+            <div class="bubble-hint">💬 "My favourite is… / I really like…"</div>
+          </div>
+        </div>
+
+        <div class="bubble">
+          <div class="bubble-num">5</div>
+          <div class="bubble-text">
+            <strong>Say one goal or dream.</strong>
+            <div class="bubble-hint">💬 "One day I want to… / My dream is to…"</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card" style="border-color:rgba(6,214,160,.2);">
+      <div class="card-title" style="color:var(--green);">🎤 Now the teacher introduces themselves</div>
+      <div class="bubble-list">
+        <div class="bubble" style="border-color:rgba(6,214,160,.2);">
+          <div class="bubble-num" style="background:var(--green); color:var(--dark);">T</div>
+          <div class="bubble-text">
+            Teacher speaks — Micha listens and tries to catch:
+            <div class="bubble-hint">✅ Name &nbsp;·&nbsp; ✅ Where from &nbsp;·&nbsp; ✅ Hobby &nbsp;·&nbsp; ✅ One fun fact</div>
+          </div>
+        </div>
+        <div class="bubble" style="border-color:rgba(6,214,160,.2);">
+          <div class="bubble-num" style="background:var(--green); color:var(--dark);">?</div>
+          <div class="bubble-text">
+            After listening, Micha asks <strong>one question</strong> to the teacher.
+            <div class="bubble-hint">💬 "Do you like…? / What is your favourite…? / Have you ever…?"</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════
+       SECTION 1 — VOCAB CARDS
+  ══════════════════════════════ -->
+  <div id="s1">
+    <div class="section-head">
+      <div class="section-icon icon-vocab">🗂️</div>
+      <div class="section-info">
+        <div class="section-tag">Part 2 · Vocabulary</div>
+        <div class="section-title">Key Phrases</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🇬🇧 English ↔ 🇫🇷 French · Tap to flip</div>
+      <div class="vocab-grid">
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">My name is…</div><div class="vex">"My name is Micha."</div></div>
+          <div class="back"><div class="vfr">Je m'appelle…</div><div class="vhint">First thing to say in any intro</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">I'm … years old</div><div class="vex">"I'm 12 years old."</div></div>
+          <div class="back"><div class="vfr">J'ai … ans</div><div class="vhint">NOT "I have 12 years" ⚠️</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">I come from…</div><div class="vex">"I come from France."</div></div>
+          <div class="back"><div class="vfr">Je viens de…</div><div class="vhint">Also: "I'm from…"</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">I love / I like…</div><div class="vex">"I love playing Brawl Stars."</div></div>
+          <div class="back"><div class="vfr">J'adore / J'aime…</div><div class="vhint">+ verb-ing after love/like</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">In my free time…</div><div class="vex">"In my free time I play games."</div></div>
+          <div class="back"><div class="vfr">Dans mon temps libre…</div><div class="vhint">Great for talking about hobbies</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">My favourite… is…</div><div class="vex">"My favourite brawler is Spike."</div></div>
+          <div class="back"><div class="vfr">Mon préféré… c'est…</div><div class="vhint">favourite = préféré(e)</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">One day I want to…</div><div class="vex">"One day I want to be a pro player."</div></div>
+          <div class="back"><div class="vfr">Un jour je veux…</div><div class="vhint">Talking about dreams & goals</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">Nice to meet you!</div><div class="vex">Said at the end of an introduction.</div></div>
+          <div class="back"><div class="vfr">Enchanté(e) !</div><div class="vhint">Always a good finish 🤝</div></div>
+        </div>
+
+      </div>
+      <div class="tap-hint">Tap a card to flip · Tap again to flip back</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       SECTION 2 — TEACHER NOTES
+  ══════════════════════════════ -->
+  <div id="s2">
+    <div class="section-head">
+      <div class="section-icon icon-notes">📋</div>
+      <div class="section-info">
+        <div class="section-tag">Teacher Only</div>
+        <div class="section-title">Session Notes</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📝 Observation Log</div>
+
+      <div class="note-block">
+        <div class="note-label">Phrases Micha used correctly ✅</div>
+        <textarea class="note-area" placeholder="e.g. Used 'I come from' naturally, said 'In my free time'…" rows="2"></textarea>
+      </div>
+
+      <div class="note-block">
+        <div class="note-label">Errors to address next time ⚡</div>
+        <textarea class="note-area" placeholder="e.g. Said 'I have 11 years' → correct to 'I'm 11 years old'…" rows="2"></textarea>
+      </div>
+
+      <div class="note-block">
+        <div class="note-label">Micha's speaking confidence today</div>
+        <div class="star-rate" id="stars-rate">
+          <button class="star-btn" onclick="setStars(1)">⭐</button>
+          <button class="star-btn" onclick="setStars(2)">⭐</button>
+          <button class="star-btn" onclick="setStars(3)">⭐</button>
+          <button class="star-btn" onclick="setStars(4)">⭐</button>
+          <button class="star-btn" onclick="setStars(5)">⭐</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-box">
+      <div class="card-title">📅 Spaced Review Reminders</div>
+      <ul class="review-list">
+        <li>Session 4 — free recall: "Introduce yourself again, without any help"</li>
+        <li>Session 4 — check: "I'm … years old" vs "I have … years" (common error)</li>
+        <li>Session 5 — introduce a <em>fictional character</em> (e.g. a Brawl Stars brawler) — same structure, new context</li>
+        <li>Homework idea — write 3–4 sentences introducing yourself in English</li>
+      </ul>
+    </div>
+
+    <div class="finish">
+      <div class="finish-title">MISSION COMPLETE! 🎉</div>
+      <div class="finish-sub">First English introduction — done. Legendary level unlocked.</div>
+    </div>
+
+  </div>
+
+</div><!-- /wrap -->
+
+<script>
+  // Stars background
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 55; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.top  = Math.random() * 100 + 'vh';
+    s.style.setProperty('--d', (2 + Math.random() * 4) + 's');
+    s.style.animationDelay = (Math.random() * 4) + 's';
+    starsEl.appendChild(s);
+  }
+
+  // Dot nav scroll
+  const sections = ['s0','s1','s2'];
+  const dots = document.querySelectorAll('.dot');
+
+  function scrollTo(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Update dots on scroll
+  window.addEventListener('scroll', () => {
+    let active = 0;
+    sections.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top <= 120) active = i;
+    });
+    dots.forEach((d, i) => {
+      d.classList.remove('active', 'done');
+      if (i < active) d.classList.add('done');
+      else if (i === active) d.classList.add('active');
+    });
+  });
+
+  // Star rating
+  function setStars(n) {
+    document.querySelectorAll('.star-btn').forEach((btn, i) => {
+      btn.classList.toggle('lit', i < n);
+    });
+    if (n >= 4) launchConfetti();
+  }
+
+  // Confetti
+  function launchConfetti() {
+    const c = document.getElementById('confetti');
+    const cols = ['#FFD93D','#FF6B35','#06D6A0','#1E90FF','#9B5DE5','#FF69B4'];
+    for (let i = 0; i < 70; i++) {
+      const p = document.createElement('div');
+      p.className = 'cp';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.background = cols[Math.floor(Math.random() * cols.length)];
+      p.style.width  = (6 + Math.random() * 8) + 'px';
+      p.style.height = (6 + Math.random() * 8) + 'px';
+      p.style.animationDuration  = (1.5 + Math.random() * 2) + 's';
+      p.style.animationDelay     = (Math.random() * .8) + 's';
+      c.appendChild(p);
+      setTimeout(() => p.remove(), 4000);
+    }
+  }
+</script>
+</body>
+</html>

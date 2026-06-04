@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mehdi – Lesson 2: Host a Client Interview</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --navy: #0f1e3c;
+    --navy-mid: #1a3260;
+    --blue-accent: #2255cc;
+    --blue-light: #dce8ff;
+    --gold: #c9a84c;
+    --gold-label: #7a5c10;
+    --gold-light: #faf0d0;
+    --green: #1e6e4a;
+    --green-light: #d6f0e4;
+    --amber: #a05a00;
+    --amber-light: #fff3dc;
+    --red-dark: #7a1e1e;
+    --red-light: #fde8e8;
+    --ink: #1a1a2e;
+    --body: #2d2d3a;
+    --muted: #4a4a5a;
+    --border: #dde3ef;
+    --bg: #f4f6fb;
+    --cream: #fefcf8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--body);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--navy);
+    padding: 28px 32px 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--blue-accent), var(--gold));
+  }
+  .header-meta {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(22px, 4.5vw, 34px);
+    color: #eef2ff;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+  .header-sub {
+    margin-top: 7px;
+    font-size: 14px;
+    color: #8899bb;
+    font-weight: 400;
+  }
+
+  /* PROGRESS */
+  .progress-track {
+    height: 4px;
+    background: #1e2d50;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue-accent), var(--gold));
+    transition: width 0.5s ease;
+  }
+
+  /* NAV */
+  .section-nav {
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 6px;
+    padding: 14px 20px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .section-nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    padding: 7px 15px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .nav-btn.active { background: var(--navy); border-color: var(--navy); color: var(--gold); }
+  .nav-btn.done { background: var(--green-light); border-color: var(--green); color: var(--green); }
+
+  /* MAIN */
+  .main { padding: 24px 18px 60px; max-width: 740px; margin: 0 auto; }
+
+  /* PANELS */
+  .panel { display: none; animation: fadeUp 0.35s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .lbl-warmup  { background: var(--amber-light); color: var(--amber); }
+  .lbl-reading { background: var(--blue-light);  color: var(--blue-accent); }
+  .lbl-vocab   { background: #ede8ff; color: #4a2fa0; }
+  .lbl-practice{ background: var(--gold-light);  color: var(--gold-label); }
+  .lbl-speaking{ background: var(--green-light); color: var(--green); }
+
+  .section-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .section-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 22px;
+  }
+
+  /* CARD */
+  .card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 18px;
+  }
+  .card-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-label);
+    margin-bottom: 14px;
+  }
+
+  /* RECALL BLOCK */
+  .recall-q {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .recall-num {
+    background: var(--navy);
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 700;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .recall-text { font-size: 14px; line-height: 1.5; font-weight: 500; color: var(--ink); }
+
+  /* READING TEXT */
+  .reading-passage {
+    background: white;
+    border-left: 4px solid var(--blue-accent);
+    border-radius: 0 12px 12px 0;
+    padding: 18px 20px;
+    margin: 14px 0;
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--body);
+  }
+  .reading-passage .hl {
+    background: #dce8ff;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--navy);
+    position: relative;
+    display: inline-block;
+    transition: background 0.2s;
+  }
+  .reading-passage .hl:hover,
+  .reading-passage .hl.open { background: var(--blue-accent); color: white; }
+  .hl-tip {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--navy);
+    color: #eef2ff;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 7px 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+    z-index: 10;
+    pointer-events: none;
+    min-width: 180px;
+    text-align: center;
+    line-height: 1.4;
+  }
+  .hl-tip::after {
+    content: '';
+    position: absolute;
+    top: 100%; left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--navy);
+  }
+  .hl.open .hl-tip { display: block; }
+
+  /* NOTICE */
+  .notice {
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 14px;
+  }
+  .notice-blue { background: var(--blue-light); color: #1a3a99; }
+  .notice-gold { background: var(--gold-light); color: var(--gold-label); }
+  .notice-green { background: var(--green-light); color: var(--green); }
+
+  /* VOCAB CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+    gap: 11px;
+    margin-top: 10px;
+  }
+  .vcard {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 11px;
+    padding: 14px 15px;
+    cursor: pointer;
+    transition: all 0.22s;
+    min-height: 80px;
+  }
+  .vcard:hover { border-color: var(--blue-accent); transform: translateY(-2px); box-shadow: 0 5px 16px rgba(34,85,204,0.1); }
+  .vcard.flipped { background: var(--navy); border-color: var(--navy); }
+  .vcard .front .ve { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .vcard .front .vex { font-size: 11px; color: var(--muted); font-style: italic; line-height: 1.4; }
+  .vcard .back { display: none; }
+  .vcard.flipped .front { display: none; }
+  .vcard.flipped .back { display: block; }
+  .vcard .back .vfr { font-size: 14px; font-weight: 600; color: var(--gold-light); margin-bottom: 4px; }
+  .vcard .back .vhint { font-size: 11px; color: rgba(255,255,255,0.88); line-height: 1.4; }
+  .tap-hint { font-size: 11px; color: var(--muted); text-align: center; margin-top: 10px; font-style: italic; }
+
+  /* QUESTION TYPES */
+  .q-block { margin-bottom: 18px; }
+  .q-text {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  .q-text em { color: var(--muted); font-weight: 400; font-size: 13px; }
+
+  /* REORDER EXERCISE */
+  .reorder-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .reorder-item {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 9px;
+    padding: 12px 16px;
+    font-size: 14px;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    user-select: none;
+  }
+  .reorder-item:active { cursor: grabbing; }
+  .reorder-item.dragging { opacity: 0.5; }
+  .reorder-item.over { border-color: var(--blue-accent); background: var(--blue-light); }
+  .drag-handle { color: var(--muted); font-size: 16px; flex-shrink: 0; }
+  .reorder-item .item-num {
+    background: var(--blue-light);
+    color: var(--blue-accent);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+
+  /* FILL BLANK */
+  .fill-line {
+    font-size: 15px;
+    line-height: 2.4;
+    margin-bottom: 6px;
+    color: var(--body);
+  }
+  .blank {
+    display: inline-block;
+    min-width: 140px;
+    border: none;
+    border-bottom: 2.5px solid var(--gold);
+    padding: 0 6px 2px;
+    margin: 0 3px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: transparent;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+  .blank:focus { outline: none; border-color: var(--blue-accent); }
+  .blank.correct { border-color: var(--green); background: var(--green-light); }
+  .blank.wrong { border-color: #c0392b; background: var(--red-light); }
+
+  /* SPEAKING CARDS */
+  .speak-card {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-left: 4px solid var(--green);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .speak-num {
+    background: var(--green);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .speak-q { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 5px; line-height: 1.4; }
+  .speak-hint { font-size: 12px; color: var(--green); font-style: italic; }
+
+  /* ROLEPLAY SCENARIO */
+  .scenario-box {
+    background: var(--navy);
+    color: #eef2ff;
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-bottom: 18px;
+  }
+  .scenario-box .card-label { color: var(--gold-light); }
+  .scenario-box p { font-size: 14px; line-height: 1.7; color: #c8d4ee; margin-bottom: 10px; }
+  .scenario-box p:last-child { margin-bottom: 0; }
+  .scenario-box strong { color: #eef2ff; }
+
+  /* PHRASE CHIPS */
+  .chip-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .chip {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 13px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .chip:hover { background: var(--navy); color: var(--gold); border-color: var(--navy); }
+  .chip.used { background: var(--green); color: white; border-color: var(--green); }
+
+  /* REVIEW BOX */
+  .review-box {
+    background: var(--navy);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 18px;
+  }
+  .review-box .card-label { color: var(--gold-light); }
+  .review-list { list-style: none; margin-top: 8px; }
+  .review-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #1e3060;
+    font-size: 14px;
+    color: #c8d4ee;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+  }
+  .review-list li:last-child { border-bottom: none; }
+  .review-list li::before { content: '→'; color: var(--gold); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  /* ANSWER INPUT */
+  .answer-input {
+    width: 100%;
+    padding: 11px 15px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    background: white;
+    color: var(--ink);
+    resize: vertical;
+    min-height: 52px;
+    transition: border-color 0.2s;
+  }
+  .answer-input:focus { outline: none; border-color: var(--blue-accent); }
+
+  /* FEEDBACK */
+  .feedback {
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-top: 12px;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback-ok { background: var(--green-light); color: var(--green); border: 1px solid #a0d8be; }
+  .feedback-partial { background: var(--amber-light); color: var(--amber); border: 1px solid #e8c878; }
+
+  /* BUTTONS */
+  .btn {
+    padding: 12px 26px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .btn-primary { background: var(--navy); color: var(--gold); }
+  .btn-primary:hover { background: var(--navy-mid); transform: translateY(-1px); }
+  .btn-check { background: var(--gold); color: var(--navy); margin-top: 14px; }
+  .btn-check:hover { background: var(--gold-light); }
+  .btn-row { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+
+  .divider { height: 1px; background: var(--border); margin: 18px 0; }
+
+  @media (max-width: 480px) {
+    .main { padding: 16px 12px 60px; }
+    .vocab-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-meta">Lesson 2 · Mehdi</div>
+  <h1>Host a Client Interview</h1>
+  <div class="header-sub">Speaking &amp; Reading · A2–B1 · 50 min</div>
+</div>
+<div class="progress-track">
+  <div class="progress-fill" id="pFill" style="width:20%"></div>
+</div>
+
+<!-- NAV -->
+<div class="section-nav">
+  <button class="nav-btn active" onclick="goTo(0)">🔥 Warm-up</button>
+  <button class="nav-btn" onclick="goTo(1)">📖 Reading</button>
+  <button class="nav-btn" onclick="goTo(2)">🗂️ Vocabulary</button>
+  <button class="nav-btn" onclick="goTo(3)">✏️ Practice</button>
+  <button class="nav-btn" onclick="goTo(4)">🎙️ Roleplay</button>
+</div>
+
+<div class="main">
+
+  <!-- ===== 0: WARM-UP (5 min) ===== -->
+  <div class="panel active" id="panel-0">
+    <span class="section-label lbl-warmup">Warm-up · 5 min</span>
+    <div class="section-title">What do you remember?</div>
+    <div class="section-desc">Free recall from Lesson 1 — no looking back. Just say what comes to mind.</div>
+
+    <div class="card">
+      <div class="card-label">Retrieval Practice</div>
+      <div class="recall-q">
+        <div class="recall-num">1</div>
+        <div class="recall-text">From last lesson — what phrases did you use to introduce yourself? Say as many as you remember.</div>
+      </div>
+      <div class="recall-q">
+        <div class="recall-num">2</div>
+        <div class="recall-text">In English, how do you ask someone what their job is? Try two different ways.</div>
+      </div>
+      <div class="recall-q">
+        <div class="recall-num">3</div>
+        <div class="recall-text">As a coach, what do you do in your work? Tell me in 2–3 English sentences — same as last time, but without looking at any notes.</div>
+      </div>
+    </div>
+
+    <div class="notice notice-gold">
+      💡 <strong>Teacher note:</strong> Listen and note which phrases from Lesson 1 come back naturally vs. which need reinforcing. Don't correct yet — this is retrieval, not production.
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goTo(1)">Continue to Reading →</button>
+    </div>
+  </div>
+
+  <!-- ===== 1: READING (12 min) ===== -->
+  <div class="panel" id="panel-1">
+    <span class="section-label lbl-reading">Presentation · 12 min</span>
+    <div class="section-title">Mehdi's Interview Guide</div>
+    <div class="section-desc">This is your real client questionnaire — translated into English. Read it and tap the <strong>highlighted phrases</strong> to see how to say them naturally.</div>
+
+    <div class="card">
+      <div class="card-label">Your Client Questionnaire · In English</div>
+
+      <div style="background:var(--blue-light); border-radius:10px; padding:12px 16px; margin-bottom:16px; font-size:13px; color:#1a3a99;">
+        🗂️ These are questions <strong>you</strong> ask your clients at the start of coaching. Today you'll practise saying them in English.
+      </div>
+
+      <!-- SECTION 1 -->
+      <div style="font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; margin-top:4px;">Part 1 · Personal Profile</div>
+      <div class="reading-passage">
+
+        <span class="hl" onclick="this.classList.toggle('open')">How would you describe yourself<span class="hl-tip">Use: "How would you describe…?" — polite, open question</span></span> professionally, and <span class="hl" onclick="this.classList.toggle('open')">what values guide<span class="hl-tip">"What values guide your choices?" — guide = direct, shape</span></span> your choices?<br><br>
+
+        <span class="hl" onclick="this.classList.toggle('open')">Are you more comfortable<span class="hl-tip">"Are you more comfortable with…?" — great for preference questions</span></span> with the technical side, the process side, or the long-term strategic vision?<br><br>
+
+        <span class="hl" onclick="this.classList.toggle('open')">How do you react<span class="hl-tip">"How do you react when…?" — react = respond, behave in a situation</span></span> when things don't go as planned — do you speed up, <span class="hl" onclick="this.classList.toggle('open')">put things off<span class="hl-tip">put things off = procrastinate (more natural in spoken English)</span></span>, or take a step back?<br><br>
+
+        What are your <span class="hl" onclick="this.classList.toggle('open')">main strengths<span class="hl-tip">strengths = things you do well; opposite: weaknesses</span></span>? For example: communication, leadership, creativity.<br><br>
+
+        What are your <span class="hl" onclick="this.classList.toggle('open')">main weaknesses<span class="hl-tip">weaknesses = areas to improve. Often asked as: "What do you find difficult?"</span></span>? For example: impatience, difficulty delegating.
+
+      </div>
+
+      <!-- SECTION 2 -->
+      <div style="font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; margin-top:18px;">Part 2 · Entrepreneurial Vision</div>
+      <div class="reading-passage">
+
+        Why do you want to <span class="hl" onclick="this.classList.toggle('open')">start your own business<span class="hl-tip">"start your own business" = create / launch an enterprise</span></span> right now?<br><br>
+
+        What <span class="hl" onclick="this.classList.toggle('open')">do you hope to achieve<span class="hl-tip">"What do you hope to achieve?" — hope to = want to / aim to</span></span> with this project?<br><br>
+
+        How would you <span class="hl" onclick="this.classList.toggle('open')">measure your success<span class="hl-tip">"How would you measure…?" — conditional for hypothetical, polite questions</span></span>? For example: revenue, client satisfaction, work-life balance.<br><br>
+
+        What <span class="hl" onclick="this.classList.toggle('open')">could discourage<span class="hl-tip">discourage = make someone lose motivation; could = possibility question</span></span> or exhaust you in this process?
+
+      </div>
+
+      <!-- SECTION 3 -->
+      <div style="font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; margin-top:18px;">Part 3 · Skills &amp; Organisation</div>
+      <div class="reading-passage">
+
+        What <span class="hl" onclick="this.classList.toggle('open')">key skills do you already have<span class="hl-tip">"What skills do you already have?" — already = at this moment, before starting</span></span>? For example: sales, marketing, team management.<br><br>
+
+        What would you prefer to <span class="hl" onclick="this.classList.toggle('open')">delegate<span class="hl-tip">delegate = give a task to someone else to do</span></span> quickly?<br><br>
+
+        How do you <span class="hl" onclick="this.classList.toggle('open')">make decisions<span class="hl-tip">"make a decision" NOT "take a decision" — common learner error</span></span> when things are uncertain?
+
+      </div>
+
+      <div class="notice notice-blue" style="margin-top:16px;">
+        💡 <strong>Notice the question patterns:</strong> "How do you…?", "What are your…?", "How would you…?" — these are the three main structures you'll practise today.
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goTo(2)">Continue to Vocabulary →</button>
+    </div>
+  </div>
+
+  <!-- ===== 2: VOCABULARY (8 min) ===== -->
+  <div class="panel" id="panel-2">
+    <span class="section-label lbl-vocab">Vocabulary · 8 min</span>
+    <div class="section-title">Key Interview Phrases</div>
+    <div class="section-desc">Tap each card to see the French translation and a usage note.</div>
+
+    <div class="card">
+      <div class="card-label">English ↔ French · Tap to flip</div>
+      <div class="vocab-grid">
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">How would you describe…?</div><div class="vex">"How would you describe your style?"</div></div>
+          <div class="back"><div class="vfr">Comment décririez-vous…?</div><div class="vhint">Polite, open — use to start</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">What values guide you?</div><div class="vex">"What values guide your decisions?"</div></div>
+          <div class="back"><div class="vfr">Quelles valeurs vous guident?</div><div class="vhint">guide = orienter, diriger</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">How do you react when…?</div><div class="vex">"How do you react under pressure?"</div></div>
+          <div class="back"><div class="vfr">Comment réagissez-vous quand…?</div><div class="vhint">react = réagir</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">to put things off</div><div class="vex">"I tend to put things off when stressed."</div></div>
+          <div class="back"><div class="vfr">remettre à plus tard / procrastiner</div><div class="vhint">More natural than "procrastinate" in speech</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">strength / weakness</div><div class="vex">"What's your biggest strength?"</div></div>
+          <div class="back"><div class="vfr">force / faiblesse</div><div class="vhint">Classic interview vocabulary</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">What do you hope to achieve?</div><div class="vex">"What do you hope to achieve this year?"</div></div>
+          <div class="back"><div class="vfr">Qu'espérez-vous accomplir?</div><div class="vhint">hope to = espérer + infinitif</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">to measure success</div><div class="vex">"How do you measure success?"</div></div>
+          <div class="back"><div class="vfr">mesurer le succès</div><div class="vhint">measure = évaluer, quantifier</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">to delegate</div><div class="vex">"I delegate admin tasks quickly."</div></div>
+          <div class="back"><div class="vfr">déléguer</div><div class="vhint">Give a task to someone else</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">to make a decision</div><div class="vex">"How do you make decisions?"</div></div>
+          <div class="back"><div class="vfr">prendre une décision</div><div class="vhint">⚠️ "make" NOT "take" in English</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">Are you more comfortable with…?</div><div class="vex">"Are you more comfortable with strategy or operations?"</div></div>
+          <div class="back"><div class="vfr">Êtes-vous plus à l'aise avec…?</div><div class="vhint">Great for preference questions</div></div>
+        </div>
+
+      </div>
+      <div class="tap-hint">Tap a card to flip · Tap again to flip back</div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goTo(3)">Continue to Practice →</button>
+    </div>
+  </div>
+
+  <!-- ===== 3: CONTROLLED PRACTICE (10 min) ===== -->
+  <div class="panel" id="panel-3">
+    <span class="section-label lbl-practice">Controlled Practice · 10 min</span>
+    <div class="section-title">Build the Questions</div>
+    <div class="section-desc">Two exercises to practise the key question structures before the roleplay.</div>
+
+    <!-- EXERCISE A: Fill in the blanks -->
+    <div class="card">
+      <div class="card-label">Exercise A · Complete the interview questions</div>
+      <div style="font-size:13px; color:var(--muted); margin-bottom:16px;">Fill in each blank with the correct word or phrase.</div>
+
+      <div class="q-block">
+        <div class="fill-line">1. "<input class="blank" id="b1" placeholder="________" size="12"> would you describe yourself professionally?"</div>
+      </div>
+      <div class="q-block">
+        <div class="fill-line">2. "What values <input class="blank" id="b2" placeholder="________" size="8"> your choices?"</div>
+      </div>
+      <div class="q-block">
+        <div class="fill-line">3. "How do you <input class="blank" id="b3" placeholder="________" size="8"> when things don't go as planned?"</div>
+      </div>
+      <div class="q-block">
+        <div class="fill-line">4. "What are your main <input class="blank" id="b4" placeholder="________" size="10"> and weaknesses?"</div>
+      </div>
+      <div class="q-block">
+        <div class="fill-line">5. "What do you <input class="blank" id="b5" placeholder="________" size="10"> to achieve with this project?"</div>
+      </div>
+      <div class="q-block">
+        <div class="fill-line">6. "How would you <input class="blank" id="b6" placeholder="________" size="10"> your success?"</div>
+      </div>
+      <div class="q-block">
+        <div class="fill-line">7. "What would you prefer to <input class="blank" id="b7" placeholder="________" size="10"> quickly?"</div>
+      </div>
+      <div class="q-block">
+        <div class="fill-line">8. "How do you <input class="blank" id="b8" placeholder="________" size="10"> decisions when things are uncertain?"</div>
+      </div>
+
+      <button class="btn btn-check" onclick="checkBlanks()">Check my answers ✓</button>
+      <div class="feedback" id="fbBlanks"></div>
+    </div>
+
+    <!-- EXERCISE B: Match question type -->
+    <div class="card">
+      <div class="card-label">Exercise B · Which question pattern?</div>
+      <div style="font-size:13px; color:var(--muted); margin-bottom:14px;">
+        Match each question to its pattern by selecting the correct label.
+      </div>
+
+      <div id="matchEx">
+        <div class="q-block" style="padding:12px; background:white; border-radius:10px; border:1.5px solid var(--border); margin-bottom:10px;">
+          <div class="q-text">"What are your main strengths?"</div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+            <button class="chip" onclick="selectMatch(this, 'a1', 'wrong')">How do you…?</button>
+            <button class="chip" onclick="selectMatch(this, 'a1', 'correct')">What are your…?</button>
+            <button class="chip" onclick="selectMatch(this, 'a1', 'wrong')">How would you…?</button>
+          </div>
+          <div id="a1fb" style="font-size:12px; margin-top:6px; display:none;"></div>
+        </div>
+
+        <div class="q-block" style="padding:12px; background:white; border-radius:10px; border:1.5px solid var(--border); margin-bottom:10px;">
+          <div class="q-text">"How do you react under pressure?"</div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+            <button class="chip" onclick="selectMatch(this, 'a2', 'correct')">How do you…?</button>
+            <button class="chip" onclick="selectMatch(this, 'a2', 'wrong')">What are your…?</button>
+            <button class="chip" onclick="selectMatch(this, 'a2', 'wrong')">How would you…?</button>
+          </div>
+          <div id="a2fb" style="font-size:12px; margin-top:6px; display:none;"></div>
+        </div>
+
+        <div class="q-block" style="padding:12px; background:white; border-radius:10px; border:1.5px solid var(--border); margin-bottom:10px;">
+          <div class="q-text">"How would you describe your ideal client?"</div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+            <button class="chip" onclick="selectMatch(this, 'a3', 'wrong')">How do you…?</button>
+            <button class="chip" onclick="selectMatch(this, 'a3', 'wrong')">What are your…?</button>
+            <button class="chip" onclick="selectMatch(this, 'a3', 'correct')">How would you…?</button>
+          </div>
+          <div id="a3fb" style="font-size:12px; margin-top:6px; display:none;"></div>
+        </div>
+
+        <div class="q-block" style="padding:12px; background:white; border-radius:10px; border:1.5px solid var(--border); margin-bottom:10px;">
+          <div class="q-text">"What do you hope to achieve?"</div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+            <button class="chip" onclick="selectMatch(this, 'a4', 'wrong')">How do you…?</button>
+            <button class="chip" onclick="selectMatch(this, 'a4', 'correct')">What do you…?</button>
+            <button class="chip" onclick="selectMatch(this, 'a4', 'wrong')">How would you…?</button>
+          </div>
+          <div id="a4fb" style="font-size:12px; margin-top:6px; display:none;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goTo(4)">Continue to Roleplay →</button>
+    </div>
+  </div>
+
+  <!-- ===== 4: ROLEPLAY (15 min) ===== -->
+  <div class="panel" id="panel-4">
+    <span class="section-label lbl-speaking">Free Production · 15 min</span>
+    <div class="section-title">You're the Coach</div>
+    <div class="section-desc">Time to run a real interview — in English. Your teacher plays the client.</div>
+
+    <div class="scenario-box">
+      <div class="card-label">🎭 Roleplay Scenario</div>
+      <p><strong>You are Mehdi, an entrepreneurial coach.</strong> Your client is Karim — he wants to start his own sustainable architecture firm.</p>
+      <p>Your goal: <strong>interview Karim</strong> using your questionnaire questions in English. Ask at least 6 questions. Listen to his answers and ask one follow-up question.</p>
+      <p>Remember: <strong>fluency first</strong> — don't stop if you make a mistake. Keep going like a real professional conversation.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Your Question Bank · Use these to run the interview</div>
+
+      <div class="speak-card">
+        <div class="speak-num">1</div>
+        <div>
+          <div class="speak-q">How would you describe yourself professionally?</div>
+          <div class="speak-hint">→ Open the interview warmly. Smile, maintain eye contact.</div>
+        </div>
+      </div>
+      <div class="speak-card">
+        <div class="speak-num">2</div>
+        <div>
+          <div class="speak-q">What values guide your choices?</div>
+          <div class="speak-hint">→ Follow up: "Can you give me an example?"</div>
+        </div>
+      </div>
+      <div class="speak-card">
+        <div class="speak-num">3</div>
+        <div>
+          <div class="speak-q">Are you more comfortable with the technical side or the strategic vision?</div>
+          <div class="speak-hint">→ Good for understanding the client's profile type</div>
+        </div>
+      </div>
+      <div class="speak-card">
+        <div class="speak-num">4</div>
+        <div>
+          <div class="speak-q">How do you react when things don't go as planned?</div>
+          <div class="speak-hint">→ Listen for: do they accelerate, step back, or freeze?</div>
+        </div>
+      </div>
+      <div class="speak-card">
+        <div class="speak-num">5</div>
+        <div>
+          <div class="speak-q">What are your main strengths and weaknesses?</div>
+          <div class="speak-hint">→ Core coaching question — give them time to think</div>
+        </div>
+      </div>
+      <div class="speak-card">
+        <div class="speak-num">6</div>
+        <div>
+          <div class="speak-q">Why do you want to start your own business right now?</div>
+          <div class="speak-hint">→ Look for real motivation vs. impulse</div>
+        </div>
+      </div>
+      <div class="speak-card">
+        <div class="speak-num">7</div>
+        <div>
+          <div class="speak-q">What do you hope to achieve with this project?</div>
+          <div class="speak-hint">→ Then ask: "And how would you measure that success?"</div>
+        </div>
+      </div>
+      <div class="speak-card">
+        <div class="speak-num">8</div>
+        <div>
+          <div class="speak-q">What could discourage you along the way?</div>
+          <div class="speak-hint">→ Important for coaching — understand their risk zones</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Useful Phrases for the Interview</div>
+      <div class="chip-grid">
+        <span class="chip" onclick="this.classList.toggle('used')">That's interesting…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">Can you tell me more?</span>
+        <span class="chip" onclick="this.classList.toggle('used')">Can you give me an example?</span>
+        <span class="chip" onclick="this.classList.toggle('used')">I understand.</span>
+        <span class="chip" onclick="this.classList.toggle('used')">What do you mean by…?</span>
+        <span class="chip" onclick="this.classList.toggle('used')">So, if I understand correctly…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">Let's move on to…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">Thank you for sharing that.</span>
+        <span class="chip" onclick="this.classList.toggle('used')">My next question is…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">That makes sense.</span>
+      </div>
+      <div class="tap-hint">Tap a phrase to mark it as used</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Teacher's Error Log</div>
+      <div style="font-size:13px; color:var(--muted); margin-bottom:10px;">Note errors during the roleplay — address them after, not during.</div>
+      <textarea class="answer-input" placeholder="e.g. 'He taked a decision' → 'He made a decision'&#10;'How react you?' → 'How do you react?'" rows="4"></textarea>
+      <div class="divider"></div>
+      <div style="font-size:14px; font-weight:600; color:var(--ink); margin-bottom:8px;">Session feedback</div>
+      <textarea class="answer-input" placeholder="What went well? What to focus on next session?" rows="3"></textarea>
+    </div>
+
+    <div class="review-box">
+      <div class="card-label">📅 Spaced Review Reminders</div>
+      <ul class="review-list">
+        <li>Session 4 — free recall: ask Mehdi to say 5 interview questions from memory, no notes</li>
+        <li>Session 4 — revisit "make a decision" vs "take a decision" — common error, needs 3 exposures</li>
+        <li>Session 5 — repeat roleplay with a different client profile (e.g. someone in retail or tech)</li>
+        <li>Homework — write 3 follow-up questions he could ask after a client's answer</li>
+      </ul>
+    </div>
+
+    <div style="text-align:center; padding:18px 0;">
+      <div style="font-family:'Libre Baskerville',serif; font-size:18px; font-weight:700; color:var(--ink); margin-bottom:5px;">Well done, Mehdi! 🎙️</div>
+      <div style="font-size:13px; color:var(--muted);">You've just run a professional coaching interview in English.</div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  let current = 0;
+  const total = 5;
+  const navBtns = document.querySelectorAll('.nav-btn');
+
+  function goTo(i) {
+    document.getElementById('panel-' + current).classList.remove('active');
+    navBtns[current].classList.remove('active');
+    navBtns[current].classList.add('done');
+    current = i;
+    document.getElementById('panel-' + current).classList.add('active');
+    navBtns[current].classList.add('active');
+    navBtns[current].classList.remove('done');
+    document.getElementById('pFill').style.width = Math.round(((i + 1) / total) * 100) + '%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Fill blanks
+  const blankAnswers = {
+    b1: 'how', b2: 'guide', b3: 'react', b4: 'strengths',
+    b5: 'hope', b6: 'measure', b7: 'delegate', b8: 'make'
+  };
+  function checkBlanks() {
+    let score = 0;
+    const total = Object.keys(blankAnswers).length;
+    for (const [id, ans] of Object.entries(blankAnswers)) {
+      const el = document.getElementById(id);
+      const val = el.value.trim().toLowerCase();
+      if (val === ans) { el.classList.add('correct'); el.classList.remove('wrong'); score++; }
+      else { el.classList.add('wrong'); el.classList.remove('correct'); }
+    }
+    const fb = document.getElementById('fbBlanks');
+    fb.classList.add('show');
+    if (score === total) {
+      fb.className = 'feedback feedback-ok show';
+      fb.innerHTML = '✅ <strong>Perfect — ' + score + '/' + total + '!</strong> You know all the key question words. Ready for the roleplay!';
+    } else {
+      fb.className = 'feedback feedback-partial show';
+      fb.innerHTML = '⚡ <strong>' + score + '/' + total + ' correct.</strong> Check the red blanks — look at the vocabulary cards for hints.';
+    }
+  }
+
+  // Match exercise
+  function selectMatch(btn, qId, result) {
+    const fb = document.getElementById(qId + 'fb');
+    fb.style.display = 'block';
+    if (result === 'correct') {
+      btn.classList.add('used');
+      fb.style.color = 'var(--green)';
+      fb.textContent = '✅ Correct!';
+    } else {
+      btn.style.background = 'var(--red-light)';
+      btn.style.borderColor = '#c0392b';
+      btn.style.color = 'var(--red-dark)';
+      fb.style.color = '#b00020';
+      fb.textContent = '✗ Try again — look at the question pattern.';
+    }
+  }
+</script>
+</body>
+</html>

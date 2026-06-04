@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mehdi – Lesson 1: Talk About Yourself</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ink: #1a1a2e;
+    --sand: #f5f0e8;
+    --gold: #c9a84c;
+    --gold-label: #7a5c10;   /* darkened for use on light backgrounds */
+    --gold-light: #f0d98a;
+    --teal: #2a7c6f;
+    --teal-dark: #1d5c52;    /* for text on light teal backgrounds */
+    --teal-light: #d4ede9;
+    --rust: #c0522a;
+    --rust-dark: #7a2e0e;    /* for text on light rust backgrounds */
+    --rust-light: #f7e5dd;
+    --cream: #fefcf7;
+    --muted: #4a4a58;        /* darkened from #6b6b7a for legibility on cream */
+    --border: #e0d8c8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--sand);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--ink);
+    color: var(--sand);
+    padding: 28px 32px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.25) 0%, transparent 70%);
+  }
+  .header-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 5vw, 38px);
+    font-weight: 900;
+    line-height: 1.1;
+  }
+  .header-sub {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #c8c8dc;
+    font-weight: 400;
+  }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    background: #2a2a40;
+    height: 4px;
+    position: relative;
+  }
+  .progress-fill {
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    height: 100%;
+    transition: width 0.6s ease;
+  }
+
+  /* SECTION NAV */
+  .section-nav {
+    display: flex;
+    gap: 6px;
+    padding: 16px 24px;
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .section-nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    padding: 7px 16px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .nav-btn.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--gold);
+  }
+  .nav-btn.done {
+    background: var(--teal-light);
+    border-color: var(--teal);
+    color: var(--teal);
+  }
+
+  /* MAIN */
+  .main { padding: 24px 20px 60px; max-width: 720px; margin: 0 auto; }
+
+  /* SECTION PANELS */
+  .section-panel {
+    display: none;
+    animation: fadeUp 0.4s ease;
+  }
+  .section-panel.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION HEADER */
+  .section-header {
+    margin-bottom: 24px;
+  }
+  .section-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .tag-warmup { background: #fde8cc; color: #b05a00; }
+  .tag-reading { background: var(--teal-light); color: var(--teal); }
+  .tag-vocab { background: #e8e0f7; color: #5b3fa6; }
+  .tag-speaking { background: var(--rust-light); color: var(--rust); }
+  .tag-review { background: #d6f0e0; color: #2a6e44; }
+
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .section-header p {
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* CARD */
+  .card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .card-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-label);
+    margin-bottom: 14px;
+  }
+
+  /* READING TEXT */
+  .reading-text {
+    background: white;
+    border-left: 4px solid var(--teal);
+    border-radius: 0 12px 12px 0;
+    padding: 20px 22px;
+    margin: 16px 0;
+    font-size: 15px;
+    line-height: 1.85;
+    color: #2a2a3a;
+  }
+  .reading-text .highlight {
+    background: var(--gold-light);
+    padding: 1px 4px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .reading-text .highlight:hover { background: var(--gold); }
+
+  /* VOCAB CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .vocab-card {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .vocab-card:hover { border-color: var(--teal); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(42,124,111,0.12); }
+  .vocab-card.flipped { background: var(--teal); border-color: var(--teal); color: white; }
+  .vocab-card .front { }
+  .vocab-card .back { display: none; }
+  .vocab-card.flipped .front { display: none; }
+  .vocab-card.flipped .back { display: block; }
+  .vocab-english {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .vocab-card.flipped .vocab-english { color: white; }
+  .vocab-example {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.4;
+  }
+  .vocab-card.flipped .vocab-example { color: rgba(255,255,255,0.9); }
+  .vocab-translation {
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 4px;
+  }
+  .vocab-hint {
+    font-size: 11px;
+    color: rgba(255,255,255,0.92);
+  }
+  .tap-hint {
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 10px;
+    font-style: italic;
+  }
+
+  /* COMPREHENSION QUESTIONS */
+  .question-block {
+    margin-bottom: 20px;
+  }
+  .question-text {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .answer-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    background: white;
+    color: var(--ink);
+    transition: border-color 0.2s;
+    resize: vertical;
+    min-height: 56px;
+  }
+  .answer-input:focus { outline: none; border-color: var(--teal); }
+
+  /* SPEAKING PROMPTS */
+  .speaking-prompt {
+    background: var(--rust-light);
+    border: 1.5px solid #e8c0ae;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .prompt-number {
+    background: var(--rust);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .prompt-content { flex: 1; }
+  .prompt-question {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    line-height: 1.4;
+  }
+  .prompt-tip {
+    font-size: 12px;
+    color: var(--rust-dark);
+    font-style: italic;
+  }
+
+  /* SENTENCE STARTERS */
+  .starters-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .starter-chip {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 7px 14px;
+    font-size: 13px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .starter-chip:hover { background: var(--ink); color: var(--gold); border-color: var(--ink); }
+  .starter-chip.used { background: var(--teal); color: white; border-color: var(--teal); }
+
+  /* FILL-IN EXERCISE */
+  .fill-sentence {
+    font-size: 15px;
+    line-height: 2.2;
+    margin-bottom: 8px;
+  }
+  .fill-blank {
+    display: inline-block;
+    min-width: 130px;
+    border-bottom: 2.5px solid var(--gold);
+    padding: 0 6px;
+    margin: 0 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: transparent;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: center;
+  }
+  .fill-blank:focus { outline: none; border-color: var(--teal); }
+  .fill-blank.correct { border-color: var(--teal); background: var(--teal-light); }
+  .fill-blank.wrong { border-color: var(--rust); background: var(--rust-light); }
+
+  /* BUTTONS */
+  .btn {
+    padding: 13px 28px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--gold);
+  }
+  .btn-primary:hover { background: #2d2d4a; transform: translateY(-1px); }
+  .btn-secondary {
+    background: var(--teal);
+    color: white;
+  }
+  .btn-secondary:hover { background: #226058; transform: translateY(-1px); }
+  .btn-check {
+    background: var(--gold);
+    color: var(--ink);
+    margin-top: 16px;
+  }
+  .btn-check:hover { background: var(--gold-light); }
+
+  .btn-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  /* FEEDBACK BOX */
+  .feedback-box {
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-top: 14px;
+    line-height: 1.6;
+    display: none;
+  }
+  .feedback-box.show { display: block; }
+  .feedback-correct { background: var(--teal-light); color: var(--teal-dark); border: 1px solid #a8d8d2; }
+  .feedback-partial { background: #fff9e0; color: #5a4200; border: 1px solid #d4c040; }
+
+  /* REVIEW BOX */
+  .review-box {
+    background: #1a1a2e;
+    color: var(--sand);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .review-box .card-title { color: var(--gold-light); }
+  .review-list {
+    list-style: none;
+    margin-top: 8px;
+  }
+  .review-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #2a2a44;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .review-list li:last-child { border-bottom: none; }
+  .review-list li::before {
+    content: '→';
+    color: var(--gold);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* TOOLTIP */
+  .tooltip-container { position: relative; display: inline; }
+  .tooltip {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: var(--sand);
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+    z-index: 100;
+    pointer-events: none;
+  }
+  .tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--ink);
+  }
+  .highlight:hover .tooltip,
+  .highlight.active .tooltip { display: block; }
+
+  /* SCORE BADGE */
+  .score-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--ink);
+    color: var(--gold);
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 22px 0;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 480px) {
+    .main { padding: 18px 14px 60px; }
+    .vocab-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-label">Lesson 1 · Mehdi</div>
+  <h1>Talk About Yourself</h1>
+  <div class="header-sub">Reading &amp; Speaking · A2–B1 · 50 min</div>
+</div>
+<div class="progress-bar">
+  <div class="progress-fill" id="progressFill" style="width: 20%"></div>
+</div>
+
+<!-- SECTION NAV -->
+<div class="section-nav">
+  <button class="nav-btn active" onclick="goTo(0)">🔥 Warm-up</button>
+  <button class="nav-btn" onclick="goTo(1)">📖 Reading</button>
+  <button class="nav-btn" onclick="goTo(2)">🗂️ Vocabulary</button>
+  <button class="nav-btn" onclick="goTo(3)">✏️ Practice</button>
+  <button class="nav-btn" onclick="goTo(4)">🗣️ Speaking</button>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- ===== SECTION 0: WARM-UP ===== -->
+  <div class="section-panel active" id="section-0">
+    <div class="section-header">
+      <span class="section-tag tag-warmup">Warm-up · 5 min</span>
+      <h2>Let's get started</h2>
+      <p>Before we read or practise, just talk. There are no wrong answers here — this is a conversation, not a test.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Think &amp; Tell</div>
+      <div class="speaking-prompt">
+        <div class="prompt-number">1</div>
+        <div class="prompt-content">
+          <div class="prompt-question">In your own language — what do you usually say when you introduce yourself professionally?</div>
+          <div class="prompt-tip">Think about it for 30 seconds, then tell your teacher.</div>
+        </div>
+      </div>
+      <div class="speaking-prompt">
+        <div class="prompt-number">2</div>
+        <div class="prompt-content">
+          <div class="prompt-question">What English words or phrases do you already know for talking about yourself?</div>
+          <div class="prompt-tip">My name is… / I'm from… / I work as… — anything you know!</div>
+        </div>
+      </div>
+      <div class="speaking-prompt">
+        <div class="prompt-number">3</div>
+        <div class="prompt-content">
+          <div class="prompt-question">When do you think you'll need to introduce yourself in English?</div>
+          <div class="prompt-tip">With clients? At a conference? Online?</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goTo(1)">Continue to Reading →</button>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 1: READING ===== -->
+  <div class="section-panel" id="section-1">
+    <div class="section-header">
+      <span class="section-tag tag-reading">Presentation · 12 min</span>
+      <h2>Meet Karim</h2>
+      <p>Read about Karim — he's one of Mehdi's clients, ready to start his own business. Tap the <strong>highlighted words</strong> to see their meaning.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Read &amp; Discover</div>
+
+      <!-- AVATAR -->
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:18px; padding:14px; background:white; border-radius:12px; border:1px solid var(--border);">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="28" cy="28" r="28" fill="#2a7c6f"/>
+          <circle cx="28" cy="22" r="9" fill="rgba(255,255,255,0.85)"/>
+          <ellipse cx="28" cy="46" rx="15" ry="9" fill="rgba(255,255,255,0.5)"/>
+        </svg>
+        <div>
+          <div style="font-weight:700; font-size:16px;">Karim Benali</div>
+          <div style="font-size:13px; color:var(--muted);">32 years old · Casablanca, Morocco 🇲🇦</div>
+          <div style="font-size:13px; color:var(--teal-dark); font-weight:700; margin-top:3px;">Aspiring entrepreneur</div>
+        </div>
+      </div>
+
+      <div class="reading-text">
+        Hi, my name is Karim. I'm <span class="tooltip-container"><span class="highlight" onclick="this.classList.toggle('active')">32 years old<span class="tooltip">Age → "I'm 32" or "I'm 32 years old"</span></span></span> and I <span class="tooltip-container"><span class="highlight" onclick="this.classList.toggle('active')">come from<span class="tooltip">Origin → "I come from…" or "I'm from…"</span></span></span> Casablanca, in Morocco. Right now, I <span class="tooltip-container"><span class="highlight" onclick="this.classList.toggle('active')">work as<span class="tooltip">Job → "I work as a…" + job title</span></span></span> a project manager in a construction company, but I <span class="tooltip-container"><span class="highlight" onclick="this.classList.toggle('active')">dream of<span class="tooltip">Ambition → "I dream of…" + verb-ing</span></span></span> starting my own business one day.<br><br>
+
+        I <span class="tooltip-container"><span class="highlight" onclick="this.classList.toggle('active')">am passionate about<span class="tooltip">Interest → "I'm passionate about…" + noun/verb-ing</span></span></span> sustainable architecture and eco-friendly design. In my <span class="tooltip-container"><span class="highlight" onclick="this.classList.toggle('active')">free time<span class="tooltip">"In my free time, I…" — great for hobbies</span></span></span>, I love watching documentaries and reading about business strategy.<br><br>
+
+        One of my biggest <span class="tooltip-container"><span class="highlight" onclick="this.classList.toggle('active')">goals<span class="tooltip">Goals → "My goal is to…" / "One of my goals is…"</span></span></span> is to <span class="tooltip-container"><span class="highlight" onclick="this.classList.toggle('active')">launch<span class="tooltip">launch = start officially (a product, company, project)</span></span></span> a consulting firm that helps people build greener homes. I believe that with the right <span class="tooltip-container"><span class="highlight" onclick="this.classList.toggle('active')">support<span class="tooltip">support = help / guidance from another person</span></span></span> and <span class="tooltip-container"><span class="highlight" onclick="this.classList.toggle('active')">mindset<span class="tooltip">mindset = the way you think about something</span></span></span>, anyone can succeed.
+      </div>
+
+      <div style="padding:12px 16px; background:var(--teal-light); border-radius:10px; font-size:13px; color:var(--teal-dark); line-height:1.6;">
+        💡 <strong>Notice:</strong> Karim uses phrases like <em>"I work as…"</em>, <em>"I dream of…"</em>, and <em>"I'm passionate about…"</em> — these are the same phrases you'll use to talk about yourself!
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Quick Comprehension</div>
+      <div class="question-block">
+        <div class="question-text">1. What is Karim's current job?</div>
+        <textarea class="answer-input" placeholder="Write your answer here…" rows="2"></textarea>
+      </div>
+      <div class="question-block">
+        <div class="question-text">2. What does he want to do in the future?</div>
+        <textarea class="answer-input" placeholder="Write your answer here…" rows="2"></textarea>
+      </div>
+      <div class="question-block">
+        <div class="question-text">3. What is he passionate about?</div>
+        <textarea class="answer-input" placeholder="Write your answer here…" rows="2"></textarea>
+      </div>
+      <button class="btn btn-check" onclick="showFeedback('readFeedback')">Check with teacher ✓</button>
+      <div class="feedback-box feedback-correct show" id="readFeedback" style="margin-top:14px;">
+        <strong>Teacher's note:</strong> Compare your answers with the text. Did you find all three? If yes — great reading! Now let's look at the key vocabulary.
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goTo(2)">Continue to Vocabulary →</button>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 2: VOCABULARY ===== -->
+  <div class="section-panel" id="section-2">
+    <div class="section-header">
+      <span class="section-tag tag-vocab">Vocabulary · 8 min</span>
+      <h2>Key Phrases</h2>
+      <p>These are the phrases you need to talk about yourself in English. Tap each card to see the French translation and an example.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">English ↔ French · Tap to flip</div>
+      <div class="vocab-grid">
+
+        <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+          <div class="front">
+            <div class="vocab-english">I come from…</div>
+            <div class="vocab-example">"I come from Casablanca."</div>
+          </div>
+          <div class="back">
+            <div class="vocab-translation">Je viens de…</div>
+            <div class="vocab-hint">Origin / hometown</div>
+          </div>
+        </div>
+
+        <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+          <div class="front">
+            <div class="vocab-english">I work as…</div>
+            <div class="vocab-example">"I work as a coach."</div>
+          </div>
+          <div class="back">
+            <div class="vocab-translation">Je travaille en tant que…</div>
+            <div class="vocab-hint">Your job title</div>
+          </div>
+        </div>
+
+        <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+          <div class="front">
+            <div class="vocab-english">I'm passionate about…</div>
+            <div class="vocab-example">"I'm passionate about helping people."</div>
+          </div>
+          <div class="back">
+            <div class="vocab-translation">Je suis passionné(e) par…</div>
+            <div class="vocab-hint">Your interests / values</div>
+          </div>
+        </div>
+
+        <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+          <div class="front">
+            <div class="vocab-english">I dream of…</div>
+            <div class="vocab-example">"I dream of running my own company."</div>
+          </div>
+          <div class="back">
+            <div class="vocab-translation">Je rêve de…</div>
+            <div class="vocab-hint">+ verb-ing</div>
+          </div>
+        </div>
+
+        <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+          <div class="front">
+            <div class="vocab-english">My goal is to…</div>
+            <div class="vocab-example">"My goal is to launch my business."</div>
+          </div>
+          <div class="back">
+            <div class="vocab-translation">Mon objectif est de…</div>
+            <div class="vocab-hint">+ verb (base form)</div>
+          </div>
+        </div>
+
+        <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+          <div class="front">
+            <div class="vocab-english">In my free time…</div>
+            <div class="vocab-example">"In my free time, I read a lot."</div>
+          </div>
+          <div class="back">
+            <div class="vocab-translation">Dans mon temps libre…</div>
+            <div class="vocab-hint">Hobbies / leisure</div>
+          </div>
+        </div>
+
+        <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+          <div class="front">
+            <div class="vocab-english">I help people…</div>
+            <div class="vocab-example">"I help people start their own business."</div>
+          </div>
+          <div class="back">
+            <div class="vocab-translation">J'aide les gens à…</div>
+            <div class="vocab-hint">Your professional purpose</div>
+          </div>
+        </div>
+
+        <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+          <div class="front">
+            <div class="vocab-english">I believe that…</div>
+            <div class="vocab-example">"I believe that everyone can succeed."</div>
+          </div>
+          <div class="back">
+            <div class="vocab-translation">Je crois que…</div>
+            <div class="vocab-hint">Sharing a value / opinion</div>
+          </div>
+        </div>
+
+        <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+          <div class="front">
+            <div class="vocab-english">to launch</div>
+            <div class="vocab-example">"I want to launch a new project."</div>
+          </div>
+          <div class="back">
+            <div class="vocab-translation">lancer</div>
+            <div class="vocab-hint">Start officially</div>
+          </div>
+        </div>
+
+        <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+          <div class="front">
+            <div class="vocab-english">mindset</div>
+            <div class="vocab-example">"A positive mindset is everything."</div>
+          </div>
+          <div class="back">
+            <div class="vocab-translation">état d'esprit</div>
+            <div class="vocab-hint">How you think / approach things</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="tap-hint">Tap a card to flip it · Tap again to flip back</div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goTo(3)">Continue to Practice →</button>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 3: CONTROLLED PRACTICE ===== -->
+  <div class="section-panel" id="section-3">
+    <div class="section-header">
+      <span class="section-tag tag-vocab">Controlled Practice · 10 min</span>
+      <h2>Complete the sentences</h2>
+      <p>Fill in the gaps with the right phrase from today's vocabulary. The word bank is below.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Word Bank</div>
+      <div class="starters-grid" id="wordBank">
+        <span class="starter-chip">I come from</span>
+        <span class="starter-chip">I work as</span>
+        <span class="starter-chip">I'm passionate about</span>
+        <span class="starter-chip">My goal is to</span>
+        <span class="starter-chip">I help people</span>
+        <span class="starter-chip">I believe that</span>
+        <span class="starter-chip">In my free time</span>
+        <span class="starter-chip">I dream of</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Fill in the Gaps</div>
+
+      <div class="question-block">
+        <div class="fill-sentence">
+          1. "<input class="fill-blank" id="f1" placeholder="______" size="14"> Morocco. I was born in Fès."
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="fill-sentence">
+          2. "<input class="fill-blank" id="f2" placeholder="______" size="14"> a business coach. I work with entrepreneurs."
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="fill-sentence">
+          3. "<input class="fill-blank" id="f3" placeholder="______" size="18"> helping others reach their potential."
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="fill-sentence">
+          4. "<input class="fill-blank" id="f4" placeholder="______" size="14"> build their own business from scratch."
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="fill-sentence">
+          5. "<input class="fill-blank" id="f5" placeholder="______" size="14"> running my own academy one day."
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="fill-sentence">
+          6. "<input class="fill-blank" id="f6" placeholder="______" size="12">, I read books about leadership and travel."
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="fill-sentence">
+          7. "<input class="fill-blank" id="f7" placeholder="______" size="16"> create an online coaching programme."
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="fill-sentence">
+          8. "<input class="fill-blank" id="f8" placeholder="______" size="16"> success is possible for everyone."
+        </div>
+      </div>
+
+      <button class="btn btn-check" onclick="checkFillIn()">Check my answers ✓</button>
+      <div class="feedback-box" id="fillFeedback"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goTo(4)">Continue to Speaking →</button>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 4: SPEAKING ===== -->
+  <div class="section-panel" id="section-4">
+    <div class="section-header">
+      <span class="section-tag tag-speaking">Free Production · 15 min</span>
+      <h2>Now it's your turn</h2>
+      <p>Use today's phrases to talk about <em>yourself</em>. Your teacher will listen — don't worry about mistakes, just speak!</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Your Speaking Prompts</div>
+      <div class="speaking-prompt">
+        <div class="prompt-number">1</div>
+        <div class="prompt-content">
+          <div class="prompt-question">Tell me your name, where you're from, and how old you are.</div>
+          <div class="prompt-tip">Use: "My name is… / I'm from… / I'm … years old."</div>
+        </div>
+      </div>
+      <div class="speaking-prompt">
+        <div class="prompt-number">2</div>
+        <div class="prompt-content">
+          <div class="prompt-question">Describe what you do professionally in 2–3 sentences.</div>
+          <div class="prompt-tip">Use: "I work as… / I help people… / My clients…"</div>
+        </div>
+      </div>
+      <div class="speaking-prompt">
+        <div class="prompt-number">3</div>
+        <div class="prompt-content">
+          <div class="prompt-question">What are you passionate about? Why did you choose this work?</div>
+          <div class="prompt-tip">Use: "I'm passionate about… / I believe that…"</div>
+        </div>
+      </div>
+      <div class="speaking-prompt">
+        <div class="prompt-number">4</div>
+        <div class="prompt-content">
+          <div class="prompt-question">Talk about your goals and dreams for the future.</div>
+          <div class="prompt-tip">Use: "My goal is to… / I dream of… / One day, I want to…"</div>
+        </div>
+      </div>
+      <div class="speaking-prompt">
+        <div class="prompt-number">5</div>
+        <div class="prompt-content">
+          <div class="prompt-question">What do you do in your free time?</div>
+          <div class="prompt-tip">Use: "In my free time, I… / I love… / I enjoy…"</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Sentence Starters · Use these if you get stuck</div>
+      <div class="starters-grid">
+        <span class="starter-chip" onclick="this.classList.toggle('used')">My name is…</span>
+        <span class="starter-chip" onclick="this.classList.toggle('used')">I come from…</span>
+        <span class="starter-chip" onclick="this.classList.toggle('used')">I work as…</span>
+        <span class="starter-chip" onclick="this.classList.toggle('used')">I help people…</span>
+        <span class="starter-chip" onclick="this.classList.toggle('used')">I'm passionate about…</span>
+        <span class="starter-chip" onclick="this.classList.toggle('used')">I dream of…</span>
+        <span class="starter-chip" onclick="this.classList.toggle('used')">My goal is to…</span>
+        <span class="starter-chip" onclick="this.classList.toggle('used')">I believe that…</span>
+        <span class="starter-chip" onclick="this.classList.toggle('used')">In my free time…</span>
+        <span class="starter-chip" onclick="this.classList.toggle('used')">One day, I want to…</span>
+      </div>
+      <div class="tap-hint">Tap a phrase to mark it as used</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Teacher's Error Log</div>
+      <div style="font-size:13px; color:var(--muted); margin-bottom:12px;">Note any errors to address after speaking (fluency first — no interruptions).</div>
+      <textarea class="answer-input" placeholder="Note errors here: e.g. 'I am from Morocco' instead of 'I come from Morocco'…" rows="4"></textarea>
+
+      <div class="divider"></div>
+
+      <div style="font-size:14px; font-weight:600; margin-bottom:10px;">End-of-lesson feedback</div>
+      <textarea class="answer-input" placeholder="What went well? What to focus on next time?" rows="3"></textarea>
+    </div>
+
+    <!-- REVIEW BOX -->
+    <div class="review-box">
+      <div class="card-title">📅 Review Reminders</div>
+      <ul class="review-list">
+        <li>Session 3 — revisit "I work as / I help people" in a new context</li>
+        <li>Session 3 — free recall: "What do you remember about Karim?"</li>
+        <li>Session 5 — spaced review: student introduces themselves without prompts</li>
+        <li>Homework idea: write a short self-introduction (5–6 sentences) using today's phrases</li>
+      </ul>
+    </div>
+
+    <div style="text-align:center; padding:20px 0;">
+      <div style="font-family:'Playfair Display',serif; font-size:20px; font-weight:700; margin-bottom:6px;">Great work today, Mehdi! 🎉</div>
+      <div style="font-size:14px; color:var(--muted);">You've covered reading, vocabulary, and speaking — all in one session.</div>
+    </div>
+
+  </div>
+
+</div><!-- /main -->
+
+<script>
+  const sections = 5;
+  let currentSection = 0;
+  const navBtns = document.querySelectorAll('.nav-btn');
+
+  function goTo(index) {
+    document.getElementById('section-' + currentSection).classList.remove('active');
+    navBtns[currentSection].classList.remove('active');
+    navBtns[currentSection].classList.add('done');
+
+    currentSection = index;
+    document.getElementById('section-' + currentSection).classList.add('active');
+    navBtns[currentSection].classList.add('active');
+    navBtns[currentSection].classList.remove('done');
+
+    const progress = Math.round(((index + 1) / sections) * 100);
+    document.getElementById('progressFill').style.width = progress + '%';
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showFeedback(id) {
+    document.getElementById(id).classList.add('show');
+  }
+
+  const answers = {
+    f1: 'I come from',
+    f2: 'I work as',
+    f3: "I'm passionate about",
+    f4: 'I help people',
+    f5: 'I dream of',
+    f6: 'In my free time',
+    f7: 'My goal is to',
+    f8: 'I believe that'
+  };
+
+  function checkFillIn() {
+    let correct = 0;
+    const total = Object.keys(answers).length;
+    for (const [id, ans] of Object.entries(answers)) {
+      const input = document.getElementById(id);
+      const val = input.value.trim().toLowerCase();
+      const expected = ans.toLowerCase();
+      if (val === expected || val === expected + '…' || val === expected + '...') {
+        input.classList.add('correct');
+        input.classList.remove('wrong');
+        correct++;
+      } else {
+        input.classList.add('wrong');
+        input.classList.remove('correct');
+      }
+    }
+    const fb = document.getElementById('fillFeedback');
+    fb.classList.add('show');
+    if (correct === total) {
+      fb.className = 'feedback-box feedback-correct show';
+      fb.innerHTML = '✅ <strong>Perfect — ' + correct + '/' + total + '!</strong> You used all the phrases correctly. Ready to speak!';
+    } else {
+      fb.className = 'feedback-box feedback-partial show';
+      fb.innerHTML = '⚡ <strong>' + correct + '/' + total + ' correct.</strong> Check the red blanks — look back at the vocabulary cards if needed!';
+    }
+  }
+</script>
+</body>
+</html>

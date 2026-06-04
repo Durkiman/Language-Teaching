@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mehdi – Pillar 1 · Session 2: Write the Value Summary</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ink:        #0e1a12;
+    --forest:     #1a4a2e;
+    --forest-mid: #2d6e47;
+    --green:      #3a8c5c;
+    --green-light:#d6efe1;
+    --gold:       #c9963a;
+    --gold-label: #7a5410;
+    --gold-light: #fdf3dc;
+    --sand:       #f7f3ec;
+    --cream:      #fefcf8;
+    --muted:      #4a5246;
+    --muted2:     #7a8a76;
+    --border:     #dde8d8;
+    --red-light:  #fde8e8;
+    --blue-dark:  #1a3a6e;
+    --blue-light: #ddeaff;
+    --purple:     #4a2fa0;
+    --purple-light:#ede8ff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(--ink); min-height: 100vh; }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--forest); padding: 30px 28px 26px;
+    position: relative; overflow: hidden;
+  }
+  .header::before {
+    content: ''; position: absolute; top: -60px; right: -60px;
+    width: 220px; height: 220px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(58,140,92,.3) 0%, transparent 70%);
+  }
+  .header::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px; background: linear-gradient(90deg, var(--green), var(--gold));
+  }
+  .header-series { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 5vw, 38px); font-weight: 700; color: #eef5f0; line-height: 1.1; }
+  .header-sub { margin-top: 8px; font-size: 13px; color: rgba(238,245,240,.6); font-weight: 400; }
+  .pillar-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+    border-radius: 20px; padding: 5px 14px; margin-top: 12px;
+    font-size: 12px; color: rgba(238,245,240,.85); font-weight: 500;
+  }
+  .pdots { display: flex; gap: 5px; }
+  .pdot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.2); }
+  .pdot.done   { background: var(--green); }
+  .pdot.active { background: var(--gold); }
+
+  /* ── PROGRESS ── */
+  .progress-bar { height: 3px; background: #1a3020; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--green), var(--gold)); transition: width .5s ease; }
+
+  /* ── NAV ── */
+  .nav {
+    background: var(--cream); border-bottom: 1px solid var(--border);
+    display: flex; gap: 5px; padding: 12px 18px;
+    overflow-x: auto; scrollbar-width: none;
+    position: sticky; top: 0; z-index: 40;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    padding: 6px 14px; border-radius: 18px; border: 1.5px solid var(--border);
+    background: transparent; font-family: 'DM Sans', sans-serif;
+    font-size: 12px; font-weight: 600; color: var(--muted);
+    cursor: pointer; white-space: nowrap; transition: all .18s;
+  }
+  .nav-btn.active { background: var(--forest); border-color: var(--forest); color: var(--gold); }
+  .nav-btn.done   { background: var(--green-light); border-color: var(--green); color: var(--forest-mid); }
+
+  /* ── MAIN ── */
+  .main { padding: 22px 18px 60px; max-width: 740px; margin: 0 auto; }
+
+  /* ── PANELS ── */
+  .panel { display: none; animation: fadeUp .35s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ── LABELS ── */
+  .slabel {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 16px; margin-bottom: 10px;
+  }
+  .sl-warm  { background: var(--gold-light);   color: var(--gold-label); }
+  .sl-model { background: var(--blue-light);   color: var(--blue-dark); }
+  .sl-vocab { background: var(--purple-light); color: var(--purple); }
+  .sl-write { background: var(--green-light);  color: var(--forest-mid); }
+  .sl-speak { background: var(--gold-light);   color: var(--gold-label); }
+
+  .stitle { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--ink); line-height: 1.2; margin-bottom: 6px; }
+  .sdesc  { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
+
+  /* ── CARDS ── */
+  .card { background: var(--cream); border: 1px solid var(--border); border-radius: 14px; padding: 22px; margin-bottom: 16px; }
+  .clabel { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-label); margin-bottom: 14px; }
+
+  /* ── RECALL BUBBLES ── */
+  .recall { background: white; border: 1.5px solid var(--border); border-radius: 11px; padding: 14px 16px; margin-bottom: 10px; display: flex; gap: 12px; align-items: flex-start; }
+  .rnum { background: var(--forest); color: var(--gold); width: 28px; height: 28px; border-radius: 50%; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .rtext { font-size: 14px; line-height: 1.55; color: var(--ink); }
+  .rhint { font-size: 12px; color: var(--muted2); font-style: italic; margin-top: 4px; }
+
+  /* ── MODEL TEXT ── */
+  .model-passage {
+    background: white; border-left: 4px solid var(--blue-dark);
+    border-radius: 0 12px 12px 0; padding: 18px 20px; margin: 14px 0;
+    font-size: 15px; line-height: 1.9; color: var(--ink);
+  }
+  /* Annotated structure labels */
+  .struct-tag {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 2px 9px; border-radius: 10px; margin-bottom: 6px;
+  }
+  .st-p { background: #fde8cc; color: #7a3a00; }   /* Problem */
+  .st-t { background: var(--blue-light); color: var(--blue-dark); } /* Transformation */
+  .st-o { background: var(--green-light); color: var(--forest-mid); } /* Outcome */
+
+  .struct-block { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px dashed var(--border); }
+  .struct-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  /* ── CONNECTOR BOX ── */
+  .connector-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 10px; margin-top: 10px;
+  }
+  .conn-card {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 11px; padding: 13px 15px;
+    transition: all .18s; cursor: default;
+  }
+  .conn-card:hover { border-color: var(--green); box-shadow: 0 4px 14px rgba(42,110,71,.08); }
+  .conn-english { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+  .conn-french  { font-size: 12px; color: var(--muted2); font-style: italic; }
+  .conn-example { font-size: 11px; color: var(--forest-mid); margin-top: 5px; line-height: 1.4; background: var(--green-light); padding: 4px 8px; border-radius: 6px; }
+
+  /* ── SCAFFOLD WRITING ── */
+  .scaffold-block {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 12px; padding: 16px 18px; margin-bottom: 12px;
+  }
+  .scaffold-tag {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 2px 9px; border-radius: 8px; margin-bottom: 10px;
+  }
+  .frame-line {
+    font-size: 15px; line-height: 1.7; color: var(--ink);
+    display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .frame-text { font-weight: 600; color: var(--forest); white-space: nowrap; }
+  .frame-input {
+    flex: 1; min-width: 160px;
+    border: none; border-bottom: 2.5px solid var(--gold);
+    padding: 2px 6px; font-family: 'DM Sans', sans-serif;
+    font-size: 14px; color: var(--ink); background: transparent;
+    transition: border-color .18s;
+  }
+  .frame-input:focus { outline: none; border-color: var(--green); }
+  .frame-hint { font-size: 11px; color: var(--muted2); font-style: italic; margin-top: 2px; }
+
+  /* ── ASSEMBLED SUMMARY ── */
+  .summary-box {
+    background: var(--forest); border-radius: 14px;
+    padding: 22px; margin-bottom: 16px;
+  }
+  .summary-box .clabel { color: rgba(255,215,100,.8); }
+  .summary-text {
+    font-size: 15px; line-height: 1.9; color: #c8e0d0;
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+  }
+  .summary-text .sumframe { color: #eef5f0; font-style: normal; font-weight: 600; }
+
+  /* ── SPEAKING CARDS ── */
+  .scard { background: white; border-left: 4px solid var(--green); border-radius: 0 12px 12px 0; padding: 15px 18px; margin-bottom: 11px; display: flex; gap: 13px; align-items: flex-start; }
+  .snum { background: var(--green); color: white; width: 28px; height: 28px; border-radius: 50%; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .sq   { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 4px; line-height: 1.4; }
+  .shit { font-size: 12px; color: var(--forest-mid); font-style: italic; }
+
+  /* ── NOTICES ── */
+  .notice { border-radius: 10px; padding: 12px 16px; font-size: 13px; line-height: 1.6; margin-top: 14px; }
+  .n-green  { background: var(--green-light); color: var(--forest-mid); }
+  .n-gold   { background: var(--gold-light);  color: var(--gold-label); }
+  .n-blue   { background: var(--blue-light);  color: var(--blue-dark); }
+  .n-purple { background: var(--purple-light); color: var(--purple); }
+
+  /* ── REVIEW BOX ── */
+  .rbox { background: var(--forest); border-radius: 14px; padding: 22px; margin-bottom: 16px; }
+  .rbox .clabel { color: rgba(255,215,100,.8); }
+  .rlist { list-style: none; margin-top: 8px; }
+  .rlist li { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.08); font-size: 14px; color: #c8e0d0; display: flex; gap: 10px; align-items: flex-start; line-height: 1.5; }
+  .rlist li:last-child { border-bottom: none; }
+  .rlist li::before { content: '→'; color: var(--gold); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── ANSWER INPUT ── */
+  .ainput { width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: white; resize: vertical; min-height: 52px; transition: border-color .18s; }
+  .ainput:focus { outline: none; border-color: var(--green); }
+
+  /* ── BUTTONS ── */
+  .btn { padding: 12px 26px; border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .18s; }
+  .btn-p { background: var(--forest); color: var(--gold); }
+  .btn-p:hover { background: var(--forest-mid); transform: translateY(-1px); }
+  .btn-reveal { background: var(--gold); color: var(--forest); }
+  .btn-reveal:hover { opacity: .88; }
+  .brow { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+
+  .divider { height: 1px; background: var(--border); margin: 18px 0; }
+
+  @media (max-width: 480px) {
+    .main { padding: 16px 12px 60px; }
+    .connector-grid { grid-template-columns: 1fr; }
+    .frame-line { flex-direction: column; align-items: flex-start; }
+    .frame-input { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-series">Business English · 5-Pillar Series</div>
+  <h1>Pillar 1 · Session 2<br>Write the Value Summary</h1>
+  <div class="header-sub">Reading · Writing · Speaking · 50 min</div>
+  <div class="pillar-badge">
+    <div class="pdots">
+      <div class="pdot done"></div>
+      <div class="pdot active"></div>
+      <div class="pdot"></div>
+      <div class="pdot"></div>
+      <div class="pdot"></div>
+    </div>
+    Pillar 1 · Part 2 of 2
+  </div>
+</div>
+<div class="progress-bar">
+  <div class="progress-fill" id="pFill" style="width:20%"></div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav-btn active" onclick="goTo(0)">🔥 Warm-up</button>
+  <button class="nav-btn" onclick="goTo(1)">📄 Model Text</button>
+  <button class="nav-btn" onclick="goTo(2)">🔗 Connectors</button>
+  <button class="nav-btn" onclick="goTo(3)">✍️ Write</button>
+  <button class="nav-btn" onclick="goTo(4)">🗣️ Speak</button>
+</div>
+
+<div class="main">
+
+  <!-- ═══════════════════════
+       0 · WARM-UP (5 min)
+  ═══════════════════════ -->
+  <div class="panel active" id="panel-0">
+    <span class="slabel sl-warm">Warm-up · 5 min</span>
+    <div class="stitle">What do you remember?</div>
+    <div class="sdesc">No notes. Free recall only — just speak.</div>
+
+    <div class="card">
+      <div class="clabel">Retrieval — Last Session</div>
+
+      <div class="recall">
+        <div class="rnum">1</div>
+        <div class="rtext">
+          What are 3 vocabulary phrases you learned last session about value creation?
+          <div class="rhint">Don't look at any notes — just say what comes.</div>
+        </div>
+      </div>
+
+      <div class="recall">
+        <div class="rnum">2</div>
+        <div class="rtext">
+          Last session you interviewed your teacher about their breathwork practice. What did you learn? Tell me 3 things.
+          <div class="rhint">💬 "I learned that… / His clients feel… / The main problem is…"</div>
+        </div>
+      </div>
+
+      <div class="recall">
+        <div class="rnum">3</div>
+        <div class="rtext">
+          Quick — finish this sentence: <em>"The question every client is always asking is…"</em>
+          <div class="rhint">One second — no thinking! 😄</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice n-gold">
+      💡 <strong>Teacher note:</strong> If recall of the breathwork answers is strong — great. If not, give 2 minutes to look at their notes from last session before moving on. They need that content for the writing task.
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(1)">Continue to Model Text →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════
+       1 · MODEL TEXT (10 min)
+  ═══════════════════════ -->
+  <div class="panel" id="panel-1">
+    <span class="slabel sl-model">Presentation · 10 min</span>
+    <div class="stitle">What a Value Summary Looks Like</div>
+    <div class="sdesc">Read this example — written by a coach about their client. Notice the three parts: <strong>Problem → Transformation → Outcome.</strong> This is the structure you will use.</div>
+
+    <div class="card">
+      <div class="clabel">Model Text · A Coach's Value Summary</div>
+
+      <!-- PROBLEM -->
+      <div class="struct-block">
+        <span class="struct-tag st-p">① Problem</span>
+        <div class="model-passage" style="border-left-color: #c05a00;">
+          Many entrepreneurs know what they want to build — but they don't know where to start. They feel overwhelmed by choices, they doubt themselves, and they lose time on the wrong priorities. Without the right support, many give up before they even begin.
+        </div>
+        <div class="notice n-blue" style="margin-top:8px; font-size:12px;">
+          🔍 Notice: the problem is described from the <strong>client's experience</strong> — not from the coach's perspective. "They feel… / They doubt… / They lose…"
+        </div>
+      </div>
+
+      <!-- TRANSFORMATION -->
+      <div class="struct-block">
+        <span class="struct-tag st-t">② Transformation</span>
+        <div class="model-passage" style="border-left-color: var(--blue-dark);">
+          Through our work together, I help clients build clarity about their business idea, identify their real strengths, and create a step-by-step plan they can actually follow. We work on both the practical side — strategy, structure, finances — and the personal side — confidence, motivation, and mindset.
+        </div>
+        <div class="notice n-blue" style="margin-top:8px; font-size:12px;">
+          🔍 Notice: <strong>"Through our work together…"</strong> — this is the key connector that opens the transformation section.
+        </div>
+      </div>
+
+      <!-- OUTCOME -->
+      <div class="struct-block">
+        <span class="struct-tag st-o">③ Outcome</span>
+        <div class="model-passage" style="border-left-color: var(--green);">
+          As a result, my clients leave our sessions with a clear direction, real tools, and the confidence to take action. They don't just understand their business better — they believe in it. That is the difference between knowing and doing.
+        </div>
+        <div class="notice n-green" style="margin-top:8px; font-size:12px;">
+          🔍 Notice: <strong>"As a result…"</strong> opens the outcome. The final sentence is a strong closing line — emotional and memorable.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COMPREHENSION -->
+    <div class="card">
+      <div class="clabel">Quick Check — Answer Orally</div>
+
+      <div style="background:white; border:1.5px solid var(--border); border-radius:11px; padding:14px 16px; margin-bottom:10px;">
+        <div style="font-size:15px; font-weight:500; color:var(--ink);">1. What is the client's problem in this summary?</div>
+        <div style="font-size:12px; color:var(--muted2); margin-top:4px; font-style:italic;">Say it in your own words — don't read from the text.</div>
+      </div>
+      <div style="background:white; border:1.5px solid var(--border); border-radius:11px; padding:14px 16px; margin-bottom:10px;">
+        <div style="font-size:15px; font-weight:500; color:var(--ink);">2. What two things does the coach work on with the client?</div>
+        <div style="font-size:12px; color:var(--muted2); margin-top:4px; font-style:italic;">There are two sides mentioned — practical and…?</div>
+      </div>
+      <div style="background:white; border:1.5px solid var(--border); border-radius:11px; padding:14px 16px;">
+        <div style="font-size:15px; font-weight:500; color:var(--ink);">3. What is the difference between the transformation and the outcome?</div>
+        <div style="font-size:12px; color:var(--muted2); margin-top:4px; font-style:italic;">Which part is about the process and which is about the result?</div>
+      </div>
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(2)">Continue to Connectors →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════
+       2 · CONNECTORS (7 min)
+  ═══════════════════════ -->
+  <div class="panel" id="panel-2">
+    <span class="slabel sl-vocab">Connectors · 7 min</span>
+    <div class="stitle">The Language of the Summary</div>
+    <div class="sdesc">These are the phrases that hold a value summary together. You will use them in your writing. Study them — then close the page and write.</div>
+
+    <div class="card">
+      <div class="clabel">① Problem — How to Open</div>
+      <div class="connector-grid">
+
+        <div class="conn-card">
+          <div class="conn-english">Many people feel…</div>
+          <div class="conn-french">Beaucoup de gens se sentent…</div>
+          <div class="conn-example">"Many people feel lost when they start a new project."</div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-english">The main challenge is…</div>
+          <div class="conn-french">Le principal défi est…</div>
+          <div class="conn-example">"The main challenge is knowing where to begin."</div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-english">Without support, people often…</div>
+          <div class="conn-french">Sans soutien, les gens ont souvent tendance à…</div>
+          <div class="conn-example">"Without support, people often give up too early."</div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-english">Most of my clients come to me because…</div>
+          <div class="conn-french">La plupart de mes clients viennent me voir parce que…</div>
+          <div class="conn-example">"…because they feel stuck and don't know why."</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="clabel">② Transformation — How to Describe the Work</div>
+      <div class="connector-grid">
+
+        <div class="conn-card">
+          <div class="conn-english">Through our work together…</div>
+          <div class="conn-french">À travers notre travail ensemble…</div>
+          <div class="conn-example">"Through our work together, I help clients find clarity."</div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-english">I help clients to…</div>
+          <div class="conn-french">J'aide mes clients à…</div>
+          <div class="conn-example">"I help clients to reconnect with their body and breath."</div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-english">We work on both… and…</div>
+          <div class="conn-french">Nous travaillons à la fois sur… et sur…</div>
+          <div class="conn-example">"We work on both the physical and emotional side."</div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-english">Step by step…</div>
+          <div class="conn-french">Étape par étape…</div>
+          <div class="conn-example">"Step by step, the client learns to regulate their stress."</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="clabel">③ Outcome — How to Close</div>
+      <div class="connector-grid">
+
+        <div class="conn-card">
+          <div class="conn-english">As a result…</div>
+          <div class="conn-french">En conséquence / Par conséquent…</div>
+          <div class="conn-example">"As a result, clients feel calmer and more focused."</div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-english">My clients leave with…</div>
+          <div class="conn-french">Mes clients repartent avec…</div>
+          <div class="conn-example">"My clients leave with real tools they can use every day."</div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-english">The difference is…</div>
+          <div class="conn-french">La différence, c'est…</div>
+          <div class="conn-example">"The difference is they now have a practice, not just knowledge."</div>
+        </div>
+
+        <div class="conn-card">
+          <div class="conn-english">They don't just… — they…</div>
+          <div class="conn-french">Ils ne font pas que… — ils…</div>
+          <div class="conn-example">"They don't just feel better — they understand why."</div>
+        </div>
+
+      </div>
+
+      <div class="notice n-purple" style="margin-top:14px;">
+        💡 <strong>Key pattern:</strong> Problem uses <em>"feel / often / because"</em> — Transformation uses <em>"through / help / work on"</em> — Outcome uses <em>"as a result / leave with / difference"</em>. One connector per section is enough.
+      </div>
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(3)">Continue to Writing →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════
+       3 · SCAFFOLDED WRITING (15 min)
+  ═══════════════════════ -->
+  <div class="panel" id="panel-3">
+    <span class="slabel sl-write">Guided Writing · 15 min</span>
+    <div class="stitle">Write Durim's Value Summary</div>
+    <div class="sdesc">Use the sentence frames below. Each frame gives you the start — you complete it using what you learned about the breathwork practice last session. <strong>Speak each sentence aloud before you write it.</strong></div>
+
+    <div class="notice n-blue" style="margin-bottom:18px;">
+      🧘 <strong>Remember:</strong> Your client is Durim — a breathwork and somatic coach. He helps people regulate stress and reconnect with their body through conscious breathing. Use what you heard in the interview.
+    </div>
+
+    <!-- PROBLEM SECTION -->
+    <div class="card">
+      <div class="clabel">① Problem — 2 sentences</div>
+
+      <div class="scaffold-block">
+        <span class="scaffold-tag st-p">Sentence 1</span>
+        <div class="frame-line">
+          <span class="frame-text">Many people feel</span>
+          <input class="frame-input" id="s1" placeholder="overwhelmed / stressed / disconnected…">
+        </div>
+        <div class="frame-hint">→ Think: what is the emotional state of Durim's clients before they come to him?</div>
+      </div>
+
+      <div class="scaffold-block">
+        <span class="scaffold-tag st-p">Sentence 2</span>
+        <div class="frame-line">
+          <span class="frame-text">The main challenge is</span>
+          <input class="frame-input" id="s2" placeholder="not knowing how to calm down / living in their head…">
+        </div>
+        <div class="frame-hint">→ What specific problem does breathwork solve?</div>
+      </div>
+    </div>
+
+    <!-- TRANSFORMATION SECTION -->
+    <div class="card">
+      <div class="clabel">② Transformation — 2 sentences</div>
+
+      <div class="scaffold-block">
+        <span class="scaffold-tag st-t">Sentence 3</span>
+        <div class="frame-line">
+          <span class="frame-text">Through our work together, I help clients</span>
+          <input class="frame-input" id="s3" placeholder="reconnect with their body / release stress…">
+        </div>
+        <div class="frame-hint">→ What does Durim actually do in a session?</div>
+      </div>
+
+      <div class="scaffold-block">
+        <span class="scaffold-tag st-t">Sentence 4</span>
+        <div class="frame-line">
+          <span class="frame-text">We work on both</span>
+          <input class="frame-input" id="s4" placeholder="the breathing techniques and the emotional awareness…">
+        </div>
+        <div class="frame-hint">→ Name two things from the breathwork practice — physical and mental?</div>
+      </div>
+    </div>
+
+    <!-- OUTCOME SECTION -->
+    <div class="card">
+      <div class="clabel">③ Outcome — 2 sentences</div>
+
+      <div class="scaffold-block">
+        <span class="scaffold-tag st-o">Sentence 5</span>
+        <div class="frame-line">
+          <span class="frame-text">As a result, my clients</span>
+          <input class="frame-input" id="s5" placeholder="feel calmer / sleep better / have more energy…">
+        </div>
+        <div class="frame-hint">→ What changes for the client after working with Durim?</div>
+      </div>
+
+      <div class="scaffold-block">
+        <span class="scaffold-tag st-o">Sentence 6</span>
+        <div class="frame-line">
+          <span class="frame-text">They don't just feel better —</span>
+          <input class="frame-input" id="s6" placeholder="they have a practice they can use every day…">
+        </div>
+        <div class="frame-hint">→ What is the lasting value — what do they take away?</div>
+      </div>
+    </div>
+
+    <!-- ASSEMBLED SUMMARY -->
+    <div class="summary-box" id="summaryBox" style="display:none;">
+      <div class="clabel">📄 Your Value Summary — Read It Aloud</div>
+      <div class="summary-text" id="summaryText"></div>
+    </div>
+
+    <button class="btn btn-reveal" onclick="buildSummary()" style="margin-bottom:16px;">
+      Assemble my summary →
+    </button>
+
+    <div class="notice n-green">
+      💡 <strong>Teacher note:</strong> Once assembled, read it through together. Correct any grammar issues gently — keep the student's words wherever possible. The goal is a summary <em>they</em> wrote, not a perfect text.
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(4)">Continue to Speaking →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════
+       4 · SPEAKING (10 min)
+  ═══════════════════════ -->
+  <div class="panel" id="panel-4">
+    <span class="slabel sl-speak">Free Production · 10 min</span>
+    <div class="stitle">Present It Out Loud</div>
+    <div class="sdesc">You have written the summary. Now you present it — first as a reading, then as a conversation. Fluency first. No stopping for errors.</div>
+
+    <div class="card">
+      <div class="clabel">Step 1 · Read Your Summary Aloud</div>
+      <div class="scard" style="border-left-color: var(--gold);">
+        <div class="snum" style="background:var(--gold); color:var(--forest);">→</div>
+        <div>
+          <div class="sq">Read your completed summary from the previous section — out loud, clearly, as if presenting to a real client.</div>
+          <div class="shit">Focus on pace and confidence — not perfection. This is a professional delivery, not a test.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="clabel">Step 2 · Client Follow-up Questions</div>
+      <div style="font-size:13px; color:var(--muted); margin-bottom:14px;">
+        The teacher plays Durim as a client. After Mehdi reads the summary, the teacher asks these questions. Mehdi answers <strong>without reading</strong> — speaking freely.
+      </div>
+
+      <div class="scard">
+        <div class="snum">1</div>
+        <div>
+          <div class="sq">"That sounds interesting — but what does breathwork actually mean? Can you explain it simply?"</div>
+          <div class="shit">→ Tests whether Mehdi can paraphrase what he heard — not just recite the summary</div>
+        </div>
+      </div>
+
+      <div class="scard">
+        <div class="snum">2</div>
+        <div>
+          <div class="sq">"How is this different from meditation or yoga?"</div>
+          <div class="shit">→ Pushes him to compare and contrast — good practice for the comparative grammar too</div>
+        </div>
+      </div>
+
+      <div class="scard">
+        <div class="snum">3</div>
+        <div>
+          <div class="sq">"Who is this for — is it for people with serious problems, or can anyone do it?"</div>
+          <div class="shit">→ Forces him to describe the ideal client in his own words</div>
+        </div>
+      </div>
+
+      <div class="notice n-purple" style="margin-top:14px;">
+        💡 <strong>Tip:</strong> Question 2 is a great natural entry point for comparative language — <em>"Breathwork is more physical than meditation… / It's faster than therapy…"</em>. If it comes up naturally, let it. If not, note it for next session.
+      </div>
+    </div>
+
+    <!-- ERROR LOG -->
+    <div class="card">
+      <div class="clabel">Teacher's Error Log</div>
+      <div style="font-size:13px; color:var(--muted); margin-bottom:10px;">Note errors during speaking — address after, not during.</div>
+      <textarea class="ainput" placeholder="e.g. 'The peoples feel' → 'People feel' (no article, no plural)&#10;'More calmer' → 'Calmer' (double comparative)&#10;'He help clients' → 'He helps clients' (3rd person -s)" rows="5"></textarea>
+      <div class="divider"></div>
+      <div style="font-size:14px; font-weight:600; color:var(--ink); margin-bottom:8px;">Session feedback</div>
+      <textarea class="ainput" placeholder="What went well? Which connectors did he use naturally? What gaps remain?" rows="3"></textarea>
+    </div>
+
+    <!-- REVIEW -->
+    <div class="rbox">
+      <div class="clabel">📅 Review &amp; Next Steps</div>
+      <ul class="rlist">
+        <li>Session 6 — free recall: Mehdi delivers his value summary from memory, without the frames</li>
+        <li>Session 6 — spaced review: 3 connector phrases from today — "Through our work… / As a result… / They don't just…"</li>
+        <li>Homework — rewrite the same summary but for <strong>his own coaching practice</strong> using the same 3-part structure</li>
+        <li>Next lesson — <strong>Pillar 2: Marketing</strong> — how do you communicate this value to the right people?</li>
+        <li>Grammar thread — comparative structures came up naturally today; introduce formally in Pillar 2</li>
+      </ul>
+    </div>
+
+    <div style="text-align:center; padding:18px 0;">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:700; color:var(--ink); margin-bottom:5px;">Pillar 1 complete. Both sessions done. 🌱</div>
+      <div style="font-size:13px; color:var(--muted2);">Value Creation — understood, written, presented.</div>
+    </div>
+
+  </div>
+
+</div><!-- /main -->
+
+<script>
+  let cur = 0;
+  const total = 5;
+  const btns = document.querySelectorAll('.nav-btn');
+
+  function goTo(i) {
+    document.getElementById('panel-' + cur).classList.remove('active');
+    btns[cur].classList.remove('active');
+    btns[cur].classList.add('done');
+    cur = i;
+    document.getElementById('panel-' + cur).classList.add('active');
+    btns[cur].classList.add('active');
+    btns[cur].classList.remove('done');
+    document.getElementById('pFill').style.width = Math.round(((i + 1) / total) * 100) + '%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function buildSummary() {
+    const s1 = document.getElementById('s1').value.trim() || '___';
+    const s2 = document.getElementById('s2').value.trim() || '___';
+    const s3 = document.getElementById('s3').value.trim() || '___';
+    const s4 = document.getElementById('s4').value.trim() || '___';
+    const s5 = document.getElementById('s5').value.trim() || '___';
+    const s6 = document.getElementById('s6').value.trim() || '___';
+
+    const text = `
+      <span class="sumframe">Many people feel</span> ${s1}. <span class="sumframe">The main challenge is</span> ${s2}.<br><br>
+      <span class="sumframe">Through our work together, I help clients</span> ${s3}. <span class="sumframe">We work on both</span> ${s4}.<br><br>
+      <span class="sumframe">As a result, my clients</span> ${s5}. <span class="sumframe">They don't just feel better —</span> ${s6}.
+    `;
+
+    document.getElementById('summaryText').innerHTML = text;
+    document.getElementById('summaryBox').style.display = 'block';
+    document.getElementById('summaryBox').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
+</body>
+</html>

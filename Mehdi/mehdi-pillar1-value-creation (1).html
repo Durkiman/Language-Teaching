@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mehdi – Pillar 1: Value Creation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ink:        #0e1a12;
+    --forest:     #1a4a2e;
+    --forest-mid: #2d6e47;
+    --green:      #3a8c5c;
+    --green-light:#d6efe1;
+    --green-pale: #eef7f2;
+    --gold:       #c9963a;
+    --gold-label: #7a5410;
+    --gold-light: #fdf3dc;
+    --sand:       #f7f3ec;
+    --cream:      #fefcf8;
+    --muted:      #4a5246;
+    --muted2:     #7a8a76;
+    --border:     #dde8d8;
+    --red-dark:   #7a2020;
+    --red-light:  #fde8e8;
+    --blue-dark:  #1a3a6e;
+    --blue-light: #ddeaff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--sand);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--forest);
+    padding: 30px 28px 26px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(58,140,92,.3) 0%, transparent 70%);
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green), var(--gold));
+  }
+  .header-series {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 6px;
+  }
+  .header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(26px, 5vw, 40px);
+    font-weight: 700; color: #eef5f0;
+    line-height: 1.1;
+  }
+  .header-sub {
+    margin-top: 8px; font-size: 13px;
+    color: rgba(238,245,240,.6); font-weight: 400;
+  }
+  .pillar-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 20px;
+    padding: 5px 14px; margin-top: 12px;
+    font-size: 12px; color: rgba(238,245,240,.85); font-weight: 500;
+  }
+  .pillar-dots {
+    display: flex; gap: 5px;
+  }
+  .pdot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,.2);
+  }
+  .pdot.active { background: var(--gold); }
+
+  /* ── PROGRESS ── */
+  .progress-bar { height: 3px; background: #1a3020; }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), var(--gold));
+    transition: width .5s ease;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 5px;
+    padding: 12px 18px;
+    overflow-x: auto; scrollbar-width: none;
+    position: sticky; top: 0; z-index: 40;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    padding: 6px 14px; border-radius: 18px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px; font-weight: 600;
+    color: var(--muted); cursor: pointer;
+    white-space: nowrap; transition: all .18s;
+  }
+  .nav-btn.active { background: var(--forest); border-color: var(--forest); color: var(--gold); }
+  .nav-btn.done   { background: var(--green-light); border-color: var(--green); color: var(--forest-mid); }
+
+  /* ── MAIN ── */
+  .main { padding: 22px 18px 60px; max-width: 740px; margin: 0 auto; }
+
+  /* ── PANELS ── */
+  .panel { display: none; animation: fadeUp .35s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION LABEL ── */
+  .slabel {
+    display: inline-block;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 16px; margin-bottom: 10px;
+  }
+  .sl-warm  { background: var(--gold-light);  color: var(--gold-label); }
+  .sl-read  { background: var(--green-light); color: var(--forest-mid); }
+  .sl-vocab { background: #ede8ff; color: #4a2fa0; }
+  .sl-prac  { background: var(--blue-light);  color: var(--blue-dark); }
+  .sl-speak { background: var(--green-light); color: var(--forest); }
+
+  .stitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-weight: 700;
+    color: var(--ink); line-height: 1.2; margin-bottom: 6px;
+  }
+  .sdesc {
+    font-size: 14px; color: var(--muted);
+    line-height: 1.65; margin-bottom: 20px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px; margin-bottom: 16px;
+  }
+  .clabel {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold-label); margin-bottom: 14px;
+  }
+
+  /* ── RECALL BUBBLES ── */
+  .recall {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 11px;
+    padding: 14px 16px; margin-bottom: 10px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .rnum {
+    background: var(--forest);
+    color: var(--gold);
+    width: 28px; height: 28px; border-radius: 50%;
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .rtext { font-size: 14px; line-height: 1.55; color: var(--ink); }
+  .rhint { font-size: 12px; color: var(--muted2); font-style: italic; margin-top: 4px; }
+
+  /* ── READING TEXT ── */
+  .passage {
+    background: white;
+    border-left: 4px solid var(--green);
+    border-radius: 0 12px 12px 0;
+    padding: 18px 20px; margin: 14px 0;
+    font-size: 15px; line-height: 1.9;
+    color: var(--ink);
+  }
+  .hl {
+    background: var(--green-light);
+    padding: 1px 5px; border-radius: 4px;
+    font-weight: 600; cursor: pointer;
+    color: var(--forest);
+    position: relative; display: inline-block;
+    transition: background .18s;
+  }
+  .hl:hover, .hl.open { background: var(--forest); color: white; }
+  .hltip {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink); color: #eef5f0;
+    font-size: 12px; font-weight: 400;
+    padding: 7px 12px; border-radius: 8px;
+    white-space: nowrap; z-index: 20;
+    pointer-events: none;
+    min-width: 190px; text-align: center;
+    line-height: 1.45;
+  }
+  .hltip::after {
+    content: '';
+    position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--ink);
+  }
+  .hl.open .hltip { display: block; }
+
+  /* ── NOTICE ── */
+  .notice {
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px; line-height: 1.6;
+    margin-top: 14px;
+  }
+  .n-green { background: var(--green-light); color: var(--forest-mid); }
+  .n-gold  { background: var(--gold-light);  color: var(--gold-label); }
+  .n-blue  { background: var(--blue-light);  color: var(--blue-dark); }
+
+  /* ── COMPREHENSION ── */
+  .cq { margin-bottom: 18px; }
+  .cq-text {
+    font-size: 15px; font-weight: 500;
+    color: var(--ink); margin-bottom: 10px; line-height: 1.5;
+  }
+  .cq-text em { font-size: 12px; color: var(--muted2); font-weight: 400; }
+  .ainput {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; color: var(--ink);
+    background: white; resize: vertical; min-height: 52px;
+    transition: border-color .18s;
+  }
+  .ainput:focus { outline: none; border-color: var(--green); }
+
+  /* ── VOCAB GRID ── */
+  .vgrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+    gap: 10px; margin-top: 8px;
+  }
+  .vcard {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 11px;
+    padding: 13px 15px; cursor: pointer;
+    min-height: 82px; transition: all .2s;
+  }
+  .vcard:hover { border-color: var(--green); transform: translateY(-2px); box-shadow: 0 5px 16px rgba(42,110,71,.1); }
+  .vcard.flipped { background: var(--forest); border-color: var(--forest); }
+  .vcard .front .ve { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .vcard .front .vex { font-size: 11px; color: var(--muted2); font-style: italic; line-height: 1.4; }
+  .vcard .back { display: none; }
+  .vcard.flipped .front { display: none; }
+  .vcard.flipped .back { display: block; }
+  .vcard .back .vfr { font-size: 14px; font-weight: 600; color: #a8d8b8; margin-bottom: 4px; }
+  .vcard .back .vhint { font-size: 11px; color: rgba(238,245,240,.82); line-height: 1.4; }
+  .tap-hint { font-size: 11px; color: var(--muted2); text-align: center; margin-top: 10px; font-style: italic; }
+
+  /* ── FILL BLANK ── */
+  .fline { font-size: 15px; line-height: 2.5; margin-bottom: 4px; color: var(--body); }
+  .blank {
+    display: inline-block; min-width: 130px;
+    border: none; border-bottom: 2.5px solid var(--gold);
+    padding: 0 6px 2px; margin: 0 3px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; color: var(--ink);
+    background: transparent; text-align: center;
+    transition: border-color .18s;
+  }
+  .blank:focus { outline: none; border-color: var(--green); }
+  .blank.correct { border-color: var(--green); background: var(--green-light); border-radius: 4px 4px 0 0; }
+  .blank.wrong   { border-color: #c0392b; background: var(--red-light); border-radius: 4px 4px 0 0; }
+
+  /* ── FEEDBACK ── */
+  .fb {
+    padding: 12px 15px; border-radius: 10px;
+    font-size: 14px; line-height: 1.6;
+    margin-top: 12px; display: none;
+  }
+  .fb.show { display: block; }
+  .fb-ok   { background: var(--green-light); color: var(--forest); border: 1px solid #a0d8b8; }
+  .fb-part { background: var(--gold-light);  color: var(--gold-label); border: 1px solid #e0c060; }
+
+  /* ── SPEAKING CARDS ── */
+  .scard {
+    background: white;
+    border-left: 4px solid var(--green);
+    border-radius: 0 12px 12px 0;
+    padding: 15px 18px; margin-bottom: 11px;
+    display: flex; gap: 13px; align-items: flex-start;
+  }
+  .snum {
+    background: var(--green); color: white;
+    width: 28px; height: 28px; border-radius: 50%;
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .sq { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 4px; line-height: 1.4; }
+  .shit { font-size: 12px; color: var(--forest-mid); font-style: italic; }
+
+  /* ── CLIENT PROFILE ── */
+  .client-box {
+    background: var(--forest);
+    border-radius: 14px;
+    padding: 20px 22px; margin-bottom: 16px;
+  }
+  .client-box .clabel { color: rgba(255,215,100,.8); }
+  .client-box p { font-size: 14px; color: #c8e0d0; line-height: 1.7; margin-bottom: 8px; }
+  .client-box p:last-child { margin-bottom: 0; }
+  .client-box strong { color: #eef5f0; }
+
+  /* ── CHIPS ── */
+  .chipwrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 18px; padding: 6px 14px;
+    font-size: 13px; color: var(--ink);
+    cursor: pointer; transition: all .18s;
+  }
+  .chip:hover { background: var(--forest); color: var(--gold); border-color: var(--forest); }
+  .chip.used  { background: var(--green); color: white; border-color: var(--green); }
+
+  /* ── REVIEW BOX ── */
+  .rbox {
+    background: var(--forest);
+    border-radius: 14px; padding: 22px; margin-bottom: 16px;
+  }
+  .rbox .clabel { color: rgba(255,215,100,.8); }
+  .rlist { list-style: none; margin-top: 8px; }
+  .rlist li {
+    padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.08);
+    font-size: 14px; color: #c8e0d0;
+    display: flex; gap: 10px; align-items: flex-start; line-height: 1.5;
+  }
+  .rlist li:last-child { border-bottom: none; }
+  .rlist li::before { content: '→'; color: var(--gold); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── BUTTONS ── */
+  .btn {
+    padding: 12px 26px; border: none; border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: all .18s;
+  }
+  .btn-p { background: var(--forest); color: var(--gold); }
+  .btn-p:hover { background: var(--forest-mid); transform: translateY(-1px); }
+  .btn-c { background: var(--gold); color: var(--forest); margin-top: 14px; }
+  .btn-c:hover { opacity: .9; }
+  .brow { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+
+  .divider { height: 1px; background: var(--border); margin: 18px 0; }
+
+  @media (max-width: 480px) {
+    .main { padding: 16px 12px 60px; }
+    .vgrid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-series">Business English · 5-Pillar Series</div>
+  <h1>Pillar 1<br>Value Creation</h1>
+  <div class="header-sub">Reading · Vocabulary · Speaking · 50 min</div>
+  <div class="pillar-badge">
+    <div class="pillar-dots">
+      <div class="pdot active"></div>
+      <div class="pdot"></div>
+      <div class="pdot"></div>
+      <div class="pdot"></div>
+      <div class="pdot"></div>
+    </div>
+    Lesson 1 of 5
+  </div>
+</div>
+<div class="progress-bar">
+  <div class="progress-fill" id="pFill" style="width:20%"></div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav-btn active" onclick="goTo(0)">🔥 Warm-up</button>
+  <button class="nav-btn" onclick="goTo(1)">📖 Reading</button>
+  <button class="nav-btn" onclick="goTo(2)">🗂️ Vocabulary</button>
+  <button class="nav-btn" onclick="goTo(3)">✏️ Practice</button>
+  <button class="nav-btn" onclick="goTo(4)">🎙️ Interview</button>
+</div>
+
+<div class="main">
+
+  <!-- ═══════════════════════════
+       0 · WARM-UP (5 min)
+  ═══════════════════════════ -->
+  <div class="panel active" id="panel-0">
+    <span class="slabel sl-warm">Warm-up · 5 min</span>
+    <div class="stitle">What do you remember?</div>
+    <div class="sdesc">Free recall before we start. No notes — just speak.</div>
+
+    <div class="card">
+      <div class="clabel">Retrieval — Lesson 2 Review</div>
+      <div class="recall">
+        <div class="rnum">1</div>
+        <div class="rtext">From last lesson — what are 3 questions you can ask a client at the start of a coaching interview?
+          <div class="rhint">Say them out loud without looking at the page.</div>
+        </div>
+      </div>
+      <div class="recall">
+        <div class="rnum">2</div>
+        <div class="rtext">What does "to delegate" mean? Use it in a sentence.
+          <div class="rhint">💬 "I prefer to delegate…"</div>
+        </div>
+      </div>
+      <div class="recall">
+        <div class="rnum">3</div>
+        <div class="rtext">Quick question: do you say "make a decision" or "take a decision" in English?
+          <div class="rhint">One second — no thinking allowed! 😄</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice n-gold">
+      💡 <strong>Teacher note:</strong> Note which interview questions came back naturally. This feeds directly into today's roleplay.
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(1)">Continue to Reading →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════
+       1 · READING (12 min)
+  ═══════════════════════════ -->
+  <div class="panel" id="panel-1">
+    <span class="slabel sl-read">Presentation · 12 min</span>
+    <div class="stitle">What is Value Creation?</div>
+    <div class="sdesc">Read the text carefully. Tap any <strong>highlighted phrase</strong> to see what it means.</div>
+
+    <div class="card">
+      <div class="clabel">Reading Text · ~150 words</div>
+
+      <div class="passage">
+        Every successful business starts with one question: <span class="hl" onclick="this.classList.toggle('open')">what problem do you solve?<span class="hltip">The core of value creation — what pain or need does your business address?</span></span><br><br>
+
+        <span class="hl" onclick="this.classList.toggle('open')">Value creation<span class="hltip">value creation = producing something useful that people are willing to pay for</span></span> means giving your clients something they truly need — something that <span class="hl" onclick="this.classList.toggle('open')">makes their life easier<span class="hltip">A simple, powerful way to describe your value: "I make my clients' lives easier by…"</span></span>, saves them time, or helps them grow.<br><br>
+
+        As a coach, your value is not just your knowledge. It is your ability to <span class="hl" onclick="this.classList.toggle('open')">help someone see clearly<span class="hltip">help someone see clearly = help them understand their situation better</span></span> when they feel lost, to <span class="hl" onclick="this.classList.toggle('open')">identify their strengths<span class="hltip">identify = find, recognise / strengths = what someone does well</span></span>, and to build a plan that works for them specifically.<br><br>
+
+        The key question your client is always asking — even if they don't say it out loud — is: <em>"<span class="hl" onclick="this.classList.toggle('open')">what's in it for me?<span class="hltip">"What's in it for me?" = What do I gain? Why should I care? Very common in business English.</span></span>"</em><br><br>
+
+        Your job as a coach is to answer that question <span class="hl" onclick="this.classList.toggle('open')">before they even ask it.<span class="hltip">Proactively = before being asked. Shows confidence and client-focus.</span></span> This is what separates a <span class="hl" onclick="this.classList.toggle('open')">trusted advisor<span class="hltip">trusted advisor = someone clients rely on for honest, expert guidance</span></span> from just another service provider.
+      </div>
+
+      <div class="notice n-green">
+        💡 <strong>Key idea:</strong> Value is not what <em>you</em> offer — it is what <em>your client</em> receives. Always think from the client's perspective.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="clabel">Comprehension — Answer Orally First, Then Write</div>
+
+      <div class="cq">
+        <div class="cq-text">1. According to the text, what is value creation? <em>Use your own words.</em></div>
+        <textarea class="ainput" placeholder="Write a short answer here after speaking…" rows="2"></textarea>
+      </div>
+      <div class="cq">
+        <div class="cq-text">2. What three things can a coach help a client with?</div>
+        <textarea class="ainput" placeholder="1… / 2… / 3…" rows="2"></textarea>
+      </div>
+      <div class="cq">
+        <div class="cq-text">3. What question is the client always asking, even silently?</div>
+        <textarea class="ainput" placeholder="Write the exact phrase from the text…" rows="2"></textarea>
+      </div>
+      <div class="cq">
+        <div class="cq-text">4. In your own work — how do you create value for your clients right now?</div>
+        <textarea class="ainput" placeholder="Speak first — then write 1–2 sentences…" rows="2"></textarea>
+      </div>
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(2)">Continue to Vocabulary →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════
+       2 · VOCABULARY (8 min)
+  ═══════════════════════════ -->
+  <div class="panel" id="panel-2">
+    <span class="slabel sl-vocab">Vocabulary · 8 min</span>
+    <div class="stitle">Key Business Phrases</div>
+    <div class="sdesc">These are the words and phrases you need to talk about value in English. Tap to flip.</div>
+
+    <div class="card">
+      <div class="clabel">English ↔ French · Tap to flip</div>
+      <div class="vgrid">
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">value creation</div><div class="vex">"Value creation is the heart of any business."</div></div>
+          <div class="back"><div class="vfr">création de valeur</div><div class="vhint">What you produce that others find useful</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">to solve a problem</div><div class="vex">"My coaching solves a specific problem."</div></div>
+          <div class="back"><div class="vfr">résoudre un problème</div><div class="vhint">solve = résoudre ⚠️ NOT "resolve a problem"</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">to meet a need</div><div class="vex">"I meet the needs of entrepreneurs."</div></div>
+          <div class="back"><div class="vfr">répondre à un besoin</div><div class="vhint">meet a need = satisfy what someone requires</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">What's in it for me?</div><div class="vex">The silent question every client has.</div></div>
+          <div class="back"><div class="vfr">Qu'est-ce que j'y gagne ?</div><div class="vhint">Key phrase — know it, use it in coaching</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">trusted advisor</div><div class="vex">"I want to be a trusted advisor, not just a coach."</div></div>
+          <div class="back"><div class="vfr">conseiller de confiance</div><div class="vhint">Higher than "service provider" — a relationship word</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">to identify strengths</div><div class="vex">"I help clients identify their strengths."</div></div>
+          <div class="back"><div class="vfr">identifier les forces</div><div class="vhint">identify = repérer, reconnaître</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">from the client's perspective</div><div class="vex">"Think from the client's perspective."</div></div>
+          <div class="back"><div class="vfr">du point de vue du client</div><div class="vhint">perspective = point de vue — essential in coaching</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">to make a difference</div><div class="vex">"Good coaching makes a real difference."</div></div>
+          <div class="back"><div class="vfr">faire une différence / avoir un impact</div><div class="vhint">Very common in English — emotional, motivational</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">service provider</div><div class="vex">"A trusted advisor is more than a service provider."</div></div>
+          <div class="back"><div class="vfr">prestataire de services</div><div class="vhint">Lower-value positioning — avoid this label for yourself</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">to add value</div><div class="vex">"How do you add value for your clients?"</div></div>
+          <div class="back"><div class="vfr">apporter de la valeur</div><div class="vhint">add value = apporter de la valeur ajoutée</div></div>
+        </div>
+
+      </div>
+      <div class="tap-hint">Tap a card to flip · Tap again to flip back</div>
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(3)">Continue to Practice →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════
+       3 · PRACTICE (10 min)
+  ═══════════════════════════ -->
+  <div class="panel" id="panel-3">
+    <span class="slabel sl-prac">Controlled Practice · 10 min</span>
+    <div class="stitle">Put It Into Words</div>
+    <div class="sdesc">Two short exercises to consolidate today's vocabulary before the interview.</div>
+
+    <!-- EXERCISE A -->
+    <div class="card">
+      <div class="clabel">Exercise A · Fill in the gaps</div>
+      <div style="font-size:13px; color:var(--muted); margin-bottom:16px;">Complete each sentence with the correct word or phrase.</div>
+
+      <div class="cq">
+        <div class="fline">1. "As a coach, my job is to help clients <input class="blank" id="b1" placeholder="________" size="12"> their strengths and weaknesses."</div>
+      </div>
+      <div class="cq">
+        <div class="fline">2. "Good coaching always <input class="blank" id="b2" placeholder="________" size="10"> a real difference in someone's life."</div>
+      </div>
+      <div class="cq">
+        <div class="fline">3. "The client is always asking: '<input class="blank" id="b3" placeholder="________" size="16">?'"</div>
+      </div>
+      <div class="cq">
+        <div class="fline">4. "I want to be a <input class="blank" id="b4" placeholder="________" size="13"> advisor, not just a service provider."</div>
+      </div>
+      <div class="cq">
+        <div class="fline">5. "To <input class="blank" id="b5" placeholder="________" size="10"> value means giving clients something they truly need."</div>
+      </div>
+      <div class="cq">
+        <div class="fline">6. "Always think from the <input class="blank" id="b6" placeholder="________" size="16"> perspective."</div>
+      </div>
+
+      <button class="btn btn-c" onclick="checkBlanks()">Check my answers ✓</button>
+      <div class="fb" id="fbA"></div>
+    </div>
+
+    <!-- EXERCISE B -->
+    <div class="card">
+      <div class="clabel">Exercise B · Your Value Proposition</div>
+      <div style="font-size:13px; color:var(--muted); margin-bottom:14px;">
+        Complete these sentences about <em>your own</em> coaching practice. Speak first — then write.
+      </div>
+
+      <div class="cq">
+        <div class="cq-text">1. "The problem I solve for my clients is…"</div>
+        <textarea class="ainput" placeholder="Speak it first, then write…" rows="2"></textarea>
+      </div>
+      <div class="cq">
+        <div class="cq-text">2. "I add value by…"</div>
+        <textarea class="ainput" placeholder="Try to use vocabulary from today's cards…" rows="2"></textarea>
+      </div>
+      <div class="cq">
+        <div class="cq-text">3. "From my client's perspective, working with me means…"</div>
+        <textarea class="ainput" placeholder="Think about what your client gains, not what you offer…" rows="2"></textarea>
+      </div>
+
+      <div class="notice n-green" style="margin-top:14px;">
+        💡 <strong>Teacher note:</strong> These 3 sentences together form Mehdi's English value proposition. If they're strong, use them as the opening of the roleplay.
+      </div>
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(4)">Continue to Interview →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════
+       4 · INTERVIEW ROLEPLAY (15 min)
+  ═══════════════════════════ -->
+  <div class="panel" id="panel-4">
+    <span class="slabel sl-speak">Free Production · 15 min</span>
+    <div class="stitle">You're the Coach</div>
+    <div class="sdesc">Your teacher plays a real client — a breathwork practitioner. Interview them to understand their value creation.</div>
+
+    <!-- CLIENT PROFILE -->
+    <div class="client-box">
+      <div class="clabel">🧘 Your Client Today</div>
+      <p><strong>Name:</strong> Durim &nbsp;·&nbsp; <strong>Practice:</strong> Breathwork &amp; Somatic Coaching</p>
+      <p>Durim runs a breathwork practice. He helps people regulate stress, reconnect with their body, and unlock emotional blocks through conscious breathing techniques. He has been practising for several years but has never clearly defined his business value — he describes what he <em>does</em>, not what his clients <em>gain</em>.</p>
+      <p><strong>Your goal as coach:</strong> understand how Durim currently creates value — and help him see it more clearly in English.</p>
+    </div>
+
+    <!-- QUESTIONS -->
+    <div class="card">
+      <div class="clabel">Your Interview Questions — Use at Least 6</div>
+
+      <div class="scard">
+        <div class="snum">1</div>
+        <div>
+          <div class="sq">How would you describe what you do — and the problem you solve?</div>
+          <div class="shit">→ Listen carefully: does he describe actions or outcomes?</div>
+        </div>
+      </div>
+      <div class="scard">
+        <div class="snum">2</div>
+        <div>
+          <div class="sq">Who is your ideal client — what are their problems, habits, and fears?</div>
+          <div class="shit">→ From his questionnaire — key for value creation</div>
+        </div>
+      </div>
+      <div class="scard">
+        <div class="snum">3</div>
+        <div>
+          <div class="sq">What do your clients gain from working with you?</div>
+          <div class="shit">→ Reframe if needed: "From their perspective, what changes?"</div>
+        </div>
+      </div>
+      <div class="scard">
+        <div class="snum">4</div>
+        <div>
+          <div class="sq">Are you more comfortable with the technical side of breathwork, or the results it creates for clients?</div>
+          <div class="shit">→ Helps locate where his perceived value sits</div>
+        </div>
+      </div>
+      <div class="scard">
+        <div class="snum">5</div>
+        <div>
+          <div class="sq">Why should a client choose you rather than another breathwork practitioner?</div>
+          <div class="shit">→ His differentiation — what makes him unique?</div>
+        </div>
+      </div>
+      <div class="scard">
+        <div class="snum">6</div>
+        <div>
+          <div class="sq">How do you measure success with a client — how do you know you added value?</div>
+          <div class="shit">→ Pushes him to think in outcomes, not processes</div>
+        </div>
+      </div>
+      <div class="scard">
+        <div class="snum">7</div>
+        <div>
+          <div class="sq">What's the biggest transformation you've seen in a client?</div>
+          <div class="shit">→ Great follow-up — real stories reveal real value</div>
+        </div>
+      </div>
+      <div class="scard">
+        <div class="snum">8</div>
+        <div>
+          <div class="sq">What do you think your clients value most about working with you?</div>
+          <div class="shit">→ Final reflective question — links back to "What's in it for me?"</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- USEFUL PHRASES -->
+    <div class="card">
+      <div class="clabel">Useful Phrases During the Interview</div>
+      <div class="chipwrap">
+        <span class="chip" onclick="this.classList.toggle('used')">That's interesting…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">Can you tell me more?</span>
+        <span class="chip" onclick="this.classList.toggle('used')">What do you mean by…?</span>
+        <span class="chip" onclick="this.classList.toggle('used')">So, from your client's perspective…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">If I understand correctly…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">Can you give me an example?</span>
+        <span class="chip" onclick="this.classList.toggle('used')">What value does that create?</span>
+        <span class="chip" onclick="this.classList.toggle('used')">What's the outcome for the client?</span>
+        <span class="chip" onclick="this.classList.toggle('used')">Let me ask you something else…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">That makes a lot of sense.</span>
+      </div>
+      <div class="tap-hint">Tap a phrase to mark it as used</div>
+    </div>
+
+    <!-- TEACHER LOG -->
+    <div class="card">
+      <div class="clabel">Teacher's Error Log</div>
+      <div style="font-size:13px; color:var(--muted); margin-bottom:10px;">Note errors during the interview — address after, not during.</div>
+      <textarea class="ainput" placeholder="e.g. 'He said resolve a problem' → 'solve a problem'&#10;'What gain the client?' → 'What does the client gain?'" rows="4"></textarea>
+      <div class="divider"></div>
+      <div style="font-size:14px; font-weight:600; color:var(--ink); margin-bottom:8px;">Session feedback</div>
+      <textarea class="ainput" placeholder="What went well? Vocabulary used naturally? Questions fluent? Gaps to address next time?" rows="3"></textarea>
+    </div>
+
+    <!-- REVIEW -->
+    <div class="rbox">
+      <div class="clabel">📅 Spaced Review & Series Plan</div>
+      <ul class="rlist">
+        <li>Session 5 — free recall: "What does 'value creation' mean? Give me 3 phrases from today."</li>
+        <li>Session 5 — error log review: address any patterns noted today</li>
+        <li>Next lesson — <strong>Pillar 2: Marketing</strong> — how do you communicate your value to the right people?</li>
+        <li>Homework — write 3 sentences: what problem you solve, who you solve it for, and what your client gains</li>
+        <li>Running thread — each pillar builds on the last: Value → Marketing → Selling → Operations → Finance</li>
+      </ul>
+    </div>
+
+    <div style="text-align:center; padding:18px 0;">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:700; color:var(--ink); margin-bottom:5px;">Pillar 1 complete. 🌱</div>
+      <div style="font-size:13px; color:var(--muted2);">Value Creation — understood, practised, applied.</div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+  let cur = 0;
+  const total = 5;
+  const btns = document.querySelectorAll('.nav-btn');
+
+  function goTo(i) {
+    document.getElementById('panel-' + cur).classList.remove('active');
+    btns[cur].classList.remove('active');
+    btns[cur].classList.add('done');
+    cur = i;
+    document.getElementById('panel-' + cur).classList.add('active');
+    btns[cur].classList.add('active');
+    btns[cur].classList.remove('done');
+    document.getElementById('pFill').style.width = Math.round(((i + 1) / total) * 100) + '%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  const answers = {
+    b1: 'identify', b2: 'makes',
+    b3: "what's in it for me", b4: 'trusted',
+    b5: 'add', b6: "client's"
+  };
+
+  function checkBlanks() {
+    let score = 0;
+    const tot = Object.keys(answers).length;
+    for (const [id, ans] of Object.entries(answers)) {
+      const el = document.getElementById(id);
+      const val = el.value.trim().toLowerCase().replace(/['']/g, "'");
+      if (val === ans || val === ans + '…' || val === ans + '...') {
+        el.classList.add('correct'); el.classList.remove('wrong'); score++;
+      } else {
+        el.classList.add('wrong'); el.classList.remove('correct');
+      }
+    }
+    const fb = document.getElementById('fbA');
+    fb.classList.add('show');
+    if (score === tot) {
+      fb.className = 'fb fb-ok show';
+      fb.innerHTML = '✅ <strong>Perfect — ' + score + '/' + tot + '!</strong> All key phrases locked in. Ready to interview.';
+    } else {
+      fb.className = 'fb fb-part show';
+      fb.innerHTML = '⚡ <strong>' + score + '/' + tot + ' correct.</strong> Check the red blanks — look back at the vocabulary cards for hints.';
+    }
+  }
+</script>
+</body>
+</html>
