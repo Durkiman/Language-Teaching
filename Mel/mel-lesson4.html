@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Ndihem — Mel's Lesson 4</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0D0B14;
+  --surface: #17142A;
+  --surface2: #201C35;
+  --card: #231F3A;
+  --border: rgba(255,255,255,0.08);
+  --text: #EDE8F5;
+  --muted: #7A7292;
+  --gold: #E8B84B;
+  --gold-dim: rgba(232,184,75,0.12);
+  --rose: #D45C7A;
+  --rose-dim: rgba(212,92,122,0.12);
+  --sage: #5BA882;
+  --sage-dim: rgba(91,168,130,0.12);
+  --blue: #4D8FD4;
+  --blue-dim: rgba(77,143,212,0.12);
+  --radius: 16px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── SCREENS ── */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ── NAV HEADER ── */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.nav-back {
+  width: 34px; height: 34px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--text);
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-family: 'DM Sans', sans-serif;
+}
+.nav-label { flex: 1; font-size: 0.78rem; font-weight: 600; color: var(--muted); }
+.nav-timer {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-variant-numeric: tabular-nums;
+  min-width: 40px;
+  text-align: center;
+}
+.nav-timer.running { color: var(--gold); border-color: rgba(232,184,75,0.3); }
+
+/* ── HOME ── */
+#home { padding-bottom: 40px; }
+
+.home-hero {
+  background: linear-gradient(160deg, #1A1430 0%, var(--bg) 100%);
+  padding: 48px 24px 40px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-glow {
+  position: absolute;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,184,75,0.1) 0%, transparent 70%);
+  top: -80px; right: -80px;
+  pointer-events: none;
+}
+.hero-glow2 {
+  position: absolute;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,92,122,0.08) 0%, transparent 70%);
+  bottom: -40px; left: -40px;
+  pointer-events: none;
+}
+.hero-kicker {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 8vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.05;
+  margin-bottom: 10px;
+}
+.hero-title em { color: var(--rose); font-style: italic; }
+.hero-desc {
+  font-size: 0.88rem;
+  color: rgba(237,232,245,0.5);
+  line-height: 1.7;
+  font-weight: 300;
+  max-width: 320px;
+}
+
+.home-plan { padding: 24px 20px 0; }
+.plan-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.plan-items { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
+.plan-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+  -webkit-user-select: none; user-select: none;
+}
+.plan-item:active { opacity: 0.75; }
+.plan-item.done { border-color: rgba(91,168,130,0.3); background: rgba(91,168,130,0.06); }
+.plan-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.plan-item.done .plan-num { background: var(--sage); border-color: var(--sage); color: white; }
+.plan-item.active-step .plan-num { background: var(--gold); border-color: var(--gold); color: var(--bg); }
+.plan-info { flex: 1; }
+.plan-name { font-size: 0.9rem; font-weight: 600; color: var(--text); }
+.plan-time { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+.plan-arrow { font-size: 0.8rem; color: var(--muted); }
+
+/* ── SECTIONS ── */
+.section-body { padding: 20px; display: flex; flex-direction: column; gap: 16px; padding-bottom: 40px; }
+
+/* CARDS */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.card-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+/* RECALL */
+.recall-prompt {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+.recall-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.recall-chip {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s;
+  -webkit-user-select: none; user-select: none;
+}
+.recall-chip:active { opacity: 0.7; }
+.recall-chip.revealed { background: var(--gold-dim); border-color: rgba(232,184,75,0.4); color: var(--gold); }
+.recall-chip .chip-alb { font-weight: 600; }
+.recall-chip .chip-en { font-size: 0.72rem; color: var(--muted); display: none; margin-top: 2px; }
+.recall-chip.revealed .chip-en { display: block; color: rgba(232,184,75,0.7); }
+
+/* VOCAB TABLE */
+.vocab-table { display: flex; flex-direction: column; gap: 0; }
+.vocab-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.vocab-row:last-child { border-bottom: none; }
+.v-alb { font-size: 0.92rem; font-weight: 600; color: var(--gold); min-width: 160px; flex-shrink: 0; }
+.v-en { font-size: 0.82rem; color: var(--muted); flex: 1; }
+.v-example { font-size: 0.75rem; color: rgba(237,232,245,0.35); margin-top: 2px; font-style: italic; }
+
+/* SENTENCE BUILDER */
+.sentence-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 10px;
+}
+.sentence-alb {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.sentence-en { font-size: 0.82rem; color: var(--muted); margin-bottom: 10px; }
+.sentence-fr { font-size: 0.78rem; color: var(--blue); font-style: italic; }
+.sentence-breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+.s-chunk {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  text-align: center;
+}
+.s-alb { font-weight: 600; color: var(--text); }
+.s-en { color: var(--muted); font-size: 0.68rem; margin-top: 2px; }
+
+/* QUIZ */
+.quiz-q {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.quiz-hint { font-size: 0.78rem; color: var(--muted); text-align: center; margin-bottom: 16px; }
+.quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.quiz-opt {
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 13px 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+  line-height: 1.3;
+  -webkit-user-select: none; user-select: none;
+}
+.quiz-opt:active:not(:disabled) { opacity: 0.7; }
+.quiz-opt.correct { background: var(--sage-dim); border-color: var(--sage); color: var(--sage); }
+.quiz-opt.wrong { background: var(--rose-dim); border-color: var(--rose); color: var(--rose); }
+.quiz-opt:disabled { cursor: default; }
+.quiz-feedback {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 0.84rem;
+  line-height: 1.6;
+  display: none;
+}
+.quiz-feedback.show { display: block; }
+.quiz-feedback.correct { background: var(--sage-dim); border-left: 3px solid var(--sage); color: var(--sage); }
+.quiz-feedback.wrong { background: var(--rose-dim); border-left: 3px solid var(--rose); color: var(--text); }
+.quiz-next {
+  display: none;
+  width: 100%;
+  margin-top: 10px;
+  padding: 13px;
+  background: var(--gold);
+  color: var(--bg);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.quiz-next.show { display: block; }
+.quiz-next:active { opacity: 0.8; }
+
+/* SONG */
+.song-hero {
+  background: linear-gradient(145deg, #1A1030, #0D0B14);
+  border: 1px solid rgba(212,92,122,0.2);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.song-glow {
+  position: absolute;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(212,92,122,0.15) 0%, transparent 70%);
+  top: -60px; left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.song-artist { font-size: 0.75rem; font-weight: 600; color: var(--rose); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+.song-title { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin-bottom: 4px; }
+.song-meaning { font-size: 0.82rem; color: var(--muted); margin-bottom: 18px; font-style: italic; }
+.yt-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--rose);
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s;
+}
+.yt-btn:active { opacity: 0.8; }
+
+.lyrics-block {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.lyrics-section { margin-bottom: 20px; }
+.lyrics-section:last-child { margin-bottom: 0; }
+.lyrics-tag {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 10px;
+}
+.lyric-line {
+  display: flex;
+  gap: 12px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.15s;
+  -webkit-user-select: none; user-select: none;
+}
+.lyric-line:last-child { border-bottom: none; }
+.lyric-line:active { opacity: 0.7; }
+.lyric-alb { font-size: 0.9rem; font-weight: 500; color: var(--text); flex: 1; line-height: 1.5; }
+.lyric-alb em { color: var(--gold); font-style: normal; font-weight: 700; }
+.lyric-en {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-style: italic;
+  flex: 1;
+  line-height: 1.5;
+  display: none;
+}
+.lyric-line.revealed .lyric-en { display: block; }
+.lyric-tap { font-size: 0.65rem; color: var(--muted); flex-shrink: 0; margin-top: 4px; }
+.lyric-line.revealed .lyric-tap { display: none; }
+
+/* SPEAK PROMPTS */
+.speak-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.speak-situation {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 8px;
+}
+.speak-q {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.speak-fr { font-size: 0.78rem; color: var(--blue); font-style: italic; margin-bottom: 14px; }
+.hint-btn {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 7px 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-right: 8px;
+  -webkit-user-select: none; user-select: none;
+}
+.hint-btn:active { opacity: 0.7; }
+.tried-btn {
+  background: var(--rose);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  -webkit-user-select: none; user-select: none;
+}
+.tried-btn:active { opacity: 0.8; }
+.tried-btn:disabled { opacity: 0.35; cursor: default; }
+.hint-box {
+  background: var(--gold-dim);
+  border-left: 2px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 12px;
+  font-size: 0.82rem;
+  color: var(--gold);
+  margin-top: 10px;
+  display: none;
+  line-height: 1.6;
+}
+.hint-box.show { display: block; }
+.answer-box {
+  background: var(--sage-dim);
+  border-left: 2px solid var(--sage);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 14px;
+  margin-top: 10px;
+  display: none;
+}
+.answer-box.show { display: block; }
+.answer-alb { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--text); margin-bottom: 4px; }
+.answer-en { font-size: 0.8rem; color: var(--muted); }
+.answer-fr { font-size: 0.75rem; color: var(--blue); font-style: italic; margin-top: 3px; }
+
+/* DONE SECTION */
+.done-card {
+  background: linear-gradient(145deg, #1A1430, #200D20);
+  border: 1px solid rgba(212,92,122,0.2);
+  border-radius: var(--radius);
+  padding: 28px 20px;
+  text-align: center;
+}
+.done-emoji { font-size: 3rem; display: block; margin-bottom: 12px; }
+.done-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+.done-sub { font-size: 0.88rem; color: rgba(237,232,245,0.55); line-height: 1.7; }
+
+/* CORRECTION DRAWER */
+.corr-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 20px;
+  z-index: 200;
+  background: var(--gold);
+  color: var(--bg);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: 0 4px 20px rgba(232,184,75,0.35);
+  transition: transform 0.15s, box-shadow 0.15s;
+  -webkit-user-select: none; user-select: none;
+}
+.corr-fab:active { transform: scale(0.95); box-shadow: 0 2px 10px rgba(232,184,75,0.2); }
+.corr-fab-badge {
+  background: var(--bg);
+  color: var(--gold);
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 1px 7px;
+  border-radius: 10px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.corr-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 300;
+}
+.corr-backdrop.open { display: block; }
+
+.corr-drawer {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 400;
+  background: var(--surface);
+  border-radius: 22px 22px 0 0;
+  border-top: 2px solid var(--gold);
+  transform: translateY(100%);
+  transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1);
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+}
+.corr-drawer.open { transform: translateY(0); }
+
+.corr-drawer-handle {
+  width: 36px; height: 4px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 2px;
+  margin: 12px auto 0;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.corr-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px 12px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border);
+}
+.corr-drawer-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.corr-drawer-close {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 1rem;
+  width: 30px; height: 30px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Sans', sans-serif;
+  flex-shrink: 0;
+}
+.corr-drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 20px 32px;
+  -webkit-overflow-scrolling: touch;
+}
+.corr-form { display: flex; gap: 8px; margin-bottom: 14px; }
+.corr-input {
+  flex: 1;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  padding: 10px 12px;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  outline: none;
+}
+.corr-input:focus { border-color: var(--gold); }
+.corr-add {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 10px 16px;
+  background: var(--gold);
+  color: var(--bg);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.corr-empty { font-size: 0.82rem; color: var(--muted); font-style: italic; text-align: center; padding: 12px 0; }
+.corr-dismiss-hint { font-size: 0.7rem; color: var(--muted); font-style: italic; margin-bottom: 10px; }
+.corr-item {
+  background: var(--card);
+  border-radius: 10px;
+  padding: 11px 14px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-left: 2px solid var(--gold);
+}
+.corr-text { flex: 1; font-size: 0.85rem; line-height: 1.55; color: var(--text); }
+.corr-dismiss {
+  background: none; border: none;
+  color: var(--muted); font-size: 1.2rem;
+  cursor: pointer; padding: 0 2px;
+  line-height: 1; flex-shrink: 0; margin-top: 1px;
+  transition: color 0.15s;
+}
+.corr-dismiss:active { color: var(--rose); }
+
+/* SECTION NAV BTNS */
+.section-done-btn {
+  display: block; width: 100%; padding: 15px;
+  background: var(--gold); color: var(--bg);
+  font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 700;
+  border: none; border-radius: var(--radius);
+  cursor: pointer; transition: opacity 0.15s;
+  margin-top: 4px;
+}
+.section-done-btn:active { opacity: 0.8; }
+.back-home-btn {
+  display: block; width: 100%; padding: 13px;
+  background: transparent; color: var(--muted);
+  font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  cursor: pointer; transition: all 0.15s; margin-top: 8px;
+}
+.back-home-btn:active { opacity: 0.7; }
+
+.confetti-piece {
+  position: fixed; pointer-events: none; z-index: 9999; border-radius: 2px;
+  animation: cfall 2.8s ease-in forwards;
+}
+@keyframes cfall {
+  0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(540deg); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════ HOME -->
+<div class="screen active" id="home">
+  <div class="home-hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+    <div class="hero-kicker">🇽🇰 Mel · Lesson 4 · ~50 minutes</div>
+    <div class="hero-title">Ndihem<br><em>& mendoj.</em></div>
+    <div class="hero-desc">Feelings, opinions, and Albanian that sounds like you. Including a song by Elvana Gjata.</div>
+  </div>
+
+  <div class="home-plan">
+    <div class="plan-label">Today's plan</div>
+    <div class="plan-items">
+      <div class="plan-item" id="plan-1" onclick="goSection('s1')">
+        <div class="plan-num" id="pn-1">1</div>
+        <div class="plan-info">
+          <div class="plan-name">🔁 Warm-up — What do you remember?</div>
+          <div class="plan-time">5 min · Free recall from last session</div>
+        </div>
+        <div class="plan-arrow">→</div>
+      </div>
+      <div class="plan-item" id="plan-2" onclick="goSection('s2')">
+        <div class="plan-num" id="pn-2">2</div>
+        <div class="plan-info">
+          <div class="plan-name">📖 Presentation — Feeling words & opinion starters</div>
+          <div class="plan-time">10 min · New vocabulary in context</div>
+        </div>
+        <div class="plan-arrow">→</div>
+      </div>
+      <div class="plan-item" id="plan-3" onclick="goSection('s3')">
+        <div class="plan-num" id="pn-3">3</div>
+        <div class="plan-info">
+          <div class="plan-name">✏️ Practice — Build sentences</div>
+          <div class="plan-time">10 min · Controlled practice with structure</div>
+        </div>
+        <div class="plan-arrow">→</div>
+      </div>
+      <div class="plan-item" id="plan-4" onclick="goSection('s4')">
+        <div class="plan-num" id="pn-4">4</div>
+        <div class="plan-info">
+          <div class="plan-name">🎵 Song — Elvana Gjata · Si Na</div>
+          <div class="plan-time">10 min · Listen, understand, feel it</div>
+        </div>
+        <div class="plan-arrow">→</div>
+      </div>
+      <div class="plan-item" id="plan-5" onclick="goSection('s5')">
+        <div class="plan-num" id="pn-5">5</div>
+        <div class="plan-info">
+          <div class="plan-name">🗣️ Production — Speak freely</div>
+          <div class="plan-time">15 min · Use everything you've learned today</div>
+        </div>
+        <div class="plan-arrow">→</div>
+      </div>
+      <div class="plan-item" id="plan-6" onclick="goSection('s6')">
+        <div class="plan-num" id="pn-6">6</div>
+        <div class="plan-info">
+          <div class="plan-name">✅ Cool-down — Feedback & take-home</div>
+          <div class="plan-time">5 min · Review corrections, one phrase to keep</div>
+        </div>
+        <div class="plan-arrow">→</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ S1: WARM-UP -->
+<div class="screen" id="s1">
+  <div class="nav">
+    <button class="nav-back" onclick="goHome()">←</button>
+    <div class="nav-label">🔁 Warm-up</div>
+    <div class="nav-timer" id="t1">0:00</div>
+  </div>
+  <div class="section-body">
+    <div class="card">
+      <div class="card-label">Free recall</div>
+      <div class="recall-prompt">"Without looking at anything — what Albanian words or phrases do you remember from last time?"</div>
+      <p style="font-size:0.82rem;color:var(--muted);line-height:1.6;margin-bottom:16px">Let her speak freely. Write anything she produces on paper. Don't correct yet — just listen and encourage. Then tap the chips below to reveal the connector phrases from last session.</p>
+      <div class="card-label" style="margin-top:4px">Connector phrases from Lesson 3 — tap to reveal</div>
+      <div class="recall-chips">
+        <div class="recall-chip" onclick="this.classList.toggle('revealed')"><span class="chip-alb">Mendoj që...</span><span class="chip-en">I think that...</span></div>
+        <div class="recall-chip" onclick="this.classList.toggle('revealed')"><span class="chip-alb">Më duket se...</span><span class="chip-en">It seems to me that...</span></div>
+        <div class="recall-chip" onclick="this.classList.toggle('revealed')"><span class="chip-alb">Nga njëra anë...</span><span class="chip-en">On one hand...</span></div>
+        <div class="recall-chip" onclick="this.classList.toggle('revealed')"><span class="chip-alb">Varet...</span><span class="chip-en">It depends...</span></div>
+        <div class="recall-chip" onclick="this.classList.toggle('revealed')"><span class="chip-alb">Fillimisht...</span><span class="chip-en">First of all...</span></div>
+        <div class="recall-chip" onclick="this.classList.toggle('revealed')"><span class="chip-alb">Për shembull...</span><span class="chip-en">For example...</span></div>
+        <div class="recall-chip" onclick="this.classList.toggle('revealed')"><span class="chip-alb">S'du me hangër tash</span><span class="chip-en">I don't want to eat now</span></div>
+        <div class="recall-chip" onclick="this.classList.toggle('revealed')"><span class="chip-alb">Du me shku bashkë</span><span class="chip-en">I want to go together</span></div>
+      </div>
+      <p style="font-size:0.78rem;color:var(--muted);font-style:italic">Ask: which of these can she put into a sentence right now?</p>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Quick bridge into today</div>
+      <p style="font-size:0.85rem;line-height:1.7;color:rgba(237,232,245,0.7)">Ask her: <em style="color:var(--gold)">"Si ndihesh sot?"</em> — How do you feel today? Let her answer however she can. Then tell her: today she'll be able to say exactly that — and much more.</p>
+    </div>
+
+    <button class="section-done-btn" onclick="completeSection(1,'s2')">Done — next section →</button>
+  </div>
+</div>
+
+<!-- ════════════ S2: PRESENTATION -->
+<div class="screen" id="s2">
+  <div class="nav">
+    <button class="nav-back" onclick="goHome()">←</button>
+    <div class="nav-label">📖 Feelings & opinions</div>
+    <div class="nav-timer" id="t2">0:00</div>
+  </div>
+  <div class="section-body">
+
+    <div class="card">
+      <div class="card-label">Feeling words — ndjenjat</div>
+      <div class="vocab-table">
+        <div class="vocab-row">
+          <div><div class="v-alb">Ndihem i/e lumtur</div><div class="v-example">Sot ndihem shumë e lumtur.</div></div>
+          <div class="v-en">I feel happy<br><span style="color:var(--blue);font-style:italic;font-size:0.72rem">Je me sens heureuse</span></div>
+        </div>
+        <div class="vocab-row">
+          <div><div class="v-alb">Ndihem i/e trishtuar</div><div class="v-example">Ndihem e trishtuar kur jam larg.</div></div>
+          <div class="v-en">I feel sad<br><span style="color:var(--blue);font-style:italic;font-size:0.72rem">Je me sens triste</span></div>
+        </div>
+        <div class="vocab-row">
+          <div><div class="v-alb">Ndihem i/e emocionuar</div><div class="v-example">Ndihem e emocionuar për këtë.</div></div>
+          <div class="v-en">I feel excited<br><span style="color:var(--blue);font-style:italic;font-size:0.72rem">Je me sens émue/excitée</span></div>
+        </div>
+        <div class="vocab-row">
+          <div><div class="v-alb">Ndihem i/e shqetësuar</div><div class="v-example">Ndihem e shqetësuar kur s'kuptoj.</div></div>
+          <div class="v-en">I feel worried<br><span style="color:var(--blue);font-style:italic;font-size:0.72rem">Je me sens inquiète</span></div>
+        </div>
+        <div class="vocab-row">
+          <div><div class="v-alb">Ndihem i/e qetë</div><div class="v-example">Ndihem e qetë kur jam në natyrë.</div></div>
+          <div class="v-en">I feel calm<br><span style="color:var(--blue);font-style:italic;font-size:0.72rem">Je me sens calme</span></div>
+        </div>
+        <div class="vocab-row">
+          <div><div class="v-alb">Ndihem i/e lodhur</div><div class="v-example">Sonte ndihem shumë e lodhur.</div></div>
+          <div class="v-en">I feel tired<br><span style="color:var(--blue);font-style:italic;font-size:0.72rem">Je me sens fatiguée</span></div>
+        </div>
+        <div class="vocab-row">
+          <div><div class="v-alb">Ndihem i/e sigurt</div><div class="v-example">Ndihem e sigurt kur flas ngadalë.</div></div>
+          <div class="v-en">I feel confident<br><span style="color:var(--blue);font-style:italic;font-size:0.72rem">Je me sens confiante</span></div>
+        </div>
+        <div class="vocab-row">
+          <div><div class="v-alb">Ndihem i/e hutuar</div><div class="v-example">Ndihem e hutuar me gramatikën.</div></div>
+          <div class="v-en">I feel confused<br><span style="color:var(--blue);font-style:italic;font-size:0.72rem">Je me sens confuse</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:rgba(232,184,75,0.2)">
+      <div class="card-label">Grammar note — i vs e</div>
+      <p style="font-size:0.85rem;line-height:1.7;color:rgba(237,232,245,0.75)">The adjective changes depending on gender. When <em style="color:var(--gold)">Mel</em> describes herself, she always uses <strong style="color:var(--gold)">e</strong> — because she's feminine. <br><br>
+      <span style="color:var(--muted)">Ndihem <strong style="color:var(--gold)">e</strong> lumtur.</span> (Mel) &nbsp;·&nbsp; <span style="color:var(--muted)">Ndihem <strong style="color:var(--rose)">i</strong> lumtur.</span> (Durim)<br><br>
+      🇫🇷 Same as <em>heureux / heureuse</em> in French — she already knows this instinct!</p>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Opinion starters — mendimet</div>
+      <div class="vocab-table">
+        <div class="vocab-row">
+          <div><div class="v-alb">Mendoj që...</div><div class="v-example">Mendoj që shqipja asht e bukur.</div></div>
+          <div class="v-en">I think that...</div>
+        </div>
+        <div class="vocab-row">
+          <div><div class="v-alb">Besoj se...</div><div class="v-example">Besoj se mund ta mësoj.</div></div>
+          <div class="v-en">I believe that...</div>
+        </div>
+        <div class="vocab-row">
+          <div><div class="v-alb">Sipas meje...</div><div class="v-example">Sipas meje, kjo asht shumë interesante.</div></div>
+          <div class="v-en">In my opinion...<br><span style="color:var(--blue);font-style:italic;font-size:0.72rem">Selon moi... — same structure!</span></div>
+        </div>
+        <div class="vocab-row">
+          <div><div class="v-alb">Jam e sigurt që...</div><div class="v-example">Jam e sigurt që do e kuptoj.</div></div>
+          <div class="v-en">I'm sure that...</div>
+        </div>
+        <div class="vocab-row">
+          <div><div class="v-alb">Nuk jam e sigurt, por...</div><div class="v-example">Nuk jam e sigurt, por mendoj se po.</div></div>
+          <div class="v-en">I'm not sure, but...</div>
+        </div>
+        <div class="vocab-row">
+          <div><div class="v-alb">Kjo më pëlqen sepse...</div><div class="v-example">Kjo më pëlqen sepse asht e sinqertë.</div></div>
+          <div class="v-en">I like this because...<br><span style="color:var(--blue);font-style:italic;font-size:0.72rem">Ça me plaît parce que...</span></div>
+        </div>
+        <div class="vocab-row">
+          <div><div class="v-alb">Kjo nuk më pëlqen sepse...</div><div class="v-example">Kjo nuk më pëlqen sepse asht e vështirë.</div></div>
+          <div class="v-en">I don't like this because...</div>
+        </div>
+        <div class="vocab-row">
+          <div><div class="v-alb">E gjej të...</div><div class="v-example">E gjej të bukur / të vështirë / të lezetshme.</div></div>
+          <div class="v-en">I find it... (beautiful / difficult / delightful)<br><span style="color:var(--blue);font-style:italic;font-size:0.72rem">Je le/la trouve...</span></div>
+        </div>
+      </div>
+    </div>
+
+    <button class="section-done-btn" onclick="completeSection(2,'s3')">Done — next section →</button>
+  </div>
+</div>
+
+<!-- ════════════ S3: PRACTICE -->
+<div class="screen" id="s3">
+  <div class="nav">
+    <button class="nav-back" onclick="goHome()">←</button>
+    <div class="nav-label">✏️ Controlled practice</div>
+    <div class="nav-timer" id="t3">0:00</div>
+  </div>
+  <div class="section-body">
+
+    <div class="card">
+      <div class="card-label">How it works</div>
+      <p style="font-size:0.84rem;line-height:1.7;color:rgba(237,232,245,0.7)">Each card shows a situation. Mel tries to say the sentence out loud, then taps <strong style="color:var(--rose)">I tried it</strong> to see the answer. Tap <strong style="color:var(--gold)">Hint</strong> if she needs a nudge first. Don't correct mid-sentence — note it in the teacher log below.</p>
+    </div>
+
+    <div id="practice-area"></div>
+
+    <button class="section-done-btn" onclick="completeSection(3,'s4')">Done — next section →</button>
+  </div>
+</div>
+
+<!-- ════════════ S4: SONG -->
+<div class="screen" id="s4">
+  <div class="nav">
+    <button class="nav-back" onclick="goHome()">←</button>
+    <div class="nav-label">🎵 Elvana Gjata · Si Na</div>
+    <div class="nav-timer" id="t4">0:00</div>
+  </div>
+  <div class="section-body">
+
+    <div class="song-hero">
+      <div class="song-glow"></div>
+      <div class="song-artist">Elvana Gjata</div>
+      <div class="song-title">Si Na</div>
+      <div class="song-meaning">"Like Us" — a song about a love so rare, nothing compares</div>
+      <a class="yt-btn" href="https://www.youtube.com/results?search_query=Elvana+Gjata+Si+Na" target="_blank">▶ Find on YouTube</a>
+    </div>
+
+    <div class="card" style="border-color:rgba(212,92,122,0.2)">
+      <div class="card-label">Before you listen — prediction task</div>
+      <p style="font-size:0.85rem;line-height:1.7;color:rgba(237,232,245,0.7)">The song is called <em style="color:var(--rose)">Si Na</em> — Like Us. Ask Mel: <em style="color:var(--gold)">"What do you think this song is about? How might it feel?"</em> Let her predict in any language. Then play it.</p>
+    </div>
+
+    <div class="lyrics-block">
+      <div class="lyrics-section">
+        <div class="lyrics-tag">Verse 1</div>
+        <div class="lyric-line" onclick="this.classList.toggle('revealed')">
+          <div class="lyric-alb"><em>Si na</em>, si na</div>
+          <div class="lyric-en">Like us, like us</div>
+          <div class="lyric-tap">tap</div>
+        </div>
+        <div class="lyric-line" onclick="this.classList.toggle('revealed')">
+          <div class="lyric-alb">Kurrë s'ka pas as s'ka me pas</div>
+          <div class="lyric-en">There never was and there never will be</div>
+          <div class="lyric-tap">tap</div>
+        </div>
+        <div class="lyric-line" onclick="this.classList.toggle('revealed')">
+          <div class="lyric-alb">Kush s'është dasht as s'ka nuk dasht</div>
+          <div class="lyric-en">No one has loved like this, no one ever will</div>
+          <div class="lyric-tap">tap</div>
+        </div>
+        <div class="lyric-line" onclick="this.classList.toggle('revealed')">
+          <div class="lyric-alb">Bonnie edhe Clyde është shumë pak</div>
+          <div class="lyric-en">Even Bonnie and Clyde is not enough</div>
+          <div class="lyric-tap">tap</div>
+        </div>
+        <div class="lyric-line" onclick="this.classList.toggle('revealed')">
+          <div class="lyric-alb">Sa kom rreziku me t'pa ty ngat</div>
+          <div class="lyric-en">How much I risked just to be near you</div>
+          <div class="lyric-tap">tap</div>
+        </div>
+      </div>
+      <div class="lyrics-section">
+        <div class="lyrics-tag">Chorus</div>
+        <div class="lyric-line" onclick="this.classList.toggle('revealed')">
+          <div class="lyric-alb">T'thojsha <em>diell</em>, m'thojshe <em>hënë</em></div>
+          <div class="lyric-en">I called you sun, you called me moon</div>
+          <div class="lyric-tap">tap</div>
+        </div>
+        <div class="lyric-line" onclick="this.classList.toggle('revealed')">
+          <div class="lyric-alb">A kujton, syt tan ça patën than</div>
+          <div class="lyric-en">Do you remember what our eyes used to say</div>
+          <div class="lyric-tap">tap</div>
+        </div>
+        <div class="lyric-line" onclick="this.classList.toggle('revealed')">
+          <div class="lyric-alb">Ti je dritë, te syt e mi je panë</div>
+          <div class="lyric-en">You are light — I saw it in your eyes</div>
+          <div class="lyric-tap">tap</div>
+        </div>
+      </div>
+      <div class="lyrics-section">
+        <div class="lyrics-tag">Key vocab from the song</div>
+        <div class="vocab-table">
+          <div class="vocab-row"><div><div class="v-alb">Si na</div></div><div class="v-en">Like us</div></div>
+          <div class="vocab-row"><div><div class="v-alb">Kurrë</div></div><div class="v-en">Never</div></div>
+          <div class="vocab-row"><div><div class="v-alb">Dasht / dashuri</div></div><div class="v-en">To love / love</div></div>
+          <div class="vocab-row"><div><div class="v-alb">Diell</div></div><div class="v-en">Sun</div></div>
+          <div class="vocab-row"><div><div class="v-alb">Hënë</div></div><div class="v-en">Moon</div></div>
+          <div class="vocab-row"><div><div class="v-alb">Dritë</div></div><div class="v-en">Light</div></div>
+          <div class="vocab-row"><div><div class="v-alb">Sytë</div></div><div class="v-en">The eyes</div></div>
+          <div class="vocab-row"><div><div class="v-alb">Kujton</div></div><div class="v-en">You remember / to remember</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">After listening — reaction questions</div>
+      <p style="font-size:0.84rem;line-height:1.7;color:rgba(237,232,245,0.7)">Ask Mel to respond in Albanian as much as she can:</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px">
+        <div style="background:var(--surface2);border-radius:10px;padding:12px 14px">
+          <div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--text);margin-bottom:3px">Si ndihesh pas kësaj këngë?</div>
+          <div style="font-size:0.75rem;color:var(--muted);font-style:italic">How do you feel after this song? → She uses <strong style="color:var(--gold)">Ndihem e...</strong></div>
+        </div>
+        <div style="background:var(--surface2);border-radius:10px;padding:12px 14px">
+          <div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--text);margin-bottom:3px">Çka mendoni për këngën?</div>
+          <div style="font-size:0.75rem;color:var(--muted);font-style:italic">What do you think about the song? → She uses <strong style="color:var(--gold)">Mendoj që... / E gjej të...</strong></div>
+        </div>
+        <div style="background:var(--surface2);border-radius:10px;padding:12px 14px">
+          <div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--text);margin-bottom:3px">A të pëlqen? Pse?</div>
+          <div style="font-size:0.75rem;color:var(--muted);font-style:italic">Do you like it? Why? → She uses <strong style="color:var(--gold)">Kjo më pëlqen sepse...</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <button class="section-done-btn" onclick="completeSection(4,'s5')">Done — next section →</button>
+  </div>
+</div>
+
+<!-- ════════════ S5: PRODUCTION -->
+<div class="screen" id="s5">
+  <div class="nav">
+    <button class="nav-back" onclick="goHome()">←</button>
+    <div class="nav-label">🗣️ Free production</div>
+    <div class="nav-timer" id="t5">0:00</div>
+  </div>
+  <div class="section-body">
+
+    <div class="card">
+      <div class="card-label">The task</div>
+      <p style="font-size:0.85rem;line-height:1.7;color:rgba(237,232,245,0.7)">Mel gets a topic. She speaks for as long as she can — at least 1 minute. You listen. Only note errors, never interrupt. She must use at least <strong style="color:var(--gold)">one feeling word</strong> and <strong style="color:var(--gold)">one opinion starter</strong> per prompt.</p>
+    </div>
+
+    <div id="speak-area"></div>
+
+    <button class="section-done-btn" onclick="completeSection(5,'s6')">Done — next section →</button>
+  </div>
+</div>
+
+<!-- ════════════ S6: COOL-DOWN -->
+<div class="screen" id="s6">
+  <div class="nav">
+    <button class="nav-back" onclick="goHome()">←</button>
+    <div class="nav-label">✅ Cool-down</div>
+    <div class="nav-timer" id="t6">0:00</div>
+  </div>
+  <div class="section-body">
+
+    <div class="card">
+      <div class="card-label">Feedback — fluency first</div>
+      <p style="font-size:0.85rem;line-height:1.7;color:rgba(237,232,245,0.7)">Review the corrections from the log below. Go through them one at a time. For each one: say the correct version, have Mel repeat it twice, then move on. Don't dwell — the goal is to close the loop, not to re-teach.</p>
+    </div>
+
+    <div class="card" style="border-color:rgba(232,184,75,0.25);background:rgba(232,184,75,0.05)">
+      <div class="card-label">Take-home phrase</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--gold);text-align:center;margin:16px 0 6px;line-height:1.3">Ndihem e sigurt kur flas shqip.</div>
+      <div style="text-align:center;font-size:0.85rem;color:var(--muted);margin-bottom:20px">I feel confident when I speak Albanian.</div>
+      <div style="display:flex;justify-content:center;gap:10px;margin-bottom:12px" id="takehome-pips">
+        <div style="width:30px;height:30px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--muted);transition:all 0.3s" id="tp1">1</div>
+        <div style="width:30px;height:30px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--muted);transition:all 0.3s" id="tp2">2</div>
+        <div style="width:30px;height:30px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--muted);transition:all 0.3s" id="tp3">3</div>
+      </div>
+      <button class="section-done-btn" id="say-it-btn" style="max-width:260px;margin:0 auto" onclick="doTakeHome()">▶ Said it!</button>
+      <div id="th-tip" style="display:none;text-align:center;font-size:0.78rem;color:var(--muted);margin-top:10px;padding:8px 12px;background:var(--surface2);border-radius:8px">
+        💡 <strong style="color:var(--gold)">Ndihem</strong> = I feel &nbsp;·&nbsp; <strong style="color:var(--gold)">e sigurt</strong> = confident (f.) &nbsp;·&nbsp; <strong style="color:var(--gold)">kur flas</strong> = when I speak
+      </div>
+    </div>
+
+    <div class="done-card" id="done-card" style="display:none">
+      <span class="done-emoji">🌟</span>
+      <div class="done-title">Shumë mirë, Mel!</div>
+      <div class="done-sub">50 minutes. Feelings expressed. Opinions formed. A song understood.<br>That's who you are in Albanian — it just needed space to come out.</div>
+    </div>
+
+    <button class="back-home-btn" onclick="goHome()">← Back to lesson plan</button>
+  </div>
+</div>
+
+<!-- ════════════ CORRECTION DRAWER -->
+<div class="corr-backdrop" id="corr-backdrop" onclick="closeCorr()"></div>
+
+<button class="corr-fab" onclick="openCorr()">
+  📝 Notes <span class="corr-fab-badge" id="corr-badge">0</span>
+</button>
+
+<div class="corr-drawer" id="corr-drawer">
+  <div class="corr-drawer-handle" onclick="closeCorr()"></div>
+  <div class="corr-drawer-header">
+    <div class="corr-drawer-title">Teacher corrections</div>
+    <button class="corr-drawer-close" onclick="closeCorr()">×</button>
+  </div>
+  <div class="corr-drawer-body">
+    <div class="corr-form">
+      <input class="corr-input" id="corr-input" placeholder="Note a correction…" onkeydown="if(event.key==='Enter')addCorr()"/>
+      <button class="corr-add" onclick="addCorr()">+ Add</button>
+    </div>
+    <div class="corr-dismiss-hint">Tap × to dismiss each one when reviewed</div>
+    <div id="corr-list"><div class="corr-empty" id="corr-empty">No corrections yet.</div></div>
+  </div>
+</div>
+
+<script>
+// ── STATE
+var corrections = [];
+var corrOpen = false;
+var sectionTimers = {};
+var sectionSeconds = {};
+var completedSections = [];
+var takeHomeDone = 0;
+
+// ── PRACTICE DATA
+var practiceItems = [
+  {
+    situation: 'You want to say: "I feel excited about going to Kosovo."',
+    hint: 'Start with <strong style="color:var(--gold)">Ndihem e emocionuar</strong> (I feel excited) then add <strong style="color:var(--gold)">për me shku Kosovë</strong>.',
+    answer: 'Ndihem e emocionuar për me shku Kosovë.',
+    en: 'I feel excited about going to Kosovo.',
+    fr: 'Je me sens émue à l\'idée d\'aller au Kosovo.',
+    chunks: [{alb:'Ndihem',en:'I feel'},{alb:'e emocionuar',en:'excited (f.)'},{alb:'për me shku',en:'about going'},{alb:'Kosovë',en:'Kosovo'}]
+  },
+  {
+    situation: 'Express your opinion: "I think Albanian is beautiful but difficult."',
+    hint: '<strong style="color:var(--gold)">Mendoj që</strong> shqipja asht e bukur — then add <strong style="color:var(--gold)">por</strong> (but) and <strong style="color:var(--gold)">e vështirë</strong> (difficult).',
+    answer: 'Mendoj që shqipja asht e bukur, por e vështirë.',
+    en: 'I think Albanian is beautiful, but difficult.',
+    fr: 'Je pense que l\'albanais est beau, mais difficile.',
+    chunks: [{alb:'Mendoj që',en:'I think that'},{alb:'shqipja',en:'Albanian (the language)'},{alb:'asht e bukur',en:'is beautiful'},{alb:'por',en:'but'},{alb:'e vështirë',en:'difficult'}]
+  },
+  {
+    situation: 'Tell Durim: "I like this song because it makes me feel happy."',
+    hint: '<strong style="color:var(--gold)">Kjo këngë më pëlqen sepse</strong>... then use <strong style="color:var(--gold)">më bën të ndihem e lumtur</strong>.',
+    answer: 'Kjo këngë më pëlqen sepse më bën të ndihem e lumtur.',
+    en: 'I like this song because it makes me feel happy.',
+    fr: 'J\'aime cette chanson parce qu\'elle me rend heureuse.',
+    chunks: [{alb:'Kjo këngë',en:'This song'},{alb:'më pëlqen',en:'I like (lit. pleases me)'},{alb:'sepse',en:'because'},{alb:'më bën',en:'it makes me'},{alb:'të ndihem',en:'to feel'},{alb:'e lumtur',en:'happy (f.)'}]
+  },
+  {
+    situation: 'Express uncertainty: "I\'m not sure, but I think I understand."',
+    hint: 'Start with <strong style="color:var(--gold)">Nuk jam e sigurt, por</strong>... then <strong style="color:var(--gold)">mendoj se po kuptoj</strong>.',
+    answer: 'Nuk jam e sigurt, por mendoj se po kuptoj.',
+    en: 'I\'m not sure, but I think I understand.',
+    fr: 'Je ne suis pas sûre, mais je crois que je comprends.',
+    chunks: [{alb:'Nuk jam e sigurt',en:'I\'m not sure (f.)'},{alb:'por',en:'but'},{alb:'mendoj se',en:'I think that'},{alb:'po kuptoj',en:'I understand (present)'}]
+  },
+  {
+    situation: 'Say: "In my opinion, speaking is more important than grammar."',
+    hint: '<strong style="color:var(--gold)">Sipas meje</strong>... then <strong style="color:var(--gold)">të folurit asht ma e rëndësishme se gramatika</strong>.',
+    answer: 'Sipas meje, të folurit asht ma e rëndësishme se gramatika.',
+    en: 'In my opinion, speaking is more important than grammar.',
+    fr: 'Selon moi, parler est plus important que la grammaire.',
+    chunks: [{alb:'Sipas meje',en:'In my opinion'},{alb:'të folurit',en:'speaking'},{alb:'asht ma e rëndësishme',en:'is more important'},{alb:'se gramatika',en:'than grammar'}]
+  },
+  {
+    situation: 'React to the song: "I find it very moving and beautiful."',
+    hint: '<strong style="color:var(--gold)">E gjej shumë</strong>... then add two adjectives: <strong style="color:var(--gold)">prekëse</strong> (moving) and <strong style="color:var(--gold)">të bukur</strong> (beautiful).',
+    answer: 'E gjej shumë prekëse dhe të bukur.',
+    en: 'I find it very moving and beautiful.',
+    fr: 'Je la trouve très touchante et belle.',
+    chunks: [{alb:'E gjej',en:'I find it'},{alb:'shumë',en:'very'},{alb:'prekëse',en:'moving (f.)'},{alb:'dhe',en:'and'},{alb:'të bukur',en:'beautiful'}]
+  }
+];
+
+// ── SPEAK DATA
+var speakItems = [
+  {
+    situation: 'Use at least one feeling word + one opinion starter',
+    q: 'Si ndihesh kur flet shqip? Çka mendon?',
+    fr: 'Comment tu te sens quand tu parles albanais? Qu\'est-ce que tu penses?',
+    hint: 'Ndihem e... kur flas shqip. Mendoj që...'
+  },
+  {
+    situation: 'Talk about the song using your new language',
+    q: 'Çka mendoni për këngën "Si Na"? Si te bën me u ndjejtë?',
+    fr: 'Que penses-tu de la chanson "Si Na"? Comment elle te fait sentir?',
+    hint: 'E gjej të... / Kjo këngë më bën të ndihem... / Mendoj që...'
+  },
+  {
+    situation: 'Describe someone you love — use feelings and opinions',
+    q: 'Trego për dikë që do shumë. Si ndihesh kur je me ta?',
+    fr: 'Parle de quelqu\'un que tu aimes beaucoup. Comment tu te sens avec eux?',
+    hint: 'Ndihem e lumtur / e qetë / e sigurt kur jam me...'
+  },
+  {
+    situation: 'Opinion challenge — pick a side!',
+    q: 'Sipas teje, çka asht ma e rëndësishme: të folurit apo gramatika?',
+    fr: 'Selon toi, qu\'est-ce qui est le plus important: parler ou la grammaire?',
+    hint: 'Sipas meje... / Besoj se... / Mendoj që...'
+  }
+];
+
+// ── INIT
+(function() {
+  renderPractice();
+  renderSpeak();
+})();
+
+function renderPractice() {
+  var area = document.getElementById('practice-area');
+  area.innerHTML = practiceItems.map(function(item, i) {
+    return '<div class="speak-card" style="margin-bottom:10px">' +
+      '<div class="speak-situation">' + item.situation + '</div>' +
+      '<div class="hint-box" id="hint-' + i + '">' + item.hint + '</div>' +
+      '<div class="answer-box" id="ans-' + i + '">' +
+        '<div class="answer-alb">' + item.answer + '</div>' +
+        '<div class="answer-en">' + item.en + '</div>' +
+        '<div class="answer-fr">' + item.fr + '</div>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:10px">' +
+          item.chunks.map(function(c) {
+            return '<div style="background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:3px 9px;font-size:0.72rem;text-align:center"><div style="font-weight:600;color:var(--text)">' + c.alb + '</div><div style="color:var(--muted)">' + c.en + '</div></div>';
+          }).join('') +
+        '</div>' +
+      '</div>' +
+      '<div style="margin-top:12px">' +
+        '<button class="hint-btn" id="hbtn-' + i + '" onclick="showHint(' + i + ')">💡 Hint</button>' +
+        '<button class="tried-btn" id="tbtn-' + i + '" onclick="showAnswer(' + i + ')">I tried it →</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function showHint(i) {
+  document.getElementById('hint-' + i).classList.add('show');
+  document.getElementById('hbtn-' + i).disabled = true;
+}
+
+function showAnswer(i) {
+  document.getElementById('ans-' + i).classList.add('show');
+  document.getElementById('tbtn-' + i).disabled = true;
+  document.getElementById('tbtn-' + i).textContent = '✓ Done';
+}
+
+function renderSpeak() {
+  var area = document.getElementById('speak-area');
+  area.innerHTML = speakItems.map(function(item, i) {
+    return '<div class="speak-card" style="margin-bottom:10px">' +
+      '<div class="speak-situation">' + item.situation + '</div>' +
+      '<div class="speak-q">' + item.q + '</div>' +
+      '<div class="speak-fr">' + item.fr + '</div>' +
+      '<div class="hint-box" id="shint-' + i + '">' + item.hint + '</div>' +
+      '<div style="margin-top:10px">' +
+        '<button class="hint-btn" id="shbtn-' + i + '" onclick="showSHint(' + i + ')">💡 Scaffold</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function showSHint(i) {
+  document.getElementById('shint-' + i).classList.add('show');
+  document.getElementById('shbtn-' + i).disabled = true;
+}
+
+// ── TAKE HOME
+function doTakeHome() {
+  if (takeHomeDone >= 3) return;
+  takeHomeDone++;
+  var pips = ['tp1','tp2','tp3'];
+  var el = document.getElementById(pips[takeHomeDone - 1]);
+  el.style.background = 'var(--gold)';
+  el.style.borderColor = 'var(--gold)';
+  el.style.color = 'var(--bg)';
+  el.textContent = '✓';
+  document.getElementById('th-tip').style.display = 'block';
+  var btn = document.getElementById('say-it-btn');
+  if (takeHomeDone === 1) btn.textContent = '▶ Louder this time!';
+  else if (takeHomeDone === 2) btn.textContent = '▶ Own it — last one!';
+  else {
+    btn.textContent = '✓ Done!';
+    btn.disabled = true;
+    document.getElementById('done-card').style.display = 'block';
+    completeSection(6, null);
+    launchConfetti();
+  }
+}
+
+// ── TIMERS
+function startTimer(id) {
+  stopAllTimers();
+  sectionSeconds[id] = sectionSeconds[id] || 0;
+  var el = document.getElementById('t' + id);
+  if (el) el.className = 'nav-timer running';
+  sectionTimers[id] = setInterval(function() {
+    sectionSeconds[id]++;
+    var m = Math.floor(sectionSeconds[id] / 60);
+    var s = sectionSeconds[id] % 60;
+    if (el) el.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+  }, 1000);
+}
+
+function stopAllTimers() {
+  Object.keys(sectionTimers).forEach(function(k) { clearInterval(sectionTimers[k]); });
+}
+
+// ── NAV
+function goSection(id) {
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+  var num = parseInt(id.replace('s',''));
+  startTimer(num);
+}
+
+function goHome() {
+  stopAllTimers();
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('home').classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function completeSection(num, nextId) {
+  if (completedSections.indexOf(num) === -1) completedSections.push(num);
+  var planEl = document.getElementById('plan-' + num);
+  var numEl = document.getElementById('pn-' + num);
+  if (planEl) planEl.classList.add('done');
+  if (numEl) numEl.textContent = '✓';
+  if (nextId) {
+    setTimeout(function() { goSection(nextId); }, 300);
+  }
+}
+
+// ── CORRECTIONS
+function openCorr() {
+  corrOpen = true;
+  document.getElementById('corr-drawer').classList.add('open');
+  document.getElementById('corr-backdrop').classList.add('open');
+  setTimeout(function() {
+    var input = document.getElementById('corr-input');
+    if (input) input.focus();
+  }, 350);
+}
+
+function closeCorr() {
+  corrOpen = false;
+  document.getElementById('corr-drawer').classList.remove('open');
+  document.getElementById('corr-backdrop').classList.remove('open');
+}
+
+function addCorr() {
+  var input = document.getElementById('corr-input');
+  var text = input.value.trim();
+  if (!text) return;
+  corrections.push({ id: Date.now(), text: text });
+  input.value = '';
+  renderCorr();
+  if (!corrOpen) openCorr();
+}
+
+function dismissCorr(id) {
+  corrections = corrections.filter(function(c) { return c.id !== id; });
+  renderCorr();
+}
+
+function renderCorr() {
+  var list = document.getElementById('corr-list');
+  var empty = document.getElementById('corr-empty');
+  document.getElementById('corr-badge').textContent = corrections.length;
+  if (corrections.length === 0) {
+    list.innerHTML = '';
+    list.appendChild(empty);
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  list.innerHTML = corrections.map(function(c) {
+    return '<div class="corr-item"><div class="corr-text">' + c.text + '</div>' +
+      '<button class="corr-dismiss" onclick="dismissCorr(' + c.id + ')">×</button></div>';
+  }).join('');
+}
+
+function launchConfetti() {
+  var colors = ['#E8B84B','#D45C7A','#5BA882','#4D8FD4','#EDE8F5'];
+  for (var i = 0; i < 60; i++) {
+    var el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.cssText = 'left:' + (Math.random()*100) + 'vw;top:-8px;background:' +
+      colors[Math.floor(Math.random()*colors.length)] +
+      ';width:' + (5+Math.random()*7) + 'px;height:' + (5+Math.random()*7) +
+      'px;border-radius:' + (Math.random()>.5?'50%':'2px') +
+      ';animation-delay:' + (Math.random()*0.5) + 's;animation-duration:' + (2+Math.random()*1.5) + 's';
+    document.body.appendChild(el);
+    setTimeout(function() { if (el.parentNode) el.parentNode.removeChild(el); }, 4000);
+  }
+}
+</script>
+</body>
+</html>
