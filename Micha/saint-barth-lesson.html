@@ -1,0 +1,2100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAINT-BARTHÉLEMY — English Lesson</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Nunito:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void:    #F7F9FB;
+  --deep:    #042535;
+  --ocean:   #0A7A9A;
+  --lagoon:  #00B4CC;
+  --foam:    #E0F7FC;
+  --sand:    #F5E6C8;
+  --sand2:   #E8D4A8;
+  --white:   #FFFFFF;
+  --ink:     #0D2030;
+  --muted:   #5A7A8A;
+  --border:  rgba(10,122,154,0.15);
+  --card:    #FFFFFF;
+  --gold:    #C4922A;
+  --gold2:   #E8B84B;
+  --red:     #CC3322;
+  --green:   #1A8A5A;
+  --correct: rgba(26,138,90,0.1);
+  --wrong:   rgba(204,51,34,0.1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--void);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ══ LAYOUT ══ */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 290px;
+  max-width: 1120px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+.main { min-width: 0; padding-bottom: 100px; }
+
+/* ══ HERO ══ */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  border-bottom: 1px solid rgba(10,122,154,0.2);
+}
+
+.hero-visual {
+  position: relative;
+  height: clamp(260px, 35vw, 380px);
+  overflow: hidden;
+}
+
+.hero-visual svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(4,37,53,0.0) 0%,
+    rgba(4,37,53,0.0) 40%,
+    rgba(4,37,53,0.6) 75%,
+    rgba(4,37,53,0.92) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 0 32px 28px;
+  z-index: 2;
+}
+
+.hero-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--lagoon);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 20px; height: 1px;
+  background: var(--lagoon);
+}
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(38px, 7vw, 72px);
+  font-weight: 700;
+  line-height: 0.95;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.hero h1 .t1 { display: block; }
+.hero h1 .t2 {
+  display: block;
+  font-style: italic;
+  color: var(--lagoon);
+  font-size: 0.55em;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.hero-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.htag {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border: 1px solid;
+  border-radius: 2px;
+}
+
+.htag.tq { border-color: var(--lagoon); color: var(--lagoon); background: rgba(0,180,204,0.1); }
+.htag.wh { border-color: rgba(255,255,255,0.4); color: rgba(255,255,255,0.7); }
+.htag.gd { border-color: var(--gold2); color: var(--gold2); background: rgba(232,184,75,0.1); }
+
+/* ══ PROGRESS BANNER ══ */
+.progress-banner {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  padding: 10px 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.prog-item { display: flex; align-items: center; gap: 8px; }
+.prog-icon { font-size: 16px; }
+.prog-label { font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+.prog-val { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: var(--ocean); }
+.prog-divider { width: 1px; height: 28px; background: var(--border); }
+
+/* ══ TIMER ══ */
+.timer-bar {
+  background: var(--deep);
+  padding: 9px 28px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.t-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--lagoon);
+  min-width: 64px;
+}
+.t-num.urgent { color: #FF6644; animation: tp .5s ease infinite alternate; }
+@keyframes tp { from{transform:scale(1)} to{transform:scale(1.07)} }
+
+.t-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.7);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 12px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all .15s;
+}
+.t-btn:hover { border-color: var(--lagoon); color: var(--lagoon); }
+.t-btn.go { border-color: var(--lagoon); color: var(--lagoon); }
+.t-btn.go:hover { background: var(--lagoon); color: var(--deep); }
+
+.t-pre {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.3);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  cursor: pointer;
+  transition: all .15s;
+}
+.t-pre:hover, .t-pre.active { border-color: var(--lagoon); color: var(--lagoon); }
+
+/* ══ CONTAINER ══ */
+.wrap { padding: 22px 28px 0; }
+
+/* ══ SECTION HEADS ══ */
+.sh {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 30px 0 16px;
+}
+
+.sh-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--muted);
+}
+
+.sh-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(18px, 3vw, 24px);
+  font-weight: 700;
+  color: var(--ink);
+  font-style: italic;
+}
+
+.sh-line { flex: 1; height: 1px; background: var(--border); }
+
+.acc-o { color: var(--ocean); font-style: normal; }
+.acc-g { color: var(--gold); font-style: normal; }
+.acc-l { color: var(--lagoon); font-style: normal; }
+
+/* ══ RETRIEVAL ══ */
+.retrieval-card {
+  background: var(--foam);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--ocean);
+  border-radius: 0 10px 10px 0;
+  padding: 18px 20px;
+  margin-bottom: 10px;
+}
+
+.retrieval-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--ocean);
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+.retrieval-q {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.rq-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ocean);
+  flex-shrink: 0;
+  width: 20px;
+  line-height: 1.1;
+}
+
+.retrieval-reveal {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ocean);
+  margin-top: 4px;
+  display: none;
+}
+.retrieval-reveal.show { display: block; }
+
+.reveal-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: all .15s;
+  margin-top: 6px;
+}
+.reveal-btn:hover { border-color: var(--ocean); color: var(--ocean); }
+
+/* ══ VIDEO ══ */
+.video-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 16px rgba(10,122,154,0.08);
+  overflow: hidden;
+}
+
+.video-thumb {
+  height: 140px;
+  background: linear-gradient(135deg, var(--deep), var(--ocean));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.video-thumb::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(255,255,255,0.02) 0px 2px,
+    transparent 2px 20px
+  );
+}
+
+.play-oval {
+  width: 56px; height: 56px;
+  border: 2px solid rgba(255,255,255,0.8);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 1;
+  box-shadow: 0 0 24px rgba(0,180,204,0.4);
+  transition: transform .2s, box-shadow .2s;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(4px);
+}
+.play-oval:hover { transform: scale(1.1); box-shadow: 0 0 36px rgba(0,180,204,0.6); }
+.play-oval::after { content: '▶'; font-size: 18px; color: white; margin-left: 4px; }
+
+.v-tag {
+  position: absolute; top: 10px; left: 10px;
+  background: var(--ocean);
+  color: white;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 2px; padding: 3px 10px;
+  border-radius: 2px;
+}
+
+.v-body { padding: 16px 18px; }
+.v-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 19px; font-weight: 700; margin-bottom: 5px; color: var(--ink); }
+.v-meta { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.v-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 12px; font-weight: 600; }
+
+.v-link {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--ocean); color: white;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 2px; padding: 8px 16px; text-decoration: none;
+  border-radius: 2px; transition: all .2s;
+}
+.v-link:hover { background: var(--lagoon); transform: translateY(-1px); }
+
+.watch-list { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); list-style: none; }
+.watch-list li { font-size: 12px; color: var(--muted); padding: 3px 0; font-weight: 700; }
+.watch-list li::before { content: '◆ '; color: var(--lagoon); font-size: 8px; }
+
+/* ══ FACTS GRID ══ */
+.facts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 2px;
+}
+
+.fact-card {
+  background: white;
+  padding: 16px 14px;
+  transition: background .2s;
+  animation: fu .5s ease both;
+}
+.fact-card:hover { background: var(--foam); }
+@keyframes fu { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+.fact-icon { font-size: 20px; display: block; margin-bottom: 7px; }
+.fact-label { font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 3px; color: var(--lagoon); text-transform: uppercase; margin-bottom: 4px; }
+.fact-val { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+.fact-text { font-size: 12px; color: var(--muted); line-height: 1.6; font-weight: 600; }
+.fact-text strong { color: var(--ink); }
+
+/* ══ SCENES ══ */
+.scene-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  margin-bottom: 1px;
+}
+
+.scene-grid3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+}
+
+.scene-wrap {
+  position: relative;
+  background: white;
+  overflow: hidden;
+  transition: opacity .2s;
+}
+.scene-wrap:hover { opacity: .95; }
+.scene-wrap svg { display: block; width: 100%; }
+
+.scene-cap {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(4,37,53,0.8));
+  padding: 14px 12px 8px;
+}
+.sc-tag { display: block; font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--lagoon); margin-bottom: 2px; }
+.sc-name { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700; color: white; font-style: italic; }
+
+/* ══ VOCAB ══ */
+.vocab-section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--border);
+}
+.vocab-section-label.new { color: var(--ocean); }
+.vocab-section-label.review { color: var(--muted); }
+
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  margin-bottom: 14px;
+}
+
+.vocab-card {
+  background: white;
+  padding: 12px 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: all .2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.vocab-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--ocean), var(--lagoon));
+  opacity: 0;
+  transition: opacity .2s;
+}
+
+.vocab-card:hover { background: var(--foam); }
+.vocab-card.flipped::before { opacity: 1; }
+.vocab-card.flipped .vc-en, .vocab-card.flipped .vc-icon { color: white; position: relative; z-index: 1; font-weight: 800; }
+.vocab-card.flipped .vc-fr { opacity: 1; color: rgba(255,255,255,.8); position: relative; z-index: 1; }
+.vocab-card.flipped .vc-hint { opacity: 0; }
+.vocab-card.done { outline: 2px solid var(--green); }
+.vocab-card.done::after { content: '✓'; position: absolute; top: 3px; right: 6px; font-size: 10px; color: var(--green); font-weight: 800; z-index: 2; }
+
+.vc-icon { font-size: 20px; display: block; margin-bottom: 4px; position: relative; z-index: 1; }
+.vc-en { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700; color: var(--ink); display: block; position: relative; z-index: 1; }
+.vc-fr { font-size: 10px; font-weight: 700; color: var(--muted); opacity: 0; transition: opacity .2s; display: block; margin-top: 2px; }
+.vc-hint { font-family: 'Space Mono', monospace; font-size: 8px; color: var(--lagoon); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; position: relative; z-index: 1; }
+
+/* ══ READING ══ */
+.read-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; padding: 4px 12px; border: 1px solid;
+  margin-bottom: 12px; border-radius: 2px;
+}
+.read-tag.t { border-color: var(--gold); color: var(--gold); background: rgba(196,146,42,0.06); }
+.read-tag.s { border-color: var(--ocean); color: var(--ocean); background: rgba(10,122,154,0.06); }
+
+.reading-card {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 22px 24px;
+  margin-bottom: 12px;
+  position: relative;
+  box-shadow: 0 2px 16px rgba(10,122,154,0.06);
+}
+.reading-card::before { content: ''; position: absolute; top:0; left:0; width:3px; height:100%; }
+.reading-card.t::before { background: var(--gold); }
+.reading-card.s::before { background: var(--ocean); }
+
+.reading-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+
+.reading-body {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 2;
+  color: #2C4050;
+}
+
+.hl { color: var(--ocean); font-weight: 800; }
+.hl-g { color: var(--gold); font-weight: 800; }
+.hl-r { color: var(--red); font-weight: 800; }
+.vp { color: #1A5A7A; font-weight: 800; background: rgba(10,122,154,0.07); padding: 1px 5px; font-size: 14px; border-radius: 2px; }
+.adj { color: #1A6A4A; font-weight: 800; background: rgba(26,106,74,0.07); padding: 1px 4px; font-size: 14px; border-radius: 2px; }
+
+/* ══ ADJECTIVE BANK ══ */
+.adj-bank {
+  background: var(--foam);
+  border: 1px solid var(--border);
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+
+.adj-bank-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--ocean);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.adj-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+
+.adj-pill {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #1A6A4A;
+  cursor: default;
+  transition: all .2s;
+  box-shadow: 0 1px 4px rgba(10,122,154,0.08);
+}
+.adj-pill:hover { border-color: var(--ocean); transform: scale(1.04); }
+.adj-pill .fr { color: var(--muted); font-weight: 600; font-size: 11px; margin-left: 4px; }
+
+/* ══ QUIZ ══ */
+.quiz-card {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 16px 18px;
+  margin-bottom: 2px;
+  box-shadow: 0 1px 6px rgba(10,122,154,0.05);
+}
+
+.ex-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 7px;
+}
+
+.ex-diff {
+  display: inline-block;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 3px;
+  margin-left: 6px;
+}
+.ex-diff.easy { background: rgba(26,138,90,0.1); color: var(--green); }
+.ex-diff.medium { background: rgba(10,122,154,0.1); color: var(--ocean); }
+.ex-diff.hard { background: rgba(196,146,42,0.1); color: var(--gold); }
+
+.ex-q {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.quiz-opts { display: flex; flex-direction: column; gap: 5px; }
+
+.quiz-btn {
+  background: var(--foam);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 9px 14px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  transition: all .15s;
+}
+.quiz-btn:hover:not(:disabled) { border-color: var(--ocean); color: var(--ocean); background: white; }
+.quiz-btn.correct { border-color: var(--green); background: var(--correct); color: var(--green); }
+.quiz-btn.wrong { border-color: var(--red); background: var(--wrong); color: var(--red); }
+.quiz-btn:disabled { pointer-events: none; }
+
+.quiz-reveal { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 5px; display: none; font-weight: 700; }
+.quiz-reveal.show { display: block; }
+.quiz-reveal strong { color: var(--green); }
+
+/* ══ EXERCISES ══ */
+.ex-card {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 16px 18px;
+  margin-bottom: 2px;
+  box-shadow: 0 1px 6px rgba(10,122,154,0.05);
+}
+
+.hint-tag {
+  display: inline-block;
+  background: rgba(10,122,154,0.08);
+  border: 1px solid rgba(10,122,154,0.2);
+  color: var(--ocean);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  margin-right: 4px;
+  border-radius: 3px;
+}
+
+.fill-input {
+  background: var(--foam);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 7px 12px;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--ink);
+  width: 100%;
+  max-width: 200px;
+  outline: none;
+  transition: border-color .2s;
+  caret-color: var(--ocean);
+  font-family: 'Nunito', sans-serif;
+}
+.fill-input:focus { border-color: var(--ocean); box-shadow: 0 0 0 3px rgba(10,122,154,0.1); }
+.fill-input.correct { border-color: var(--green); background: var(--correct); color: var(--green); }
+.fill-input.wrong { border-color: var(--red); background: var(--wrong); color: var(--red); }
+
+.mc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+
+.mc-btn {
+  background: var(--foam);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 9px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+  transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) { border-color: var(--ocean); color: var(--ocean); background: white; }
+.mc-btn.correct { border-color: var(--green); background: var(--correct); color: var(--green); }
+.mc-btn.wrong { border-color: var(--red); background: var(--wrong); color: var(--red); }
+.mc-btn:disabled { pointer-events: none; }
+
+.ex-reveal { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 5px; display: none; font-weight: 700; }
+.ex-reveal.show { display: block; }
+.ex-reveal strong { color: var(--green); }
+
+/* ══ OPINION WRITING ══ */
+.opinion-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--gold);
+  padding: 20px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 16px rgba(10,122,154,0.06);
+}
+
+.opinion-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.starter-chip {
+  background: var(--foam);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+  margin-bottom: 6px;
+  display: block;
+  transition: all .15s;
+}
+.starter-chip:hover { border-color: var(--ocean); background: white; color: var(--ocean); }
+.starter-chip span { color: var(--ocean); font-weight: 800; }
+
+.opinion-textarea {
+  width: 100%;
+  min-height: 100px;
+  background: var(--foam);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 14px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  resize: vertical;
+  outline: none;
+  line-height: 1.7;
+  caret-color: var(--ocean);
+  transition: border-color .2s;
+  margin-top: 8px;
+}
+.opinion-textarea:focus { border-color: var(--ocean); box-shadow: 0 0 0 3px rgba(10,122,154,0.08); }
+.opinion-textarea::placeholder { color: var(--muted); font-style: italic; font-size: 13px; }
+
+/* ══ SPEAKING ══ */
+.speaking-section {
+  background: var(--deep);
+  border-radius: 0;
+  padding: 22px;
+  margin-bottom: 2px;
+}
+
+.speaking-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--lagoon);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.speaking-sub {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.speaking-prompts { display: flex; flex-direction: column; gap: 8px; }
+
+.speaking-prompt {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  padding: 14px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  transition: border-color .2s;
+}
+.speaking-prompt:hover { border-color: rgba(0,180,204,0.3); }
+
+.sp-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--lagoon);
+  flex-shrink: 0;
+  width: 24px;
+  line-height: 1;
+}
+
+.sp-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.5;
+  flex: 1;
+}
+.sp-hl { color: var(--lagoon); font-weight: 800; }
+
+.sp-level {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  border: 1px solid;
+}
+.sp-level.warm { border-color: var(--green); color: var(--green); }
+.sp-level.core { border-color: var(--lagoon); color: var(--lagoon); }
+.sp-level.challenge { border-color: var(--gold2); color: var(--gold2); }
+
+/* ══ CHECK + SCORE ══ */
+.check-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ocean);
+  border: none;
+  color: white;
+  padding: 14px 32px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(10,122,154,0.3);
+  transition: all .2s;
+  border-radius: 2px;
+}
+.check-btn:hover { background: var(--deep); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(10,122,154,0.35); }
+
+.score-panel {
+  background: var(--deep);
+  border: 1px solid rgba(0,180,204,0.3);
+  padding: 34px 24px;
+  text-align: center;
+  margin-top: 24px;
+  display: none;
+  animation: popIn .4s cubic-bezier(.34,1.56,.64,1) both;
+  box-shadow: 0 0 40px rgba(0,180,204,0.1);
+}
+.score-panel.show { display: block; }
+@keyframes popIn { from{opacity:0;transform:scale(.85)} to{opacity:1;transform:scale(1)} }
+
+.score-big { font-family: 'Cormorant Garamond', serif; font-size: 80px; font-weight: 700; color: var(--lagoon); line-height: 1; }
+.score-sub { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 4px; color: rgba(255,255,255,0.3); text-transform: uppercase; margin-top: 3px; }
+.score-msg { font-size: 18px; font-weight: 800; margin: 14px 0 6px; color: white; }
+
+.retry-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.5);
+  padding: 7px 22px;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all .2s;
+  border-radius: 2px;
+}
+.retry-btn:hover { border-color: var(--lagoon); color: var(--lagoon); }
+
+/* ══ WHITEBOARD ══ */
+.wb {
+  background: var(--deep);
+  border-left: 1px solid rgba(0,180,204,0.1);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.wb-head {
+  background: #031C2A;
+  padding: 13px 14px 10px;
+  border-bottom: 1px solid rgba(0,180,204,0.08);
+  flex-shrink: 0;
+}
+
+.wb-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-style: italic;
+  font-weight: 700;
+  color: var(--lagoon);
+}
+.wb-sub { font-family: 'Space Mono', monospace; font-size: 8px; color: rgba(255,255,255,0.25); font-weight: 600; margin-top: 2px; letter-spacing: 1px; text-transform: uppercase; }
+
+.wb-stamps {
+  padding: 8px 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  flex-shrink: 0;
+}
+
+.stamp {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 4px;
+  padding: 6px 4px;
+  font-size: 9px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.45);
+  cursor: pointer;
+  text-align: center;
+  transition: all .15s;
+  line-height: 1.4;
+}
+.stamp:hover { background: rgba(0,180,204,0.08); border-color: var(--lagoon); color: var(--lagoon); }
+.stamp.r:hover { border-color: #FF6644; color: #FF6644; }
+.stamp.g:hover { border-color: var(--green); color: var(--green); }
+
+/* Correction field */
+.wb-correction {
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  flex-shrink: 0;
+}
+
+.wb-correction-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wb-correction-wrap { display: flex; gap: 5px; }
+
+.wb-correction-input {
+  flex: 1;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 6px 10px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  color: white;
+  outline: none;
+  caret-color: var(--lagoon);
+  transition: border-color .2s;
+  border-radius: 4px;
+}
+.wb-correction-input:focus { border-color: rgba(0,180,204,0.4); }
+.wb-correction-input::placeholder { color: rgba(255,255,255,0.2); font-size: 11px; font-style: italic; }
+
+.wb-correction-send {
+  background: var(--lagoon);
+  border: none;
+  color: var(--deep);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all .15s;
+}
+.wb-correction-send:hover { background: white; }
+
+.wb-correction-display {
+  margin-top: 5px;
+  min-height: 38px;
+  background: rgba(0,180,204,0.07);
+  border: 1px solid rgba(0,180,204,0.15);
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--lagoon);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 1px;
+  transition: all .2s;
+}
+
+.wb-notes-wrap {
+  flex: 1; padding: 8px 10px;
+  display: flex; flex-direction: column; gap: 4px; min-height: 0;
+}
+
+.wb-notes-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.25);
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.wb-export-btn {
+  background: transparent; border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.3); font-family: 'Space Mono', monospace;
+  font-size: 8px; font-weight: 700; padding: 2px 7px;
+  cursor: pointer; transition: all .15s; border-radius: 3px;
+}
+.wb-export-btn:hover { border-color: var(--lagoon); color: var(--lagoon); }
+
+.wb-notes {
+  flex: 1; min-height: 60px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,0.75);
+  resize: none; outline: none; line-height: 1.7;
+  caret-color: var(--lagoon);
+  transition: border-color .2s;
+}
+.wb-notes:focus { border-color: rgba(0,180,204,0.25); }
+.wb-notes::placeholder { color: rgba(255,255,255,0.15); font-size: 11px; font-style: italic; }
+
+.wb-log {
+  padding: 0 10px 6px;
+  display: flex; flex-direction: column; gap: 3px;
+  flex-shrink: 0; max-height: 90px; overflow-y: auto;
+}
+.wb-log-label { font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 3px; }
+.wb-log-entry {
+  background: rgba(255,255,255,0.03); border-radius: 3px; padding: 3px 7px;
+  font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.55);
+  display: flex; align-items: center; gap: 4px; animation: sli .2s ease;
+}
+@keyframes sli { from{opacity:0;transform:translateX(5px)} to{opacity:1;transform:translateX(0)} }
+.wb-log-time { font-size: 9px; color: rgba(255,255,255,0.2); margin-left: auto; }
+
+.wb-acts {
+  padding: 4px 10px 8px; display: flex; gap: 4px; flex-shrink: 0;
+}
+.wb-act {
+  flex: 1; background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 3px; padding: 4px 3px;
+  font-family: 'Space Mono', monospace;
+  font-size: 8px; font-weight: 700;
+  color: rgba(255,255,255,0.25); cursor: pointer; text-align: center;
+  transition: all .15s;
+}
+.wb-act:hover { border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); }
+
+/* Mobile */
+.wb-toggle {
+  display: none;
+  position: fixed; bottom: 20px; right: 20px;
+  background: var(--ocean); color: white;
+  border: none; border-radius: 50%;
+  width: 50px; height: 50px; font-size: 20px;
+  cursor: pointer; box-shadow: 0 4px 20px rgba(10,122,154,0.4); z-index: 1000;
+}
+
+.wb-drawer {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--deep);
+  border-top: 2px solid var(--lagoon);
+  border-radius: 18px 18px 0 0;
+  padding: 14px; z-index: 999;
+  max-height: 75vh; overflow-y: auto;
+  transform: translateY(100%);
+  transition: transform .3s cubic-bezier(.34,1.2,.64,1);
+}
+.wb-drawer.open { transform: translateY(0); }
+.wb-dh { width: 34px; height: 3px; background: var(--lagoon); margin: 0 auto 12px; opacity: .3; border-radius: 2px; }
+
+@media (max-width: 720px) {
+  .layout { grid-template-columns: 1fr; }
+  .wb { display: none; }
+  .wb-toggle { display: flex; align-items: center; justify-content: center; }
+  .wb-drawer { display: block; }
+  .mc-opts { grid-template-columns: 1fr; }
+  .scene-grid { grid-template-columns: 1fr; }
+  .scene-grid3 { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="layout">
+<div class="main">
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-visual">
+    <svg viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0A2A3A"/>
+          <stop offset="50%" stop-color="#0E5A7A"/>
+          <stop offset="100%" stop-color="#1A90AA"/>
+        </linearGradient>
+        <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#00B4CC"/>
+          <stop offset="100%" stop-color="#006A88"/>
+        </linearGradient>
+        <linearGradient id="sandg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#F5E6C8"/>
+          <stop offset="100%" stop-color="#E0C890"/>
+        </linearGradient>
+        <radialGradient id="sun" cx="75%" cy="25%">
+          <stop offset="0%" stop-color="rgba(255,230,150,0.5)"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Sky -->
+      <rect width="900" height="380" fill="url(#sky)"/>
+      <!-- Sun glow -->
+      <rect width="900" height="380" fill="url(#sun)"/>
+      <!-- Sun disc -->
+      <circle cx="675" cy="95" r="36" fill="rgba(255,230,150,0.75)"/>
+      <circle cx="675" cy="95" r="50" fill="rgba(255,210,100,0.15)"/>
+
+      <!-- Distant mountains / hills of St Barths -->
+      <path d="M0,220 L60,170 L110,190 L170,155 L230,175 L290,145 L350,168 L410,150 L470,170 L530,148 L590,165 L650,152 L710,168 L760,155 L820,165 L900,155 L900,380 L0,380Z" fill="#083848"/>
+      <!-- Lush green hills -->
+      <path d="M0,240 L50,200 L100,215 L160,188 L220,208 L280,180 L340,200 L400,185 L460,200 L520,182 L580,198 L640,186 L700,200 L760,190 L820,205 L900,195 L900,380 L0,380Z" fill="#0A5040"/>
+      <path d="M0,260 L70,230 L140,245 L210,225 L280,242 L350,228 L420,244 L490,230 L560,244 L630,232 L700,244 L770,232 L840,245 L900,238 L900,380 L0,380Z" fill="#0E6A50"/>
+
+      <!-- Sea -->
+      <rect y="295" width="900" height="85" fill="url(#sea)"/>
+
+      <!-- Lagoon water shimmer -->
+      <path d="M0,297 Q90,290 180,297 Q270,304 360,297 Q450,290 540,297 Q630,304 720,297 Q810,290 900,297" stroke="rgba(255,255,255,0.25)" stroke-width="2" fill="none"/>
+      <path d="M0,310 Q100,305 200,310 Q300,315 400,310 Q500,305 600,310 Q700,315 800,310 Q850,308 900,310" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" fill="none"/>
+
+      <!-- Beach strip -->
+      <path d="M0,330 Q150,320 300,328 Q450,336 600,328 Q750,320 900,328 L900,380 L0,380Z" fill="url(#sandg)"/>
+
+      <!-- Sailboat -->
+      <g transform="translate(180,240)">
+        <rect x="-3" y="-2" width="6" height="40" fill="rgba(255,255,255,0.8)"/>
+        <path d="M3,0 L40,28 L3,30Z" fill="rgba(255,255,255,0.7)"/>
+        <path d="M-3,5 L-35,28 L-3,28Z" fill="rgba(255,255,255,0.5)"/>
+        <ellipse cx="0" cy="40" rx="20" ry="5" fill="rgba(255,255,255,0.4)"/>
+      </g>
+
+      <!-- Pirate ship (historic feel) -->
+      <g transform="translate(650,255)">
+        <rect x="-40" y="15" width="80" height="20" rx="4" fill="#3A2800"/>
+        <path d="M-40,20 Q0,28 40,20" fill="#4A3400" />
+        <!-- Mast -->
+        <rect x="-2" y="-30" width="4" height="50" fill="#5A3800"/>
+        <!-- Sail -->
+        <path d="M2,-28 L2,15 L35,5 L25,-22Z" fill="rgba(255,240,200,0.5)"/>
+        <!-- Flag -->
+        <path d="M2,-30 L14,-26 L2,-22Z" fill="#222"/>
+      </g>
+
+      <!-- Palm trees on beach -->
+      <g transform="translate(80,310)">
+        <line x1="0" y1="40" x2="4" y2="-10" stroke="#3A2800" stroke-width="5"/>
+        <ellipse cx="10" cy="-14" rx="20" ry="9" fill="#1A5A28" transform="rotate(-20,10,-14)"/>
+        <ellipse cx="-4" cy="-16" rx="18" ry="8" fill="#228B36" transform="rotate(18,-4,-16)"/>
+      </g>
+      <g transform="translate(800,315)">
+        <line x1="0" y1="35" x2="-2" y2="-8" stroke="#3A2800" stroke-width="4.5"/>
+        <ellipse cx="-8" cy="-12" rx="17" ry="8" fill="#1A5A28" transform="rotate(-18,-8,-12)"/>
+        <ellipse cx="6" cy="-10" rx="15" ry="7" fill="#228B36" transform="rotate(16,6,-10)"/>
+      </g>
+
+      <!-- White church (St Barths is famous for them) -->
+      <g transform="translate(390,188)">
+        <rect x="-14" y="0" width="28" height="32" fill="rgba(255,255,255,0.85)"/>
+        <polygon points="-14,0 0,-16 14,0" fill="rgba(255,255,255,0.9)"/>
+        <rect x="-2" y="-22" width="4" height="10" fill="rgba(255,255,255,0.9)"/>
+        <rect x="-8" y="8" width="16" height="20" fill="rgba(10,90,120,0.3)"/>
+      </g>
+
+      <!-- Stars -->
+      <circle cx="100" cy="30" r="1.2" fill="rgba(255,255,255,0.5)"/>
+      <circle cx="250" cy="18" r="1" fill="rgba(255,255,255,0.4)"/>
+      <circle cx="550" cy="25" r="1.2" fill="rgba(255,255,255,0.5)"/>
+      <circle cx="800" cy="15" r="1" fill="rgba(255,255,255,0.4)"/>
+    </svg>
+
+    <div class="hero-overlay"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">🌴 English Lesson · History · Culture</div>
+    <h1>
+      <span class="t1">Saint-Barthélemy</span>
+      <span class="t2">The Pearl of the Caribbean</span>
+    </h1>
+    <div class="hero-tags">
+      <span class="htag tq">⚔️ Colonial History</span>
+      <span class="htag gd">🏴‍☠️ Pirates</span>
+      <span class="htag wh">🇫🇷 French &amp; Swedish Past</span>
+      <span class="htag wh">📖 Descriptive Language</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PROGRESS BANNER ══ -->
+<div class="progress-banner">
+  <div class="prog-item">
+    <span class="prog-icon">📚</span>
+    <div>
+      <div class="prog-label">Lessons Done</div>
+      <div class="prog-val">9</div>
+    </div>
+  </div>
+  <div class="prog-divider"></div>
+  <div class="prog-item">
+    <span class="prog-icon">⚡</span>
+    <div>
+      <div class="prog-label">Irregular Verbs</div>
+      <div class="prog-val">26</div>
+    </div>
+  </div>
+  <div class="prog-divider"></div>
+  <div class="prog-item">
+    <span class="prog-icon">🔤</span>
+    <div>
+      <div class="prog-label">Vocab Cards</div>
+      <div class="prog-val">135+</div>
+    </div>
+  </div>
+  <div class="prog-divider"></div>
+  <div class="prog-item">
+    <span class="prog-icon">🌍</span>
+    <div>
+      <div class="prog-label">Places Explored</div>
+      <div class="prog-val">8</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TIMER ══ -->
+<div class="timer-bar">
+  <div>
+    <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-bottom:2px;text-transform:uppercase;">LESSON TIMER</div>
+    <div class="t-num" id="td">00:00</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:4px;">
+    <div style="display:flex;gap:4px;">
+      <button class="t-pre" onclick="setTimer(5,this)">5</button>
+      <button class="t-pre" onclick="setTimer(10,this)">10</button>
+      <button class="t-pre" onclick="setTimer(15,this)">15</button>
+      <button class="t-pre" onclick="setTimer(20,this)">20</button>
+    </div>
+    <div style="display:flex;gap:5px;">
+      <button class="t-btn go" id="tsb" onclick="toggleTimer()">▶ Start</button>
+      <button class="t-btn" onclick="resetTimer()">↺ Reset</button>
+    </div>
+  </div>
+  <span style="font-family:'Space Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);" id="tmode">COUNT UP</span>
+</div>
+
+<div class="wrap">
+
+<!-- ══ WARM-UP ══ -->
+<div class="sh"><span class="sh-num">00</span><span class="sh-title"><span class="acc-o">Warm-Up</span> — Last Lesson Recall</span><span class="sh-line"></span></div>
+
+<div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:12px;font-weight:700;letter-spacing:1px;">Answer first — then tap Reveal to check.</div>
+
+<div class="retrieval-card">
+  <div class="retrieval-title">🧠 Retrieval — Michael Jackson Lesson</div>
+
+  <div class="retrieval-q">
+    <span class="rq-num">1</span>
+    <div>
+      What are the past tense forms of: become · cost · grow · spread?
+      <button class="reveal-btn" onclick="revealQ(0)">REVEAL</button>
+      <div class="retrieval-reveal" id="rr0">become → became &nbsp;·&nbsp; cost → cost &nbsp;·&nbsp; grow → grew &nbsp;·&nbsp; spread → spread (same!)</div>
+    </div>
+  </div>
+
+  <div class="retrieval-q">
+    <span class="rq-num">2</span>
+    <div>
+      Describe Michael Jackson in 2 sentences. Use at least one adjective and one past tense verb.
+      <button class="reveal-btn" onclick="revealQ(1)">REVEAL</button>
+      <div class="retrieval-reveal" id="rr1">Example: "Michael Jackson was an extraordinary performer. He became famous when he was just eleven years old."</div>
+    </div>
+  </div>
+
+  <div class="retrieval-q" style="margin-bottom:0;">
+    <span class="rq-num">3</span>
+    <div>
+      What happened in the Thriller video? Describe one scene.
+      <button class="reveal-btn" onclick="revealQ(2)">REVEAL</button>
+      <div class="retrieval-reveal" id="rr2">Example: "The video was set in a dark, creepy graveyard. Zombies rose from the ground and danced in a terrifying but funny way."</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PART 1: VIDEO ══ -->
+<div class="sh"><span class="sh-num">01</span><span class="sh-title">Watch — <span class="acc-l">Saint-Barthélemy</span></span><span class="sh-line"></span></div>
+
+<div class="video-card">
+  <div class="video-thumb">
+    <div class="v-tag">▶ WATCH FIRST</div>
+    <div class="play-oval"></div>
+  </div>
+  <div class="v-body">
+    <div class="v-title">Saint-Barthélemy — A Caribbean Gem</div>
+    <div class="v-meta">YouTube · 5–8 min · Watch together</div>
+    <div class="v-desc">Before we read, let's see the island. The turquoise lagoons, the white beaches, the colourful port of Gustavia — and the unique mix of French elegance and Caribbean warmth.</div>
+    <a class="v-link" href="https://www.youtube.com/results?search_query=Saint+Barthelemy+island+documentary+history" target="_blank">◆ FIND ON YOUTUBE</a>
+    <ul class="watch-list">
+      <li>What are 3 adjectives to describe what you see?</li>
+      <li>What surprises you most about the island?</li>
+      <li>How is it different from Samoa or Kauai?</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══ PART 2: FAST FACTS ══ -->
+<div class="sh"><span class="sh-num">02</span><span class="sh-title">Fast <span class="acc-o">Facts</span></span><span class="sh-line"></span></div>
+
+<div class="facts-grid">
+  <div class="fact-card" style="animation-delay:.05s">
+    <span class="fact-icon">🌍</span>
+    <div class="fact-label">Location</div>
+    <div class="fact-val">Caribbean Sea</div>
+    <div class="fact-text">A small island in the <strong>Lesser Antilles</strong>, near Guadeloupe and Saint Martin. Just 21 km².</div>
+  </div>
+  <div class="fact-card" style="animation-delay:.1s">
+    <span class="fact-icon">🇫🇷</span>
+    <div class="fact-label">Status</div>
+    <div class="fact-val">French Territory</div>
+    <div class="fact-text">Officially part of <strong>France</strong> — people use euros and speak French. No visa needed for EU citizens.</div>
+  </div>
+  <div class="fact-card" style="animation-delay:.15s">
+    <span class="fact-icon">🇸🇪</span>
+    <div class="fact-label">Swedish Past</div>
+    <div class="fact-val">1784 — 1878</div>
+    <div class="fact-text">For 94 years, Saint-Barths <strong>belonged to Sweden</strong> — the only Caribbean island ever ruled by Swedes.</div>
+  </div>
+  <div class="fact-card" style="animation-delay:.2s">
+    <span class="fact-icon">⚓</span>
+    <div class="fact-label">Capital</div>
+    <div class="fact-val">Gustavia</div>
+    <div class="fact-text">Named after <strong>King Gustav III of Sweden</strong>. The port still has Swedish-style red rooftops today.</div>
+  </div>
+  <div class="fact-card" style="animation-delay:.25s">
+    <span class="fact-icon">👥</span>
+    <div class="fact-label">Population</div>
+    <div class="fact-val">~10,000 people</div>
+    <div class="fact-text">One of the <strong>smallest inhabited islands</strong> in the Caribbean, but one of the most visited by tourists.</div>
+  </div>
+  <div class="fact-card" style="animation-delay:.3s">
+    <span class="fact-icon">🏖️</span>
+    <div class="fact-label">Famous For</div>
+    <div class="fact-val">Shell Beach &amp; Luxury</div>
+    <div class="fact-text">Known for <strong>pristine white beaches</strong>, crystal-clear water, and being a destination for celebrities.</div>
+  </div>
+</div>
+
+<!-- ══ PART 3: SVG SCENES ══ -->
+<div class="sh"><span class="sh-num">03</span><span class="sh-title">See <span class="acc-l">Saint-Barths</span></span><span class="sh-line"></span></div>
+
+<div class="scene-grid" style="margin-bottom:1px;">
+
+  <!-- Gustavia port -->
+  <div class="scene-wrap">
+    <svg viewBox="0 0 440 210" xmlns="http://www.w3.org/2000/svg" style="height:210px;">
+      <defs>
+        <linearGradient id="gv-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0A1E2A"/>
+          <stop offset="100%" stop-color="#0E4A6A"/>
+        </linearGradient>
+        <linearGradient id="gv-sea" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#00A0BC"/>
+          <stop offset="100%" stop-color="#005A78"/>
+        </linearGradient>
+      </defs>
+      <rect width="440" height="210" fill="url(#gv-sky)"/>
+      <!-- Water -->
+      <rect y="145" width="440" height="65" fill="url(#gv-sea)"/>
+      <path d="M0,147 Q55,142 110,147 Q165,152 220,147 Q275,142 330,147 Q385,152 440,147" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none"/>
+      <!-- Buildings Gustavia style -->
+      <!-- Red rooftops (Swedish influence) -->
+      <rect x="30" y="100" width="35" height="48" fill="#F5E8D0"/>
+      <polygon points="28,100 47,80 67,100" fill="#CC4422"/>
+      <rect x="38" y="118" width="16" height="30" fill="#D4B88A"/>
+      <rect x="72" y="108" width="28" height="40" fill="#EDE0C8"/>
+      <polygon points="70,108 86,90 102,108" fill="#BB3311"/>
+      <rect x="78" y="122" width="13" height="26" fill="#C4A070"/>
+      <rect x="105" y="112" width="32" height="36" fill="#F0E4CC"/>
+      <polygon points="103,112 121,92 137,112" fill="#CC4422"/>
+      <!-- White church -->
+      <rect x="145" y="88" width="30" height="55" fill="rgba(255,255,255,0.92)"/>
+      <polygon points="143,88 160,68 177,88" fill="rgba(255,255,255,0.95)"/>
+      <rect x="158" y="56" width="4" height="14" fill="rgba(255,255,255,0.9)"/>
+      <rect x="153" y="118" width="20" height="25" fill="rgba(180,220,240,0.5)"/>
+      <!-- More colourful buildings -->
+      <rect x="182" y="104" width="26" height="44" fill="#D4E8C0"/>
+      <polygon points="180,104 195,86 208,104" fill="#4A8840"/>
+      <rect x="215" y="110" width="30" height="38" fill="#FFE8CC"/>
+      <polygon points="213,110 230,92 245,110" fill="#CC4422"/>
+      <rect x="252" y="100" width="28" height="48" fill="#CCE0F0"/>
+      <polygon points="250,100 266,82 280,100" fill="#4466AA"/>
+      <!-- Boats in port -->
+      <ellipse cx="340" cy="162" rx="30" ry="8" fill="rgba(255,255,255,0.6)"/>
+      <rect x="333" y="148" width="14" height="15" rx="2" fill="rgba(255,255,255,0.7)"/>
+      <line x1="340" y1="148" x2="340" y2="128" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
+      <path d="M340,130 L355,144 L340,146Z" fill="rgba(255,240,200,0.6)"/>
+      <ellipse cx="395" cy="165" rx="22" ry="6" fill="rgba(255,255,255,0.5)"/>
+      <line x1="395" y1="159" x2="395" y2="140" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+      <!-- Water reflections -->
+      <rect x="145" y="160" width="4" height="25" fill="rgba(255,255,255,0.08)"/>
+      <rect x="195" y="158" width="3" height="22" fill="rgba(255,255,255,0.06)"/>
+      <text x="220" y="205" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,204,0.5)" letter-spacing="2">GUSTAVIA — THE CAPITAL PORT</text>
+    </svg>
+    <div class="scene-cap"><span class="sc-tag">⚓ Capital City</span><span class="sc-name">Gustavia Harbour</span></div>
+  </div>
+
+  <!-- Pirate map / history -->
+  <div class="scene-wrap">
+    <svg viewBox="0 0 260 210" xmlns="http://www.w3.org/2000/svg" style="height:210px;">
+      <!-- Parchment background -->
+      <rect width="260" height="210" fill="#F5E6C0"/>
+      <rect width="260" height="210" fill="none" stroke="#C4A060" stroke-width="8"/>
+      <!-- Aged spots -->
+      <circle cx="30" cy="30" r="15" fill="rgba(180,140,60,0.08)"/>
+      <circle cx="230" cy="180" r="20" fill="rgba(180,140,60,0.1)"/>
+      <circle cx="200" cy="40" r="12" fill="rgba(180,140,60,0.06)"/>
+      <!-- Compass rose -->
+      <g transform="translate(48,100)">
+        <circle cx="0" cy="0" r="28" fill="none" stroke="#8A6030" stroke-width="1"/>
+        <polygon points="0,-26 4,-8 0,-4 -4,-8" fill="#8A6030"/>
+        <polygon points="0,26 4,8 0,4 -4,8" fill="#8A6030"/>
+        <polygon points="26,0 8,4 4,0 8,-4" fill="#8A6030"/>
+        <polygon points="-26,0 -8,4 -4,0 -8,-4" fill="#8A6030"/>
+        <circle cx="0" cy="0" r="5" fill="#C4922A"/>
+        <text x="0" y="-30" text-anchor="middle" font-family="serif" font-size="10" fill="#8A6030" font-weight="bold">N</text>
+        <text x="0" y="40" text-anchor="middle" font-family="serif" font-size="10" fill="#8A6030">S</text>
+        <text x="33" y="4" text-anchor="middle" font-family="serif" font-size="10" fill="#8A6030">E</text>
+        <text x="-33" y="4" text-anchor="middle" font-family="serif" font-size="10" fill="#8A6030">W</text>
+      </g>
+      <!-- Island shape on map -->
+      <path d="M120,60 Q145,50 165,62 Q178,72 175,88 Q170,100 155,105 Q138,110 122,100 Q108,88 112,74 Z" fill="rgba(34,140,60,0.4)" stroke="#8A6030" stroke-width="1.5"/>
+      <text x="145" y="88" text-anchor="middle" font-family="serif" font-style="italic" font-size="9" fill="#5A3010">St. Barths</text>
+      <!-- Dotted route line -->
+      <path d="M85,165 Q120,140 155,110" stroke="#AA4422" stroke-width="1.5" fill="none" stroke-dasharray="5,4"/>
+      <!-- Skull and crossbones -->
+      <circle cx="82" cy="172" r="12" fill="#AA4422"/>
+      <text x="82" y="176" text-anchor="middle" font-size="14" fill="white">☠</text>
+      <!-- Flag of Sweden (historic) -->
+      <rect x="185" y="55" width="46" height="32" fill="#006AA7"/>
+      <rect x="198" y="55" width="8" height="32" fill="#FECC02"/>
+      <rect x="185" y="67" width="46" height="8" fill="#FECC02"/>
+      <text x="208" y="99" text-anchor="middle" font-family="serif" font-size="7" fill="#8A6030">1784-1878</text>
+      <!-- Decorative text -->
+      <text x="130" y="30" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-style="italic" font-size="14" fill="#8A6030">Mare Caribeum</text>
+      <text x="130" y="195" text-anchor="middle" font-family="serif" font-size="8" fill="#AA4422" letter-spacing="2">PIRATE WATERS</text>
+    </svg>
+    <div class="scene-cap"><span class="sc-tag">🏴‍☠️ History</span><span class="sc-name">Colonial Era Map</span></div>
+  </div>
+</div>
+
+<div class="scene-grid3">
+
+  <!-- Turquoise beach -->
+  <div class="scene-wrap">
+    <svg viewBox="0 0 200 155" xmlns="http://www.w3.org/2000/svg" style="height:155px;">
+      <defs>
+        <linearGradient id="b-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1A8AA8"/>
+          <stop offset="100%" stop-color="#5AB8D0"/>
+        </linearGradient>
+        <linearGradient id="b-sea" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#00D4E8"/>
+          <stop offset="100%" stop-color="#0090A8"/>
+        </linearGradient>
+      </defs>
+      <rect width="200" height="155" fill="url(#b-sky)"/>
+      <circle cx="160" cy="32" r="18" fill="rgba(255,230,150,0.9)"/>
+      <circle cx="160" cy="32" r="26" fill="rgba(255,210,100,0.2)"/>
+      <rect y="88" width="200" height="67" fill="url(#b-sea)"/>
+      <path d="M0,90 Q50,84 100,90 Q150,96 200,90" stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none"/>
+      <path d="M0,100 Q40,96 80,100 Q120,104 160,100 Q180,98 200,100" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/>
+      <!-- Sand -->
+      <path d="M0,122 Q100,116 200,122 L200,155 L0,155Z" fill="#F5E6C8"/>
+      <path d="M0,122 Q100,118 200,122" fill="#EDD8A8"/>
+      <!-- Palm -->
+      <line x1="40" y1="155" x2="42" y2="95" stroke="#5A3800" stroke-width="5"/>
+      <ellipse cx="52" cy="88" rx="22" ry="9" fill="#1A6A30" transform="rotate(-25,52,88)"/>
+      <ellipse cx="35" cy="85" rx="20" ry="8" fill="#228B40" transform="rotate(20,35,85)"/>
+      <!-- Hammock suggestion -->
+      <path d="M25,105 Q42,110 60,105" stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none"/>
+      <text x="100" y="148" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="rgba(10,40,60,0.5)" letter-spacing="2">SAINT-JEAN BEACH</text>
+    </svg>
+    <div class="scene-cap"><span class="sc-tag">🏖️ Beach</span><span class="sc-name">Saint-Jean Beach</span></div>
+  </div>
+
+  <!-- Swedish fort -->
+  <div class="scene-wrap">
+    <svg viewBox="0 0 200 155" xmlns="http://www.w3.org/2000/svg" style="height:155px;">
+      <defs>
+        <linearGradient id="ft-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0A1828"/>
+          <stop offset="100%" stop-color="#1A3A50"/>
+        </linearGradient>
+      </defs>
+      <rect width="200" height="155" fill="url(#ft-sky)"/>
+      <!-- Stars -->
+      <circle cx="40" cy="20" r="1" fill="rgba(255,255,255,0.5)"/>
+      <circle cx="140" cy="15" r="1.2" fill="rgba(255,255,255,0.4)"/>
+      <circle cx="180" cy="28" r="1" fill="rgba(255,255,255,0.5)"/>
+      <!-- Hill -->
+      <path d="M0,155 L0,105 Q50,78 100,82 Q150,86 200,78 L200,155Z" fill="#1A2A18"/>
+      <!-- Fort walls -->
+      <rect x="50" y="72" width="100" height="50" fill="#3A3020"/>
+      <rect x="48" y="68" width="16" height="12" fill="#3A3020"/>
+      <rect x="90" y="65" width="16" height="12" fill="#3A3020"/>
+      <rect x="132" y="68" width="16" height="12" fill="#3A3020"/>
+      <!-- Crenellations -->
+      <rect x="50" y="70" width="6" height="8" fill="#4A4028"/>
+      <rect x="60" y="70" width="6" height="8" fill="#4A4028"/>
+      <rect x="92" y="67" width="6" height="8" fill="#4A4028"/>
+      <rect x="102" y="67" width="6" height="8" fill="#4A4028"/>
+      <rect x="134" y="70" width="6" height="8" fill="#4A4028"/>
+      <rect x="144" y="70" width="6" height="8" fill="#4A4028"/>
+      <!-- Gate -->
+      <path d="M90,122 L90,100 Q100,93 110,100 L110,122Z" fill="#0A0A0A"/>
+      <!-- Swedish flag on fort -->
+      <line x1="100" y1="72" x2="100" y2="50" stroke="#5A4818" stroke-width="2"/>
+      <rect x="100" y="50" width="22" height="15" fill="#006AA7"/>
+      <rect x="106" y="50" width="4" height="15" fill="#FECC02"/>
+      <rect x="100" y="57" width="22" height="4" fill="#FECC02"/>
+      <!-- Cannon -->
+      <rect x="55" y="108" width="22" height="8" rx="3" fill="#2A2820"/>
+      <rect x="68" y="105" width="8" height="5" fill="#2A2820"/>
+      <ellipse cx="55" cy="112" rx="5" ry="5" fill="#1A1810"/>
+      <text x="100" y="148" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="rgba(0,180,204,0.4)" letter-spacing="2">FORT KARL — 1786</text>
+    </svg>
+    <div class="scene-cap"><span class="sc-tag">🏰 Swedish Era</span><span class="sc-name">Fort Karl, Gustavia</span></div>
+  </div>
+
+  <!-- Colourful port streets -->
+  <div class="scene-wrap">
+    <svg viewBox="0 0 200 155" xmlns="http://www.w3.org/2000/svg" style="height:155px;">
+      <rect width="200" height="155" fill="#F5E6C8"/>
+      <!-- Street -->
+      <rect x="70" y="0" width="60" height="155" fill="#E8D4A8"/>
+      <!-- Colourful buildings left side -->
+      <rect x="0" y="30" width="68" height="125" fill="#FFE4CC"/>
+      <polygon points="-2,30 34,8 70,30" fill="#CC4422"/>
+      <rect x="10" y="70" width="20" height="30" fill="rgba(0,100,140,0.4)"/>
+      <rect x="38" y="75" width="16" height="25" fill="rgba(0,100,140,0.35)"/>
+      <rect x="10" y="45" width="12" height="14" fill="rgba(0,100,140,0.3)"/>
+      <rect x="46" y="45" width="12" height="14" fill="rgba(0,100,140,0.3)"/>
+      <!-- Right side buildings -->
+      <rect x="132" y="35" width="68" height="120" fill="#D4E8F0"/>
+      <polygon points="130,35 166,12 200,35" fill="#4466AA"/>
+      <rect x="142" y="72" width="18" height="28" fill="rgba(0,80,120,0.35)"/>
+      <rect x="168" y="72" width="18" height="28" fill="rgba(0,80,120,0.3)"/>
+      <rect x="142" y="48" width="12" height="14" fill="rgba(0,80,120,0.3)"/>
+      <rect x="168" y="48" width="12" height="14" fill="rgba(0,80,120,0.3)"/>
+      <!-- Street pavement -->
+      <rect x="70" y="130" width="60" height="25" fill="#D4C898"/>
+      <!-- Bougainvillea splash -->
+      <circle cx="68" cy="55" r="12" fill="rgba(220,60,140,0.5)"/>
+      <circle cx="64" cy="62" r="9" fill="rgba(220,60,140,0.4)"/>
+      <!-- People silhouettes -->
+      <ellipse cx="100" cy="145" rx="5" ry="7" fill="rgba(60,40,20,0.4)"/>
+      <ellipse cx="115" cy="148" rx="4" ry="6" fill="rgba(60,40,20,0.3)"/>
+      <text x="100" y="13" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="rgba(80,40,0,0.5)" letter-spacing="2">RUE DE LA FRANCE</text>
+    </svg>
+    <div class="scene-cap"><span class="sc-tag">🌺 Island Life</span><span class="sc-name">Gustavia Streets</span></div>
+  </div>
+
+</div>
+
+<!-- ══ PART 4: VOCAB PRE-TEACH ══ -->
+<div class="sh"><span class="sh-num">04</span><span class="sh-title">Vocabulary — <span class="acc-o">Learn First</span></span><span class="sh-line"></span></div>
+<p style="font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:14px;font-weight:700;letter-spacing:1px;">◆ Study these words before reading — tap once to reveal French, tap again to mark ✓ learned.</p>
+
+<div class="vocab-section-label new">⭐ New vocabulary — history &amp; atmosphere</div>
+<div class="vocab-grid" id="vocabNew"></div>
+
+<div class="vocab-section-label review" style="margin-top:12px;">🔁 Review from previous lessons</div>
+<div class="vocab-grid" id="vocabReview"></div>
+
+<!-- ══ PART 5: READING ══ -->
+<div class="sh"><span class="sh-num">05</span><span class="sh-title">Reading — <span class="acc-g">Two Texts</span></span><span class="sh-line"></span></div>
+
+<div class="read-tag t">🎤 TEXT A — Teacher reads aloud · Micha listens</div>
+<div class="reading-card t">
+  <div class="reading-title">A Paradise Passed Between Empires</div>
+  <div class="reading-body">
+    Long before tourists <span class="vp">arrived</span> with their superyachts and sunglasses, Saint-Barthélemy <span class="vp">belonged</span> to a very different world. The island's first known inhabitants were the <span class="hl">Arawak people</span>, who <span class="vp">settled</span> its <span class="adj">green</span>, <span class="adj">rocky</span> hills thousands of years ago. Christopher Columbus <span class="vp">spotted</span> the island in 1493 and <span class="vp">named</span> it after his brother Bartolomeo — giving it the <span class="adj">melodic</span> name we still use today.<br><br>
+
+    For two centuries, the island <span class="vp">changed</span> hands repeatedly. The French <span class="vp">took</span> control in 1648, but <span class="hl-r">pirates</span> <span class="vp">made</span> the waters around it <span class="adj">treacherous</span> and <span class="adj">dangerous</span>. The <span class="hl">buccaneers of the Caribbean</span> — <span class="adj">fearless</span>, <span class="adj">ruthless</span>, and <span class="adj">free</span> — <span class="vp">used</span> the island's <span class="adj">hidden</span> coves to hide their ships and divide their treasure.<br><br>
+
+    Then, in a <span class="adj">remarkable</span> deal, France <span class="vp">sold</span> the island to <span class="hl">Sweden</span> in 1784 in exchange for trading rights in Gothenburg. Sweden <span class="vp">renamed</span> the capital <span class="hl-g">Gustavia</span> after King Gustav III, <span class="vp">built</span> the <span class="adj">imposing</span> Fort Karl, and <span class="vp">turned</span> it into a <span class="adj">prosperous</span> free port. For 94 years, this <span class="adj">tiny</span> Caribbean island <span class="vp">flew</span> the Swedish flag.
+  </div>
+</div>
+
+<div class="read-tag s">📖 TEXT B — Micha reads</div>
+<div class="reading-card s">
+  <div class="reading-title">The Return to France &amp; the Island Today</div>
+  <div class="reading-body">
+    In 1878, Sweden <span class="vp">held</span> a vote — and the people of Saint-Barths <span class="vp">chose</span> to return to France. Sweden <span class="vp">sold</span> the island back for 320,000 francs. The <span class="hl">Swedish influence</span>, however, never <span class="vp">disappeared</span> completely. Even today, the capital Gustavia still has <span class="adj">distinctive</span> <span class="hl">red Swedish-style rooftops</span>, and the island's coat of arms includes a <span class="adj">Nordic</span> symbol.<br><br>
+
+    Today, Saint-Barthélemy is one of the most <span class="adj">exclusive</span> holiday destinations in the world. Its <span class="adj">pristine</span> beaches, <span class="adj">crystal-clear</span> lagoons, and <span class="adj">elegant</span> French restaurants <span class="vp">attract</span> celebrities, billionaires, and travellers from all over the globe. Yet the island has <span class="vp">kept</span> something <span class="adj">rare</span> — a sense of <span class="adj">quiet</span>, <span class="adj">authentic</span> beauty that <span class="adj">few</span> Caribbean islands still have.<br><br>
+
+    With a population of just 10,000 people, Saint-Barths <span class="vp">remains</span> a place where history and luxury <span class="vp">coexist</span>. <span class="hl-r">Pirates</span> once <span class="vp">sailed</span> past these same <span class="adj">turquoise</span> waters. Swedish soldiers once <span class="vp">stood</span> guard on these same <span class="adj">sun-drenched</span> hills. And today, Micha's teacher <span class="vp">walked</span> on the same <span class="adj">white</span>, <span class="adj">powdery</span> sand.
+  </div>
+</div>
+
+<!-- Adjective bank -->
+<div class="adj-bank">
+  <div class="adj-bank-title">◆ ATMOSPHERE ADJECTIVES — from both texts</div>
+  <div class="adj-pills" id="adjPills"></div>
+</div>
+
+<!-- ══ PART 6: COMPREHENSION ══ -->
+<div class="sh"><span class="sh-num">06</span><span class="sh-title">Comprehension <span class="acc-o">Quiz</span></span><span class="sh-line"></span></div>
+<div id="quizSection"></div>
+
+<!-- ══ PART 7: VERB PRACTICE ══ -->
+<div class="sh"><span class="sh-num">07</span><span class="sh-title">Verb <span class="acc-l">Practice</span></span><span class="sh-line"></span></div>
+<p style="font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:14px;font-weight:700;letter-spacing:1px;">◆ Light review — focus on verbs from the texts and previous lessons.</p>
+
+<div id="exerciseSection"></div>
+
+<div style="text-align:center;margin-top:22px;">
+  <button class="check-btn" onclick="checkAll()">◆ Check All Answers</button>
+</div>
+
+<div class="score-panel" id="scorePanel">
+  <div style="font-size:38px;margin-bottom:8px;" id="scoreTrophy">🌴</div>
+  <div class="score-big" id="scoreBig">0</div>
+  <div class="score-sub">POINTS SCORED</div>
+  <div class="score-msg" id="scoreMsg"></div>
+  <button class="retry-btn" onclick="resetAll()">↺ Try Again</button>
+</div>
+
+<!-- ══ PART 8: OPINION WRITING ══ -->
+<div class="sh"><span class="sh-num">08</span><span class="sh-title">Opinion <span class="acc-g">Writing</span></span><span class="sh-line"></span></div>
+
+<div class="opinion-card">
+  <div class="opinion-title">◆ Would You Like to Visit Saint-Barths? Why?</div>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:12px;font-weight:700;">Use the sentence starters below. Aim for 3–4 sentences. Try to use at least 2 adjectives.</p>
+
+  <div class="starter-chip" onclick="insertStarter('I would love to visit Saint-Barths because ')">🌊 <span>I would love to visit</span> Saint-Barths because ___</div>
+  <div class="starter-chip" onclick="insertStarter('The most interesting thing about Saint-Barths is ')">🏴‍☠️ <span>The most interesting thing</span> about Saint-Barths is ___</div>
+  <div class="starter-chip" onclick="insertStarter('I think the history of Saint-Barths is fascinating because ')">📖 <span>I think the history</span> is fascinating because ___</div>
+  <div class="starter-chip" onclick="insertStarter('However, I prefer ___ because it is more ')">🔵 <span>However</span>, I prefer ___ because it is more ___</div>
+  <div class="starter-chip" onclick="insertStarter('To conclude, I believe that ')">⭐ <span>To conclude</span>, I believe that ___</div>
+
+  <textarea class="opinion-textarea" id="opinionText" placeholder="Start writing your opinion here… Click a starter above to begin!"></textarea>
+</div>
+
+<!-- ══ PART 9: SPEAKING CHALLENGE ══ -->
+<div class="sh"><span class="sh-num">09</span><span class="sh-title">Speaking <span class="acc-l">Challenge</span></span><span class="sh-line"></span></div>
+
+<div class="speaking-section">
+  <div class="speaking-title">🎤 Say It Out Loud</div>
+  <div class="speaking-sub">// Production task — fluency over accuracy · complete all 3 if time allows</div>
+
+  <div class="speaking-prompts">
+    <div class="speaking-prompt">
+      <span class="sp-num">1</span>
+      <div class="sp-text">
+        Tell me: <span class="sp-hl">What did you learn about Saint-Barths today?</span><br>
+        Use 3 past tense verbs and mention at least one historical fact.
+      </div>
+      <span class="sp-level warm">WARM-UP</span>
+    </div>
+
+    <div class="speaking-prompt">
+      <span class="sp-num">2</span>
+      <div class="sp-text">
+        Describe the island using <span class="sp-hl">5 adjectives from today's lesson.</span><br>
+        "Saint-Barths is… It has… The beaches are… The history is…"
+      </div>
+      <span class="sp-level core">CORE</span>
+    </div>
+
+    <div class="speaking-prompt">
+      <span class="sp-num">3</span>
+      <div class="sp-text">
+        <span class="sp-hl">Imagine you are a pirate in 1700.</span> Describe Saint-Barths in 3 sentences.<br>
+        Use: "The island was… We sailed… We found… The water was…"
+      </div>
+      <span class="sp-level challenge">CHALLENGE</span>
+    </div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+</div><!-- /main -->
+
+<!-- ══ WHITEBOARD ══ -->
+<div class="wb">
+  <div class="wb-head">
+    <div class="wb-title">Teacher's Board</div>
+    <div class="wb-sub">stamps · correction · notes</div>
+  </div>
+
+  <div class="wb-stamps">
+    <button class="stamp" onclick="addStamp('✅ Correct!')">✅<br>Correct!</button>
+    <button class="stamp r" onclick="addStamp('❌ Not quite')">❌<br>Not quite</button>
+    <button class="stamp g" onclick="addStamp('🔁 Try again')">🔁<br>Try again</button>
+    <button class="stamp" onclick="addStamp('⭐ Great job!')">⭐<br>Great job!</button>
+    <button class="stamp" onclick="addStamp('👂 Listen carefully')">👂<br>Listen</button>
+    <button class="stamp" onclick="addStamp('🗣️ Say it out loud')">🗣️<br>Say it!</button>
+    <button class="stamp g" onclick="addStamp('💡 Remember this')">💡<br>Remember</button>
+    <button class="stamp" onclick="addStamp('📝 Write it down')">📝<br>Write it</button>
+  </div>
+
+  <div class="wb-correction">
+    <div class="wb-correction-label">
+      ✏️ CORRECTION
+      <span style="font-size:8px;">type → show large</span>
+    </div>
+    <div class="wb-correction-wrap">
+      <input type="text" class="wb-correction-input" id="corrInput" placeholder="type correction…">
+      <button class="wb-correction-send" onclick="showCorrection()">SHOW</button>
+    </div>
+    <div class="wb-correction-display" id="corrDisplay">—</div>
+  </div>
+
+  <div class="wb-notes-wrap">
+    <div class="wb-notes-label">
+      📝 NOTES
+      <button class="wb-export-btn" onclick="exportNotes()">COPY ALL</button>
+    </div>
+    <textarea class="wb-notes" id="wbNotes" placeholder="corrections, vocab to review, speaking prompts…"></textarea>
+  </div>
+
+  <div class="wb-log" id="wbLog">
+    <div class="wb-log-label">STAMP LOG</div>
+  </div>
+
+  <div class="wb-acts">
+    <button class="wb-act" onclick="clearNotes()">clear notes</button>
+    <button class="wb-act" onclick="clearLog()">clear log</button>
+    <button class="wb-act" onclick="clearCorr()">clear fix</button>
+  </div>
+</div>
+
+</div><!-- /layout -->
+
+<button class="wb-toggle" onclick="toggleWB()">📋</button>
+<div class="wb-drawer" id="wbDrawer">
+  <div class="wb-dh"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">
+    <button class="stamp" onclick="addStampM('✅ Correct!')">✅ Correct!</button>
+    <button class="stamp r" onclick="addStampM('❌ Not quite')">❌ Not quite</button>
+    <button class="stamp g" onclick="addStampM('🔁 Try again')">🔁 Try again</button>
+    <button class="stamp" onclick="addStampM('⭐ Great job!')">⭐ Great job!</button>
+    <button class="stamp" onclick="addStampM('👂 Listen')">👂 Listen</button>
+    <button class="stamp" onclick="addStampM('🗣️ Say it!')">🗣️ Say it!</button>
+    <button class="stamp g" onclick="addStampM('💡 Remember')">💡 Remember</button>
+    <button class="stamp" onclick="addStampM('📝 Write it')">📝 Write it</button>
+  </div>
+  <div style="margin-bottom:10px;">
+    <div style="font-family:'Space Mono',monospace;font-size:9px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-bottom:5px;text-transform:uppercase;">✏️ Quick Correction</div>
+    <div style="display:flex;gap:5px;">
+      <input type="text" class="wb-correction-input" id="corrInputM" placeholder="type correction…" style="flex:1;">
+      <button class="wb-correction-send" onclick="showCorrectionM()">SHOW</button>
+    </div>
+    <div class="wb-correction-display" id="corrDisplayM" style="margin-top:6px;">—</div>
+  </div>
+  <textarea id="wbNM" class="wb-notes" style="height:100px;width:100%;margin-bottom:8px;" placeholder="notes…"></textarea>
+  <div style="display:flex;gap:7px;">
+    <button class="wb-act" style="flex:1;" onclick="toggleWB()">close</button>
+    <button class="wb-act" style="flex:1;" onclick="document.getElementById('wbNM').value=''">clear</button>
+  </div>
+</div>
+
+<script>
+// ══ TIMER ══
+let tS=0,tT=0,tR=false,tI=null,cD=false;
+function setTimer(m,btn){resetTimer();tT=m*60;tS=tT;cD=true;document.getElementById('tmode').textContent=m+' MIN';document.getElementById('td').textContent=fmt(tS);document.querySelectorAll('.t-pre').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function toggleTimer(){if(tR){clearInterval(tI);tR=false;document.getElementById('tsb').textContent='▶ Start';}else{tR=true;document.getElementById('tsb').textContent='⏸ Pause';tI=setInterval(()=>{cD?tS--:tS++;if(cD&&tS<=0){tS=0;clearInterval(tI);tR=false;document.getElementById('tsb').textContent='▶ Start';}const el=document.getElementById('td');el.textContent=fmt(tS);el.classList.toggle('urgent',cD&&tS<=60);},1000);}}
+function resetTimer(){clearInterval(tI);tR=false;tS=cD?tT:0;document.getElementById('td').textContent=fmt(tS);document.getElementById('td').classList.remove('urgent');document.getElementById('tsb').textContent='▶ Start';}
+
+// ══ RETRIEVAL ══
+function revealQ(n){document.getElementById('rr'+n).classList.add('show');}
+
+// ══ VOCAB ══
+const vocabNew = [
+  {en:'colony',fr:'colonie',icon:'🗺️'},
+  {en:'treaty',fr:'traité',icon:'📜'},
+  {en:'harbour',fr:'port / havre',icon:'⚓'},
+  {en:'buccaneer',fr:'boucanier / pirate',icon:'🏴‍☠️'},
+  {en:'sovereign',fr:'souverain',icon:'👑'},
+  {en:'trade',fr:'commerce',icon:'⚖️'},
+  {en:'cove',fr:'crique',icon:'🏝️'},
+  {en:'fortress',fr:'forteresse',icon:'🏰'},
+  {en:'prosperous',fr:'prospère',icon:'💰'},
+  {en:'exclusive',fr:'exclusif',icon:'✨'},
+  {en:'pristine',fr:'immaculé / vierge',icon:'🌊'},
+  {en:'coexist',fr:'coexister',icon:'🤝'},
+];
+
+const vocabReview = [
+  {en:'island',fr:'île',icon:'🏝️'},
+  {en:'ocean',fr:'océan',icon:'🌊'},
+  {en:'legendary',fr:'légendaire',icon:'👑'},
+  {en:'extreme',fr:'extrême',icon:'⚡'},
+  {en:'transform',fr:'transformer',icon:'🔄'},
+  {en:'tradition',fr:'tradition',icon:'🥁'},
+];
+
+function buildVocab(arr,id){
+  const g=document.getElementById(id);
+  arr.forEach(v=>{
+    const c=document.createElement('div');
+    c.className='vocab-card';
+    c.innerHTML=`<span class="vc-icon">${v.icon}</span><span class="vc-en">${v.en}</span><span class="vc-fr">${v.fr}</span><span class="vc-hint">tap · tap again = ✓</span>`;
+    let clicks=0;
+    c.onclick=()=>{clicks++;if(clicks===1){c.classList.add('flipped');}else if(clicks===2){c.classList.add('done');}else{c.classList.remove('flipped','done');clicks=0;}};
+    g.appendChild(c);
+  });
+}
+
+// ══ ADJECTIVES ══
+const adjectives = [
+  {en:'turquoise',fr:'turquoise'},{en:'pristine',fr:'immaculé'},
+  {en:'treacherous',fr:'traître / dangereux'},{en:'fearless',fr:'intrépide'},
+  {en:'prosperous',fr:'prospère'},{en:'imposing',fr:'imposant'},
+  {en:'exclusive',fr:'exclusif'},{en:'crystal-clear',fr:'cristallin'},
+  {en:'elegant',fr:'élégant'},{en:'authentic',fr:'authentique'},
+  {en:'sun-drenched',fr:'baigné de soleil'},{en:'melodic',fr:'mélodieux'},
+  {en:'hidden',fr:'caché'},{en:'distinctive',fr:'distinctif'},
+];
+
+function buildAdj(){
+  const wrap=document.getElementById('adjPills');
+  adjectives.forEach(a=>{
+    const p=document.createElement('div');
+    p.className='adj-pill';
+    p.innerHTML=`${a.en} <span class="fr">${a.fr}</span>`;
+    wrap.appendChild(p);
+  });
+}
+
+// ══ QUIZ ══
+const quizData = [
+  {q:"🗺️ Who first named Saint-Barthélemy and when?",opts:["The French in 1648","Christopher Columbus in 1493","The Swedes in 1784","The Arawak people"],ans:"Christopher Columbus in 1493",diff:"easy"},
+  {q:"🇸🇪 Why did France sell Saint-Barths to Sweden in 1784?",opts:["They didn't want it anymore","In exchange for trading rights in Gothenburg","Because pirates controlled it","To end a war with Sweden"],ans:"In exchange for trading rights in Gothenburg",diff:"medium"},
+  {q:"⚓ What is the capital of Saint-Barths named after?",opts:["A French king","A Swedish ship","King Gustav III of Sweden","A pirate captain"],ans:"King Gustav III of Sweden",diff:"easy"},
+  {q:"🏴‍☠️ How did pirates use the island?",opts:["They built a fort there","They used hidden coves to hide ships and divide treasure","They sold it to Sweden","They attacked the French navy from there"],ans:"They used hidden coves to hide ships and divide treasure",diff:"medium"},
+  {q:"📊 For how many years did Saint-Barths fly the Swedish flag?",opts:["42 years","67 years","94 years","120 years"],ans:"94 years",diff:"medium"},
+  {q:"🗳️ How did Saint-Barths return to France in 1878?",opts:["France won it in a war","Sweden gave it as a gift","The people voted to return to France","Napoleon took it back"],ans:"The people voted to return to France",diff:"easy"},
+  {q:"🏘️ What Swedish influence can still be seen in Gustavia today?",opts:["Swedish is still spoken","The red Swedish-style rooftops remain","Swedish food is served everywhere","The Swedish flag still flies"],ans:"The red Swedish-style rooftops remain",diff:"medium"},
+  {q:"👥 Approximately how many people live on Saint-Barths today?",opts:["1,000","10,000","50,000","100,000"],ans:"10,000",diff:"easy"},
+];
+
+function buildQuiz(){
+  const sec=document.getElementById('quizSection');
+  sec.innerHTML='';
+  quizData.forEach((q,i)=>{
+    const card=document.createElement('div');
+    card.className='quiz-card';
+    const sh=[...q.opts].sort(()=>Math.random()-.5);
+    card.innerHTML=`
+      <div class="ex-label">QUESTION ${i+1} <span class="ex-diff ${q.diff}">${q.diff.toUpperCase()}</span></div>
+      <div class="ex-q">${q.q}</div>
+      <div class="quiz-opts" id="qo_${i}">
+        ${sh.map(o=>`<button class="quiz-btn" data-qi="${i}" data-val="${encodeURIComponent(o)}" onclick="pickQ(this)">${o}</button>`).join('')}
+      </div>
+      <div class="quiz-reveal" id="qr_${i}">✅ Answer: <strong>${q.ans}</strong></div>
+    `;
+    sec.appendChild(card);
+  });
+}
+
+function pickQ(btn){
+  const qi=btn.dataset.qi;
+  document.querySelectorAll(`#qo_${qi} .quiz-btn`).forEach(b=>b.disabled=true);
+  if(decodeURIComponent(btn.dataset.val)===quizData[qi].ans){btn.classList.add('correct');}
+  else{btn.classList.add('wrong');document.querySelectorAll(`#qo_${qi} .quiz-btn`).forEach(b=>{if(decodeURIComponent(b.dataset.val)===quizData[qi].ans)b.classList.add('correct');});document.getElementById('qr_'+qi).classList.add('show');}
+}
+
+// ══ EXERCISES ══
+const fillData = [
+  {s:"France ___ (sell) Saint-Barths to Sweden in 1784.",ans:"sold",hint:"sell",type:"fill",diff:"easy"},
+  {s:"Sweden ___ (build) Fort Karl to protect the harbour.",ans:"built",hint:"build",type:"fill",diff:"easy"},
+  {s:"The people ___ (choose) to return to France in 1878.",ans:"chose",hint:"choose",type:"fill",diff:"medium"},
+  {s:"Pirates ___ (sail) past the island and ___ (find) hidden coves.",ans:["sailed","found"],hint:["sail","find"],type:"fill2",diff:"medium"},
+  {s:"The Swedish influence ___ (not / disappear) — it ___ (become) part of the island's identity.",ans:["didn't disappear","became"],hint:["disappear","become"],type:"fill2",diff:"hard"},
+];
+
+const mcData = [
+  {q:"🇸🇪 Sweden ___ (hold) the island for almost a century.",opts:["holded","held","hold","helled"],ans:"held",label:"irregular: hold → ?",diff:"medium"},
+  {q:"🏴‍☠️ Pirates ___ (make) the waters around the island very dangerous.",opts:["maked","made","make","maded"],ans:"made",label:"irregular: make → ?",diff:"easy"},
+  {q:"📜 Columbus ___ (give) the island its name in 1493.",opts:["gived","given","gave","gives"],ans:"gave",label:"irregular: give → ?",diff:"easy"},
+  {q:"🗳️ ___ the islanders ___ (choose) to stay with Sweden or return to France?",opts:["Did / choose","Did / chose","Does / choose","Did / choosed"],ans:"Did / choose",label:"question form!",diff:"hard"},
+];
+
+function buildExercises(){
+  const sec=document.getElementById('exerciseSection');
+  sec.innerHTML='';
+  fillData.forEach((item,i)=>{
+    const card=document.createElement('div');
+    card.className='ex-card';
+    const dh=`<span class="ex-diff ${item.diff}">${item.diff.toUpperCase()}</span>`;
+    if(item.type==='fill'){
+      card.innerHTML=`
+        <div class="ex-label">FILL IN THE BLANK ${dh}</div>
+        <div class="ex-q"><span class="hint-tag">${item.hint}</span> ${item.s.replace('___','<span style="color:var(--ocean);font-weight:800"> ___ </span>')}</div>
+        <input type="text" class="fill-input" id="fi_${i}" placeholder="past tense…" autocomplete="off" spellcheck="false">
+        <div class="ex-reveal" id="fr_${i}">✅ Answer: <strong>${item.ans}</strong></div>
+      `;
+    } else {
+      const pts=item.s.split('___');
+      card.innerHTML=`
+        <div class="ex-label">FILL BOTH BLANKS ${dh}</div>
+        <div class="ex-q">
+          <span class="hint-tag">${item.hint[0]}</span><span class="hint-tag">${item.hint[1]}</span><br>
+          ${pts[0]}<input type="text" class="fill-input" id="fi_${i}_a" placeholder="…" autocomplete="off" spellcheck="false" style="width:140px;display:inline-block;margin:0 4px;">${pts[1]}<input type="text" class="fill-input" id="fi_${i}_b" placeholder="…" autocomplete="off" spellcheck="false" style="width:140px;display:inline-block;margin:0 4px;">${pts[2]||''}
+        </div>
+        <div class="ex-reveal" id="fr_${i}">✅ Answers: <strong>${item.ans[0]}</strong> / <strong>${item.ans[1]}</strong></div>
+      `;
+    }
+    sec.appendChild(card);
+  });
+
+  mcData.forEach((q,i)=>{
+    const card=document.createElement('div');
+    card.className='ex-card';
+    const sh=[...q.opts].sort(()=>Math.random()-.5);
+    card.innerHTML=`
+      <div class="ex-label">MULTIPLE CHOICE — <span style="color:var(--ocean)">${q.label}</span> <span class="ex-diff ${q.diff}">${q.diff.toUpperCase()}</span></div>
+      <div class="ex-q">${q.q}</div>
+      <div class="mc-opts" id="mo_${i}">
+        ${sh.map(o=>`<button class="mc-btn" data-qi="${i}" data-val="${encodeURIComponent(o)}" onclick="pickMC(this)">${o}</button>`).join('')}
+      </div>
+      <div class="ex-reveal" id="mr_${i}">✅ Answer: <strong>${q.ans}</strong></div>
+    `;
+    sec.appendChild(card);
+  });
+}
+
+function pickMC(btn){
+  const qi=btn.dataset.qi;
+  document.querySelectorAll(`#mo_${qi} .mc-btn`).forEach(b=>b.disabled=true);
+  if(decodeURIComponent(btn.dataset.val)===mcData[qi].ans){btn.classList.add('correct');}
+  else{btn.classList.add('wrong');document.querySelectorAll(`#mo_${qi} .mc-btn`).forEach(b=>{if(decodeURIComponent(b.dataset.val)===mcData[qi].ans)b.classList.add('correct');});}
+}
+
+// ══ CHECK ALL ══
+function checkAll(){
+  let s=0,t=0;
+
+  quizData.forEach((q,i)=>{
+    t++;
+    const c=document.querySelector(`#qo_${i} .quiz-btn.correct`);
+    const w=document.querySelector(`#qo_${i} .quiz-btn.wrong`);
+    if(c&&!w)s++;
+    else document.getElementById('qr_'+i).classList.add('show');
+    document.querySelectorAll(`#qo_${i} .quiz-btn`).forEach(b=>b.disabled=true);
+  });
+
+  fillData.forEach((item,i)=>{
+    if(item.type==='fill'){
+      t++;
+      const inp=document.getElementById('fi_'+i);
+      if(inp?.value.trim().toLowerCase()===item.ans.toLowerCase()){inp.classList.add('correct');s++;}
+      else{inp?.classList.add('wrong');document.getElementById('fr_'+i).classList.add('show');}
+      if(inp)inp.disabled=true;
+    } else {
+      t+=2;
+      const a=document.getElementById(`fi_${i}_a`);
+      const b=document.getElementById(`fi_${i}_b`);
+      if(a?.value.trim().toLowerCase()===item.ans[0].toLowerCase()){a.classList.add('correct');s++;}
+      else{a?.classList.add('wrong');document.getElementById('fr_'+i).classList.add('show');}
+      if(b?.value.trim().toLowerCase()===item.ans[1].toLowerCase()){b.classList.add('correct');s++;}
+      else{b?.classList.add('wrong');document.getElementById('fr_'+i).classList.add('show');}
+      if(a)a.disabled=true;
+      if(b)b.disabled=true;
+    }
+  });
+
+  mcData.forEach((q,i)=>{
+    t++;
+    const c=document.querySelector(`#mo_${i} .mc-btn.correct`);
+    const w=document.querySelector(`#mo_${i} .mc-btn.wrong`);
+    if(c&&!w)s++;
+    else document.getElementById('mr_'+i).classList.add('show');
+    document.querySelectorAll(`#mo_${i} .mc-btn`).forEach(b=>b.disabled=true);
+  });
+
+  const pct=s/t;
+  let msg,trophy;
+  if(pct>=.9){msg:"";msg="🌴 Parfait! You know Saint-Barths better than a local!";trophy="🏆🌊⭐⭐⭐";}
+  else if(pct>=.75){msg="🌺 Excellent — nearly perfect!";trophy="🌊⭐⭐";}
+  else if(pct>=.55){msg="⚓ Good effort — re-read the texts and retry!";trophy="⚓⭐";}
+  else{msg="📜 Re-read both texts carefully and try again!";trophy="🏴‍☠️";}
+
+  document.getElementById('scoreBig').textContent=`${s}/${t}`;
+  document.getElementById('scoreMsg').textContent=msg;
+  document.getElementById('scoreTrophy').textContent=trophy;
+  document.getElementById('scorePanel').classList.add('show');
+  document.getElementById('scorePanel').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function resetAll(){
+  document.getElementById('scorePanel').classList.remove('show');
+  buildQuiz();
+  buildExercises();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══ OPINION ══
+function insertStarter(text){
+  const ta=document.getElementById('opinionText');
+  if(ta.value&&!ta.value.endsWith('\n'))ta.value+='\n';
+  ta.value+=text;
+  ta.focus();
+  ta.setSelectionRange(ta.value.length,ta.value.length);
+}
+
+// ══ WHITEBOARD ══
+function gT(){const n=new Date();return n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0');}
+
+function addStamp(t){
+  const log=document.getElementById('wbLog');
+  const e=document.createElement('div');
+  e.className='wb-log-entry';
+  e.innerHTML=`<span>${t}</span><span class="wb-log-time">${gT()}</span>`;
+  log.appendChild(e);log.scrollTop=log.scrollHeight;
+  const n=document.getElementById('wbNotes');
+  if(n){n.value+=(n.value?'\n':'')+`[${gT()}] ${t}`;n.scrollTop=n.scrollHeight;}
+}
+
+function addStampM(t){const n=document.getElementById('wbNM');if(n)n.value+=(n.value?'\n':'')+`[${gT()}] ${t}`;}
+
+function showCorrection(){
+  const v=document.getElementById('corrInput').value.trim();
+  if(v)document.getElementById('corrDisplay').textContent=v;
+}
+
+function showCorrectionM(){
+  const v=document.getElementById('corrInputM').value.trim();
+  if(v)document.getElementById('corrDisplayM').textContent=v;
+}
+
+document.getElementById('corrInput')?.addEventListener('keydown',e=>{if(e.key==='Enter')showCorrection();});
+
+function clearNotes(){const n=document.getElementById('wbNotes');if(n)n.value='';}
+function clearLog(){const l=document.getElementById('wbLog');while(l.children.length>1)l.removeChild(l.lastChild);}
+function clearCorr(){document.getElementById('corrDisplay').textContent='—';document.getElementById('corrInput').value='';}
+
+function exportNotes(){
+  const notes=document.getElementById('wbNotes')?.value||'';
+  const log=[...document.querySelectorAll('.wb-log-entry')].map(e=>e.textContent.trim()).join('\n');
+  const full=`=== SESSION NOTES ===\n${notes}\n\n=== STAMP LOG ===\n${log}`;
+  navigator.clipboard?.writeText(full).then(()=>{
+    const btn=document.querySelector('.wb-export-btn');
+    btn.textContent='✅ COPIED';
+    setTimeout(()=>btn.textContent='COPY ALL',2000);
+  });
+}
+
+function toggleWB(){document.getElementById('wbDrawer').classList.toggle('open');}
+
+// ══ INIT ══
+buildVocab(vocabNew,'vocabNew');
+buildVocab(vocabReview,'vocabReview');
+buildAdj();
+buildQuiz();
+buildExercises();
+</script>
+</body>
+</html>

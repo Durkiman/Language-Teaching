@@ -1,0 +1,1869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Piece — Compass & Prepositions</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0A1628;
+  --deep: #061020;
+  --ocean: #0E4D6B;
+  --wave: #1A7A9A;
+  --gold: #F5C518;
+  --straw: #E8A020;
+  --red: #D42B2B;
+  --cream: #FDF6E3;
+  --parchment: #F5E6C0;
+  --ink: #1A1205;
+  --wood: #8B5E3C;
+  --wood-dark: #5C3D20;
+  --sail: #F0DEB0;
+  --muted: #7A9AB8;
+  --card: #FFFFFF;
+  --border: #D0C8B8;
+  --green: #2E7D32;
+  --green-l: #E8F5E9;
+  --purple: #6A1B9A;
+  --purple-l: #F3E5F5;
+
+  /* Whiteboard */
+  --wb-bg: #111E2E;
+  --wb-border: #1E3048;
+  --wb-text: #E0EAF6;
+  --wb-muted: #4A6A8A;
+  --wb-accent: #4FC3F7;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--navy);
+  color: var(--cream);
+  min-height: 100vh;
+}
+
+/* ══ LAYOUT ══ */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 290px;
+  min-height: 100vh;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.main-col { min-width: 0; padding-bottom: 80px; }
+
+/* ══ HERO ══ */
+.hero {
+  background: linear-gradient(160deg, #060C18 0%, #0A1E3A 50%, #0E2D50 100%);
+  padding: 30px 28px 26px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid var(--gold);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg, transparent, transparent 40px,
+    rgba(255,197,24,0.02) 40px, rgba(255,197,24,0.02) 41px
+  );
+}
+
+/* Animated waves in hero */
+.hero-waves {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 30px;
+  overflow: hidden;
+}
+
+.hero-wave {
+  position: absolute;
+  bottom: 0;
+  height: 20px;
+  width: 200%;
+  background: rgba(14,77,107,0.4);
+  border-radius: 50% 50% 0 0;
+  animation: waveSlide var(--spd, 6s) linear infinite;
+}
+.hero-wave:nth-child(2) { --spd: 8s; opacity: 0.5; animation-delay: -3s; }
+@keyframes waveSlide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+.hero-eyebrow {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-eyebrow::before { content:''; display:inline-block; width:24px; height:2px; background:var(--gold); }
+
+.hero h1 {
+  font-family: 'Bangers', cursive;
+  font-size: clamp(32px, 6vw, 56px);
+  letter-spacing: 3px;
+  color: white;
+  text-shadow: 3px 3px 0 var(--red), 5px 5px 0 rgba(0,0,0,0.4);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.hero h1 span { color: var(--gold); }
+
+.hero-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.htag {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.75);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+.htag.gold { background: var(--gold); color: var(--ink); border-color: var(--gold); }
+
+/* ══ TIMER BAR ══ */
+.timer-bar {
+  background: #061020;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 10px 28px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.timer-display {
+  font-family: 'Bangers', cursive;
+  font-size: 28px;
+  letter-spacing: 2px;
+  color: var(--gold);
+  min-width: 70px;
+  transition: color 0.3s;
+}
+
+.timer-display.urgent { color: var(--red); animation: pulse 0.5s ease infinite alternate; }
+@keyframes pulse { from{transform:scale(1)} to{transform:scale(1.06)} }
+
+.timer-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--cream);
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 5px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.15s;
+}
+.timer-btn:hover { background: rgba(255,255,255,0.15); }
+.timer-btn.start { background: var(--gold); color: var(--ink); border-color: var(--gold); }
+.timer-btn.start:hover { background: #FFD740; }
+
+.timer-presets { display: flex; gap: 6px; }
+.preset-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.preset-btn:hover { background: rgba(255,197,24,0.15); color: var(--gold); border-color: var(--gold); }
+.preset-btn.active { background: rgba(255,197,24,0.2); color: var(--gold); border-color: var(--gold); }
+
+.timer-label { font-size: 11px; color: var(--muted); font-weight: 700; letter-spacing: 1px; }
+
+/* ══ CONTAINER ══ */
+.container { padding: 20px 24px 0; }
+
+/* ══ SECTION HEADS ══ */
+.sec-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 30px 0 16px;
+}
+
+.sec-tag {
+  font-family: 'Bangers', cursive;
+  font-size: 12px;
+  letter-spacing: 2px;
+  padding: 3px 12px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.sec-tag.gold { background: var(--gold); color: var(--ink); }
+.sec-tag.red { background: var(--red); color: white; }
+.sec-tag.ocean { background: var(--ocean); color: white; }
+.sec-tag.green { background: var(--green); color: white; }
+.sec-tag.purple { background: var(--purple); color: white; }
+
+.sec-title {
+  font-family: 'Bangers', cursive;
+  font-size: clamp(18px, 3vw, 24px);
+  letter-spacing: 2px;
+  color: var(--gold);
+}
+
+.sec-line { flex:1; height:1px; background:rgba(255,255,255,0.07); }
+
+/* ══ VIDEO CARD ══ */
+.video-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.video-thumb {
+  background: linear-gradient(135deg, #060C18, #0A1E3A);
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.video-thumb::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-conic-gradient(from 0deg at 50% 110%, rgba(245,197,24,0.04) 0deg 4deg, transparent 4deg 12deg);
+}
+
+.play-btn {
+  width: 58px; height: 58px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: flex; align-items:center; justify-content:center;
+  font-size: 22px;
+  position: relative; z-index: 1;
+  box-shadow: 0 0 30px rgba(245,197,24,0.4);
+  transition: transform 0.2s;
+}
+.play-btn:hover { transform: scale(1.1); }
+.play-btn::after { content:'▶'; margin-left:4px; color:var(--ink); }
+
+.video-rec-tag {
+  position: absolute; top:10px; left:10px;
+  background: var(--red);
+  color: white;
+  font-family: 'Bangers', cursive;
+  font-size: 10px; letter-spacing: 2px;
+  padding: 3px 10px; border-radius: 2px;
+}
+
+.video-body { padding: 16px 18px; }
+.video-title { font-family: 'Bangers', cursive; font-size: 20px; letter-spacing: 1px; color: white; margin-bottom: 5px; }
+.video-meta { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+.video-desc { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 12px; }
+
+.video-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--gold); color: var(--ink);
+  font-family: 'Bangers', cursive; font-size: 14px; letter-spacing: 2px;
+  padding: 8px 18px; border-radius: 6px; text-decoration: none;
+  transition: all 0.2s;
+}
+.video-link:hover { background: white; transform: translateY(-1px); }
+
+.watch-prompts {
+  margin-top: 12px; padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  list-style: none;
+}
+.watch-prompts li {
+  font-size: 13px; font-weight: 700;
+  color: rgba(255,255,255,0.5); padding: 3px 0;
+}
+.watch-prompts li::before { content:'→ '; color: var(--gold); }
+
+/* ══ COMPASS SECTION ══ */
+.compass-wrap {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.compass-svg-wrap {
+  position: relative;
+  width: 180px;
+  flex-shrink: 0;
+}
+
+.compass-svg-wrap svg { display: block; }
+
+.compass-needle {
+  transform-origin: 90px 90px;
+  animation: spin 8s ease-in-out infinite;
+}
+
+@keyframes spin {
+  0%   { transform: rotate(0deg); }
+  20%  { transform: rotate(15deg); }
+  40%  { transform: rotate(-10deg); }
+  60%  { transform: rotate(5deg); }
+  80%  { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.compass-facts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.compass-fact {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 14px;
+}
+
+.compass-fact h4 {
+  font-family: 'Bangers', cursive;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.compass-fact p {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.6;
+}
+
+.compass-fact p strong { color: white; }
+
+/* Directions grid */
+.directions-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.dir-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 12px 8px;
+  text-align: center;
+  transition: all 0.2s;
+}
+.dir-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+
+.dir-arrow { font-size: 24px; display: block; margin-bottom: 4px; }
+.dir-en { font-family: 'Bangers', cursive; font-size: 16px; letter-spacing: 1px; color: var(--gold); }
+.dir-fr { font-size: 11px; font-weight: 700; color: var(--muted); margin-top: 2px; }
+.dir-abbr {
+  font-size: 10px; font-weight: 800; letter-spacing: 1px;
+  background: var(--gold); color: var(--ink);
+  padding: 1px 5px; border-radius: 3px;
+  display: inline-block; margin-bottom: 4px;
+}
+
+/* ══ PREPOSITIONS ══ */
+.prep-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.prep-card {
+  background: var(--card);
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  padding: 12px 10px;
+  text-align: center;
+  transition: all 0.2s;
+  cursor: default;
+}
+.prep-card:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+
+.prep-scene { height: 60px; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
+.prep-en { font-family: 'Bangers', cursive; font-size: 17px; letter-spacing: 1px; color: var(--ink); }
+.prep-fr { font-size: 11px; font-weight: 700; color: #888; margin-top: 2px; }
+.prep-example { font-size: 11px; font-weight: 600; color: #607D8B; margin-top: 4px; font-style: italic; line-height: 1.4; }
+
+/* ══ INTERACTIVE BOAT ══ */
+.boat-section {
+  background: linear-gradient(180deg, #061828 0%, #0A2240 100%);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 20px;
+  user-select: none;
+}
+
+.boat-scene {
+  position: relative;
+  width: 100%;
+  background: linear-gradient(180deg, #0A1E3A 0%, #061828 100%);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.boat-scene svg { display: block; width: 100%; }
+
+/* Luffy character */
+.luffy-char {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  cursor: grab;
+  transition: filter 0.2s;
+  z-index: 10;
+  touch-action: none;
+}
+
+.luffy-char:active { cursor: grabbing; filter: drop-shadow(0 0 8px var(--gold)); }
+
+/* Hotspots */
+.zone-label {
+  position: absolute;
+  font-family: 'Bangers', cursive;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.25);
+  pointer-events: none;
+  text-transform: uppercase;
+}
+
+/* Prep answer display */
+.prep-answer {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 14px 18px;
+  text-align: center;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  transition: all 0.3s;
+}
+
+.prep-answer.active {
+  border-color: var(--gold);
+  background: rgba(245,197,24,0.08);
+}
+
+.prep-answer .answer-main {
+  font-family: 'Bangers', cursive;
+  font-size: 22px;
+  letter-spacing: 2px;
+  color: var(--gold);
+}
+
+.prep-answer .answer-sentence {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+}
+
+.prep-answer .answer-fr {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* Snap zone buttons */
+.snap-zones {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.snap-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 8px;
+  padding: 9px 6px;
+  font-family: 'Bangers', cursive;
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+}
+.snap-btn:hover { background: rgba(245,197,24,0.12); border-color: var(--gold); color: var(--gold); }
+.snap-btn:active { transform: scale(0.96); }
+
+/* ══ CHARACTER SECTION ══ */
+.char-card {
+  background: var(--parchment);
+  border-radius: 14px;
+  border: 2px solid var(--wood);
+  padding: 20px 22px;
+  color: var(--ink);
+  box-shadow: 4px 4px 0 var(--wood-dark);
+  margin-bottom: 14px;
+}
+
+.char-card h3 {
+  font-family: 'Bangers', cursive;
+  font-size: 22px;
+  letter-spacing: 2px;
+  color: var(--red);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 2px dashed var(--wood);
+  padding-bottom: 10px;
+}
+
+.char-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.char-stat {
+  background: rgba(139,94,60,0.1);
+  border: 1px solid rgba(139,94,60,0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.char-stat-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--wood);
+  margin-bottom: 3px;
+}
+
+.char-stat-val {
+  font-family: 'Bangers', cursive;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: var(--ink);
+}
+
+.char-desc {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.85;
+  color: #2C1A0E;
+}
+
+.char-desc .hl { color: var(--red); font-weight: 800; }
+.char-desc .vp { background: rgba(212,43,43,0.1); color: var(--red); font-weight: 800; padding: 1px 4px; border-radius: 3px; }
+
+/* Adjective bank */
+.adj-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.adj-pill {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink);
+  transition: all 0.2s;
+  cursor: default;
+}
+.adj-pill:hover { border-color: var(--red); color: var(--red); transform: scale(1.05); }
+.adj-pill .fr { color: var(--muted); font-weight: 600; font-size: 11px; margin-left: 4px; }
+
+/* ══ VOCAB ══ */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 8px;
+}
+
+.vocab-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 12px 8px;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.vocab-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--gold), var(--straw));
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.vocab-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+.vocab-card.revealed::before { opacity: 1; }
+.vocab-card.revealed .vc-en, .vocab-card.revealed .vc-icon { color: var(--ink); position: relative; z-index: 1; }
+.vocab-card.revealed .vc-fr { opacity: 1; color: rgba(0,0,0,0.65); position: relative; z-index: 1; }
+.vocab-card.revealed .vc-hint { opacity: 0; }
+
+.vc-icon { font-size: 22px; display: block; margin-bottom: 4px; position: relative; z-index: 1; }
+.vc-en { font-family: 'Bangers', cursive; font-size: 14px; letter-spacing: 1px; color: rgba(255,255,255,0.9); display: block; position: relative; z-index: 1; }
+.vc-fr { font-size: 10px; color: rgba(255,255,255,0.45); font-weight: 700; opacity: 0; transition: opacity 0.2s; display: block; margin-top: 2px; }
+.vc-hint { font-size: 9px; color: var(--gold); font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; position: relative; z-index: 1; transition: opacity 0.2s; }
+
+/* ══ QUIZ ══ */
+.quiz-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 10px;
+}
+
+.quiz-q { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: white; line-height: 1.5; }
+.quiz-opts { display: flex; flex-direction: column; gap: 6px; }
+
+.quiz-btn {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 7px;
+  padding: 9px 14px;
+  color: rgba(255,255,255,0.8);
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px; font-weight: 700;
+  cursor: pointer; text-align: left;
+  transition: all 0.15s;
+}
+.quiz-btn:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
+.quiz-btn.correct { border-color: #66BB6A; background: rgba(102,187,106,0.12); color: #81C784; }
+.quiz-btn.wrong { border-color: #EF5350; background: rgba(239,83,80,0.12); color: #EF9A9A; }
+.quiz-btn:disabled { pointer-events: none; }
+
+.quiz-reveal { font-size: 12px; color: var(--muted); margin-top: 5px; display: none; font-weight: 600; }
+.quiz-reveal.show { display: block; }
+.quiz-reveal strong { color: #81C784; }
+
+/* ══ CHECK BTN + SCORE ══ */
+.check-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, var(--gold), var(--straw));
+  color: var(--ink); border: none; border-radius: 10px;
+  padding: 14px 32px;
+  font-family: 'Bangers', cursive; font-size: 22px; letter-spacing: 2px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(245,197,24,0.3);
+  transition: all 0.2s;
+}
+.check-btn:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 28px rgba(245,197,24,0.4); }
+
+.score-panel {
+  background: linear-gradient(135deg, #0A1E3A, #061828);
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  padding: 30px 24px;
+  text-align: center;
+  margin-top: 24px;
+  display: none;
+  animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.score-panel.show { display: block; }
+@keyframes popIn { from{opacity:0;transform:scale(0.8)} to{opacity:1;transform:scale(1)} }
+
+.score-big { font-family: 'Bangers', cursive; font-size: 80px; color: var(--gold); text-shadow: 3px 3px 0 var(--straw); line-height: 1; }
+.score-label { font-size: 11px; font-weight: 800; letter-spacing: 3px; opacity: 0.4; text-transform: uppercase; }
+.score-msg { font-size: 20px; font-weight: 800; margin: 14px 0; }
+
+.retry-btn {
+  background: rgba(255,255,255,0.08); color: var(--gold);
+  border: 2px solid var(--gold); border-radius: 8px;
+  padding: 8px 22px; font-family: 'Bangers', cursive; font-size: 18px; letter-spacing: 1px;
+  cursor: pointer; margin-top: 8px; transition: all 0.2s;
+}
+.retry-btn:hover { background: var(--gold); color: var(--ink); }
+
+/* ══ WHITEBOARD ══ */
+.wb-panel {
+  background: var(--wb-bg);
+  border-left: 2px solid var(--wb-border);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.wb-header {
+  background: #0A1520;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid var(--wb-border);
+  flex-shrink: 0;
+}
+
+.wb-title { font-family: 'Bangers', cursive; font-size: 14px; letter-spacing: 3px; color: var(--wb-accent); }
+.wb-subtitle { font-size: 10px; color: var(--wb-muted); font-weight: 600; margin-top: 2px; }
+
+.wb-stamps {
+  padding: 10px 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  border-bottom: 1px solid var(--wb-border);
+  flex-shrink: 0;
+}
+
+.stamp-btn {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 6px;
+  padding: 7px 5px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 10px; font-weight: 700;
+  color: var(--wb-text);
+  cursor: pointer; text-align: center;
+  transition: all 0.15s; line-height: 1.3;
+}
+.stamp-btn:hover { background: rgba(79,195,247,0.1); border-color: var(--wb-accent); color: var(--wb-accent); }
+.stamp-btn.green:hover { border-color: #81C784; color: #81C784; }
+.stamp-btn.red:hover { border-color: #EF9A9A; color: #EF9A9A; }
+.stamp-btn.yellow:hover { border-color: #FFE082; color: #FFE082; }
+
+.wb-textarea-wrap {
+  flex: 1; padding: 10px 12px;
+  display: flex; flex-direction: column; gap: 6px; min-height: 0;
+}
+
+.wb-textarea-label { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--wb-muted); }
+
+.wb-textarea {
+  flex: 1; min-height: 80px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--wb-border);
+  border-radius: 8px; padding: 10px 12px;
+  font-family: 'Kalam', cursive; font-size: 14px;
+  color: var(--wb-text); resize: none; outline: none; line-height: 1.7;
+  transition: border-color 0.2s;
+}
+.wb-textarea:focus { border-color: var(--wb-accent); }
+.wb-textarea::placeholder { color: var(--wb-muted); font-size: 12px; font-family: 'Nunito', sans-serif; font-style: italic; }
+
+.wb-log-wrap {
+  padding: 0 12px 8px;
+  display: flex; flex-direction: column; gap: 4px;
+  flex-shrink: 0; max-height: 130px; overflow-y: auto;
+}
+
+.wb-log-label { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--wb-muted); margin-bottom: 4px; }
+
+.wb-log-entry {
+  background: rgba(255,255,255,0.04); border-radius: 5px;
+  padding: 4px 8px; font-size: 11px; font-weight: 700;
+  color: var(--wb-text); display: flex; align-items: center; gap: 5px;
+  animation: slideIn 0.2s ease;
+}
+@keyframes slideIn { from{opacity:0;transform:translateX(6px)} to{opacity:1;transform:translateX(0)} }
+
+.wb-log-time { font-size: 9px; color: var(--wb-muted); margin-left: auto; flex-shrink: 0; }
+
+.wb-actions {
+  padding: 6px 12px 12px; display: flex; gap: 5px; flex-shrink: 0;
+}
+
+.wb-action-btn {
+  flex: 1;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--wb-border);
+  border-radius: 5px; padding: 6px 4px;
+  font-family: 'Nunito', sans-serif; font-size: 10px; font-weight: 700;
+  color: var(--wb-muted); cursor: pointer; text-align: center;
+  transition: all 0.15s;
+}
+.wb-action-btn:hover { background: rgba(255,255,255,0.07); color: var(--wb-text); }
+
+/* Mobile */
+.wb-toggle {
+  display: none;
+  position: fixed; bottom: 20px; right: 20px;
+  background: var(--gold); color: var(--ink);
+  border: none; border-radius: 50%;
+  width: 52px; height: 52px; font-size: 22px;
+  cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  z-index: 1000; transition: all 0.2s;
+}
+.wb-toggle:hover { transform: scale(1.1); }
+
+.wb-mobile-drawer {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--wb-bg); border-top: 2px solid var(--wb-border);
+  border-radius: 20px 20px 0 0; padding: 14px;
+  z-index: 999; max-height: 70vh; overflow-y: auto;
+  transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.34,1.2,0.64,1);
+}
+.wb-mobile-drawer.open { transform: translateY(0); }
+.wb-drawer-handle { width: 36px; height: 4px; background: var(--wb-border); border-radius: 2px; margin: 0 auto 14px; }
+
+@media (max-width: 720px) {
+  .layout { grid-template-columns: 1fr; }
+  .wb-panel { display: none; }
+  .wb-toggle { display: flex; align-items: center; justify-content: center; }
+  .wb-mobile-drawer { display: block; }
+  .compass-wrap { grid-template-columns: 1fr; }
+  .compass-svg-wrap { margin: 0 auto; }
+  .directions-grid { grid-template-columns: repeat(4, 1fr); }
+  .char-stats { grid-template-columns: 1fr 1fr; }
+  .snap-zones { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<div class="layout">
+<div class="main-col">
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-waves"><div class="hero-wave"></div><div class="hero-wave"></div></div>
+  <div class="hero-eyebrow">🏴‍☠️ One Piece English Lesson</div>
+  <h1>COMPASS &amp; <span>PREPOSITIONS</span></h1>
+  <div class="hero-tags">
+    <span class="htag gold">🧭 Directions</span>
+    <span class="htag">📍 Prepositions of Place</span>
+    <span class="htag">🏴‍☠️ Luffy's Crew</span>
+    <span class="htag">⚔️ Character Description</span>
+  </div>
+</div>
+
+<!-- ══ TIMER ══ -->
+<div class="timer-bar">
+  <div>
+    <div style="font-size:9px;font-weight:800;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:2px;">⏱ Lesson Timer</div>
+    <div class="timer-display" id="timerDisplay">00:00</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:5px;">
+    <div class="timer-presets" id="presets">
+      <button class="preset-btn" onclick="setTimer(5)">5 min</button>
+      <button class="preset-btn" onclick="setTimer(10)">10 min</button>
+      <button class="preset-btn" onclick="setTimer(15)">15 min</button>
+      <button class="preset-btn" onclick="setTimer(20)">20 min</button>
+    </div>
+    <div style="display:flex;gap:6px;">
+      <button class="timer-btn start" id="timerStartBtn" onclick="toggleTimer()">▶ Start</button>
+      <button class="timer-btn" onclick="resetTimer()">↺ Reset</button>
+    </div>
+  </div>
+  <div class="timer-label" id="timerMode">Count up</div>
+</div>
+
+<div class="container">
+
+  <!-- ══ PART 1: VIDEO ══ -->
+  <div class="sec-head">
+    <span class="sec-tag gold">Part 1</span>
+    <span class="sec-title">🎬 Watch First</span>
+    <span class="sec-line"></span>
+  </div>
+
+  <div class="video-card">
+    <div class="video-thumb">
+      <div class="video-rec-tag">▶ WATCH TOGETHER</div>
+      <div class="play-btn"></div>
+    </div>
+    <div class="video-body">
+      <div class="video-title">HOW DOES A COMPASS WORK?</div>
+      <div class="video-meta">YouTube · 3–5 min · Watch together before reading</div>
+      <div class="video-desc">Before we explore the Grand Line, we need to understand compasses! Watch this short explainer — then we'll connect it to One Piece's Log Pose.</div>
+      <a class="video-link" href="https://www.youtube.com/results?search_query=how+does+a+compass+work+for+kids" target="_blank">🔍 Find on YouTube</a>
+      <ul class="watch-prompts">
+        <li>What makes the needle always point North?</li>
+        <li>Why can't a normal compass work on the Grand Line?</li>
+        <li>Can you name the 4 main directions in English?</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══ PART 2: COMPASS ══ -->
+  <div class="sec-head">
+    <span class="sec-tag ocean">Part 2</span>
+    <span class="sec-title">🧭 The Compass</span>
+    <span class="sec-line"></span>
+  </div>
+
+  <div class="compass-wrap">
+    <!-- Animated SVG compass -->
+    <div class="compass-svg-wrap">
+      <svg viewBox="0 0 180 180" width="180" height="180" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer ring -->
+        <circle cx="90" cy="90" r="85" fill="#0A1628" stroke="#F5C518" stroke-width="3"/>
+        <circle cx="90" cy="90" r="78" fill="none" stroke="rgba(245,197,24,0.2)" stroke-width="1"/>
+        <!-- Degree ticks -->
+        <g stroke="rgba(255,255,255,0.2)" stroke-width="1">
+          <line x1="90" y1="8" x2="90" y2="16"/>
+          <line x1="90" y1="164" x2="90" y2="172"/>
+          <line x1="8" y1="90" x2="16" y2="90"/>
+          <line x1="164" y1="90" x2="172" y2="90"/>
+        </g>
+        <!-- Background compass rose pattern -->
+        <polygon points="90,20 95,88 90,96 85,88" fill="rgba(255,255,255,0.05)"/>
+        <polygon points="90,160 95,92 90,84 85,92" fill="rgba(255,255,255,0.03)"/>
+        <polygon points="20,90 88,85 96,90 88,95" fill="rgba(255,255,255,0.03)"/>
+        <polygon points="160,90 92,85 84,90 92,95" fill="rgba(255,255,255,0.03)"/>
+        <!-- Cardinal labels -->
+        <text x="90" y="22" text-anchor="middle" font-family="Bangers,cursive" font-size="16" fill="#F5C518" letter-spacing="1">N</text>
+        <text x="90" y="172" text-anchor="middle" font-family="Bangers,cursive" font-size="16" fill="rgba(255,255,255,0.8)">S</text>
+        <text x="166" y="95" text-anchor="middle" font-family="Bangers,cursive" font-size="16" fill="rgba(255,255,255,0.8)">E</text>
+        <text x="14" y="95" text-anchor="middle" font-family="Bangers,cursive" font-size="16" fill="rgba(255,255,255,0.8)">W</text>
+        <!-- Intercardinals -->
+        <text x="138" y="42" text-anchor="middle" font-family="Bangers,cursive" font-size="10" fill="rgba(255,255,255,0.4)">NE</text>
+        <text x="138" y="145" text-anchor="middle" font-family="Bangers,cursive" font-size="10" fill="rgba(255,255,255,0.4)">SE</text>
+        <text x="42" y="145" text-anchor="middle" font-family="Bangers,cursive" font-size="10" fill="rgba(255,255,255,0.4)">SW</text>
+        <text x="42" y="42" text-anchor="middle" font-family="Bangers,cursive" font-size="10" fill="rgba(255,255,255,0.4)">NW</text>
+        <!-- Needle (animated) -->
+        <g class="compass-needle">
+          <polygon points="90,30 94,88 90,96 86,88" fill="#D42B2B"/>
+          <polygon points="90,150 94,92 90,84 86,92" fill="rgba(255,255,255,0.6)"/>
+          <circle cx="90" cy="90" r="5" fill="#F5C518"/>
+          <circle cx="90" cy="90" r="2.5" fill="white"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="compass-facts">
+      <div class="compass-fact">
+        <h4>🌍 Why does it work?</h4>
+        <p>The Earth is like a giant <strong>magnet</strong>. The compass needle is also magnetic, so it always <strong>points toward the North Pole</strong> — no matter where you are!</p>
+      </div>
+      <div class="compass-fact">
+        <h4>🏴‍☠️ The Log Pose</h4>
+        <p>On the Grand Line, normal compasses don't work because of <strong>magnetic islands</strong>. That's why Nami uses a <strong>Log Pose</strong> — it locks onto island magnetic fields instead!</p>
+      </div>
+      <div class="compass-fact">
+        <h4>🧭 4 Cardinal Directions</h4>
+        <p><strong>North · South · East · West</strong><br>Remember: <em style="color:var(--gold);">"Never Eat Soggy Waffles"</em> — N, E, S, W clockwise!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Directions grid -->
+  <div class="directions-grid">
+    <div class="dir-card">
+      <span class="dir-arrow">⬆️</span>
+      <div class="dir-abbr">N</div>
+      <div class="dir-en">NORTH</div>
+      <div class="dir-fr">nord</div>
+    </div>
+    <div class="dir-card">
+      <span class="dir-arrow">➡️</span>
+      <div class="dir-abbr">E</div>
+      <div class="dir-en">EAST</div>
+      <div class="dir-fr">est</div>
+    </div>
+    <div class="dir-card">
+      <span class="dir-arrow">⬇️</span>
+      <div class="dir-abbr">S</div>
+      <div class="dir-en">SOUTH</div>
+      <div class="dir-fr">sud</div>
+    </div>
+    <div class="dir-card">
+      <span class="dir-arrow">⬅️</span>
+      <div class="dir-abbr">W</div>
+      <div class="dir-en">WEST</div>
+      <div class="dir-fr">ouest</div>
+    </div>
+    <div class="dir-card">
+      <span class="dir-arrow">↗️</span>
+      <div class="dir-abbr">NE</div>
+      <div class="dir-en">NORTH-EAST</div>
+      <div class="dir-fr">nord-est</div>
+    </div>
+    <div class="dir-card">
+      <span class="dir-arrow">↘️</span>
+      <div class="dir-abbr">SE</div>
+      <div class="dir-en">SOUTH-EAST</div>
+      <div class="dir-fr">sud-est</div>
+    </div>
+    <div class="dir-card">
+      <span class="dir-arrow">↙️</span>
+      <div class="dir-abbr">SW</div>
+      <div class="dir-en">SOUTH-WEST</div>
+      <div class="dir-fr">sud-ouest</div>
+    </div>
+    <div class="dir-card">
+      <span class="dir-arrow">↖️</span>
+      <div class="dir-abbr">NW</div>
+      <div class="dir-en">NORTH-WEST</div>
+      <div class="dir-fr">nord-ouest</div>
+    </div>
+  </div>
+
+  <!-- ══ PART 3: PREPOSITIONS ══ -->
+  <div class="sec-head">
+    <span class="sec-tag red">Part 3</span>
+    <span class="sec-title">📍 Prepositions of Place</span>
+    <span class="sec-line"></span>
+  </div>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:14px;font-weight:600;">These words tell us WHERE something is. Study them — you'll use them on the boat!</p>
+
+  <div class="prep-grid">
+
+    <!-- ON -->
+    <div class="prep-card">
+      <div class="prep-scene">
+        <svg viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="38" width="60" height="8" rx="2" fill="#8B5E3C"/>
+          <rect x="30" y="22" width="20" height="16" rx="2" fill="#F5C518"/>
+          <circle cx="40" cy="18" r="8" fill="#FF6B35"/>
+          <circle cx="37" cy="16" r="2" fill="#1A1A1A"/>
+          <circle cx="43" cy="16" r="2" fill="#1A1A1A"/>
+          <path d="M36,21 Q40,24 44,21" stroke="#1A1A1A" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <div class="prep-en">ON</div>
+      <div class="prep-fr">sur</div>
+      <div class="prep-example">Luffy is <b>on</b> the deck</div>
+    </div>
+
+    <!-- UNDER -->
+    <div class="prep-card">
+      <div class="prep-scene">
+        <svg viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="22" width="60" height="8" rx="2" fill="#8B5E3C"/>
+          <circle cx="40" cy="40" r="8" fill="#FF6B35"/>
+          <circle cx="37" cy="38" r="2" fill="#1A1A1A"/>
+          <circle cx="43" cy="38" r="2" fill="#1A1A1A"/>
+          <path d="M36,43 Q40,46 44,43" stroke="#1A1A1A" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <div class="prep-en">UNDER</div>
+      <div class="prep-fr">sous</div>
+      <div class="prep-example">Zoro sleeps <b>under</b> the deck</div>
+    </div>
+
+    <!-- ON TOP OF -->
+    <div class="prep-card">
+      <div class="prep-scene">
+        <svg viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg">
+          <line x1="40" y1="50" x2="40" y2="10" stroke="#8B5E3C" stroke-width="4"/>
+          <polygon points="20,28 60,28 50,10 30,10" fill="#F0DEB0" stroke="#8B5E3C" stroke-width="1.5"/>
+          <circle cx="40" cy="5" r="6" fill="#FF6B35"/>
+          <circle cx="38" cy="4" r="1.5" fill="#1A1A1A"/>
+          <circle cx="42" cy="4" r="1.5" fill="#1A1A1A"/>
+        </svg>
+      </div>
+      <div class="prep-en">ON TOP OF</div>
+      <div class="prep-fr">au sommet de</div>
+      <div class="prep-example"><b>On top of</b> the mast</div>
+    </div>
+
+    <!-- INSIDE -->
+    <div class="prep-card">
+      <div class="prep-scene">
+        <svg viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg">
+          <rect x="12" y="14" width="56" height="38" rx="4" fill="none" stroke="#8B5E3C" stroke-width="3"/>
+          <rect x="12" y="14" width="56" height="38" rx="4" fill="rgba(139,94,60,0.1)"/>
+          <circle cx="40" cy="33" r="9" fill="#FF6B35"/>
+          <circle cx="37" cy="31" r="2" fill="#1A1A1A"/>
+          <circle cx="43" cy="31" r="2" fill="#1A1A1A"/>
+          <path d="M36,36 Q40,39 44,36" stroke="#1A1A1A" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <div class="prep-en">INSIDE</div>
+      <div class="prep-fr">à l'intérieur</div>
+      <div class="prep-example"><b>Inside</b> the cabin</div>
+    </div>
+
+    <!-- IN FRONT OF -->
+    <div class="prep-card">
+      <div class="prep-scene">
+        <svg viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg">
+          <rect x="38" y="10" width="30" height="40" rx="3" fill="rgba(139,94,60,0.3)" stroke="#8B5E3C" stroke-width="2"/>
+          <circle cx="24" cy="32" r="9" fill="#FF6B35"/>
+          <circle cx="21" cy="30" r="2" fill="#1A1A1A"/>
+          <circle cx="27" cy="30" r="2" fill="#1A1A1A"/>
+          <path d="M20,35 Q24,38 28,35" stroke="#1A1A1A" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <div class="prep-en">IN FRONT OF</div>
+      <div class="prep-fr">devant</div>
+      <div class="prep-example"><b>In front of</b> the cabin</div>
+    </div>
+
+    <!-- BEHIND -->
+    <div class="prep-card">
+      <div class="prep-scene">
+        <svg viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg">
+          <rect x="12" y="10" width="30" height="40" rx="3" fill="rgba(139,94,60,0.3)" stroke="#8B5E3C" stroke-width="2"/>
+          <circle cx="56" cy="32" r="9" fill="#FF6B35"/>
+          <circle cx="53" cy="30" r="2" fill="#1A1A1A"/>
+          <circle cx="59" cy="30" r="2" fill="#1A1A1A"/>
+          <path d="M52,35 Q56,38 60,35" stroke="#1A1A1A" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <div class="prep-en">BEHIND</div>
+      <div class="prep-fr">derrière</div>
+      <div class="prep-example"><b>Behind</b> the cabin</div>
+    </div>
+
+    <!-- NEXT TO -->
+    <div class="prep-card">
+      <div class="prep-scene">
+        <svg viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg">
+          <rect x="40" y="18" width="22" height="28" rx="3" fill="rgba(139,94,60,0.3)" stroke="#8B5E3C" stroke-width="2"/>
+          <circle cx="28" cy="32" r="9" fill="#FF6B35"/>
+          <circle cx="25" cy="30" r="2" fill="#1A1A1A"/>
+          <circle cx="31" cy="30" r="2" fill="#1A1A1A"/>
+          <path d="M24,35 Q28,38 32,35" stroke="#1A1A1A" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <div class="prep-en">NEXT TO</div>
+      <div class="prep-fr">à côté de</div>
+      <div class="prep-example"><b>Next to</b> the mast</div>
+    </div>
+
+    <!-- ABOVE / BELOW -->
+    <div class="prep-card">
+      <div class="prep-scene">
+        <svg viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="40" cy="10" r="7" fill="#FF6B35"/>
+          <text x="40" y="13" text-anchor="middle" font-size="8" fill="white" font-weight="bold">↑</text>
+          <rect x="15" y="25" width="50" height="8" rx="2" fill="#8B5E3C"/>
+          <text x="5" y="31" font-size="7" fill="rgba(255,255,255,0.5)" font-weight="bold">above</text>
+          <circle cx="40" cy="48" r="7" fill="#0096C7"/>
+          <text x="40" y="51" text-anchor="middle" font-size="8" fill="white" font-weight="bold">↓</text>
+          <text x="5" y="50" font-size="7" fill="rgba(255,255,255,0.5)" font-weight="bold">below</text>
+        </svg>
+      </div>
+      <div class="prep-en">ABOVE / BELOW</div>
+      <div class="prep-fr">au-dessus / en-dessous</div>
+      <div class="prep-example"><b>Above</b> = higher · <b>Below</b> = lower</div>
+    </div>
+
+    <!-- OVER -->
+    <div class="prep-card">
+      <div class="prep-scene">
+        <svg viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="38" width="60" height="8" rx="2" fill="#8B5E3C"/>
+          <path d="M15,38 Q40,10 65,38" stroke="#F5C518" stroke-width="2.5" fill="none" stroke-dasharray="4,2"/>
+          <circle cx="20" cy="35" r="7" fill="#FF6B35"/>
+          <circle cx="18" cy="33" r="1.8" fill="#1A1A1A"/>
+          <circle cx="22" cy="33" r="1.8" fill="#1A1A1A"/>
+        </svg>
+      </div>
+      <div class="prep-en">OVER</div>
+      <div class="prep-fr">par-dessus</div>
+      <div class="prep-example">Jump <b>over</b> the railing</div>
+    </div>
+
+    <!-- BETWEEN -->
+    <div class="prep-card">
+      <div class="prep-scene">
+        <svg viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="15" width="16" height="30" rx="3" fill="rgba(139,94,60,0.4)" stroke="#8B5E3C" stroke-width="2"/>
+          <rect x="56" y="15" width="16" height="30" rx="3" fill="rgba(139,94,60,0.4)" stroke="#8B5E3C" stroke-width="2"/>
+          <circle cx="40" cy="30" r="9" fill="#FF6B35"/>
+          <circle cx="37" cy="28" r="2" fill="#1A1A1A"/>
+          <circle cx="43" cy="28" r="2" fill="#1A1A1A"/>
+          <path d="M36,33 Q40,36 44,33" stroke="#1A1A1A" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <div class="prep-en">BETWEEN</div>
+      <div class="prep-fr">entre</div>
+      <div class="prep-example"><b>Between</b> two barrels</div>
+    </div>
+
+  </div>
+
+  <!-- ══ PART 4: INTERACTIVE BOAT ══ -->
+  <div class="sec-head">
+    <span class="sec-tag gold">Part 4</span>
+    <span class="sec-title">🚢 Move Luffy!</span>
+    <span class="sec-line"></span>
+  </div>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:14px;font-weight:600;">Drag Luffy to different parts of the boat — or tap the quick buttons. Describe where he is using prepositions!</p>
+
+  <div class="boat-section">
+    <!-- Boat scene -->
+    <div class="boat-scene" id="boatScene" style="height:260px;">
+      <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;">
+        <defs>
+          <linearGradient id="sky-g" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#061828"/>
+            <stop offset="100%" stop-color="#0A2A44"/>
+          </linearGradient>
+          <linearGradient id="sea-g" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0E4D6B"/>
+            <stop offset="100%" stop-color="#061828"/>
+          </linearGradient>
+          <linearGradient id="hull-g" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#8B5E3C"/>
+            <stop offset="100%" stop-color="#5C3D20"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Sky -->
+        <rect width="700" height="260" fill="url(#sky-g)"/>
+
+        <!-- Stars -->
+        <circle cx="80" cy="20" r="1.2" fill="rgba(255,255,255,0.6)"/>
+        <circle cx="200" cy="15" r="1" fill="rgba(255,255,255,0.5)"/>
+        <circle cx="500" cy="25" r="1.2" fill="rgba(255,255,255,0.6)"/>
+        <circle cx="620" cy="12" r="1" fill="rgba(255,255,255,0.4)"/>
+        <circle cx="350" cy="8" r="1.5" fill="rgba(255,255,255,0.7)"/>
+        <circle cx="450" cy="30" r="1" fill="rgba(255,255,255,0.4)"/>
+
+        <!-- Moon -->
+        <circle cx="640" cy="35" r="18" fill="#F5C518" opacity="0.9"/>
+        <circle cx="648" cy="30" r="14" fill="#0A2A44"/>
+
+        <!-- Sea -->
+        <rect y="190" width="700" height="70" fill="url(#sea-g)"/>
+        <path d="M0,192 Q50,185 100,192 Q150,199 200,192 Q250,185 300,192 Q350,199 400,192 Q450,185 500,192 Q550,199 600,192 Q650,185 700,192" stroke="rgba(255,255,255,0.2)" stroke-width="2" fill="none"/>
+        <path d="M0,202 Q60,197 120,202 Q180,207 240,202 Q300,197 360,202 Q420,207 480,202 Q540,197 600,202 Q660,207 700,202" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" fill="none"/>
+
+        <!-- ── BOAT HULL ── -->
+        <!-- Main hull body -->
+        <path d="M100,185 Q120,200 350,205 Q580,200 600,185 L580,155 L120,155 Z" fill="url(#hull-g)"/>
+        <!-- Hull planks -->
+        <path d="M120,165 L580,165" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
+        <path d="M120,175 L580,175" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
+        <!-- Hull highlight -->
+        <path d="M120,155 L580,155" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+
+        <!-- ── DECK ── -->
+        <rect x="120" y="145" width="460" height="14" rx="2" fill="#6B4423"/>
+        <rect x="120" y="145" width="460" height="3" fill="rgba(255,255,255,0.1)"/>
+        <!-- Deck planks -->
+        <line x1="170" y1="145" x2="170" y2="159" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+        <line x1="220" y1="145" x2="220" y2="159" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+        <line x1="270" y1="145" x2="270" y2="159" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+        <line x1="320" y1="145" x2="320" y2="159" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+        <line x1="370" y1="145" x2="370" y2="159" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+        <line x1="420" y1="145" x2="420" y2="159" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+        <line x1="470" y1="145" x2="470" y2="159" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+        <line x1="520" y1="145" x2="520" y2="159" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+
+        <!-- ── MAST ── -->
+        <rect x="344" y="30" width="12" height="118" fill="#5C3D20"/>
+        <rect x="344" y="30" width="3" height="118" fill="rgba(255,255,255,0.08)"/>
+        <!-- Crow's nest -->
+        <rect x="328" y="22" width="44" height="18" rx="3" fill="#6B4423" stroke="#8B5E3C" stroke-width="1.5"/>
+        <rect x="332" y="18" width="36" height="8" rx="2" fill="#5C3D20"/>
+
+        <!-- ── SAIL ── -->
+        <path d="M356,35 L356,130 L480,100 L460,50 Z" fill="#F0DEB0" stroke="#C4A870" stroke-width="1.5"/>
+        <path d="M356,35 L356,130 L480,100 L460,50 Z" fill="rgba(0,0,0,0.05)"/>
+        <!-- Sail lines -->
+        <line x1="356" y1="60" x2="465" y2="60" stroke="rgba(139,94,60,0.3)" stroke-width="1"/>
+        <line x1="356" y1="85" x2="472" y2="82" stroke="rgba(139,94,60,0.3)" stroke-width="1"/>
+        <line x1="356" y1="108" x2="479" y2="97" stroke="rgba(139,94,60,0.3)" stroke-width="1"/>
+        <!-- Jolly Roger on sail -->
+        <circle cx="415" cy="78" r="16" fill="rgba(0,0,0,0.15)"/>
+        <text x="415" y="84" text-anchor="middle" font-size="18">💀</text>
+
+        <!-- ── CABIN ── -->
+        <rect x="440" y="110" width="100" height="38" rx="3" fill="#6B4423" stroke="#8B5E3C" stroke-width="1.5"/>
+        <rect x="440" y="110" width="100" height="8" rx="2" fill="#5C3D20"/>
+        <!-- Cabin door -->
+        <rect x="476" y="120" width="28" height="28" rx="2" fill="#4A2E10"/>
+        <circle cx="500" cy="135" r="2.5" fill="#F5C518"/>
+        <!-- Cabin window -->
+        <circle cx="456" cy="127" r="7" fill="#1A3A5C" stroke="#8B5E3C" stroke-width="1.5"/>
+        <circle cx="456" cy="127" r="4" fill="#1A6B8A" opacity="0.6"/>
+
+        <!-- ── RAILING ── -->
+        <rect x="120" y="140" width="460" height="5" rx="2" fill="#8B5E3C"/>
+        <!-- Railing posts -->
+        <rect x="135" y="120" width="4" height="20" fill="#6B4423"/>
+        <rect x="165" y="120" width="4" height="20" fill="#6B4423"/>
+        <rect x="195" y="120" width="4" height="20" fill="#6B4423"/>
+        <rect x="225" y="120" width="4" height="20" fill="#6B4423"/>
+        <rect x="255" y="120" width="4" height="20" fill="#6B4423"/>
+        <rect x="555" y="120" width="4" height="20" fill="#6B4423"/>
+        <rect x="575" y="120" width="4" height="20" fill="#6B4423"/>
+        <rect x="595" y="120" width="4" height="20" fill="#6B4423"/>
+
+        <!-- Top railing -->
+        <rect x="120" y="120" width="310" height="4" rx="2" fill="#8B5E3C"/>
+        <rect x="540" y="120" width="70" height="4" rx="2" fill="#8B5E3C"/>
+
+        <!-- ── BARRELS ── -->
+        <rect x="150" y="120" width="28" height="22" rx="4" fill="#5C3D20" stroke="#8B5E3C" stroke-width="1.5"/>
+        <line x1="150" y1="127" x2="178" y2="127" stroke="#8B5E3C" stroke-width="1.5"/>
+        <line x1="150" y1="134" x2="178" y2="134" stroke="#8B5E3C" stroke-width="1.5"/>
+
+        <rect x="185" y="122" width="24" height="20" rx="4" fill="#5C3D20" stroke="#8B5E3C" stroke-width="1.5"/>
+        <line x1="185" y1="129" x2="209" y2="129" stroke="#8B5E3C" stroke-width="1.5"/>
+
+        <!-- ── ANCHOR ── -->
+        <text x="130" y="148" font-size="16">⚓</text>
+
+        <!-- Zone labels -->
+        <text x="163" y="115" text-anchor="middle" font-family="Bangers,cursive" font-size="9" fill="rgba(255,255,255,0.18)" letter-spacing="1">DECK</text>
+        <text x="350" y="20" text-anchor="middle" font-family="Bangers,cursive" font-size="9" fill="rgba(255,255,255,0.18)" letter-spacing="1">CROW'S NEST</text>
+        <text x="490" y="108" text-anchor="middle" font-family="Bangers,cursive" font-size="9" fill="rgba(255,255,255,0.18)" letter-spacing="1">CABIN</text>
+        <text x="350" y="218" text-anchor="middle" font-family="Bangers,cursive" font-size="9" fill="rgba(255,255,255,0.12)" letter-spacing="1">BELOW DECK</text>
+      </svg>
+
+      <!-- Luffy draggable character -->
+      <div class="luffy-char" id="luffyChar" style="left:300px;top:100px;" title="Drag Luffy!">
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <!-- Straw hat -->
+          <ellipse cx="24" cy="12" rx="18" ry="5" fill="#F5C518" stroke="#C4A800" stroke-width="1.5"/>
+          <path d="M10,13 Q24,22 38,13" fill="#E8A020" stroke="#C4A800" stroke-width="1"/>
+          <!-- Head -->
+          <circle cx="24" cy="18" r="10" fill="#FFCC88"/>
+          <!-- Scar under left eye -->
+          <path d="M18,20 Q20,23 18,24" stroke="#D42B2B" stroke-width="1.5" fill="none"/>
+          <!-- Eyes -->
+          <circle cx="20" cy="17" r="2.5" fill="#1A1A1A"/>
+          <circle cx="28" cy="17" r="2.5" fill="#1A1A1A"/>
+          <circle cx="21" cy="16" r="1" fill="white"/>
+          <circle cx="29" cy="16" r="1" fill="white"/>
+          <!-- Smile -->
+          <path d="M19,22 Q24,27 29,22" stroke="#C87A40" stroke-width="1.5" fill="none"/>
+          <!-- Body / Red vest -->
+          <rect x="16" y="27" width="16" height="14" rx="3" fill="#D42B2B"/>
+          <!-- Arms -->
+          <rect x="8" y="28" width="8" height="5" rx="2" fill="#FFCC88"/>
+          <rect x="32" y="28" width="8" height="5" rx="2" fill="#FFCC88"/>
+          <!-- Legs -->
+          <rect x="17" y="40" width="6" height="7" rx="2" fill="#2244AA"/>
+          <rect x="25" y="40" width="6" height="7" rx="2" fill="#2244AA"/>
+          <!-- Shoes -->
+          <ellipse cx="20" cy="47" rx="4" ry="2" fill="#1A1A1A"/>
+          <ellipse cx="28" cy="47" rx="4" ry="2" fill="#1A1A1A"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Preposition display -->
+    <div class="prep-answer" id="prepAnswer">
+      <div class="answer-main">Where is Luffy?</div>
+      <div class="answer-sentence">Drag him somewhere on the boat!</div>
+    </div>
+
+    <!-- Quick snap buttons -->
+    <div class="snap-zones" style="margin-top:12px;">
+      <button class="snap-btn" onclick="snapLuffy('deck')">🪵 On the deck</button>
+      <button class="snap-btn" onclick="snapLuffy('mast')">🏔️ On top of mast</button>
+      <button class="snap-btn" onclick="snapLuffy('cabin')">🏠 In front of cabin</button>
+      <button class="snap-btn" onclick="snapLuffy('behind')">↩️ Behind cabin</button>
+      <button class="snap-btn" onclick="snapLuffy('barrel')">🪣 Next to barrels</button>
+      <button class="snap-btn" onclick="snapLuffy('crow')">🪶 In crow's nest</button>
+      <button class="snap-btn" onclick="snapLuffy('below')">⬇️ Below deck</button>
+      <button class="snap-btn" onclick="snapLuffy('bow')">⚓ At the bow</button>
+    </div>
+  </div>
+
+  <!-- ══ PART 5: CHARACTER ══ -->
+  <div class="sec-head">
+    <span class="sec-tag red">Part 5</span>
+    <span class="sec-title">⚔️ Character Description</span>
+    <span class="sec-line"></span>
+  </div>
+
+  <div class="char-card">
+    <h3>🏴‍☠️ Monkey D. Luffy</h3>
+    <div class="char-stats">
+      <div class="char-stat"><div class="char-stat-label">Role</div><div class="char-stat-val">Captain</div></div>
+      <div class="char-stat"><div class="char-stat-label">Goal</div><div class="char-stat-val">King of the Pirates</div></div>
+      <div class="char-stat"><div class="char-stat-label">Power</div><div class="char-stat-val">Rubber Body</div></div>
+      <div class="char-stat"><div class="char-stat-label">From</div><div class="char-stat-val">Foosha Village</div></div>
+    </div>
+    <div class="char-desc">
+      Luffy is the <span class="hl">captain</span> of the Straw Hat Pirates. He is a <span class="hl">young man</span> with <span class="hl">short black hair</span>, a <span class="hl">red vest</span>, and his famous <span class="hl">straw hat</span> — a gift from his hero, Shanks.<br><br>
+      He <span class="vp">ate</span> the Gum-Gum Devil Fruit as a child, which <span class="vp">made</span> his entire body stretch like <span class="hl">rubber</span>. Because of this, he <span class="vp">became</span> unable to swim — a serious problem for a pirate!<br><br>
+      Luffy is <span class="hl">incredibly brave</span>, sometimes <span class="hl">reckless</span>, and always <span class="hl">loyal</span> to his friends. He never <span class="vp">gave up</span> on anyone, no matter how dangerous the enemy <span class="vp">was</span>. His dream is to <span class="hl">find the One Piece</span> and become King of the Pirates.
+    </div>
+  </div>
+
+  <div class="char-card" style="margin-top:0;">
+    <h3>🗡️ Roronoa Zoro</h3>
+    <div class="char-stats">
+      <div class="char-stat"><div class="char-stat-label">Role</div><div class="char-stat-val">Swordsman</div></div>
+      <div class="char-stat"><div class="char-stat-label">Goal</div><div class="char-stat-val">World's Greatest Swordsman</div></div>
+      <div class="char-stat"><div class="char-stat-label">Style</div><div class="char-stat-val">Three Sword Style</div></div>
+      <div class="char-stat"><div class="char-stat-label">Known For</div><div class="char-stat-val">Always Getting Lost</div></div>
+    </div>
+    <div class="char-desc">
+      Zoro is the <span class="hl">first mate</span> and the strongest fighter on the crew. He has <span class="hl">short green hair</span>, a <span class="hl">muscular body</span>, and three earrings in his left ear. He always <span class="vp">carried</span> <span class="hl">three swords</span> — one in each hand and one in his mouth!<br><br>
+      He <span class="vp">trained</span> as a swordsman since he <span class="vp">was</span> a child. He <span class="vp">made</span> a promise to his childhood friend Kuina that he would become the <span class="hl">greatest swordsman in the world</span>. He never <span class="vp">forgot</span> that promise.<br><br>
+      Zoro is <span class="hl">serious</span>, <span class="hl">determined</span>, and <span class="hl">disciplined</span> — but he has one famous weakness: he <span class="hl">cannot read maps</span> and always <span class="vp">got</span> lost, even on a straight road!
+    </div>
+  </div>
+
+  <!-- Adjectives bank -->
+  <p style="font-size:13px;color:var(--muted);margin-bottom:10px;font-weight:700;margin-top:6px;">💬 Useful adjectives — tap to hover, use them to describe the characters:</p>
+  <div class="adj-grid">
+    <div class="adj-pill">brave <span class="fr">courageux</span></div>
+    <div class="adj-pill">loyal <span class="fr">loyal</span></div>
+    <div class="adj-pill">strong <span class="fr">fort</span></div>
+    <div class="adj-pill">tall <span class="fr">grand</span></div>
+    <div class="adj-pill">short <span class="fr">petit</span></div>
+    <div class="adj-pill">muscular <span class="fr">musclé</span></div>
+    <div class="adj-pill">reckless <span class="fr">imprudent</span></div>
+    <div class="adj-pill">determined <span class="fr">déterminé</span></div>
+    <div class="adj-pill">funny <span class="fr">drôle</span></div>
+    <div class="adj-pill">serious <span class="fr">sérieux</span></div>
+    <div class="adj-pill">kind <span class="fr">gentil</span></div>
+    <div class="adj-pill">stubborn <span class="fr">têtu</span></div>
+  </div>
+
+  <!-- ══ VOCAB ══ -->
+  <div class="sec-head">
+    <span class="sec-tag green">Vocab</span>
+    <span class="sec-title">🔤 Lesson Vocabulary</span>
+    <span class="sec-line"></span>
+  </div>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:12px;font-weight:600;">👆 Tap each card to reveal the French meaning!</p>
+  <div class="vocab-grid" id="vocabGrid"></div>
+
+  <!-- ══ QUIZ ══ -->
+  <div class="sec-head">
+    <span class="sec-tag purple">Quiz</span>
+    <span class="sec-title">🧠 Comprehension Quiz</span>
+    <span class="sec-line"></span>
+  </div>
+  <div id="quizSection"></div>
+
+  <div style="text-align:center;margin-top:20px;">
+    <button class="check-btn" onclick="checkAll()">⚓ Check Answers</button>
+  </div>
+
+  <div class="score-panel" id="scorePanel">
+    <div style="font-size:48px;margin-bottom:8px;" id="scoreTrophy">🏴‍☠️</div>
+    <div class="score-big" id="scoreBig">0</div>
+    <div class="score-label">POINTS</div>
+    <div class="score-msg" id="scoreMsg"></div>
+    <button class="retry-btn" onclick="resetAll()">🔄 Try Again</button>
+  </div>
+
+</div><!-- /container -->
+</div><!-- /main-col -->
+
+<!-- ══ WHITEBOARD ══ -->
+<div class="wb-panel">
+  <div class="wb-header">
+    <div class="wb-title">📋 TEACHER BOARD</div>
+    <div class="wb-subtitle">Notes · Stamps · Corrections</div>
+  </div>
+
+  <div class="wb-stamps">
+    <button class="stamp-btn green" onclick="addStamp('✅ Correct!')">✅<br>Correct!</button>
+    <button class="stamp-btn red" onclick="addStamp('❌ Not quite')">❌<br>Not quite</button>
+    <button class="stamp-btn yellow" onclick="addStamp('🔁 Try again')">🔁<br>Try again</button>
+    <button class="stamp-btn green" onclick="addStamp('⭐ Great job!')">⭐<br>Great job!</button>
+    <button class="stamp-btn" onclick="addStamp('👂 Listen carefully')">👂<br>Listen</button>
+    <button class="stamp-btn" onclick="addStamp('🗣️ Say it out loud')">🗣️<br>Say it!</button>
+    <button class="stamp-btn yellow" onclick="addStamp('💡 Remember this')">💡<br>Remember</button>
+    <button class="stamp-btn" onclick="addStamp('📝 Write it down')">📝<br>Write it</button>
+  </div>
+
+  <div class="wb-textarea-wrap">
+    <div class="wb-textarea-label">📝 Free Notes</div>
+    <textarea class="wb-textarea" id="wbNotes" placeholder="Type corrections, vocab to review, speaking prompts…"></textarea>
+  </div>
+
+  <div class="wb-log-wrap" id="wbLog">
+    <div class="wb-log-label">🕐 Stamp Log</div>
+  </div>
+
+  <div class="wb-actions">
+    <button class="wb-action-btn" onclick="clearNotes()">🗑 Clear notes</button>
+    <button class="wb-action-btn" onclick="clearLog()">✕ Clear log</button>
+  </div>
+</div>
+
+</div><!-- /layout -->
+
+<!-- Mobile whiteboard -->
+<button class="wb-toggle" id="wbToggle" onclick="toggleMobileWB()">📋</button>
+<div class="wb-mobile-drawer" id="wbDrawer">
+  <div class="wb-drawer-handle"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px;">
+    <button class="stamp-btn green" onclick="addStampMobile('✅ Correct!')">✅ Correct!</button>
+    <button class="stamp-btn red" onclick="addStampMobile('❌ Not quite')">❌ Not quite</button>
+    <button class="stamp-btn yellow" onclick="addStampMobile('🔁 Try again')">🔁 Try again</button>
+    <button class="stamp-btn green" onclick="addStampMobile('⭐ Great job!')">⭐ Great job!</button>
+    <button class="stamp-btn" onclick="addStampMobile('👂 Listen')">👂 Listen</button>
+    <button class="stamp-btn" onclick="addStampMobile('🗣️ Say it!')">🗣️ Say it!</button>
+    <button class="stamp-btn yellow" onclick="addStampMobile('💡 Remember')">💡 Remember</button>
+    <button class="stamp-btn" onclick="addStampMobile('📝 Write it')">📝 Write it</button>
+  </div>
+  <textarea id="wbNotesMobile" class="wb-textarea" style="height:110px;width:100%;" placeholder="Notes…"></textarea>
+  <div style="display:flex;gap:8px;margin-top:8px;">
+    <button class="wb-action-btn" style="flex:1;" onclick="toggleMobileWB()">Close</button>
+    <button class="wb-action-btn" style="flex:1;" onclick="document.getElementById('wbNotesMobile').value=''">🗑 Clear</button>
+  </div>
+</div>
+
+<script>
+// ══ TIMER ══
+let timerSeconds = 0;
+let timerTarget = 0;
+let timerRunning = false;
+let timerInterval = null;
+let countDown = false;
+
+function setTimer(minutes) {
+  resetTimer();
+  timerTarget = minutes * 60;
+  timerSeconds = timerTarget;
+  countDown = true;
+  document.getElementById('timerMode').textContent = `${minutes} min countdown`;
+  document.getElementById('timerDisplay').textContent = formatTime(timerSeconds);
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return m + ':' + String(sec).padStart(2,'0');
+}
+
+function toggleTimer() {
+  if (timerRunning) {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    document.getElementById('timerStartBtn').textContent = '▶ Resume';
+  } else {
+    timerRunning = true;
+    document.getElementById('timerStartBtn').textContent = '⏸ Pause';
+    timerInterval = setInterval(() => {
+      if (countDown) {
+        timerSeconds--;
+        if (timerSeconds <= 0) { timerSeconds = 0; clearInterval(timerInterval); timerRunning = false; document.getElementById('timerStartBtn').textContent = '▶ Start'; }
+      } else { timerSeconds++; }
+      const el = document.getElementById('timerDisplay');
+      el.textContent = formatTime(timerSeconds);
+      el.classList.toggle('urgent', countDown && timerSeconds <= 60);
+    }, 1000);
+  }
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  countDown ? timerSeconds = timerTarget : timerSeconds = 0;
+  document.getElementById('timerDisplay').textContent = formatTime(timerSeconds);
+  document.getElementById('timerDisplay').classList.remove('urgent');
+  document.getElementById('timerStartBtn').textContent = '▶ Start';
+}
+
+// ══ LUFFY DRAG ══
+const luffyChar = document.getElementById('luffyChar');
+const boatScene = document.getElementById('boatScene');
+const prepAnswer = document.getElementById('prepAnswer');
+
+let isDragging = false;
+let dragOffX = 0, dragOffY = 0;
+
+function getScenePos(e) {
+  const rect = boatScene.getBoundingClientRect();
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  return { x: clientX - rect.left, y: clientY - rect.top };
+}
+
+function startDrag(e) {
+  isDragging = true;
+  const pos = getScenePos(e);
+  dragOffX = pos.x - luffyChar.offsetLeft;
+  dragOffY = pos.y - luffyChar.offsetTop;
+  luffyChar.style.transition = 'none';
+  e.preventDefault();
+}
+
+function doDrag(e) {
+  if (!isDragging) return;
+  const pos = getScenePos(e);
+  const maxX = boatScene.clientWidth - 52;
+  const maxY = boatScene.clientHeight - 52;
+  const x = Math.max(0, Math.min(pos.x - dragOffX, maxX));
+  const y = Math.max(0, Math.min(pos.y - dragOffY, maxY));
+  luffyChar.style.left = x + 'px';
+  luffyChar.style.top = y + 'px';
+  updatePrepDescription(x, y);
+  e.preventDefault();
+}
+
+function endDrag() { isDragging = false; }
+
+luffyChar.addEventListener('mousedown', startDrag);
+luffyChar.addEventListener('touchstart', startDrag, { passive: false });
+document.addEventListener('mousemove', doDrag);
+document.addEventListener('touchmove', doDrag, { passive: false });
+document.addEventListener('mouseup', endDrag);
+document.addEventListener('touchend', endDrag);
+
+// Zone detection based on position within 700x260 scene
+function updatePrepDescription(px, py) {
+  const sceneW = boatScene.clientWidth;
+  const sceneH = boatScene.clientHeight;
+  // Normalise to 0-1
+  const nx = px / sceneW;
+  const ny = py / sceneH;
+
+  let prep, sentence, fr;
+
+  if (ny < 0.18) {
+    prep = "ON TOP OF"; sentence = "Luffy is on top of the mast!"; fr = "au sommet du mât";
+  } else if (ny < 0.32 && nx > 0.42 && nx < 0.60) {
+    prep = "IN THE CROW'S NEST"; sentence = "Luffy is in the crow's nest!"; fr = "dans la vigie";
+  } else if (nx > 0.58 && nx < 0.82 && ny > 0.40 && ny < 0.65) {
+    prep = "IN FRONT OF"; sentence = "Luffy is in front of the cabin!"; fr = "devant la cabine";
+  } else if (nx > 0.80 && ny > 0.40) {
+    prep = "BEHIND"; sentence = "Luffy is behind the cabin!"; fr = "derrière la cabine";
+  } else if (nx < 0.22 && ny > 0.40 && ny < 0.65) {
+    prep = "NEXT TO"; sentence = "Luffy is next to the barrels!"; fr = "à côté des tonneaux";
+  } else if (ny > 0.68) {
+    prep = "BELOW"; sentence = "Luffy is below the deck!"; fr = "sous le pont";
+  } else if (ny > 0.50 && ny < 0.68) {
+    prep = "ON"; sentence = "Luffy is on the deck!"; fr = "sur le pont";
+  } else if (ny > 0.35 && ny < 0.55 && nx > 0.35 && nx < 0.60) {
+    prep = "NEXT TO"; sentence = "Luffy is next to the mast!"; fr = "à côté du mât";
+  } else if (ny < 0.40 && (nx < 0.15 || nx > 0.85)) {
+    prep = "ABOVE"; sentence = "Luffy is above the boat!"; fr = "au-dessus du bateau";
+  } else {
+    prep = "ON"; sentence = "Luffy is on the boat!"; fr = "sur le bateau";
+  }
+
+  prepAnswer.classList.add('active');
+  prepAnswer.innerHTML = `
+    <div class="answer-main">${prep}</div>
+    <div class="answer-sentence">${sentence}</div>
+    <div class="answer-fr">🇫🇷 ${fr}</div>
+  `;
+}
+
+function snapLuffy(zone) {
+  const sceneW = boatScene.clientWidth;
+  const sceneH = boatScene.clientHeight;
+  const positions = {
+    deck:   { x: 0.43, y: 0.52 },
+    mast:   { x: 0.47, y: 0.04 },
+    cabin:  { x: 0.64, y: 0.44 },
+    behind: { x: 0.84, y: 0.50 },
+    barrel: { x: 0.16, y: 0.48 },
+    crow:   { x: 0.46, y: 0.24 },
+    below:  { x: 0.43, y: 0.76 },
+    bow:    { x: 0.10, y: 0.55 },
+  };
+  const p = positions[zone];
+  if (!p) return;
+  const x = p.x * sceneW - 24;
+  const y = p.y * sceneH - 24;
+  luffyChar.style.transition = 'left 0.4s cubic-bezier(0.34,1.4,0.64,1), top 0.4s cubic-bezier(0.34,1.4,0.64,1)';
+  luffyChar.style.left = Math.max(0, Math.min(x, sceneW - 48)) + 'px';
+  luffyChar.style.top  = Math.max(0, Math.min(y, sceneH - 48)) + 'px';
+  setTimeout(() => updatePrepDescription(parseFloat(luffyChar.style.left) + 24, parseFloat(luffyChar.style.top) + 24), 420);
+}
+
+// ══ VOCAB ══
+const vocabWords = [
+  { en:'compass', fr:'boussole', icon:'🧭' },
+  { en:'direction', fr:'direction', icon:'➡️' },
+  { en:'north', fr:'nord', icon:'⬆️' },
+  { en:'south', fr:'sud', icon:'⬇️' },
+  { en:'east', fr:'est', icon:'➡️' },
+  { en:'west', fr:'ouest', icon:'⬅️' },
+  { en:'deck', fr:'pont (du bateau)', icon:'🪵' },
+  { en:'mast', fr:'mât', icon:'🪃' },
+  { en:'cabin', fr:'cabine', icon:'🏠' },
+  { en:'sail', fr:'voile', icon:'⛵' },
+  { en:'crew', fr:'équipage', icon:'👥' },
+  { en:'pirate', fr:'pirate', icon:'🏴‍☠️' },
+  { en:'captain', fr:'capitaine', icon:'⚓' },
+  { en:'magnetic', fr:'magnétique', icon:'🔮' },
+];
+
+function buildVocab() {
+  const grid = document.getElementById('vocabGrid');
+  vocabWords.forEach(v => {
+    const c = document.createElement('div');
+    c.className = 'vocab-card';
+    c.innerHTML = `<span class="vc-icon">${v.icon}</span><span class="vc-en">${v.en}</span><span class="vc-fr">${v.fr}</span><span class="vc-hint">tap</span>`;
+    c.onclick = () => c.classList.toggle('revealed');
+    grid.appendChild(c);
+  });
+}
+
+// ══ QUIZ DATA ══
+const quizData = [
+  {
+    q:"🧭 Why does a compass needle always point North?",
+    opts:["Because of the sun","The Earth is like a giant magnet","The needle is heavy","Someone programmed it"],
+    ans:"The Earth is like a giant magnet"
+  },
+  {
+    q:"🏴‍☠️ Why can't a normal compass work on the Grand Line?",
+    opts:["It is too hot","There are magnetic islands that confuse it","Pirates broke them all","The sea is too deep"],
+    ans:"There are magnetic islands that confuse it"
+  },
+  {
+    q:"📍 Luffy is ON the deck. What does 'on' mean?",
+    opts:["Underneath something","Above and touching a surface","Inside something","Behind something"],
+    ans:"Above and touching a surface"
+  },
+  {
+    q:"⬇️ Which preposition means 'sous' in French?",
+    opts:["On top of","In front of","Under","Behind"],
+    ans:"Under"
+  },
+  {
+    q:"🗡️ What is special about Zoro's fighting style?",
+    opts:["He uses his fists","He uses three swords — one in his mouth!","He shoots fire","He flies"],
+    ans:"He uses three swords — one in his mouth!"
+  },
+  {
+    q:"🏴‍☠️ What is Luffy's dream?",
+    opts:["To become the greatest swordsman","To find Zoro","To become King of the Pirates","To eat all the food in the world"],
+    ans:"To become King of the Pirates"
+  },
+  {
+    q:"📍 Luffy stands between two barrels. 'Between' means…",
+    opts:["On top of both","In the middle of two things","Behind something","Above something"],
+    ans:"In the middle of two things"
+  },
+  {
+    q:"🧭 What does NE stand for?",
+    opts:["North End","North-East","New East","Near Edge"],
+    ans:"North-East"
+  },
+];
+
+function buildQuiz() {
+  const sec = document.getElementById('quizSection');
+  sec.innerHTML = '';
+  quizData.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-card';
+    const shuffled = [...q.opts].sort(() => Math.random() - 0.5);
+    card.innerHTML = `
+      <div class="quiz-q">${q.q}</div>
+      <div class="quiz-opts" id="qopts_${i}">
+        ${shuffled.map(o => `<button class="quiz-btn" data-qi="${i}" data-val="${encodeURIComponent(o)}" onclick="pickQ(this)">${o}</button>`).join('')}
+      </div>
+      <div class="quiz-reveal" id="qrev_${i}">✅ Answer: <strong>${q.ans}</strong></div>
+    `;
+    sec.appendChild(card);
+  });
+}
+
+function pickQ(btn) {
+  const qi = btn.dataset.qi;
+  document.querySelectorAll(`#qopts_${qi} .quiz-btn`).forEach(b => b.disabled = true);
+  if (decodeURIComponent(btn.dataset.val) === quizData[qi].ans) { btn.classList.add('correct'); }
+  else {
+    btn.classList.add('wrong');
+    document.querySelectorAll(`#qopts_${qi} .quiz-btn`).forEach(b => {
+      if (decodeURIComponent(b.dataset.val) === quizData[qi].ans) b.classList.add('correct');
+    });
+    document.getElementById('qrev_' + qi).classList.add('show');
+  }
+}
+
+function checkAll() {
+  let score = 0;
+  quizData.forEach((q, i) => {
+    const correct = document.querySelector(`#qopts_${i} .quiz-btn.correct`);
+    const wrong   = document.querySelector(`#qopts_${i} .quiz-btn.wrong`);
+    if (correct && !wrong) score++;
+    else document.getElementById('qrev_' + i).classList.add('show');
+    document.querySelectorAll(`#qopts_${i} .quiz-btn`).forEach(b => b.disabled = true);
+  });
+
+  const total = quizData.length;
+  const pct = score / total;
+  let msg, trophy;
+  if (pct >= 0.88) { msg = "🏆 LEGENDARY! You're ready to sail the Grand Line!"; trophy = "🏴‍☠️👑⭐⭐⭐"; }
+  else if (pct >= 0.70) { msg = "⚔️ Strong result — Zoro would approve!"; trophy = "🗡️⭐⭐"; }
+  else if (pct >= 0.50) { msg = "🧭 Not bad — check the prepositions and retry!"; trophy = "🧭⭐"; }
+  else { msg = "🌊 Keep studying — even Luffy had to train hard!"; trophy = "🏴‍☠️"; }
+
+  document.getElementById('scoreBig').textContent = `${score}/${total}`;
+  document.getElementById('scoreMsg').textContent = msg;
+  document.getElementById('scoreTrophy').textContent = trophy;
+  document.getElementById('scorePanel').classList.add('show');
+  document.getElementById('scorePanel').scrollIntoView({ behavior:'smooth', block:'center' });
+}
+
+function resetAll() {
+  document.getElementById('scorePanel').classList.remove('show');
+  buildQuiz();
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+// ══ WHITEBOARD ══
+function getTime() {
+  const now = new Date();
+  return now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+}
+
+function addStamp(text) {
+  const log = document.getElementById('wbLog');
+  const entry = document.createElement('div');
+  entry.className = 'wb-log-entry';
+  entry.innerHTML = `<span>${text}</span><span class="wb-log-time">${getTime()}</span>`;
+  log.appendChild(entry);
+  log.scrollTop = log.scrollHeight;
+  const notes = document.getElementById('wbNotes');
+  if (notes) { notes.value += (notes.value ? '\n' : '') + `[${getTime()}] ${text}`; notes.scrollTop = notes.scrollHeight; }
+}
+
+function addStampMobile(text) {
+  const n = document.getElementById('wbNotesMobile');
+  if (n) n.value += (n.value ? '\n' : '') + `[${getTime()}] ${text}`;
+}
+
+function clearNotes() { const n = document.getElementById('wbNotes'); if (n) n.value = ''; }
+function clearLog() { const log = document.getElementById('wbLog'); while (log.children.length > 1) log.removeChild(log.lastChild); }
+
+function toggleMobileWB() { document.getElementById('wbDrawer').classList.toggle('open'); }
+
+// ══ INIT ══
+buildVocab();
+buildQuiz();
+</script>
+</body>
+</html>

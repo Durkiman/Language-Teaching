@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏴‍☠️ Saint Martin – The Island Split in Two</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Nunito:wght@400;600;700;900&display=swap');
+
+  :root {
+    --sea: #0a6e9a;
+    --sea-light: #1a9fd4;
+    --sand: #f5e6c8;
+    --gold: #f0b429;
+    --french: #002395;
+    --dutch: #FF6600;
+    --dark: #0d1b2a;
+    --card-bg: #ffffff;
+    --radius: 14px;
+    --shadow: 0 4px 18px rgba(0,0,0,0.13);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(160deg, #0d1b2a 0%, #0a3f5c 40%, #0a6e9a 100%);
+    min-height: 100vh;
+    color: #fff;
+    padding-bottom: 60px;
+  }
+
+  .hero {
+    position: relative;
+    text-align: center;
+    padding: 32px 20px 24px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Sint_Maarten_-_Saint_Martin_seen_from_the_air.jpg/1280px-Sint_Maarten_-_Saint_Martin_seen_from_the_air.jpg') center/cover no-repeat;
+    opacity: 0.22;
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero h1 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.4rem, 5vw, 2.4rem);
+    color: var(--gold);
+    text-shadow: 0 2px 12px rgba(0,0,0,0.7);
+    line-height: 1.2;
+  }
+  .hero p { margin-top: 8px; font-size: 1rem; opacity: 0.85; }
+
+  .progress-banner {
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+    padding: 10px 16px;
+    background: rgba(255,255,255,0.07);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .pb-item {
+    background: rgba(255,255,255,0.12);
+    border-radius: 20px; padding: 4px 12px;
+    font-size: 0.8rem; font-weight: 700;
+  }
+
+  .timer-bar {
+    display: flex; align-items: center; gap: 10px; justify-content: center;
+    padding: 10px 16px;
+    background: rgba(0,0,0,0.25);
+    flex-wrap: wrap;
+  }
+  .timer-display {
+    font-size: 1.5rem; font-weight: 900; color: var(--gold);
+    min-width: 70px; text-align: center;
+  }
+  .timer-btn {
+    background: rgba(255,255,255,0.15); border: none; color: #fff;
+    border-radius: 8px; padding: 5px 11px; cursor: pointer; font-size: 0.85rem;
+    font-family: 'Nunito', sans-serif; font-weight: 700;
+    transition: background 0.2s;
+  }
+  .timer-btn:hover { background: rgba(255,255,255,0.28); }
+
+  .section { max-width: 720px; margin: 20px auto; padding: 0 14px; }
+  .card {
+    background: var(--card-bg); color: var(--dark);
+    border-radius: var(--radius); padding: 22px;
+    box-shadow: var(--shadow); margin-bottom: 18px;
+  }
+  .card-title {
+    font-size: 1.05rem; font-weight: 900; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .tag {
+    font-size: 0.68rem; font-weight: 800; border-radius: 6px;
+    padding: 2px 7px; text-transform: uppercase; letter-spacing: .05em;
+  }
+  .tag-easy   { background: #d1fae5; color: #065f46; }
+  .tag-medium { background: #fef3c7; color: #92400e; }
+  .tag-hard   { background: #fee2e2; color: #991b1b; }
+
+  .recall-box {
+    background: #f0f9ff; border-left: 4px solid var(--sea);
+    border-radius: 10px; padding: 14px 16px;
+    font-size: 0.95rem; line-height: 1.7;
+  }
+  .recall-box strong { color: var(--sea); }
+
+  .story-img {
+    width: 100%; border-radius: 10px; margin-bottom: 14px;
+    object-fit: cover; max-height: 220px; display: block;
+  }
+  .story-text { font-size: 0.95rem; line-height: 1.85; }
+  .story-text .vocab-hl {
+    background: #fef3c7; border-radius: 4px; padding: 1px 4px;
+    font-weight: 700; cursor: pointer; border-bottom: 2px solid var(--gold);
+  }
+
+  .vocab-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px; margin-top: 6px;
+  }
+  .vc {
+    background: linear-gradient(135deg, #0a6e9a, #1a9fd4);
+    color: #fff; border-radius: 12px; padding: 13px 10px;
+    text-align: center; cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    user-select: none; min-height: 80px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .vc:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
+  .vc .en { font-weight: 900; font-size: 1rem; }
+  .vc .fr { font-size: 0.82rem; opacity: 0; margin-top: 5px; transition: opacity 0.3s; }
+  .vc.show-fr .fr { opacity: 1; }
+  .vc.learned { background: linear-gradient(135deg, #065f46, #059669); }
+
+  /* Grammar box */
+  .grammar-box {
+    background: #f0f9ff; border-radius: 10px; padding: 16px;
+    font-size: 0.9rem; line-height: 2;
+  }
+  .grammar-box .form-row {
+    display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-start;
+    border-bottom: 1px solid #e0f2fe; padding: 6px 0;
+  }
+  .grammar-box .form-row:last-child { border-bottom: none; }
+  .form-label {
+    background: var(--sea); color: #fff; border-radius: 6px;
+    padding: 2px 10px; font-weight: 800; font-size: 0.8rem; white-space: nowrap;
+    align-self: flex-start; margin-top: 3px;
+  }
+  .form-example { flex: 1; color: #1e3a5f; }
+  .form-example em { color: #059669; font-style: normal; font-weight: 700; }
+  .form-fr { font-size: 0.78rem; color: #6b7280; margin-top: 2px; }
+
+  /* Irregular verb table */
+  .verb-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-top: 8px; }
+  .verb-table th { background: var(--dark); color: #fff; padding: 7px 10px; text-align: left; }
+  .verb-table td { padding: 7px 10px; border-bottom: 1px solid #e5e7eb; }
+  .verb-table tr:nth-child(even) td { background: #f9fafb; }
+  .verb-table .irr { color: #dc2626; font-weight: 800; }
+
+  /* Exercises */
+  .ex-item { margin-bottom: 16px; }
+  .ex-item p { font-size: 0.93rem; margin-bottom: 6px; line-height: 1.6; }
+  .ex-hint {
+    font-size: 0.8rem; color: #6b7280; margin-bottom: 6px;
+    background: #f9fafb; border-radius: 6px; padding: 5px 10px;
+  }
+  .ex-input {
+    border: 2px solid #d1d5db; border-radius: 8px; padding: 8px 12px;
+    font-size: 0.93rem; font-family: 'Nunito', sans-serif; width: 100%;
+    transition: border-color 0.2s;
+  }
+  .ex-input:focus { outline: none; border-color: var(--sea); }
+  .ex-input.correct { border-color: #059669; background: #d1fae5; }
+  .ex-input.wrong   { border-color: #dc2626; background: #fee2e2; }
+
+  .inline-input {
+    border: none; border-bottom: 2px solid #0a6e9a;
+    font-family: 'Nunito', sans-serif; font-size: 0.93rem;
+    width: 130px; padding: 2px 4px; background: transparent;
+    color: var(--dark);
+  }
+  .inline-input:focus { outline: none; border-bottom-color: var(--gold); }
+  .inline-input.correct { border-bottom-color: #059669; color: #059669; font-weight: 700; }
+  .inline-input.wrong   { border-bottom-color: #dc2626; color: #dc2626; }
+
+  .tf-row { display: flex; gap: 10px; }
+  .tf-btn {
+    flex: 1; padding: 9px; border: 2px solid #d1d5db; border-radius: 8px;
+    background: #fff; cursor: pointer; font-family: 'Nunito', sans-serif;
+    font-weight: 700; font-size: 0.9rem; transition: all 0.2s;
+  }
+  .tf-btn:hover { border-color: var(--sea); }
+  .tf-btn.correct { background: #d1fae5; border-color: #059669; color: #065f46; }
+  .tf-btn.wrong   { background: #fee2e2; border-color: #dc2626; color: #991b1b; }
+
+  .check-btn {
+    background: var(--sea); color: #fff; border: none; border-radius: 10px;
+    padding: 11px 24px; font-size: 0.95rem; font-weight: 800;
+    cursor: pointer; margin-top: 12px; font-family: 'Nunito', sans-serif;
+    transition: background 0.2s; display: block;
+  }
+  .check-btn:hover { background: var(--sea-light); }
+  .feedback { margin-top: 10px; font-weight: 700; font-size: 0.9rem; min-height: 22px; }
+  .feedback.ok  { color: #059669; }
+  .feedback.err { color: #dc2626; }
+
+  .score-bar {
+    background: #f3f4f6; border-radius: 10px; padding: 12px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-weight: 800; margin-bottom: 16px;
+  }
+  .score-num { font-size: 1.6rem; color: var(--sea); }
+
+  .answer-reveal {
+    display: none; margin-top: 6px;
+    background: #d1fae5; border-radius: 8px; padding: 8px 12px;
+    font-size: 0.88rem; color: #065f46; font-weight: 700;
+  }
+  .answer-reveal.show { display: block; }
+
+  /* Speaking scaffold */
+  .speaking-card {
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    color: #fff; border-radius: var(--radius);
+    padding: 22px; margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .speaking-card h3 { font-size: 1.1rem; margin-bottom: 12px; }
+  .speaking-scene {
+    background: rgba(255,255,255,0.12); border-radius: 10px;
+    padding: 14px; font-size: 0.93rem; line-height: 1.7; margin-bottom: 12px;
+  }
+  .speaking-scaffold {
+    display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;
+  }
+  .scaffold-step {
+    background: rgba(255,255,255,0.15); border-radius: 8px;
+    padding: 10px 14px; font-size: 0.88rem;
+  }
+  .scaffold-step .step-num {
+    font-weight: 900; color: var(--gold); margin-right: 6px;
+  }
+  .scaffold-step .step-example {
+    font-style: italic; opacity: 0.85; display: block; margin-top: 4px; font-size: 0.83rem;
+  }
+  .verb-bank {
+    background: rgba(255,255,255,0.1); border-radius: 8px;
+    padding: 10px 14px; font-size: 0.85rem;
+  }
+  .verb-bank strong { color: var(--gold); display: block; margin-bottom: 4px; }
+  .speaking-tip {
+    font-size: 0.8rem; opacity: 0.75; margin-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10px;
+  }
+
+  .split-visual {
+    display: flex; border-radius: 10px; overflow: hidden;
+    margin-bottom: 14px; box-shadow: var(--shadow);
+  }
+  .split-fr { flex: 3; background: var(--french); color: #fff; padding: 14px; text-align: center; font-weight: 800; }
+  .split-nl { flex: 2; background: var(--dutch); color: #fff; padding: 14px; text-align: center; font-weight: 800; }
+  .split-label { font-size: 1.1rem; }
+  .split-sub { font-size: 0.75rem; opacity: 0.85; margin-top: 4px; }
+
+  .review-flag {
+    background: #fff7ed; border-left: 4px solid #f59e0b;
+    border-radius: 10px; padding: 12px 16px; margin-top: 4px;
+    font-size: 0.88rem; color: #78350f; line-height: 1.7;
+  }
+
+  .whiteboard {
+    background: #fff; color: var(--dark); border-radius: var(--radius);
+    padding: 18px; box-shadow: var(--shadow);
+    max-width: 720px; margin: 0 auto 20px; padding-left: 14px; padding-right: 14px;
+    margin-left: 14px; margin-right: 14px;
+  }
+  @media (min-width: 748px) { .whiteboard { margin-left: auto; margin-right: auto; } }
+  .whiteboard h3 { font-weight: 900; margin-bottom: 10px; font-size: 1rem; }
+  .wb-stamps { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  .wb-stamp {
+    background: #f3f4f6; border: none; border-radius: 8px;
+    padding: 6px 12px; cursor: pointer; font-size: 1rem;
+  }
+  .wb-notes {
+    width: 100%; min-height: 90px; border: 2px solid #e5e7eb;
+    border-radius: 8px; padding: 10px; font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem; resize: vertical;
+  }
+  .wb-actions { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .wb-btn {
+    background: var(--dark); color: #fff; border: none; border-radius: 8px;
+    padding: 7px 14px; cursor: pointer; font-size: 0.82rem; font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+  }
+  .wb-btn.copy { background: var(--sea); }
+
+  .section-title {
+    font-size: 0.78rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: .1em; color: rgba(255,255,255,0.55);
+    padding: 0 14px; margin: 24px auto 0;
+    max-width: 720px;
+  }
+
+  .confetti-piece {
+    position: fixed; width: 10px; height: 10px; border-radius: 2px;
+    pointer-events: none; z-index: 9999;
+    animation: confettiFall 2s ease-in forwards;
+  }
+  @keyframes confettiFall {
+    0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  .divider { border: none; border-top: 1px solid #e5e7eb; margin: 16px 0; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <h1>🏴‍☠️ Saint Martin</h1>
+    <p>The Island Split in Two — France 🇫🇷 meets the Netherlands 🇳🇱</p>
+  </div>
+</div>
+
+<!-- PROGRESS BANNER -->
+<div class="progress-banner">
+  <div class="pb-item">📚 Lesson 14</div>
+  <div class="pb-item">🔤 26+ verbs learned</div>
+  <div class="pb-item">🗺️ Islands: 8</div>
+  <div class="pb-item">⏪ Past Simple</div>
+</div>
+
+<!-- TIMER -->
+<div class="timer-bar">
+  <span style="font-size:0.85rem; opacity:0.7;">⏱</span>
+  <div class="timer-display" id="timerDisplay">00:00</div>
+  <button class="timer-btn" onclick="setTimer(5)">5 min</button>
+  <button class="timer-btn" onclick="setTimer(10)">10 min</button>
+  <button class="timer-btn" onclick="setTimer(15)">15 min</button>
+  <button class="timer-btn" id="timerStartBtn" onclick="toggleTimer()">▶ Start</button>
+</div>
+
+<!-- ===== WARM-UP ===== -->
+<div class="section-title">🔥 WARM-UP — Free Recall</div>
+<div class="section">
+  <div class="card">
+    <div class="card-title">🧠 What do you remember?</div>
+    <div class="recall-box">
+      <p><strong>No notes! Just try to remember:</strong></p><br>
+      <p>1. 🌊 Name <strong>one thing</strong> you remember about <strong>Saba or Saint-Barths</strong>.</p><br>
+      <p>2. ⏪ Say <strong>three irregular verbs</strong> in the past simple — for example: <em>go → went</em>. Can you do three?</p><br>
+      <p>3. 🗺️ Saint Martin is shared by <strong>two countries</strong>. Which ones? Take a guess!</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== STORY ===== -->
+<div class="section-title">📖 THE STORY — Past Simple</div>
+<div class="section">
+  <div class="card">
+    <div class="card-title">🏝️ The Race That Split an Island</div>
+
+    <img
+      class="story-img"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Sint_Maarten_-_Saint_Martin_seen_from_the_air.jpg/800px-Sint_Maarten_-_Saint_Martin_seen_from_the_air.jpg"
+      alt="Saint Martin aerial"
+      onerror="this.style.display='none'"
+    >
+
+    <div class="split-visual">
+      <div class="split-fr"><div class="split-label">🇫🇷 Saint-Martin</div><div class="split-sub">French side — bigger (53 km²)</div></div>
+      <div class="split-nl"><div class="split-label">🇳🇱 Sint Maarten</div><div class="split-sub">Dutch side (34 km²)</div></div>
+    </div>
+
+    <div class="story-text">
+      <p>
+        Long ago, <span class="vocab-hl" data-fr="pirates">pirates</span> <strong>sailed</strong> the Caribbean Sea. They <strong>loved</strong> Saint Martin because it <strong>had</strong> salt, fresh water, and safe <span class="vocab-hl" data-fr="ports / havres">harbours</span>.
+        Christopher Columbus <strong>spotted</strong> the island on November 11, 1493 — Saint Martin's Day. He never <strong>landed</strong>, but he <strong>gave</strong> the island its name.
+      </p>
+      <br>
+      <p>
+        For many years, Spain, France, and the Netherlands all <strong>wanted</strong> the island. They <strong>fought</strong> many times. Spain <strong>built</strong> a fort and <strong>tried</strong> to keep the others away. But in 1648, Spain <strong>left</strong>. France and the Netherlands finally <strong>made</strong> a deal.
+      </p>
+      <br>
+      <p>
+        But how <strong>did</strong> they <strong>decide</strong> the <span class="vocab-hl" data-fr="frontière">border</span>? They <strong>chose</strong> a very unusual method — a race! 🏃
+      </p>
+      <br>
+      <p>
+        A French runner and a Dutch runner both <strong>stood</strong> at the coast. They <strong>started</strong> running in opposite directions around the island. The <span class="vocab-hl" data-fr="frontière / limite">border</span> <strong>became</strong> the place where they <strong>met</strong>.
+        The French runner <strong>ran</strong> faster — so France <strong>got</strong> the bigger part!
+        Or… <strong>did</strong> he cheat? The legend says he <strong>drank</strong> wine before the race to give him courage. Nobody really <strong>knew</strong> the truth! 😄
+      </p>
+      <br>
+      <p>
+        On March 23, 1648, the two nations <strong>signed</strong> the Treaty of Concordia on Concordia Hill. They <strong>agreed</strong>: no fence, no passport, open border forever. And today — more than 370 years later — it is still true!
+      </p>
+    </div>
+
+    <img
+      class="story-img"
+      style="margin-top:14px;"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Border_monument_2008.JPG/800px-Border_monument_2008.JPG"
+      alt="Concordia border monument"
+      onerror="this.style.display='none'"
+    >
+    <p style="font-size:0.78rem; color:#6b7280; margin-top:4px;">📍 The Concordia Monument — where the border begins</p>
+  </div>
+
+  <!-- VOCAB CARDS -->
+  <div class="card">
+    <div class="card-title">🃏 Vocabulary Cards <span style="font-size:0.78rem; font-weight:600; color:#6b7280;">(Tap once = French · Tap again = ✓ learned)</span></div>
+    <div class="vocab-grid" id="vocabGrid"></div>
+  </div>
+</div>
+
+<!-- ===== GRAMMAR ===== -->
+<div class="section-title">⚡ GRAMMAR — Past Simple</div>
+<div class="section">
+  <div class="card">
+    <div class="card-title">📘 How to use Past Simple</div>
+    <div class="grammar-box">
+      <div class="form-row">
+        <span class="form-label">✅ Affirmative</span>
+        <div class="form-example">
+          Subject + <em>past verb</em><br>
+          <em>The runner <strong>ran</strong> fast.</em> &nbsp;·&nbsp; <em>France <strong>got</strong> the bigger part.</em><br>
+          <em>They <strong>signed</strong> the treaty.</em> &nbsp;·&nbsp; <em>Columbus <strong>spotted</strong> the island.</em>
+          <div class="form-fr">Le coureur courut vite. · La France obtint la plus grande partie.</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <span class="form-label">❌ Negative</span>
+        <div class="form-example">
+          Subject + <em>didn't</em> + base verb<br>
+          <em>Columbus <strong>didn't land</strong> on the island.</em><br>
+          <em>Spain <strong>didn't want</strong> to leave.</em>
+          <div class="form-fr">Colomb n'a pas débarqué. · L'Espagne ne voulait pas partir.</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <span class="form-label">❓ Question</span>
+        <div class="form-example">
+          <em>Did</em> + subject + base verb?<br>
+          <em><strong>Did</strong> France win the race?</em> → Yes, it <strong>did</strong>. / No, it <strong>didn't</strong>.<br>
+          <em><strong>Did</strong> Columbus land on the island?</em> → No, he <strong>didn't</strong>.
+          <div class="form-fr">Est-ce que la France a gagné ? · Colomb a-t-il débarqué ?</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <span class="form-label">🔍 Wh- Question</span>
+        <div class="form-example">
+          Wh- word + <em>did</em> + subject + base verb?<br>
+          <em><strong>Where did</strong> they sign the treaty?</em><br>
+          <em><strong>When did</strong> Columbus spot the island?</em><br>
+          <em><strong>Why did</strong> pirates love Saint Martin?</em>
+          <div class="form-fr">Où ont-ils signé le traité ? · Quand Colomb a-t-il aperçu l'île ?</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <p style="font-weight:800; margin-bottom:8px; font-size:0.9rem;">⚠️ Irregular verbs used in this lesson:</p>
+    <table class="verb-table">
+      <thead><tr><th>Base form</th><th>Past simple</th><th>Français</th></tr></thead>
+      <tbody>
+        <tr><td>go</td><td class="irr">went</td><td>aller → alla</td></tr>
+        <tr><td>have</td><td class="irr">had</td><td>avoir → eut</td></tr>
+        <tr><td>give</td><td class="irr">gave</td><td>donner → donna</td></tr>
+        <tr><td>fight</td><td class="irr">fought</td><td>se battre → se battit</td></tr>
+        <tr><td>build</td><td class="irr">built</td><td>construire → construisit</td></tr>
+        <tr><td>leave</td><td class="irr">left</td><td>partir → partir</td></tr>
+        <tr><td>make</td><td class="irr">made</td><td>faire → fit</td></tr>
+        <tr><td>choose</td><td class="irr">chose</td><td>choisir → choisit</td></tr>
+        <tr><td>stand</td><td class="irr">stood</td><td>se tenir → se tint</td></tr>
+        <tr><td>run</td><td class="irr">ran</td><td>courir → courut</td></tr>
+        <tr><td>meet</td><td class="irr">met</td><td>rencontrer → rencontra</td></tr>
+        <tr><td>get</td><td class="irr">got</td><td>obtenir → obtint</td></tr>
+        <tr><td>drink</td><td class="irr">drank</td><td>boire → but</td></tr>
+        <tr><td>know</td><td class="irr">knew</td><td>savoir → sut</td></tr>
+        <tr><td>become</td><td class="irr">became</td><td>devenir → devint</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== EXERCISES ===== -->
+<div class="section-title">✏️ EXERCISES — Produce the Forms</div>
+<div class="section">
+
+  <!-- EX 1: GAP FILL AFFIRMATIVE -->
+  <div class="card">
+    <div class="card-title">1️⃣ Affirmative — Fill the Gap <span class="tag tag-easy">EASY</span></div>
+    <p style="font-size:0.85rem; color:#6b7280; margin-bottom:14px;">Write the correct past simple form of the verb in brackets.</p>
+    <div class="score-bar"><span>Score</span><span class="score-num" id="ex1Score">0 / 7</span></div>
+    <div id="ex1"></div>
+    <button class="check-btn" onclick="checkEx1()">Check ✓</button>
+    <div class="feedback" id="ex1Feedback"></div>
+  </div>
+
+  <!-- EX 2: MAKE IT NEGATIVE -->
+  <div class="card">
+    <div class="card-title">2️⃣ Make it Negative <span class="tag tag-medium">MEDIUM</span></div>
+    <p style="font-size:0.85rem; color:#6b7280; margin-bottom:6px;">Rewrite each sentence in the negative form.</p>
+    <div class="ex-hint">💡 Remember: <strong>didn't + base verb</strong> &nbsp;·&nbsp; Example: "He ran fast." → "He <strong>didn't run</strong> fast."</div>
+    <div id="ex2"></div>
+    <button class="check-btn" onclick="checkEx2()">Check ✓</button>
+    <div class="feedback" id="ex2Feedback"></div>
+  </div>
+
+  <!-- EX 3: FORM A QUESTION -->
+  <div class="card">
+    <div class="card-title">3️⃣ Form a Yes/No Question <span class="tag tag-medium">MEDIUM</span></div>
+    <p style="font-size:0.85rem; color:#6b7280; margin-bottom:6px;">Turn each sentence into a question, then write a short answer.</p>
+    <div class="ex-hint">💡 Remember: <strong>Did + subject + base verb?</strong> &nbsp;·&nbsp; "France won." → "<strong>Did</strong> France <strong>win</strong>?"</div>
+    <div id="ex3"></div>
+    <button class="check-btn" onclick="checkEx3()">Check ✓</button>
+    <div class="feedback" id="ex3Feedback"></div>
+  </div>
+
+  <!-- EX 4: WH- QUESTIONS -->
+  <div class="card">
+    <div class="card-title">4️⃣ Wh- Questions <span class="tag tag-hard">HARD</span></div>
+    <p style="font-size:0.85rem; color:#6b7280; margin-bottom:6px;">Read the answer. Write the Wh- question that matches it.</p>
+    <div class="ex-hint">💡 Wh- word + <strong>did</strong> + subject + base verb? &nbsp;·&nbsp; Use: <em>Where / When / Why / Who / How</em></div>
+    <div id="ex4"></div>
+    <button class="check-btn" onclick="checkEx4()">Check ✓</button>
+    <div class="feedback" id="ex4Feedback"></div>
+  </div>
+
+  <!-- EX 5: ERROR CORRECTION -->
+  <div class="card">
+    <div class="card-title">5️⃣ Spot the Error! <span class="tag tag-hard">HARD</span></div>
+    <p style="font-size:0.85rem; color:#6b7280; margin-bottom:6px;">Each sentence has <strong>one mistake</strong>. Find it and write the correct sentence.</p>
+    <div class="ex-hint">💡 Look carefully at the verb form — is it affirmative, negative, or a question?</div>
+    <div id="ex5"></div>
+    <button class="check-btn" onclick="checkEx5()">Check ✓</button>
+    <div class="feedback" id="ex5Feedback"></div>
+  </div>
+
+</div>
+
+<!-- ===== SPEAKING ===== -->
+<div class="section-title">🎤 SPEAKING CHALLENGE — Past Simple Production</div>
+<div class="section">
+  <div class="speaking-card">
+    <h3>🏴‍☠️ You were a pirate who just arrived at Saint Martin!</h3>
+
+    <div class="speaking-scene">
+      <p>🗓️ <strong>The year was 1630.</strong> Your ship arrived at Saint Martin yesterday. Now you are telling your crew what happened.</p>
+      <br>
+      <p>🗣️ <strong>Tell the story in Past Simple. What did you see? What did you do? What happened?</strong></p>
+    </div>
+
+    <p style="font-weight:800; margin-bottom:8px; font-size:0.9rem;">📋 Follow these steps — one at a time:</p>
+    <div class="speaking-scaffold">
+      <div class="scaffold-step">
+        <span class="step-num">Step 1</span> <strong>Where did you arrive?</strong> Describe what you saw when you arrived.
+        <span class="step-example">💬 Try: "I arrived at… I saw… The island was…"</span>
+      </div>
+      <div class="scaffold-step">
+        <span class="step-num">Step 2</span> <strong>Why did you go there?</strong> What did your ship need?
+        <span class="step-example">💬 Try: "We went to Saint Martin because… We needed… We wanted…"</span>
+      </div>
+      <div class="scaffold-step">
+        <span class="step-num">Step 3</span> <strong>What did you find?</strong> Salt? Fresh water? Other pirates?
+        <span class="step-example">💬 Try: "We found… There was / There were… We met…"</span>
+      </div>
+      <div class="scaffold-step">
+        <span class="step-num">Step 4</span> <strong>What happened next?</strong> Did you fight? Did you leave? Did you stay?
+        <span class="step-example">💬 Try: "Then we… After that… We decided to… We didn't…"</span>
+      </div>
+    </div>
+
+    <div class="verb-bank">
+      <strong>🔤 Verb bank — use these!</strong>
+      arrived · saw · found · wanted · needed · went · met · fought · took · left · stayed · decided · looked · felt · knew · gave · ran · built · had
+    </div>
+
+    <div class="speaking-tip">
+      💡 <strong>Teacher:</strong> Don't interrupt — let Micha speak freely. Note errors silently on the whiteboard. Correct gently at the end. Even 4–5 sentences is great for a first try!
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🌊 Your View as a Pirate</div>
+    <img
+      class="story-img"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Simpson_Bay_Lagoon_aerial_St_Maarten.jpg/800px-Simpson_Bay_Lagoon_aerial_St_Maarten.jpg"
+      alt="Simpson Bay Lagoon"
+      onerror="this.style.display='none'"
+      style="max-height:260px;"
+    >
+    <p style="font-size:0.82rem; color:#6b7280; margin-top:8px;">🗺️ Simpson Bay Lagoon — pirates used this lagoon to hide their ships and collect fresh water.</p>
+  </div>
+
+  <div class="review-flag">
+    🔁 <strong>Review flag:</strong> Past Simple negatives (didn't + base verb) — revisit in 2 sessions · again after 1 week<br>
+    🔁 <strong>Review flag:</strong> Past Simple Wh- questions (Where/When/Why did…?) — revisit in 2 sessions · again after 1 week<br>
+    🔁 <strong>Review flag:</strong> Saint Martin vocab (harbour, border, treaty, divide, pirate) — revisit in 2 sessions
+  </div>
+</div>
+
+<!-- ===== WHITEBOARD ===== -->
+<div class="section-title">🖊️ TEACHER WHITEBOARD</div>
+<div class="whiteboard">
+  <h3>📋 Error Log & Notes</h3>
+  <div class="wb-stamps">
+    <button class="wb-stamp" onclick="addStamp('⭐')">⭐</button>
+    <button class="wb-stamp" onclick="addStamp('❌')">❌</button>
+    <button class="wb-stamp" onclick="addStamp('✓')">✓</button>
+    <button class="wb-stamp" onclick="addStamp('💡')">💡</button>
+    <button class="wb-stamp" onclick="addStamp('🔁')">🔁</button>
+    <button class="wb-stamp" onclick="addStamp('🏴‍☠️')">🏴‍☠️</button>
+    <button class="wb-stamp" onclick="addStamp('didn\'t + base: ')">didn't</button>
+    <button class="wb-stamp" onclick="addStamp('Did + subj + base? ')">Did?</button>
+  </div>
+  <textarea class="wb-notes" id="wbNotes" placeholder="Error log, corrections, notes from speaking challenge..."></textarea>
+  <div class="wb-actions">
+    <button class="wb-btn copy" onclick="copyNotes()">📋 Copy All</button>
+    <button class="wb-btn" onclick="clearNotes()">🗑️ Clear</button>
+  </div>
+</div>
+
+<script>
+// ===== VOCAB =====
+const vocab = [
+  { en: 'island',    fr: 'île' },
+  { en: 'border',    fr: 'frontière' },
+  { en: 'harbour',   fr: 'port / havre' },
+  { en: 'divide',    fr: 'diviser' },
+  { en: 'belong',    fr: 'appartenir à' },
+  { en: 'pirate',    fr: 'pirate' },
+  { en: 'treaty',    fr: 'traité' },
+  { en: 'runner',    fr: 'coureur' },
+  { en: 'beach',     fr: 'plage' },
+  { en: 'legend',    fr: 'légende' },
+];
+
+function renderVocab() {
+  const grid = document.getElementById('vocabGrid');
+  vocab.forEach(w => {
+    const el = document.createElement('div');
+    el.className = 'vc';
+    el.innerHTML = `<div class="en">${w.en}</div><div class="fr">${w.fr}</div>`;
+    el.dataset.state = '0';
+    el.addEventListener('click', () => {
+      const s = parseInt(el.dataset.state);
+      if (s === 0) { el.classList.add('show-fr'); el.dataset.state = '1'; }
+      else if (s === 1) { el.classList.add('learned'); el.dataset.state = '2'; }
+      else { el.classList.remove('show-fr','learned'); el.dataset.state = '0'; }
+    });
+    grid.appendChild(el);
+  });
+}
+
+// ===== EX 1: AFFIRMATIVE GAP FILL =====
+const ex1Data = [
+  { sentence: 'Columbus ___ (spot) the island in 1493.',         answer: 'spotted' },
+  { sentence: 'Pirates ___ (sail) the Caribbean Sea.',           answer: 'sailed' },
+  { sentence: 'The two nations ___ (sign) a treaty in 1648.',    answer: 'signed' },
+  { sentence: 'The French runner ___ (run) faster.',             answer: 'ran' },
+  { sentence: 'Spain ___ (build) a fort on the island.',         answer: 'built' },
+  { sentence: 'France ___ (get) the bigger part of the island.', answer: 'got' },
+  { sentence: 'The runners ___ (meet) and the border was set.',  answer: 'met' },
+];
+
+function renderEx1() {
+  const c = document.getElementById('ex1');
+  ex1Data.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'ex-item';
+    const html = item.sentence.replace('___', `<input type="text" class="inline-input" id="ex1i${i}" autocomplete="off" placeholder="?">`);
+    div.innerHTML = `<p>${i+1}. ${html}</p>`;
+    c.appendChild(div);
+  });
+}
+
+function checkEx1() {
+  let correct = 0;
+  ex1Data.forEach((item, i) => {
+    const inp = document.getElementById(`ex1i${i}`);
+    const val = inp.value.trim().toLowerCase();
+    if (val === item.answer) { inp.classList.add('correct'); inp.classList.remove('wrong'); correct++; }
+    else { inp.classList.add('wrong'); inp.classList.remove('correct'); }
+  });
+  document.getElementById('ex1Score').textContent = `${correct} / ${ex1Data.length}`;
+  const fb = document.getElementById('ex1Feedback');
+  if (correct === ex1Data.length) { fb.textContent = '🎉 Perfect! All correct!'; fb.className = 'feedback ok'; confetti(); }
+  else { fb.textContent = `${correct}/${ex1Data.length} — check the red ones. Remember irregular verbs!`; fb.className = 'feedback err'; }
+}
+
+// ===== EX 2: NEGATIVE =====
+const ex2Data = [
+  { prompt: 'France won the race.',                         answer: "france didn't win the race." },
+  { prompt: 'Columbus landed on the island.',               answer: "columbus didn't land on the island." },
+  { prompt: 'Spain left the island peacefully.',            answer: "spain didn't leave the island peacefully." },
+  { prompt: 'The Dutch runner ran faster.',                 answer: "the dutch runner didn't run faster." },
+  { prompt: 'The two countries built a wall at the border.',answer: "the two countries didn't build a wall at the border." },
+];
+
+function renderEx2() {
+  const c = document.getElementById('ex2');
+  ex2Data.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'ex-item';
+    div.innerHTML = `
+      <p>${i+1}. <em>${item.prompt}</em> → Make it negative:</p>
+      <input type="text" class="ex-input" id="ex2i${i}" placeholder="Write the negative sentence..." autocomplete="off">`;
+    c.appendChild(div);
+  });
+}
+
+function checkEx2() {
+  let correct = 0;
+  ex2Data.forEach((item, i) => {
+    const inp = document.getElementById(`ex2i${i}`);
+    const val = inp.value.trim().toLowerCase().replace(/[.!?]$/, '');
+    const ans = item.answer.replace(/[.!?]$/, '');
+    // Accept if "didn't" + base verb present and key content words match
+    const hasDidnt = val.includes("didn't") || val.includes("did not");
+    // Extract base verb from answer
+    const baseVerb = ans.split("didn't ")[1]?.split(' ')[0] || '';
+    if (hasDidnt && val.includes(baseVerb)) {
+      inp.classList.add('correct'); inp.classList.remove('wrong'); correct++;
+    } else {
+      inp.classList.add('wrong'); inp.classList.remove('correct');
+    }
+  });
+  const fb = document.getElementById('ex2Feedback');
+  if (correct === ex2Data.length) { fb.textContent = '🎉 Excellent! Perfect negatives!'; fb.className = 'feedback ok'; confetti(); }
+  else { fb.textContent = `${correct}/${ex2Data.length} — make sure you use "didn't" + base verb (e.g. didn't win, not didn't won!)`;fb.className = 'feedback err'; }
+}
+
+// ===== EX 3: YES/NO QUESTIONS =====
+const ex3Data = [
+  { prompt: 'Columbus spotted the island.',        question: 'Did Columbus spot the island?',       answerShort: 'Yes, he did.' },
+  { prompt: 'Spain left in 1648.',                 question: 'Did Spain leave in 1648?',             answerShort: 'Yes, it did.' },
+  { prompt: 'The French runner drank wine.',       question: 'Did the French runner drink wine?',    answerShort: 'Yes, he did.' },
+  { prompt: 'The two countries built a fence.',    question: 'Did the two countries build a fence?', answerShort: 'No, they didn\'t.' },
+];
+
+function renderEx3() {
+  const c = document.getElementById('ex3');
+  ex3Data.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'ex-item';
+    div.innerHTML = `
+      <p>${i+1}. Turn into a question: <em>"${item.prompt}"</em></p>
+      <input type="text" class="ex-input" id="ex3q${i}" placeholder="Write the question..." autocomplete="off" style="margin-bottom:6px;">
+      <input type="text" class="ex-input" id="ex3a${i}" placeholder="Short answer: Yes, ... / No, ..." autocomplete="off">`;
+    c.appendChild(div);
+  });
+}
+
+function checkEx3() {
+  let correct = 0, total = ex3Data.length * 2;
+  ex3Data.forEach((item, i) => {
+    const qInp = document.getElementById(`ex3q${i}`);
+    const aInp = document.getElementById(`ex3a${i}`);
+    const qVal = qInp.value.trim().toLowerCase();
+    const aVal = aInp.value.trim().toLowerCase();
+
+    // Check question: must start with "did" and contain base verb
+    const baseVerb = item.question.toLowerCase().split('did ')[1]?.split(' ')[0] || '';
+    const qOk = qVal.startsWith('did') && qVal.includes(baseVerb);
+    if (qOk) { qInp.classList.add('correct'); qInp.classList.remove('wrong'); correct++; }
+    else { qInp.classList.add('wrong'); qInp.classList.remove('correct'); }
+
+    // Check short answer
+    const expectedAns = item.answerShort.toLowerCase();
+    const aOk = aVal.includes('yes, he did') || aVal.includes('yes, it did') || aVal.includes('yes, they did') ||
+                 aVal.includes("no, they didn't") || aVal.includes("no, it didn't") || aVal.includes("no, he didn't") ||
+                 aVal === expectedAns;
+    if (aOk) { aInp.classList.add('correct'); aInp.classList.remove('wrong'); correct++; }
+    else { aInp.classList.add('wrong'); aInp.classList.remove('correct'); }
+  });
+  const fb = document.getElementById('ex3Feedback');
+  if (correct === total) { fb.textContent = '🎉 Perfect questions and answers!'; fb.className = 'feedback ok'; confetti(); }
+  else { fb.textContent = `${correct}/${total} — remember: Did + subject + BASE verb? (not "runned", "leaved"!)`;fb.className = 'feedback err'; }
+}
+
+// ===== EX 4: WH- QUESTIONS =====
+const ex4Data = [
+  { answer: 'They signed the treaty on Concordia Hill.', question: 'Where did they sign the treaty?',       whWord: 'where' },
+  { answer: 'Columbus spotted the island in 1493.',       question: 'When did Columbus spot the island?',   whWord: 'when' },
+  { answer: 'Pirates loved the island because of the salt and harbours.', question: 'Why did pirates love the island?', whWord: 'why' },
+  { answer: 'The French runner won the race.',            question: 'Who won the race?',                    whWord: 'who' },
+];
+
+function renderEx4() {
+  const c = document.getElementById('ex4');
+  ex4Data.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'ex-item';
+    div.innerHTML = `
+      <p>${i+1}. Answer: <em>"${item.answer}"</em></p>
+      <p style="font-size:0.82rem; color:#6b7280;">Hint: starts with <strong>${item.whWord.charAt(0).toUpperCase() + item.whWord.slice(1)}...</strong></p>
+      <input type="text" class="ex-input" id="ex4i${i}" placeholder="Write the question..." autocomplete="off">`;
+    c.appendChild(div);
+  });
+}
+
+function checkEx4() {
+  let correct = 0;
+  ex4Data.forEach((item, i) => {
+    const inp = document.getElementById(`ex4i${i}`);
+    const val = inp.value.trim().toLowerCase();
+    const ok = val.startsWith(item.whWord) && val.includes('did') || (item.whWord === 'who' && val.startsWith('who'));
+    if (ok) { inp.classList.add('correct'); inp.classList.remove('wrong'); correct++; }
+    else { inp.classList.add('wrong'); inp.classList.remove('correct'); }
+  });
+  const fb = document.getElementById('ex4Feedback');
+  if (correct === ex4Data.length) { fb.textContent = '🎉 Brilliant! Wh- questions mastered!'; fb.className = 'feedback ok'; confetti(); }
+  else { fb.textContent = `${correct}/${ex4Data.length} — start with the Wh- word, then "did", then subject, then base verb!`; fb.className = 'feedback err'; }
+}
+
+// ===== EX 5: ERROR CORRECTION =====
+const ex5Data = [
+  { wrong: 'Columbus didn\'t landed on the island.',          hint: 'didn\'t + BASE verb (not past!)', answer: "columbus didn't land on the island." },
+  { wrong: 'Did France won the race?',                        hint: 'Did + subject + BASE verb',        answer: 'did france win the race?' },
+  { wrong: 'Spain builded a fort on the island.',             hint: 'Irregular verb — check the table!',answer: 'spain built a fort on the island.' },
+  { wrong: 'Where did they signed the treaty?',               hint: 'Did + subject + BASE verb',        answer: 'where did they sign the treaty?' },
+  { wrong: 'The runners didn\'t met at the border.',          hint: 'didn\'t + BASE verb',              answer: "the runners didn't meet at the border." },
+];
+
+function renderEx5() {
+  const c = document.getElementById('ex5');
+  ex5Data.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'ex-item';
+    div.innerHTML = `
+      <p>${i+1}. ❌ <em>"${item.wrong}"</em></p>
+      <div class="ex-hint">💡 Hint: ${item.hint}</div>
+      <input type="text" class="ex-input" id="ex5i${i}" placeholder="Write the correct sentence..." autocomplete="off">`;
+    c.appendChild(div);
+  });
+}
+
+function checkEx5() {
+  let correct = 0;
+  ex5Data.forEach((item, i) => {
+    const inp = document.getElementById(`ex5i${i}`);
+    const val = inp.value.trim().toLowerCase().replace(/[.!?]$/, '');
+    const ans = item.answer.replace(/[.!?]$/, '');
+    if (val === ans) { inp.classList.add('correct'); inp.classList.remove('wrong'); correct++; }
+    else { inp.classList.add('wrong'); inp.classList.remove('correct'); }
+  });
+  const fb = document.getElementById('ex5Feedback');
+  if (correct === ex5Data.length) { fb.textContent = '🎉 All errors found! You are a grammar detective! 🕵️'; fb.className = 'feedback ok'; confetti(); }
+  else { fb.textContent = `${correct}/${ex5Data.length} — the most common error: "didn't" + BASE verb, not past verb!`; fb.className = 'feedback err'; }
+}
+
+// ===== TIMER =====
+let timerInterval = null, timerSeconds = 0, timerRunning = false, timerTarget = 0;
+function setTimer(mins) {
+  clearInterval(timerInterval); timerRunning = false;
+  timerTarget = mins * 60; timerSeconds = timerTarget;
+  document.getElementById('timerDisplay').textContent = formatTime(timerSeconds);
+  document.getElementById('timerStartBtn').textContent = '▶ Start';
+}
+function toggleTimer() {
+  if (timerRunning) {
+    clearInterval(timerInterval); timerRunning = false;
+    document.getElementById('timerStartBtn').textContent = '▶ Start';
+  } else {
+    if (timerSeconds <= 0) timerSeconds = timerTarget || 300;
+    timerRunning = true;
+    document.getElementById('timerStartBtn').textContent = '⏸ Pause';
+    timerInterval = setInterval(() => {
+      timerSeconds--;
+      document.getElementById('timerDisplay').textContent = formatTime(timerSeconds);
+      if (timerSeconds <= 0) {
+        clearInterval(timerInterval); timerRunning = false;
+        document.getElementById('timerStartBtn').textContent = '▶ Start';
+        document.getElementById('timerDisplay').textContent = '⏰ Done!';
+      }
+    }, 1000);
+  }
+}
+function formatTime(s) {
+  return `${Math.floor(s/60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}`;
+}
+
+// ===== WHITEBOARD =====
+function addStamp(s) { const ta = document.getElementById('wbNotes'); ta.value += s; ta.focus(); }
+function copyNotes() { navigator.clipboard.writeText(document.getElementById('wbNotes').value).then(() => alert('Copied!')); }
+function clearNotes() { if (confirm('Clear notes?')) document.getElementById('wbNotes').value = ''; }
+
+// ===== CONFETTI =====
+function confetti() {
+  const colors = ['#f0b429','#0a6e9a','#059669','#7c3aed','#dc2626','#f97316'];
+  for (let i = 0; i < 60; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.cssText = `left:${Math.random()*100}vw;top:-10px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*1.2}s;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;`;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 2500);
+  }
+}
+
+// ===== INIT =====
+renderVocab();
+renderEx1();
+renderEx2();
+renderEx3();
+renderEx4();
+renderEx5();
+</script>
+</body>
+</html>

@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🗽 NYC Eats – Ordering Food</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;900&display=swap');
+:root {
+  --nyc-yellow:#f7c948; --nyc-red:#e03131; --nyc-blue:#1971c2;
+  --nyc-dark:#1a1a2e; --card-bg:#ffffff; --radius:14px;
+  --shadow:0 4px 20px rgba(0,0,0,0.13);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);min-height:100vh;color:#fff;padding-bottom:60px;}
+
+/* HERO */
+.hero{position:relative;text-align:center;padding:36px 20px 28px;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/New_york_times_square-terabass.jpg/1280px-New_york_times_square-terabass.jpg') center/cover no-repeat;opacity:0.18;}
+.hero-content{position:relative;z-index:1;}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.4rem,8vw,4rem);color:var(--nyc-yellow);letter-spacing:.04em;text-shadow:0 3px 14px rgba(0,0,0,0.7);line-height:1;}
+.hero p{margin-top:8px;font-size:1rem;opacity:0.85;}
+
+/* PROGRESS */
+.progress-banner{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px 16px;background:rgba(255,255,255,0.07);border-bottom:1px solid rgba(255,255,255,0.1);}
+.pb-item{background:rgba(255,255,255,0.12);border-radius:20px;padding:4px 12px;font-size:0.8rem;font-weight:700;}
+
+/* TIMER */
+.timer-bar{display:flex;align-items:center;gap:10px;justify-content:center;padding:10px 16px;background:rgba(0,0,0,0.25);flex-wrap:wrap;}
+.timer-display{font-size:1.5rem;font-weight:900;color:var(--nyc-yellow);min-width:70px;text-align:center;}
+.timer-btn{background:rgba(255,255,255,0.15);border:none;color:#fff;border-radius:8px;padding:5px 11px;cursor:pointer;font-size:0.85rem;font-family:'Nunito',sans-serif;font-weight:700;transition:background 0.2s;}
+.timer-btn:hover{background:rgba(255,255,255,0.28);}
+
+/* SECTIONS */
+.section{max-width:720px;margin:20px auto;padding:0 14px;}
+.section-title{font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.5);padding:0 14px;margin:24px auto 0;max-width:720px;}
+.card{background:var(--card-bg);color:var(--nyc-dark);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);margin-bottom:18px;}
+.card-title{font-size:1.05rem;font-weight:900;margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.tag{font-size:0.68rem;font-weight:800;border-radius:6px;padding:2px 7px;text-transform:uppercase;}
+.tag-easy{background:#d1fae5;color:#065f46;} .tag-medium{background:#fef3c7;color:#92400e;} .tag-hard{background:#fee2e2;color:#991b1b;}
+hr.divider{border:none;border-top:1px solid #e9ecef;margin:16px 0;}
+
+/* RECALL */
+.recall-box{background:#fff9e6;border-left:4px solid var(--nyc-yellow);border-radius:10px;padding:14px 16px;font-size:0.95rem;line-height:1.7;}
+.recall-box strong{color:#b45309;}
+
+/* STORY */
+.story-img{width:100%;border-radius:10px;margin-bottom:14px;object-fit:cover;max-height:220px;display:block;}
+.reading-text{background:#f8f9fa;border-radius:10px;padding:16px;font-size:0.93rem;line-height:1.85;margin-bottom:14px;border-left:4px solid var(--nyc-red);}
+.vocab-hl{background:#fff3bf;border-radius:4px;padding:1px 4px;font-weight:700;cursor:pointer;border-bottom:2px solid var(--nyc-yellow);}
+
+/* VOCAB CARDS */
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:6px;}
+.vc{background:linear-gradient(135deg,#1971c2,#1864ab);color:#fff;border-radius:12px;padding:13px 10px;text-align:center;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;user-select:none;min-height:78px;display:flex;flex-direction:column;justify-content:center;}
+.vc:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,0.2);}
+.vc .en{font-weight:900;font-size:0.95rem;} .vc .fr{font-size:0.8rem;opacity:0;margin-top:5px;transition:opacity 0.3s;}
+.vc.show-fr .fr{opacity:1;} .vc.learned{background:linear-gradient(135deg,#2b8a3e,#37b24d);}
+
+/* TRUE/FALSE */
+.ex-item{margin-bottom:16px;}
+.ex-item p{font-size:0.93rem;margin-bottom:6px;line-height:1.6;}
+.tf-row{display:flex;gap:10px;}
+.tf-btn{flex:1;padding:9px;border:2px solid #d1d5db;border-radius:8px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.9rem;transition:all 0.2s;}
+.tf-btn:hover{border-color:var(--nyc-blue);}
+.tf-btn.correct{background:#d3f9d8;border-color:#2b8a3e;color:#2b8a3e;}
+.tf-btn.wrong{background:#ffe3e3;border-color:#e03131;color:#e03131;}
+.feedback{margin-top:10px;font-weight:700;font-size:0.9rem;min-height:22px;}
+.feedback.ok{color:#2b8a3e;} .feedback.err{color:#e03131;}
+
+/* ===== PHRASE LIST ===== */
+.phrase-section{margin-bottom:20px;}
+.phrase-section-title{
+  font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.05em;
+  color:var(--nyc-yellow);margin-bottom:10px;padding-bottom:6px;
+  border-bottom:2px solid #f1f3f5;display:flex;align-items:center;gap:8px;
+}
+.phrase-row{
+  display:flex;align-items:flex-start;gap:10px;padding:9px 10px;
+  border-radius:8px;margin-bottom:6px;font-size:0.88rem;line-height:1.5;
+  transition:background 0.15s;
+}
+.phrase-row:hover{background:#f8f9fa;}
+.phrase-who{
+  font-size:0.7rem;font-weight:800;border-radius:5px;padding:2px 7px;
+  white-space:nowrap;align-self:flex-start;margin-top:2px;flex-shrink:0;
+}
+.who-server{background:#e7f5ff;color:#1971c2;}
+.who-you{background:#fff3bf;color:#7c4d00;}
+.who-both{background:#f3d9fa;color:#7950f2;}
+.phrase-en{font-weight:700;flex:1;}
+.phrase-fr{color:#6b7280;font-size:0.82rem;margin-top:2px;}
+.phrase-note{font-size:0.78rem;color:#adb5bd;margin-top:2px;font-style:italic;}
+.phrase-alts{font-size:0.8rem;color:#495057;margin-top:3px;}
+.phrase-alts span{background:#f1f3f5;border-radius:4px;padding:1px 6px;margin-right:4px;display:inline-block;margin-top:2px;}
+
+/* ===== CONVERSATION BUILDER ===== */
+.builder-scene{background:#fff9e6;border-left:4px solid var(--nyc-yellow);border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:0.88rem;color:#7c4d00;line-height:1.6;}
+.builder-pool{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;min-height:50px;padding:10px;background:#f8f9fa;border-radius:10px;border:2px dashed #dee2e6;}
+.builder-pool-label{font-size:0.75rem;font-weight:800;color:#6b7280;margin-bottom:6px;display:block;}
+.conv-card{
+  background:#fff;border:2px solid #dee2e6;border-radius:10px;
+  padding:10px 14px;cursor:grab;font-size:0.85rem;line-height:1.4;
+  user-select:none;transition:all 0.15s;box-shadow:0 2px 6px rgba(0,0,0,0.06);
+  max-width:280px;
+}
+.conv-card:hover{border-color:var(--nyc-yellow);box-shadow:0 4px 12px rgba(0,0,0,0.12);transform:translateY(-1px);}
+.conv-card.dragging{opacity:0.45;transform:scale(0.97);}
+.conv-card.placed{cursor:grab;}
+.conv-card .card-who{font-size:0.68rem;font-weight:800;border-radius:4px;padding:1px 6px;margin-bottom:4px;display:inline-block;}
+.conv-card .card-text{font-weight:700;color:var(--nyc-dark);}
+.conv-card .card-fr{font-size:0.75rem;color:#6b7280;margin-top:3px;}
+
+.conv-slots{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.conv-slot{
+  min-height:60px;border:2px dashed #dee2e6;border-radius:10px;
+  padding:8px 12px;display:flex;align-items:center;gap:10px;
+  transition:background 0.15s,border-color 0.15s;
+  background:#fff;
+}
+.conv-slot.drag-over{background:#fff9e6;border-color:var(--nyc-yellow);}
+.conv-slot.filled{border-style:solid;border-color:#2b8a3e;background:#f4fbf6;}
+.conv-slot.wrong-slot{border-color:#e03131;background:#fff5f5;}
+.slot-num{font-size:0.75rem;font-weight:900;color:#adb5bd;min-width:20px;}
+.slot-empty-hint{font-size:0.8rem;color:#adb5bd;font-style:italic;}
+
+.builder-check-btn{background:var(--nyc-red);color:#fff;border:none;border-radius:10px;padding:11px 24px;font-size:0.95rem;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:background 0.2s;display:block;margin-top:4px;}
+.builder-check-btn:hover{background:#c92a2a;}
+.builder-reset-btn{background:#6b7280;color:#fff;border:none;border-radius:10px;padding:11px 20px;font-size:0.88rem;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:background 0.2s;margin-top:4px;margin-left:8px;}
+.builder-result{margin-top:14px;padding:14px;border-radius:10px;font-size:0.9rem;line-height:1.7;display:none;}
+.builder-result.show{display:block;}
+.builder-result.perfect{background:#d3f9d8;color:#1e6b3c;}
+.builder-result.partial{background:#fff9e6;color:#7c4d00;}
+.builder-result.wrong{background:#ffe3e3;color:#991b1b;}
+.score-bar{background:#f1f3f5;border-radius:10px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;font-weight:800;margin-bottom:16px;}
+.score-num{font-size:1.6rem;color:var(--nyc-red);}
+
+/* TRUE NEW YORKER QUIZ */
+.quiz-card{background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;border-radius:var(--radius);padding:24px;margin-bottom:18px;box-shadow:var(--shadow);}
+.quiz-card h2{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--nyc-yellow);letter-spacing:.05em;margin-bottom:6px;}
+.quiz-question{margin-bottom:20px;}
+.quiz-q-text{font-size:1rem;font-weight:800;margin-bottom:10px;line-height:1.4;}
+.quiz-q-hint{font-size:0.82rem;opacity:0.7;margin-bottom:10px;}
+.quiz-options{display:flex;flex-direction:column;gap:8px;}
+.quiz-opt{background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.15);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:0.9rem;font-weight:700;color:#fff;text-align:left;transition:all 0.2s;}
+.quiz-opt:hover{background:rgba(255,255,255,0.2);border-color:var(--nyc-yellow);}
+.quiz-opt.chosen{background:rgba(247,201,72,0.25);border-color:var(--nyc-yellow);}
+.quiz-progress{display:flex;gap:6px;margin-bottom:18px;}
+.quiz-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.2);transition:background 0.3s;}
+.quiz-dot.done{background:var(--nyc-yellow);}
+.quiz-nav{display:flex;justify-content:flex-end;margin-top:16px;}
+.quiz-next-btn{background:var(--nyc-yellow);color:var(--nyc-dark);border:none;border-radius:10px;padding:10px 24px;font-family:'Nunito',sans-serif;font-weight:900;font-size:0.95rem;cursor:pointer;transition:background 0.2s;}
+.quiz-next-btn:hover{background:#e8b800;}
+.quiz-next-btn:disabled{opacity:0.4;cursor:not-allowed;}
+.quiz-result{display:none;text-align:center;padding:10px 0;}
+.result-emoji{font-size:4rem;margin-bottom:10px;display:block;}
+.result-title{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--nyc-yellow);letter-spacing:.05em;margin-bottom:8px;}
+.result-desc{font-size:0.92rem;opacity:0.9;line-height:1.6;margin-bottom:14px;}
+.result-sentences{background:rgba(255,255,255,0.1);border-radius:10px;padding:14px;text-align:left;font-size:0.88rem;line-height:1.8;}
+.result-sentences strong{color:var(--nyc-yellow);}
+.speaking-tip{background:rgba(255,255,255,0.08);border-radius:8px;padding:10px 14px;font-size:0.82rem;opacity:0.8;margin-top:14px;line-height:1.6;}
+
+/* GRAMMAR REVEAL */
+.reveal-panel{margin-bottom:4px;}
+.reveal-question{display:flex;align-items:flex-start;gap:12px;padding:6px 0 10px;}
+.reveal-q-num{background:var(--nyc-dark);color:var(--nyc-yellow);border-radius:50%;width:28px;height:28px;min-width:28px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:0.88rem;margin-top:2px;}
+.reveal-q-text{flex:1;font-size:0.93rem;line-height:1.5;}
+.reveal-q-hint{font-size:0.8rem;color:#6b7280;display:block;margin-top:4px;}
+.reveal-btn{background:var(--nyc-dark);color:var(--nyc-yellow);border:none;border-radius:8px;padding:7px 14px;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.82rem;cursor:pointer;white-space:nowrap;transition:background 0.2s;align-self:flex-start;}
+.reveal-btn:hover{background:#2d2d4e;} .reveal-btn.revealed{background:#2b8a3e;color:#fff;}
+.reveal-answer{display:none;background:#f8f9fa;border-radius:10px;padding:14px 16px;margin:0 0 6px 40px;border-left:4px solid var(--nyc-yellow);animation:slideDown 0.25s ease;}
+.reveal-answer.show{display:block;}
+@keyframes slideDown{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+.reveal-rule{font-size:0.95rem;font-weight:800;color:var(--nyc-dark);margin-bottom:10px;background:#fff;border-radius:8px;padding:8px 12px;border:1px solid #e9ecef;}
+.reveal-examples{font-size:0.88rem;line-height:2;color:#374151;margin-bottom:8px;}
+.reveal-fr{font-size:0.78rem;color:#6b7280;margin-top:6px;}
+.reveal-trap{background:#fff5f5;border-radius:8px;padding:8px 12px;font-size:0.83rem;color:#c92a2a;line-height:1.6;}
+.rev-tag{display:inline-block;font-size:0.72rem;font-weight:800;border-radius:4px;padding:1px 6px;margin-right:4px;}
+.rev-green{background:#d3f9d8;color:#2b8a3e;} .rev-red{background:#ffe3e3;color:#c92a2a;}
+.irr-pill{background:#fff;border:1px solid #e9ecef;border-radius:8px;padding:6px 10px;font-size:0.85rem;color:#374151;}
+.irr-pill strong{color:#c92a2a;}
+
+/* MIXED EXERCISE */
+.ex-hint{font-size:0.8rem;color:#6b7280;background:#f9fafb;border-radius:6px;padding:5px 10px;margin-bottom:6px;}
+.ex-input{border:2px solid #d1d5db;border-radius:8px;padding:8px 12px;font-size:0.93rem;font-family:'Nunito',sans-serif;width:100%;transition:border-color 0.2s;}
+.ex-input:focus{outline:none;border-color:var(--nyc-blue);}
+.ex-input.correct{border-color:#2b8a3e;background:#d3f9d8;} .ex-input.wrong{border-color:#e03131;background:#ffe3e3;}
+.inline-input{border:none;border-bottom:2px solid var(--nyc-blue);font-family:'Nunito',sans-serif;font-size:0.93rem;width:120px;padding:2px 4px;background:transparent;color:var(--nyc-dark);}
+.inline-input:focus{outline:none;border-bottom-color:var(--nyc-yellow);}
+.inline-input.correct{border-bottom-color:#2b8a3e;color:#2b8a3e;font-weight:700;}
+.inline-input.wrong{border-bottom-color:#e03131;color:#e03131;}
+.check-btn{background:var(--nyc-red);color:#fff;border:none;border-radius:10px;padding:11px 24px;font-size:0.95rem;font-weight:800;cursor:pointer;margin-top:12px;font-family:'Nunito',sans-serif;transition:background 0.2s;display:block;}
+.check-btn:hover{background:#c92a2a;}
+
+/* REVIEW FLAG */
+.review-flag{background:#fff9e6;border-left:4px solid var(--nyc-yellow);border-radius:10px;padding:12px 16px;font-size:0.88rem;color:#7c4d00;line-height:1.7;}
+
+/* WHITEBOARD */
+.whiteboard{background:#fff;color:var(--nyc-dark);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);max-width:720px;margin:0 14px 20px;}
+@media(min-width:748px){.whiteboard{margin-left:auto;margin-right:auto;}}
+.whiteboard h3{font-weight:900;margin-bottom:10px;font-size:1rem;}
+.wb-stamps{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+.wb-stamp{background:#f1f3f5;border:none;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:0.9rem;font-family:'Nunito',sans-serif;}
+.wb-notes{width:100%;min-height:90px;border:2px solid #e9ecef;border-radius:8px;padding:10px;font-family:'Nunito',sans-serif;font-size:0.9rem;resize:vertical;}
+.wb-actions{display:flex;gap:8px;margin-top:8px;}
+.wb-btn{background:var(--nyc-dark);color:#fff;border:none;border-radius:8px;padding:7px 14px;cursor:pointer;font-size:0.82rem;font-weight:700;font-family:'Nunito',sans-serif;}
+.wb-btn.copy{background:var(--nyc-blue);}
+
+/* CONFETTI */
+.confetti-piece{position:fixed;width:10px;height:10px;border-radius:2px;pointer-events:none;z-index:9999;animation:fall 2s ease-in forwards;}
+@keyframes fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(720deg);opacity:0;}}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <h1>🗽 NYC EATS</h1>
+    <p>Ordering Food in New York City · Past Simple Revision</p>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-banner">
+  <div class="pb-item">📚 Lesson 16</div>
+  <div class="pb-item">🔤 26+ verbs learned</div>
+  <div class="pb-item">🗺️ Islands: 8 · Cities: 1</div>
+  <div class="pb-item">🍕 Ordering food</div>
+</div>
+
+<!-- TIMER -->
+<div class="timer-bar">
+  <span style="font-size:0.85rem;opacity:0.7;">⏱</span>
+  <div class="timer-display" id="timerDisplay">00:00</div>
+  <button class="timer-btn" onclick="setTimer(5)">5 min</button>
+  <button class="timer-btn" onclick="setTimer(10)">10 min</button>
+  <button class="timer-btn" onclick="setTimer(15)">15 min</button>
+  <button class="timer-btn" id="timerStartBtn" onclick="toggleTimer()">▶ Start</button>
+</div>
+
+<!-- ===== WARM-UP ===== -->
+<div class="section-title">🔥 WARM-UP — Quick Retrieval</div>
+<div class="section">
+  <div class="card">
+    <div class="card-title">🧠 What do you remember? — no notes!</div>
+    <div class="recall-box">
+      <p><strong>Before we start, let's check last lesson:</strong></p><br>
+      <p>1. 🍕 Name <strong>three NYC foods</strong> we talked about last time.</p><br>
+      <p>2. 💬 You walk into a diner. The waiter comes over. What does he say? What do <em>you</em> say?</p><br>
+      <p>3. 💵 Your pizza costs $3 and your Coke costs $2. You pay with $10. How much change do you get?</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== READING ===== -->
+<div class="section-title">📖 READING — NYC Food Culture</div>
+<div class="section">
+  <div class="card">
+    <div class="card-title">🍕 The Food Capital of the World</div>
+    <img class="story-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/New_york_times_square-terabass.jpg/1280px-New_york_times_square-terabass.jpg" alt="NYC Times Square" onerror="this.style.display='none'">
+    <div class="reading-text">
+      <p>New York City is one of the most <span class="vocab-hl" data-fr="célèbre">famous</span> cities in the world. More than 8 million people <span class="vocab-hl" data-fr="vivent">live</span> there, and they all need to eat! The city <span class="vocab-hl" data-fr="possède">has</span> more than 26,000 restaurants.</p><br>
+      <p>New Yorkers <span class="vocab-hl" data-fr="adorent">love</span> their pizza. A classic New York slice is big, thin, and <span class="vocab-hl" data-fr="pliable">foldable</span> — you always fold it in half before you eat it! The city has hundreds of pizza <span class="vocab-hl" data-fr="petits restos">joints</span> — small shops that only serve pizza by the slice.</p><br>
+      <p>The bagel is another New York <span class="vocab-hl" data-fr="icône">icon</span>. A bagel is a round bread with a hole in the middle. New Yorkers eat bagels for breakfast — usually with <span class="vocab-hl" data-fr="fromage à la crème">cream cheese</span> and smoked salmon. The best bagels come from <span class="vocab-hl" data-fr="boulangeries">bakeries</span> in Brooklyn.</p><br>
+      <p>On the streets, you can find hot dog <span class="vocab-hl" data-fr="vendeurs">vendors</span> on almost every corner. A hot dog <span class="vocab-hl" data-fr="coûte">costs</span> about $2. Food trucks <span class="vocab-hl" data-fr="parcourent">roam</span> the streets of Manhattan every day — the city never <span class="vocab-hl" data-fr="dort">sleeps</span>, and neither do its kitchens!</p>
+    </div>
+    <div class="card-title" style="margin-top:4px;">❓ True or False? <span class="tag tag-easy">EASY</span></div>
+    <div id="tfExercise"></div>
+    <div class="feedback" id="tfFeedback"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">🃏 Vocabulary <span style="font-size:0.78rem;font-weight:600;color:#6b7280;">(Tap once = French · Tap again = ✓)</span></div>
+    <div class="vocab-grid" id="vocabGrid"></div>
+  </div>
+</div>
+
+<!-- ===== PHRASE LIST ===== -->
+<div class="section-title">📋 RESTAURANT PHRASE LIST</div>
+<div class="section">
+  <div class="card">
+    <div class="card-title">🗣️ Everything you need to know — in a restaurant</div>
+    <p style="font-size:0.85rem;color:#6b7280;margin-bottom:18px;">From walking in to walking out. Learn these phrases — you'll use them for life!</p>
+
+    <!-- ARRIVING -->
+    <div class="phrase-section">
+      <div class="phrase-section-title">🚪 Arriving</div>
+      <div class="phrase-row">
+        <span class="phrase-who who-server">🧑‍🍳 Server</span>
+        <div>
+          <div class="phrase-en">"Welcome! How many?"</div>
+          <div class="phrase-fr">(Bienvenue ! Vous êtes combien ?)</div>
+          <div class="phrase-alts"><span>"Table for how many?"</span><span>"Just you today?"</span></div>
+        </div>
+      </div>
+      <div class="phrase-row">
+        <span class="phrase-who who-you">🧒 You</span>
+        <div>
+          <div class="phrase-en">"Just me, please." / "Two, please."</div>
+          <div class="phrase-fr">(Juste moi, s'il vous plaît. / Deux personnes.)</div>
+        </div>
+      </div>
+      <div class="phrase-row">
+        <span class="phrase-who who-server">🧑‍🍳 Server</span>
+        <div>
+          <div class="phrase-en">"Right this way!" / "Follow me, please."</div>
+          <div class="phrase-fr">(Par ici ! / Suivez-moi, s'il vous plaît.)</div>
+        </div>
+      </div>
+      <div class="phrase-row">
+        <span class="phrase-who who-you">🧒 You</span>
+        <div>
+          <div class="phrase-en">"Do you have a table by the window?"</div>
+          <div class="phrase-fr">(Vous avez une table près de la fenêtre ?)</div>
+          <div class="phrase-note">💡 Optional — only ask if you want a specific spot!</div>
+        </div>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <!-- LOOKING AT MENU -->
+    <div class="phrase-section">
+      <div class="phrase-section-title">📜 Looking at the menu</div>
+      <div class="phrase-row">
+        <span class="phrase-who who-server">🧑‍🍳 Server</span>
+        <div>
+          <div class="phrase-en">"Can I start you off with something to drink?"</div>
+          <div class="phrase-fr">(Je vous apporte quelque chose à boire pour commencer ?)</div>
+          <div class="phrase-alts"><span>"What can I get you to drink?"</span></div>
+        </div>
+      </div>
+      <div class="phrase-row">
+        <span class="phrase-who who-you">🧒 You</span>
+        <div>
+          <div class="phrase-en">"Can I have a Coke, please?" / "Just water, thanks."</div>
+          <div class="phrase-fr">(Je peux avoir un Coca ? / Juste de l'eau, merci.)</div>
+        </div>
+      </div>
+      <div class="phrase-row">
+        <span class="phrase-who who-you">🧒 You</span>
+        <div>
+          <div class="phrase-en">"Can I have a few more minutes?"</div>
+          <div class="phrase-fr">(Je peux avoir encore quelques minutes ?)</div>
+          <div class="phrase-note">💡 Say this if you're not ready to order yet!</div>
+        </div>
+      </div>
+      <div class="phrase-row">
+        <span class="phrase-who who-you">🧒 You</span>
+        <div>
+          <div class="phrase-en">"What do you recommend?"</div>
+          <div class="phrase-fr">(Qu'est-ce que vous recommandez ?)</div>
+        </div>
+      </div>
+      <div class="phrase-row">
+        <span class="phrase-who who-you">🧒 You</span>
+        <div>
+          <div class="phrase-en">"What's in the [dish name]?"</div>
+          <div class="phrase-fr">(Il y a quoi dans le [nom du plat] ?)</div>
+        </div>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <!-- ORDERING -->
+    <div class="phrase-section">
+      <div class="phrase-section-title">🍽️ Ordering</div>
+      <div class="phrase-row">
+        <span class="phrase-who who-server">🧑‍🍳 Server</span>
+        <div>
+          <div class="phrase-en">"Are you ready to order?" / "What can I get you?"</div>
+          <div class="phrase-fr">(Vous êtes prêt à commander ? / Qu'est-ce que je vous sers ?)</div>
+          <div class="phrase-alts"><span>"What'll it be?"</span><span>"What are you having?"</span></div>
+        </div>
+      </div>
+      <div class="phrase-row">
+        <span class="phrase-who who-you">🧒 You</span>
+        <div>
+          <div class="phrase-en">"Can I get a [item], please?"</div>
+          <div class="phrase-fr">(Je peux avoir un(e) [plat], s'il vous plaît ?)</div>
+          <div class="phrase-alts"><span>"I'll have the..."</span><span>"I'd like the..."</span><span>"Give me a..." (casual)</span></div>
+          <div class="phrase-note">💡 "Can I get" is the most natural, everyday way to order in NYC!</div>
+        </div>
+      </div>
+      <div class="phrase-row">
+        <span class="phrase-who who-server">🧑‍🍳 Server</span>
+        <div>
+          <div class="phrase-en">"How would you like that cooked?"</div>
+          <div class="phrase-fr">(Vous le voulez cuit comment ?)</div>
+          <div class="phrase-note">💡 For burgers/steaks: rare, medium-rare, medium, well-done</div>
+        </div>
+      </div>
+      <div class="phrase-row">
+        <span class="phrase-who who-server">🧑‍🍳 Server</span>
+        <div>
+          <div class="phrase-en">"Anything else?" / "Is that everything?"</div>
+          <div class="phrase-fr">(Autre chose ? / C'est tout ?)</div>
+          <div class="phrase-alts"><span>"That all for you?"</span></div>
+        </div>
+      </div>
+      <div class="phrase-row">
+        <span class="phrase-who who-you">🧒 You</span>
+        <div>
+          <div class="phrase-en">"That's it, thank you." / "No, that's everything."</div>
+          <div class="phrase-fr">(C'est tout, merci. / Non, c'est tout.)</div>
+        </div>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <!-- DURING THE MEAL -->
+    <div class="phrase-section">
+      <div class="phrase-section-title">🥄 During the meal</div>
+      <div class="phrase-row">
+        <span class="phrase-who who-server">🧑‍🍳 Server</span>
+        <div>
+          <div class="phrase-en">"How is everything?" / "How's the food?"</div>
+          <div class="phrase-fr">(Tout se passe bien ? / Comment c'est ?)</div>
+        </div>
+      </div>
+      <div class="phrase-row">
+        <span class="phrase-who who-you">🧒 You</span>
+        <div>
+          <div class="phrase-en">"It's delicious, thank you!" / "Really good!"</div>
+          <div class="phrase-fr">(C'est délicieux, merci ! / Vraiment bon !)</div>
+        </div>
+      </div>
+      <div class="phrase-row">
+        <span class="phrase-who who-you">🧒 You</span>
+        <div>
+          <div class="phrase-en">"Excuse me, could I get some more water?"</div>
+          <div class="phrase-fr">(Excusez-moi, je pourrais avoir encore de l'eau ?)</div>
+          <div class="phrase-alts"><span>"Can I get a refill?"</span></div>
+        </div>
+      </div>
+      <div class="phrase-row">
+        <span class="phrase-who who-you">🧒 You</span>
+        <div>
+          <div class="phrase-en">"Excuse me, I ordered the [X], not the [Y]."</div>
+          <div class="phrase-fr">(Excusez-moi, j'avais commandé le [X], pas le [Y].)</div>
+          <div class="phrase-note">💡 Always be polite if there's a mistake — use "excuse me" first!</div>
+        </div>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <!-- PAYING -->
+    <div class="phrase-section">
+      <div class="phrase-section-title">💵 Paying</div>
+      <div class="phrase-row">
+        <span class="phrase-who who-you">🧒 You</span>
+        <div>
+          <div class="phrase-en">"Can I get the check, please?"</div>
+          <div class="phrase-fr">(Je peux avoir l'addition, s'il vous plaît ?)</div>
+          <div class="phrase-alts"><span>"Can we get the bill?" (British)</span><span>"Check, please!"</span></div>
+          <div class="phrase-note">💡 In the USA: always say "check" — "bill" sounds British!</div>
+        </div>
+      </div>
+      <div class="phrase-row">
+        <span class="phrase-who who-server">🧑‍🍳 Server</span>
+        <div>
+          <div class="phrase-en">"That comes to $12.50." / "Your total is $12.50."</div>
+          <div class="phrase-fr">(Ça fait 12,50 dollars. / Votre total est de 12,50 dollars.)</div>
+        </div>
+      </div>
+      <div class="phrase-row">
+        <span class="phrase-who who-you">🧒 You</span>
+        <div>
+          <div class="phrase-en">"Here you go. I've got a twenty."</div>
+          <div class="phrase-fr">(Voilà. J'ai un billet de 20.)</div>
+          <div class="phrase-alts"><span>"Here's $20."</span><span>"Keep the change!" (si tu veux laisser un pourboire)</span></div>
+        </div>
+      </div>
+      <div class="phrase-row">
+        <span class="phrase-who who-server">🧑‍🍳 Server</span>
+        <div>
+          <div class="phrase-en">"And here's your change — $7.50."</div>
+          <div class="phrase-fr">(Et voici votre monnaie — 7,50 dollars.)</div>
+        </div>
+      </div>
+      <div class="phrase-row">
+        <span class="phrase-who who-both">💳 Both</span>
+        <div>
+          <div class="phrase-en">"Can we split the bill?" / "Separate checks, please."</div>
+          <div class="phrase-fr">(On peut séparer l'addition ? / Des additions séparées, s'il vous plaît.)</div>
+          <div class="phrase-note">💡 In the USA, "splitting the check" is very common with friends!</div>
+        </div>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <!-- LEAVING -->
+    <div class="phrase-section">
+      <div class="phrase-section-title">👋 Leaving</div>
+      <div class="phrase-row">
+        <span class="phrase-who who-server">🧑‍🍳 Server</span>
+        <div>
+          <div class="phrase-en">"Have a great day!" / "Come back soon!"</div>
+          <div class="phrase-fr">(Bonne journée ! / Revenez bientôt !)</div>
+        </div>
+      </div>
+      <div class="phrase-row">
+        <span class="phrase-who who-you">🧒 You</span>
+        <div>
+          <div class="phrase-en">"Thank you, it was delicious!" / "Great food, thanks!"</div>
+          <div class="phrase-fr">(Merci, c'était délicieux ! / Super repas, merci !)</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== CONVERSATION BUILDER ===== -->
+<div class="section-title">🃏 MINIGAME — BUILD THE CONVERSATION</div>
+<div class="section">
+  <div class="card">
+    <div class="card-title">🧩 Put the conversation in the right order! <span class="tag tag-medium">MEDIUM</span></div>
+
+    <div class="builder-scene">
+      📍 <strong>Scene:</strong> Micha walks into a NYC pizzeria. He orders a slice of pizza and a Coke, eats, then pays with a $10 bill. His total is $5. Drag the cards into the correct order to build the full conversation — from walking in to getting his change!
+    </div>
+
+    <div class="score-bar"><span>Your score</span><span class="score-num" id="builderScore">0 / 10</span></div>
+
+    <!-- CARD POOL -->
+    <span class="builder-pool-label">🃏 Drag the cards into the numbered slots below:</span>
+    <div class="builder-pool" id="cardPool"></div>
+
+    <!-- SLOTS -->
+    <div class="conv-slots" id="convSlots"></div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;">
+      <button class="builder-check-btn" onclick="checkBuilder()">Check Order ✓</button>
+      <button class="builder-reset-btn" onclick="resetBuilder()">↺ Reset</button>
+    </div>
+    <div class="builder-result" id="builderResult"></div>
+  </div>
+</div>
+
+<!-- ===== TRUE NEW YORKER QUIZ ===== -->
+<div class="section-title">🏆 ARE YOU A TRUE NEW YORKER?</div>
+<div class="section">
+  <div class="quiz-card" id="quizCard">
+    <h2>🗽 TRUE NEW YORKER QUIZ</h2>
+    <p style="font-size:0.88rem;opacity:0.8;margin-bottom:16px;">Answer 5 questions about food and NYC life. Find out what kind of New Yorker you are!</p>
+    <div class="quiz-progress" id="quizProgress"></div>
+    <div id="quizBody"></div>
+    <div class="quiz-result" id="quizResult"></div>
+    <div class="speaking-tip">💡 <strong>Teacher:</strong> After the result appears, ask Micha to describe it in Past Simple — <em>"I was a… / I ordered… / I didn't like… / I went to…"</em></div>
+  </div>
+</div>
+
+<!-- ===== GRAMMAR REVISION ===== -->
+<div class="section-title">🧠 GRAMMAR REVISION — Past Simple</div>
+<div class="section">
+  <div class="card">
+    <div class="card-title">💬 Explain it to me! — Teacher-led revision</div>
+    <p style="font-size:0.88rem;color:#6b7280;margin-bottom:16px;">Ask Micha each question out loud. Let him answer first, then tap <strong>Reveal</strong>.</p>
+
+    <div class="reveal-panel" id="rp0">
+      <div class="reveal-question">
+        <div class="reveal-q-num">1</div>
+        <div class="reveal-q-text"><strong>How do you make an affirmative sentence in the Past Simple?</strong><br><span class="reveal-q-hint">💬 "If I want to say something happened in the past, what do I do to the verb?"</span></div>
+        <button class="reveal-btn" onclick="toggleReveal(0)">👁 Reveal</button>
+      </div>
+      <div class="reveal-answer" id="ra0">
+        <div class="reveal-rule">Subject + <strong>past verb</strong> (regular: verb + <em>-ed</em> · irregular: learn the form!)</div>
+        <div class="reveal-examples">
+          <span class="rev-tag rev-green">✅</span> <em>I <strong>ordered</strong> a pizza.</em><br>
+          <span class="rev-tag rev-green">✅</span> <em>The waiter <strong>brought</strong> my food.</em><br>
+          <span class="rev-tag rev-green">✅</span> <em>We <strong>paid</strong> with a $10 bill.</em>
+          <div class="reveal-fr">J'ai commandé une pizza. · Le serveur a apporté ma nourriture.</div>
+        </div>
+        <div class="reveal-trap">⚠️ Same form for ALL subjects — no +s for he/she/it in the past!<br><em>He <strong>ordered</strong> (not <s>orders</s>) · She <strong>paid</strong> (not <s>pays</s>)</em></div>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <div class="reveal-panel" id="rp1">
+      <div class="reveal-question">
+        <div class="reveal-q-num">2</div>
+        <div class="reveal-q-text"><strong>How do you make a negative in the Past Simple?</strong><br><span class="reveal-q-hint">💬 "How do you say something did NOT happen?"</span></div>
+        <button class="reveal-btn" onclick="toggleReveal(1)">👁 Reveal</button>
+      </div>
+      <div class="reveal-answer" id="ra1">
+        <div class="reveal-rule">Subject + <strong>didn't</strong> + base verb <em>(NOT the past form!)</em></div>
+        <div class="reveal-examples">
+          <span class="rev-tag rev-green">✅</span> <em>I <strong>didn't order</strong> the hot dog.</em><br>
+          <span class="rev-tag rev-green">✅</span> <em>He <strong>didn't pay</strong> with a card.</em><br>
+          <span class="rev-tag rev-red">❌</span> <em>She <strong>didn't <s>ordered</s></strong> dessert.</em> → <strong>didn't order</strong>
+          <div class="reveal-fr">Je n'ai pas commandé le hot dog. · Il n'a pas payé par carte.</div>
+        </div>
+        <div class="reveal-trap">⚠️ The biggest trap: <strong>didn't + BASE verb</strong> — never past form!<br><em>didn't <strong>eat</strong> (not <s>didn't ate</s>) · didn't <strong>go</strong> (not <s>didn't went</s>)</em></div>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <div class="reveal-panel" id="rp2">
+      <div class="reveal-question">
+        <div class="reveal-q-num">3</div>
+        <div class="reveal-q-text"><strong>How do you make a Yes/No question in the Past Simple?</strong><br><span class="reveal-q-hint">💬 "What word do you put at the start?"</span></div>
+        <button class="reveal-btn" onclick="toggleReveal(2)">👁 Reveal</button>
+      </div>
+      <div class="reveal-answer" id="ra2">
+        <div class="reveal-rule"><strong>Did</strong> + subject + base verb? → Yes, … <strong>did.</strong> / No, … <strong>didn't.</strong></div>
+        <div class="reveal-examples">
+          <span class="rev-tag rev-green">✅</span> <em><strong>Did</strong> you order the pizza?</em> → Yes, I <strong>did</strong>.<br>
+          <span class="rev-tag rev-green">✅</span> <em><strong>Did</strong> the waiter bring ketchup?</em> → No, he <strong>didn't</strong>.<br>
+          <span class="rev-tag rev-red">❌</span> <em><strong>Did</strong> you <s>ordered</s>?</em> → <strong>Did you order?</strong>
+          <div class="reveal-fr">Est-ce que tu as commandé la pizza ? → Oui. / Non, il n'en a pas apporté.</div>
+        </div>
+        <div class="reveal-trap">⚠️ <strong>Did + BASE verb</strong> always — never the past form in the question!</div>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <div class="reveal-panel" id="rp3">
+      <div class="reveal-question">
+        <div class="reveal-q-num">4</div>
+        <div class="reveal-q-text"><strong>Can you give me 5 irregular verbs — with their past form?</strong><br><span class="reveal-q-hint">💬 Let Micha recall freely. Then reveal to check.</span></div>
+        <button class="reveal-btn" onclick="toggleReveal(3)">👁 Reveal</button>
+      </div>
+      <div class="reveal-answer" id="ra3">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-top:6px;">
+          <div class="irr-pill">go → <strong>went</strong></div>
+          <div class="irr-pill">eat → <strong>ate</strong></div>
+          <div class="irr-pill">pay → <strong>paid</strong></div>
+          <div class="irr-pill">bring → <strong>brought</strong></div>
+          <div class="irr-pill">buy → <strong>bought</strong></div>
+          <div class="irr-pill">give → <strong>gave</strong></div>
+          <div class="irr-pill">come → <strong>came</strong></div>
+          <div class="irr-pill">find → <strong>found</strong></div>
+          <div class="irr-pill">have → <strong>had</strong></div>
+          <div class="irr-pill">make → <strong>made</strong></div>
+          <div class="irr-pill">leave → <strong>left</strong></div>
+          <div class="irr-pill">sell → <strong>sold</strong></div>
+          <div class="irr-pill">say → <strong>said</strong></div>
+          <div class="irr-pill">sit → <strong>sat</strong></div>
+          <div class="irr-pill">become → <strong>became</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MIXED EXERCISE ===== -->
+<div class="section-title">✏️ MIXED EXERCISE — Past Simple</div>
+<div class="section">
+  <div class="card">
+    <div class="card-title">🎯 All Four Forms <span class="tag tag-medium">MIXED</span></div>
+    <p style="font-size:0.85rem;color:#6b7280;margin-bottom:10px;">Each question is different — read the label carefully!</p>
+    <div class="ex-hint">💡 Watch for: <strong>didn't + BASE verb</strong> · <strong>Did + BASE verb?</strong> · irregular past forms!</div>
+    <div class="score-bar"><span>Score</span><span class="score-num" id="mixedScore">0 / 18</span></div>
+    <div id="mixedExercise"></div>
+    <button class="check-btn" onclick="checkMixed()">Check All ✓</button>
+    <div class="feedback" id="mixedFeedback"></div>
+  </div>
+</div>
+
+<!-- REVIEW FLAG -->
+<div class="section">
+  <div class="review-flag">
+    🔁 <strong>Review flag:</strong> Restaurant phrases (Can I get…? / Check please / Keep the change) — revisit next session<br>
+    🔁 <strong>Review flag:</strong> Past Simple negatives (didn't + base verb) — revisit in 2 sessions · again after 1 week<br>
+    🔁 <strong>Review flag:</strong> NYC food vocab (vendor, joint, slice, icon, bakery) — revisit in 2 sessions
+  </div>
+</div>
+
+<!-- ===== WHITEBOARD ===== -->
+<div class="section-title">🖊️ TEACHER WHITEBOARD</div>
+<div class="whiteboard">
+  <h3>📋 Error Log & Notes</h3>
+  <div class="wb-stamps">
+    <button class="wb-stamp" onclick="addStamp('⭐ ')">⭐</button>
+    <button class="wb-stamp" onclick="addStamp('❌ ')">❌</button>
+    <button class="wb-stamp" onclick="addStamp('✓ ')">✓</button>
+    <button class="wb-stamp" onclick="addStamp('💡 ')">💡</button>
+    <button class="wb-stamp" onclick="addStamp('didn\'t + base: ')">didn't</button>
+    <button class="wb-stamp" onclick="addStamp('Did + base? ')">Did?</button>
+    <button class="wb-stamp" onclick="addStamp('Can I get…? ')">Can I get?</button>
+    <button class="wb-stamp" onclick="addStamp('🔁 ')">🔁</button>
+  </div>
+  <textarea class="wb-notes" id="wbNotes" placeholder="Error log, corrections, notes..."></textarea>
+  <div class="wb-actions">
+    <button class="wb-btn copy" onclick="copyNotes()">📋 Copy All</button>
+    <button class="wb-btn" onclick="clearNotes()">🗑️ Clear</button>
+  </div>
+</div>
+
+<script>
+// ===== VOCAB =====
+const vocab = [
+  {en:'vendor',fr:'vendeur de rue'},{en:'joint',fr:'petit resto / boui-boui'},
+  {en:'slice',fr:'part (de pizza)'},{en:'foldable',fr:'pliable'},
+  {en:'icon',fr:'icône / symbole'},{en:'roam',fr:'parcourir / se promener'},
+  {en:'claim',fr:'revendiquer'},{en:'bakery',fr:'boulangerie'},
+  {en:'mustard',fr:'moutarde'},{en:'creamy',fr:'crémeux/crémeuse'},
+  {en:'check',fr:'addition (USA)'},{en:'tip',fr:'pourboire'},
+];
+function renderVocab(){
+  const g=document.getElementById('vocabGrid');
+  vocab.forEach(w=>{
+    const el=document.createElement('div');el.className='vc';
+    el.innerHTML=`<div class="en">${w.en}</div><div class="fr">${w.fr}</div>`;
+    el.dataset.state='0';
+    el.addEventListener('click',()=>{
+      const s=parseInt(el.dataset.state);
+      if(s===0){el.classList.add('show-fr');el.dataset.state='1';}
+      else if(s===1){el.classList.add('learned');el.dataset.state='2';}
+      else{el.classList.remove('show-fr','learned');el.dataset.state='0';}
+    });
+    g.appendChild(el);
+  });
+}
+
+// ===== TRUE/FALSE =====
+const tfData=[
+  {text:'New York City has more than 26,000 restaurants.',answer:true},
+  {text:'New Yorkers always eat their pizza without folding it.',answer:false},
+  {text:'The best bagels in NYC come from bakeries in Brooklyn.',answer:true},
+  {text:'A hot dog in NYC costs about $10.',answer:false},
+  {text:'Food trucks in NYC only serve pizza.',answer:false},
+];
+function renderTF(){
+  const c=document.getElementById('tfExercise');
+  tfData.forEach((item,i)=>{
+    const div=document.createElement('div');div.className='ex-item';
+    div.innerHTML=`<p>${i+1}. ${item.text}</p><div class="tf-row">
+      <button class="tf-btn" onclick="checkTF(${i},true,this)">✅ True</button>
+      <button class="tf-btn" onclick="checkTF(${i},false,this)">❌ False</button></div>`;
+    c.appendChild(div);
+  });
+}
+function checkTF(i,answer,btn){
+  const correct=tfData[i].answer;
+  const parent=btn.parentElement;
+  parent.querySelectorAll('.tf-btn').forEach(b=>b.classList.remove('correct','wrong'));
+  if(answer===correct)btn.classList.add('correct');
+  else{
+    btn.classList.add('wrong');
+    parent.querySelectorAll('.tf-btn').forEach(b=>{
+      if((b.textContent.includes('True')&&correct)||(b.textContent.includes('False')&&!correct))b.classList.add('correct');
+    });
+  }
+  if(document.querySelectorAll('#tfExercise .tf-btn.correct').length===tfData.length){
+    document.getElementById('tfFeedback').textContent='🎉 All correct!';
+    document.getElementById('tfFeedback').className='feedback ok';
+  }
+}
+
+// ===== CONVERSATION BUILDER =====
+// The correct conversation order: 10 cards in correct sequence
+const convCards = [
+  {id:0, who:'🧑‍🍳 Server', whoClass:'who-server', text:'"Hey! What can I get you?"', fr:'(Bonjour ! Qu\'est-ce que je vous sers ?)'},
+  {id:1, who:'🧒 Micha',  whoClass:'who-you',    text:'"Can I get a slice of pizza, please?"', fr:'(Je peux avoir une part de pizza, s\'il vous plaît ?)'},
+  {id:2, who:'🧑‍🍳 Server', whoClass:'who-server', text:'"Sure! Anything to drink?"', fr:'(Bien sûr ! Quelque chose à boire ?)'},
+  {id:3, who:'🧒 Micha',  whoClass:'who-you',    text:'"Yeah, a Coke please."', fr:'(Oui, un Coca s\'il vous plaît.)'},
+  {id:4, who:'🧑‍🍳 Server', whoClass:'who-server', text:'"Anything else?"', fr:'(Autre chose ?)'},
+  {id:5, who:'🧒 Micha',  whoClass:'who-you',    text:'"No, that\'s it. Thanks."', fr:'(Non, c\'est tout. Merci.)'},
+  {id:6, who:'🧑‍🍳 Server', whoClass:'who-server', text:'"How is everything?"', fr:'(Tout se passe bien ?)'},
+  {id:7, who:'🧒 Micha',  whoClass:'who-you',    text:'"It\'s delicious, thank you!"', fr:'(C\'est délicieux, merci !)'},
+  {id:8, who:'🧒 Micha',  whoClass:'who-you',    text:'"Can I get the check, please?"', fr:'(Je peux avoir l\'addition, s\'il vous plaît ?)'},
+  {id:9, who:'🧑‍🍳 Server', whoClass:'who-server', text:'"That\'s $5. Here\'s your $5 change!"', fr:'(Ça fait 5 dollars. Voici votre monnaie de 5 dollars !)'},
+];
+
+// Shuffle for pool display
+let poolCards = [...convCards].sort(()=>Math.random()-0.5);
+let slotContents = new Array(convCards.length).fill(null); // slot index → card id or null
+let draggingCardId = null;
+
+function renderBuilder(){
+  const pool = document.getElementById('cardPool');
+  const slots = document.getElementById('convSlots');
+  pool.innerHTML=''; slots.innerHTML='';
+
+  // Render pool
+  poolCards.forEach(card=>{
+    if(slotContents.includes(card.id)) return; // already placed
+    pool.appendChild(makeCardEl(card, 'pool'));
+  });
+  if(pool.children.length===0) pool.innerHTML='<span style="color:#adb5bd;font-style:italic;font-size:0.82rem;">All cards placed!</span>';
+
+  // Render slots
+  convCards.forEach((_,i)=>{
+    const slot = document.createElement('div');
+    slot.className='conv-slot';
+    slot.dataset.slot=i;
+    slot.addEventListener('dragover',e=>{e.preventDefault();slot.classList.add('drag-over');});
+    slot.addEventListener('dragleave',()=>slot.classList.remove('drag-over'));
+    slot.addEventListener('drop',e=>{e.preventDefault();slot.classList.remove('drag-over');dropCard(i);});
+    const num=document.createElement('span');num.className='slot-num';num.textContent=i+1;
+    slot.appendChild(num);
+    const filled = slotContents[i];
+    if(filled!==null){
+      const card=convCards.find(c=>c.id===filled);
+      slot.classList.add('filled');
+      slot.appendChild(makeCardEl(card,'slot',i));
+    } else {
+      const hint=document.createElement('span');hint.className='slot-empty-hint';hint.textContent='Drop a card here...';
+      slot.appendChild(hint);
+    }
+    slots.appendChild(slot);
+  });
+
+  // Pool drop-back
+  pool.addEventListener('dragover',e=>{e.preventDefault();pool.style.borderColor='#f7c948';});
+  pool.addEventListener('dragleave',()=>pool.style.borderColor='#dee2e6');
+  pool.addEventListener('drop',e=>{
+    e.preventDefault();pool.style.borderColor='#dee2e6';
+    if(draggingCardId===null)return;
+    // Remove from slot if it was there
+    slotContents=slotContents.map(v=>v===draggingCardId?null:v);
+    draggingCardId=null;
+    renderBuilder();
+  });
+}
+
+function makeCardEl(card, location, slotIdx){
+  const el=document.createElement('div');
+  el.className='conv-card'+(location==='slot'?' placed':'');
+  el.draggable=true;
+  el.dataset.cardId=card.id;
+  el.innerHTML=`<div class="card-who ${card.whoClass}">${card.who}</div><div class="card-text">${card.text}</div><div class="card-fr">${card.fr}</div>`;
+  el.addEventListener('dragstart',()=>{draggingCardId=card.id;el.classList.add('dragging');setTimeout(()=>el.classList.remove('dragging'),0);});
+  el.addEventListener('dragend',()=>{draggingCardId=null;});
+  // Click to return to pool
+  if(location==='slot'){
+    el.title='Click to return to pool';
+    el.addEventListener('click',()=>{
+      slotContents=slotContents.map(v=>v===card.id?null:v);
+      renderBuilder();
+    });
+  }
+  return el;
+}
+
+function dropCard(slotIdx){
+  if(draggingCardId===null) return;
+  // Remove card from any other slot
+  slotContents=slotContents.map(v=>v===draggingCardId?null:v);
+  // If slot already has a card, send it back to pool
+  slotContents[slotIdx]=draggingCardId;
+  draggingCardId=null;
+  renderBuilder();
+}
+
+function checkBuilder(){
+  let correct=0;
+  const slots=document.querySelectorAll('.conv-slot');
+  slots.forEach((slot,i)=>{
+    slot.classList.remove('filled','wrong-slot');
+    const placed=slotContents[i];
+    if(placed===null)return;
+    if(placed===i){slot.classList.add('filled');correct++;}
+    else slot.classList.add('wrong-slot');
+  });
+  document.getElementById('builderScore').textContent=`${correct} / ${convCards.length}`;
+  const res=document.getElementById('builderResult');
+  res.classList.add('show');
+  if(correct===convCards.length){
+    res.className='builder-result show perfect';
+    res.innerHTML='🎉 <strong>Perfect! You built the whole conversation correctly!</strong><br>Now try it for real — Durim is the server, you are the customer. Go!';
+    confetti();
+  } else if(correct>=6){
+    res.className='builder-result show partial';
+    res.innerHTML=`✅ <strong>${correct}/10 correct!</strong> Good job — check the orange slots and try to fix them. Think about: does a server line come before a customer line?`;
+  } else {
+    res.className='builder-result show wrong';
+    res.innerHTML=`💪 <strong>${correct}/10 — keep trying!</strong> Tip: conversations follow a pattern — <em>server asks → customer answers → server responds</em>. Start with the greeting!`;
+  }
+}
+
+function resetBuilder(){
+  slotContents=new Array(convCards.length).fill(null);
+  poolCards=[...convCards].sort(()=>Math.random()-0.5);
+  document.getElementById('builderResult').classList.remove('show');
+  document.getElementById('builderScore').textContent=`0 / ${convCards.length}`;
+  document.querySelectorAll('.conv-slot').forEach(s=>s.classList.remove('filled','wrong-slot'));
+  renderBuilder();
+}
+
+// ===== TRUE NEW YORKER QUIZ =====
+const quizQuestions=[
+  {q:'🍕 You get a pizza slice. What do you do first?',hint:'Think about what a real New Yorker does...',
+   opts:['A) Eat it flat with a knife and fork 🍴','B) Fold it in half and walk 🚶','C) Wait for it to cool down ❄️','D) Share it with five friends 👫'],scores:[0,3,1,2]},
+  {q:'🥯 It\'s 7am. What does your perfect breakfast look like?',hint:'NYC breakfast is quick and on the go!',
+   opts:['A) Bagel with cream cheese on the subway 🚇','B) Full cooked breakfast at home 🍳','C) Just a coffee ☕','D) Cheesecake for breakfast 🍰'],scores:[3,1,2,1]},
+  {q:'🌭 How often do you buy a hot dog from a street vendor?',hint:'Use Present Simple to think about your habits!',
+   opts:['A) Every single day 🔥','B) Sometimes, when I walk past 🚶','C) Never ❌','D) Only when very hungry 😤'],scores:[3,2,0,1]},
+  {q:'🗽 Someone visits NYC for the first time. Where do you take them?',hint:'What does a real New Yorker recommend?',
+   opts:['A) A famous pizza joint in Brooklyn 🍕','B) A fancy restaurant in Manhattan 🥂','C) A food truck for falafel 🧆','D) A classic deli for pastrami 🥪'],scores:[3,1,2,3]},
+  {q:'🌙 It\'s midnight. You\'re hungry. What do you do?',hint:'The city never sleeps!',
+   opts:['A) Order delivery — NYC delivers 24/7! 📱','B) Go to sleep — too late to eat 😴','C) Walk to a 24-hour deli 🏪','D) Eat leftover pizza from the fridge 🍕'],scores:[3,0,3,2]},
+];
+const quizResults=[
+  {min:0,max:5,emoji:'🌍',title:'TOURIST IN NYC!',desc:'You love NYC but you\'re still learning the food rules! A true New Yorker always folds their pizza. You\'ll get there!'},
+  {min:6,max:9,emoji:'🗺️',title:'NYC EXPLORER!',desc:'You know your way around NYC food! Bagels, food trucks, late nights — almost a true New Yorker!'},
+  {min:10,max:15,emoji:'🗽',title:'TRUE NEW YORKER!',desc:'You fold your pizza, eat on the subway, know every food truck on your block, and never sleep before midnight. Welcome to NYC! 🎉'},
+];
+let quizCurrent=0,quizTotalScore=0,quizAnswered=[];
+function renderQuiz(){
+  const prog=document.getElementById('quizProgress');
+  prog.innerHTML=quizQuestions.map((_,i)=>`<div class="quiz-dot" id="qdot${i}"></div>`).join('');
+  renderQuizQuestion();
+}
+function renderQuizQuestion(){
+  const body=document.getElementById('quizBody');
+  if(quizCurrent>=quizQuestions.length){showQuizResult();return;}
+  const q=quizQuestions[quizCurrent];
+  body.innerHTML=`<div class="quiz-question"><div class="quiz-q-text">${q.q}</div><div class="quiz-q-hint">💡 ${q.hint}</div>
+    <div class="quiz-options">${q.opts.map((opt,i)=>`<button class="quiz-opt" id="qopt${i}" onclick="selectQuizOpt(${i})">${opt}</button>`).join('')}</div></div>
+    <div class="quiz-nav"><button class="quiz-next-btn" id="quizNextBtn" onclick="nextQuizQ()" disabled>Next →</button></div>`;
+}
+function selectQuizOpt(i){
+  document.querySelectorAll('.quiz-opt').forEach(b=>b.classList.remove('chosen'));
+  document.getElementById(`qopt${i}`).classList.add('chosen');
+  quizAnswered[quizCurrent]=i;
+  document.getElementById('quizNextBtn').disabled=false;
+}
+function nextQuizQ(){
+  const chosen=quizAnswered[quizCurrent];if(chosen===undefined)return;
+  quizTotalScore+=quizQuestions[quizCurrent].scores[chosen];
+  document.getElementById(`qdot${quizCurrent}`).classList.add('done');
+  quizCurrent++;
+  if(quizCurrent>=quizQuestions.length)showQuizResult();else renderQuizQuestion();
+}
+function showQuizResult(){
+  document.getElementById('quizBody').innerHTML='';
+  const result=quizResults.find(r=>quizTotalScore>=r.min&&quizTotalScore<=r.max)||quizResults[quizResults.length-1];
+  const res=document.getElementById('quizResult');res.style.display='block';
+  res.innerHTML=`<span class="result-emoji">${result.emoji}</span><div class="result-title">${result.title}</div>
+    <div class="result-desc">${result.desc}</div>
+    <div class="result-sentences"><p><strong>🗣️ Describe your result in Past Simple:</strong></p>
+    <p>· "I was a <strong>${result.title.toLowerCase()}</strong>."</p>
+    <p>· "I ordered… / I didn't like… / I went to…"</p></div>`;
+  confetti();
+  document.querySelectorAll('.quiz-dot').forEach(d=>d.classList.add('done'));
+}
+
+// ===== GRAMMAR REVEAL =====
+function toggleReveal(i){
+  const a=document.getElementById(`ra${i}`);
+  const b=document.querySelector(`#rp${i} .reveal-btn`);
+  const shown=a.classList.contains('show');
+  a.classList.toggle('show');
+  b.textContent=shown?'👁 Reveal':'🙈 Hide';
+  b.classList.toggle('revealed',!shown);
+}
+
+// ===== MIXED EXERCISE =====
+const mixedData=[
+  {type:'gap',label:'✅ Fill the gap',s:'Italian immigrants ___ (bring) pizza recipes to New York.',a:'brought'},
+  {type:'gap',label:'✅ Fill the gap',s:'The first pizzeria ___ (open) in NYC in 1905.',a:'opened'},
+  {type:'gap',label:'✅ Fill the gap',s:'A hot dog vendor ___ (sell) sausages on the street.',a:'sold'},
+  {type:'gap',label:'✅ Fill the gap',s:'The city ___ (become) famous for its food culture.',a:'became'},
+  {type:'negative',label:'❌ Make it negative',prompt:'Early immigrants had a lot of money.',baseVerb:'have'},
+  {type:'negative',label:'❌ Make it negative',prompt:'The first hot dog vendor sold ketchup.',baseVerb:'sell'},
+  {type:'negative',label:'❌ Make it negative',prompt:'Pizza came from New York originally.',baseVerb:'come'},
+  {type:'yesno',label:'❓ Make a question',s:'Immigrants brought pizza to NYC.',base:'bring'},
+  {type:'yesno',label:'❓ Make a question',s:'The first bagel shop opened in 1900.',base:'open'},
+  {type:'error',label:'🕵️ Spot the error',wrong:"Immigrants didn't brought pizza to New York.",hint:"didn't + BASE verb",answer:"immigrants didn't bring pizza to new york."},
+  {type:'error',label:'🕵️ Spot the error',wrong:'Did the vendor sold hot dogs?',hint:'Did + BASE verb — no past form!',answer:'did the vendor sell hot dogs?'},
+  {type:'error',label:'🕵️ Spot the error',wrong:'The city becomed famous for its food.',hint:'Irregular — check the verb list!',answer:'the city became famous for its food.'},
+];
+function totalSlots(){return mixedData.reduce((n,item)=>item.type==='yesno'?n+2:n+1,0);}
+function renderMixed(){
+  const c=document.getElementById('mixedExercise');
+  document.getElementById('mixedScore').textContent=`0 / ${totalSlots()}`;
+  let n=1;
+  const colors={gap:'#2b8a3e',negative:'#c92a2a',yesno:'#1971c2',error:'#7c3aed'};
+  mixedData.forEach((item,i)=>{
+    const div=document.createElement('div');div.className='ex-item';
+    div.style.cssText='border-top:1px solid #f1f3f5;padding-top:14px;';
+    let inner=`<p style="margin-bottom:6px;"><span style="font-size:0.75rem;font-weight:800;background:${colors[item.type]};color:#fff;border-radius:5px;padding:2px 8px;margin-right:6px;">${item.label}</span><strong>${n}${item.type==='yesno'?'–'+(n+1):''}.</strong>`;
+    if(item.type==='gap'){
+      inner+=` ${item.s.replace('___',`<input type="text" class="inline-input" id="mx${i}_0" autocomplete="off" placeholder="?">`)}</p>`;n++;
+    } else if(item.type==='negative'){
+      inner+=` <em>"${item.prompt}"</em> → negative:</p><input type="text" class="ex-input" id="mx${i}_0" placeholder="Write the negative sentence..." autocomplete="off">`;n++;
+    } else if(item.type==='yesno'){
+      inner+=` <em>"${item.s}"</em> → question + short answer:</p><input type="text" class="ex-input" id="mx${i}_0" placeholder="Write the question..." autocomplete="off" style="margin-bottom:6px;"><input type="text" class="ex-input" id="mx${i}_1" placeholder="Short answer: Yes,... / No,..." autocomplete="off">`;n+=2;
+    } else if(item.type==='error'){
+      inner+=` ❌ <em>"${item.wrong}"</em></p><div class="ex-hint">💡 ${item.hint}</div><input type="text" class="ex-input" id="mx${i}_0" placeholder="Write the correct sentence..." autocomplete="off">`;n++;
+    }
+    div.innerHTML=inner;c.appendChild(div);
+  });
+}
+function checkMixed(){
+  let correct=0,total=totalSlots();
+  mixedData.forEach((item,i)=>{
+    if(item.type==='gap'){
+      const inp=document.getElementById(`mx${i}_0`);
+      const val=inp.value.trim().toLowerCase();
+      if(val===item.a){inp.classList.add('correct');inp.classList.remove('wrong');correct++;}
+      else{inp.classList.add('wrong');inp.classList.remove('correct');}
+    } else if(item.type==='negative'){
+      const inp=document.getElementById(`mx${i}_0`);
+      const val=inp.value.trim().toLowerCase();
+      const ok=(val.includes("didn't")||val.includes("did not"))&&val.includes(item.baseVerb);
+      if(ok){inp.classList.add('correct');inp.classList.remove('wrong');correct++;}
+      else{inp.classList.add('wrong');inp.classList.remove('correct');}
+    } else if(item.type==='yesno'){
+      const qi=document.getElementById(`mx${i}_0`),ai=document.getElementById(`mx${i}_1`);
+      const qv=qi.value.trim().toLowerCase(),av=ai.value.trim().toLowerCase();
+      const qOk=qv.startsWith('did')&&qv.includes(item.base);
+      if(qOk){qi.classList.add('correct');qi.classList.remove('wrong');correct++;}else{qi.classList.add('wrong');qi.classList.remove('correct');}
+      const aOk=av.includes('yes')||av.includes('no');
+      if(aOk){ai.classList.add('correct');ai.classList.remove('wrong');correct++;}else{ai.classList.add('wrong');ai.classList.remove('correct');}
+    } else if(item.type==='error'){
+      const inp=document.getElementById(`mx${i}_0`);
+      const val=inp.value.trim().toLowerCase().replace(/[.!?]$/,'');
+      const ans=item.answer.replace(/[.!?]$/,'');
+      if(val===ans){inp.classList.add('correct');inp.classList.remove('wrong');correct++;}
+      else{inp.classList.add('wrong');inp.classList.remove('correct');}
+    }
+  });
+  document.getElementById('mixedScore').textContent=`${correct} / ${total}`;
+  const fb=document.getElementById('mixedFeedback');
+  if(correct===total){fb.textContent='🎉 Perfect! All forms mastered!';fb.className='feedback ok';confetti();}
+  else{fb.textContent=`${correct}/${total} — check the red ones. Traps: didn't + BASE verb · Did + BASE verb? · irregular forms!`;fb.className='feedback err';}
+}
+
+// ===== TIMER =====
+let timerInterval=null,timerSeconds=0,timerRunning=false,timerTarget=0;
+function setTimer(m){clearInterval(timerInterval);timerRunning=false;timerTarget=m*60;timerSeconds=timerTarget;document.getElementById('timerDisplay').textContent=formatTime(timerSeconds);document.getElementById('timerStartBtn').textContent='▶ Start';}
+function toggleTimer(){if(timerRunning){clearInterval(timerInterval);timerRunning=false;document.getElementById('timerStartBtn').textContent='▶ Start';}else{if(timerSeconds<=0)timerSeconds=timerTarget||300;timerRunning=true;document.getElementById('timerStartBtn').textContent='⏸ Pause';timerInterval=setInterval(()=>{timerSeconds--;document.getElementById('timerDisplay').textContent=formatTime(timerSeconds);if(timerSeconds<=0){clearInterval(timerInterval);timerRunning=false;document.getElementById('timerStartBtn').textContent='▶ Start';document.getElementById('timerDisplay').textContent='⏰ Done!';}},1000);}}
+function formatTime(s){return`${Math.floor(s/60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}`;}
+
+// ===== WHITEBOARD =====
+function addStamp(s){const ta=document.getElementById('wbNotes');ta.value+=s;ta.focus();}
+function copyNotes(){navigator.clipboard.writeText(document.getElementById('wbNotes').value).then(()=>alert('Copied!'));}
+function clearNotes(){if(confirm('Clear notes?'))document.getElementById('wbNotes').value='';}
+
+// ===== CONFETTI =====
+function confetti(){const c=['#f7c948','#e03131','#1971c2','#2b8a3e','#7c3aed','#f97316'];for(let i=0;i<60;i++){const el=document.createElement('div');el.className='confetti-piece';el.style.cssText=`left:${Math.random()*100}vw;top:-10px;background:${c[Math.floor(Math.random()*c.length)]};animation-delay:${Math.random()*1.2}s;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;`;document.body.appendChild(el);setTimeout(()=>el.remove(),2500);}}
+
+// ===== INIT =====
+renderVocab();renderTF();renderBuilder();renderQuiz();renderMixed();
+</script>
+</body>
+</html>

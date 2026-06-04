@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kauai — The Garden Isle</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --emerald: #1A4731;
+  --leaf: #2D7D4F;
+  --mint: #52B788;
+  --gold: #D4A017;
+  --sun: #F5C842;
+  --coral: #E8714A;
+  --ocean: #1A6B8A;
+  --sky: #4BA3C3;
+  --sand: #F2E0B0;
+  --cream: #FBF7EE;
+  --dark: #0F1A12;
+  --text: #1C2B1E;
+  --muted: #5A7A60;
+  --card-bg: #FFFFFF;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--dark);
+  color: var(--cream);
+  min-height: 100vh;
+}
+
+/* ══ CINEMATIC HERO ══ */
+.hero {
+  position: relative;
+  height: clamp(380px, 55vw, 520px);
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+/* Layered SVG landscape */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15,26,18,0.1) 0%,
+    rgba(15,26,18,0.0) 30%,
+    rgba(15,26,18,0.5) 70%,
+    rgba(15,26,18,0.95) 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 24px 36px;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--sun);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 30px;
+  height: 2px;
+  background: var(--sun);
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(44px, 10vw, 88px);
+  font-weight: 900;
+  line-height: 0.95;
+  color: white;
+  text-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  margin-bottom: 10px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--sun);
+  display: block;
+  font-size: 0.65em;
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero-tag {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  backdrop-filter: blur(8px);
+  color: rgba(255,255,255,0.9);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+}
+
+.hero-tag.accent { background: var(--coral); border-color: var(--coral); }
+
+/* ══ MAIN CONTAINER ══ */
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 16px 80px;
+}
+
+/* ══ SECTION HEADERS ══ */
+.sec-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 40px 0 18px;
+}
+
+.sec-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--sun);
+  border-bottom: 1px solid var(--sun);
+  padding-bottom: 2px;
+}
+
+.sec-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px, 4vw, 28px);
+  font-weight: 700;
+  color: white;
+  font-style: italic;
+}
+
+.sec-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.1), transparent);
+}
+
+/* ══ FAST FACTS ══ */
+.facts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 12px;
+}
+
+.fact-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 16px 16px 14px;
+  transition: border-color 0.2s, transform 0.2s;
+  animation: fadeUp 0.5s ease both;
+}
+
+.fact-card:hover { border-color: rgba(212,160,23,0.4); transform: translateY(-2px); }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+
+.fact-icon { font-size: 26px; margin-bottom: 8px; display: block; }
+.fact-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--sun);
+  margin-bottom: 5px;
+}
+.fact-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.6;
+}
+.fact-text strong { color: white; }
+
+/* ══ SVG GALLERY ══ */
+.gallery {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.gallery-single {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.scene-card {
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  background: #0A1A0F;
+  transition: transform 0.2s;
+  cursor: default;
+}
+
+.scene-card:hover { transform: scale(1.02); }
+
+.scene-card svg { display: block; width: 100%; }
+
+.scene-label {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  padding: 16px 12px 8px;
+  font-size: 11px;
+  font-weight: 800;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 0.5px;
+}
+
+.scene-label span {
+  display: block;
+  font-size: 9px;
+  color: var(--sun);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+/* ══ READING CARDS ══ */
+.reading-wrap {
+  position: relative;
+}
+
+.read-level-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+.read-level-tag.teacher { background: rgba(232,113,74,0.2); color: var(--coral); border: 1px solid rgba(232,113,74,0.3); }
+.read-level-tag.student { background: rgba(82,183,136,0.2); color: var(--mint); border: 1px solid rgba(82,183,136,0.3); }
+
+.reading-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 24px 24px 20px;
+  color: var(--text);
+  margin-bottom: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.reading-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px;
+  height: 100%;
+}
+
+.reading-card.teacher::before { background: var(--coral); }
+.reading-card.student::before { background: var(--mint); }
+
+.reading-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 14px;
+  line-height: 1.3;
+}
+
+.reading-body {
+  font-size: 15px;
+  line-height: 2;
+  color: #2C3E2D;
+  font-weight: 600;
+}
+
+.hl { color: var(--ocean); font-weight: 800; border-bottom: 2px dotted #90CAF9; }
+.hl-g { color: var(--leaf); font-weight: 800; }
+.hl-o { color: var(--coral); font-weight: 800; }
+.vp { color: #C0392B; font-weight: 800; background: #FDEDEC; padding: 1px 5px; border-radius: 3px; font-size: 14px; }
+
+/* ══ VOCAB ══ */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+}
+
+.vocab-card {
+  background: rgba(255,255,255,0.05);
+  border: 2px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 12px 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+
+.vocab-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--leaf), var(--ocean));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.vocab-card:hover { border-color: var(--sun); transform: translateY(-2px); }
+.vocab-card.revealed::before { opacity: 1; }
+.vocab-card.revealed .vc-hint { opacity: 0; }
+.vocab-card.revealed .vc-fr { opacity: 1; }
+.vocab-card.revealed .vc-en, .vocab-card.revealed .vc-icon { position: relative; z-index: 1; color: white; }
+.vocab-card.revealed .vc-fr { position: relative; z-index: 1; }
+
+.vc-icon { font-size: 24px; display: block; margin-bottom: 5px; position: relative; z-index: 1; }
+.vc-en { font-size: 13px; font-weight: 800; color: rgba(255,255,255,0.9); display: block; position: relative; z-index: 1; }
+.vc-fr { font-size: 11px; color: rgba(255,255,255,0.85); font-weight: 700; opacity: 0; transition: opacity 0.3s; display: block; margin-top: 3px; }
+.vc-hint { font-size: 9px; color: var(--sun); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-top: 3px; position: relative; z-index: 1; }
+
+.vocab-section-title {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.vocab-section-title.review { color: var(--sky); }
+.vocab-section-title.new { color: var(--sun); }
+
+/* ══ COMPREHENSION ══ */
+.comp-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 12px;
+}
+
+.comp-q { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: white; line-height: 1.5; }
+
+.comp-opts { display: flex; flex-direction: column; gap: 7px; }
+
+.comp-btn {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: rgba(255,255,255,0.8);
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.comp-btn:hover:not(:disabled) { border-color: var(--sun); color: var(--sun); }
+.comp-btn.correct { border-color: var(--mint); background: rgba(82,183,136,0.12); color: #81C784; }
+.comp-btn.wrong { border-color: var(--coral); background: rgba(232,113,74,0.12); color: #FF8A65; }
+.comp-btn:disabled { pointer-events: none; }
+
+.comp-reveal { font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 6px; display: none; font-weight: 600; }
+.comp-reveal.show { display: block; }
+.comp-reveal strong { color: var(--mint); }
+
+/* ══ VERB CARDS ══ */
+.verb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.verb-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.verb-card:hover { transform: translateY(-2px); border-color: rgba(212,160,23,0.4); }
+
+.verb-card::after {
+  content: attr(data-emoji);
+  position: absolute;
+  top: -6px; right: 8px;
+  font-size: 36px;
+  opacity: 0.12;
+}
+
+.vc-present { font-family: 'Playfair Display', serif; font-size: 20px; color: rgba(255,255,255,0.7); }
+.vc-arrow { color: rgba(255,255,255,0.2); font-size: 16px; margin: 4px 0; }
+.vc-past { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--sun); }
+.vc-fr { font-size: 11px; color: rgba(255,255,255,0.35); font-weight: 700; margin-top: 4px; letter-spacing: 1px; }
+.vc-sentence { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 8px; font-style: italic; font-weight: 600; line-height: 1.5; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 8px; }
+
+/* ══ EXERCISES ══ */
+.ex-card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 12px;
+  color: var(--text);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.ex-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #90A4AE;
+  margin-bottom: 8px;
+}
+
+.ex-q { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 10px; line-height: 1.6; }
+
+.hint-tag {
+  display: inline-block;
+  background: #E8F5E9;
+  color: #2E7D32;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-right: 4px;
+}
+
+.ex-input {
+  background: #F5F8FF;
+  border: 2px solid #CFD8DC;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  max-width: 200px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.ex-input:focus { border-color: var(--ocean); }
+.ex-input.correct { border-color: #43A047; background: #E8F5E9; color: #2E7D32; }
+.ex-input.wrong { border-color: #E53935; background: #FFEBEE; color: #C62828; }
+
+.mc-opts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.mc-btn {
+  background: #F5F8FF;
+  border: 2px solid #CFD8DC;
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.mc-btn:hover:not(:disabled) { border-color: var(--ocean); color: var(--ocean); }
+.mc-btn.correct { border-color: #43A047; background: #E8F5E9; color: #2E7D32; }
+.mc-btn.wrong { border-color: #E53935; background: #FFEBEE; color: #C62828; }
+.mc-btn:disabled { pointer-events: none; }
+
+.ex-reveal { font-size: 13px; color: #90A4AE; margin-top: 6px; display: none; font-weight: 600; }
+.ex-reveal.show { display: block; }
+.ex-reveal strong { color: #2E7D32; }
+
+/* ══ SCORE ══ */
+.score-panel {
+  background: linear-gradient(135deg, var(--emerald), #0A2A1A);
+  border: 2px solid var(--sun);
+  border-radius: 20px;
+  padding: 36px 24px;
+  text-align: center;
+  margin-top: 30px;
+  display: none;
+  animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+.score-panel.show { display: block; }
+@keyframes popIn { from{opacity:0;transform:scale(0.75)} to{opacity:1;transform:scale(1)} }
+
+.score-trophy { font-size: 48px; margin-bottom: 8px; }
+.score-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 80px;
+  font-weight: 900;
+  color: var(--sun);
+  text-shadow: 0 4px 0 rgba(0,0,0,0.3);
+  line-height: 1;
+}
+.score-label { font-size: 12px; font-weight: 800; letter-spacing: 3px; opacity: 0.5; text-transform: uppercase; margin-top: 4px; }
+.score-msg { font-size: 20px; font-weight: 800; margin: 16px 0 8px; }
+
+.check-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--coral), var(--gold));
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 32px;
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(232,113,74,0.4);
+  transition: all 0.2s;
+  font-style: italic;
+  letter-spacing: 0.5px;
+}
+
+.check-btn:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 28px rgba(232,113,74,0.5); }
+
+.retry-btn {
+  background: rgba(255,255,255,0.1);
+  color: var(--sun);
+  border: 2px solid var(--sun);
+  border-radius: 10px;
+  padding: 10px 26px;
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-style: italic;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: all 0.2s;
+}
+
+.retry-btn:hover { background: var(--sun); color: var(--dark); }
+
+@media (max-width: 500px) {
+  .gallery { grid-template-columns: 1fr; }
+  .gallery-single { grid-template-columns: 1fr 1fr; }
+  .mc-opts { grid-template-columns: 1fr; }
+  .verb-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ CINEMATIC HERO ══ -->
+<div class="hero">
+  <svg class="hero-bg" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="hSky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0A2A4A"/>
+        <stop offset="40%" stop-color="#1A5C7A"/>
+        <stop offset="75%" stop-color="#E8A87C"/>
+        <stop offset="100%" stop-color="#D4601A"/>
+      </linearGradient>
+      <linearGradient id="hOcean" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#1A6B8A"/>
+        <stop offset="100%" stop-color="#0A3A50"/>
+      </linearGradient>
+      <radialGradient id="hSun" cx="75%" cy="38%">
+        <stop offset="0%" stop-color="#FFE066" stop-opacity="1"/>
+        <stop offset="40%" stop-color="#F5A623" stop-opacity="0.6"/>
+        <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="hMtn1" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#1A4731"/>
+        <stop offset="100%" stop-color="#0F2B1A"/>
+      </linearGradient>
+      <linearGradient id="hMtn2" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#2D6A4F"/>
+        <stop offset="100%" stop-color="#1A4731"/>
+      </linearGradient>
+      <linearGradient id="hBeach" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#F2D98A"/>
+        <stop offset="100%" stop-color="#E8C46A"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Sky -->
+    <rect width="800" height="520" fill="url(#hSky)"/>
+    <!-- Sun glow -->
+    <ellipse cx="600" cy="200" rx="200" ry="180" fill="url(#hSun)"/>
+    <!-- Sun disc -->
+    <circle cx="600" cy="180" r="42" fill="#FFE566" opacity="0.9"/>
+    <circle cx="600" cy="180" r="52" fill="rgba(255,229,102,0.25)"/>
+
+    <!-- Distant mountains / Napali coast silhouette -->
+    <path d="M0,320 L40,240 L80,270 L130,200 L180,250 L230,190 L280,230 L330,170 L380,210 L430,175 L480,215 L530,165 L580,200 L630,185 L680,210 L730,190 L780,220 L800,215 L800,520 L0,520Z" fill="url(#hMtn1)"/>
+    <!-- Mid mountains -->
+    <path d="M0,360 L60,300 L120,330 L180,290 L240,320 L300,285 L360,315 L420,295 L480,325 L540,300 L600,320 L660,305 L720,330 L800,310 L800,520 L0,520Z" fill="url(#hMtn2)"/>
+    <!-- Lush foreground hills -->
+    <path d="M0,400 Q100,370 200,385 Q300,400 400,375 Q500,350 600,370 Q700,390 800,375 L800,520 L0,520Z" fill="#1A5C36"/>
+    <!-- Beach strip -->
+    <path d="M0,460 Q200,445 400,450 Q600,455 800,445 L800,520 L0,520Z" fill="url(#hBeach)"/>
+    <!-- Ocean -->
+    <path d="M0,450 Q200,440 400,445 Q600,450 800,440 L800,520 L0,520Z" fill="url(#hOcean)" opacity="0.7"/>
+    <!-- Waves -->
+    <path d="M0,455 Q50,450 100,455 Q150,460 200,455 Q250,450 300,455" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/>
+    <path d="M350,458 Q400,453 450,458 Q500,463 550,458 Q600,453 650,458 Q700,463 750,458" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" fill="none"/>
+
+    <!-- Foreground palm trees -->
+    <line x1="70" y1="520" x2="75" y2="390" stroke="#3D2010" stroke-width="7"/>
+    <ellipse cx="88" cy="378" rx="32" ry="14" fill="#1A5C2A" transform="rotate(-25,88,378)"/>
+    <ellipse cx="66" cy="374" rx="30" ry="13" fill="#2D7A40" transform="rotate(20,66,374)"/>
+    <ellipse cx="80" cy="366" rx="28" ry="12" fill="#1A5C2A" transform="rotate(-5,80,366)"/>
+    <circle cx="82" cy="381" r="6" fill="#5D4037"/>
+    <circle cx="74" cy="385" r="5" fill="#4E342E"/>
+
+    <line x1="720" y1="520" x2="715" y2="395" stroke="#3D2010" stroke-width="6"/>
+    <ellipse cx="728" cy="383" rx="26" ry="12" fill="#1A5C2A" transform="rotate(-20,728,383)"/>
+    <ellipse cx="708" cy="380" rx="24" ry="11" fill="#2D7A40" transform="rotate(18,708,380)"/>
+    <ellipse cx="720" cy="373" rx="22" ry="10" fill="#1A5C2A" transform="rotate(-8,720,373)"/>
+
+    <!-- Hibiscus flowers scattered -->
+    <circle cx="150" cy="415" r="6" fill="#E8714A" opacity="0.8"/>
+    <circle cx="155" cy="415" r="3" fill="#FFE066" opacity="0.9"/>
+    <circle cx="640" cy="410" r="5" fill="#D4527A" opacity="0.7"/>
+    <circle cx="645" cy="410" r="2.5" fill="#FFE066" opacity="0.8"/>
+
+    <!-- Mist on mountains -->
+    <ellipse cx="200" cy="290" rx="80" ry="20" fill="rgba(255,255,255,0.06)"/>
+    <ellipse cx="500" cy="280" rx="100" ry="18" fill="rgba(255,255,255,0.05)"/>
+  </svg>
+
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">🌺 Lesson 3 — Hawaii</div>
+    <h1>KAUAI<em>The Garden Isle</em></h1>
+    <div class="hero-meta">
+      <span class="hero-tag">🇺🇸 Hawaii, USA</span>
+      <span class="hero-tag">🌿 Nature & Culture</span>
+      <span class="hero-tag accent">✏️ Verbs + Vocab</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MAIN ══ -->
+<div class="container">
+
+  <!-- ══ FAST FACTS ══ -->
+  <div class="sec-head">
+    <span class="sec-num">Part 1</span>
+    <span class="sec-title">Fast Facts</span>
+    <span class="sec-line"></span>
+  </div>
+
+  <div class="facts-grid">
+    <div class="fact-card" style="animation-delay:0.05s">
+      <span class="fact-icon">🌍</span>
+      <div class="fact-label">Location</div>
+      <div class="fact-text">Kauai is one of <strong>8 Hawaiian islands</strong> in the North Pacific Ocean — about 4,000 km from mainland USA.</div>
+    </div>
+    <div class="fact-card" style="animation-delay:0.1s">
+      <span class="fact-icon">🌿</span>
+      <div class="fact-label">Nickname</div>
+      <div class="fact-text">Called <strong>"The Garden Isle"</strong> because it is the greenest, most lush island in Hawaii — covered in jungle!</div>
+    </div>
+    <div class="fact-card" style="animation-delay:0.15s">
+      <span class="fact-icon">🌧️</span>
+      <div class="fact-label">Wettest Place</div>
+      <div class="fact-text">Mount Waialeale on Kauai is one of the <strong>wettest places on Earth</strong> — it rains almost every single day!</div>
+    </div>
+    <div class="fact-card" style="animation-delay:0.2s">
+      <span class="fact-icon">🦜</span>
+      <div class="fact-label">Wildlife</div>
+      <div class="fact-text">Kauai is home to thousands of <strong>wild chickens</strong>, rare seabirds, and the endangered Hawaiian monk seal.</div>
+    </div>
+    <div class="fact-card" style="animation-delay:0.25s">
+      <span class="fact-icon">🎬</span>
+      <div class="fact-label">Famous For</div>
+      <div class="fact-text">Many Hollywood movies were filmed here — including <strong>Jurassic Park</strong> and <strong>Pirates of the Caribbean!</strong></div>
+    </div>
+    <div class="fact-card" style="animation-delay:0.3s">
+      <span class="fact-icon">🏔️</span>
+      <div class="fact-label">Nā Pali Coast</div>
+      <div class="fact-text">A dramatic coastline of <strong>sharp green cliffs</strong> rising 1,200 metres straight from the sea — breathtaking!</div>
+    </div>
+  </div>
+
+  <!-- ══ VISUALS ══ -->
+  <div class="sec-head">
+    <span class="sec-num">Part 2</span>
+    <span class="sec-title">See Kauai</span>
+    <span class="sec-line"></span>
+  </div>
+
+  <!-- Flag + map -->
+  <div class="gallery" style="margin-bottom:10px;">
+
+    <!-- Hawaiian flag SVG -->
+    <div class="scene-card">
+      <svg viewBox="0 0 400 230" xmlns="http://www.w3.org/2000/svg" style="height:220px;">
+        <!-- 8 stripes: white, red, blue alternating -->
+        <rect width="400" height="230" fill="#FFFFFF"/>
+        <rect y="28.75" width="400" height="28.75" fill="#BE0000"/>
+        <rect y="57.5" width="400" height="28.75" fill="#00247D"/>
+        <rect y="86.25" width="400" height="28.75" fill="#FFFFFF"/>
+        <rect y="115" width="400" height="28.75" fill="#BE0000"/>
+        <rect y="143.75" width="400" height="28.75" fill="#00247D"/>
+        <rect y="172.5" width="400" height="28.75" fill="#FFFFFF"/>
+        <rect y="201.25" width="400" height="28.75" fill="#BE0000"/>
+        <!-- Union Jack canton -->
+        <rect width="160" height="115" fill="#00247D"/>
+        <!-- Union Jack diagonals -->
+        <line x1="0" y1="0" x2="160" y2="115" stroke="white" stroke-width="22"/>
+        <line x1="160" y1="0" x2="0" y2="115" stroke="white" stroke-width="22"/>
+        <line x1="0" y1="0" x2="160" y2="115" stroke="#BE0000" stroke-width="14"/>
+        <line x1="160" y1="0" x2="0" y2="115" stroke="#BE0000" stroke-width="14"/>
+        <!-- Cross -->
+        <rect x="64" y="0" width="32" height="115" fill="white"/>
+        <rect x="0" y="41.5" width="160" height="32" fill="white"/>
+        <rect x="70" y="0" width="20" height="115" fill="#BE0000"/>
+        <rect x="0" y="47.5" width="160" height="20" fill="#BE0000"/>
+        <text x="280" y="200" text-anchor="middle" font-family="sans-serif" font-size="13" fill="rgba(0,0,0,0.5)" font-weight="bold">FLAG OF HAWAII 🌺</text>
+      </svg>
+      <div class="scene-label">
+        <span>🌺 Official Flag</span>
+        Union Jack + 8 stripes for 8 islands
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div class="scene-card">
+      <svg viewBox="0 0 260 230" xmlns="http://www.w3.org/2000/svg" style="height:220px;">
+        <rect width="260" height="230" fill="#0A1628"/>
+        <!-- Ocean grid -->
+        <line x1="0" y1="46" x2="260" y2="46" stroke="rgba(30,144,255,0.12)" stroke-width="1"/>
+        <line x1="0" y1="92" x2="260" y2="92" stroke="rgba(30,144,255,0.12)" stroke-width="1"/>
+        <line x1="0" y1="138" x2="260" y2="138" stroke="rgba(30,144,255,0.12)" stroke-width="1"/>
+        <line x1="0" y1="184" x2="260" y2="184" stroke="rgba(30,144,255,0.12)" stroke-width="1"/>
+        <line x1="52" y1="0" x2="52" y2="230" stroke="rgba(30,144,255,0.12)" stroke-width="1"/>
+        <line x1="104" y1="0" x2="104" y2="230" stroke="rgba(30,144,255,0.12)" stroke-width="1"/>
+        <line x1="156" y1="0" x2="156" y2="230" stroke="rgba(30,144,255,0.12)" stroke-width="1"/>
+        <line x1="208" y1="0" x2="208" y2="230" stroke="rgba(30,144,255,0.12)" stroke-width="1"/>
+        <!-- Islands (roughly spaced chain, NW to SE) -->
+        <!-- Kauai (NW, biggest) -->
+        <ellipse cx="42" cy="75" rx="28" ry="22" fill="#2D6A4F"/>
+        <ellipse cx="42" cy="75" rx="22" ry="16" fill="#52B788"/>
+        <circle cx="42" cy="75" r="5" fill="#FFD600"/>
+        <text x="42" y="63" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#FFD600" font-weight="bold">KAUAI ★</text>
+        <!-- Oahu -->
+        <ellipse cx="95" cy="110" rx="18" ry="13" fill="#2D6A4F"/>
+        <ellipse cx="95" cy="110" rx="13" ry="9" fill="#52B788"/>
+        <text x="95" y="130" text-anchor="middle" font-family="sans-serif" font-size="7" fill="rgba(255,255,255,0.5)">O'ahu</text>
+        <!-- Molokai -->
+        <ellipse cx="140" cy="130" rx="14" ry="8" fill="#2D6A4F"/>
+        <!-- Maui -->
+        <ellipse cx="175" cy="150" rx="16" ry="12" fill="#2D6A4F"/>
+        <ellipse cx="175" cy="150" rx="11" ry="8" fill="#52B788"/>
+        <text x="175" y="168" text-anchor="middle" font-family="sans-serif" font-size="7" fill="rgba(255,255,255,0.5)">Maui</text>
+        <!-- Big Island -->
+        <ellipse cx="215" cy="180" rx="22" ry="20" fill="#1E5C35"/>
+        <ellipse cx="215" cy="180" rx="16" ry="14" fill="#2D7A4F"/>
+        <text x="215" y="200" text-anchor="middle" font-family="sans-serif" font-size="7" fill="rgba(255,255,255,0.5)">Big Island</text>
+        <text x="130" y="220" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(100,180,255,0.5)">NORTH PACIFIC OCEAN</text>
+      </svg>
+      <div class="scene-label">
+        <span>🗺️ Map</span>
+        8 islands — Kauai is the oldest
+      </div>
+    </div>
+  </div>
+
+  <!-- Scene row: canyon, beach, cliffs -->
+  <div class="gallery-single">
+
+    <!-- Waimea Canyon -->
+    <div class="scene-card">
+      <svg viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg" style="height:170px;">
+        <defs>
+          <linearGradient id="cSky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1A6B8A"/>
+            <stop offset="100%" stop-color="#4BAED4"/>
+          </linearGradient>
+        </defs>
+        <rect width="200" height="170" fill="url(#cSky)"/>
+        <!-- Canyon walls layered -->
+        <path d="M0,60 L30,40 L55,55 L80,30 L110,50 L140,35 L165,48 L200,38 L200,170 L0,170Z" fill="#5D2A12"/>
+        <path d="M0,80 L25,65 L50,75 L75,55 L100,70 L130,58 L160,68 L200,60 L200,170 L0,170Z" fill="#8B3A1A"/>
+        <path d="M0,100 L20,88 L45,95 L70,80 L95,90 L120,82 L150,88 L180,80 L200,88 L200,170 L0,170Z" fill="#6B2F10"/>
+        <!-- Canyon floor with green -->
+        <path d="M0,130 Q50,120 100,125 Q150,130 200,122 L200,170 L0,170Z" fill="#2D6A1A"/>
+        <!-- River at bottom -->
+        <path d="M30,148 Q70,143 110,148 Q150,153 180,148" stroke="#48CAE4" stroke-width="3" fill="none" opacity="0.8"/>
+        <!-- Clouds -->
+        <ellipse cx="40" cy="28" rx="25" ry="10" fill="rgba(255,255,255,0.2)"/>
+        <ellipse cx="160" cy="22" rx="20" ry="8" fill="rgba(255,255,255,0.15)"/>
+        <text x="100" y="162" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,0.7)" font-weight="bold">WAIMEA CANYON</text>
+      </svg>
+      <div class="scene-label">
+        <span>🏜️ Canyon</span>
+        "Grand Canyon of the Pacific"
+      </div>
+    </div>
+
+    <!-- Hanalei Bay beach -->
+    <div class="scene-card">
+      <svg viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg" style="height:170px;">
+        <defs>
+          <linearGradient id="bSky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0096C7"/>
+            <stop offset="55%" stop-color="#48CAE4"/>
+            <stop offset="100%" stop-color="#90E0EF"/>
+          </linearGradient>
+          <linearGradient id="bSea" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#00B4D8"/>
+            <stop offset="100%" stop-color="#023E8A"/>
+          </linearGradient>
+        </defs>
+        <rect width="200" height="170" fill="url(#bSky)"/>
+        <circle cx="160" cy="35" r="20" fill="#FFE566" opacity="0.85"/>
+        <circle cx="160" cy="35" r="28" fill="rgba(255,229,102,0.2)"/>
+        <rect y="100" width="200" height="40" fill="url(#bSea)"/>
+        <path d="M0,100 Q25,95 50,100 Q75,105 100,100 Q125,95 150,100 Q175,105 200,100" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" fill="none"/>
+        <rect y="135" width="200" height="35" fill="#F2D98A"/>
+        <path d="M0,135 Q50,130 100,135 Q150,140 200,135" fill="#EFD080"/>
+        <!-- Mountains bg -->
+        <path d="M0,95 L40,60 L80,75 L120,55 L160,70 L200,60 L200,100 L0,100Z" fill="#1A4731" opacity="0.7"/>
+        <!-- Palm -->
+        <line x1="35" y1="170" x2="37" y2="100" stroke="#5D4037" stroke-width="5"/>
+        <ellipse cx="47" cy="93" rx="22" ry="9" fill="#1A5C2A" transform="rotate(-25,47,93)"/>
+        <ellipse cx="30" cy="90" rx="20" ry="8" fill="#2D7A40" transform="rotate(20,30,90)"/>
+        <!-- Surfer dots -->
+        <circle cx="120" cy="108" r="3" fill="rgba(255,255,255,0.7)"/>
+        <circle cx="140" cy="105" r="2.5" fill="rgba(255,255,255,0.6)"/>
+        <text x="100" y="163" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(80,40,0,0.7)" font-weight="bold">HANALEI BAY 🏄</text>
+      </svg>
+      <div class="scene-label">
+        <span>🏖️ Beach</span>
+        Famous surfing bay
+      </div>
+    </div>
+
+    <!-- Nā Pali cliffs -->
+    <div class="scene-card">
+      <svg viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg" style="height:170px;">
+        <defs>
+          <linearGradient id="npSky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1A3A5C"/>
+            <stop offset="100%" stop-color="#2A6A8C"/>
+          </linearGradient>
+          <linearGradient id="npSea" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0096C7"/>
+            <stop offset="100%" stop-color="#023E8A"/>
+          </linearGradient>
+          <linearGradient id="npCliff" x1="0" y1="0" x2="0.3" y2="1">
+            <stop offset="0%" stop-color="#1A5C36"/>
+            <stop offset="60%" stop-color="#0F3D20"/>
+            <stop offset="100%" stop-color="#2D7A4F"/>
+          </linearGradient>
+        </defs>
+        <rect width="200" height="170" fill="url(#npSky)"/>
+        <!-- Ocean -->
+        <rect y="130" width="200" height="40" fill="url(#npSea)"/>
+        <!-- Dramatic cliffs -->
+        <path d="M0,170 L0,40 L18,20 L35,45 L50,15 L68,38 L85,10 L100,35 L118,5 L135,30 L150,18 L165,40 L180,25 L200,50 L200,170Z" fill="url(#npCliff)"/>
+        <!-- Cliff texture shadows -->
+        <path d="M18,20 L15,80 L25,80 L35,45Z" fill="rgba(0,0,0,0.2)"/>
+        <path d="M50,15 L48,90 L60,90 L68,38Z" fill="rgba(0,0,0,0.15)"/>
+        <path d="M85,10 L82,100 L95,100 L100,35Z" fill="rgba(0,0,0,0.2)"/>
+        <path d="M118,5 L115,85 L128,85 L135,30Z" fill="rgba(0,0,0,0.15)"/>
+        <!-- Waterfalls on cliffs -->
+        <line x1="28" y1="25" x2="22" y2="90" stroke="rgba(180,230,255,0.6)" stroke-width="2"/>
+        <line x1="95" y1="18" x2="90" y2="95" stroke="rgba(180,230,255,0.5)" stroke-width="1.5"/>
+        <!-- Mist -->
+        <ellipse cx="100" cy="125" rx="80" ry="12" fill="rgba(255,255,255,0.08)"/>
+        <!-- Waves -->
+        <path d="M0,138 Q30,133 60,138 Q90,143 120,138 Q150,133 180,138 Q195,141 200,138" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" fill="none"/>
+        <text x="100" y="163" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,0.75)" font-weight="bold">NĀ PALI COAST 🏔️</text>
+      </svg>
+      <div class="scene-label">
+        <span>⛰️ Cliffs</span>
+        1,200 m above the sea
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ READING ══ -->
+  <div class="sec-head">
+    <span class="sec-num">Part 3</span>
+    <span class="sec-title">Reading</span>
+    <span class="sec-line"></span>
+  </div>
+
+  <!-- Text A: Teacher reads aloud -->
+  <div class="reading-wrap">
+    <div class="read-level-tag teacher">🎤 Text A — Teacher reads aloud · Micha listens</div>
+    <div class="reading-card teacher">
+      <div class="reading-title">The Island That Hollywood Loves</div>
+      <div class="reading-body">
+        Kauai is the oldest of the eight Hawaiian islands. Millions of years ago, a <span class="hl">volcano</span>
+        <span class="vp">erupted</span> under the Pacific Ocean, and over time, rock and lava <span class="vp">built up</span>
+        until an island <span class="vp">appeared</span> above the surface of the water.<br><br>
+
+        Today, Kauai is one of the most beautiful places on Earth. The island <span class="hl-g">receives</span>
+        so much rain that its mountains are permanently covered in thick jungle. The ancient Hawaiians
+        <span class="vp">called</span> it <span class="hl">"Kaua'i"</span> — a name that means
+        <span class="hl-o">a calm place after a storm.</span><br><br>
+
+        The island's most spectacular landscape is the <span class="hl">Nā Pali Coast</span> — a series of
+        enormous green cliffs that <span class="vp">rose</span> straight out of the ocean. No road
+        <span class="vp">was ever built</span> along this coast because the cliffs are too steep.
+        The only way to see it is by boat, helicopter, or a long, difficult hike.<br><br>
+
+        Film directors <span class="vp">fell</span> in love with Kauai because it <span class="vp">looked</span>
+        so wild and untouched. Steven Spielberg <span class="vp">chose</span> it for <span class="hl-o">Jurassic Park</span>
+        in 1993, and it <span class="vp">became</span> the island of dinosaurs that the world
+        <span class="vp">saw</span> on screen. Since then, <span class="hl">more than 70 Hollywood films</span>
+        have been <span class="vp">shot</span> here.
+      </div>
+    </div>
+  </div>
+
+  <!-- Text B: Micha reads -->
+  <div class="reading-wrap">
+    <div class="read-level-tag student">📖 Text B — Micha reads</div>
+    <div class="reading-card student">
+      <div class="reading-title">Waimea Canyon — The Grand Canyon of the Pacific</div>
+      <div class="reading-body">
+        On the west side of Kauai, there is a <span class="hl">giant canyon</span> called
+        <span class="hl-g">Waimea Canyon</span>. It is about <strong>16 km long</strong> and
+        <strong>900 metres deep</strong>.<br><br>
+
+        Mark Twain, a famous American writer, <span class="vp">visited</span> Hawaii in the 1800s.
+        He <span class="vp">saw</span> the canyon and <span class="vp">called</span> it
+        <span class="hl-o">"The Grand Canyon of the Pacific"</span>.
+        The colours are incredible — red, orange, brown, and green all together.<br><br>
+
+        The canyon <span class="vp">formed</span> because an old volcano <span class="vp">collapsed</span>
+        and rain <span class="vp">carved</span> the rock for millions of years. Today, a small river
+        <span class="vp">runs</span> through the bottom, and wild <span class="hl">goats</span>
+        live on the steep walls.<br><br>
+
+        Every year, thousands of tourists <span class="vp">come</span> to Kauai to <span class="hl">hike</span>
+        the canyon trails. They <span class="vp">take</span> photos, <span class="vp">eat</span>
+        picnics on the edge, and sometimes <span class="vp">see</span> a rainbow after the rain.
+        It is one of the most visited places in all of Hawaii.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ VOCAB ══ -->
+  <div class="sec-head">
+    <span class="sec-num">Vocab</span>
+    <span class="sec-title">Vocabulary</span>
+    <span class="sec-line"></span>
+  </div>
+
+  <p style="font-size:14px;color:rgba(255,255,255,0.4);margin-bottom:16px;font-weight:600;">👆 Tap each card to see the French meaning.</p>
+
+  <div class="vocab-section-title review">🔁 Review from Samoa</div>
+  <div class="vocab-grid" style="margin-bottom:20px;" id="vocabReview"></div>
+
+  <div class="vocab-section-title new" style="margin-top:16px;">🌺 New Hawaiian Words</div>
+  <div class="vocab-grid" id="vocabNew"></div>
+
+  <!-- ══ COMPREHENSION ══ -->
+  <div class="sec-head">
+    <span class="sec-num">Part 4</span>
+    <span class="sec-title">Comprehension</span>
+    <span class="sec-line"></span>
+  </div>
+  <p style="font-size:14px;color:rgba(255,255,255,0.4);margin-bottom:16px;font-weight:600;">Answer questions about both texts.</p>
+  <div id="compSection"></div>
+
+  <!-- ══ VERB INTRO ══ -->
+  <div class="sec-head">
+    <span class="sec-num">Part 5</span>
+    <span class="sec-title">New Verbs</span>
+    <span class="sec-line"></span>
+  </div>
+  <p style="font-size:14px;color:rgba(255,255,255,0.4);margin-bottom:16px;font-weight:600;">3 new irregular verbs — spot them in the texts above!</p>
+
+  <div class="verb-grid">
+    <div class="verb-card" data-emoji="🌊">
+      <div class="vc-present">fall</div>
+      <div class="vc-arrow">↓</div>
+      <div class="vc-past">fell</div>
+      <div class="vc-fr">tomber</div>
+      <div class="vc-sentence">"Directors fell in love with Kauai." 🎬</div>
+    </div>
+    <div class="verb-card" data-emoji="🎯">
+      <div class="vc-present">choose</div>
+      <div class="vc-arrow">↓</div>
+      <div class="vc-past">chose</div>
+      <div class="vc-fr">choisir</div>
+      <div class="vc-sentence">"Spielberg chose it for Jurassic Park." 🦕</div>
+    </div>
+    <div class="verb-card" data-emoji="⛰️">
+      <div class="vc-present">rise</div>
+      <div class="vc-arrow">↓</div>
+      <div class="vc-past">rose</div>
+      <div class="vc-fr">s'élever / se lever</div>
+      <div class="vc-sentence">"The cliffs rose out of the ocean." 🏔️</div>
+    </div>
+  </div>
+
+  <!-- ══ VERB EXERCISES ══ -->
+  <div class="sec-head">
+    <span class="sec-num">Part 6</span>
+    <span class="sec-title">Verb Exercises</span>
+    <span class="sec-line"></span>
+  </div>
+  <p style="font-size:14px;color:rgba(255,255,255,0.4);margin-bottom:16px;font-weight:600;">New verbs + review of all previous ones. Mix of fill-in and multiple choice.</p>
+
+  <div id="verbSection"></div>
+
+  <div style="text-align:center;margin-top:24px;">
+    <button class="check-btn" onclick="checkAll()">✦ Check My Answers</button>
+  </div>
+
+  <div class="score-panel" id="scorePanel">
+    <div class="score-trophy" id="scoreTrophy">🌺</div>
+    <div class="score-num" id="scoreNum">0</div>
+    <div class="score-label">points</div>
+    <div class="score-msg" id="scoreMsg"></div>
+    <button class="retry-btn" onclick="resetAll()">↺ Try Again</button>
+  </div>
+
+</div>
+
+<script>
+// ══ VOCAB DATA ══
+const vocabReview = [
+  { en:'island', fr:'île', icon:'🏝️' },
+  { en:'ocean', fr:'océan', icon:'🌊' },
+  { en:'beach', fr:'plage', icon:'🏖️' },
+  { en:'waterfall', fr:'cascade', icon:'💧' },
+  { en:'wave', fr:'vague', icon:'🌀' },
+  { en:'tradition', fr:'tradition', icon:'🥁' },
+];
+
+const vocabNew = [
+  { en:'canyon', fr:'canyon', icon:'🏜️' },
+  { en:'cliff', fr:'falaise', icon:'⛰️' },
+  { en:'volcano', fr:'volcan', icon:'🌋' },
+  { en:'jungle', fr:'jungle / forêt tropicale', icon:'🌿' },
+  { en:'hike', fr:'randonnée', icon:'🥾' },
+  { en:'rainbow', fr:'arc-en-ciel', icon:'🌈' },
+  { en:'lava', fr:'lave', icon:'🔥' },
+  { en:'ceremony', fr:'cérémonie', icon:'🌺' },
+  { en:'sunset', fr:'coucher de soleil', icon:'🌅' },
+  { en:'ancient', fr:'ancien / antique', icon:'🗿' },
+  { en:'spectacular', fr:'spectaculaire', icon:'😲' },
+  { en:'sacred', fr:'sacré', icon:'🙏' },
+];
+
+// ══ COMP DATA ══
+const compData = [
+  {
+    q: "🌋 How was Kauai created?",
+    opts: ["People built it from rocks","A volcano erupted under the ocean","It broke off from mainland USA","It was always above the water"],
+    ans: "A volcano erupted under the ocean"
+  },
+  {
+    q: "🎬 Why did Steven Spielberg choose Kauai for Jurassic Park?",
+    opts: ["It was cheap to film there","It looked wild and untouched","It had real dinosaurs","The weather was always good"],
+    ans: "It looked wild and untouched"
+  },
+  {
+    q: "🏔️ Why was no road ever built along the Nā Pali Coast?",
+    opts: ["People didn't want tourists","The government refused","The cliffs are too steep","It rains too much"],
+    ans: "The cliffs are too steep"
+  },
+  {
+    q: "📏 How deep is Waimea Canyon?",
+    opts: ["200 metres","450 metres","900 metres","1,200 metres"],
+    ans: "900 metres"
+  },
+  {
+    q: "✍️ What did Mark Twain call the canyon?",
+    opts: ["The Valley of Fire","The Green Monster","The Grand Canyon of the Pacific","The Oldest Place on Earth"],
+    ans: "The Grand Canyon of the Pacific"
+  },
+  {
+    q: "🌧️ What made Waimea Canyon so deep?",
+    opts: ["An earthquake split the rock","Rain carved the rock for millions of years","Tourists dug it out","The river was always very big"],
+    ans: "Rain carved the rock for millions of years"
+  },
+];
+
+// ══ VERB EXERCISE DATA ══
+const fillData = [
+  { s:"The director ___ Kauai for his new film.", ans:"chose", hint:"choose", type:"fill" },
+  { s:"The ancient cliffs ___ slowly from the sea floor.", ans:"rose", hint:"rise", type:"fill" },
+  { s:"Micha ___ in love with the Jurassic Park soundtrack.", ans:"fell", hint:"fall", type:"fill" },
+  { s:"Yesterday, the tourists ___ to the canyon and ___ amazing photos.", ans:["went","took"], hint:["go","take"], type:"fill2" },
+  { s:"The guide ___ the group well and ___ them interesting facts.", ans:["knew","gave"], hint:["know","give"], type:"fill2" },
+];
+
+const mcData = [
+  {
+    q:"🌋 The volcano ___ (erupt) millions of years ago.",
+    opts:["erupted","erupt","erupting","erupts"], ans:"erupted", label:"regular: erupt"
+  },
+  {
+    q:"🦕 Spielberg ___ (choose) Kauai because it looked prehistoric.",
+    opts:["choosed","chosen","chose","chosed"], ans:"chose", label:"irregular: choose → ?"
+  },
+  {
+    q:"🌊 The cliffs ___ (rise) 1,200 metres above the ocean.",
+    opts:["rised","risen","rose","rises"], ans:"rose", label:"irregular: rise → ?"
+  },
+  {
+    q:"🎬 The film crew ___ (stay) on Kauai for three months.",
+    opts:["stay","stayed","staid","staye"], ans:"stayed", label:"regular: stay"
+  },
+  {
+    q:"🌈 After the rain, Micha ___ (see) a beautiful rainbow.",
+    opts:["seed","seen","saw","sees"], ans:"saw", label:"irregular: see → ?"
+  },
+  {
+    q:"🏃 The hikers ___ (run) back to camp before the storm.",
+    opts:["runned","ran","run","ranned"], ans:"ran", label:"irregular: run → ?"
+  },
+];
+
+// ══ BUILD FUNCTIONS ══
+function buildVocab(arr, id) {
+  const grid = document.getElementById(id);
+  if (!grid) return;
+  grid.innerHTML = '';
+  arr.forEach(v => {
+    const c = document.createElement('div');
+    c.className = 'vocab-card';
+    c.innerHTML = `<span class="vc-icon">${v.icon}</span><span class="vc-en">${v.en}</span><span class="vc-fr">${v.fr}</span><span class="vc-hint">tap</span>`;
+    c.onclick = () => c.classList.toggle('revealed');
+    grid.appendChild(c);
+  });
+}
+
+function buildComp() {
+  const sec = document.getElementById('compSection');
+  sec.innerHTML = '';
+  compData.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'comp-card';
+    const shuffled = [...q.opts].sort(() => Math.random() - 0.5);
+    card.innerHTML = `
+      <div class="comp-q">${q.q}</div>
+      <div class="comp-opts" id="copts_${i}">
+        ${shuffled.map(o => `<button class="comp-btn" data-qi="${i}" data-val="${encodeURIComponent(o)}" onclick="pickComp(this)">${o}</button>`).join('')}
+      </div>
+      <div class="comp-reveal" id="crev_${i}">✅ Answer: <strong>${q.ans}</strong></div>
+    `;
+    sec.appendChild(card);
+  });
+}
+
+function pickComp(btn) {
+  const qi = btn.dataset.qi;
+  document.querySelectorAll(`#copts_${qi} .comp-btn`).forEach(b => b.disabled = true);
+  if (decodeURIComponent(btn.dataset.val) === compData[qi].ans) { btn.classList.add('correct'); }
+  else {
+    btn.classList.add('wrong');
+    document.querySelectorAll(`#copts_${qi} .comp-btn`).forEach(b => { if (decodeURIComponent(b.dataset.val) === compData[qi].ans) b.classList.add('correct'); });
+    document.getElementById('crev_' + qi).classList.add('show');
+  }
+}
+
+function buildVerbs() {
+  const sec = document.getElementById('verbSection');
+  sec.innerHTML = '';
+
+  fillData.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'ex-card';
+    if (item.type === 'fill') {
+      card.innerHTML = `
+        <div class="ex-label">Fill in the blank</div>
+        <div class="ex-q"><span class="hint-tag">${item.hint}</span> ${item.s.replace('___','<span style="color:#1565C0;font-weight:800"> ___ </span>')}</div>
+        <input type="text" class="ex-input" id="fill_${i}" placeholder="past tense..." autocomplete="off" spellcheck="false">
+        <div class="ex-reveal" id="frev_${i}">✅ Answer: <strong>${item.ans}</strong></div>
+      `;
+    } else {
+      const parts = item.s.split('___');
+      card.innerHTML = `
+        <div class="ex-label">Fill in both blanks</div>
+        <div class="ex-q">
+          <span class="hint-tag">${item.hint[0]}</span><span class="hint-tag">${item.hint[1]}</span><br>
+          ${parts[0]}<input type="text" class="ex-input" id="fill_${i}_a" placeholder="..." autocomplete="off" spellcheck="false" style="width:120px;display:inline-block;margin:0 4px;">${parts[1]}<input type="text" class="ex-input" id="fill_${i}_b" placeholder="..." autocomplete="off" spellcheck="false" style="width:120px;display:inline-block;margin:0 4px;">${parts[2]||''}
+        </div>
+        <div class="ex-reveal" id="frev_${i}">✅ Answers: <strong>${item.ans[0]}</strong> / <strong>${item.ans[1]}</strong></div>
+      `;
+    }
+    sec.appendChild(card);
+  });
+
+  mcData.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'ex-card';
+    const shuffled = [...q.opts].sort(() => Math.random() - 0.5);
+    card.innerHTML = `
+      <div class="ex-label">Multiple choice — <span style="color:#1565C0;font-weight:800;">${q.label}</span></div>
+      <div class="ex-q">${q.q}</div>
+      <div class="mc-opts" id="mcopts_${i}">
+        ${shuffled.map(o => `<button class="mc-btn" data-qi="${i}" data-val="${o}" onclick="pickMC(this)">${o}</button>`).join('')}
+      </div>
+      <div class="ex-reveal" id="mcrev_${i}">✅ Answer: <strong>${q.ans}</strong></div>
+    `;
+    sec.appendChild(card);
+  });
+}
+
+function pickMC(btn) {
+  const qi = btn.dataset.qi;
+  document.querySelectorAll(`#mcopts_${qi} .mc-btn`).forEach(b => b.disabled = true);
+  if (btn.dataset.val === mcData[qi].ans) { btn.classList.add('correct'); }
+  else {
+    btn.classList.add('wrong');
+    document.querySelectorAll(`#mcopts_${qi} .mc-btn`).forEach(b => { if (b.dataset.val === mcData[qi].ans) b.classList.add('correct'); });
+  }
+}
+
+// ══ CHECK ALL ══
+function checkAll() {
+  let score = 0, total = 0;
+
+  compData.forEach((q, i) => {
+    total++;
+    const correct = document.querySelector(`#copts_${i} .comp-btn.correct`);
+    const wrong = document.querySelector(`#copts_${i} .comp-btn.wrong`);
+    if (correct && !wrong) score++;
+    else document.getElementById('crev_' + i).classList.add('show');
+    document.querySelectorAll(`#copts_${i} .comp-btn`).forEach(b => b.disabled = true);
+  });
+
+  fillData.forEach((item, i) => {
+    if (item.type === 'fill') {
+      total++;
+      const inp = document.getElementById('fill_' + i);
+      if (inp?.value.trim().toLowerCase() === item.ans) { inp.classList.add('correct'); score++; }
+      else { inp?.classList.add('wrong'); document.getElementById('frev_' + i).classList.add('show'); }
+      if (inp) inp.disabled = true;
+    } else {
+      total += 2;
+      const a = document.getElementById(`fill_${i}_a`);
+      const b = document.getElementById(`fill_${i}_b`);
+      if (a?.value.trim().toLowerCase() === item.ans[0]) { a.classList.add('correct'); score++; }
+      else { a?.classList.add('wrong'); document.getElementById('frev_' + i).classList.add('show'); }
+      if (b?.value.trim().toLowerCase() === item.ans[1]) { b.classList.add('correct'); score++; }
+      else { b?.classList.add('wrong'); document.getElementById('frev_' + i).classList.add('show'); }
+      if (a) a.disabled = true;
+      if (b) b.disabled = true;
+    }
+  });
+
+  mcData.forEach((q, i) => {
+    total++;
+    const correct = document.querySelector(`#mcopts_${i} .mc-btn.correct`);
+    const wrong = document.querySelector(`#mcopts_${i} .mc-btn.wrong`);
+    if (correct && !wrong) score++;
+    else document.getElementById('mcrev_' + i).classList.add('show');
+    document.querySelectorAll(`#mcopts_${i} .mc-btn`).forEach(b => b.disabled = true);
+  });
+
+  const pct = score / total;
+  let msg, trophy;
+  if (pct >= 0.88) { msg = "🌺 Incredible — Aloha, champion!"; trophy = "🏆🌺⭐⭐⭐"; }
+  else if (pct >= 0.7) { msg = "🌿 Strong work — the Garden Isle is proud!"; trophy = "🌿⭐⭐"; }
+  else if (pct >= 0.5) { msg = "🌊 Good effort — read the texts again and retry!"; trophy = "🏄⭐"; }
+  else { msg = "🦜 Nice try — go back to the reading and look for the answers!"; trophy = "🦜"; }
+
+  document.getElementById('scoreNum').textContent = `${score}/${total}`;
+  document.getElementById('scoreMsg').textContent = msg;
+  document.getElementById('scoreTrophy').textContent = trophy;
+  document.getElementById('scorePanel').classList.add('show');
+  document.getElementById('scorePanel').scrollIntoView({ behavior:'smooth', block:'center' });
+}
+
+function resetAll() {
+  document.getElementById('scorePanel').classList.remove('show');
+  buildComp();
+  buildVerbs();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ══ INIT ══
+buildVocab(vocabReview, 'vocabReview');
+buildVocab(vocabNew, 'vocabNew');
+buildComp();
+buildVerbs();
+</script>
+</body>
+</html>
