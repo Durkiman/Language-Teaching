@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Mel's Albanian — Fjalori im</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Lora:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0F0E17;
+  --surface: #1A1928;
+  --surface2: #232236;
+  --border: rgba(255,255,255,0.07);
+  --text: #F0EEF8;
+  --muted: #7B7A8E;
+  --gold: #F0C040;
+  --gold-dim: rgba(240,192,64,0.15);
+  --red: #E8413A;
+  --green: #3DBA7B;
+  --blue: #4A90D9;
+  --purple: #9B6FD4;
+  --correct: #3DBA7B;
+  --wrong: #E8413A;
+  --radius: 18px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { height: 100%; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100%;
+  margin: 0;
+}
+
+/* ── SCREENS ── */
+.screen { display: none; flex-direction: column; min-height: 100dvh; }
+.screen.active { display: flex; }
+
+/* ── HOME ── */
+#home {
+  background: var(--bg);
+  padding: 0 0 32px;
+}
+
+.home-hero {
+  padding: 40px 24px 28px;
+  background: linear-gradient(160deg, #1E1B35 0%, var(--bg) 100%);
+  position: relative;
+  overflow: hidden;
+}
+.home-hero::before {
+  content: '';
+  position: absolute;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(240,192,64,0.12) 0%, transparent 70%);
+  top: -40px; right: -40px;
+  pointer-events: none;
+}
+
+.home-flag {
+  font-size: 28px;
+  margin-bottom: 8px;
+  display: block;
+}
+.home-title {
+  font-family: 'Lora', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.15;
+  margin-bottom: 6px;
+}
+.home-title span { color: var(--gold); font-style: italic; }
+.home-subtitle { font-size: 0.88rem; color: var(--muted); font-weight: 600; }
+
+.streak-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  margin: 0 16px 20px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+.streak-icon { font-size: 1.4rem; }
+.streak-info { flex: 1; }
+.streak-label { font-size: 0.72rem; color: var(--muted); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+.streak-val { font-size: 1rem; font-weight: 800; color: var(--gold); }
+.total-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: var(--gold-dim);
+  color: var(--gold);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.mode-section { padding: 0 16px; margin-bottom: 20px; }
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+  padding-left: 4px;
+}
+
+.mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mode-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  cursor: pointer;
+  transition: all 0.18s;
+  position: relative;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.mode-card:active { transform: scale(0.96); }
+.mode-card.featured {
+  grid-column: span 2;
+  background: linear-gradient(135deg, #1E2A4A, #151E36);
+  border-color: rgba(74,144,217,0.3);
+}
+.mode-card.featured::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(74,144,217,0.08), transparent);
+  pointer-events: none;
+}
+.mode-icon { font-size: 1.8rem; margin-bottom: 8px; display: block; }
+.mode-name { font-size: 0.95rem; font-weight: 800; margin-bottom: 3px; }
+.mode-desc { font-size: 0.75rem; color: var(--muted); font-weight: 600; line-height: 1.4; }
+
+.cat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.cat-pill {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.cat-pill:active { transform: scale(0.93); }
+.cat-pill.selected { border-width: 2px; }
+.cat-pill-icon { font-size: 1.3rem; display: block; margin-bottom: 4px; }
+.cat-pill-label { font-size: 0.68rem; font-weight: 700; color: var(--muted); }
+.cat-pill.selected .cat-pill-label { color: var(--text); }
+
+.start-btn {
+  display: block;
+  width: calc(100% - 32px);
+  margin: 0 16px;
+  padding: 16px;
+  background: var(--gold);
+  color: #0F0E17;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  font-weight: 900;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.18s;
+  letter-spacing: 0.3px;
+}
+.start-btn:active { transform: scale(0.97); background: #d9a830; }
+.start-btn:disabled { opacity: 0.35; cursor: default; transform: none; }
+
+/* ── FLASHCARD SCREEN ── */
+#flashcards {
+  background: var(--bg);
+  padding: 0 0 24px;
+}
+
+.fc-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px 12px;
+  flex-shrink: 0;
+}
+.fc-back {
+  width: 36px; height: 36px;
+  background: var(--surface);
+  border: none;
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.fc-progress-wrap { flex: 1; }
+.fc-progress-bar {
+  height: 6px;
+  background: var(--surface2);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+.fc-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), #F0A040);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+.fc-counter { font-size: 0.72rem; font-weight: 700; color: var(--muted); }
+
+.fc-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px 0;
+  position: relative;
+  min-height: 60dvh;
+}
+
+.fc-card {
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 3/2;
+  position: relative;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.fc-card-inner {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+.fc-card.flipped .fc-card-inner { transform: rotateY(180deg); }
+.fc-front, .fc-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.fc-face-front {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.fc-face-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(145deg, #1A2840, #0F1A2E);
+  border: 1px solid rgba(74,144,217,0.25);
+  transform: rotateY(180deg);
+}
+.fc-cat-tag {
+  position: absolute;
+  top: 14px; left: 14px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.fc-tap-hint {
+  position: absolute;
+  bottom: 14px; right: 14px;
+  font-size: 0.65rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+.fc-word {
+  font-family: 'Lora', serif;
+  font-size: clamp(1.6rem, 6vw, 2.2rem);
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
+  color: var(--text);
+}
+.fc-word-alb { color: var(--gold); }
+.fc-translation {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 600;
+  margin-top: 8px;
+  text-align: center;
+}
+.fc-fr-note {
+  font-size: 0.78rem;
+  color: #6BA3D9;
+  margin-top: 6px;
+  font-style: italic;
+  font-family: 'Lora', serif;
+}
+
+.fc-actions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  max-width: 420px;
+  padding: 16px 0 0;
+  flex-shrink: 0;
+}
+.fc-action-btn {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.fc-action-btn:active { transform: scale(0.95); }
+.fc-btn-wrong { background: rgba(232,65,58,0.15); color: var(--wrong); border: 1.5px solid rgba(232,65,58,0.3); }
+.fc-btn-correct { background: rgba(61,186,123,0.15); color: var(--correct); border: 1.5px solid rgba(61,186,123,0.3); }
+.fc-btn-wrong:disabled, .fc-btn-correct:disabled { opacity: 0.25; cursor: default; transform: none; }
+
+.fc-actions-hint {
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 8px 0 16px;
+  flex-shrink: 0;
+}
+
+/* ── QUIZ SCREEN ── */
+#quiz {
+  background: var(--bg);
+}
+.quiz-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px 12px;
+  flex-shrink: 0;
+}
+.quiz-back {
+  width: 36px; height: 36px;
+  background: var(--surface);
+  border: none;
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.quiz-meta { flex: 1; }
+.quiz-progress-bar {
+  height: 6px;
+  background: var(--surface2);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+.quiz-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--purple), #C06FFF);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+.quiz-counter { font-size: 0.72rem; font-weight: 700; color: var(--muted); }
+.score-display {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--gold);
+}
+
+.quiz-body {
+  padding: 8px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+}
+
+.quiz-question-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px 20px;
+  text-align: center;
+}
+.quiz-q-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.quiz-q-word {
+  font-family: 'Lora', serif;
+  font-size: clamp(1.8rem, 7vw, 2.6rem);
+  font-weight: 600;
+  color: var(--gold);
+  line-height: 1.15;
+}
+.quiz-q-category {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+.quiz-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.quiz-opt {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+  line-height: 1.3;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.quiz-opt:active:not(:disabled) { transform: scale(0.96); }
+.quiz-opt.correct { background: rgba(61,186,123,0.2); border-color: var(--correct); color: var(--correct); }
+.quiz-opt.wrong { background: rgba(232,65,58,0.15); border-color: var(--wrong); color: var(--wrong); }
+.quiz-opt:disabled { cursor: default; }
+
+.quiz-feedback {
+  background: var(--surface);
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.6;
+  display: none;
+}
+.quiz-feedback.show { display: block; }
+.quiz-feedback.correct { border-left: 3px solid var(--correct); color: var(--correct); }
+.quiz-feedback.wrong { border-left: 3px solid var(--wrong); }
+.quiz-feedback .fb-correct-ans { color: var(--correct); font-weight: 800; }
+.quiz-feedback .fb-fr { color: #6BA3D9; font-style: italic; font-size: 0.8rem; margin-top: 4px; }
+
+.quiz-next-btn {
+  display: none;
+  width: 100%;
+  padding: 15px;
+  background: var(--purple);
+  color: white;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.quiz-next-btn.show { display: block; }
+.quiz-next-btn:active { transform: scale(0.97); background: #8560BA; }
+
+/* ── SPEED ROUND ── */
+#speed {
+  background: var(--bg);
+}
+.speed-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px 12px;
+  flex-shrink: 0;
+}
+.speed-back {
+  width: 36px; height: 36px;
+  background: var(--surface);
+  border: none;
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.speed-info { flex: 1; display: flex; align-items: center; justify-content: space-between; }
+.speed-score-label { font-size: 0.72rem; font-weight: 800; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+.speed-score-val { font-size: 1.1rem; font-weight: 900; color: var(--red); }
+.speed-timer-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.speed-timer-bar {
+  width: 80px;
+  height: 8px;
+  background: var(--surface2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.speed-timer-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), #80FF80);
+  border-radius: 4px;
+  transition: width 0.1s linear;
+}
+.speed-timer-fill.urgent { background: linear-gradient(90deg, var(--red), #FF8080); }
+.speed-timer-num { font-size: 0.8rem; font-weight: 800; color: var(--text); min-width: 20px; }
+
+.speed-body {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 20px 20px;
+  gap: 12px;
+}
+.speed-question-card {
+  background: var(--surface);
+  border-radius: 20px;
+  padding: 28px 20px;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+.speed-q-word {
+  font-family: 'Lora', serif;
+  font-size: clamp(2rem, 8vw, 3rem);
+  font-weight: 600;
+  color: var(--red);
+  line-height: 1.1;
+}
+.speed-q-from { font-size: 0.75rem; color: var(--muted); font-weight: 600; margin-top: 6px; }
+.speed-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.speed-opt {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.1s, border-color 0.1s, transform 0.1s;
+  text-align: center;
+  line-height: 1.3;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.speed-opt:active:not(:disabled) { transform: scale(0.95); }
+.speed-opt.correct { background: rgba(61,186,123,0.25); border-color: var(--correct); color: var(--correct); }
+.speed-opt.wrong { background: rgba(232,65,58,0.15); border-color: var(--wrong); color: var(--wrong); }
+.speed-opt:disabled { cursor: default; }
+
+/* ── RESULTS SCREEN ── */
+#results {
+  background: var(--bg);
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+}
+.results-inner { width: 100%; max-width: 420px; }
+.results-emoji { font-size: 4rem; text-align: center; display: block; margin-bottom: 12px; }
+.results-title { font-family: 'Lora', serif; font-size: 2rem; font-weight: 600; text-align: center; margin-bottom: 6px; }
+.results-subtitle { text-align: center; color: var(--muted); font-size: 0.9rem; font-weight: 600; margin-bottom: 28px; line-height: 1.5; }
+.results-score-ring {
+  width: 130px; height: 130px;
+  margin: 0 auto 24px;
+  position: relative;
+}
+.results-score-ring svg { transform: rotate(-90deg); }
+.results-score-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.results-score-num { font-size: 2rem; font-weight: 900; color: var(--gold); line-height: 1; }
+.results-score-label { font-size: 0.65rem; font-weight: 800; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+
+.results-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.stat-box {
+  background: var(--surface);
+  border-radius: 14px;
+  padding: 14px 10px;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+.stat-val { font-size: 1.4rem; font-weight: 900; }
+.stat-label { font-size: 0.65rem; font-weight: 700; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; margin-top: 2px; }
+.stat-val.green { color: var(--correct); }
+.stat-val.red { color: var(--wrong); }
+.stat-val.gold { color: var(--gold); }
+
+.missed-section { margin-bottom: 20px; }
+.missed-title { font-size: 0.72rem; font-weight: 800; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+.missed-list { display: flex; flex-direction: column; gap: 6px; }
+.missed-item {
+  background: var(--surface);
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 3px solid var(--wrong);
+}
+.missed-alb { font-weight: 700; font-size: 0.9rem; }
+.missed-en { font-size: 0.82rem; color: var(--muted); }
+
+.results-btns { display: flex; flex-direction: column; gap: 10px; }
+.results-btn {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: var(--radius);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.results-btn:active { transform: scale(0.97); }
+.results-btn-primary { background: var(--gold); color: var(--bg); }
+.results-btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+
+/* ── CONFETTI ── */
+.confetti-piece {
+  position: fixed;
+  pointer-events: none;
+  animation: confFall 2.5s ease-in forwards;
+  z-index: 9999;
+  border-radius: 2px;
+}
+@keyframes confFall {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(600deg); opacity: 0; }
+}
+
+/* ── MISC ── */
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- ═══════ HOME ═══════ -->
+<div class="screen active" id="home">
+  <div class="home-hero">
+    <span class="home-flag">🇽🇰</span>
+    <div class="home-title">Fjalori <span>im</span></div>
+    <div class="home-subtitle">191 words · Kosovo Albanian · Mel's vocab trainer</div>
+  </div>
+
+  <div class="streak-bar" style="margin-top:16px">
+    <span class="streak-icon">🔥</span>
+    <div class="streak-info">
+      <div class="streak-label">Session streak</div>
+      <div class="streak-val" id="streak-display">0 sessions</div>
+    </div>
+    <div class="total-badge" id="total-mastered">0 mastered</div>
+  </div>
+
+  <div class="mode-section">
+    <div class="section-label">Choose a mode</div>
+    <div class="mode-grid">
+      <div class="mode-card featured" onclick="selectMode('flashcards')">
+        <span class="mode-icon">🃏</span>
+        <div class="mode-name">Flashcards</div>
+        <div class="mode-desc">See the Albanian, try to recall the meaning. Mark what you know.</div>
+      </div>
+      <div class="mode-card" onclick="selectMode('quiz')" style="border-color:rgba(155,111,212,0.3); background: linear-gradient(135deg,#1E1A30,#151228)">
+        <span class="mode-icon">✏️</span>
+        <div class="mode-name">Quiz</div>
+        <div class="mode-desc">4 options, one answer</div>
+      </div>
+      <div class="mode-card" onclick="selectMode('speed')" style="border-color:rgba(232,65,58,0.3); background:linear-gradient(135deg,#2A1A1A,#1A0F0F)">
+        <span class="mode-icon">⚡</span>
+        <div class="mode-name">Speed</div>
+        <div class="mode-desc">Fast tap — beat the clock</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mode-section">
+    <div class="section-label">Categories — tap to select</div>
+    <div class="cat-grid" id="cat-grid"></div>
+  </div>
+
+  <div class="mode-section" style="margin-top:4px">
+    <button class="start-btn" id="start-btn" onclick="startSession()">Start →</button>
+  </div>
+</div>
+
+<!-- ═══════ FLASHCARDS ═══════ -->
+<div class="screen" id="flashcards">
+  <div class="fc-header">
+    <button class="fc-back" onclick="goHome()">←</button>
+    <div class="fc-progress-wrap">
+      <div class="fc-progress-bar"><div class="fc-progress-fill" id="fc-fill" style="width:0%"></div></div>
+      <div class="fc-counter" id="fc-counter">Card 1 of 1</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+      <div id="fc-session-timer" style="font-size:0.78rem;font-weight:800;color:var(--muted);letter-spacing:0.5px;min-width:36px;text-align:right">0:00</div>
+      <button id="fc-dir-btn" onclick="toggleDirection()" style="
+        background: var(--surface2); border: 1px solid var(--border); border-radius: 8px;
+        color: var(--text); font-family: 'Nunito', sans-serif; font-size: 0.7rem;
+        font-weight: 800; padding: 6px 10px; cursor: pointer; white-space: nowrap;
+        letter-spacing: 0.3px;">ALB → EN</button>
+    </div>
+  </div>
+  <div class="fc-area">
+    <div class="fc-card" id="fc-card" onclick="flipCard()">
+      <div class="fc-card-inner" id="fc-card-inner">
+        <div class="fc-face-front">
+          <span class="fc-cat-tag" id="fc-cat-tag">—</span>
+          <div class="fc-word fc-word-alb" id="fc-front-word">—</div>
+          <span class="fc-tap-hint">tap to reveal</span>
+        </div>
+        <div class="fc-face-back">
+          <span class="fc-cat-tag" id="fc-cat-tag-back">—</span>
+          <div class="fc-word" id="fc-back-word-en">—</div>
+          <div class="fc-fr-note" id="fc-back-fr">—</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-actions" id="fc-actions">
+      <button class="fc-action-btn fc-btn-wrong" id="fc-wrong-btn" onclick="fcAnswer(false)" disabled>✗ Not yet</button>
+      <button class="fc-action-btn fc-btn-correct" id="fc-correct-btn" onclick="fcAnswer(true)" disabled>✓ Got it</button>
+    </div>
+    <div class="fc-actions-hint" id="fc-actions-hint">Flip the card first</div>
+  </div>
+</div>
+
+<!-- ═══════ QUIZ ═══════ -->
+<div class="screen" id="quiz">
+  <div class="quiz-header">
+    <button class="quiz-back" onclick="goHome()">←</button>
+    <div class="quiz-meta">
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-fill" style="width:0%"></div></div>
+      <div class="quiz-counter" id="quiz-counter">Q 1 of 10</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+      <div id="quiz-session-timer" style="font-size:0.78rem;font-weight:800;color:var(--muted);min-width:36px;text-align:right">0:00</div>
+      <div class="score-display" id="quiz-score-display">0 ✓</div>
+    </div>
+  </div>
+  <div class="quiz-body" id="quiz-body"></div>
+</div>
+
+<!-- ═══════ SPEED ═══════ -->
+<div class="screen" id="speed">
+  <div class="speed-header">
+    <button class="speed-back" onclick="goHome()">←</button>
+    <div class="speed-info">
+      <div>
+        <div class="speed-score-label">Score</div>
+        <div class="speed-score-val" id="speed-score-val">0</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div id="speed-session-timer" style="font-size:0.78rem;font-weight:800;color:var(--muted);min-width:36px;text-align:right">0:00</div>
+        <div class="speed-timer-wrap">
+          <div class="speed-timer-bar"><div class="speed-timer-fill" id="speed-timer-fill" style="width:100%"></div></div>
+          <div class="speed-timer-num" id="speed-timer-num">5</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="speed-body">
+    <div class="speed-question-card">
+      <div class="speed-q-word" id="speed-q-word">—</div>
+      <div class="speed-q-from" id="speed-q-from">What does this mean in English?</div>
+    </div>
+    <div class="speed-options" id="speed-options"></div>
+  </div>
+</div>
+
+<!-- ═══════ RESULTS ═══════ -->
+<div class="screen" id="results">
+  <div class="results-inner">
+    <span class="results-emoji" id="results-emoji">🌟</span>
+    <div class="results-title" id="results-title">Shumë mirë!</div>
+    <div class="results-subtitle" id="results-subtitle">Great session.</div>
+    <div class="results-score-ring">
+      <svg width="130" height="130" viewBox="0 0 130 130">
+        <circle cx="65" cy="65" r="55" fill="none" stroke="#1A1928" stroke-width="12"/>
+        <circle id="results-ring" cx="65" cy="65" r="55" fill="none" stroke="#F0C040" stroke-width="12"
+          stroke-dasharray="345.4" stroke-dashoffset="345.4" stroke-linecap="round"
+          style="transition: stroke-dashoffset 1s ease"/>
+      </svg>
+      <div class="results-score-text">
+        <div class="results-score-num" id="results-pct">—</div>
+        <div class="results-score-label">accuracy</div>
+      </div>
+    </div>
+    <div class="results-stats" style="grid-template-columns:1fr 1fr 1fr 1fr">
+      <div class="stat-box"><div class="stat-val green" id="res-correct">—</div><div class="stat-label">Correct</div></div>
+      <div class="stat-box"><div class="stat-val red" id="res-wrong">—</div><div class="stat-label">Missed</div></div>
+      <div class="stat-box"><div class="stat-val gold" id="res-total">—</div><div class="stat-label">Total</div></div>
+      <div class="stat-box"><div class="stat-val" id="res-time" style="color:var(--muted);font-size:1.1rem">—</div><div class="stat-label">Time</div></div>
+    </div>
+    <div class="missed-section" id="missed-section"></div>
+    <div class="results-btns">
+      <button class="results-btn results-btn-primary" id="results-retry-btn" onclick="retrySession()">Try again →</button>
+      <button class="results-btn results-btn-secondary" onclick="goHome()">← Back to menu</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════ DATA
+const VOCAB = {
+  greetings: [
+    { alb:"Përshëndetje", en:"Hello", fr:"Bonjour" },
+    { alb:"Mirëdita", en:"Good day", fr:"Bonjour (en journée)" },
+    { alb:"Mirëmëngjes", en:"Good morning", fr:"Bonjour (le matin)" },
+    { alb:"Mirëmbrëma", en:"Good evening", fr:"Bonsoir" },
+    { alb:"Natën e mirë", en:"Good night", fr:"Bonne nuit" },
+    { alb:"Si jeni?", en:"How are you? (formal)", fr:"Comment allez-vous?" },
+    { alb:"Qysh je?", en:"How are you? (informal)", fr:"Comment vas-tu?" },
+    { alb:"Faleminderit", en:"Thank you", fr:"Merci" },
+    { alb:"S'ka përse!", en:"You're welcome!", fr:"De rien!" },
+    { alb:"Ju lutem", en:"Please (formal)", fr:"S'il vous plaît" },
+    { alb:"Te lutem", en:"Please (informal)", fr:"S'il te plaît" },
+    { alb:"Më falni", en:"Excuse me", fr:"Excusez-moi" },
+    { alb:"Shihemi javën tjetër", en:"See you next week!", fr:"À la semaine prochaine" },
+    { alb:"Shihemi të shtunën", en:"See you on Saturday!", fr:"À samedi" },
+    { alb:"Na po shkojmë!", en:"Let's go!", fr:"On y va!" },
+  ],
+  question_words: [
+    { alb:"Qysh", en:"How", fr:"Comment" },
+    { alb:"Çka", en:"What", fr:"Quoi / Que" },
+    { alb:"Ku", en:"Where", fr:"Où" },
+    { alb:"Kush", en:"Who", fr:"Qui" },
+    { alb:"Pse", en:"Why", fr:"Pourquoi" },
+    { alb:"Sa", en:"How much / many", fr:"Combien" },
+  ],
+  adverbs: [
+    { alb:"Pak", en:"A little", fr:"Un peu" },
+    { alb:"Shumë pak", en:"Very little", fr:"Très peu" },
+    { alb:"Nga", en:"From", fr:"De / depuis" },
+    { alb:"Deri", en:"Until", fr:"Jusqu'à" },
+    { alb:"Pas / Mas", en:"After", fr:"Après" },
+    { alb:"Para", en:"Before", fr:"Avant" },
+    { alb:"Tani", en:"Now", fr:"Maintenant" },
+    { alb:"Afër", en:"Near", fr:"Près" },
+    { alb:"Atje", en:"There", fr:"Là-bas" },
+    { alb:"Ma herët", en:"Earlier", fr:"Plus tôt" },
+    { alb:"Veç sa", en:"Just now / right now", fr:"Tout juste" },
+    { alb:"Jasht", en:"Outside", fr:"Dehors" },
+    { alb:"Shpejt", en:"Fast", fr:"Vite" },
+    { alb:"Larg", en:"Far", fr:"Loin" },
+    { alb:"Vogël", en:"Small", fr:"Petit" },
+    { alb:"Mjaft / Boll", en:"Enough", fr:"Assez" },
+    { alb:"Vetë", en:"Alone", fr:"Seul·e" },
+    { alb:"Askund", en:"Nowhere", fr:"Nulle part" },
+    { alb:"Bashkë", en:"Together", fr:"Ensemble" },
+  ],
+  time: [
+    { alb:"Sonte", en:"Tonight", fr:"Ce soir" },
+    { alb:"Dje", en:"Yesterday", fr:"Hier" },
+    { alb:"Pramë", en:"Last night", fr:"Hier soir" },
+    { alb:"Në mëngjes", en:"In the morning", fr:"Le matin" },
+    { alb:"Paradite", en:"Before noon", fr:"Avant-midi" },
+    { alb:"Pasdite", en:"In the afternoon", fr:"L'après-midi" },
+    { alb:"Në mbrëmje", en:"In the evening", fr:"Le soir" },
+    { alb:"Në vikend", en:"At the weekend", fr:"Le week-end" },
+    { alb:"Gjithe ditën", en:"All day", fr:"Toute la journée" },
+    { alb:"E hënë", en:"Monday", fr:"Lundi" },
+    { alb:"E martë", en:"Tuesday", fr:"Mardi" },
+    { alb:"E mërkurë", en:"Wednesday", fr:"Mercredi" },
+    { alb:"E enjte", en:"Thursday", fr:"Jeudi" },
+    { alb:"E premte", en:"Friday", fr:"Vendredi" },
+    { alb:"E shtunë", en:"Saturday", fr:"Samedi" },
+    { alb:"E diel", en:"Sunday", fr:"Dimanche" },
+    { alb:"Janar", en:"January", fr:"Janvier" },
+    { alb:"Shkurt", en:"February", fr:"Février" },
+    { alb:"Mars", en:"March", fr:"Mars" },
+    { alb:"Prill", en:"April", fr:"Avril" },
+    { alb:"Maj", en:"May", fr:"Mai" },
+    { alb:"Qërshor", en:"June", fr:"Juin" },
+    { alb:"Korrik", en:"July", fr:"Juillet" },
+    { alb:"Gusht", en:"August", fr:"Août" },
+    { alb:"Shtator", en:"September", fr:"Septembre" },
+    { alb:"Tetor", en:"October", fr:"Octobre" },
+    { alb:"Nëntor", en:"November", fr:"Novembre" },
+    { alb:"Dhjetor", en:"December", fr:"Décembre" },
+    { alb:"Pranvera", en:"Spring", fr:"Printemps" },
+    { alb:"Vera", en:"Summer", fr:"Été" },
+    { alb:"Vjeshta", en:"Autumn", fr:"Automne" },
+    { alb:"Dimri", en:"Winter", fr:"Hiver" },
+    { alb:"Një javë", en:"One week", fr:"Une semaine" },
+    { alb:"Një ditë", en:"One day", fr:"Un jour" },
+    { alb:"Një natë", en:"One night", fr:"Une nuit" },
+    { alb:"Një vit", en:"One year", fr:"Un an" },
+    { alb:"Një muaj", en:"One month", fr:"Un mois" },
+    { alb:"Një orë", en:"One hour", fr:"Une heure" },
+  ],
+  weather: [
+    { alb:"Moti i mirë", en:"Good weather", fr:"Beau temps" },
+    { alb:"Moti i keq", en:"Bad weather", fr:"Mauvais temps" },
+    { alb:"Me diell", en:"Sunny", fr:"Ensoleillé" },
+    { alb:"Me vranësira", en:"Cloudy", fr:"Nuageux" },
+    { alb:"Po bie shi", en:"It is raining", fr:"Il pleut" },
+    { alb:"Po bie borë", en:"It is snowing", fr:"Il neige" },
+    { alb:"Po fryn erë", en:"It is windy", fr:"Il y a du vent" },
+    { alb:"Me mjegull", en:"Foggy", fr:"Brumeux" },
+    { alb:"Ftohtë", en:"Cold", fr:"Froid" },
+    { alb:"Nxehtë", en:"Hot", fr:"Chaud" },
+    { alb:"Ngrohtë", en:"Warm", fr:"Chaud (agréable)" },
+    { alb:"Freskët", en:"Cool / Fresh", fr:"Frais" },
+  ],
+  family: [
+    { alb:"Babai", en:"The father", fr:"Le père" },
+    { alb:"Nana", en:"The mother", fr:"La mère" },
+    { alb:"Prindërit", en:"The parents", fr:"Les parents" },
+    { alb:"Motra", en:"Sister", fr:"Sœur" },
+    { alb:"Vllau", en:"Brother", fr:"Frère" },
+    { alb:"Halla", en:"Dad's sister (aunt)", fr:"Tante (côté père)" },
+    { alb:"Tezja", en:"Mom's sister (aunt)", fr:"Tante (côté mère)" },
+    { alb:"Daja", en:"Mom's brother (uncle)", fr:"Oncle (côté mère)" },
+    { alb:"Axha", en:"Dad's brother (uncle)", fr:"Oncle (côté père)" },
+    { alb:"Gjyshi", en:"Grandfather", fr:"Grand-père" },
+    { alb:"Gjyshja", en:"Grandmother", fr:"Grand-mère" },
+    { alb:"Kushëriri", en:"Cousin (m)", fr:"Cousin" },
+    { alb:"Kushërira", en:"Cousin (f)", fr:"Cousine" },
+    { alb:"Fëmija", en:"Child / Kids", fr:"Enfant(s)" },
+  ],
+  fruits_veg: [
+    { alb:"Mollë", en:"Apple", fr:"Pomme" },
+    { alb:"Dardhë", en:"Pear", fr:"Poire" },
+    { alb:"Kumbullë", en:"Plum", fr:"Prune" },
+    { alb:"Pjeshkë", en:"Peach", fr:"Pêche" },
+    { alb:"Portokall", en:"Orange", fr:"Orange" },
+    { alb:"Limon", en:"Lemon", fr:"Citron" },
+    { alb:"Bostan", en:"Watermelon / Melon", fr:"Pastèque / Melon" },
+    { alb:"Rrush", en:"Grapes", fr:"Raisin" },
+    { alb:"Qershi", en:"Cherry", fr:"Cerise" },
+    { alb:"Dredhza", en:"Strawberry", fr:"Fraise" },
+    { alb:"Mjedër", en:"Raspberry", fr:"Framboise" },
+    { alb:"Boronicë", en:"Blueberry", fr:"Myrtille" },
+    { alb:"Banane", en:"Banana", fr:"Banane" },
+    { alb:"Ananas", en:"Pineapple", fr:"Ananas" },
+    { alb:"Patate", en:"Potato", fr:"Pomme de terre" },
+    { alb:"Patilijon", en:"Tomato", fr:"Tomate" },
+    { alb:"Patilijon i zi", en:"Aubergine", fr:"Aubergine" },
+    { alb:"Karotë", en:"Carrot", fr:"Carotte" },
+    { alb:"Kastraveç", en:"Cucumber", fr:"Concombre" },
+    { alb:"Spec", en:"Bell pepper", fr:"Poivron" },
+    { alb:"Qepë", en:"Onion", fr:"Oignon" },
+    { alb:"Hudhër", en:"Garlic", fr:"Ail" },
+    { alb:"Sallatë", en:"Salad / Lettuce", fr:"Salade" },
+    { alb:"Fasule", en:"Beans", fr:"Haricots" },
+    { alb:"Bizele", en:"Peas", fr:"Petits pois" },
+    { alb:"Lakën", en:"Cabbage", fr:"Chou" },
+    { alb:"Lulelakër", en:"Cauliflower", fr:"Chou-fleur" },
+    { alb:"Kungull", en:"Courgette / Squash", fr:"Courgette" },
+    { alb:"Paqurka", en:"Mushroom", fr:"Champignon" },
+  ],
+  home: [
+    { alb:"Bahçe / Kopsht", en:"Garden", fr:"Jardin" },
+    { alb:"Ballkon", en:"Balcony", fr:"Balcon" },
+    { alb:"Banjo", en:"Bathroom", fr:"Salle de bain" },
+    { alb:"Dhomë gjumi", en:"Bedroom", fr:"Chambre à coucher" },
+    { alb:"Kuzhinë", en:"Kitchen", fr:"Cuisine" },
+    { alb:"Salon", en:"Living room", fr:"Salon" },
+    { alb:"Korridor", en:"Hallway", fr:"Couloir" },
+    { alb:"Tavolinë", en:"Table", fr:"Table" },
+    { alb:"Karriget", en:"Chairs", fr:"Chaises" },
+    { alb:"Komodinë", en:"Nightstand", fr:"Table de chevet" },
+    { alb:"Banak", en:"Counter / Bar", fr:"Comptoir" },
+  ],
+  verbs: [
+    { alb:"Punoj", en:"I work", fr:"Je travaille" },
+    { alb:"Lexoj", en:"I read", fr:"Je lis" },
+    { alb:"Kuptoj", en:"I understand", fr:"Je comprends" },
+    { alb:"Mësoj", en:"I learn", fr:"J'apprends" },
+    { alb:"Flej", en:"I sleep", fr:"Je dors" },
+    { alb:"Ha", en:"I eat", fr:"Je mange" },
+    { alb:"Pi", en:"I drink", fr:"Je bois" },
+    { alb:"Shkoj", en:"I go", fr:"Je vais" },
+    { alb:"Di", en:"I know (how to)", fr:"Je sais" },
+    { alb:"Du", en:"I want", fr:"Je veux" },
+    { alb:"Njoh", en:"I know (someone/place)", fr:"Je connais" },
+    { alb:"Kam", en:"I have", fr:"J'ai" },
+    { alb:"Jam", en:"I am", fr:"Je suis" },
+    { alb:"Shoh", en:"I see / watch", fr:"Je vois" },
+    { alb:"Vij", en:"I come", fr:"Je viens" },
+    { alb:"Flas", en:"I speak", fr:"Je parle" },
+    { alb:"Jap", en:"I give", fr:"Je donne" },
+    { alb:"Marr", en:"I take / receive", fr:"Je prends" },
+    { alb:"Blej", en:"I buy", fr:"J'achète" },
+    { alb:"Eci", en:"I walk", fr:"Je marche" },
+    { alb:"Lahem", en:"I wash myself", fr:"Je me lave" },
+    { alb:"Ulem", en:"I sit down", fr:"Je m'assieds" },
+    { alb:"Bo", en:"I do / make", fr:"Je fais" },
+    { alb:"Udhëtoj", en:"I travel", fr:"Je voyage" },
+  ],
+  numbers: [
+    { alb:"Një (ni)", en:"One — 1", fr:"Un" },
+    { alb:"Dy", en:"Two — 2", fr:"Deux" },
+    { alb:"Tre", en:"Three — 3", fr:"Trois" },
+    { alb:"Katër", en:"Four — 4", fr:"Quatre" },
+    { alb:"Pesë", en:"Five — 5", fr:"Cinq" },
+    { alb:"Gjashtë", en:"Six — 6", fr:"Six" },
+    { alb:"Shtatë", en:"Seven — 7", fr:"Sept" },
+    { alb:"Tetë", en:"Eight — 8", fr:"Huit" },
+    { alb:"Nëntë (nanë)", en:"Nine — 9", fr:"Neuf" },
+    { alb:"Dhjetë (dhetë)", en:"Ten — 10", fr:"Dix" },
+    { alb:"Nizet", en:"Twenty — 20", fr:"Vingt" },
+    { alb:"Tridhetë", en:"Thirty — 30", fr:"Trente" },
+    { alb:"Ni qind", en:"One hundred — 100", fr:"Cent" },
+    { alb:"Ni mijë", en:"One thousand — 1000", fr:"Mille" },
+  ],
+  frequency: [
+    { alb:"Gjithë", en:"Always", fr:"Toujours" },
+    { alb:"Zakonisht", en:"Usually", fr:"D'habitude" },
+    { alb:"Shpesh", en:"Often", fr:"Souvent" },
+    { alb:"Kaniherë", en:"Sometimes", fr:"Parfois" },
+    { alb:"Rrallë", en:"Rarely", fr:"Rarement" },
+    { alb:"Kurrë", en:"Never", fr:"Jamais" },
+  ],
+};
+
+const CAT_META = {
+  greetings:     { label:"Greetings",         emoji:"👋", color:"#E8413A" },
+  question_words:{ label:"Questions",         emoji:"❓", color:"#4A90D9" },
+  adverbs:       { label:"Adverbs",           emoji:"🔀", color:"#9B6FD4" },
+  time:          { label:"Time & Calendar",   emoji:"📅", color:"#3DBA7B" },
+  weather:       { label:"Weather",           emoji:"🌤️", color:"#4A90D9" },
+  family:        { label:"Family",            emoji:"👨‍👩‍👧", color:"#E8413A" },
+  fruits_veg:    { label:"Fruits & Veg",      emoji:"🍎", color:"#3DBA7B" },
+  home:          { label:"Home",              emoji:"🏠", color:"#D4A030" },
+  verbs:         { label:"Verbs",             emoji:"⚡", color:"#E8413A" },
+  numbers:       { label:"Numbers",           emoji:"🔢", color:"#4A90D9" },
+  frequency:     { label:"Frequency",         emoji:"🔁", color:"#3DBA7B" },
+};
+
+// ═══════════════════════════════════════════════ STATE
+let selectedMode = 'flashcards';
+let selectedCats = new Set(Object.keys(VOCAB));
+let sessionCards = [];
+let sessionIndex = 0;
+let sessionCorrect = 0;
+let sessionWrong = 0;
+let missedCards = [];
+let fcFlipped = false;
+let quizData = [];
+let speedTimer = null;
+let speedTimeLeft = 5;
+let speedScore = 0;
+let speedIndex = 0;
+let speedAnswered = false;
+let totalMastered = 0;
+let sessionStreak = 0;
+
+// ═══════════════════════════════════════════════ INIT
+function init() {
+  renderCatGrid();
+  const saved = localStorage.getItem('mel_mastered');
+  if (saved) totalMastered = parseInt(saved) || 0;
+  const streak = localStorage.getItem('mel_streak');
+  if (streak) sessionStreak = parseInt(streak) || 0;
+  updateHomeStats();
+}
+
+function updateHomeStats() {
+  document.getElementById('streak-display').textContent = sessionStreak + (sessionStreak === 1 ? ' session' : ' sessions');
+  document.getElementById('total-mastered').textContent = totalMastered + ' mastered';
+}
+
+function renderCatGrid() {
+  const grid = document.getElementById('cat-grid');
+  grid.innerHTML = '';
+  Object.entries(CAT_META).forEach(([key, meta]) => {
+    const el = document.createElement('div');
+    el.className = 'cat-pill selected';
+    el.id = 'cat-' + key;
+    el.style.borderColor = meta.color;
+    el.innerHTML = `<span class="cat-pill-icon">${meta.emoji}</span><span class="cat-pill-label">${meta.label}</span>`;
+    el.onclick = () => toggleCat(key, meta.color);
+    grid.appendChild(el);
+  });
+}
+
+function toggleCat(key, color) {
+  if (selectedCats.has(key)) {
+    if (selectedCats.size <= 1) return;
+    selectedCats.delete(key);
+    const el = document.getElementById('cat-' + key);
+    el.classList.remove('selected');
+    el.style.borderColor = 'rgba(255,255,255,0.07)';
+  } else {
+    selectedCats.add(key);
+    const el = document.getElementById('cat-' + key);
+    el.classList.add('selected');
+    el.style.borderColor = color;
+  }
+}
+
+function selectMode(mode) {
+  selectedMode = mode;
+  document.querySelectorAll('.mode-card').forEach(c => c.style.opacity = '0.5');
+  event.currentTarget.style.opacity = '1';
+  event.currentTarget.style.boxShadow = '0 0 0 2px rgba(240,192,64,0.4)';
+}
+
+function buildDeck() {
+  const all = [];
+  selectedCats.forEach(cat => {
+    VOCAB[cat].forEach(card => all.push({ ...card, cat }));
+  });
+  return shuffle(all);
+}
+
+// ═══════════════════════════════════════════════ SESSION TIMER
+let sessionTimerInterval = null;
+let sessionTimerSeconds = 0;
+
+function startSessionTimer() {
+  clearInterval(sessionTimerInterval);
+  sessionTimerSeconds = 0;
+  updateSessionTimerDisplays();
+  sessionTimerInterval = setInterval(() => {
+    sessionTimerSeconds++;
+    updateSessionTimerDisplays();
+  }, 1000);
+}
+
+function stopSessionTimer() {
+  clearInterval(sessionTimerInterval);
+}
+
+function updateSessionTimerDisplays() {
+  const m = Math.floor(sessionTimerSeconds / 60);
+  const s = sessionTimerSeconds % 60;
+  const str = m + ':' + String(s).padStart(2, '0');
+  ['fc-session-timer','quiz-session-timer','speed-session-timer'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = str;
+  });
+}
+
+function startSession() {
+  sessionCards = buildDeck();
+  sessionIndex = 0;
+  sessionCorrect = 0;
+  sessionWrong = 0;
+  missedCards = [];
+  startSessionTimer();
+
+  if (selectedMode === 'flashcards') startFlashcards();
+  else if (selectedMode === 'quiz') startQuiz();
+  else if (selectedMode === 'speed') startSpeed();
+}
+
+// ═══════════════════════════════════════════════ FLASHCARDS
+let fcDirection = 'alb'; // 'alb' = Albanian front, 'en' = English front
+
+function toggleDirection() {
+  fcDirection = fcDirection === 'alb' ? 'en' : 'alb';
+  document.getElementById('fc-dir-btn').textContent = fcDirection === 'alb' ? 'ALB → EN' : 'EN → ALB';
+  loadFlashcard();
+}
+
+function startFlashcards() {
+  goScreen('flashcards');
+  fcFlipped = false;
+  fcDirection = 'alb';
+  document.getElementById('fc-dir-btn').textContent = 'ALB → EN';
+  loadFlashcard();
+}
+
+function loadFlashcard() {
+  if (sessionIndex >= sessionCards.length) { showResults(); return; }
+  const card = sessionCards[sessionIndex];
+  const pct = (sessionIndex / sessionCards.length) * 100;
+  document.getElementById('fc-fill').style.width = pct + '%';
+  document.getElementById('fc-counter').textContent = `Card ${sessionIndex + 1} of ${sessionCards.length}`;
+
+  const frontWord = fcDirection === 'alb' ? card.alb : card.en;
+  const backWord  = fcDirection === 'alb' ? card.en  : card.alb;
+  const frontColor = fcDirection === 'alb' ? 'var(--gold)' : 'var(--text)';
+  const backColor  = fcDirection === 'alb' ? 'var(--text)' : 'var(--gold)';
+  const showFr = fcDirection === 'alb';
+
+  // 1. Kill transition so reset is instant and invisible
+  const inner = document.getElementById('fc-card-inner');
+  inner.style.transition = 'none';
+  const cardEl = document.getElementById('fc-card');
+  cardEl.classList.remove('flipped');
+  fcFlipped = false;
+
+  // 2. Update content while card is face-down (invisible swap)
+  document.getElementById('fc-cat-tag').textContent = CAT_META[card.cat].emoji + ' ' + CAT_META[card.cat].label;
+  document.getElementById('fc-cat-tag-back').textContent = CAT_META[card.cat].emoji + ' ' + CAT_META[card.cat].label;
+  document.getElementById('fc-front-word').textContent = frontWord;
+  document.getElementById('fc-front-word').style.color = frontColor;
+  document.getElementById('fc-back-word-en').textContent = backWord;
+  document.getElementById('fc-back-word-en').style.color = backColor;
+  document.getElementById('fc-back-fr').textContent = showFr ? '🇫🇷 ' + card.fr : '';
+  document.getElementById('fc-back-fr').style.display = showFr ? '' : 'none';
+
+  // 3. Re-enable transition after browser has painted the reset
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      inner.style.transition = '';
+    });
+  });
+
+  document.getElementById('fc-wrong-btn').disabled = true;
+  document.getElementById('fc-correct-btn').disabled = true;
+  document.getElementById('fc-actions-hint').textContent = 'Tap the card to reveal';
+}
+
+function flipCard() {
+  const cardEl = document.getElementById('fc-card');
+  cardEl.classList.toggle('flipped');
+  fcFlipped = !fcFlipped;
+  if (fcFlipped) {
+    document.getElementById('fc-wrong-btn').disabled = false;
+    document.getElementById('fc-correct-btn').disabled = false;
+    document.getElementById('fc-actions-hint').textContent = 'How did you do?';
+  } else {
+    document.getElementById('fc-wrong-btn').disabled = true;
+    document.getElementById('fc-correct-btn').disabled = true;
+    document.getElementById('fc-actions-hint').textContent = 'Flip the card first';
+  }
+}
+
+function fcAnswer(correct) {
+  const card = sessionCards[sessionIndex];
+  if (correct) {
+    sessionCorrect++;
+    totalMastered++;
+    localStorage.setItem('mel_mastered', totalMastered);
+  } else {
+    sessionWrong++;
+    missedCards.push(card);
+  }
+  sessionIndex++;
+  loadFlashcard();
+}
+
+// ═══════════════════════════════════════════════ QUIZ
+const QUIZ_SIZE = 15;
+
+function startQuiz() {
+  goScreen('quiz');
+  quizData = sessionCards.slice(0, QUIZ_SIZE);
+  sessionIndex = 0;
+  sessionCorrect = 0;
+  sessionWrong = 0;
+  missedCards = [];
+  renderQuizQuestion();
+}
+
+function renderQuizQuestion() {
+  if (sessionIndex >= quizData.length) { showResults(); return; }
+  const card = quizData[sessionIndex];
+  const pct = (sessionIndex / quizData.length) * 100;
+  document.getElementById('quiz-fill').style.width = pct + '%';
+  document.getElementById('quiz-counter').textContent = `Q ${sessionIndex+1} of ${quizData.length}`;
+  document.getElementById('quiz-score-display').textContent = sessionCorrect + ' ✓';
+
+  // Build distractors
+  const allCards = buildDeck().filter(c => c.alb !== card.alb);
+  const distractors = shuffle(allCards).slice(0, 3).map(c => c.en);
+  const options = shuffle([card.en, ...distractors]);
+
+  const body = document.getElementById('quiz-body');
+  body.innerHTML = `
+    <div class="quiz-question-card">
+      <div class="quiz-q-label">${CAT_META[card.cat].emoji} What does this mean?</div>
+      <div class="quiz-q-word">${card.alb}</div>
+      <div class="quiz-q-category">${CAT_META[card.cat].label}</div>
+    </div>
+    <div class="quiz-options">
+      ${options.map(opt => `<button class="quiz-opt" onclick="quizAnswer(this,'${opt.replace(/'/g,"\\'")}','${card.en.replace(/'/g,"\\'")}','${card.fr.replace(/'/g,"\\'")}',${sessionIndex})">${opt}</button>`).join('')}
+    </div>
+    <div class="quiz-feedback" id="qfb-${sessionIndex}"></div>
+    <button class="quiz-next-btn" id="qnext-${sessionIndex}" onclick="quizNext()">Next →</button>
+  `;
+  body.scrollTop = 0;
+}
+
+function quizAnswer(btn, chosen, correct, fr, idx) {
+  document.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+  const fb = document.getElementById('qfb-' + idx);
+  const nxt = document.getElementById('qnext-' + idx);
+  fb.classList.add('show');
+  nxt.classList.add('show');
+
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    sessionCorrect++;
+    fb.className = 'quiz-feedback show correct';
+    fb.innerHTML = `✓ Saktë! <span class="fb-fr">🇫🇷 ${fr}</span>`;
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.quiz-opt').forEach(b => { if (b.textContent === correct) b.classList.add('correct'); });
+    sessionWrong++;
+    const card = quizData[idx];
+    missedCards.push(card);
+    fb.className = 'quiz-feedback show wrong';
+    fb.innerHTML = `The answer is <span class="fb-correct-ans">${correct}</span><span class="fb-fr"><br>🇫🇷 ${fr}</span>`;
+  }
+  document.getElementById('quiz-score-display').textContent = sessionCorrect + ' ✓';
+}
+
+function quizNext() {
+  sessionIndex++;
+  renderQuizQuestion();
+  document.getElementById('quiz-body').scrollTop = 0;
+}
+
+// ═══════════════════════════════════════════════ SPEED
+const SPEED_TIME = 5;
+const SPEED_ROUNDS = 20;
+
+function startSpeed() {
+  goScreen('speed');
+  speedScore = 0;
+  speedIndex = 0;
+  document.getElementById('speed-score-val').textContent = '0';
+  loadSpeedQuestion();
+}
+
+function loadSpeedQuestion() {
+  if (speedIndex >= Math.min(SPEED_ROUNDS, sessionCards.length)) { showResults(); return; }
+  speedAnswered = false;
+  const card = sessionCards[speedIndex];
+
+  document.getElementById('speed-q-word').textContent = card.alb;
+  document.getElementById('speed-q-from').textContent = CAT_META[card.cat].emoji + ' ' + CAT_META[card.cat].label;
+
+  const allCards = buildDeck().filter(c => c.alb !== card.alb);
+  const distractors = shuffle(allCards).slice(0, 3).map(c => c.en);
+  const options = shuffle([card.en, ...distractors]);
+
+  const optArea = document.getElementById('speed-options');
+  optArea.innerHTML = options.map(opt =>
+    `<button class="speed-opt" onclick="speedAnswer(this,'${opt.replace(/'/g,"\\'")}','${card.en.replace(/'/g,"\\'")}',${speedIndex})">${opt}</button>`
+  ).join('');
+
+  startSpeedTimer(card.en);
+}
+
+function startSpeedTimer(correctEn) {
+  clearInterval(speedTimer);
+  speedTimeLeft = SPEED_TIME;
+  updateTimerDisplay();
+  speedTimer = setInterval(() => {
+    speedTimeLeft -= 0.1;
+    updateTimerDisplay();
+    if (speedTimeLeft <= 0) {
+      clearInterval(speedTimer);
+      if (!speedAnswered) {
+        speedAnswered = true;
+        document.querySelectorAll('.speed-opt').forEach(b => {
+          b.disabled = true;
+          if (b.textContent === correctEn) b.classList.add('correct');
+          else b.classList.add('wrong');
+        });
+        sessionWrong++;
+        const card = sessionCards[speedIndex];
+        missedCards.push(card);
+        speedIndex++;
+        setTimeout(loadSpeedQuestion, 900);
+      }
+    }
+  }, 100);
+}
+
+function updateTimerDisplay() {
+  const pct = (speedTimeLeft / SPEED_TIME) * 100;
+  const fill = document.getElementById('speed-timer-fill');
+  fill.style.width = Math.max(0, pct) + '%';
+  fill.className = 'speed-timer-fill' + (speedTimeLeft < 2 ? ' urgent' : '');
+  document.getElementById('speed-timer-num').textContent = Math.max(0, Math.ceil(speedTimeLeft));
+}
+
+function speedAnswer(btn, chosen, correct, idx) {
+  if (speedAnswered) return;
+  speedAnswered = true;
+  clearInterval(speedTimer);
+  document.querySelectorAll('.speed-opt').forEach(b => b.disabled = true);
+
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    speedScore++;
+    sessionCorrect++;
+    document.getElementById('speed-score-val').textContent = speedScore;
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.speed-opt').forEach(b => { if (b.textContent === correct) b.classList.add('correct'); });
+    sessionWrong++;
+    missedCards.push(sessionCards[idx]);
+  }
+  speedIndex++;
+  setTimeout(loadSpeedQuestion, 700);
+}
+
+// ═══════════════════════════════════════════════ RESULTS
+function showResults() {
+  clearInterval(speedTimer);
+  stopSessionTimer();
+  sessionStreak++;
+  localStorage.setItem('mel_streak', sessionStreak);
+
+  goScreen('results');
+  const total = sessionCorrect + sessionWrong;
+  const pct = total > 0 ? Math.round((sessionCorrect / total) * 100) : 0;
+  const m = Math.floor(sessionTimerSeconds / 60);
+  const s = sessionTimerSeconds % 60;
+  const timeStr = m + ':' + String(s).padStart(2, '0');
+
+  let emoji, title, subtitle;
+  if (pct >= 90)      { emoji='🌟'; title='Shumë mirë!'; subtitle='Excellent! You really know these words.'; }
+  else if (pct >= 70) { emoji='💪'; title='Mirë!'; subtitle='Good work — a few more sessions and these will feel automatic.'; }
+  else if (pct >= 50) { emoji='📚'; title='Po mëson!'; subtitle="You're learning! The missed ones are exactly what to focus on next time."; }
+  else                { emoji='🔥'; title='Vazhdo!'; subtitle="Keep going — every session makes you stronger. The words are getting into your memory."; }
+
+  document.getElementById('results-emoji').textContent = emoji;
+  document.getElementById('results-title').textContent = title;
+  document.getElementById('results-subtitle').textContent = subtitle;
+  document.getElementById('results-pct').textContent = pct + '%';
+  document.getElementById('res-correct').textContent = sessionCorrect;
+  document.getElementById('res-wrong').textContent = sessionWrong;
+  document.getElementById('res-total').textContent = total;
+  document.getElementById('res-time').textContent = timeStr;
+
+  const circumference = 345.4;
+  const offset = circumference - (pct / 100) * circumference;
+  setTimeout(() => {
+    document.getElementById('results-ring').style.strokeDashoffset = offset;
+    const ringColor = pct >= 70 ? '#3DBA7B' : pct >= 50 ? '#F0C040' : '#E8413A';
+    document.getElementById('results-ring').style.stroke = ringColor;
+  }, 100);
+
+  // Missed words
+  const missedSec = document.getElementById('missed-section');
+  if (missedCards.length > 0) {
+    const unique = [...new Map(missedCards.map(c => [c.alb, c])).values()].slice(0, 8);
+    missedSec.innerHTML = `
+      <div class="missed-title">Review these 👀</div>
+      <div class="missed-list">${unique.map(c => `
+        <div class="missed-item">
+          <span class="missed-alb">${c.alb}</span>
+          <span class="missed-en">${c.en}</span>
+        </div>`).join('')}
+      </div>`;
+  } else {
+    missedSec.innerHTML = '';
+  }
+
+  if (pct >= 80) launchConfetti();
+  updateHomeStats();
+}
+
+function retrySession() {
+  sessionCards = shuffle(sessionCards);
+  sessionIndex = 0;
+  sessionCorrect = 0;
+  sessionWrong = 0;
+  missedCards = [];
+  startSessionTimer();
+  if (selectedMode === 'flashcards') startFlashcards();
+  else if (selectedMode === 'quiz') startQuiz();
+  else startSpeed();
+}
+
+// ═══════════════════════════════════════════════ NAV
+function goScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function goHome() {
+  clearInterval(speedTimer);
+  stopSessionTimer();
+  document.querySelectorAll('.mode-card').forEach(c => { c.style.opacity = '1'; c.style.boxShadow = 'none'; });
+  selectedMode = 'flashcards';
+  goScreen('home');
+  updateHomeStats();
+}
+
+// ═══════════════════════════════════════════════ UTILS
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function launchConfetti() {
+  const colors = ['#F0C040','#E8413A','#3DBA7B','#4A90D9','#9B6FD4','#FF8C42'];
+  for (let i = 0; i < 70; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.cssText = `left:${Math.random()*100}vw;top:-8px;background:${colors[Math.floor(Math.random()*colors.length)]};width:${5+Math.random()*8}px;height:${5+Math.random()*8}px;border-radius:${Math.random()>0.5?'50%':'2px'};animation-delay:${Math.random()}s;animation-duration:${2+Math.random()*1.5}s;`;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4000);
+  }
+}
+
+// ═══════════════════════════════════════════════ START
+init();
+</script>
+</body>
+</html>
