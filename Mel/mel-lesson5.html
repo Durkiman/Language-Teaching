@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Fol si ti — Mel's Lesson 5</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A0A0F;
+  --surface: #13121E;
+  --surface2: #1C1B2E;
+  --card: #221F38;
+  --border: rgba(255,255,255,0.07);
+  --text: #EAE8F2;
+  --muted: #6E6A85;
+  --gold: #E0A830;
+  --gold-dim: rgba(224,168,48,0.12);
+  --violet: #7B5EA7;
+  --violet-dim: rgba(123,94,167,0.15);
+  --rose: #C45C78;
+  --rose-dim: rgba(196,92,120,0.12);
+  --sage: #4E9E78;
+  --sage-dim: rgba(78,158,120,0.12);
+  --blue: #4A82C4;
+  --radius: 16px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ── NAV ── */
+.nav {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  position: sticky; top: 0; z-index: 50;
+}
+.nav-back {
+  width: 34px; height: 34px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 9px;
+  color: var(--text); font-size: 0.95rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Sans', sans-serif;
+}
+.nav-label { flex: 1; font-size: 0.78rem; font-weight: 600; color: var(--muted); }
+.nav-timer {
+  font-size: 0.78rem; font-weight: 600; color: var(--muted);
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  padding: 4px 10px; min-width: 40px; text-align: center; font-variant-numeric: tabular-nums;
+}
+.nav-timer.running { color: var(--gold); border-color: rgba(224,168,48,0.3); }
+
+/* ── HOME ── */
+#home { padding-bottom: 40px; }
+
+.home-hero {
+  background: linear-gradient(160deg, #16132A 0%, var(--bg) 100%);
+  padding: 48px 24px 40px;
+}
+.hero-kicker { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--violet); margin-bottom: 14px; }
+.hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 8vw, 3.4rem); font-weight: 700; line-height: 1.05; margin-bottom: 10px; }
+.hero-title em { color: var(--gold); font-style: italic; }
+.hero-desc { font-size: 0.88rem; color: rgba(234,232,242,0.45); line-height: 1.7; font-weight: 300; }
+
+.home-plan { padding: 24px 20px 0; }
+.plan-label { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+.plan-items { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
+.plan-item {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+  padding: 14px 16px; display: flex; align-items: center; gap: 14px;
+  cursor: pointer; transition: all 0.15s; -webkit-user-select: none; user-select: none;
+}
+.plan-item:active { opacity: 0.75; }
+.plan-item.done { border-color: rgba(78,158,120,0.3); background: rgba(78,158,120,0.05); }
+.plan-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--surface2); border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 700; color: var(--muted); flex-shrink: 0; transition: all 0.2s;
+}
+.plan-item.done .plan-num { background: var(--sage); border-color: var(--sage); color: white; }
+.plan-item.active-step .plan-num { background: var(--gold); border-color: var(--gold); color: var(--bg); }
+.plan-info { flex: 1; }
+.plan-name { font-size: 0.9rem; font-weight: 600; color: var(--text); }
+.plan-time { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+.plan-arrow { font-size: 0.8rem; color: var(--muted); }
+
+/* ── SECTION BODY ── */
+.section-body { padding: 20px; display: flex; flex-direction: column; gap: 16px; padding-bottom: 60px; }
+
+/* ── CARDS ── */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+.card-label { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+
+/* ── RECAP ── */
+.recap-block {
+  background: var(--card); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px;
+  border-left: 3px solid var(--violet);
+}
+.recap-block-title { font-size: 0.78rem; font-weight: 700; color: var(--violet); margin-bottom: 8px; letter-spacing: 0.5px; }
+.recap-item { font-size: 0.84rem; line-height: 1.7; color: rgba(234,232,242,0.75); }
+.recap-alb { color: var(--gold); font-weight: 600; }
+.recap-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.recap-chip {
+  background: var(--surface2); border: 1px solid var(--border); border-radius: 20px;
+  padding: 5px 11px; font-size: 0.78rem; color: var(--text);
+  cursor: pointer; transition: all 0.15s; -webkit-user-select: none; user-select: none;
+}
+.recap-chip:active { opacity: 0.7; }
+.recap-chip.lit { background: var(--violet-dim); border-color: rgba(123,94,167,0.4); color: var(--text); }
+.recap-chip .en { display: none; font-size: 0.7rem; color: var(--muted); margin-top: 2px; }
+.recap-chip.lit .en { display: block; }
+
+/* ── VOCAB TABLE ── */
+.vocab-table { display: flex; flex-direction: column; }
+.vocab-row { display: flex; align-items: baseline; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--border); }
+.vocab-row:last-child { border-bottom: none; }
+.v-alb { font-size: 0.9rem; font-weight: 600; color: var(--gold); min-width: 170px; flex-shrink: 0; }
+.v-en { font-size: 0.82rem; color: var(--muted); flex: 1; }
+.v-fr { font-size: 0.74rem; color: var(--blue); font-style: italic; margin-top: 2px; }
+.v-ex { font-size: 0.74rem; color: rgba(234,232,242,0.3); margin-top: 2px; font-style: italic; }
+
+/* ── GRAMMAR BOX ── */
+.grammar-box {
+  background: var(--surface2); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px;
+  border-left: 3px solid var(--gold);
+}
+.grammar-title { font-size: 0.78rem; font-weight: 700; color: var(--gold); margin-bottom: 8px; }
+.grammar-body { font-size: 0.84rem; line-height: 1.75; color: rgba(234,232,242,0.75); }
+.grammar-body strong { color: var(--gold); }
+.grammar-body em { color: var(--blue); font-style: italic; }
+
+/* ── PRACTICE CARDS ── */
+.practice-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px; margin-bottom: 10px;
+}
+.practice-situation { font-size: 0.78rem; color: var(--muted); font-style: italic; margin-bottom: 8px; }
+.practice-q { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--text); line-height: 1.4; margin-bottom: 6px; }
+.practice-fr { font-size: 0.78rem; color: var(--blue); font-style: italic; margin-bottom: 14px; }
+.hint-box { background: var(--gold-dim); border-left: 2px solid var(--gold); border-radius: 0 8px 8px 0; padding: 10px 12px; font-size: 0.82rem; color: var(--gold); margin-top: 10px; display: none; line-height: 1.6; }
+.hint-box.show { display: block; }
+.answer-box { background: var(--sage-dim); border-left: 2px solid var(--sage); border-radius: 0 8px 8px 0; padding: 12px 14px; margin-top: 10px; display: none; }
+.answer-box.show { display: block; }
+.answer-alb { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--text); margin-bottom: 4px; }
+.answer-en { font-size: 0.8rem; color: var(--muted); }
+.answer-fr { font-size: 0.75rem; color: var(--blue); font-style: italic; margin-top: 3px; }
+.chunks { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+.chunk { background: var(--surface); border: 1px solid var(--border); border-radius: 7px; padding: 3px 9px; font-size: 0.72rem; text-align: center; }
+.chunk-alb { font-weight: 600; color: var(--text); }
+.chunk-en { color: var(--muted); font-size: 0.66rem; margin-top: 1px; }
+
+.hint-btn { background: transparent; border: 1.5px solid var(--border); border-radius: 8px; color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 600; padding: 7px 12px; cursor: pointer; margin-right: 8px; -webkit-user-select: none; user-select: none; }
+.hint-btn:active { opacity: 0.7; }
+.tried-btn { background: var(--rose); border: none; border-radius: 8px; color: white; font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 700; padding: 7px 14px; cursor: pointer; -webkit-user-select: none; user-select: none; }
+.tried-btn:active { opacity: 0.8; }
+.tried-btn:disabled { opacity: 0.35; cursor: default; }
+
+/* ── ROLEPLAY ── */
+.roleplay-card {
+  background: linear-gradient(145deg, #1A1530, #0F0D1C);
+  border: 1px solid rgba(123,94,167,0.25);
+  border-radius: var(--radius); padding: 22px;
+}
+.roleplay-scenario { font-size: 0.8rem; color: var(--violet); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+.roleplay-setup { font-size: 0.88rem; color: rgba(234,232,242,0.7); line-height: 1.7; margin-bottom: 14px; }
+.roleplay-exchange { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+.exchange-line { display: flex; gap: 10px; align-items: flex-start; }
+.exchange-who { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding-top: 3px; min-width: 44px; flex-shrink: 0; }
+.who-durim { color: var(--violet); }
+.who-mel { color: var(--gold); }
+.exchange-text { font-size: 0.88rem; line-height: 1.6; color: var(--text); }
+.exchange-en { font-size: 0.75rem; color: var(--muted); font-style: italic; margin-top: 2px; }
+.exchange-mel { background: var(--gold-dim); border-radius: 10px; padding: 10px 14px; }
+.exchange-mel .exchange-text { color: var(--gold); font-style: italic; }
+
+/* ── SONG / GENIUS ── */
+.song-hero {
+  background: linear-gradient(145deg, #0F0C1E, #1A1030);
+  border: 1px solid rgba(196,92,120,0.2);
+  border-radius: var(--radius); padding: 24px 20px; text-align: center;
+}
+.song-artist { font-size: 0.75rem; font-weight: 600; color: var(--rose); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+.song-title { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin-bottom: 4px; }
+.song-meaning { font-size: 0.82rem; color: var(--muted); margin-bottom: 6px; font-style: italic; }
+.song-genre { font-size: 0.72rem; color: var(--muted); margin-bottom: 18px; }
+.yt-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--rose); color: white;
+  font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600;
+  padding: 10px 22px; border-radius: 30px; text-decoration: none;
+  border: none; cursor: pointer; transition: opacity 0.15s;
+}
+.yt-btn:active { opacity: 0.8; }
+
+.genius-intro {
+  background: var(--surface2); border-radius: 12px; padding: 12px 14px;
+  font-size: 0.82rem; color: rgba(234,232,242,0.6); line-height: 1.6;
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.genius-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+
+/* GENIUS LYRICS */
+.lyrics-section { margin-bottom: 8px; }
+.lyrics-tag { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--rose); margin-bottom: 6px; padding: 12px 0 4px; }
+
+.lyric-line {
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.12s;
+  -webkit-user-select: none; user-select: none;
+  position: relative;
+  margin-bottom: 2px;
+}
+.lyric-line:active { background: rgba(224,168,48,0.1); }
+.lyric-line.active {
+  background: var(--gold-dim);
+  border-left: 3px solid var(--gold);
+  padding-left: 11px;
+}
+.lyric-alb { font-size: 0.95rem; font-weight: 500; color: var(--text); line-height: 1.5; }
+.lyric-alb em { color: var(--gold); font-style: normal; font-weight: 700; }
+
+/* TRANSLATION POPUP */
+.translation-bubble {
+  display: none;
+  background: #1C1A30;
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-top: 6px;
+}
+.lyric-line.active .translation-bubble { display: block; }
+.tb-en { font-size: 0.88rem; color: var(--text); line-height: 1.5; margin-bottom: 6px; }
+.tb-fr { font-size: 0.78rem; color: var(--blue); font-style: italic; margin-bottom: 8px; }
+.tb-note { font-size: 0.74rem; color: var(--muted); line-height: 1.5; }
+.tb-note strong { color: var(--gold); }
+
+/* ── SPEAK ── */
+.speak-card {
+  background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 10px;
+}
+.speak-situation { font-size: 0.78rem; color: var(--muted); font-style: italic; margin-bottom: 8px; }
+.speak-q { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--text); line-height: 1.4; margin-bottom: 6px; }
+.speak-fr { font-size: 0.78rem; color: var(--blue); font-style: italic; margin-bottom: 12px; }
+.scaffold-box { background: var(--violet-dim); border-left: 2px solid var(--violet); border-radius: 0 8px 8px 0; padding: 10px 12px; font-size: 0.82rem; color: rgba(234,232,242,0.8); margin-top: 10px; display: none; line-height: 1.6; }
+.scaffold-box.show { display: block; }
+.scaffold-btn { background: transparent; border: 1.5px solid var(--border); border-radius: 8px; color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 600; padding: 7px 12px; cursor: pointer; -webkit-user-select: none; user-select: none; }
+.scaffold-btn:active { opacity: 0.7; }
+
+/* ── TAKE HOME ── */
+.takehome-card {
+  background: linear-gradient(145deg, #1A1030, #0F0C1E);
+  border: 1px solid rgba(224,168,48,0.25); border-radius: var(--radius); padding: 24px 20px; text-align: center;
+}
+.th-phrase { font-family: 'Playfair Display', serif; font-size: clamp(1.3rem, 5vw, 1.8rem); color: var(--gold); line-height: 1.3; margin: 16px 0 6px; }
+.th-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 20px; }
+.th-pips { display: flex; justify-content: center; gap: 10px; margin-bottom: 14px; }
+.th-pip { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--muted); transition: all 0.3s; }
+.th-pip.done { background: var(--gold); border-color: var(--gold); color: var(--bg); }
+.say-btn { display: block; width: 100%; max-width: 260px; margin: 0 auto 10px; padding: 14px; background: var(--gold); color: var(--bg); font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 700; border: none; border-radius: 50px; cursor: pointer; transition: opacity 0.15s; }
+.say-btn:active { opacity: 0.8; }
+.say-btn:disabled { opacity: 0.4; cursor: default; }
+.th-tip { display: none; font-size: 0.78rem; color: var(--muted); text-align: center; padding: 8px 12px; background: var(--surface2); border-radius: 8px; margin-top: 6px; line-height: 1.6; }
+
+.done-banner { background: linear-gradient(145deg, #1A1030, #120E22); border: 1px solid rgba(123,94,167,0.3); border-radius: var(--radius); padding: 28px 20px; text-align: center; display: none; }
+.done-emoji { font-size: 3rem; display: block; margin-bottom: 12px; }
+.done-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+.done-sub { font-size: 0.88rem; color: rgba(234,232,242,0.5); line-height: 1.7; }
+
+/* ── BUTTONS ── */
+.section-done-btn { display: block; width: 100%; padding: 15px; background: var(--gold); color: var(--bg); font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 700; border: none; border-radius: var(--radius); cursor: pointer; transition: opacity 0.15s; }
+.section-done-btn:active { opacity: 0.8; }
+.back-home-btn { display: block; width: 100%; padding: 13px; background: transparent; color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600; border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: all 0.15s; margin-top: 8px; }
+.back-home-btn:active { opacity: 0.7; }
+
+/* ── CORRECTION DRAWER ── */
+.corr-fab {
+  position: fixed; bottom: 24px; right: 20px; z-index: 200;
+  background: var(--gold); color: var(--bg);
+  font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 700;
+  padding: 10px 16px; border: none; border-radius: 50px; cursor: pointer;
+  display: flex; align-items: center; gap: 7px;
+  box-shadow: 0 4px 20px rgba(224,168,48,0.3);
+  -webkit-user-select: none; user-select: none;
+}
+.corr-fab:active { opacity: 0.85; }
+.corr-fab-badge { background: var(--bg); color: var(--gold); font-size: 0.68rem; font-weight: 800; padding: 1px 7px; border-radius: 10px; min-width: 20px; text-align: center; }
+
+.corr-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 300; }
+.corr-backdrop.open { display: block; }
+
+.corr-drawer {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 400;
+  background: var(--surface); border-radius: 22px 22px 0 0;
+  border-top: 2px solid var(--gold);
+  transform: translateY(100%);
+  transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1);
+  max-height: 70vh; display: flex; flex-direction: column;
+}
+.corr-drawer.open { transform: translateY(0); }
+.corr-handle { width: 36px; height: 4px; background: rgba(255,255,255,0.12); border-radius: 2px; margin: 12px auto 0; cursor: pointer; flex-shrink: 0; }
+.corr-drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px 12px; flex-shrink: 0; border-bottom: 1px solid var(--border); }
+.corr-drawer-title { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); }
+.corr-close { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--muted); font-size: 1rem; width: 30px; height: 30px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: 'DM Sans', sans-serif; }
+.corr-drawer-body { flex: 1; overflow-y: auto; padding: 14px 20px 32px; -webkit-overflow-scrolling: touch; }
+.corr-form { display: flex; gap: 8px; margin-bottom: 14px; }
+.corr-input { flex: 1; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; padding: 10px 12px; background: var(--card); border: 1.5px solid var(--border); border-radius: 10px; color: var(--text); outline: none; }
+.corr-input:focus { border-color: var(--gold); }
+.corr-add { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 700; padding: 10px 16px; background: var(--gold); color: var(--bg); border: none; border-radius: 10px; cursor: pointer; white-space: nowrap; }
+.corr-hint { font-size: 0.7rem; color: var(--muted); font-style: italic; margin-bottom: 10px; }
+.corr-empty { font-size: 0.82rem; color: var(--muted); font-style: italic; text-align: center; padding: 12px 0; }
+.corr-item { background: var(--card); border-radius: 10px; padding: 11px 14px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; border-left: 2px solid var(--gold); }
+.corr-text { flex: 1; font-size: 0.85rem; line-height: 1.55; color: var(--text); }
+.corr-dismiss { background: none; border: none; color: var(--muted); font-size: 1.2rem; cursor: pointer; padding: 0 2px; line-height: 1; flex-shrink: 0; }
+.corr-dismiss:active { color: var(--rose); }
+
+.confetti-piece { position: fixed; pointer-events: none; z-index: 9999; border-radius: 2px; animation: cfall 2.8s ease-in forwards; }
+@keyframes cfall { 0% { transform: translateY(-10px) rotate(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotate(540deg); opacity: 0; } }
+</style>
+</head>
+<body>
+
+<!-- ════════ HOME ════════ -->
+<div class="screen active" id="home">
+  <div class="home-hero">
+    <div class="hero-kicker">🇽🇰 Mel · Lesson 5 · ~50 minutes</div>
+    <div class="hero-title">Fol<br><em>si ti.</em></div>
+    <div class="hero-desc">Questions, conversation bounce-back, and a rock ballad about yearning. Today you stop just responding — you start driving.</div>
+  </div>
+
+  <div class="home-plan">
+    <div class="plan-label">Today's plan</div>
+    <div class="plan-items">
+      <div class="plan-item" id="plan-1" onclick="goSection('s1')">
+        <div class="plan-num" id="pn-1">1</div>
+        <div class="plan-info"><div class="plan-name">🔁 Recap — Full summary of Lesson 4</div><div class="plan-time">8 min · Everything from last time, activated</div></div>
+        <div class="plan-arrow">→</div>
+      </div>
+      <div class="plan-item" id="plan-2" onclick="goSection('s2')">
+        <div class="plan-num" id="pn-2">2</div>
+        <div class="plan-info"><div class="plan-name">📖 Presentation — How to ask questions</div><div class="plan-time">10 min · Question words + structures</div></div>
+        <div class="plan-arrow">→</div>
+      </div>
+      <div class="plan-item" id="plan-3" onclick="goSection('s3')">
+        <div class="plan-num" id="pn-3">3</div>
+        <div class="plan-info"><div class="plan-name">✏️ Practice — Build questions</div><div class="plan-time">8 min · Speak first, then reveal</div></div>
+        <div class="plan-arrow">→</div>
+      </div>
+      <div class="plan-item" id="plan-4" onclick="goSection('s4')">
+        <div class="plan-num" id="pn-4">4</div>
+        <div class="plan-info"><div class="plan-name">💬 Roleplay — Conversation bounce-back</div><div class="plan-time">8 min · Hold a full exchange</div></div>
+        <div class="plan-arrow">→</div>
+      </div>
+      <div class="plan-item" id="plan-5" onclick="goSection('s5')">
+        <div class="plan-num" id="pn-5">5</div>
+        <div class="plan-info"><div class="plan-name">🎸 Song — Eugent Bushpepa · Mall</div><div class="plan-time">10 min · Full lyrics, tap to translate</div></div>
+        <div class="plan-arrow">→</div>
+      </div>
+      <div class="plan-item" id="plan-6" onclick="goSection('s6')">
+        <div class="plan-num" id="pn-6">6</div>
+        <div class="plan-info"><div class="plan-name">🗣️ Production — Drive a conversation</div><div class="plan-time">10 min · She asks, she follows up, she holds it</div></div>
+        <div class="plan-arrow">→</div>
+      </div>
+      <div class="plan-item" id="plan-7" onclick="goSection('s7')">
+        <div class="plan-num" id="pn-7">7</div>
+        <div class="plan-info"><div class="plan-name">✅ Cool-down — Feedback & take-home</div><div class="plan-time">5 min · Corrections reviewed, one phrase to keep</div></div>
+        <div class="plan-arrow">→</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ S1: RECAP ════════ -->
+<div class="screen" id="s1">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">🔁 Lesson 4 Recap</div><div class="nav-timer" id="t1">0:00</div></div>
+  <div class="section-body">
+
+    <div class="card">
+      <div class="card-label">What we covered in Lesson 4</div>
+      <p style="font-size:0.83rem;color:rgba(234,232,242,0.6);line-height:1.7;margin-bottom:16px">Ask Mel to recall anything from last time before you show her this. Then go through it together. Tap each phrase to see the English.</p>
+
+      <div class="recap-block">
+        <div class="recap-block-title">🧠 Feeling words — ndjenjat</div>
+        <div class="recap-chips">
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Ndihem e lumtur</div><div class="en">I feel happy</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Ndihem e trishtuar</div><div class="en">I feel sad</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Ndihem e emocionuar</div><div class="en">I feel excited</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Ndihem e shqetësuar</div><div class="en">I feel worried</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Ndihem e qetë</div><div class="en">I feel calm</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Ndihem e sigurt</div><div class="en">I feel confident</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Ndihem e lodhur</div><div class="en">I feel tired</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Ndihem e hutuar</div><div class="en">I feel confused</div></div>
+        </div>
+      </div>
+
+      <div class="recap-block">
+        <div class="recap-block-title">💬 Opinion starters — mendimet</div>
+        <div class="recap-chips">
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Mendoj që...</div><div class="en">I think that...</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Besoj se...</div><div class="en">I believe that...</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Sipas meje...</div><div class="en">In my opinion...</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Jam e sigurt që...</div><div class="en">I'm sure that...</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Kjo më pëlqen sepse...</div><div class="en">I like this because...</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>E gjej të...</div><div class="en">I find it...</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Nuk jam e sigurt, por...</div><div class="en">I'm not sure, but...</div></div>
+        </div>
+      </div>
+
+      <div class="recap-block">
+        <div class="recap-block-title">⚙️ Grammar — i vs e adjectives</div>
+        <div class="recap-item">Adjectives agree with gender. Mel always uses <span class="recap-alb">e</span> — <span class="recap-alb">Ndihem e lumtur</span>, <span class="recap-alb">jam e sigurt</span>. Durim uses <span class="recap-alb">i</span> — <span class="recap-alb">ndihem i lumtur</span>. Same as <em style="color:var(--blue)">heureuse / heureux</em> in French.</div>
+      </div>
+
+      <div class="recap-block">
+        <div class="recap-block-title">🎵 Song — Elvana Gjata · Si Na</div>
+        <div class="recap-item">Key words: <span class="recap-alb">kurrë</span> (never), <span class="recap-alb">dashuri</span> (love), <span class="recap-alb">diell</span> (sun), <span class="recap-alb">hënë</span> (moon), <span class="recap-alb">dritë</span> (light), <span class="recap-alb">sytë</span> (the eyes). Ask: can she use one of these in a sentence right now?</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Activation challenge</div>
+      <p style="font-size:0.84rem;line-height:1.7;color:rgba(234,232,242,0.7)">Ask Mel to complete these sentences out loud — using only what she remembers from Lesson 4:</p>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+        <div style="background:var(--surface2);border-radius:10px;padding:11px 14px;font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold)">Sot ndihem... <span style="color:var(--muted);font-size:0.75rem;font-family:'DM Sans',sans-serif;font-style:italic">(Today I feel...)</span></div>
+        <div style="background:var(--surface2);border-radius:10px;padding:11px 14px;font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold)">Mendoj që shqipja asht... <span style="color:var(--muted);font-size:0.75rem;font-family:'DM Sans',sans-serif;font-style:italic">(I think Albanian is...)</span></div>
+        <div style="background:var(--surface2);border-radius:10px;padding:11px 14px;font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold)">Kjo këngë më pëlqen sepse... <span style="color:var(--muted);font-size:0.75rem;font-family:'DM Sans',sans-serif;font-style:italic">(I like this song because...)</span></div>
+      </div>
+    </div>
+
+    <button class="section-done-btn" onclick="completeSection(1,'s2')">Done — next section →</button>
+  </div>
+</div>
+
+<!-- ════════ S2: PRESENTATION ════════ -->
+<div class="screen" id="s2">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">📖 Questions</div><div class="nav-timer" id="t2">0:00</div></div>
+  <div class="section-body">
+
+    <div class="card">
+      <div class="card-label">Question words — fjalët pyetëse</div>
+      <div class="vocab-table">
+        <div class="vocab-row"><div><div class="v-alb">Çka? / Çfarë?</div><div class="v-ex">Çka bën? — What are you doing?</div></div><div><div class="v-en">What?</div><div class="v-fr">Quoi? / Qu'est-ce que?</div></div></div>
+        <div class="vocab-row"><div><div class="v-alb">Ku?</div><div class="v-ex">Ku jeton? — Where do you live?</div></div><div><div class="v-en">Where?</div><div class="v-fr">Où?</div></div></div>
+        <div class="vocab-row"><div><div class="v-alb">Kur?</div><div class="v-ex">Kur po vjen? — When are you coming?</div></div><div><div class="v-en">When?</div><div class="v-fr">Quand?</div></div></div>
+        <div class="vocab-row"><div><div class="v-alb">Kush?</div><div class="v-ex">Kush asht ai? — Who is that?</div></div><div><div class="v-en">Who?</div><div class="v-fr">Qui?</div></div></div>
+        <div class="vocab-row"><div><div class="v-alb">Pse?</div><div class="v-ex">Pse po qesh? — Why are you laughing?</div></div><div><div class="v-en">Why?</div><div class="v-fr">Pourquoi?</div></div></div>
+        <div class="vocab-row"><div><div class="v-alb">Si? / Qysh?</div><div class="v-ex">Qysh je? — How are you?</div></div><div><div class="v-en">How?</div><div class="v-fr">Comment?</div></div></div>
+        <div class="vocab-row"><div><div class="v-alb">Sa?</div><div class="v-ex">Sa vjet ke? — How old are you?</div></div><div><div class="v-en">How much/many?</div><div class="v-fr">Combien?</div></div></div>
+        <div class="vocab-row"><div><div class="v-alb">Cilin? / Cilën?</div><div class="v-ex">Cilën preferoni? — Which one do you prefer?</div></div><div><div class="v-en">Which?</div><div class="v-fr">Lequel / laquelle?</div></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Yes/No questions — with A</div>
+      <div class="grammar-box">
+        <div class="grammar-title">The "A" marker</div>
+        <div class="grammar-body">Put <strong>A</strong> at the start of a sentence to make it a yes/no question — no word order change needed.<br><br>
+        <strong>Po punon.</strong> → He is working.<br>
+        <strong>A po punon?</strong> → Is he working?<br><br>
+        <em>🇫🇷 Think of "A" like "Est-ce que" — it's a question marker, not a word that changes the rest.</em></div>
+      </div>
+      <div class="vocab-table">
+        <div class="vocab-row"><div><div class="v-alb">A ke kohë?</div></div><div><div class="v-en">Do you have time?</div><div class="v-fr">Tu as le temps?</div></div></div>
+        <div class="vocab-row"><div><div class="v-alb">A po kuptoni?</div></div><div><div class="v-en">Do you understand?</div><div class="v-fr">Tu comprends?</div></div></div>
+        <div class="vocab-row"><div><div class="v-alb">A don kafe?</div></div><div><div class="v-en">Do you want coffee?</div><div class="v-fr">Tu veux un café?</div></div></div>
+        <div class="vocab-row"><div><div class="v-alb">A jeni mirë?</div></div><div><div class="v-en">Are you well?</div><div class="v-fr">Vous allez bien?</div></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Bounce-back phrases — keep the conversation going</div>
+      <p style="font-size:0.83rem;color:rgba(234,232,242,0.6);line-height:1.7;margin-bottom:14px">These are the phrases that turn a response into a conversation. They show you're listening and want more.</p>
+      <div class="vocab-table">
+        <div class="vocab-row"><div><div class="v-alb">Vërtet? / Seriozisht?</div><div class="v-ex">Vërtet? Çka ndodhi pastaj? — Really? What happened then?</div></div><div><div class="v-en">Really? / Seriously?</div><div class="v-fr">Vraiment? / Sérieusement?</div></div></div>
+        <div class="vocab-row"><div><div class="v-alb">Interesante! Dhe?</div><div class="v-ex">Interesante! Dhe ti çka bëre? — Interesting! And what did you do?</div></div><div><div class="v-en">Interesting! And?</div><div class="v-fr">Intéressant! Et?</div></div></div>
+        <div class="vocab-row"><div><div class="v-alb">Pse mendon kështu?</div><div class="v-ex">Pse mendon kështu? — Why do you think that way?</div></div><div><div class="v-en">Why do you think that?</div><div class="v-fr">Pourquoi tu penses comme ça?</div></div></div>
+        <div class="vocab-row"><div><div class="v-alb">Po ty si të duket?</div><div class="v-ex">Po ty si të duket? — What do you think about it?</div></div><div><div class="v-en">And what do you think?</div><div class="v-fr">Et toi, qu'est-ce que tu en penses?</div></div></div>
+        <div class="vocab-row"><div><div class="v-alb">Mund të tregosh më shumë?</div><div class="v-ex">Mund të tregosh më shumë? — Can you tell me more?</div></div><div><div class="v-en">Can you tell me more?</div><div class="v-fr">Tu peux m'en dire plus?</div></div></div>
+        <div class="vocab-row"><div><div class="v-alb">Si ndiheshe atëherë?</div><div class="v-ex">Si ndiheshe atëherë? — How did you feel then?</div></div><div><div class="v-en">How did you feel then?</div><div class="v-fr">Comment tu te sentais à ce moment-là?</div></div></div>
+        <div class="vocab-row"><div><div class="v-alb">Edhe unë! / As unë!</div><div class="v-ex">Edhe unë ndihem kështu! — Me too! / I feel the same!</div></div><div><div class="v-en">Me too! / Same here!</div><div class="v-fr">Moi aussi! / Moi non plus!</div></div></div>
+        <div class="vocab-row"><div><div class="v-alb">A ka ndodhur ndonjëherë?</div><div class="v-ex">A ka ndodhur ndonjëherë me ty? — Has it ever happened to you?</div></div><div><div class="v-en">Has it ever happened to you?</div><div class="v-fr">Ça t'est déjà arrivé?</div></div></div>
+      </div>
+    </div>
+
+    <button class="section-done-btn" onclick="completeSection(2,'s3')">Done — next section →</button>
+  </div>
+</div>
+
+<!-- ════════ S3: PRACTICE ════════ -->
+<div class="screen" id="s3">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">✏️ Build questions</div><div class="nav-timer" id="t3">0:00</div></div>
+  <div class="section-body">
+    <div class="card">
+      <div class="card-label">How it works</div>
+      <p style="font-size:0.84rem;line-height:1.7;color:rgba(234,232,242,0.6)">Each card gives a situation. Mel tries the question out loud, then taps <strong style="color:var(--rose)">I tried it</strong> to reveal the answer. Hint available if she needs a nudge.</p>
+    </div>
+    <div id="practice-area"></div>
+    <button class="section-done-btn" onclick="completeSection(3,'s4')">Done — next section →</button>
+  </div>
+</div>
+
+<!-- ════════ S4: ROLEPLAY ════════ -->
+<div class="screen" id="s4">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">💬 Bounce-back roleplay</div><div class="nav-timer" id="t4">0:00</div></div>
+  <div class="section-body">
+
+    <div class="card">
+      <div class="card-label">The skill</div>
+      <p style="font-size:0.84rem;line-height:1.7;color:rgba(234,232,242,0.6)">Bounce-back means: after you respond, you immediately throw a question or reaction back. It's what turns a monologue into a conversation. Mel's goal is to never let a silence be the last word.</p>
+    </div>
+
+    <div id="roleplay-area"></div>
+
+    <button class="section-done-btn" onclick="completeSection(4,'s5')">Done — next section →</button>
+  </div>
+</div>
+
+<!-- ════════ S5: SONG ════════ -->
+<div class="screen" id="s5">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">🎸 Mall · Eugent Bushpepa</div><div class="nav-timer" id="t5">0:00</div></div>
+  <div class="section-body">
+
+    <div class="song-hero">
+      <div class="song-artist">Eugent Bushpepa</div>
+      <div class="song-title">Mall</div>
+      <div class="song-meaning">"Yearning" — a rock ballad about longing for someone</div>
+      <div class="song-genre">Folk rock · Written & composed by Eugent Bushpepa · Eurovision Albania 2018</div>
+      <a class="yt-btn" href="https://www.youtube.com/results?search_query=Eugent+Bushpepa+Mall" target="_blank">▶ Find on YouTube</a>
+    </div>
+
+    <div class="genius-intro">
+      <div class="genius-icon">👆</div>
+      <div>Tap any line to see the English translation and a language note. Tap again to close. Listen first — then go back through the lyrics.</div>
+    </div>
+
+    <div class="card" style="border-color:rgba(196,92,120,0.2)">
+      <div class="card-label">Before you listen</div>
+      <p style="font-size:0.84rem;line-height:1.7;color:rgba(234,232,242,0.65)">The word <em style="color:var(--gold)">mall</em> in Albanian doesn't mean a shopping centre. It means <em style="color:var(--gold)">yearning</em> — a deep, aching longing. Ask Mel: when have you felt <em style="color:var(--gold)">mall</em>? She can answer in any language. Then press play.</p>
+    </div>
+
+    <div class="card" id="lyrics-card">
+      <div class="card-label">Full lyrics — tap a line to translate</div>
+      <div id="lyrics-container"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">After listening — reaction in Albanian</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px">
+        <div style="background:var(--surface2);border-radius:10px;padding:12px 14px">
+          <div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--text);margin-bottom:3px">Si ndihesh pas kësaj këngë?</div>
+          <div style="font-size:0.75rem;color:var(--muted);font-style:italic">How do you feel after this song? → <strong style="color:var(--gold)">Ndihem e...</strong></div>
+        </div>
+        <div style="background:var(--surface2);border-radius:10px;padding:12px 14px">
+          <div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--text);margin-bottom:3px">A ke ndier ndonjëherë mall të tillë?</div>
+          <div style="font-size:0.75rem;color:var(--muted);font-style:italic">Have you ever felt a yearning like this? → Bounce-back with <strong style="color:var(--gold)">Dhe ti?</strong></div>
+        </div>
+        <div style="background:var(--surface2);border-radius:10px;padding:12px 14px">
+          <div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--text);margin-bottom:3px">Çka mendoni — pse e shkroi këtë këngë?</div>
+          <div style="font-size:0.75rem;color:var(--muted);font-style:italic">Why do you think he wrote this song? → <strong style="color:var(--gold)">Mendoj që... / Besoj se...</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <button class="section-done-btn" onclick="completeSection(5,'s6')">Done — next section →</button>
+  </div>
+</div>
+
+<!-- ════════ S6: PRODUCTION ════════ -->
+<div class="screen" id="s6">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">🗣️ Drive a conversation</div><div class="nav-timer" id="t6">0:00</div></div>
+  <div class="section-body">
+    <div class="card">
+      <div class="card-label">The challenge</div>
+      <p style="font-size:0.84rem;line-height:1.7;color:rgba(234,232,242,0.65)">For each prompt, Mel must: <strong style="color:var(--gold)">(1)</strong> respond to the question, <strong style="color:var(--gold)">(2)</strong> use at least one feeling word or opinion starter, <strong style="color:var(--gold)">(3)</strong> bounce back with a question or reaction. All three. That's a real conversation.</p>
+    </div>
+    <div id="speak-area"></div>
+    <button class="section-done-btn" onclick="completeSection(6,'s7')">Done — next section →</button>
+  </div>
+</div>
+
+<!-- ════════ S7: COOL-DOWN ════════ -->
+<div class="screen" id="s7">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">✅ Cool-down</div><div class="nav-timer" id="t7">0:00</div></div>
+  <div class="section-body">
+    <div class="card">
+      <div class="card-label">Feedback — corrections first</div>
+      <p style="font-size:0.84rem;line-height:1.7;color:rgba(234,232,242,0.65)">Open the teacher notes (📝 button below right) and go through corrections one by one. For each: say the correct version clearly, have Mel repeat it twice, move on. Never dwell.</p>
+    </div>
+
+    <div class="takehome-card">
+      <div class="card-label" style="color:var(--muted)">Take-home phrase</div>
+      <div class="th-phrase">A ke ndier ndonjëherë mall të tillë?</div>
+      <div class="th-sub">Have you ever felt a yearning like this?</div>
+      <div class="th-pips">
+        <div class="th-pip" id="tp1">1</div>
+        <div class="th-pip" id="tp2">2</div>
+        <div class="th-pip" id="tp3">3</div>
+      </div>
+      <button class="say-btn" id="say-btn" onclick="doTakeHome()">▶ Said it!</button>
+      <div class="th-tip" id="th-tip">💡 <strong style="color:var(--gold)">A ke ndier</strong> = Have you felt &nbsp;·&nbsp; <strong style="color:var(--gold)">ndonjëherë</strong> = ever &nbsp;·&nbsp; <strong style="color:var(--gold)">mall të tillë</strong> = a yearning like this</div>
+    </div>
+
+    <div class="done-banner" id="done-banner">
+      <span class="done-emoji">🌟</span>
+      <div class="done-title">Shumë mirë, Mel!</div>
+      <div class="done-sub">Questions asked. Conversations driven. A rock ballad felt and understood.<br>You're not just responding anymore — you're holding the room.</div>
+    </div>
+
+    <button class="back-home-btn" onclick="goHome()">← Back to lesson plan</button>
+  </div>
+</div>
+
+<!-- ════════ CORRECTION DRAWER ════════ -->
+<div class="corr-backdrop" id="corr-backdrop" onclick="closeCorr()"></div>
+<button class="corr-fab" onclick="openCorr()">📝 Notes <span class="corr-fab-badge" id="corr-badge">0</span></button>
+<div class="corr-drawer" id="corr-drawer">
+  <div class="corr-handle" onclick="closeCorr()"></div>
+  <div class="corr-drawer-header">
+    <div class="corr-drawer-title">Teacher corrections</div>
+    <button class="corr-close" onclick="closeCorr()">×</button>
+  </div>
+  <div class="corr-drawer-body">
+    <div class="corr-form">
+      <input class="corr-input" id="corr-input" placeholder="Note a correction…" onkeydown="if(event.key==='Enter')addCorr()"/>
+      <button class="corr-add" onclick="addCorr()">+ Add</button>
+    </div>
+    <div class="corr-hint">Tap × to dismiss each one when reviewed</div>
+    <div id="corr-list"><div class="corr-empty" id="corr-empty">No corrections yet.</div></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════ DATA
+
+var PRACTICE = [
+  {
+    situation: 'You want to ask Durim\'s mother where she bought the food.',
+    hint: 'Start with <strong style="color:var(--gold)">Ku</strong> (where) + <strong style="color:var(--gold)">e bleve</strong> (did you buy it)?',
+    answer: 'Ku e bleve këtë?',
+    en: 'Where did you buy this?',
+    fr: 'Où tu as acheté ça?',
+    chunks: [{alb:'Ku',en:'where'},{alb:'e bleve',en:'did you buy it'},{alb:'këtë',en:'this'}]
+  },
+  {
+    situation: 'Ask Durim when he is coming home tonight.',
+    hint: '<strong style="color:var(--gold)">Kur</strong> (when) + <strong style="color:var(--gold)">po vjen në shpi?</strong> (are you coming home?)',
+    answer: 'Kur po vjen në shpi sonte?',
+    en: 'When are you coming home tonight?',
+    fr: 'Quand tu rentres à la maison ce soir?',
+    chunks: [{alb:'Kur',en:'when'},{alb:'po vjen',en:'are you coming'},{alb:'në shpi',en:'home'},{alb:'sonte',en:'tonight'}]
+  },
+  {
+    situation: 'You want to know why Durim\'s father is laughing.',
+    hint: '<strong style="color:var(--gold)">Pse</strong> (why) + <strong style="color:var(--gold)">po qesh?</strong> (are you laughing?)',
+    answer: 'Pse po qesh?',
+    en: 'Why are you laughing?',
+    fr: 'Pourquoi tu ris?',
+    chunks: [{alb:'Pse',en:'why'},{alb:'po qesh',en:'are you laughing'}]
+  },
+  {
+    situation: 'Ask how Durim\'s sister is feeling.',
+    hint: '<strong style="color:var(--gold)">Si</strong> (how) + <strong style="color:var(--gold)">po ndihesh?</strong> (are you feeling?)',
+    answer: 'Si po ndihesh?',
+    en: 'How are you feeling?',
+    fr: 'Comment tu te sens?',
+    chunks: [{alb:'Si',en:'how'},{alb:'po ndihesh',en:'are you feeling'}]
+  },
+  {
+    situation: 'Ask if Durim\'s parents want more tea.',
+    hint: '<strong style="color:var(--gold)">A</strong> + <strong style="color:var(--gold)">doni</strong> (do you want/plural) + <strong style="color:var(--gold)">më shumë çaj?</strong>',
+    answer: 'A doni më shumë çaj?',
+    en: 'Do you want more tea?',
+    fr: 'Vous voulez plus de thé?',
+    chunks: [{alb:'A',en:'question marker'},{alb:'doni',en:'do you want (pl.)'},{alb:'më shumë',en:'more'},{alb:'çaj',en:'tea'}]
+  },
+  {
+    situation: 'You want to ask who the person in the photo is.',
+    hint: '<strong style="color:var(--gold)">Kush</strong> (who) + <strong style="color:var(--gold)">asht ky/kjo?</strong> (is this?)',
+    answer: 'Kush asht kjo në foto?',
+    en: 'Who is this in the photo?',
+    fr: 'Qui est cette personne sur la photo?',
+    chunks: [{alb:'Kush',en:'who'},{alb:'asht',en:'is'},{alb:'kjo',en:'this (f.)'},{alb:'në foto',en:'in the photo'}]
+  }
+];
+
+var ROLEPLAYS = [
+  {
+    scenario: 'At the dinner table',
+    setup: 'Durim\'s mother tells you she cooked all day. You respond warmly AND ask her a follow-up question. Mel\'s lines are blank — she fills them in.',
+    exchanges: [
+      { who: 'durim', text: 'Nana ka gatuar gjithë ditën për ty.', en: 'Mum cooked all day for you.' },
+      { who: 'mel', text: 'Shumë faleminderit! ___? (bounce back — ask her something)', en: 'Thank you so much! ___?' },
+      { who: 'durim', text: 'Po, me kënaqësi!', en: 'Yes, with pleasure!' },
+    ],
+    scaffold: 'Try: <strong style="color:var(--gold)">Çka gatuat sot?</strong> (What did you cook today?) or <strong style="color:var(--gold)">A keni nevojë për ndihmë?</strong> (Do you need help?)'
+  },
+  {
+    scenario: 'Talking about Kosovo',
+    setup: 'Durim asks if you\'re excited about visiting Kosovo. You say yes AND ask him something back.',
+    exchanges: [
+      { who: 'durim', text: 'A je e emocionuar për me shku Kosovë?', en: 'Are you excited about going to Kosovo?' },
+      { who: 'mel', text: 'Po, ndihem shumë e emocionuar! ___? (ask something back)', en: 'Yes, I feel very excited! ___?' },
+      { who: 'durim', text: 'Patjetër! Do ta duash!', en: 'Of course! You\'ll love it!' },
+    ],
+    scaffold: 'Try: <strong style="color:var(--gold)">Çka duhet me parë atje?</strong> (What should I see there?) or <strong style="color:var(--gold)">Kur po shkojmë?</strong> (When are we going?)'
+  },
+  {
+    scenario: 'Reacting to good news',
+    setup: 'Durim tells you something good happened at work. React AND follow up.',
+    exchanges: [
+      { who: 'durim', text: 'Sot ndodhi diçka e mirë në punë.', en: 'Something good happened at work today.' },
+      { who: 'mel', text: 'Vërtet?! ___? (reaction + follow-up question)', en: 'Really?! ___?' },
+      { who: 'durim', text: 'Po, jam shumë i gëzuar!', en: 'Yes, I\'m very happy!' },
+    ],
+    scaffold: 'Try: <strong style="color:var(--gold)">Çka ndodhi?</strong> (What happened?) or <strong style="color:var(--gold)">Pse? Trego!</strong> (Why? Tell me!)'
+  },
+  {
+    scenario: 'Feeling homesick',
+    setup: 'You\'re missing Paris. Express it AND ask Durim if he ever feels the same about Kosovo.',
+    exchanges: [
+      { who: 'durim', text: 'Si po ndihesh sot?', en: 'How are you feeling today?' },
+      { who: 'mel', text: 'Ndihem pak e trishtuar... ___ (continue + bounce back)', en: 'I feel a little sad... ___ (continue + bounce back)' },
+      { who: 'durim', text: 'Po, edhe unë ndihem ashtu ndonjëherë.', en: 'Yes, I feel that way sometimes too.' },
+    ],
+    scaffold: 'Try: <strong style="color:var(--gold)">Më mungon Parisi. A të mungon Kosova ndonjëherë?</strong> (I miss Paris. Do you miss Kosovo sometimes?)'
+  }
+];
+
+var SPEAK_PROMPTS = [
+  {
+    situation: 'Full conversation task — all skills at once',
+    q: 'Durim pyet: "Si e gjete këngën e sotme?" — Respond, use an opinion/feeling, AND bounce back.',
+    fr: 'Durim asks: "What did you think of today\'s song?" — Respond, use an opinion/feeling, AND bounce back.',
+    scaffold: '<strong style="color:var(--gold)">E gjej të...</strong> / <strong style="color:var(--gold)">Ndihem... kur e dëgjoj.</strong> Then: <strong style="color:var(--gold)">Pse e shkroi këtë këngë, mendon?</strong>'
+  },
+  {
+    situation: 'Open conversation — drive it for 1 full minute',
+    q: 'Topic: udhëtimi yt i fundit — your last trip. Mel starts, asks questions, keeps it going.',
+    fr: 'Topic: your last trip. Mel starts, asks questions, keeps it going.',
+    scaffold: 'Start: <strong style="color:var(--gold)">Ku ke shku kohët e fundit?</strong> Bounce: <strong style="color:var(--gold)">Si ndiheshe atje? / Çka të pëlqeu ma shumë?</strong>'
+  },
+  {
+    situation: 'Question challenge — ask 5 different questions in a row',
+    q: 'Mel asks Durim 5 questions about his day — each one using a different question word.',
+    fr: 'Mel asks Durim 5 questions about his day — each one using a different question word.',
+    scaffold: 'Ku, Kur, Çka, Si, Pse — one each. E.g: <strong style="color:var(--gold)">Ku ishe sot? Kur u ktheve? Çka hëngre?</strong>'
+  },
+  {
+    situation: 'Emotional conversation — feelings + questions combined',
+    q: 'Talk about a moment when you felt "mall" — yearning. Express it. Then ask Durim about his.',
+    fr: 'Talk about a moment when you felt "mall". Express it. Then ask Durim about his.',
+    scaffold: '<strong style="color:var(--gold)">Ndihem mall kur...</strong> / <strong style="color:var(--gold)">Më mungon...</strong> Then: <strong style="color:var(--gold)">A ke ndier ndonjëherë mall të tillë?</strong>'
+  }
+];
+
+var LYRICS = [
+  { section: 'Verse 1', lines: [
+    { alb: 'Një pritje e gjatë', en: 'A long wait', fr: 'Une longue attente', note: '<strong>Pritje</strong> = waiting/wait. <strong>E gjatë</strong> = long (feminine). Remember: adjectives agree with gender.' },
+    { alb: 'E ëmbël e zjarrte', en: 'Sweet and fiery', fr: 'Douce et ardente', note: '<strong>E ëmbël</strong> = sweet (f.). <strong>Zjarrte</strong> = fiery, burning — from <strong>zjarr</strong> (fire).' },
+    { alb: 'Ca hapa trokasin si zemër këtë natë', en: 'Some steps beat like a heart tonight', fr: 'Quelques pas battent comme un cœur cette nuit', note: '<strong>Hapa</strong> = steps. <strong>Zemër</strong> = heart. <strong>Natë</strong> = night.' },
+    { alb: 'Unë ndjek ritmin e saj', en: 'I follow her rhythm', fr: 'Je suis son rythme', note: '<strong>Ndjek</strong> = I follow. <strong>Ritmin</strong> = the rhythm. <strong>E saj</strong> = her/its.' },
+    { alb: 'Dy duar që zgjaten përpijnë në ngrohtësi', en: 'Two hands that reach out absorb the warmth', fr: 'Deux mains qui s\'étendent s\'absorbent dans la chaleur', note: '<strong>Dy duar</strong> = two hands. <strong>Ngrohtësi</strong> = warmth — from <strong>ngrohtë</strong> (warm), which you already know!' },
+    { alb: 'Ky mall që të djeg nuk njeh kufi as largësi', en: 'This yearning that burns knows no limit or distance', fr: 'Ce manque qui brûle ne connaît ni limite ni distance', note: '<strong>Mall</strong> = yearning/longing. <strong>Djeg</strong> = burns. <strong>Kufi</strong> = limit. <strong>Largësi</strong> = distance.' },
+  ]},
+  { section: 'Pre-chorus', lines: [
+    { alb: 'Asgjë në këtë botë nuk mund ta shprehe dot ndjenjën', en: 'Nothing in this world can express the feeling', fr: 'Rien dans ce monde ne peut exprimer le sentiment', note: '<strong>Asgjë</strong> = nothing. <strong>Botë</strong> = world. <strong>Shprehe</strong> = express. <strong>Ndjenjë</strong> = feeling — you know this one!' },
+    { alb: 'Kur zemrat bashkohen dhe prapë rrahin si një', en: 'When hearts come together and beat as one again', fr: 'Quand les cœurs s\'unissent et battent à nouveau comme un', note: '<strong>Zemrat</strong> = the hearts (plural). <strong>Bashkohen</strong> = come together. <strong>Rrahin</strong> = they beat.' },
+  ]},
+  { section: 'Chorus', lines: [
+    { alb: 'Dua të hesht në këtë natë', en: 'I want to be silent tonight', fr: 'Je veux me taire cette nuit', note: '<strong>Dua</strong> = I want. <strong>Të hesht</strong> = to be silent. <strong>Natë</strong> = night.' },
+    { alb: 'I shtrirë në këtë shtrat', en: 'Lying in this bed', fr: 'Allongé dans ce lit', note: '<strong>I shtrirë</strong> = lying down. <strong>Shtrat</strong> = bed.' },
+    { alb: 'Ku ëndrrat hyjnore shërojnë çdo plagë', en: 'Where divine dreams heal every wound', fr: 'Où les rêves divins guérissent chaque blessure', note: '<strong>Ëndrrat</strong> = the dreams. <strong>Hyjnore</strong> = divine. <strong>Shërojnë</strong> = heal. <strong>Plagë</strong> = wound.' },
+    { alb: 'Të shoh portretin e saj', en: 'To see her portrait', fr: 'Pour voir son portrait', note: '<strong>Të shoh</strong> = to see. <strong>Portretin</strong> = the portrait. <strong>E saj</strong> = her/hers.' },
+    { alb: 'Momentet kalojnë, sekondat nuk falin', en: 'Moments pass, seconds don\'t forgive', fr: 'Les moments passent, les secondes ne pardonnent pas', note: '<strong>Momentet kalojnë</strong> = moments pass. <strong>Sekondat nuk falin</strong> = seconds don\'t forgive — time is ruthless.' },
+    { alb: 'Orët pasojnë por ndjenjën s\'e ndalin, jo', en: 'Hours follow but they don\'t stop the feeling, no', fr: 'Les heures s\'enchaînent mais n\'arrêtent pas le sentiment, non', note: '<strong>Orët</strong> = the hours. <strong>Pasojnë</strong> = follow/pass. <strong>Ndalin</strong> = stop. <strong>Jo</strong> = no.' },
+  ]},
+  { section: 'Bridge', lines: [
+    { alb: 'Si me magji hëna shikimet përpin', en: 'Like magic the moon absorbs the glances', fr: 'Comme par magie la lune absorbe les regards', note: '<strong>Magji</strong> = magic. <strong>Hëna</strong> = the moon. <strong>Shikimet</strong> = the glances/looks.' },
+    { alb: 'Më sjell vegimin tënd', en: 'It brings me your vision', fr: 'Elle m\'apporte ta vision', note: '<strong>Më sjell</strong> = brings me. <strong>Vegimin</strong> = the vision/dream. <strong>Tënd</strong> = your.' },
+  ]},
+  { section: 'Final verse', lines: [
+    { alb: 'Lot i patharë ndriçojë këtë natë', en: 'An unshed tear illuminate this night', fr: 'Une larme non versée illumine cette nuit', note: '<strong>Lot</strong> = tear. <strong>I patharë</strong> = unshed (lit. "not poured"). <strong>Ndriçojë</strong> = may it illuminate.' },
+    { alb: 'Sonte kumbo prej shpirtit pa fjalë', en: 'Tonight it pours from the soul without words', fr: 'Ce soir ça coule de l\'âme sans mots', note: '<strong>Sonte</strong> = tonight (you know this!). <strong>Shpirtit</strong> = of the soul. <strong>Pa fjalë</strong> = without words.' },
+    { alb: 'Vetëm një çast dhimbja të më ndalë', en: 'Just for a moment let the pain stop me', fr: 'Juste un instant, que la douleur m\'arrête', note: '<strong>Vetëm</strong> = only/just. <strong>Çast</strong> = moment. <strong>Dhimbja</strong> = the pain.' },
+    { alb: 'Ky lot i patharë një ditë do shterojë', en: 'This unshed tear will one day run dry', fr: 'Cette larme non versée se tarira un jour', note: '<strong>Një ditë</strong> = one day. <strong>Do shterojë</strong> = will run dry/be exhausted.' },
+    { alb: 'Nga puthjet e zjarrta që ëndërroi', en: 'From the fiery kisses that were dreamed of', fr: 'Des baisers ardents qui ont été rêvés', note: '<strong>Puthjet</strong> = the kisses. <strong>Zjarrta</strong> = fiery. <strong>Ëndërroi</strong> = (that) were dreamed.' },
+    { alb: 'Në atë çast dhimbja do ndalojë', en: 'In that moment the pain will stop', fr: 'En ce moment la douleur s\'arrêtera', note: '<strong>Në atë çast</strong> = in that moment. <strong>Dhimbja do ndalojë</strong> = the pain will stop.' },
+  ]},
+];
+
+// ══════════════════════════════════════════ INIT
+var corrections = [];
+var corrOpen = false;
+var sectionTimers = {};
+var sectionSeconds = {};
+var completedSections = [];
+var takeHomeDone = 0;
+var activeLyricLine = null;
+
+(function init() {
+  renderPractice();
+  renderRoleplays();
+  renderSpeak();
+  renderLyrics();
+})();
+
+// ══════════════════════════════════════════ RENDER
+
+function renderPractice() {
+  var area = document.getElementById('practice-area');
+  area.innerHTML = PRACTICE.map(function(item, i) {
+    var chunkHtml = item.chunks.map(function(c) {
+      return '<div class="chunk"><div class="chunk-alb">' + c.alb + '</div><div class="chunk-en">' + c.en + '</div></div>';
+    }).join('');
+    return '<div class="practice-card">' +
+      '<div class="practice-situation">' + item.situation + '</div>' +
+      '<div class="hint-box" id="ph-' + i + '">' + item.hint + '</div>' +
+      '<div class="answer-box" id="pa-' + i + '">' +
+        '<div class="answer-alb">' + item.answer + '</div>' +
+        '<div class="answer-en">' + item.en + '</div>' +
+        '<div class="answer-fr">' + item.fr + '</div>' +
+        '<div class="chunks">' + chunkHtml + '</div>' +
+      '</div>' +
+      '<div style="margin-top:12px">' +
+        '<button class="hint-btn" id="phb-' + i + '" onclick="showPHint(' + i + ')">💡 Hint</button>' +
+        '<button class="tried-btn" id="ptb-' + i + '" onclick="showPAnswer(' + i + ')">I tried it →</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function showPHint(i) {
+  document.getElementById('ph-' + i).classList.add('show');
+  document.getElementById('phb-' + i).disabled = true;
+}
+function showPAnswer(i) {
+  document.getElementById('pa-' + i).classList.add('show');
+  document.getElementById('ptb-' + i).disabled = true;
+  document.getElementById('ptb-' + i).textContent = '✓';
+}
+
+function renderRoleplays() {
+  var area = document.getElementById('roleplay-area');
+  area.innerHTML = ROLEPLAYS.map(function(rp, i) {
+    var exchangeHtml = rp.exchanges.map(function(ex) {
+      var isMel = ex.who === 'mel';
+      return '<div class="exchange-line' + (isMel ? ' exchange-mel' : '') + '">' +
+        '<div class="exchange-who ' + (isMel ? 'who-mel' : 'who-durim') + '">' + (isMel ? 'Mel' : 'Durim') + '</div>' +
+        '<div><div class="exchange-text">' + ex.text + '</div><div class="exchange-en">' + ex.en + '</div></div>' +
+      '</div>';
+    }).join('');
+    return '<div class="roleplay-card" style="margin-bottom:12px">' +
+      '<div class="roleplay-scenario">' + rp.scenario + '</div>' +
+      '<div class="roleplay-setup">' + rp.setup + '</div>' +
+      '<div class="roleplay-exchange">' + exchangeHtml + '</div>' +
+      '<div class="scaffold-box" id="sc-' + i + '">' + rp.scaffold + '</div>' +
+      '<button class="scaffold-btn" id="scb-' + i + '" onclick="showScaffold(' + i + ')">💡 Show scaffold</button>' +
+    '</div>';
+  }).join('');
+}
+
+function showScaffold(i) {
+  document.getElementById('sc-' + i).classList.add('show');
+  document.getElementById('scb-' + i).disabled = true;
+}
+
+function renderSpeak() {
+  var area = document.getElementById('speak-area');
+  area.innerHTML = SPEAK_PROMPTS.map(function(item, i) {
+    return '<div class="speak-card">' +
+      '<div class="speak-situation">' + item.situation + '</div>' +
+      '<div class="speak-q">' + item.q + '</div>' +
+      '<div class="speak-fr">' + item.fr + '</div>' +
+      '<div class="scaffold-box" id="ss-' + i + '">' + item.scaffold + '</div>' +
+      '<button class="scaffold-btn" id="ssb-' + i + '" onclick="showSScaffold(' + i + ')">💡 Scaffold</button>' +
+    '</div>';
+  }).join('');
+}
+
+function showSScaffold(i) {
+  document.getElementById('ss-' + i).classList.add('show');
+  document.getElementById('ssb-' + i).disabled = true;
+}
+
+function renderLyrics() {
+  var container = document.getElementById('lyrics-container');
+  var html = '';
+  LYRICS.forEach(function(section) {
+    html += '<div class="lyrics-section">';
+    html += '<div class="lyrics-tag">' + section.section + '</div>';
+    section.lines.forEach(function(line, idx) {
+      var id = 'line-' + section.section.replace(/\s/g,'') + '-' + idx;
+      html += '<div class="lyric-line" id="' + id + '" onclick="toggleLine(\'' + id + '\')">' +
+        '<div class="lyric-alb">' + line.alb + '</div>' +
+        '<div class="translation-bubble">' +
+          '<div class="tb-en">' + line.en + '</div>' +
+          '<div class="tb-fr">' + line.fr + '</div>' +
+          (line.note ? '<div class="tb-note">📝 ' + line.note + '</div>' : '') +
+        '</div>' +
+      '</div>';
+    });
+    html += '</div>';
+  });
+  container.innerHTML = html;
+}
+
+function toggleLine(id) {
+  var el = document.getElementById(id);
+  var isActive = el.classList.contains('active');
+  if (activeLyricLine && activeLyricLine !== id) {
+    var prev = document.getElementById(activeLyricLine);
+    if (prev) prev.classList.remove('active');
+  }
+  if (isActive) {
+    el.classList.remove('active');
+    activeLyricLine = null;
+  } else {
+    el.classList.add('active');
+    activeLyricLine = id;
+    setTimeout(function() { el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
+  }
+}
+
+// ══════════════════════════════════════════ TAKE HOME
+function doTakeHome() {
+  if (takeHomeDone >= 3) return;
+  takeHomeDone++;
+  var pips = ['tp1','tp2','tp3'];
+  var el = document.getElementById(pips[takeHomeDone - 1]);
+  el.style.background = 'var(--gold)';
+  el.style.borderColor = 'var(--gold)';
+  el.style.color = 'var(--bg)';
+  el.textContent = '✓';
+  document.getElementById('th-tip').style.display = 'block';
+  var btn = document.getElementById('say-btn');
+  if (takeHomeDone === 1) btn.textContent = '▶ Louder!';
+  else if (takeHomeDone === 2) btn.textContent = '▶ Own it!';
+  else {
+    btn.textContent = '✓ Done!';
+    btn.disabled = true;
+    document.getElementById('done-banner').style.display = 'block';
+    completeSection(7, null);
+    launchConfetti();
+  }
+}
+
+// ══════════════════════════════════════════ TIMERS
+function startTimer(id) {
+  stopAllTimers();
+  sectionSeconds[id] = sectionSeconds[id] || 0;
+  var el = document.getElementById('t' + id);
+  if (el) el.className = 'nav-timer running';
+  sectionTimers[id] = setInterval(function() {
+    sectionSeconds[id]++;
+    var m = Math.floor(sectionSeconds[id] / 60);
+    var s = sectionSeconds[id] % 60;
+    if (el) el.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+  }, 1000);
+}
+function stopAllTimers() {
+  Object.keys(sectionTimers).forEach(function(k) { clearInterval(sectionTimers[k]); });
+}
+
+// ══════════════════════════════════════════ NAV
+function goSection(id) {
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+  startTimer(parseInt(id.replace('s', '')));
+}
+function goHome() {
+  stopAllTimers();
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('home').classList.add('active');
+  window.scrollTo(0, 0);
+}
+function completeSection(num, nextId) {
+  if (completedSections.indexOf(num) === -1) completedSections.push(num);
+  var planEl = document.getElementById('plan-' + num);
+  var numEl = document.getElementById('pn-' + num);
+  if (planEl) planEl.classList.add('done');
+  if (numEl) numEl.textContent = '✓';
+  if (nextId) setTimeout(function() { goSection(nextId); }, 300);
+}
+
+// ══════════════════════════════════════════ CORRECTIONS
+function openCorr() {
+  corrOpen = true;
+  document.getElementById('corr-drawer').classList.add('open');
+  document.getElementById('corr-backdrop').classList.add('open');
+  setTimeout(function() { var i = document.getElementById('corr-input'); if (i) i.focus(); }, 350);
+}
+function closeCorr() {
+  corrOpen = false;
+  document.getElementById('corr-drawer').classList.remove('open');
+  document.getElementById('corr-backdrop').classList.remove('open');
+}
+function addCorr() {
+  var input = document.getElementById('corr-input');
+  var text = input.value.trim();
+  if (!text) return;
+  corrections.push({ id: Date.now(), text: text });
+  input.value = '';
+  renderCorr();
+  if (!corrOpen) openCorr();
+}
+function dismissCorr(id) {
+  corrections = corrections.filter(function(c) { return c.id !== id; });
+  renderCorr();
+}
+function renderCorr() {
+  var list = document.getElementById('corr-list');
+  var empty = document.getElementById('corr-empty');
+  document.getElementById('corr-badge').textContent = corrections.length;
+  if (corrections.length === 0) {
+    list.innerHTML = '';
+    list.appendChild(empty);
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  list.innerHTML = corrections.map(function(c) {
+    return '<div class="corr-item"><div class="corr-text">' + c.text + '</div>' +
+      '<button class="corr-dismiss" onclick="dismissCorr(' + c.id + ')">×</button></div>';
+  }).join('');
+}
+
+// ══════════════════════════════════════════ CONFETTI
+function launchConfetti() {
+  var colors = ['#E0A830','#C45C78','#4E9E78','#7B5EA7','#4A82C4'];
+  for (var i = 0; i < 60; i++) {
+    var el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.cssText = 'left:' + (Math.random()*100) + 'vw;top:-8px;background:' +
+      colors[Math.floor(Math.random()*colors.length)] +
+      ';width:' + (5+Math.random()*7) + 'px;height:' + (5+Math.random()*7) +
+      'px;border-radius:' + (Math.random()>.5?'50%':'2px') +
+      ';animation-delay:' + (Math.random()*0.5) + 's;animation-duration:' + (2+Math.random()*1.5) + 's';
+    document.body.appendChild(el);
+    setTimeout(function() { if (el.parentNode) el.parentNode.removeChild(el); }, 4000);
+  }
+}
+</script>
+</body>
+</html>
