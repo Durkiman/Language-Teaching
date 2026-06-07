@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Azores — English Lesson</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #F4F6F8;
+  --surface: #FFFFFF;
+  --surface2:#F0F2F5;
+  --ink:     #1E2433;
+  --ink2:    #3A4155;
+  --muted:   #7A8299;
+  --border:  rgba(30,36,51,0.1);
+  --teal:    #2A8A8A;
+  --teal2:   #1D6B6B;
+  --teal-bg: rgba(42,138,138,0.08);
+  --green:   #2D7A3A;
+  --lava:    #B83A1A;
+  --gold:    #A06A10;
+  --fr:      #7A5A10;
+  --comp:    #1D6B8A;
+  --sup:     #7A6010;
+  --correct: rgba(45,122,58,0.1);
+  --wrong:   rgba(184,58,26,0.1);
+  --shadow:  0 1px 4px rgba(0,0,0,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; display: flex; flex-direction: column; }
+
+/* NAV */
+.tab-nav { position: sticky; top: 0; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; overflow-x: auto; scrollbar-width: none; flex-shrink: 0; box-shadow: var(--shadow); }
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 11px 22px; background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--muted); font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: all .18s; }
+.tab-btn:hover { color: var(--ink2); }
+.tab-btn.active { color: var(--teal); border-bottom-color: var(--teal); }
+.tab-icon { font-size: 16px; }
+
+/* PAGES */
+.page { display: none; flex: 1; padding-bottom: 100px; }
+.page.active { display: block; }
+
+/* PAGE HEADER */
+.page-header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 20px 24px 16px; }
+.page-eyebrow { font-size: 10px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--teal); margin-bottom: 5px; }
+.page-header h2 { font-size: clamp(18px, 3.5vw, 26px); font-weight: 900; color: var(--ink); line-height: 1.2; }
+.page-header p { font-size: 13px; font-weight: 600; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+.fr-pill { display: inline-flex; align-items: center; gap: 5px; background: rgba(122,90,16,0.07); border: 1px solid rgba(122,90,16,0.15); border-radius: 4px; padding: 4px 10px; font-size: 11px; font-weight: 700; color: var(--fr); margin-top: 8px; line-height: 1.5; }
+.fr-pill::before { content: '🇫🇷'; flex-shrink: 0; }
+
+/* CONTENT */
+.wrap { padding: 20px 24px 0; }
+.sec-label { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin: 20px 0 10px; display: flex; align-items: center; gap: 8px; }
+.sec-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; margin-bottom: 8px; box-shadow: var(--shadow); }
+
+/* RETRIEVAL */
+.ret-q { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 14px; font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.6; }
+.ret-q:last-child { margin-bottom: 0; }
+.ret-num { font-size: 18px; font-weight: 900; color: var(--teal); flex-shrink: 0; width: 20px; }
+.ret-fr { font-size: 11px; color: var(--fr); margin-top: 2px; font-weight: 700; line-height: 1.5; }
+.ret-reveal { background: var(--teal-bg); border: 1px solid rgba(42,138,138,0.2); border-radius: 6px; padding: 8px 12px; font-size: 13px; font-weight: 700; color: var(--teal2); margin-top: 6px; display: none; line-height: 1.6; }
+.ret-reveal.show { display: block; }
+.reveal-btn { background: transparent; border: 1px solid var(--border); color: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: 1px; padding: 4px 11px; cursor: pointer; transition: all .15s; margin-top: 6px; display: inline-block; border-radius: 4px; }
+.reveal-btn:hover { background: var(--teal); color: white; border-color: var(--teal); }
+
+/* GRAMMAR */
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.g-col { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; box-shadow: var(--shadow); }
+.g-col-head { font-size: 11px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+.g-col-head.base { color: var(--muted); }
+.g-col-head.comp { color: var(--comp); }
+.g-col-head.sup  { color: var(--sup); }
+.g-col-fr { font-size: 10px; color: var(--fr); font-weight: 700; margin-bottom: 10px; line-height: 1.5; }
+.g-col-rule { background: var(--surface2); border-radius: 6px; padding: 8px 10px; font-size: 11px; font-weight: 700; margin-bottom: 8px; line-height: 1.6; color: var(--ink2); }
+.g-col-rule .kw { color: var(--teal); font-weight: 900; }
+.g-col-ex { font-size: 12px; font-weight: 600; color: var(--muted); font-style: italic; }
+.g-col-ex .hl { color: var(--ink); font-weight: 800; font-style: normal; }
+
+.gram-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 12px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+.gram-table thead tr { background: var(--surface2); }
+.gram-table thead th { padding: 9px 11px; font-size: 9px; letter-spacing: 2px; color: var(--muted); text-align: left; text-transform: uppercase; font-weight: 800; border-bottom: 1px solid var(--border); }
+.gram-table tbody tr { background: var(--surface); border-bottom: 1px solid var(--border); transition: background .12s; }
+.gram-table tbody tr:last-child { border-bottom: none; }
+.gram-table tbody tr:hover { background: var(--surface2); }
+.gram-table td { padding: 9px 11px; vertical-align: middle; }
+.gram-table td:first-child { font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+.t-short { color: var(--comp); } .t-long { color: var(--sup); } .t-irreg { color: var(--lava); }
+.t-base { color: var(--muted); font-weight: 600; } .t-comp { color: var(--comp); font-weight: 800; } .t-sup { color: var(--sup); font-weight: 800; } .t-fr { font-size: 10px; color: var(--fr); font-weight: 700; }
+
+.mistakes-box { background: rgba(184,58,26,0.05); border: 1px solid rgba(184,58,26,0.15); border-radius: 8px; padding: 14px 16px; }
+.mistakes-title { font-size: 11px; font-weight: 900; color: var(--lava); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+.m-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; font-size: 13px; font-weight: 700; line-height: 1.5; }
+.m-row:last-child { margin-bottom: 0; }
+.m-bad  { color: var(--lava); text-decoration: line-through; }
+.m-good { color: var(--green); }
+.m-fr   { font-size: 10px; color: var(--fr); margin-top: 2px; font-weight: 700; display: block; }
+
+/* FACTS + SCENES */
+.facts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 8px; margin-bottom: 14px; }
+.fact-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 13px; box-shadow: var(--shadow); }
+.fact-icon { font-size: 20px; display: block; margin-bottom: 5px; }
+.fact-label { font-size: 8px; font-weight: 800; letter-spacing: 3px; color: var(--teal); text-transform: uppercase; margin-bottom: 2px; }
+.fact-val { font-size: 13px; font-weight: 900; color: var(--ink); margin-bottom: 2px; }
+.fact-text { font-size: 12px; color: var(--muted); line-height: 1.6; font-weight: 600; }
+.fact-text strong { color: var(--ink2); }
+
+.scene-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 6px; margin-bottom: 14px; }
+.scene-wrap { position: relative; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); }
+.scene-wrap svg { display: block; width: 100%; }
+.scene-cap { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(10,12,16,0.8)); padding: 14px 10px 7px; border-radius: 0 0 8px 8px; }
+.sc-tag  { display: block; font-size: 8px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: rgba(100,220,210,0.9); margin-bottom: 1px; }
+.sc-name { font-size: 12px; font-weight: 900; color: white; }
+
+/* VOCAB */
+.vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(115px, 1fr)); gap: 6px; margin-bottom: 8px; }
+.vocab-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 11px 8px; cursor: pointer; text-align: center; transition: all .18s; position: relative; overflow: hidden; box-shadow: var(--shadow); }
+.vocab-card::before { content: ''; position: absolute; inset: 0; background: var(--teal); opacity: 0; transition: opacity .18s; border-radius: 8px; }
+.vocab-card:hover { border-color: var(--teal); }
+.vocab-card.flipped::before { opacity: 1; }
+.vocab-card.flipped .vc-en, .vocab-card.flipped .vc-icon { color: white; position: relative; z-index: 1; }
+.vocab-card.flipped .vc-fr { opacity: 1; color: rgba(255,255,255,0.85); position: relative; z-index: 1; }
+.vocab-card.flipped .vc-hint { opacity: 0; }
+.vocab-card.done { border-color: var(--green) !important; background: rgba(45,122,58,0.05); }
+.vocab-card.done::after { content: '✓'; position: absolute; top: 4px; right: 6px; font-size: 9px; color: var(--green); font-weight: 800; z-index: 2; }
+.vc-icon { font-size: 19px; display: block; margin-bottom: 3px; position: relative; z-index: 1; }
+.vc-en   { font-size: 12px; font-weight: 800; color: var(--ink); display: block; position: relative; z-index: 1; }
+.vc-fr   { font-size: 10px; font-weight: 700; color: var(--muted); opacity: 0; transition: opacity .18s; display: block; margin-top: 2px; }
+.vc-hint { font-size: 8px; color: var(--teal); font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; position: relative; z-index: 1; }
+
+/* READING */
+.read-tag { display: inline-flex; align-items: center; gap: 7px; font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; padding: 4px 11px; border: 1px solid; margin-bottom: 8px; border-radius: 4px; }
+.read-tag.t { border-color: rgba(160,106,16,0.4); color: var(--gold); background: rgba(160,106,16,0.06); }
+.read-tag.s { border-color: rgba(42,138,138,0.35); color: var(--teal); background: var(--teal-bg); }
+.reading-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin-bottom: 12px; position: relative; box-shadow: var(--shadow); }
+.reading-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; border-radius: 10px 0 0 10px; }
+.reading-card.t::before { background: var(--gold); }
+.reading-card.s::before { background: var(--teal); }
+.reading-title { font-size: 15px; font-weight: 900; color: var(--ink); margin-bottom: 10px; }
+.reading-body { font-size: 14px; font-weight: 600; line-height: 2.1; color: var(--ink2); }
+.comp-hl { color: var(--comp); font-weight: 800; background: rgba(29,107,138,0.08); padding: 1px 4px; border-radius: 3px; font-size: 13px; }
+.sup-hl  { color: var(--sup);  font-weight: 800; background: rgba(122,96,16,0.08); padding: 1px 4px; border-radius: 3px; font-size: 13px; }
+
+/* EXERCISES */
+.ex-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 15px 17px; margin-bottom: 8px; box-shadow: var(--shadow); }
+.ex-label { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ex-diff { font-size: 8px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; }
+.ex-diff.easy   { background: rgba(45,122,58,0.1); color: var(--green); }
+.ex-diff.medium { background: rgba(42,138,138,0.1); color: var(--teal); }
+.ex-diff.hard   { background: rgba(160,106,16,0.1); color: var(--gold); }
+.ex-q    { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 6px; line-height: 1.6; }
+.ex-fr   { font-size: 11px; color: var(--fr); font-weight: 700; margin-bottom: 6px; display: flex; align-items: flex-start; gap: 5px; line-height: 1.5; }
+.ex-fr::before { content: '🇫🇷'; flex-shrink: 0; }
+.ex-note { font-size: 11px; color: #7755CC; font-weight: 700; margin-bottom: 8px; }
+.ex-note::before { content: '💡 '; }
+.fill-input { background: var(--surface2); border: 1px solid var(--border); border-radius: 5px; padding: 7px 12px; font-size: 14px; font-weight: 800; color: var(--ink); outline: none; transition: border-color .15s; caret-color: var(--teal); font-family: 'Nunito', sans-serif; max-width: 220px; width: 100%; }
+.fill-input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(42,138,138,0.1); }
+.fill-input.correct { border-color: var(--green); background: var(--correct); color: var(--green); }
+.fill-input.wrong   { border-color: var(--lava);  background: var(--wrong);   color: var(--lava); }
+.mc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.mc-btn { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 9px 12px; font-size: 13px; font-weight: 700; color: var(--ink2); cursor: pointer; text-align: left; transition: all .15s; font-family: 'Nunito', sans-serif; }
+.mc-btn:hover:not(:disabled) { border-color: var(--teal); color: var(--teal); background: var(--teal-bg); }
+.mc-btn.correct { border-color: var(--green); background: var(--correct); color: var(--green); }
+.mc-btn.wrong   { border-color: var(--lava);  background: var(--wrong);   color: var(--lava); }
+.mc-btn:disabled { pointer-events: none; }
+.ex-reveal { font-size: 11px; color: var(--muted); margin-top: 5px; display: none; font-weight: 700; }
+.ex-reveal.show { display: block; }
+.ex-reveal strong { color: var(--green); }
+
+.check-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--teal); color: white; border: none; border-radius: 8px; padding: 12px 26px; font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 900; cursor: pointer; box-shadow: 0 3px 14px rgba(42,138,138,0.3); transition: all .18s; }
+.check-btn:hover { background: var(--teal2); transform: translateY(-1px); }
+.score-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 26px 22px; text-align: center; margin-top: 16px; display: none; animation: popIn .4s cubic-bezier(.34,1.56,.64,1) both; box-shadow: var(--shadow); }
+.score-panel.show { display: block; }
+@keyframes popIn { from{opacity:0;transform:scale(.85)} to{opacity:1;transform:scale(1)} }
+.score-big { font-size: 64px; font-weight: 900; color: var(--teal); line-height: 1; }
+.score-sub { font-size: 9px; letter-spacing: 4px; color: var(--muted); text-transform: uppercase; margin-top: 3px; }
+.score-msg { font-size: 15px; font-weight: 800; margin: 10px 0 4px; color: var(--ink); }
+.retry-btn { background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 6px 18px; font-family: 'Nunito', sans-serif; font-size: 10px; font-weight: 800; letter-spacing: 2px; cursor: pointer; margin-top: 8px; transition: all .18s; border-radius: 5px; }
+.retry-btn:hover { border-color: var(--teal); color: var(--teal); }
+
+/* WRITING + SPEAKING */
+.starter { background: var(--surface); border: 1px solid var(--border); border-radius: 7px; padding: 10px 13px; cursor: pointer; margin-bottom: 6px; display: block; transition: all .15s; box-shadow: var(--shadow); }
+.starter:hover { border-color: var(--teal); background: var(--teal-bg); }
+.starter-en { font-size: 13px; font-weight: 700; color: var(--ink2); line-height: 1.5; }
+.starter-en .comp { color: var(--comp); font-weight: 900; }
+.starter-en .sup  { color: var(--sup);  font-weight: 900; }
+.starter-fr { font-size: 10px; color: var(--fr); font-weight: 700; margin-top: 3px; display: flex; gap: 5px; }
+.starter-fr::before { content: '🇫🇷'; flex-shrink: 0; }
+.writing-area { width: 100%; min-height: 100px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 700; color: var(--ink); resize: vertical; outline: none; line-height: 1.7; caret-color: var(--teal); transition: border-color .15s; margin-top: 8px; box-shadow: var(--shadow); }
+.writing-area:focus { border-color: var(--teal); }
+.writing-area::placeholder { color: var(--muted); font-style: italic; font-size: 13px; }
+
+.sp-prompt { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin-bottom: 8px; display: flex; gap: 10px; align-items: flex-start; box-shadow: var(--shadow); }
+.sp-num  { font-size: 20px; font-weight: 900; color: var(--teal); flex-shrink: 0; width: 22px; line-height: 1.1; }
+.sp-body { flex: 1; }
+.sp-en   { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.5; margin-bottom: 4px; }
+.sp-en .hl { color: var(--teal); font-weight: 900; }
+.sp-fr   { font-size: 11px; color: var(--fr); font-weight: 700; display: flex; gap: 5px; line-height: 1.5; }
+.sp-fr::before { content: '🇫🇷'; flex-shrink: 0; }
+.sp-level { font-size: 8px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; flex-shrink: 0; margin-top: 2px; border: 1px solid; }
+.sp-level.warm      { border-color: var(--green); color: var(--green); }
+.sp-level.core      { border-color: var(--teal);  color: var(--teal); }
+.sp-level.challenge { border-color: var(--gold);  color: var(--gold); }
+
+/* NAV BUTTONS */
+.page-nav { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; margin-top: 24px; border-top: 1px solid var(--border); }
+.nav-btn { background: var(--surface); border: 1px solid var(--border); color: var(--ink2); font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 800; padding: 9px 18px; cursor: pointer; border-radius: 7px; transition: all .15s; box-shadow: var(--shadow); }
+.nav-btn:hover { background: var(--surface2); }
+.nav-btn.primary { background: var(--teal); border-color: var(--teal); color: white; }
+.nav-btn.primary:hover { background: var(--teal2); }
+
+/* TIMER BUBBLE */
+.timer-bubble {
+  position: fixed; bottom: 22px; left: 22px;
+  width: 64px; height: 64px;
+  background: var(--teal); color: white;
+  border: none; border-radius: 50%;
+  box-shadow: 0 4px 18px rgba(42,138,138,0.4);
+  cursor: pointer; z-index: 400;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: all .2s; line-height: 1.2;
+}
+.timer-bubble:hover { transform: scale(1.07); background: var(--teal2); }
+.bubble-time { font-size: 13px; font-weight: 900; letter-spacing: 0.5px; }
+.bubble-label { font-size: 8px; font-weight: 700; opacity: 0.7; letter-spacing: 0.5px; }
+.bubble-time.countdown { color: #AAFFEE; }
+.bubble-time.urgent { color: #FFBBAA; }
+
+/* TIMER PANEL */
+.wb-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.25); z-index: 450; display: none; }
+.wb-overlay.show { display: block; }
+
+.wb-panel {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--surface); border-top: 1px solid var(--border);
+  border-radius: 18px 18px 0 0;
+  padding: 0 0 24px; z-index: 500;
+  max-height: 80vh; overflow-y: auto;
+  transform: translateY(100%);
+  transition: transform .3s cubic-bezier(.34,1.1,.64,1);
+  box-shadow: 0 -4px 30px rgba(0,0,0,0.1);
+}
+.wb-panel.open { transform: translateY(0); }
+.wb-handle-wrap { display: flex; justify-content: center; padding: 12px 0 6px; cursor: pointer; }
+.wb-handle { width: 38px; height: 4px; background: var(--border); border-radius: 2px; }
+.wb-inner { padding: 0 20px; }
+
+.wb-timer-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+.wb-timer-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.wb-timer-display { display: flex; flex-direction: column; }
+.wb-main-time { font-size: 38px; font-weight: 900; color: var(--teal); line-height: 1; letter-spacing: 1px; }
+.wb-main-time.urgent { color: var(--lava); }
+.wb-session-time { font-size: 11px; font-weight: 700; color: var(--muted); margin-top: 2px; }
+.wb-controls { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+.wb-duration-row { display: flex; align-items: center; gap: 6px; }
+.wb-dur-label { font-size: 11px; font-weight: 700; color: var(--muted); }
+.wb-dur-input { width: 52px; background: var(--surface); border: 1px solid var(--border); border-radius: 5px; padding: 5px 8px; font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 800; color: var(--ink); outline: none; text-align: center; caret-color: var(--teal); }
+.wb-dur-input:focus { border-color: var(--teal); }
+.wb-presets { display: flex; gap: 5px; }
+.wb-preset { background: var(--surface); border: 1px solid var(--border); color: var(--muted); font-family: 'Nunito', sans-serif; font-size: 11px; font-weight: 700; padding: 4px 10px; cursor: pointer; border-radius: 4px; transition: all .15s; }
+.wb-preset:hover, .wb-preset.active { border-color: var(--teal); color: var(--teal); }
+.wb-timer-btns { display: flex; gap: 6px; }
+.wb-tbtn { background: var(--surface); border: 1px solid var(--border); color: var(--ink2); font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 800; padding: 7px 16px; cursor: pointer; border-radius: 6px; transition: all .15s; }
+.wb-tbtn:hover { background: var(--surface2); }
+.wb-tbtn.go { background: var(--teal); color: white; border-color: var(--teal); }
+.wb-tbtn.go:hover { background: var(--teal2); }
+
+.wb-stamps { display: grid; grid-template-columns: repeat(4,1fr); gap: 5px; margin-bottom: 14px; }
+.stamp { background: var(--surface2); border: 1px solid var(--border); border-radius: 7px; padding: 8px 4px; font-size: 10px; font-weight: 700; color: var(--ink2); cursor: pointer; text-align: center; transition: all .15s; line-height: 1.4; }
+.stamp:hover { background: var(--teal-bg); border-color: var(--teal); color: var(--teal); }
+.stamp.r:hover { background: rgba(184,58,26,0.07); border-color: var(--lava); color: var(--lava); }
+.stamp.g:hover { background: rgba(45,122,58,0.07); border-color: var(--green); color: var(--green); }
+
+.wb-corr-row { display: flex; gap: 6px; margin-bottom: 8px; }
+.wb-corr-input { flex: 1; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 800; color: var(--ink); outline: none; caret-color: var(--teal); transition: border-color .15s; }
+.wb-corr-input:focus { border-color: var(--teal); }
+.wb-corr-input::placeholder { color: var(--muted); font-size: 11px; font-weight: 600; }
+.wb-corr-send { background: var(--teal); border: none; color: white; font-family: 'Nunito', sans-serif; font-size: 11px; font-weight: 800; padding: 8px 14px; cursor: pointer; border-radius: 6px; }
+.wb-corr-send:hover { background: var(--teal2); }
+.wb-corr-display { min-height: 40px; background: var(--teal-bg); border: 1px solid rgba(42,138,138,0.2); border-radius: 6px; padding: 6px 12px; font-family: 'Nunito', sans-serif; font-size: 22px; font-weight: 900; color: var(--teal); text-align: center; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+
+textarea.wb-notes { width: 100%; height: 90px; background: var(--surface2); border: 1px solid var(--border); border-radius: 7px; padding: 9px 12px; font-family: 'Nunito', sans-serif; font-size: 13px; color: var(--ink); resize: none; outline: none; line-height: 1.7; caret-color: var(--teal); margin-bottom: 10px; transition: border-color .15s; }
+textarea.wb-notes:focus { border-color: var(--teal); }
+textarea.wb-notes::placeholder { color: var(--muted); font-size: 12px; }
+
+.wb-footer { display: flex; gap: 6px; }
+.wb-fbtn { flex: 1; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 8px; font-family: 'Nunito', sans-serif; font-size: 11px; font-weight: 700; color: var(--muted); cursor: pointer; text-align: center; transition: all .15s; }
+.wb-fbtn:hover { color: var(--ink); border-color: rgba(30,36,51,0.2); }
+.wb-fbtn.close { background: var(--teal); color: white; border-color: var(--teal); }
+.wb-fbtn.close:hover { background: var(--teal2); }
+
+/* EMOJI BURST */
+.emoji-burst { position: fixed; inset: 0; z-index: 9000; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.96); opacity: 0; pointer-events: none; transition: opacity .25s; }
+.emoji-burst.show { opacity: 1; pointer-events: all; }
+.burst-emoji { font-size: 40px; display: block; }
+.emoji-burst.show .burst-emoji { animation: zoomOut .55s cubic-bezier(.2,1.6,.4,1) forwards; }
+@keyframes zoomOut { from{transform:scale(0.05);opacity:0} to{transform:scale(9);opacity:1} }
+.burst-hint { position: absolute; bottom: 18%; left: 0; right: 0; text-align: center; font-size: 15px; font-weight: 800; color: var(--ink2); animation: fadeUp .4s ease .5s both; }
+.burst-tap  { position: absolute; top: 18%; left: 0; right: 0; text-align: center; font-size: 13px; font-weight: 700; color: var(--muted); animation: fadeUp .4s ease .7s both; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+@media (max-width: 600px) {
+  .three-col { grid-template-columns: 1fr; }
+  .scene-grid { grid-template-columns: 1fr 1fr; }
+  .mc-opts { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- TAB NAV -->
+<nav class="tab-nav">
+  <button class="tab-btn active"  onclick="goTo('warmup',this)"><span class="tab-icon">⚡</span>Warm-Up</button>
+  <button class="tab-btn"         onclick="goTo('grammar',this)"><span class="tab-icon">📐</span>Grammar</button>
+  <button class="tab-btn"         onclick="goTo('azores',this)"><span class="tab-icon">🌋</span>The Azores</button>
+  <button class="tab-btn"         onclick="goTo('reading',this)"><span class="tab-icon">📖</span>Reading &amp; Exercises</button>
+  <button class="tab-btn"         onclick="goTo('speaking',this)"><span class="tab-icon">🎤</span>Writing &amp; Speaking</button>
+</nav>
+
+<!-- ══ WARM-UP ══ -->
+<div class="page active" id="page-warmup">
+  <div class="page-header">
+    <div class="page-eyebrow">Chapter 1</div>
+    <h2>Warm-Up — Last Lesson Recall</h2>
+    <p>Answer from memory first — then tap Reveal to check.</p>
+    <div class="fr-pill">Réponds de mémoire d'abord — puis tape Reveal pour vérifier.</div>
+  </div>
+  <div class="wrap">
+    <div class="card">
+      <div class="ret-q">
+        <span class="ret-num">1</span>
+        <div>
+          Give the past tense of: score · win · miss · equalise · hit
+          <div class="ret-fr">Donne le passé de : marquer · gagner · rater · égaliser · frapper</div>
+          <button class="reveal-btn" onclick="this.nextElementSibling.classList.add('show')">Reveal</button>
+          <div class="ret-reveal">score → <strong>scored</strong> · win → <strong>won</strong> · miss → <strong>missed</strong> · equalise → <strong>equalised</strong> · hit → <strong>hit</strong></div>
+        </div>
+      </div>
+      <div class="ret-q">
+        <span class="ret-num">2</span>
+        <div>
+          Make one negative and one question about the UCL final using past simple.
+          <div class="ret-fr">Fais une phrase négative et une question sur la finale de la LdC au passé simple.</div>
+          <button class="reveal-btn" onclick="this.nextElementSibling.classList.add('show')">Reveal</button>
+          <div class="ret-reveal">"Arsenal <strong>didn't win</strong> the trophy." · "<strong>Did</strong> Havertz <strong>score</strong> first?" — Always BASE form after didn't and Did!</div>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav"><span></span><button class="nav-btn primary" onclick="goTo('grammar')">Grammar →</button></div>
+  </div>
+</div>
+
+<!-- ══ GRAMMAR ══ -->
+<div class="page" id="page-grammar">
+  <div class="page-header">
+    <div class="page-eyebrow">Chapter 2</div>
+    <h2>Comparatives &amp; Superlatives</h2>
+    <p>Two tools for comparing things — one for 2 items, one for the most extreme.</p>
+    <div class="fr-pill">Deux outils pour comparer — "plus ___ que" et "le/la plus ___".</div>
+  </div>
+  <div class="wrap">
+    <div class="sec-label">The Three Forms</div>
+    <div class="three-col">
+      <div class="g-col">
+        <div class="g-col-head base">Base</div>
+        <div class="g-col-fr">🇫🇷 La forme normale</div>
+        <div class="g-col-rule">Just the adjective.<br><span class="kw">big · tall · beautiful</span></div>
+        <div class="g-col-ex">"The Azores is a <span class="hl">volcanic</span> island."</div>
+      </div>
+      <div class="g-col">
+        <div class="g-col-head comp">Comparative</div>
+        <div class="g-col-fr">🇫🇷 Compare 2 choses — "plus ___ que"</div>
+        <div class="g-col-rule">2 things. Always <span class="kw">"than"</span> after!<br><span class="kw">bigger than · more beautiful than</span></div>
+        <div class="g-col-ex">"The Azores is <span class="hl">greener than</span> Belgium."</div>
+      </div>
+      <div class="g-col">
+        <div class="g-col-head sup">Superlative</div>
+        <div class="g-col-fr">🇫🇷 Le plus extrême — "le/la plus ___"</div>
+        <div class="g-col-rule">Most extreme. Always <span class="kw">"the"</span> before!<br><span class="kw">the biggest · the most beautiful</span></div>
+        <div class="g-col-ex">"It is <span class="hl">the most remote</span> island."</div>
+      </div>
+    </div>
+
+    <div class="sec-label">How to Form Them</div>
+    <table class="gram-table">
+      <thead><tr><th>Type</th><th>Base</th><th>Comparative</th><th>Superlative</th><th>🇫🇷 Rule</th></tr></thead>
+      <tbody>
+        <tr><td class="t-short">Short (1 syllable)</td><td class="t-base">big · tall · hot · deep</td><td class="t-comp">bigger · taller · hotter · deeper</td><td class="t-sup">the biggest · the hottest</td><td class="t-fr">Add <strong>-er / -est</strong><br><small>CVC → double last letter<br>big→bigger · hot→hotter</small></td></tr>
+        <tr><td class="t-short">Ending -y</td><td class="t-base">pretty · rocky</td><td class="t-comp">prettier · rockier</td><td class="t-sup">the prettiest</td><td class="t-fr">Change <strong>-y → -ier / -iest</strong></td></tr>
+        <tr><td class="t-long">Long (2+ syllables)</td><td class="t-base">beautiful · volcanic · remote</td><td class="t-comp">more beautiful · more volcanic</td><td class="t-sup">the most beautiful</td><td class="t-fr">Add <strong>more / the most</strong> before</td></tr>
+        <tr><td class="t-irreg">Irregular ⚠️</td><td class="t-base">good · bad · far</td><td class="t-comp">better · worse · further</td><td class="t-sup">the best · the worst · the furthest</td><td class="t-fr">Must memorise!<br>good → better → <strong>the best</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="sec-label">3 Most Common Mistakes</div>
+    <div class="mistakes-box">
+      <div class="m-row"><span>1.</span><div><span class="m-bad">"more bigger than Belgium"</span> → <span class="m-good">"<strong>bigger</strong> than Belgium"</span><span class="m-fr">🇫🇷 Jamais "more" + "-er" ensemble — un seul à la fois !</span></div></div>
+      <div class="m-row"><span>2.</span><div><span class="m-bad">"the most biggest lake"</span> → <span class="m-good">"<strong>the biggest</strong> lake"</span><span class="m-fr">🇫🇷 Jamais "the most" + "-est" ensemble.</span></div></div>
+      <div class="m-row"><span>3.</span><div><span class="m-bad">"bigger Belgium"</span> → <span class="m-good">"bigger <strong>than</strong> Belgium"</span><span class="m-fr">🇫🇷 Le comparatif a TOUJOURS besoin de "than" après !</span></div></div>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-btn" onclick="goTo('warmup')">← Warm-Up</button>
+      <button class="nav-btn primary" onclick="goTo('azores')">The Azores →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ THE AZORES ══ -->
+<div class="page" id="page-azores">
+  <div class="page-header">
+    <div class="page-eyebrow">Chapter 3</div>
+    <h2>São Miguel — The Green Island</h2>
+    <p>Durim is here right now. Facts, scenes, and vocabulary.</p>
+    <div class="fr-pill">Durim est ici en ce moment. Faits, scènes et vocabulaire.</div>
+  </div>
+  <div class="wrap">
+    <div class="sec-label">Fast Facts</div>
+    <div class="facts-grid">
+      <div class="fact-card"><span class="fact-icon">🌍</span><div class="fact-label">Location</div><div class="fact-val">North Atlantic Ocean</div><div class="fact-text">1,500 km west of Lisbon — <strong>closer to Canada</strong> than to mainland Europe!</div></div>
+      <div class="fact-card"><span class="fact-icon">🇵🇹</span><div class="fact-label">Country</div><div class="fact-val">Portugal</div><div class="fact-text"><strong>9 islands</strong> in total. São Miguel is the largest, nicknamed "the Green Island".</div></div>
+      <div class="fact-card"><span class="fact-icon">🌋</span><div class="fact-label">Geology</div><div class="fact-val">Volcanic Island</div><div class="fact-text">Still active — <strong>hot springs</strong> everywhere. The earth literally boils in Furnas Valley.</div></div>
+      <div class="fact-card"><span class="fact-icon">💧</span><div class="fact-label">Sete Cidades</div><div class="fact-val">Twin Crater Lakes</div><div class="fact-text">One <strong>blue</strong>, one <strong>green</strong> — inside the same volcanic crater.</div></div>
+      <div class="fact-card"><span class="fact-icon">🌿</span><div class="fact-label">Climate</div><div class="fact-val">Subtropical</div><div class="fact-text"><strong>Greener</strong> than almost anywhere in Europe. Rain and sunshine — sometimes in the same hour.</div></div>
+      <div class="fact-card"><span class="fact-icon">🐋</span><div class="fact-label">Wildlife</div><div class="fact-val">Whale Capital</div><div class="fact-text">One of the <strong>best places in the world</strong> to see sperm whales — all year round.</div></div>
+    </div>
+
+    <div class="sec-label">Three Scenes</div>
+    <div class="scene-grid">
+      <div class="scene-wrap">
+        <svg viewBox="0 0 380 195" xmlns="http://www.w3.org/2000/svg" style="height:195px;">
+          <defs><linearGradient id="sc-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#060C14"/><stop offset="100%" stop-color="#0A1E28"/></linearGradient><radialGradient id="lb"><stop offset="0%" stop-color="#0080A0"/><stop offset="100%" stop-color="#004060"/></radialGradient><radialGradient id="lg"><stop offset="0%" stop-color="#006040"/><stop offset="100%" stop-color="#003020"/></radialGradient></defs>
+          <rect width="380" height="195" fill="url(#sc-sky)"/>
+          <path d="M0,195 L0,80 Q40,60 80,68 Q120,75 140,62 Q180,48 210,52 Q240,56 260,48 Q290,40 320,48 Q350,55 380,50 L380,195Z" fill="#0A2008"/>
+          <path d="M0,195 L0,95 Q40,78 80,84 Q120,88 140,76 Q170,62 200,66 Q230,70 250,62 Q275,54 300,60 Q330,65 360,58 L380,60 L380,195Z" fill="#0E2A0C"/>
+          <path d="M50,195 L50,130 Q80,115 110,120 Q140,125 160,115 Q190,105 220,110 Q245,115 260,125 L260,195Z" fill="#122812"/>
+          <ellipse cx="155" cy="152" rx="60" ry="29" fill="url(#lb)"/><ellipse cx="228" cy="147" rx="42" ry="21" fill="url(#lg)"/>
+          <path d="M105,150 Q130,145 155,150 Q175,154 195,150" stroke="rgba(0,200,240,0.2)" stroke-width="1.5" fill="none"/>
+          <circle cx="50" cy="20" r="1" fill="rgba(255,255,255,0.4)"/><circle cx="200" cy="15" r="1.2" fill="rgba(255,255,255,0.5)"/>
+        </svg>
+        <div class="scene-cap"><span class="sc-tag">Volcanic Crater</span><span class="sc-name">Sete Cidades</span></div>
+      </div>
+      <div class="scene-wrap">
+        <svg viewBox="0 0 240 195" xmlns="http://www.w3.org/2000/svg" style="height:195px;">
+          <rect width="240" height="195" fill="#06080A"/>
+          <circle cx="180" cy="22" r="14" fill="rgba(255,220,120,0.4)"/>
+          <path d="M0,195 L0,155 Q60,145 120,150 Q180,155 240,145 L240,195Z" fill="#0A1206"/>
+          <ellipse cx="70" cy="162" rx="28" ry="12" fill="#6B1400" opacity="0.85"/>
+          <ellipse cx="155" cy="158" rx="20" ry="9" fill="#8B1800" opacity="0.7"/>
+          <path d="M55,152 Q52,138 56,122" stroke="rgba(255,255,255,0.14)" stroke-width="3" fill="none"/>
+          <path d="M70,150 Q73,136 70,120" stroke="rgba(255,255,255,0.12)" stroke-width="2.5" fill="none"/>
+          <path d="M85,153 Q82,141 85,129" stroke="rgba(255,255,255,0.1)" stroke-width="2" fill="none"/>
+          <path d="M150,150 Q147,140 150,130" stroke="rgba(255,255,255,0.12)" stroke-width="2" fill="none"/>
+        </svg>
+        <div class="scene-cap"><span class="sc-tag">Geothermal</span><span class="sc-name">Furnas Valley</span></div>
+      </div>
+      <div class="scene-wrap">
+        <svg viewBox="0 0 240 195" xmlns="http://www.w3.org/2000/svg" style="height:195px;">
+          <defs><linearGradient id="ws" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#001828"/><stop offset="100%" stop-color="#003050"/></linearGradient></defs>
+          <rect width="240" height="195" fill="#040810"/>
+          <circle cx="180" cy="28" r="16" fill="rgba(240,220,150,0.5)"/>
+          <rect y="80" width="240" height="115" fill="url(#ws)"/>
+          <path d="M0,82 Q60,78 120,82 Q180,86 240,82" stroke="rgba(0,200,200,0.15)" stroke-width="1.5" fill="none"/>
+          <path d="M40,118 Q80,108 130,112 Q155,114 160,120 Q155,128 130,130 Q80,132 40,126Z" fill="#003858"/>
+          <ellipse cx="155" cy="121" rx="18" ry="11" fill="#004060"/>
+          <circle cx="160" cy="119" r="2.5" fill="rgba(0,200,200,0.6)"/>
+          <path d="M100,112 L95,96 L110,112Z" fill="#003050"/>
+          <path d="M38,120 L20,110 L28,122 L20,132 L38,124Z" fill="#003050"/>
+          <path d="M153,110 Q149,94 153,78" stroke="rgba(200,240,255,0.4)" stroke-width="2.5" fill="none"/>
+          <path d="M159,108 Q163,93 159,78" stroke="rgba(200,240,255,0.3)" stroke-width="2" fill="none"/>
+        </svg>
+        <div class="scene-cap"><span class="sc-tag">Wildlife</span><span class="sc-name">Whale Watching</span></div>
+      </div>
+    </div>
+
+    <div class="sec-label">Vocabulary — Tap once = French · Tap again = ✓</div>
+    <div class="vocab-grid" id="vocabGrid"></div>
+
+    <div class="page-nav">
+      <button class="nav-btn" onclick="goTo('grammar')">← Grammar</button>
+      <button class="nav-btn primary" onclick="goTo('reading')">Reading →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ READING + EXERCISES ══ -->
+<div class="page" id="page-reading">
+  <div class="page-header">
+    <div class="page-eyebrow">Chapter 4</div>
+    <h2>Reading &amp; Exercises</h2>
+    <p>Spot the comparatives (blue) and superlatives (gold) — then practise.</p>
+    <div class="fr-pill">Repère les comparatifs (bleu) et superlatifs (doré), puis practique !</div>
+  </div>
+  <div class="wrap">
+    <div class="read-tag t">🎤 Text A — Teacher reads · Micha listens</div>
+    <div class="reading-card t">
+      <div class="reading-title">An Island Unlike Any Other</div>
+      <div class="reading-body">
+        The Azores is one of the <span class="sup-hl">most isolated</span> archipelagos on Earth. São Miguel, the <span class="sup-hl">largest</span> island, sits in the Atlantic — <span class="comp-hl">further from Lisbon</span> than Lisbon is from London. The landscape is <span class="comp-hl">greener than</span> almost anywhere in Europe, and its volcanic lakes are <span class="comp-hl">deeper than</span> any lake in mainland Portugal. The <span class="sup-hl">most famous</span> of these is Sete Cidades — two differently coloured lakes inside the same crater.<br><br>
+        In Furnas Valley, the ground is <span class="comp-hl">hotter than</span> you would expect — locals cook food directly in the volcanic soil, a tradition <span class="comp-hl">older than</span> the oldest restaurants in Lisbon. Durim is here right now, on ground that is <span class="sup-hl">the most volcanically active</span> in all of Portugal.
+      </div>
+    </div>
+
+    <div class="read-tag s">📖 Text B — Micha reads</div>
+    <div class="reading-card s">
+      <div class="reading-title">The Whales and the Weather</div>
+      <div class="reading-body">
+        The Atlantic around São Miguel is <span class="comp-hl">colder than</span> the Mediterranean, but home to some of the <span class="sup-hl">most spectacular</span> marine life in the world. Sperm whales live here all year. They are <span class="comp-hl">bigger than</span> any land animal — their dives are <span class="comp-hl">deeper than</span> most submarines can go.<br><br>
+        The weather is <span class="comp-hl">more unpredictable than</span> in Belgium — rain and sunshine in the same morning. But the result is an island <span class="comp-hl">wilder than</span> California, <span class="comp-hl">more volcanic than</span> Samoa, and <span class="comp-hl">quieter than</span> Saint-Barths. It might be the <span class="sup-hl">most surprising</span> place in all of Durim's lessons.
+      </div>
+    </div>
+
+    <div class="sec-label">Exercises</div>
+    <div id="exerciseSection"></div>
+    <div style="text-align:center;margin-top:20px;">
+      <button class="check-btn" onclick="checkAll()">Check All Answers</button>
+    </div>
+    <div class="score-panel" id="scorePanel">
+      <div style="font-size:32px;margin-bottom:5px;" id="scoreTrophy">🌋</div>
+      <div class="score-big" id="scoreBig">0</div>
+      <div class="score-sub">Points scored</div>
+      <div class="score-msg" id="scoreMsg"></div>
+      <button class="retry-btn" onclick="resetAll()">↺ Try Again</button>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-btn" onclick="goTo('azores')">← The Azores</button>
+      <button class="nav-btn primary" onclick="goTo('speaking')">Writing &amp; Speaking →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ WRITING + SPEAKING ══ -->
+<div class="page" id="page-speaking">
+  <div class="page-header">
+    <div class="page-eyebrow">Chapter 5</div>
+    <h2>Writing &amp; Speaking</h2>
+    <p>Write 3–4 sentences, then speak. Fluency first — accuracy after.</p>
+    <div class="fr-pill">Écris 3–4 phrases, puis parle. La fluidité d'abord — la précision après.</div>
+  </div>
+  <div class="wrap">
+    <div class="sec-label">Writing — Click a starter to begin</div>
+    <div class="starter" onclick="insertStarter('The Azores is greener than ')">
+      <div class="starter-en">The Azores is <span class="comp">greener than</span> ___ because ___</div>
+      <div class="starter-fr">Les Açores sont <strong>plus vertes que</strong> ___ parce que ___ [comparatif court -er]</div>
+    </div>
+    <div class="starter" onclick="insertStarter('São Miguel is more volcanic than ')">
+      <div class="starter-en">São Miguel is <span class="comp">more volcanic than</span> ___ — it has ___</div>
+      <div class="starter-fr">São Miguel est <strong>plus volcanique que</strong> ___ [comparatif long avec "more"]</div>
+    </div>
+    <div class="starter" onclick="insertStarter('I think it is the most ')">
+      <div class="starter-en">I think it is <span class="sup">the most</span> ___ island I have studied because ___</div>
+      <div class="starter-fr">Je pense que c'est <strong>l'île la plus</strong> ___ [superlatif avec "the most"]</div>
+    </div>
+    <textarea class="writing-area" id="writingArea" placeholder="Start writing here… Click a starter above to begin!"></textarea>
+
+    <div class="sec-label" style="margin-top:20px;">Speaking</div>
+    <div class="sp-prompt">
+      <span class="sp-num">1</span>
+      <div class="sp-body">
+        <div class="sp-en">Compare the Azores to Belgium using <span class="hl">at least 3 comparatives.</span></div>
+        <div class="sp-fr">Compare les Açores à la Belgique — au moins 3 comparatifs.</div>
+      </div>
+      <span class="sp-level warm">Warm-up</span>
+    </div>
+    <div class="sp-prompt">
+      <span class="sp-num">2</span>
+      <div class="sp-body">
+        <div class="sp-en"><span class="hl">Durim is in the Azores right now.</span> Describe what you imagine it looks like — use comparatives and superlatives.</div>
+        <div class="sp-fr">Décris ce que tu imagines autour de Durim en ce moment — comparatifs et superlatifs.</div>
+      </div>
+      <span class="sp-level core">Core</span>
+    </div>
+    <div class="sp-prompt">
+      <span class="sp-num">3</span>
+      <div class="sp-body">
+        <div class="sp-en"><span class="hl">Which place from all our lessons is the most interesting?</span> Compare at least 3 places we've studied.</div>
+        <div class="sp-fr">Quel endroit de tous nos cours est le plus intéressant ? Compare au moins 3 endroits.</div>
+      </div>
+      <span class="sp-level challenge">Challenge</span>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-btn" onclick="goTo('reading')">← Reading</button>
+      <button class="nav-btn primary" onclick="goTo('warmup')">↺ Start Over</button>
+    </div>
+  </div>
+</div>
+
+<!-- TIMER BUBBLE -->
+<button class="timer-bubble" id="timerBubble" onclick="openPanel()">
+  <span class="bubble-time" id="bubbleTime">00:00</span>
+  <span class="bubble-label" id="bubbleLabel">session</span>
+</button>
+
+<!-- PANEL OVERLAY -->
+<div class="wb-overlay" id="wbOverlay" onclick="closePanel()"></div>
+
+<!-- PANEL -->
+<div class="wb-panel" id="wbPanel">
+  <div class="wb-handle-wrap" onclick="closePanel()"><div class="wb-handle"></div></div>
+  <div class="wb-inner">
+
+    <!-- Timer -->
+    <div class="wb-timer-box">
+      <div class="wb-timer-row">
+        <div class="wb-timer-display">
+          <div class="wb-main-time" id="mainTime">00:00</div>
+          <div class="wb-session-time" id="sessionLabel">Session: 00:00</div>
+        </div>
+        <div class="wb-controls">
+          <div class="wb-duration-row">
+            <span class="wb-dur-label">Countdown:</span>
+            <input type="number" class="wb-dur-input" id="durInput" value="5" min="1" max="99">
+            <span class="wb-dur-label">min</span>
+          </div>
+          <div class="wb-presets">
+            <button class="wb-preset" onclick="setPreset(3,this)">3</button>
+            <button class="wb-preset" onclick="setPreset(5,this)">5</button>
+            <button class="wb-preset" onclick="setPreset(10,this)">10</button>
+            <button class="wb-preset" onclick="setPreset(15,this)">15</button>
+          </div>
+          <div class="wb-timer-btns">
+            <button class="wb-tbtn go" id="startBtn" onclick="toggleCountdown()">▶ Start</button>
+            <button class="wb-tbtn" onclick="resetCountdown()">↺ Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stamps -->
+    <div class="sec-label" style="margin-top:0;">Stamps</div>
+    <div class="wb-stamps">
+      <button class="stamp"   onclick="addNote('✅ Correct!')">✅<br>Correct!</button>
+      <button class="stamp r" onclick="addNote('❌ Not quite')">❌<br>Not quite</button>
+      <button class="stamp g" onclick="addNote('🔁 Try again')">🔁<br>Try again</button>
+      <button class="stamp"   onclick="addNote('⭐ Great job!')">⭐<br>Great!</button>
+      <button class="stamp"   onclick="addNote('👂 Listen')">👂<br>Listen</button>
+      <button class="stamp"   onclick="addNote('🗣️ Say it!')">🗣️<br>Say it!</button>
+      <button class="stamp g" onclick="addNote('💡 Remember')">💡<br>Remember</button>
+      <button class="stamp"   onclick="addNote('📝 Write it')">📝<br>Write it</button>
+    </div>
+
+    <!-- Correction -->
+    <div class="sec-label">Correction</div>
+    <div class="wb-corr-row">
+      <input type="text" class="wb-corr-input" id="corrInput" placeholder="type correction — Enter to show">
+      <button class="wb-corr-send" onclick="showCorr()">Show</button>
+    </div>
+    <div class="wb-corr-display" id="corrDisplay">—</div>
+
+    <!-- Notes -->
+    <div class="sec-label">Notes</div>
+    <textarea class="wb-notes" id="wbNotes" placeholder="errors, vocab to review, Micha's sentences…"></textarea>
+
+    <div class="wb-footer">
+      <button class="wb-fbtn" onclick="exportNotes()">Copy notes</button>
+      <button class="wb-fbtn" onclick="clearAll()">Clear all</button>
+      <button class="wb-fbtn close" onclick="closePanel()">Close ✕</button>
+    </div>
+  </div>
+</div>
+
+<!-- EMOJI BURST -->
+<div class="emoji-burst" id="emojiBurst" onclick="closeBurst()">
+  <span class="burst-emoji" id="burstEmoji">😄</span>
+  <div class="burst-tap">Tap anywhere to continue</div>
+  <div class="burst-hint" id="burstHint">Can you make this face?</div>
+</div>
+
+<script>
+// ══ PAGES ══
+function goTo(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const b = btn || document.querySelector('.tab-btn[onclick*="' + id + '"]');
+  if (b) { b.classList.add('active'); b.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' }); }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ══ TIMER ══
+let sessionSec = 0, sessionInt = null, sessionGoing = false;
+let cdSec = 0, cdRunning = false, cdInt = null, cdArmed = false;
+
+function fmt(s) { return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0'); }
+
+function startSession() {
+  if (!sessionGoing) {
+    sessionGoing = true;
+    sessionInt = setInterval(() => {
+      sessionSec++;
+      document.getElementById('sessionLabel').textContent = 'Session: ' + fmt(sessionSec);
+      if (!cdRunning) updateBubble(false);
+    }, 1000);
+  }
+}
+
+function updateBubble(countdown) {
+  const bt = document.getElementById('bubbleTime');
+  const bl = document.getElementById('bubbleLabel');
+  if (countdown) {
+    bt.textContent = fmt(cdSec);
+    bt.className = 'bubble-time countdown' + (cdSec <= 30 ? ' urgent' : '');
+    bl.textContent = 'countdown';
+  } else {
+    bt.textContent = fmt(sessionSec);
+    bt.className = 'bubble-time';
+    bl.textContent = 'session';
+  }
+}
+
+function setPreset(m, btn) {
+  document.getElementById('durInput').value = m;
+  document.querySelectorAll('.wb-preset').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function toggleCountdown() {
+  if (!cdArmed) {
+    const mins = parseInt(document.getElementById('durInput').value) || 5;
+    cdSec = mins * 60;
+    cdArmed = true;
+  }
+  if (cdRunning) {
+    clearInterval(cdInt); cdRunning = false;
+    document.getElementById('startBtn').textContent = '▶ Resume';
+  } else {
+    startSession(); cdRunning = true;
+    document.getElementById('startBtn').textContent = '⏸ Pause';
+    cdInt = setInterval(() => {
+      cdSec--;
+      document.getElementById('mainTime').textContent = fmt(cdSec);
+      document.getElementById('mainTime').classList.toggle('urgent', cdSec <= 30 && cdSec > 0);
+      updateBubble(true);
+      if (cdSec <= 0) {
+        clearInterval(cdInt); cdRunning = false; cdArmed = false;
+        document.getElementById('startBtn').textContent = '▶ Start';
+        updateBubble(false);
+        triggerBurst();
+      }
+    }, 1000);
+  }
+}
+
+function resetCountdown() {
+  clearInterval(cdInt); cdRunning = false; cdArmed = false;
+  cdSec = 0;
+  document.getElementById('startBtn').textContent = '▶ Start';
+  document.getElementById('mainTime').textContent = '00:00';
+  document.getElementById('mainTime').classList.remove('urgent');
+  updateBubble(false);
+}
+
+// ══ PANEL ══
+function openPanel()  { document.getElementById('wbPanel').classList.add('open'); document.getElementById('wbOverlay').classList.add('show'); }
+function closePanel() { document.getElementById('wbPanel').classList.remove('open'); document.getElementById('wbOverlay').classList.remove('show'); }
+
+// ══ EMOJI BURST ══
+const EMOJIS = ['😄','🤩','😱','🥶','🥵','😤','🤔','😴','🥳','😬','🫡','🥺','😎','🤯','🫠','😵','🤭','😇','😈','🫣'];
+
+function triggerBurst() {
+  const e = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+  const el = document.getElementById('burstEmoji');
+  el.textContent = e;
+  // Reset animation
+  el.style.animation = 'none'; el.offsetHeight; el.style.animation = '';
+  document.getElementById('emojiBurst').classList.add('show');
+  closePanel();
+}
+
+function closeBurst() { document.getElementById('emojiBurst').classList.remove('show'); }
+
+// ══ WHITEBOARD ══
+function showCorr() {
+  const v = document.getElementById('corrInput').value.trim();
+  if (v) document.getElementById('corrDisplay').textContent = v;
+}
+document.getElementById('corrInput').addEventListener('keydown', e => { if (e.key === 'Enter') showCorr(); });
+
+function addNote(text) {
+  const n = document.getElementById('wbNotes');
+  n.value += (n.value ? '\n' : '') + '[' + fmt(sessionSec) + '] ' + text;
+  n.scrollTop = n.scrollHeight;
+}
+
+function clearAll() {
+  document.getElementById('wbNotes').value = '';
+  document.getElementById('corrDisplay').textContent = '—';
+  document.getElementById('corrInput').value = '';
+}
+
+function exportNotes() {
+  navigator.clipboard?.writeText(document.getElementById('wbNotes').value || '').then(() => {
+    const btn = document.querySelector('.wb-fbtn');
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => btn.textContent = 'Copy notes', 2000);
+  });
+}
+
+// ══ VOCAB ══
+const vocab = [
+  {en:'volcano',fr:'volcan',icon:'🌋'},{en:'crater',fr:'cratère',icon:'⭕'},
+  {en:'lake',fr:'lac',icon:'💧'},{en:'isolated',fr:'isolé',icon:'🏝️'},
+  {en:'lush',fr:'luxuriant',icon:'🌿'},{en:'unpredictable',fr:'imprévisible',icon:'⛅'},
+  {en:'remote',fr:'éloigné',icon:'📍'},{en:'spectacular',fr:'spectaculaire',icon:'✨'},
+  {en:'subtropical',fr:'subtropical',icon:'🌴'},{en:'archipelago',fr:'archipel',icon:'🗺️'},
+  {en:'hydrangea',fr:'hortensia',icon:'💐'},{en:'submarine',fr:'sous-marin',icon:'🤿'},
+];
+
+function buildVocab() {
+  const g = document.getElementById('vocabGrid');
+  vocab.forEach(v => {
+    const c = document.createElement('div'); c.className = 'vocab-card';
+    c.innerHTML = '<span class="vc-icon">'+v.icon+'</span><span class="vc-en">'+v.en+'</span><span class="vc-fr">'+v.fr+'</span><span class="vc-hint">tap · tap = ✓</span>';
+    let n = 0;
+    c.onclick = function() { n++; if(n===1) c.classList.add('flipped'); else if(n===2) c.classList.add('done'); else { c.classList.remove('flipped','done'); n=0; } };
+    g.appendChild(c);
+  });
+}
+
+// ══ EXERCISES ══
+const exercises = [
+  {type:'fill1',q:'São Miguel is ___ (green) than Belgium.',blank:'greener',hint:'green → comparative',fr:'"plus vert(e) que" → adjectif court, ajoute -er',note:'Short adjective: add -er. Never "more greener"!',diff:'easy'},
+  {type:'fill1',q:'The crater lakes are ___ (deep) than any lake in Belgium.',blank:'deeper',hint:'deep → comparative',fr:'"plus profond(e) que" → CVC: double the p! deep → deeper',note:'CVC: double the final letter. deep → deeper',diff:'easy'},
+  {type:'fill1',q:'The Azores is ___ (far) from Europe than most people think.',blank:'further',hint:'far → IRREGULAR!',fr:'"plus loin que" → irrégulier: far → further (jamais "more far"!)',note:'IRREGULAR: far → further → furthest',diff:'medium'},
+  {type:'fill1',q:'The weather in São Miguel is ___ (unpredictable) than in Portugal.',blank:'more unpredictable',hint:'unpredictable → long adjective',fr:'"plus imprévisible que" → adjectif long, utilise "more"',note:'Long adjective: "more" before it. Never "unpredictabler"!',diff:'medium'},
+  {type:'fill2',q:"The Azores is ___ (good) for whale watching than Saint-Barths, and ___ (far) from Belgium.",blanks:['better','further'],hints:['good → IRREGULAR','far → IRREGULAR'],fr:'"meilleur que" = better · "plus loin que" = further (both irregular!)',note:'Two irregulars in one! good→better, far→further',diff:'hard'},
+  {type:'mc',q:'Sete Cidades is ___ volcanic lake in Portugal.',opts:['the most beautiful','the more beautiful','most beautiful','the beautifulest'],ans:'the most beautiful',fr:'"le plus beau lac" → superlatif long = "the most ___"',note:'Long adjective superlative: the most beautiful.',diff:'easy',label:'superlative'},
+  {type:'mc',q:'Sperm whales make ___ dives of any mammal on Earth.',opts:['the deeper','the most deep','the deepest','most deepest'],ans:'the deepest',fr:'"les plongées les plus profondes" → superlatif court = "the ___est"',note:'Short adjective: the deepest. Not "the most deep"!',diff:'medium',label:'superlative'},
+  {type:'mc',q:'❌ Which sentence is WRONG?',opts:['São Miguel is greener than Belgium.','It is the most isolated island.','The lake is more deeper than expected.','Sperm whales are bigger than elephants.'],ans:'The lake is more deeper than expected.',fr:'"more deeper" est FAUX — jamais "more" + "-er" ensemble !',note:'Never "more deeper". Either "deeper" OR "more deep"!',diff:'hard',label:'find the mistake'},
+  {type:'mc',q:'The hydrangeas grow ___ than any flowers in Belgium.',opts:['more tall','tallest','taller','most tall'],ans:'taller',fr:'"plus hautes que" → comparatif court = tall + -er',note:'Comparative (2 things): taller than.',diff:'easy',label:'comparative'},
+];
+
+function buildExercises() {
+  const sec = document.getElementById('exerciseSection'); sec.innerHTML = '';
+  exercises.forEach(function(ex, i) {
+    const card = document.createElement('div'); card.className = 'ex-card';
+    const dh = '<span class="ex-diff '+ex.diff+'">'+ex.diff.toUpperCase()+'</span>';
+    if (ex.type === 'fill1') {
+      card.innerHTML = '<div class="ex-label">Fill in the blank '+dh+'</div><div class="ex-fr">'+ex.fr+'</div><div class="ex-note">'+ex.note+'</div><div class="ex-q">'+ex.q.replace('___','<span style="color:var(--comp);font-weight:800"> ___ </span>')+'</div><input type="text" class="fill-input" id="fi_'+i+'" placeholder="your answer…" autocomplete="off" spellcheck="false"><div class="ex-reveal" id="fr_'+i+'">Answer: <strong>'+ex.blank+'</strong></div>';
+    } else if (ex.type === 'fill2') {
+      const pts = ex.q.split('___');
+      card.innerHTML = '<div class="ex-label">Fill both blanks '+dh+'</div><div class="ex-fr">'+ex.fr+'</div><div class="ex-note">'+ex.note+'</div><div class="ex-q" style="display:flex;align-items:center;flex-wrap:wrap;gap:4px;">'+pts[0]+'<input type="text" class="fill-input" id="fi_'+i+'_a" placeholder="…" autocomplete="off" spellcheck="false" style="width:110px;display:inline-block;margin:0 3px;">'+pts[1]+'<input type="text" class="fill-input" id="fi_'+i+'_b" placeholder="…" autocomplete="off" spellcheck="false" style="width:110px;display:inline-block;margin:0 3px;">'+(pts[2]||'')+'</div><div class="ex-reveal" id="fr_'+i+'">Answers: <strong>'+ex.blanks[0]+'</strong> / <strong>'+ex.blanks[1]+'</strong></div>';
+    } else {
+      const sh = ex.opts.slice().sort(function(){return Math.random()-.5;});
+      card.innerHTML = '<div class="ex-label">Multiple choice — '+ex.label+' '+dh+'</div><div class="ex-fr">'+ex.fr+'</div><div class="ex-note">'+ex.note+'</div><div class="ex-q">'+ex.q+'</div><div class="mc-opts" id="mo_'+i+'">'+sh.map(function(o){return '<button class="mc-btn" data-qi="'+i+'" data-val="'+encodeURIComponent(o)+'" onclick="pickMC(this)">'+o+'</button>';}).join('')+'</div><div class="ex-reveal" id="fr_'+i+'">Answer: <strong>'+ex.ans+'</strong></div>';
+    }
+    sec.appendChild(card);
+  });
+}
+
+function pickMC(btn) {
+  const qi = btn.dataset.qi;
+  document.querySelectorAll('#mo_'+qi+' .mc-btn').forEach(function(b){b.disabled=true;});
+  if (decodeURIComponent(btn.dataset.val) === exercises[qi].ans) { btn.classList.add('correct'); }
+  else { btn.classList.add('wrong'); document.querySelectorAll('#mo_'+qi+' .mc-btn').forEach(function(b){if(decodeURIComponent(b.dataset.val)===exercises[qi].ans)b.classList.add('correct');}); }
+}
+
+function checkAll() {
+  let s=0, t=0;
+  exercises.forEach(function(ex,i){
+    if (ex.type==='fill1') {
+      t++; const inp=document.getElementById('fi_'+i);
+      if (inp && inp.value.trim().toLowerCase()===ex.blank.toLowerCase()){inp.classList.add('correct');s++;}
+      else{if(inp)inp.classList.add('wrong');document.getElementById('fr_'+i).classList.add('show');}
+      if(inp)inp.disabled=true;
+    } else if (ex.type==='fill2') {
+      t+=2;
+      const a=document.getElementById('fi_'+i+'_a'), b=document.getElementById('fi_'+i+'_b');
+      if(a&&a.value.trim().toLowerCase()===ex.blanks[0].toLowerCase()){a.classList.add('correct');s++;}else{if(a)a.classList.add('wrong');document.getElementById('fr_'+i).classList.add('show');}
+      if(b&&b.value.trim().toLowerCase()===ex.blanks[1].toLowerCase()){b.classList.add('correct');s++;}else{if(b)b.classList.add('wrong');document.getElementById('fr_'+i).classList.add('show');}
+      if(a)a.disabled=true; if(b)b.disabled=true;
+    } else {
+      t++;
+      const c=document.querySelector('#mo_'+i+' .mc-btn.correct'), w=document.querySelector('#mo_'+i+' .mc-btn.wrong');
+      if(c&&!w)s++; else document.getElementById('fr_'+i).classList.add('show');
+      document.querySelectorAll('#mo_'+i+' .mc-btn').forEach(function(b){b.disabled=true;});
+    }
+  });
+  const pct=s/t;
+  let msg, trophy;
+  if(pct>=.9){msg="Comparatives and superlatives: mastered!";trophy="🏆";}
+  else if(pct>=.75){msg="Excellent — nearly perfect!";trophy="🌋";}
+  else if(pct>=.55){msg="Good effort — re-read the Grammar page!";trophy="🐋";}
+  else{msg="Go back to Grammar and re-read the rules.";trophy="💧";}
+  document.getElementById('scoreBig').textContent=s+'/'+t;
+  document.getElementById('scoreMsg').textContent=msg;
+  document.getElementById('scoreTrophy').textContent=trophy;
+  document.getElementById('scorePanel').classList.add('show');
+}
+
+function resetAll(){document.getElementById('scorePanel').classList.remove('show');buildExercises();}
+
+function insertStarter(text){
+  const ta=document.getElementById('writingArea');
+  if(ta.value&&!ta.value.endsWith('\n'))ta.value+='\n';
+  ta.value+=text; ta.focus(); ta.setSelectionRange(ta.value.length,ta.value.length);
+}
+
+buildVocab();
+buildExercises();
+</script>
+</body>
+</html>
