@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE FOOTBALL GAZETTE — Match Report</title>
+<link href="https://fonts.googleapis.com/css2?family=600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper:   #F8F4EC;
+  --paper2:  #F2EDE0;
+  --paper3:  #EDE7D4;
+  --ink:     #1A1510;
+  --ink2:    #2C2518;
+  --red:     #CC2200;
+  --blue:    #003399;
+  --gold:    #B8860B;
+  --fr:      #8B6914;
+  --grey:    #6A6050;
+  --border:  rgba(26,21,16,0.15);
+  --border2: rgba(26,21,16,0.08);
+  --green:   #1A6A2A;
+  --correct: rgba(26,106,42,0.08);
+  --wrong:   rgba(204,34,0,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: #C8B888;
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ══ LAYOUT ══ */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 290px;
+  max-width: 1120px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.main { min-width: 0; padding-bottom: 100px; background: var(--paper); }
+
+/* ══ MASTHEAD ══ */
+.masthead {
+  background: var(--ink);
+  padding: 8px 0 6px;
+  text-align: center;
+  border-bottom: 4px double rgba(255,255,255,0.15);
+}
+
+.masthead-top {
+  font-family: Arial, sans-serif;
+  font-size: 9px; letter-spacing: 4px;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase; margin-bottom: 4px;
+}
+
+.masthead-title {
+  font-family: '
+  font-size: clamp(26px, 5vw, 46px);
+  color: white; letter-spacing: 2px; line-height: 1;
+  margin-bottom: 3px;
+}
+
+.masthead-sub {
+  font-family: Arial, sans-serif;
+  font-size: 9px; color: rgba(255,255,255,0.4);
+  letter-spacing: 3px; text-transform: uppercase;
+}
+
+/* ══ RESULT BANNER ══ */
+.result-banner {
+  background: var(--ink2);
+  padding: 12px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-bottom: 3px solid var(--gold);
+  flex-wrap: wrap;
+}
+
+.rb-team {
+  font-family: Arial, sans-serif;
+  font-size: clamp(14px, 2.5vw, 20px);
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.rb-team.arsenal { color: #EF0107; }
+.rb-team.psg { color: #6688FF; }
+
+.rb-score {
+  text-align: center;
+  flex: 1;
+}
+
+.rb-score-main {
+  font-family: Arial, sans-serif;
+  font-size: clamp(28px, 6vw, 50px);
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.rb-score-detail {
+  font-family: Arial, sans-serif;
+  font-size: 9px; color: rgba(255,255,255,0.4);
+  letter-spacing: 2px; margin-top: 3px;
+  text-transform: uppercase;
+}
+
+.rb-score-detail strong { color: #FF4444; }
+
+.rb-scorers {
+  font-family: Arial, sans-serif;
+  font-size: 9px; color: rgba(255,255,255,0.35);
+  letter-spacing: 1px; margin-top: 2px; line-height: 1.7;
+}
+
+/* ══ LESSON PLAN ══ */
+.plan-strip {
+  background: var(--paper2);
+  border-bottom: 2px solid var(--border);
+  padding: 8px 24px;
+  display: flex; align-items: center; gap: 0; overflow-x: auto;
+}
+
+.plan-item {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 5px 14px; border-right: 1px solid var(--border); flex-shrink: 0;
+}
+.plan-item:last-child { border-right: none; }
+
+.plan-time { font-family: Arial, sans-serif; font-size: 16px; font-weight: 400; color: var(--red); }
+.plan-desc { font-family: Arial, sans-serif; font-size: 8px; font-weight: 400; letter-spacing: 1px; color: var(--grey); text-transform: uppercase; margin-top: 1px; text-align: center; max-width: 90px; }
+
+/* ══ TIMER ══ */
+.timer-bar {
+  background: var(--paper2);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 24px;
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+
+.t-num {
+  font-family: Arial, sans-serif;
+  font-size: 26px; font-weight: 700;
+  letter-spacing: 2px; color: var(--red); min-width: 62px;
+}
+.t-num.urgent { animation: tp .5s ease infinite alternate; }
+@keyframes tp { from{transform:scale(1)} to{transform:scale(1.08)} }
+
+.t-btn {
+  background: transparent; border: 1px solid var(--border);
+  color: var(--ink); font-family: Arial, sans-serif;
+  font-size: 10px; font-weight: 700;
+  padding: 4px 12px; cursor: pointer; letter-spacing: 1px; transition: all .15s;
+}
+.t-btn:hover, .t-btn.go { background: var(--ink); color: var(--paper); }
+
+.t-pre {
+  background: transparent; border: 1px solid var(--border2);
+  color: var(--grey); font-family: Arial, sans-serif;
+  font-size: 10px; font-weight: 700;
+  padding: 3px 9px; cursor: pointer; transition: all .15s;
+}
+.t-pre:hover, .t-pre.active { background: var(--ink); color: var(--paper); }
+
+/* ══ WRAP ══ */
+.wrap { padding: 20px 28px 0; }
+
+/* ══ SEC HEADS ══ */
+.sh {
+  display: flex; align-items: center; gap: 12px;
+  margin: 24px 0 14px;
+  border-bottom: 2px solid var(--ink); padding-bottom: 6px;
+}
+.sh-num { font-family: Arial, sans-serif; font-size: 9px; letter-spacing: 3px; color: var(--grey); }
+.sh-title { font-family: Arial, sans-serif; font-size: clamp(16px, 2.5vw, 21px); font-weight: 400;  color: var(--ink); }
+.sh-line { flex: 1; }
+.sh-time { font-family: Arial, sans-serif; font-size: 9px; letter-spacing: 1px; color: var(--red); font-weight: 700; background: rgba(204,34,0,0.07); border: 1px solid rgba(204,34,0,0.18); padding: 2px 8px; }
+
+/* ══ RETRIEVAL ══ */
+.retrieval-card {
+  background: var(--paper2); border: 1px solid var(--border);
+  border-left: 4px solid var(--ink); padding: 16px 18px; margin-bottom: 10px;
+}
+.retrieval-title { font-family: Arial, sans-serif; font-size: 10px; letter-spacing: 3px; color: var(--ink); margin-bottom: 12px; text-transform: uppercase; font-weight: 700; }
+.retrieval-q { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; font-size: 14px; font-weight: 700; color: var(--ink2); line-height: 1.5; }
+.rq-num { font-family: Arial, sans-serif; font-size: 22px; font-weight: 400; color: var(--red); flex-shrink: 0; width: 20px; line-height: 1.1; }
+.rq-fr { font-family: Arial, sans-serif; font-size: 10px; color: var(--fr); margin-top: 3px; font-weight: 700; line-height: 1.5;  }
+.retrieval-reveal { background: white; border: 1px solid var(--border); padding: 7px 12px; font-size: 13px; font-weight: 700; color: var(--blue); margin-top: 4px; display: none; }
+.retrieval-reveal.show { display: block; }
+.reveal-btn { background: transparent; border: 1px solid var(--border); color: var(--grey); font-family: Arial, sans-serif; font-size: 9px; font-weight: 400; letter-spacing: 1px; padding: 3px 10px; cursor: pointer; transition: all .15s; margin-top: 5px; display: inline-block; }
+.reveal-btn:hover { background: var(--ink); color: var(--paper); }
+
+/* ══ GRAMMAR CARD ══ */
+.grammar-card {
+  background: white; border: 1px solid var(--border);
+  border-top: 3px solid var(--ink);
+  padding: 18px 20px; margin-bottom: 12px;
+}
+
+.grammar-card-title {
+  font-family: Arial, sans-serif;
+  font-size: 16px; font-weight: 700; 
+  color: var(--ink); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+
+.grammar-table {
+  width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px;
+}
+
+.grammar-table thead tr { background: var(--ink); }
+.grammar-table thead th { padding: 8px 12px; font-family: Arial, sans-serif; font-size: 9px; letter-spacing: 2px; color: rgba(255,255,255,0.7); text-align: left; text-transform: uppercase; font-weight: 700; }
+
+.grammar-table tbody tr { background: white; border-bottom: 1px solid var(--border2); transition: background .15s; }
+.grammar-table tbody tr:hover { background: var(--paper2); }
+.grammar-table tbody td { padding: 9px 12px; vertical-align: top; }
+
+.gt-type { font-family: Arial, sans-serif; font-size: 9px; font-weight: 400; letter-spacing: 1px; text-transform: uppercase; }
+.gt-type.pos { color: var(--green); }
+.gt-type.neg { color: var(--red); }
+.gt-type.q { color: var(--blue); }
+
+.gt-formula { font-family: Arial, sans-serif; font-size: 11px; font-weight: 400; color: var(--ink); line-height: 1.6; }
+.gt-formula .kw { color: var(--blue); }
+.gt-formula .vb { color: var(--red); }
+
+.gt-example { font-size: 13px; font-weight: 700; color: var(--ink2);  line-height: 1.6; }
+.gt-example .hl { color: var(--red); font-weight: 800; font-style: normal; }
+
+.gt-fr { font-family: Arial, sans-serif; font-size: 10px; color: var(--fr);  font-weight: 700; line-height: 1.5; }
+
+.verb-rule {
+  background: var(--paper2); border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  padding: 10px 14px; font-size: 13px; font-weight: 700;
+  color: var(--ink2); line-height: 1.7;
+}
+
+.verb-rule .fr { font-family: Arial, sans-serif; font-size: 10px; color: var(--fr); font-weight: 700;  }
+
+/* ══ VERB BANK ══ */
+.verb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  margin-bottom: 12px;
+}
+
+.verb-card {
+  background: white; padding: 10px 12px;
+  cursor: pointer; transition: all .2s;
+  position: relative; overflow: hidden;
+}
+.verb-card::before { content: ''; position: absolute; inset: 0; background: var(--ink); opacity: 0; transition: opacity .2s; }
+.verb-card:hover { background: var(--paper2); }
+.verb-card.flipped::before { opacity: 1; }
+.verb-card.flipped .vc-pre { color: rgba(255,255,255,0.5); position: relative; z-index: 1; }
+.verb-card.flipped .vc-past { color: var(--gold); position: relative; z-index: 1; }
+.verb-card.flipped .vc-fr { opacity: 1; color: rgba(255,208,96,0.7); position: relative; z-index: 1; }
+.verb-card.flipped .vc-hint { opacity: 0; }
+.verb-card.done { outline: 2px solid var(--green); background: rgba(26,106,42,0.08) !important; }
+.verb-card.done::before { background: rgba(26,106,42,0.12) !important; opacity: 1 !important; }
+.verb-card.done .vc-pre { color: var(--green) !important; position: relative; z-index: 1; }
+.verb-card.done .vc-past { color: var(--green) !important; position: relative; z-index: 1; }
+.verb-card.done .vc-fr { opacity: 1; color: var(--green) !important; position: relative; z-index: 1; }
+.verb-card.done .vc-arrow { color: var(--green) !important; position: relative; z-index: 1; }
+.verb-card.done::after { content: '✓ learned'; position: absolute; top: 4px; right: 6px; font-size: 9px; color: var(--green); font-weight: 800; z-index: 2; font-family: Arial, sans-serif; letter-spacing: 1px; }
+
+.vc-pre { font-family: Arial, sans-serif; font-size: 11px; color: var(--grey); display: block; position: relative; z-index: 1; }
+.vc-arrow { font-size: 10px; color: var(--border); margin: 1px 0; display: block; position: relative; z-index: 1; }
+.vc-past { font-family: Arial, sans-serif; font-size: 15px; font-weight: 400; color: var(--red); display: block; position: relative; z-index: 1; }
+.vc-fr { font-family: Arial, sans-serif; font-size: 9px; font-weight: 400; color: var(--grey); opacity: 0; transition: opacity .2s; display: block; margin-top: 2px; }
+.vc-hint { font-family: Arial, sans-serif; font-size: 8px; color: var(--gold); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; position: relative; z-index: 1; }
+
+/* ══ MATCH FACTS ══ */
+.match-facts-card {
+  background: var(--paper2); border: 1px solid var(--border);
+  padding: 16px 20px; margin-bottom: 12px;
+}
+
+.mf-title {
+  font-family: Arial, sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--ink);
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border); padding-bottom: 6px;
+}
+
+.mf-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+
+.mf-row {
+  display: flex; flex-direction: column; gap: 2px;
+  background: white; border: 1px solid var(--border); padding: 8px 10px;
+}
+
+.mf-label { font-family: Arial, sans-serif; font-size: 8px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; color: var(--grey); }
+.mf-val { font-family: Arial, sans-serif; font-size: 15px; font-weight: 400; color: var(--ink); }
+.mf-fr { font-family: Arial, sans-serif; font-size: 9px; color: var(--fr);  font-weight: 700; margin-top: 1px; }
+
+/* ══ FRENCH FREE WRITE ══ */
+.french-zone {
+  background: rgba(184,134,11,0.05);
+  border: 2px solid rgba(184,134,11,0.25);
+  border-radius: 0;
+  padding: 18px 20px;
+  margin-bottom: 8px;
+}
+
+.fz-title {
+  font-family: Arial, sans-serif;
+  font-size: 18px; font-weight: 900; 
+  color: var(--ink); margin-bottom: 4px;
+  display: flex; align-items: center; gap: 10px;
+}
+
+.fz-sub {
+  font-family: Arial, sans-serif;
+  font-size: 10px; color: var(--fr); font-weight: 700;
+  margin-bottom: 14px;  line-height: 1.6;
+}
+
+.fz-prompt {
+  background: white; border: 1px solid var(--border);
+  padding: 12px 14px; margin-bottom: 12px;
+  font-size: 14px; font-weight: 700; color: var(--ink2);
+  line-height: 1.7;
+}
+
+.fz-prompt .fr { color: var(--fr);  }
+.fz-prompt .hl { color: var(--red); font-weight: 800; }
+
+.fz-textarea {
+  width: 100%; min-height: 120px;
+  background: white; border: 1px solid var(--border);
+  padding: 12px 14px; font-family: 'Nunito', sans-serif;
+  font-size: 14px; font-weight: 700; color: var(--ink);
+  resize: vertical; outline: none; line-height: 1.7;
+  caret-color: var(--red); transition: border-color .2s;
+}
+.fz-textarea:focus { border-color: rgba(184,134,11,0.4); box-shadow: 0 0 0 3px rgba(184,134,11,0.07); }
+.fz-textarea::placeholder { color: rgba(26,21,16,0.3);  font-size: 13px; }
+
+/* Translation zone */
+.translation-zone {
+  background: rgba(0,51,153,0.04);
+  border: 1px solid rgba(0,51,153,0.15);
+  border-left: 3px solid var(--blue);
+  padding: 14px 18px; margin-top: 10px;
+}
+
+.tz-title {
+  font-family: Arial, sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--blue); margin-bottom: 8px;
+}
+
+.tz-sub { font-size: 12px; font-weight: 700; color: var(--grey); margin-bottom: 10px; line-height: 1.6; }
+
+.tz-rows { display: flex; flex-direction: column; gap: 8px; }
+
+.tz-row {
+  display: grid; grid-template-columns: 22px 1fr 1fr; gap: 6px;
+  align-items: start;
+}
+
+.tz-num { font-family: Arial, sans-serif; font-size: 16px; font-weight: 400; color: var(--grey); padding-top: 5px; }
+
+.tz-input {
+  background: var(--paper2); border: 1px solid var(--border);
+  padding: 7px 10px; font-family: 'Nunito', sans-serif;
+  font-size: 13px; font-weight: 700; color: var(--ink);
+  outline: none; caret-color: var(--red); width: 100%;
+  transition: border-color .2s;
+}
+.tz-input:focus { border-color: var(--blue); }
+.tz-input::placeholder { color: rgba(26,21,16,0.3); font-size: 11px;  }
+.tz-input.fr-side { border-left: 2px solid var(--fr); }
+.tz-input.en-side { border-left: 2px solid var(--blue); }
+
+/* ══ REPORT BUILDER ══ */
+.report-intro {
+  background: var(--ink); color: var(--paper);
+  padding: 16px 20px; margin-bottom: 2px;
+  display: flex; align-items: center; gap: 14px;
+}
+
+.report-intro-icon { font-size: 32px; flex-shrink: 0; }
+.report-intro-text { flex: 1; }
+
+.report-intro h3 {
+  font-family: Arial, sans-serif;
+  font-size: 18px; font-weight: 900; 
+  color: var(--gold); margin-bottom: 4px;
+}
+
+.report-intro p {
+  font-family: Arial, sans-serif;
+  font-size: 10px; color: rgba(255,255,255,0.5);
+  letter-spacing: 1px; line-height: 1.6;
+}
+
+/* Paragraph blocks */
+.para-block {
+  background: white; border: 1px solid var(--border);
+  padding: 18px 20px; margin-bottom: 2px;
+}
+
+.para-num {
+  font-family: Arial, sans-serif;
+  font-size: 9px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--grey);
+  margin-bottom: 5px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.para-label {
+  font-family: Arial, sans-serif;
+  font-size: 14px; font-weight: 700; color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.para-fr {
+  font-family: Arial, sans-serif;
+  font-size: 10px; color: var(--fr); font-weight: 700;
+   margin-bottom: 12px; line-height: 1.6;
+  padding: 6px 10px; background: rgba(184,134,11,0.05);
+  border-left: 2px solid var(--fr);
+}
+.para-fr::before { content: '🇫🇷 '; }
+
+.para-template {
+  font-size: 14px; font-weight: 600; line-height: 2.2;
+  color: var(--ink2); margin-bottom: 8px;
+}
+
+/* Inline fill inputs */
+.inline-input {
+  display: inline-block;
+  background: var(--paper2); border-bottom: 2px solid var(--red);
+  border-top: none; border-left: none; border-right: none;
+  padding: 2px 8px; font-family: Arial, sans-serif;
+  font-size: 14px; font-weight: 700; color: var(--red);
+  outline: none; min-width: 100px; max-width: 220px;
+  transition: border-color .2s; caret-color: var(--red);
+  vertical-align: baseline;
+}
+.inline-input:focus { border-bottom-color: var(--blue); background: rgba(0,51,153,0.04); color: var(--blue); }
+.inline-input::placeholder { color: rgba(26,21,16,0.3); font-size: 13px; font-family: Arial, sans-serif; }
+
+.para-textarea {
+  width: 100%; min-height: 80px;
+  background: var(--paper2); border: 1px solid var(--border);
+  padding: 10px 12px; font-family: 'Nunito', sans-serif;
+  font-size: 14px; font-weight: 700; color: var(--ink);
+  resize: vertical; outline: none; line-height: 1.7;
+  caret-color: var(--red); transition: border-color .2s;
+}
+.para-textarea:focus { border-color: var(--red); }
+.para-textarea::placeholder { color: rgba(26,21,16,0.3); font-size: 12px;  }
+
+/* PUBLISH BUTTON */
+.publish-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--ink); color: var(--paper);
+  border: none; padding: 14px 32px;
+  font-family: Arial, sans-serif;
+  font-size: 20px;  font-weight: 900;
+  cursor: pointer; box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+  transition: all .15s; letter-spacing: 1px;
+}
+.publish-btn:hover { background: var(--red); box-shadow: 6px 6px 0 rgba(204,34,0,0.25); }
+.publish-btn::before { content: '📰'; font-size: 20px; font-style: normal; }
+
+/* ══ PUBLISHED ARTICLE ══ */
+.published-article {
+  background: white; border: 3px double var(--ink);
+  padding: 28px 28px 24px;
+  margin-top: 20px; display: none;
+  animation: fadeIn .5s ease both;
+  box-shadow: 6px 6px 0 rgba(0,0,0,0.15);
+}
+.published-article.show { display: block; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+.pub-label {
+  font-family: Arial, sans-serif;
+  font-size: 9px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; color: white;
+  background: var(--red); padding: 3px 10px;
+  display: inline-block; margin-bottom: 10px;
+}
+
+.pub-headline {
+  font-family: Arial, sans-serif;
+  font-size: clamp(22px, 4vw, 34px);
+  font-weight: 900; line-height: 1.1;
+  color: var(--ink); margin-bottom: 8px;
+  border-bottom: 2px solid var(--ink); padding-bottom: 10px;
+}
+
+.pub-byline {
+  font-family: Arial, sans-serif;
+  font-size: 9px; color: var(--grey);
+  letter-spacing: 2px; margin-bottom: 16px; text-transform: uppercase;
+}
+
+.pub-body {
+  font-size: 14px; font-weight: 600; line-height: 2;
+  color: var(--ink2); columns: 2; column-gap: 24px;
+}
+
+.pub-body p { margin-bottom: 10px; }
+
+.pub-star {
+  background: var(--paper2); border: 1px solid var(--border);
+  padding: 12px 14px; margin: 12px 0;
+  break-inside: avoid;
+  font-family: Arial, sans-serif;
+  font-size: 14px;  font-weight: 700;
+  color: var(--ink); border-left: 3px solid var(--gold);
+}
+
+.pub-star-label {
+  font-family: Arial, sans-serif;
+  font-size: 8px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 4px;
+}
+
+.pub-actions {
+  display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap;
+}
+
+.pub-action-btn {
+  background: transparent; border: 1px solid var(--border);
+  padding: 8px 18px; font-family: Arial, sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 1px;
+  cursor: pointer; transition: all .15s; color: var(--grey);
+}
+.pub-action-btn:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.pub-action-btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.pub-action-btn.primary:hover { background: var(--red); border-color: var(--red); }
+
+/* ══ SPEAKING ══ */
+.speaking-card {
+  background: var(--paper2); border: 2px solid var(--ink);
+  padding: 20px;
+}
+
+.speaking-title {
+  font-family: Arial, sans-serif;
+  font-size: 20px; font-weight: 700;  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.speaking-sub {
+  font-family: Arial, sans-serif;
+  font-size: 9px; color: var(--grey); letter-spacing: 2px;
+  margin-bottom: 14px; text-transform: uppercase;
+}
+
+.sp-prompt {
+  background: white; border: 1px solid var(--border);
+  padding: 12px 14px; margin-bottom: 7px;
+  display: flex; gap: 10px; align-items: flex-start;
+}
+
+.sp-num { font-family: Arial, sans-serif; font-size: 24px; font-weight: 400; color: var(--red); flex-shrink: 0; width: 22px; line-height: 1; }
+.sp-body { flex: 1; }
+.sp-en { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.5; margin-bottom: 4px; }
+.sp-en .hl { color: var(--red); font-weight: 800; }
+.sp-fr { font-family: Arial, sans-serif; font-size: 10px; color: var(--fr);  font-weight: 700; display: flex; align-items: flex-start; gap: 5px; line-height: 1.5; }
+.sp-fr::before { content: '🇫🇷'; font-style: normal; flex-shrink: 0; }
+.sp-level { font-family: Arial, sans-serif; font-size: 8px; font-weight: 400; letter-spacing: 1px; text-transform: uppercase; padding: 3px 8px; flex-shrink: 0; margin-top: 2px; border: 1px solid; }
+.sp-level.warm { border-color: var(--green); color: var(--green); }
+.sp-level.core { border-color: var(--blue); color: var(--blue); }
+.sp-level.challenge { border-color: var(--red); color: var(--red); }
+
+/* ══ WHITEBOARD ══ */
+.wb {
+  background: var(--ink2); border-left: 3px solid var(--ink);
+  position: sticky; top: 0; height: 100vh;
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.wb-head { background: var(--ink); padding: 13px 14px 10px; border-bottom: 2px solid rgba(255,255,255,0.08); flex-shrink: 0; }
+.wb-title { font-family: Arial, sans-serif; font-size: 14px;  font-weight: 700; color: var(--gold); }
+.wb-sub { font-family: Arial, sans-serif; font-size: 8px; color: rgba(255,255,255,0.3); font-weight: 600; margin-top: 2px; letter-spacing: 1px; text-transform: uppercase; }
+
+.wb-stamps { padding: 8px 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; border-bottom: 1px solid rgba(255,255,255,0.06); flex-shrink: 0; }
+.stamp { background: transparent; border: 1px solid rgba(255,255,255,0.1); border-radius: 3px; padding: 6px 4px; font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.45); cursor: pointer; text-align: center; transition: all .15s; line-height: 1.4; }
+.stamp:hover { background: rgba(255,255,255,0.08); border-color: var(--gold); color: var(--gold); }
+.stamp.r:hover { border-color: #FF6644; color: #FF6644; }
+.stamp.g:hover { border-color: #66CC66; color: #66CC66; }
+
+.wb-correction { padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.06); flex-shrink: 0; }
+.wb-correction-label { font-family: Arial, sans-serif; font-size: 8px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 5px; display: flex; align-items: center; justify-content: space-between; }
+.wb-correction-wrap { display: flex; gap: 5px; }
+.wb-correction-input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 6px 10px; font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 800; color: white; outline: none; caret-color: var(--gold); transition: border-color .2s; }
+.wb-correction-input:focus { border-color: rgba(184,134,11,0.4); }
+.wb-correction-input::placeholder { color: rgba(255,255,255,0.2); font-size: 11px;  }
+.wb-correction-send { background: var(--gold); border: none; color: var(--ink); font-family: Arial, sans-serif; font-size: 10px; font-weight: 400; padding: 6px 10px; cursor: pointer; transition: all .15s; }
+.wb-correction-send:hover { background: white; }
+.wb-correction-display { margin-top: 5px; min-height: 38px; background: rgba(184,134,11,0.08); border: 1px solid rgba(184,134,11,0.2); padding: 6px 10px; font-family: 'Nunito', sans-serif; font-size: 18px; font-weight: 800; color: var(--gold); text-align: center; display: flex; align-items: center; justify-content: center; transition: all .2s; }
+
+.wb-notes-wrap { flex: 1; padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; min-height: 0; }
+.wb-notes-label { font-family: Arial, sans-serif; font-size: 8px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: space-between; }
+.wb-export-btn { background: transparent; border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.25); font-family: Arial, sans-serif; font-size: 8px; font-weight: 400; padding: 2px 7px; cursor: pointer; transition: all .15s; }
+.wb-export-btn:hover { border-color: var(--gold); color: var(--gold); }
+.wb-notes { flex: 1; min-height: 60px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 8px 10px; font-family: 'Nunito', sans-serif; font-size: 12px; color: rgba(255,255,255,0.75); resize: none; outline: none; line-height: 1.7; caret-color: var(--gold); transition: border-color .2s; }
+.wb-notes:focus { border-color: rgba(184,134,11,0.25); }
+.wb-notes::placeholder { color: rgba(255,255,255,0.15); font-size: 11px;  }
+
+.wb-log { padding: 0 10px 6px; display: flex; flex-direction: column; gap: 3px; flex-shrink: 0; max-height: 90px; overflow-y: auto; }
+.wb-log-label { font-family: Arial, sans-serif; font-size: 8px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 3px; }
+.wb-log-entry { background: rgba(255,255,255,0.04); padding: 3px 7px; font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.55); display: flex; align-items: center; gap: 4px; animation: sli .2s ease; }
+@keyframes sli { from{opacity:0;transform:translateX(5px)} to{opacity:1;transform:translateX(0)} }
+.wb-log-time { font-size: 9px; color: rgba(255,255,255,0.25); margin-left: auto; }
+
+.wb-acts { padding: 4px 10px 8px; display: flex; gap: 4px; flex-shrink: 0; }
+.wb-act { flex: 1; background: transparent; border: 1px solid rgba(255,255,255,0.06); padding: 4px 3px; font-family: Arial, sans-serif; font-size: 8px; font-weight: 400; color: rgba(255,255,255,0.25); cursor: pointer; text-align: center; transition: all .15s; }
+.wb-act:hover { border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); }
+
+/* Mobile */
+.wb-toggle { display: none; position: fixed; bottom: 20px; right: 20px; background: var(--ink); color: var(--gold); border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 20px; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.3); z-index: 1000; }
+.wb-drawer { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--ink); border-top: 3px solid var(--gold); border-radius: 18px 18px 0 0; padding: 14px; z-index: 999; max-height: 75vh; overflow-y: auto; transform: translateY(100%); transition: transform .3s cubic-bezier(.34,1.2,.64,1); }
+.wb-drawer.open { transform: translateY(0); }
+.wb-dh { width: 34px; height: 3px; background: var(--gold); margin: 0 auto 12px; opacity: .3; }
+
+@media (max-width: 720px) {
+  .layout { grid-template-columns: 1fr; }
+  .wb { display: none; }
+  .wb-toggle { display: flex; align-items: center; justify-content: center; }
+  .wb-drawer { display: block; }
+  .mf-grid { grid-template-columns: 1fr; }
+  .tz-row { grid-template-columns: 22px 1fr; }
+  .tz-input.en-side { grid-column: 2; }
+  .pub-body { columns: 1; }
+  .grammar-table { font-size: 11px; }
+}
+</style>
+</head>
+<body>
+
+<div class="layout">
+<div class="main">
+
+<!-- ══ MASTHEAD ══ -->
+<div class="masthead">
+  <div class="masthead-top">The Football Gazette · Lesson Edition · 31 May 2026</div>
+  <div class="masthead-title">The Football Gazette</div>
+  <div class="masthead-sub">Match Report Special — Write Your Own Article</div>
+</div>
+
+<!-- ══ RESULT BANNER ══ -->
+<div class="result-banner">
+  <div>
+    <div class="rb-team arsenal">ARSENAL</div>
+    <div class="rb-scorers" style="margin-top:3px;">⚽ Havertz 6' &nbsp;❌ Eze, Gabriel (pens)</div>
+  </div>
+
+  <div class="rb-score">
+    <div class="rb-score-main">1 — 1</div>
+    <div class="rb-score-detail">AET · <strong>PSG WIN 4–3 ON PENALTIES</strong></div>
+    <div class="rb-score-detail" style="margin-top:2px;">Puskás Aréna · Budapest · 30 May 2026</div>
+  </div>
+
+  <div style="text-align:right;">
+    <div class="rb-team psg">PARIS S-G</div>
+    <div class="rb-scorers" style="margin-top:3px;text-align:right;">⚽ Dembélé 65' (pen) &nbsp;✅ PSG CHAMPIONS</div>
+  </div>
+</div>
+
+<!-- ══ LESSON PLAN ══ -->
+<div class="plan-strip">
+  <div class="plan-item"><div class="plan-time">5'</div><div class="plan-desc">Warm-Up Retrieval</div></div>
+  <div class="plan-item"><div class="plan-time">8'</div><div class="plan-desc">Grammar: Past Simple</div></div>
+  <div class="plan-item"><div class="plan-time">5'</div><div class="plan-desc">Verb Bank</div></div>
+  <div class="plan-item"><div class="plan-time">10'</div><div class="plan-desc">Dis-le en français</div></div>
+  <div class="plan-item"><div class="plan-time">20'</div><div class="plan-desc">Build Your Report</div></div>
+  <div class="plan-item"><div class="plan-time">7'</div><div class="plan-desc">Read Aloud + Speaking</div></div>
+</div>
+
+<!-- ══ TIMER ══ -->
+<div class="timer-bar">
+  <div>
+    <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--grey);margin-bottom:2px;text-transform:uppercase;">Timer</div>
+    <div class="t-num" id="td">00:00</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:4px;">
+    <div style="display:flex;gap:4px;">
+      <button class="t-pre" onclick="setTimer(5,this)">5</button>
+      <button class="t-pre" onclick="setTimer(10,this)">10</button>
+      <button class="t-pre" onclick="setTimer(15,this)">15</button>
+      <button class="t-pre" onclick="setTimer(20,this)">20</button>
+    </div>
+    <div style="display:flex;gap:5px;">
+      <button class="t-btn go" id="tsb" onclick="toggleTimer()">▶ Start</button>
+      <button class="t-btn" onclick="resetTimer()">↺</button>
+    </div>
+  </div>
+  <span style="font-family:'Space Mono',monospace;font-size:9px;color:var(--grey);" id="tmode">COUNT UP</span>
+</div>
+
+<div class="wrap">
+
+<!-- ══ 00: WARM-UP ══ -->
+<div class="sh">
+  <span class="sh-num">00</span>
+  <span class="sh-title">Warm-Up — Last Lesson Recall</span>
+  <span class="sh-line"></span>
+  <span class="sh-time">5 MIN</span>
+</div>
+
+<div class="retrieval-card">
+  <div class="retrieval-title">🧠 Retrieval — Football Vocab + Possessives</div>
+
+  <div class="retrieval-q">
+    <span class="rq-num">1</span>
+    <div>
+      Name 3 football positions and say what each player does. In English!
+      <div class="rq-fr">Nomme 3 postes de football et explique ce que chaque joueur fait. En anglais !</div>
+      <button class="reveal-btn" onclick="revealQ(0)">REVEAL</button>
+      <div class="retrieval-reveal" id="rr0">Examples: <strong>Goalkeeper</strong> = protects the goal · <strong>Striker</strong> = scores goals · <strong>Winger</strong> = attacks from the sides · <strong>Midfielder</strong> = controls the tempo · <strong>Defender</strong> = stops the opponents</div>
+    </div>
+  </div>
+
+  <div class="retrieval-q" style="margin-bottom:0;">
+    <span class="rq-num">2</span>
+    <div>
+      Use "his" and "their" correctly in 2 sentences about last night's match.
+      <div class="rq-fr">Utilise "his" et "their" correctement dans 2 phrases sur le match d'hier soir.</div>
+      <button class="reveal-btn" onclick="revealQ(1)">REVEAL</button>
+      <div class="retrieval-reveal" id="rr1">Examples: <strong>"His</strong> penalty miss was heartbreaking for Arsenal." · "<strong>Their</strong> goalkeeper saved an incredible shot." · "PSG celebrated with <strong>their</strong> fans." · "Ødegaard couldn't hide <strong>his</strong> disappointment."</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 01: GRAMMAR ══ -->
+<div class="sh">
+  <span class="sh-num">01</span>
+  <span class="sh-title">Past Simple — Match Report Grammar</span>
+  <span class="sh-line"></span>
+  <span class="sh-time">8 MIN</span>
+</div>
+
+<div class="grammar-card">
+  <div class="grammar-card-title">
+    📐 How to write about a match — Past Simple reference
+    <span style="font-family:'Space Mono',monospace;font-size:9px;color:var(--gold);background:rgba(184,134,11,0.1);border:1px solid rgba(184,134,11,0.2);padding:2px 8px;">🇫🇷 WITH FRENCH</span>
+  </div>
+
+  <table class="grammar-table">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Formula</th>
+        <th>Football Example</th>
+        <th>🇫🇷 French</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="gt-type pos">POSITIVE</span></td>
+        <td>
+          <div class="gt-formula"><span class="kw">Subject</span> + <span class="vb">past verb</span></div>
+          <div class="gt-formula" style="margin-top:3px;font-size:9px;color:var(--grey);">Regular: add -ed &nbsp; Irregular: change form</div>
+        </td>
+        <td>
+          <div class="gt-example"><span class="hl">Havertz scored</span> in the 6th minute.</div>
+          <div class="gt-example"><span class="hl">PSG won</span> on penalties.</div>
+        </td>
+        <td>
+          <div class="gt-fr">Havertz <strong>a marqué</strong> à la 6e minute.<br>Le PSG <strong>a gagné</strong> aux penalties.</div>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="gt-type neg">NEGATIVE</span></td>
+        <td>
+          <div class="gt-formula"><span class="kw">Subject</span> + <span class="vb">didn't</span> + <span class="vb">base verb</span></div>
+          <div class="gt-formula" style="margin-top:3px;font-size:9px;color:var(--grey);">Always use BASE form after "didn't"</div>
+        </td>
+        <td>
+          <div class="gt-example">Arsenal <span class="hl">didn't win</span> the trophy.</div>
+          <div class="gt-example">Gabriel <span class="hl">didn't score</span> his penalty.</div>
+        </td>
+        <td>
+          <div class="gt-fr">Arsenal <strong>n'a pas gagné</strong> le trophée.<br>Gabriel <strong>n'a pas marqué</strong> son penalty.</div>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="gt-type q">QUESTION</span></td>
+        <td>
+          <div class="gt-formula"><span class="vb">Did</span> + <span class="kw">subject</span> + <span class="vb">base verb</span>?</div>
+          <div class="gt-formula" style="margin-top:3px;font-size:9px;color:var(--grey);">Always use BASE form after "Did"</div>
+        </td>
+        <td>
+          <div class="gt-example"><span class="hl">Did Arsenal score</span> first?</div>
+          <div class="gt-example"><span class="hl">Did Saka play</span> well?</div>
+        </td>
+        <td>
+          <div class="gt-fr"><strong>Est-ce qu'Arsenal</strong> a marqué en premier ?<br><strong>Est-ce que Saka</strong> a bien joué ?</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="verb-rule">
+    ⚡ <strong>The KEY rule:</strong> After <em>didn't</em> and <em>Did…?</em> — always use the <strong>BASE form</strong> of the verb (not past tense).<br>
+    ❌ "He didn't <u>scored</u>" → ✅ "He didn't <u>score</u>" &nbsp;&nbsp; ❌ "Did he <u>won</u>?" → ✅ "Did he <u>win</u>?"<br>
+    <span class="fr">🇫🇷 Après "didn't" et "Did…?" on utilise TOUJOURS l'infinitif (la forme de base) — jamais le passé !</span>
+  </div>
+</div>
+
+<!-- ══ 02: VERB BANK ══ -->
+<div class="sh">
+  <span class="sh-num">02</span>
+  <span class="sh-title">Verb Bank — Football in the Past</span>
+  <span class="sh-line"></span>
+  <span class="sh-time">5 MIN</span>
+</div>
+<p style="font-family:'Space Mono',monospace;font-size:10px;color:var(--grey);margin-bottom:10px;font-weight:700;">Tap each card to see the past form + French. Tap again to mark learned.</p>
+
+<div class="verb-grid" id="verbGrid"></div>
+
+<!-- ══ 03: MATCH FACTS ══ -->
+<div class="sh">
+  <span class="sh-num">03</span>
+  <span class="sh-title">The Match Facts</span>
+  <span class="sh-line"></span>
+</div>
+
+<div class="match-facts-card">
+  <div class="mf-title">📋 What Actually Happened — Key Facts</div>
+  <div class="mf-grid">
+    <div class="mf-row">
+      <div class="mf-label">Score (90 min)</div>
+      <div class="mf-val">Arsenal 1 — 1 PSG</div>
+      <div class="mf-fr">Score après 90 minutes</div>
+    </div>
+    <div class="mf-row">
+      <div class="mf-label">Final Result</div>
+      <div class="mf-val">PSG won 4–3 on penalties</div>
+      <div class="mf-fr">PSG a gagné 4–3 aux tirs au but</div>
+    </div>
+    <div class="mf-row">
+      <div class="mf-label">Arsenal's goal</div>
+      <div class="mf-val">Kai Havertz — 6th minute</div>
+      <div class="mf-fr">Havertz a marqué à la 6e minute</div>
+    </div>
+    <div class="mf-row">
+      <div class="mf-label">PSG's goal</div>
+      <div class="mf-val">Dembélé — 65th min (penalty)</div>
+      <div class="mf-fr">Dembélé a marqué sur penalty à la 65e</div>
+    </div>
+    <div class="mf-row">
+      <div class="mf-label">Arsenal's misses</div>
+      <div class="mf-val">Eze (wide) · Gabriel (over bar)</div>
+      <div class="mf-fr">Eze a raté à gauche · Gabriel a tiré au-dessus</div>
+    </div>
+    <div class="mf-row">
+      <div class="mf-label">PSG's achievement</div>
+      <div class="mf-val">Back-to-back UCL champions</div>
+      <div class="mf-fr">Champions consécutifs — seulement le 2e club de l'histoire à y parvenir</div>
+    </div>
+    <div class="mf-row">
+      <div class="mf-label">Near miss</div>
+      <div class="mf-val">Kvaratskhelia hit the post (77')</div>
+      <div class="mf-fr">Kvaratskhelia a touché le poteau à la 77e</div>
+    </div>
+    <div class="mf-row">
+      <div class="mf-label">Arsenal record</div>
+      <div class="mf-val">226 UCL games — never won</div>
+      <div class="mf-fr">226 matchs en LdC — jamais vainqueurs</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 04: DIS-LE EN FRANÇAIS ══ -->
+<div class="sh">
+  <span class="sh-num">04</span>
+  <span class="sh-title">Dis-le en Français 🇫🇷</span>
+  <span class="sh-line"></span>
+  <span class="sh-time">10 MIN</span>
+</div>
+
+<div class="french-zone">
+  <div class="fz-title">🇫🇷 Ton opinion d'abord — en français</div>
+  <div class="fz-sub">Pas de pression sur l'anglais ici. Dis TOUT ce que tu penses sur le match. Qui était le meilleur ? C'était juste ? Qu'est-ce qui s'est passé ? Comment tu t'es senti quand Gabriel a raté son penalty ? Écris librement — en français.</div>
+
+  <div class="fz-prompt">
+    <span class="hl">Questions pour t'aider :</span><br>
+    🔴 Qui méritait de gagner selon toi ?<br>
+    🔵 Quel joueur t'a impressionné le plus ?<br>
+    😢 Comment tu t'es senti quand Gabriel a raté ?<br>
+    🏆 Est-ce que le PSG méritait de garder le titre ?<br>
+    ⚽ Quel moment du match tu n'oublieras jamais ?
+  </div>
+
+  <textarea class="fz-textarea" id="frenchText" placeholder="Écris tout ce que tu penses ici… (en français, sans pression !)"></textarea>
+
+  <div class="translation-zone" style="margin-top:14px;">
+    <div class="tz-title">Now translate YOUR ideas into English</div>
+    <div class="tz-sub">Pick your 3 most interesting sentences from above. Write them in French on the left — then translate them into English on the right. Use the verb bank and grammar card above!</div>
+    <div class="tz-rows">
+      <div class="tz-row">
+        <span class="tz-num">1</span>
+        <input type="text" class="tz-input fr-side" id="tr1fr" placeholder="🇫🇷 Ta phrase en français…">
+        <input type="text" class="tz-input en-side" id="tr1en" placeholder="🇬🇧 Ta phrase en anglais…">
+      </div>
+      <div class="tz-row">
+        <span class="tz-num">2</span>
+        <input type="text" class="tz-input fr-side" id="tr2fr" placeholder="🇫🇷 Ta phrase en français…">
+        <input type="text" class="tz-input en-side" id="tr2en" placeholder="🇬🇧 Ta phrase en anglais…">
+      </div>
+      <div class="tz-row">
+        <span class="tz-num">3</span>
+        <input type="text" class="tz-input fr-side" id="tr3fr" placeholder="🇫🇷 Ta phrase en français…">
+        <input type="text" class="tz-input en-side" id="tr3en" placeholder="🇬🇧 Ta phrase en anglais…">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 05: REPORT BUILDER ══ -->
+<div class="sh">
+  <span class="sh-num">05</span>
+  <span class="sh-title">Build Your Match Report</span>
+  <span class="sh-line"></span>
+  <span class="sh-time">20 MIN</span>
+</div>
+
+<div class="report-intro">
+  <div class="report-intro-icon">📰</div>
+  <div class="report-intro-text">
+    <h3>You are the journalist.</h3>
+    <p>Fill in each paragraph using the verb bank, grammar card, and your own translations above. When you're done — hit PUBLISH and your article goes to the front page of The Football Gazette!</p>
+  </div>
+</div>
+
+<!-- P1: Result -->
+<div class="para-block">
+  <div class="para-num">PARAGRAPH 1 <span style="color:var(--red);">EASY</span></div>
+  <div class="para-label">The Result</div>
+  <div class="para-fr">Le résultat — qui a joué, où, quel était le score, qui a gagné</div>
+  <div class="para-template">
+    Paris Saint-Germain <input class="inline-input" id="p1_1" placeholder="beat / defeated…" size="18">
+    Arsenal in the
+    <input class="inline-input" id="p1_2" placeholder="2026 Champions…" size="22">
+    final at the Puskás Aréna in Budapest. The match
+    <input class="inline-input" id="p1_3" placeholder="ended / finished…" size="16">
+    1–1 after 90 minutes, and PSG
+    <input class="inline-input" id="p1_4" placeholder="won / triumphed…" size="16">
+    4–3 on penalties.
+  </div>
+</div>
+
+<!-- P2: First half -->
+<div class="para-block">
+  <div class="para-num">PARAGRAPH 2 <span style="color:var(--blue);">MEDIUM</span></div>
+  <div class="para-label">The First Half</div>
+  <div class="para-fr">La première mi-temps — Arsenal a marqué en premier, Havertz, 6e minute — PSG n'a pas répondu en première mi-temps</div>
+  <div class="para-template">
+    Arsenal
+    <input class="inline-input" id="p2_1" placeholder="scored / struck…" size="14">
+    first. Kai Havertz
+    <input class="inline-input" id="p2_2" placeholder="scored / headed…" size="14">
+    in the sixth minute, giving the Gunners an early lead.
+    PSG
+    <input class="inline-input" id="p2_3" placeholder="didn't score / tried…" size="18">
+    in the first half, but they
+    <input class="inline-input" id="p2_4" placeholder="controlled / dominated…" size="20">
+    possession.
+  </div>
+</div>
+
+<!-- P3: Second half + penalties -->
+<div class="para-block">
+  <div class="para-num">PARAGRAPH 3 <span style="color:var(--blue);">MEDIUM</span></div>
+  <div class="para-label">The Turning Point</div>
+  <div class="para-fr">Le tournant — Dembélé a égalisé sur penalty à la 65e minute — Kvaratskhelia a touché le poteau à la 77e — tirs au but</div>
+  <div class="para-template">
+    Ousmane Dembélé
+    <input class="inline-input" id="p3_1" placeholder="equalised / scored…" size="18">
+    with a penalty in the 65th minute to make it 1–1.
+    In the 77th minute, Kvaratskhelia
+    <input class="inline-input" id="p3_2" placeholder="hit / struck…" size="12">
+    the post — it
+    <input class="inline-input" id="p3_3" placeholder="was / felt…" size="10">
+    so close! The match
+    <input class="inline-input" id="p3_4" placeholder="went / continued…" size="16">
+    to extra time and then penalties, where PSG
+    <input class="inline-input" id="p3_5" placeholder="won / triumphed…" size="14">
+    4–3.
+  </div>
+</div>
+
+<!-- P4: Player rating -->
+<div class="para-block">
+  <div class="para-num">PARAGRAPH 4 <span style="color:var(--gold);">YOUR CHOICE</span></div>
+  <div class="para-label">Your Player of the Match</div>
+  <div class="para-fr">Ton joueur du match — décris sa performance avec des adjectifs et des verbes au passé</div>
+  <div class="para-template">
+    The best player on the pitch
+    <input class="inline-input" id="p4_1" placeholder="was / seemed…" size="12">
+    <input class="inline-input" id="p4_2" placeholder="player's name…" size="16">
+    .
+    He
+    <input class="inline-input" id="p4_3" placeholder="played / performed…" size="14">
+    an
+    <input class="inline-input" id="p4_4" placeholder="adjective: brilliant…" size="18">
+    game. His
+    <input class="inline-input" id="p4_5" placeholder="best moment / skill…" size="18">
+    <input class="inline-input" id="p4_6" placeholder="was / came…" size="10">
+    <input class="inline-input" id="p4_7" placeholder="when / in the…" size="22">
+    .
+  </div>
+</div>
+
+<!-- P5: My verdict -->
+<div class="para-block">
+  <div class="para-num">PARAGRAPH 5 <span style="color:var(--red);">YOUR OPINION</span></div>
+  <div class="para-label">Your Verdict — Use your translations from Part 4!</div>
+  <div class="para-fr">Ton verdict — c'était juste ? Qui méritait de gagner ? Comment tu t'es senti ? Utilise tes traductions de la partie 4 !</div>
+  <textarea class="para-textarea" id="p5" placeholder="Write your final verdict here. Use your English sentences from Part 04 — the ones you translated yourself! Start with: 'I think… / In my opinion… / It was…'"></textarea>
+</div>
+
+<!-- HEADLINE -->
+<div class="para-block" style="background:var(--paper2);">
+  <div class="para-num">YOUR HEADLINE</div>
+  <div class="para-label" style="margin-bottom:10px;">Give your article a title. Make it dramatic!</div>
+  <div class="para-fr">Donne un titre à ton article. Rends-le dramatique ! Examples: "Heartbreak for Arsenal" · "PSG Make History" · "Penalty Drama in Budapest"</div>
+  <input type="text" id="headline" class="inline-input" placeholder="Your headline here…" style="width:100%;max-width:100%;font-size:18px;padding:8px 12px;border-bottom:3px solid var(--ink);border-top:none;border-left:none;border-right:none;background:white;display:block;margin-top:10px;">
+</div>
+
+<div style="text-align:center;margin-top:22px;">
+  <button class="publish-btn" onclick="publishReport()">Publish My Report!</button>
+</div>
+
+<!-- PUBLISHED ARTICLE -->
+<div class="published-article" id="publishedArticle">
+  <div class="pub-label">Published</div>
+  <div class="pub-headline" id="pubHeadline">Match Report</div>
+  <div class="pub-byline" id="pubByline">By Micha · The Football Gazette · Budapest, 31 May 2026</div>
+  <div class="pub-body" id="pubBody"></div>
+  <div class="pub-actions">
+    <button class="pub-action-btn primary" onclick="window.print()">🖨️ Print My Article</button>
+    <button class="pub-action-btn" onclick="copyReport()">📋 Copy Text</button>
+    <button class="pub-action-btn" onclick="resetReport()">✏️ Edit</button>
+  </div>
+</div>
+
+<!-- ══ 06: SPEAKING ══ -->
+<div class="sh">
+  <span class="sh-num">06</span>
+  <span class="sh-title">Read Aloud + Speaking</span>
+  <span class="sh-line"></span>
+  <span class="sh-time">7 MIN</span>
+</div>
+
+<div class="speaking-card">
+  <div class="speaking-title">🎤 The Broadcast</div>
+  <div class="speaking-sub">// read your article like a TV journalist · then answer live questions</div>
+
+  <div class="sp-prompt">
+    <span class="sp-num">1</span>
+    <div class="sp-body">
+      <div class="sp-en"><span class="hl">Read your published article out loud</span> — from the headline to the last word. No stopping. Imagine you are live on television in Budapest.</div>
+      <div class="sp-fr">Lis ton article publié à voix haute — du titre jusqu'à la dernière phrase. Sans t'arrêter. Imagine que tu es en direct à la télévision à Budapest.</div>
+    </div>
+    <span class="sp-level warm">WARM-UP</span>
+  </div>
+
+  <div class="sp-prompt">
+    <span class="sp-num">2</span>
+    <div class="sp-body">
+      <div class="sp-en">I'm a journalist interviewing you after the match. <span class="hl">"Did Arsenal deserve to lose? What did they do wrong?"</span><br>Answer in at least 3 sentences using past simple.</div>
+      <div class="sp-fr">Je suis un journaliste qui t'interviewe après le match. "Est-ce qu'Arsenal méritait de perdre ? Qu'est-ce qu'ils ont mal fait ?"<br>Réponds en au moins 3 phrases au passé simple.</div>
+    </div>
+    <span class="sp-level core">CORE</span>
+  </div>
+
+  <div class="sp-prompt">
+    <span class="sp-num">3</span>
+    <div class="sp-body">
+      <div class="sp-en"><span class="hl">"Imagine you are Mikel Arteta after the match."</span> How did he feel? What did he say to his players? What does Arsenal need to do next season? Use past + opinion language.</div>
+      <div class="sp-fr">"Imagine que tu es Mikel Arteta après le match." Comment il s'est senti ? Qu'est-ce qu'il a dit à ses joueurs ? Qu'est-ce qu'Arsenal doit faire la saison prochaine ? Utilise le passé + des opinions.</div>
+    </div>
+    <span class="sp-level challenge">CHALLENGE</span>
+  </div>
+
+</div>
+
+</div><!-- /wrap -->
+</div><!-- /main -->
+
+<!-- ══ WHITEBOARD ══ -->
+<div class="wb">
+  <div class="wb-head">
+    <div class="wb-title">Teacher's Board</div>
+    <div class="wb-sub">stamps · correction · notes</div>
+  </div>
+  <div class="wb-stamps">
+    <button class="stamp" onclick="addStamp('✅ Correct!')">✅<br>Correct!</button>
+    <button class="stamp r" onclick="addStamp('❌ Not quite')">❌<br>Not quite</button>
+    <button class="stamp g" onclick="addStamp('🔁 Try again')">🔁<br>Try again</button>
+    <button class="stamp" onclick="addStamp('⭐ Great job!')">⭐<br>Great job!</button>
+    <button class="stamp" onclick="addStamp('👂 Listen carefully')">👂<br>Listen</button>
+    <button class="stamp" onclick="addStamp('🗣️ Say it out loud')">🗣️<br>Say it!</button>
+    <button class="stamp g" onclick="addStamp('💡 Remember this')">💡<br>Remember</button>
+    <button class="stamp" onclick="addStamp('📝 Write it down')">📝<br>Write it</button>
+  </div>
+  <div class="wb-correction">
+    <div class="wb-correction-label">✏️ CORRECTION <span>enter → show</span></div>
+    <div class="wb-correction-wrap">
+      <input type="text" class="wb-correction-input" id="corrInput" placeholder="type correction…">
+      <button class="wb-correction-send" onclick="showCorrection()">SHOW</button>
+    </div>
+    <div class="wb-correction-display" id="corrDisplay">—</div>
+  </div>
+  <div class="wb-notes-wrap">
+    <div class="wb-notes-label">📝 NOTES <button class="wb-export-btn" onclick="exportNotes()">COPY ALL</button></div>
+    <textarea class="wb-notes" id="wbNotes" placeholder="errors noticed, vocab to review, Micha's great sentences…"></textarea>
+  </div>
+  <div class="wb-log" id="wbLog"><div class="wb-log-label">STAMP LOG</div></div>
+  <div class="wb-acts">
+    <button class="wb-act" onclick="clearNotes()">clear notes</button>
+    <button class="wb-act" onclick="clearLog()">clear log</button>
+    <button class="wb-act" onclick="clearCorr()">clear fix</button>
+  </div>
+</div>
+
+</div><!-- /layout -->
+
+<button class="wb-toggle" onclick="toggleWB()">📋</button>
+<div class="wb-drawer" id="wbDrawer">
+  <div class="wb-dh"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">
+    <button class="stamp" onclick="addStampM('✅ Correct!')">✅ Correct!</button>
+    <button class="stamp r" onclick="addStampM('❌ Not quite')">❌ Not quite</button>
+    <button class="stamp g" onclick="addStampM('🔁 Try again')">🔁 Try again</button>
+    <button class="stamp" onclick="addStampM('⭐ Great job!')">⭐ Great job!</button>
+    <button class="stamp" onclick="addStampM('👂 Listen')">👂 Listen</button>
+    <button class="stamp" onclick="addStampM('🗣️ Say it!')">🗣️ Say it!</button>
+    <button class="stamp g" onclick="addStampM('💡 Remember')">💡 Remember</button>
+    <button class="stamp" onclick="addStampM('📝 Write it')">📝 Write it</button>
+  </div>
+  <div style="margin-bottom:10px;">
+    <div style="font-family:'Space Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-bottom:5px;text-transform:uppercase;">✏️ Correction</div>
+    <div style="display:flex;gap:5px;">
+      <input type="text" class="wb-correction-input" id="corrInputM" placeholder="correction…" style="flex:1;">
+      <button class="wb-correction-send" onclick="showCorrectionM()">SHOW</button>
+    </div>
+    <div class="wb-correction-display" id="corrDisplayM" style="margin-top:6px;">—</div>
+  </div>
+  <textarea id="wbNM" class="wb-notes" style="height:100px;width:100%;margin-bottom:8px;" placeholder="notes…"></textarea>
+  <div style="display:flex;gap:7px;">
+    <button class="wb-act" style="flex:1;" onclick="toggleWB()">close</button>
+    <button class="wb-act" style="flex:1;" onclick="document.getElementById('wbNM').value=''">clear</button>
+  </div>
+</div>
+
+<script>
+// ══ TIMER ══
+let tS=0,tT=0,tR=false,tI=null,cD=false;
+function setTimer(m,btn){resetTimer();tT=m*60;tS=tT;cD=true;document.getElementById('tmode').textContent=m+' MIN';document.getElementById('td').textContent=fmt(tS);document.querySelectorAll('.t-pre').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function toggleTimer(){if(tR){clearInterval(tI);tR=false;document.getElementById('tsb').textContent='▶ Start';}else{tR=true;document.getElementById('tsb').textContent='⏸ Pause';tI=setInterval(()=>{cD?tS--:tS++;if(cD&&tS<=0){tS=0;clearInterval(tI);tR=false;document.getElementById('tsb').textContent='▶ Start';}const el=document.getElementById('td');el.textContent=fmt(tS);el.classList.toggle('urgent',cD&&tS<=60);},1000);}}
+function resetTimer(){clearInterval(tI);tR=false;tS=cD?tT:0;document.getElementById('td').textContent=fmt(tS);document.getElementById('td').classList.remove('urgent');document.getElementById('tsb').textContent='▶ Start';}
+
+// ══ RETRIEVAL ══
+function revealQ(n){ document.getElementById('rr'+n).classList.add('show'); }
+
+// ══ VERB BANK ══
+const verbs = [
+  {pre:'score',  past:'scored',    fr:'marquer',       type:'regular'},
+  {pre:'win',    past:'won',       fr:'gagner',        type:'irregular'},
+  {pre:'lose',   past:'lost',      fr:'perdre',        type:'irregular'},
+  {pre:'play',   past:'played',    fr:'jouer',         type:'regular'},
+  {pre:'save',   past:'saved',     fr:'arrêter (un tir)', type:'regular'},
+  {pre:'miss',   past:'missed',    fr:'rater',         type:'regular'},
+  {pre:'shoot',  past:'shot',      fr:'tirer',         type:'irregular'},
+  {pre:'kick',   past:'kicked',    fr:'frapper du pied', type:'regular'},
+  {pre:'tackle',  past:'tackled',  fr:'tacler',        type:'regular'},
+  {pre:'cross',  past:'crossed',   fr:'centrer',       type:'regular'},
+  {pre:'head',   past:'headed',    fr:'faire une tête', type:'regular'},
+  {pre:'dribble', past:'dribbled', fr:'dribbler',      type:'regular'},
+  {pre:'defend', past:'defended',  fr:'défendre',      type:'regular'},
+  {pre:'attack', past:'attacked',  fr:'attaquer',      type:'regular'},
+  {pre:'celebrate', past:'celebrated', fr:'célébrer',  type:'regular'},
+  {pre:'equalise', past:'equalised', fr:'égaliser',    type:'regular'},
+  {pre:'dominate', past:'dominated', fr:'dominer',     type:'regular'},
+  {pre:'hit',    past:'hit',       fr:'frapper / toucher', type:'irregular'},
+  {pre:'run',    past:'ran',       fr:'courir',        type:'irregular'},
+  {pre:'go',     past:'went',      fr:'aller',         type:'irregular'},
+];
+
+function buildVerbs(){
+  const g=document.getElementById('verbGrid');
+  verbs.forEach(v=>{
+    const c=document.createElement('div');
+    c.className='verb-card';
+    const badge = v.type==='irregular'
+      ? '<span style="font-family:Space Mono,monospace;font-size:7px;color:#CC2200;font-weight:700;letter-spacing:1px;text-transform:uppercase;">IRREG</span>'
+      : '<span style="font-family:Space Mono,monospace;font-size:7px;color:#1A6A2A;font-weight:700;letter-spacing:1px;text-transform:uppercase;">REG</span>';
+    c.innerHTML=`
+      <span class="vc-pre">${v.pre} ${badge}</span>
+      <span class="vc-arrow">↓</span>
+      <span class="vc-past">${v.past}</span>
+      <span class="vc-fr">${v.fr}</span>
+      <span class="vc-hint">tap</span>
+    `;
+    let clicks=0;
+    c.onclick=()=>{clicks++;if(clicks===1){c.classList.add('flipped');}else if(clicks===2){c.classList.add('done');}else{c.classList.remove('flipped','done');clicks=0;}};
+    g.appendChild(c);
+  });
+}
+
+// ══ PUBLISH ══
+function gVal(id){ return document.getElementById(id)?.value?.trim() || '___'; }
+
+function publishReport(){
+  const headline = gVal('headline') || 'Heartbreak in Budapest';
+
+  const p1 = `Paris Saint-Germain ${gVal('p1_1')} Arsenal in the ${gVal('p1_2')} final at the Puskás Aréna in Budapest. The match ${gVal('p1_3')} 1–1 after 90 minutes, and PSG ${gVal('p1_4')} 4–3 on penalties.`;
+
+  const p2 = `Arsenal ${gVal('p2_1')} first. Kai Havertz ${gVal('p2_2')} in the sixth minute, giving the Gunners an early lead. PSG ${gVal('p2_3')} in the first half, but they ${gVal('p2_4')} possession.`;
+
+  const p3 = `Ousmane Dembélé ${gVal('p3_1')} with a penalty in the 65th minute to make it 1–1. In the 77th minute, Kvaratskhelia ${gVal('p3_2')} the post — it ${gVal('p3_3')} so close! The match ${gVal('p3_4')} to extra time and then penalties, where PSG ${gVal('p3_5')} 4–3.`;
+
+  const p4 = `The best player on the pitch ${gVal('p4_1')} ${gVal('p4_2')}. He ${gVal('p4_3')} an ${gVal('p4_4')} game. His ${gVal('p4_5')} ${gVal('p4_6')} ${gVal('p4_7')}.`;
+
+  const p5 = gVal('p5') || 'This was a memorable final that will not be forgotten.';
+
+  // Build translations summary
+  const tr1en = gVal('tr1en');
+  const tr2en = gVal('tr2en');
+  const tr3en = gVal('tr3en');
+  const hasTranslations = tr1en !== '___' || tr2en !== '___' || tr3en !== '___';
+
+  document.getElementById('pubHeadline').textContent = headline;
+
+  const body = document.getElementById('pubBody');
+  body.innerHTML = `
+    <p>${p1}</p>
+    <p>${p2}</p>
+    <p>${p3}</p>
+    <p>${p4}</p>
+    ${hasTranslations ? `
+    <div class="pub-star">
+      <div class="pub-star-label">⭐ Micha's own words</div>
+      ${tr1en !== '___' ? `<p>"${tr1en}"</p>` : ''}
+      ${tr2en !== '___' ? `<p>"${tr2en}"</p>` : ''}
+      ${tr3en !== '___' ? `<p>"${tr3en}"</p>` : ''}
+    </div>` : ''}
+    <p>${p5}</p>
+  `;
+
+  document.getElementById('publishedArticle').classList.add('show');
+  document.getElementById('publishedArticle').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function copyReport(){
+  const h = document.getElementById('pubHeadline').textContent;
+  const b = document.getElementById('pubBody').innerText;
+  const full = `${h}\n\nBy Micha · The Football Gazette · 31 May 2026\n\n${b}`;
+  navigator.clipboard?.writeText(full).then(()=>{
+    const btn = document.querySelectorAll('.pub-action-btn')[1];
+    btn.textContent = '✅ Copied!';
+    setTimeout(()=>btn.textContent='📋 Copy Text', 2000);
+  });
+}
+
+function resetReport(){
+  document.getElementById('publishedArticle').classList.remove('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══ WHITEBOARD ══
+function gT(){const n=new Date();return n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0');}
+function addStamp(t){const log=document.getElementById('wbLog');const e=document.createElement('div');e.className='wb-log-entry';e.innerHTML=`<span>${t}</span><span class="wb-log-time">${gT()}</span>`;log.appendChild(e);log.scrollTop=log.scrollHeight;const n=document.getElementById('wbNotes');if(n){n.value+=(n.value?'\n':'')+`[${gT()}] ${t}`;n.scrollTop=n.scrollHeight;}}
+function addStampM(t){const n=document.getElementById('wbNM');if(n)n.value+=(n.value?'\n':'')+`[${gT()}] ${t}`;}
+function showCorrection(){const v=document.getElementById('corrInput').value.trim();if(v)document.getElementById('corrDisplay').textContent=v;}
+function showCorrectionM(){const v=document.getElementById('corrInputM').value.trim();if(v)document.getElementById('corrDisplayM').textContent=v;}
+document.getElementById('corrInput')?.addEventListener('keydown',e=>{if(e.key==='Enter')showCorrection();});
+function clearNotes(){const n=document.getElementById('wbNotes');if(n)n.value='';}
+function clearLog(){const l=document.getElementById('wbLog');while(l.children.length>1)l.removeChild(l.lastChild);}
+function clearCorr(){document.getElementById('corrDisplay').textContent='—';document.getElementById('corrInput').value='';}
+function exportNotes(){const notes=document.getElementById('wbNotes')?.value||'';const log=[...document.querySelectorAll('.wb-log-entry')].map(e=>e.textContent.trim()).join('\n');const full=`=== NOTES ===\n${notes}\n\n=== STAMPS ===\n${log}`;navigator.clipboard?.writeText(full).then(()=>{const btn=document.querySelector('.wb-export-btn');btn.textContent='✅ COPIED';setTimeout(()=>btn.textContent='COPY ALL',2000);});}
+function toggleWB(){document.getElementById('wbDrawer').classList.toggle('open');}
+
+// ══ INIT ══
+buildVerbs();
+</script>
+</body>
+</html>

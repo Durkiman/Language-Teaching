@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SABA — Possessives Review</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:   #07080C;
+  --dark:    #0E0F14;
+  --card:    #13141A;
+  --card2:   #191A22;
+  --teal:    #00B4A0;
+  --teal2:   #00D4BC;
+  --sky:     #5BBFD4;
+  --gold:    #E8B84B;
+  --amber:   #FF9900;
+  --green:   #00C870;
+  --red:     #FF3344;
+  --purple:  #8866FF;
+  --white:   #EEF2F5;
+  --dim:     #4A5570;
+  --fr:      #FFD060;
+  --border:  rgba(0,180,160,0.12);
+  --correct: rgba(0,200,112,0.12);
+  --wrong:   rgba(255,51,68,0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  min-height: 100vh;
+}
+
+/* ══ LAYOUT ══ */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 285px;
+  max-width: 1120px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+.main { min-width: 0; padding-bottom: 100px; }
+
+/* ══ HERO ══ */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--black);
+  border-bottom: 2px solid var(--teal);
+  padding: 0;
+}
+
+.hero-visual {
+  position: relative;
+  height: clamp(220px, 30vw, 320px);
+  overflow: hidden;
+}
+
+.hero-visual svg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+}
+
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(7,8,12,0) 0%, rgba(7,8,12,0) 35%, rgba(7,8,12,0.7) 75%, rgba(7,8,12,0.98) 100%);
+}
+
+.hero-content {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 0 28px 24px;
+  z-index: 2;
+}
+
+.hero-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; letter-spacing: 4px; color: var(--teal2);
+  text-transform: uppercase; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.hero-eyebrow::before { content:''; width:16px; height:1px; background:var(--teal2); display:inline-block; }
+
+.hero h1 {
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(44px, 9vw, 80px);
+  letter-spacing: 3px; line-height: 0.92;
+  margin-bottom: 8px; color: var(--white);
+}
+
+.hero h1 .t2 {
+  display: block; font-size: 0.45em;
+  letter-spacing: 6px; color: var(--teal2);
+  text-transform: uppercase;
+}
+
+.hero-tags { display: flex; gap: 7px; flex-wrap: wrap; }
+.htag {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; padding: 4px 11px;
+  border: 1px solid; border-radius: 2px;
+}
+.htag.t { border-color: var(--teal); color: var(--teal); background: rgba(0,180,160,0.08); }
+.htag.g { border-color: var(--gold); color: var(--gold); background: rgba(232,184,75,0.08); }
+.htag.w { border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.5); }
+
+/* ══ LESSON PLAN STRIP ══ */
+.plan-strip {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
+}
+
+.plan-step {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.plan-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 14px;
+  border-right: 1px solid var(--border);
+  cursor: default;
+  transition: background .15s;
+}
+.plan-item:last-child { border-right: none; }
+.plan-item:hover { background: rgba(0,180,160,0.05); }
+
+.plan-time {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: var(--teal);
+}
+
+.plan-desc {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-top: 2px;
+  text-align: center;
+  max-width: 80px;
+}
+
+/* ══ TIMER ══ */
+.timer-bar {
+  background: #08090D;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 8px 24px;
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+
+.t-num {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 26px; letter-spacing: 3px; color: var(--gold); min-width: 62px;
+}
+.t-num.urgent { color: var(--red); animation: tp .5s ease infinite alternate; }
+@keyframes tp { from{transform:scale(1)} to{transform:scale(1.08)} }
+
+.t-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--white); font-family: 'Space Mono', monospace;
+  font-size: 10px; font-weight: 700;
+  padding: 4px 12px; cursor: pointer; letter-spacing: 1px; transition: all .15s;
+}
+.t-btn:hover { border-color: var(--gold); color: var(--gold); }
+.t-btn.go { border-color: var(--gold); color: var(--gold); }
+.t-btn.go:hover { background: var(--gold); color: var(--black); }
+
+.t-pre {
+  background: transparent; border: 1px solid rgba(255,255,255,0.07);
+  color: var(--dim); font-family: 'Space Mono', monospace;
+  font-size: 10px; font-weight: 700;
+  padding: 3px 9px; cursor: pointer; transition: all .15s;
+}
+.t-pre:hover, .t-pre.active { border-color: var(--gold); color: var(--gold); }
+
+/* ══ WRAP ══ */
+.wrap { padding: 20px 24px 0; }
+
+/* ══ SECTION HEADS ══ */
+.sh { display: flex; align-items: center; gap: 12px; margin: 28px 0 14px; }
+.sh-num { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--dim); }
+.sh-title { font-family: 'Bebas Neue', cursive; font-size: clamp(17px, 3vw, 24px); letter-spacing: 2px; color: var(--white); }
+.sh-line { flex: 1; height: 1px; background: var(--border); }
+.sh-time {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 13px; letter-spacing: 1px; color: var(--teal);
+  background: rgba(0,180,160,0.08); border: 1px solid var(--border);
+  padding: 2px 10px; border-radius: 3px; flex-shrink: 0;
+}
+
+.ac { color: var(--teal2); }
+.ag { color: var(--gold); }
+.af { color: var(--fr); }
+
+/* ══ FRENCH BADGE ══ */
+.fr-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255,208,96,0.08);
+  border: 1px solid rgba(255,208,96,0.2);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--fr);
+  flex-shrink: 0;
+}
+.fr-badge::before { content: '🇫🇷'; font-size: 10px; }
+
+/* ══ RETRIEVAL ══ */
+.retrieval-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--teal);
+  border-radius: 0 8px 8px 0;
+  padding: 16px 18px;
+  margin-bottom: 10px;
+}
+.retrieval-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; letter-spacing: 3px; color: var(--teal);
+  margin-bottom: 12px; text-transform: uppercase;
+}
+.retrieval-q {
+  display: flex; gap: 10px; align-items: flex-start;
+  margin-bottom: 10px; font-size: 14px; font-weight: 700;
+  color: rgba(255,255,255,0.75); line-height: 1.5;
+}
+.rq-num { font-family: 'Bebas Neue', cursive; font-size: 22px; color: var(--teal); flex-shrink: 0; width: 20px; line-height: 1.1; }
+.rq-fr { font-size: 11px; font-style: italic; color: var(--fr); margin-top: 3px; font-weight: 700; }
+.retrieval-reveal {
+  background: rgba(0,180,160,0.07); border: 1px solid rgba(0,180,160,0.2);
+  border-radius: 5px; padding: 7px 12px; font-size: 13px; font-weight: 700;
+  color: var(--teal2); margin-top: 4px; display: none;
+}
+.retrieval-reveal.show { display: block; }
+.reveal-btn {
+  background: transparent; border: 1px solid var(--border);
+  color: var(--dim); font-family: 'Space Mono', monospace;
+  font-size: 9px; font-weight: 700; letter-spacing: 1px;
+  padding: 3px 10px; cursor: pointer; transition: all .15s; margin-top: 5px;
+}
+.reveal-btn:hover { border-color: var(--teal); color: var(--teal); }
+
+/* ══ GRAMMAR TABLE ══ */
+.grammar-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--gold);
+  border-radius: 0 0 10px 10px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+}
+
+.grammar-box-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 14px; letter-spacing: 2px; color: var(--gold);
+  margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+}
+
+.grammar-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.grammar-col {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.gc-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 13px; letter-spacing: 2px;
+  margin-bottom: 4px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+.gc-title.adj { color: var(--sky); }
+.gc-title.pro { color: var(--gold); }
+
+.gc-fr-note {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; color: var(--fr);
+  margin-bottom: 10px; letter-spacing: 1px; line-height: 1.5;
+}
+
+.prow {
+  display: grid;
+  grid-template-columns: 46px 60px 1fr 1fr;
+  gap: 0;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+.prow-sub {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  padding: 6px 6px;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; color: var(--dim);
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  line-height: 1.3;
+}
+.prow-sub .sub-fr { font-size: 8px; color: var(--fr); margin-top: 1px; }
+
+.prow-word {
+  border: 1px solid var(--border);
+  border-left: none;
+  padding: 6px 8px;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 16px; letter-spacing: 1px;
+  display: flex; align-items: center;
+}
+.prow-word.adj { color: var(--sky); background: rgba(91,191,212,0.06); }
+.prow-word.pro { color: var(--gold); background: rgba(232,184,75,0.06); }
+
+.prow-ex {
+  border: 1px solid var(--border);
+  border-left: none;
+  padding: 4px 8px;
+  font-size: 11px; font-weight: 600;
+  color: rgba(255,255,255,0.4);
+  font-style: italic;
+  display: flex; align-items: center;
+}
+
+.prow-fr {
+  border: 1px solid var(--border);
+  border-left: none;
+  padding: 4px 8px;
+  font-size: 10px; font-weight: 700;
+  color: var(--fr);
+  display: flex; align-items: center;
+  font-style: italic;
+}
+
+/* KEY RULE */
+.key-rule {
+  background: rgba(232,184,75,0.05);
+  border: 1px solid rgba(232,184,75,0.2);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
+.key-rule-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 14px; letter-spacing: 2px; color: var(--gold); margin-bottom: 10px;
+}
+
+.kr-row {
+  display: flex; gap: 10px; align-items: flex-start;
+  margin-bottom: 8px; font-size: 13px; font-weight: 700; line-height: 1.5;
+}
+
+.kr-fr {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; color: var(--fr); margin-top: 2px;
+  font-style: italic; font-weight: 700;
+}
+
+/* ══ SABA FACTS ══ */
+.facts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.fact-card {
+  background: var(--card);
+  padding: 14px 14px 12px;
+  transition: background .2s;
+}
+.fact-card:hover { background: var(--card2); }
+
+.fact-icon { font-size: 20px; display: block; margin-bottom: 6px; }
+.fact-label { font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 3px; color: var(--teal); text-transform: uppercase; margin-bottom: 3px; }
+.fact-val { font-family: 'Bebas Neue', cursive; font-size: 16px; letter-spacing: 1px; color: var(--white); margin-bottom: 2px; }
+.fact-text { font-size: 12px; color: var(--dim); line-height: 1.6; font-weight: 600; }
+.fact-text strong { color: var(--white); }
+
+/* ══ SCENES ══ */
+.scene-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 2px;
+  background: var(--border);
+  margin-bottom: 2px;
+}
+
+.scene-wrap {
+  position: relative; background: var(--card);
+  overflow: hidden; transition: opacity .2s;
+}
+.scene-wrap:hover { opacity: .92; }
+.scene-wrap svg { display: block; width: 100%; }
+
+.scene-cap {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(7,8,12,0.85));
+  padding: 14px 10px 7px;
+}
+.sc-tag { display: block; font-family: 'Space Mono', monospace; font-size: 7px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--teal); margin-bottom: 1px; }
+.sc-name { font-family: 'Bebas Neue', cursive; font-size: 12px; letter-spacing: 1px; color: var(--white); }
+
+/* ══ READING ══ */
+.read-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; padding: 4px 12px; border: 1px solid;
+  margin-bottom: 10px; border-radius: 2px;
+}
+.read-tag.t { border-color: var(--gold); color: var(--gold); }
+.read-tag.s { border-color: var(--teal); color: var(--teal); }
+
+.reading-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 18px 20px; margin-bottom: 10px;
+  position: relative;
+}
+.reading-card::before { content:''; position:absolute; top:0; left:0; width:3px; height:100%; }
+.reading-card.t::before { background: var(--gold); }
+.reading-card.s::before { background: var(--teal); }
+
+.reading-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 18px; letter-spacing: 1px; color: var(--white); margin-bottom: 12px;
+}
+
+.reading-body {
+  font-size: 15px; font-weight: 600; line-height: 2; color: rgba(255,255,255,0.7);
+}
+
+.hl { color: var(--teal2); font-weight: 800; }
+.hlg { color: var(--gold); font-weight: 800; }
+.vp { color: #80CCDD; font-weight: 800; background: rgba(0,180,160,0.08); padding: 1px 4px; font-size: 14px; border-radius: 2px; }
+.adj-hl { color: var(--green); font-weight: 800; background: rgba(0,200,112,0.07); padding: 1px 4px; font-size: 14px; border-radius: 2px; }
+/* possessive highlights in reading */
+.pa { color: var(--sky); font-weight: 800; background: rgba(91,191,212,0.1); padding: 1px 4px; border-radius: 3px; }
+.pp { color: var(--gold); font-weight: 800; background: rgba(232,184,75,0.1); padding: 1px 4px; border-radius: 3px; }
+
+/* ══ EXERCISES ══ */
+.ex-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 15px 17px;
+  margin-bottom: 2px;
+}
+
+.ex-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--dim); margin-bottom: 6px;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+
+.ex-diff {
+  display: inline-block; font-size: 8px; font-weight: 800; letter-spacing: 1px;
+  text-transform: uppercase; padding: 2px 7px; border-radius: 3px;
+}
+.ex-diff.easy { background: rgba(0,200,112,0.12); color: var(--green); }
+.ex-diff.medium { background: rgba(0,180,160,0.12); color: var(--teal2); }
+.ex-diff.hard { background: rgba(232,184,75,0.12); color: var(--gold); }
+
+.ex-q { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 6px; line-height: 1.6; }
+
+/* French hint under question */
+.ex-fr {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; color: var(--fr); font-style: italic; font-weight: 700;
+  margin-bottom: 8px; display: flex; align-items: flex-start; gap: 6px;
+  line-height: 1.5;
+}
+.ex-fr::before { content: '🇫🇷'; font-style: normal; flex-shrink: 0; }
+
+.ex-note {
+  font-size: 11px; color: var(--purple); font-weight: 700;
+  margin-bottom: 8px; font-style: italic;
+}
+.ex-note::before { content: '💡 '; }
+
+.fill-input {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12); border-radius: 4px;
+  padding: 7px 12px; font-size: 14px; font-weight: 800;
+  color: var(--white); outline: none; transition: border-color .2s;
+  caret-color: var(--teal); font-family: 'Nunito', sans-serif;
+  max-width: 180px; width: 100%;
+}
+.fill-input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(0,180,160,0.1); }
+.fill-input.correct { border-color: var(--green); background: var(--correct); color: var(--green); }
+.fill-input.wrong { border-color: var(--red); background: var(--wrong); color: var(--red); }
+
+.mc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+
+.mc-btn {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px; padding: 9px 12px;
+  font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.65);
+  cursor: pointer; text-align: left; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) { border-color: var(--teal); color: var(--teal); }
+.mc-btn.correct { border-color: var(--green); background: var(--correct); color: var(--green); }
+.mc-btn.wrong { border-color: var(--red); background: var(--wrong); color: var(--red); }
+.mc-btn:disabled { pointer-events: none; }
+
+.ex-reveal {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px; color: var(--dim); margin-top: 5px; display: none; font-weight: 700;
+}
+.ex-reveal.show { display: block; }
+.ex-reveal strong { color: var(--green); }
+
+/* ══ WRITING TASK ══ */
+.writing-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--teal);
+  border-radius: 0 0 10px 10px;
+  padding: 20px;
+  margin-bottom: 12px;
+}
+
+.writing-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 16px; letter-spacing: 2px; color: var(--teal);
+  margin-bottom: 4px;
+}
+
+.writing-sub {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; color: var(--dim); letter-spacing: 1px; margin-bottom: 14px;
+}
+
+.writing-starters { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+
+.starter {
+  background: var(--card2);
+  border: 1px solid var(--border); border-radius: 5px;
+  padding: 10px 14px; cursor: pointer; transition: all .15s;
+}
+.starter:hover { border-color: var(--teal); }
+
+.starter-en { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.8); line-height: 1.5; }
+.starter-en .fill { color: var(--teal); font-weight: 800; }
+.starter-en .poss { color: var(--gold); font-weight: 800; }
+
+.starter-fr {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; color: var(--fr); font-style: italic;
+  margin-top: 4px; font-weight: 700;
+  display: flex; align-items: center; gap: 5px;
+}
+.starter-fr::before { content: '🇫🇷'; font-style: normal; }
+
+.writing-area {
+  width: 100%; min-height: 110px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;
+  padding: 12px 14px; font-family: 'Nunito', sans-serif;
+  font-size: 14px; font-weight: 700; color: var(--white);
+  resize: vertical; outline: none; line-height: 1.7;
+  caret-color: var(--teal); transition: border-color .2s;
+}
+.writing-area:focus { border-color: rgba(0,180,160,0.3); }
+.writing-area::placeholder { color: rgba(255,255,255,0.2); font-style: italic; font-size: 13px; }
+
+/* ══ SPEAKING ══ */
+.speaking-card {
+  background: var(--dark);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--teal2);
+  padding: 20px;
+}
+
+.speaking-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 18px; letter-spacing: 2px; color: var(--teal2); margin-bottom: 4px;
+}
+.speaking-sub {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; color: var(--dim); letter-spacing: 2px; margin-bottom: 14px; text-transform: uppercase;
+}
+
+.sp-prompt {
+  background: var(--card);
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 12px 14px; margin-bottom: 8px;
+  display: flex; gap: 10px; align-items: flex-start;
+  transition: border-color .2s;
+}
+.sp-prompt:hover { border-color: rgba(0,180,160,0.25); }
+
+.sp-num { font-family: 'Bebas Neue', cursive; font-size: 24px; color: var(--teal); flex-shrink: 0; width: 20px; line-height: 1; }
+
+.sp-body { flex: 1; }
+.sp-en { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.75); line-height: 1.5; margin-bottom: 5px; }
+.sp-en .hl { color: var(--teal2); font-weight: 800; }
+.sp-en .pp { color: var(--gold); font-weight: 800; }
+.sp-fr {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; color: var(--fr); font-style: italic; font-weight: 700;
+  display: flex; align-items: flex-start; gap: 5px; line-height: 1.5;
+}
+.sp-fr::before { content: '🇫🇷'; font-style: normal; flex-shrink: 0; }
+
+.sp-level {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 3px; flex-shrink: 0; margin-top: 2px; border: 1px solid;
+}
+.sp-level.warm { border-color: var(--green); color: var(--green); }
+.sp-level.core { border-color: var(--teal); color: var(--teal); }
+.sp-level.challenge { border-color: var(--gold); color: var(--gold); }
+
+/* ══ CHECK + SCORE ══ */
+.check-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--teal); color: var(--black);
+  border: none; border-radius: 6px; padding: 13px 28px;
+  font-family: 'Bebas Neue', cursive; font-size: 20px; letter-spacing: 2px;
+  cursor: pointer; box-shadow: 0 4px 20px rgba(0,180,160,0.3);
+  transition: all .2s;
+}
+.check-btn:hover { background: var(--teal2); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,180,160,0.4); }
+
+.score-panel {
+  background: var(--card); border: 2px solid var(--teal);
+  border-radius: 12px; padding: 30px 24px; text-align: center;
+  margin-top: 20px; display: none;
+  animation: popIn .4s cubic-bezier(.34,1.56,.64,1) both;
+  box-shadow: 0 0 40px rgba(0,180,160,0.1);
+}
+.score-panel.show { display: block; }
+@keyframes popIn { from{opacity:0;transform:scale(.85)} to{opacity:1;transform:scale(1)} }
+
+.score-big { font-family: 'Bebas Neue', cursive; font-size: 76px; color: var(--teal2); text-shadow: 0 0 30px rgba(0,180,160,0.4); line-height: 1; }
+.score-sub { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 4px; color: var(--dim); text-transform: uppercase; margin-top: 3px; }
+.score-msg { font-size: 18px; font-weight: 800; margin: 12px 0 5px; }
+
+.retry-btn {
+  background: transparent; border: 1px solid var(--border); color: var(--dim);
+  padding: 7px 20px; font-family: 'Space Mono', monospace;
+  font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  cursor: pointer; margin-top: 8px; transition: all .2s; border-radius: 4px;
+}
+.retry-btn:hover { border-color: var(--teal); color: var(--teal); }
+
+/* ══ WHITEBOARD ══ */
+.wb {
+  background: #07080C;
+  border-left: 1px solid rgba(0,180,160,0.08);
+  position: sticky; top: 0; height: 100vh;
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.wb-head { background: #050608; padding: 13px 14px 10px; border-bottom: 1px solid rgba(0,180,160,0.07); flex-shrink: 0; }
+.wb-title { font-family: 'Bebas Neue', cursive; font-size: 14px; letter-spacing: 3px; color: var(--teal); }
+.wb-sub { font-family: 'Space Mono', monospace; font-size: 8px; color: var(--dim); font-weight: 600; margin-top: 2px; letter-spacing: 1px; text-transform: uppercase; }
+
+.wb-stamps { padding: 8px 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; border-bottom: 1px solid rgba(255,255,255,0.04); flex-shrink: 0; }
+.stamp { background: transparent; border: 1px solid rgba(255,255,255,0.06); border-radius: 4px; padding: 6px 4px; font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.45); cursor: pointer; text-align: center; transition: all .15s; line-height: 1.4; }
+.stamp:hover { background: rgba(0,180,160,0.07); border-color: var(--teal); color: var(--teal); }
+.stamp.r:hover { border-color: var(--red); color: var(--red); }
+.stamp.g:hover { border-color: var(--green); color: var(--green); }
+
+.wb-correction { padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.04); flex-shrink: 0; }
+.wb-correction-label { font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 5px; display: flex; align-items: center; justify-content: space-between; }
+.wb-correction-wrap { display: flex; gap: 5px; }
+.wb-correction-input { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 6px 10px; font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 800; color: white; outline: none; caret-color: var(--teal); transition: border-color .2s; }
+.wb-correction-input:focus { border-color: rgba(0,180,160,0.35); }
+.wb-correction-input::placeholder { color: rgba(255,255,255,0.18); font-size: 11px; font-style: italic; }
+.wb-correction-send { background: var(--teal); border: none; color: var(--black); font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 800; padding: 6px 10px; cursor: pointer; border-radius: 4px; transition: all .15s; }
+.wb-correction-send:hover { background: var(--teal2); }
+.wb-correction-display { margin-top: 5px; min-height: 38px; background: rgba(0,180,160,0.06); border: 1px solid rgba(0,180,160,0.15); border-radius: 4px; padding: 6px 10px; font-family: 'Nunito', sans-serif; font-size: 18px; font-weight: 800; color: var(--teal2); text-align: center; display: flex; align-items: center; justify-content: center; transition: all .2s; }
+
+.wb-notes-wrap { flex: 1; padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; min-height: 0; }
+.wb-notes-label { font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: space-between; }
+.wb-export-btn { background: transparent; border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.25); font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700; padding: 2px 7px; cursor: pointer; transition: all .15s; border-radius: 3px; }
+.wb-export-btn:hover { border-color: var(--teal); color: var(--teal); }
+.wb-notes { flex: 1; min-height: 60px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 5px; padding: 8px 10px; font-family: 'Nunito', sans-serif; font-size: 12px; color: rgba(255,255,255,0.75); resize: none; outline: none; line-height: 1.7; caret-color: var(--teal); transition: border-color .2s; }
+.wb-notes:focus { border-color: rgba(0,180,160,0.2); }
+.wb-notes::placeholder { color: rgba(255,255,255,0.15); font-size: 11px; font-style: italic; }
+
+.wb-log { padding: 0 10px 6px; display: flex; flex-direction: column; gap: 3px; flex-shrink: 0; max-height: 90px; overflow-y: auto; }
+.wb-log-label { font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--dim); margin-bottom: 3px; }
+.wb-log-entry { background: rgba(255,255,255,0.03); border-radius: 3px; padding: 3px 7px; font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.55); display: flex; align-items: center; gap: 4px; animation: sli .2s ease; }
+@keyframes sli { from{opacity:0;transform:translateX(5px)} to{opacity:1;transform:translateX(0)} }
+.wb-log-time { font-size: 9px; color: var(--dim); margin-left: auto; }
+
+.wb-acts { padding: 4px 10px 8px; display: flex; gap: 4px; flex-shrink: 0; }
+.wb-act { flex: 1; background: transparent; border: 1px solid rgba(255,255,255,0.05); border-radius: 3px; padding: 4px 3px; font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700; color: var(--dim); cursor: pointer; text-align: center; transition: all .15s; }
+.wb-act:hover { border-color: rgba(255,255,255,0.15); color: var(--white); }
+
+/* Mobile */
+.wb-toggle { display: none; position: fixed; bottom: 20px; right: 20px; background: var(--teal); color: var(--black); border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 20px; cursor: pointer; box-shadow: 0 0 20px rgba(0,180,160,0.4); z-index: 1000; }
+.wb-drawer { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #07080C; border-top: 2px solid var(--teal); border-radius: 18px 18px 0 0; padding: 14px; z-index: 999; max-height: 75vh; overflow-y: auto; transform: translateY(100%); transition: transform .3s cubic-bezier(.34,1.2,.64,1); }
+.wb-drawer.open { transform: translateY(0); }
+.wb-dh { width: 34px; height: 3px; background: var(--teal); margin: 0 auto 12px; opacity: .3; border-radius: 2px; }
+
+@media (max-width: 720px) {
+  .layout { grid-template-columns: 1fr; }
+  .wb { display: none; }
+  .wb-toggle { display: flex; align-items: center; justify-content: center; }
+  .wb-drawer { display: block; }
+  .mc-opts { grid-template-columns: 1fr; }
+  .grammar-cols { grid-template-columns: 1fr; }
+  .prow { grid-template-columns: 40px 55px 1fr; }
+  .prow-fr { display: none; }
+  .scene-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="layout">
+<div class="main">
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-visual">
+    <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="sky-g" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#020810"/>
+          <stop offset="60%" stop-color="#051828"/>
+          <stop offset="100%" stop-color="#072030"/>
+        </linearGradient>
+        <linearGradient id="sea-g" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#006A78"/>
+          <stop offset="100%" stop-color="#003040"/>
+        </linearGradient>
+        <radialGradient id="moon-g" cx="50%" cy="50%">
+          <stop offset="0%" stop-color="rgba(0,212,188,0.25)"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Sky -->
+      <rect width="900" height="320" fill="url(#sky-g)"/>
+
+      <!-- Stars -->
+      <circle cx="80" cy="30" r="1.2" fill="rgba(255,255,255,0.6)"/>
+      <circle cx="200" cy="18" r="1" fill="rgba(255,255,255,0.5)"/>
+      <circle cx="350" cy="35" r="1.2" fill="rgba(255,255,255,0.5)"/>
+      <circle cx="500" cy="14" r="1" fill="rgba(255,255,255,0.6)"/>
+      <circle cx="650" cy="28" r="1.2" fill="rgba(255,255,255,0.4)"/>
+      <circle cx="780" cy="20" r="1" fill="rgba(255,255,255,0.5)"/>
+      <circle cx="140" cy="55" r="0.8" fill="rgba(255,255,255,0.4)"/>
+      <circle cx="420" cy="50" r="0.8" fill="rgba(255,255,255,0.3)"/>
+      <circle cx="700" cy="48" r="0.8" fill="rgba(255,255,255,0.4)"/>
+
+      <!-- Moon glow -->
+      <ellipse cx="760" cy="60" rx="100" ry="80" fill="url(#moon-g)"/>
+      <!-- Moon -->
+      <circle cx="760" cy="55" r="28" fill="rgba(0,212,188,0.6)"/>
+      <circle cx="770" cy="48" r="22" fill="#020810"/>
+
+      <!-- Mount Scenery — The Bottom (Saba's famous extinct volcano) -->
+      <!-- Back mountain dark -->
+      <path d="M300,200 L420,80 L550,200Z" fill="#060E18"/>
+      <!-- Main volcano peak -->
+      <path d="M350,220 L450,60 L560,220Z" fill="#0A1A28"/>
+      <!-- Cloud around peak -->
+      <ellipse cx="450" cy="80" rx="50" ry="16" fill="rgba(0,180,160,0.08)"/>
+      <ellipse cx="450" cy="72" rx="35" ry="12" fill="rgba(0,180,160,0.06)"/>
+      <!-- Green terraced slopes -->
+      <path d="M250,230 L350,220 L450,60 L560,220 L680,230 L700,260 L200,260Z" fill="#0A2A1A"/>
+      <path d="M200,260 L280,248 L380,240 L450,90 L530,240 L650,248 L740,260 L750,290 L150,290Z" fill="#0E3A22"/>
+      <!-- Foreground green hill -->
+      <path d="M0,290 Q200,268 450,272 Q700,268 900,288 L900,320 L0,320Z" fill="#0E3020"/>
+
+      <!-- Traditional red-roof houses (Saba style) -->
+      <!-- House 1 -->
+      <rect x="120" y="252" width="36" height="24" fill="#F5F0E8"/>
+      <polygon points="118,252 138,236 158,252" fill="#CC3322"/>
+      <rect x="128" y="262" width="12" height="14" fill="rgba(0,100,120,0.5)"/>
+      <!-- House 2 -->
+      <rect x="170" y="248" width="30" height="22" fill="#EDE8DC"/>
+      <polygon points="168,248 185,234 202,248" fill="#BB2A1A"/>
+      <!-- House 3 right side -->
+      <rect x="730" y="256" width="32" height="22" fill="#F0EBE0"/>
+      <polygon points="728,256 746,241 764,256" fill="#CC3322"/>
+      <rect x="738" y="265" width="10" height="13" fill="rgba(0,100,120,0.4)"/>
+
+      <!-- Sea -->
+      <rect y="278" width="900" height="42" fill="url(#sea-g)"/>
+      <path d="M0,280 Q90,274 180,280 Q270,286 360,280 Q450,274 540,280 Q630,286 720,280 Q810,274 900,280" stroke="rgba(0,180,160,0.25)" stroke-width="1.5" fill="none"/>
+      <path d="M0,292 Q100,288 200,292 Q300,296 400,292 Q500,288 600,292 Q700,296 800,292 Q860,290 900,292" stroke="rgba(0,180,160,0.15)" stroke-width="1" fill="none"/>
+
+      <!-- Tiny boat -->
+      <ellipse cx="620" cy="290" rx="22" ry="5" fill="rgba(255,255,255,0.4)"/>
+      <rect x="613" y="282" width="14" height="9" rx="1" fill="rgba(255,255,255,0.3)"/>
+      <line x1="620" y1="282" x2="620" y2="266" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+      <path d="M620,267 L633,278 L620,280Z" fill="rgba(255,255,255,0.25)"/>
+
+      <!-- Teal accent glow on horizon -->
+      <ellipse cx="450" cy="280" rx="200" ry="10" fill="rgba(0,180,160,0.06)"/>
+    </svg>
+    <div class="hero-overlay"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">🌿 Focused Lesson · 50 min · Grammar + Context</div>
+    <h1>SABA<span class="t2">Possessives Review</span></h1>
+    <div class="hero-tags">
+      <span class="htag t">🧭 Possessive Adjectives</span>
+      <span class="htag g">🏆 Possessive Pronouns</span>
+      <span class="htag w">🇫🇷 French Translations Throughout</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LESSON PLAN ══ -->
+<div class="plan-strip">
+  <div class="plan-item"><div class="plan-time">5'</div><div class="plan-desc">Warm-Up Retrieval</div></div>
+  <div class="plan-item"><div class="plan-time">10'</div><div class="plan-desc">Grammar Review</div></div>
+  <div class="plan-item"><div class="plan-time">10'</div><div class="plan-desc">Saba Fast Facts + Reading</div></div>
+  <div class="plan-item"><div class="plan-time">15'</div><div class="plan-desc">Exercises</div></div>
+  <div class="plan-item"><div class="plan-time">10'</div><div class="plan-desc">Writing + Speaking</div></div>
+</div>
+
+<!-- ══ TIMER ══ -->
+<div class="timer-bar">
+  <div>
+    <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--dim);margin-bottom:2px;text-transform:uppercase;">Timer</div>
+    <div class="t-num" id="td">00:00</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:4px;">
+    <div style="display:flex;gap:4px;">
+      <button class="t-pre" onclick="setTimer(5,this)">5</button>
+      <button class="t-pre" onclick="setTimer(10,this)">10</button>
+      <button class="t-pre" onclick="setTimer(15,this)">15</button>
+      <button class="t-pre" onclick="setTimer(20,this)">20</button>
+    </div>
+    <div style="display:flex;gap:5px;">
+      <button class="t-btn go" id="tsb" onclick="toggleTimer()">▶ Start</button>
+      <button class="t-btn" onclick="resetTimer()">↺</button>
+    </div>
+  </div>
+  <span style="font-family:'Space Mono',monospace;font-size:9px;color:var(--dim);" id="tmode">COUNT UP</span>
+</div>
+
+<div class="wrap">
+
+<!-- ══ 00: WARM-UP ══ -->
+<div class="sh">
+  <span class="sh-num">00</span>
+  <span class="sh-title">⚡ <span class="ac">Warm-Up</span> — Quick Recall</span>
+  <span class="sh-line"></span>
+  <span class="sh-time">5 MIN</span>
+</div>
+
+<div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--dim);margin-bottom:10px;font-weight:700;">Answer first — then tap Reveal. No looking at the screen!</div>
+
+<div class="retrieval-card">
+  <div class="retrieval-title">🧠 Retrieval — Possessives + Saint-Barths</div>
+
+  <div class="retrieval-q">
+    <span class="rq-num">1</span>
+    <div>
+      Give the possessive adjective AND pronoun for: I · she · they
+      <div class="rq-fr">Donne l'adjectif possessif ET le pronom possessif pour : I (je) · she (elle) · they (ils)</div>
+      <button class="reveal-btn" onclick="revealQ(0)">REVEAL</button>
+      <div class="retrieval-reveal" id="rr0">I → <strong>my</strong> (mon/ma) · <strong>mine</strong> (le mien/la mienne) &nbsp;|&nbsp; she → <strong>her</strong> (son/sa) · <strong>hers</strong> (le sien) &nbsp;|&nbsp; they → <strong>their</strong> (leur) · <strong>theirs</strong> (le leur)</div>
+    </div>
+  </div>
+
+  <div class="retrieval-q">
+    <span class="rq-num">2</span>
+    <div>
+      What's wrong with these sentences? Fix them.
+      <br>a) "This is mine book." &nbsp; b) "The trophy is my."
+      <div class="rq-fr">Qu'est-ce qui ne va pas dans ces phrases ? Corrige-les.</div>
+      <button class="reveal-btn" onclick="revealQ(1)">REVEAL</button>
+      <div class="retrieval-reveal" id="rr1">a) "This is <strong>my</strong> book." — mine ne peut pas précéder un nom / mine cannot come before a noun<br>b) "The trophy is <strong>mine</strong>." — my doit être suivi d'un nom / my must be followed by a noun</div>
+    </div>
+  </div>
+
+  <div class="retrieval-q" style="margin-bottom:0;">
+    <span class="rq-num">3</span>
+    <div>
+      Which country owned Saint-Barths from 1784 to 1878?
+      <div class="rq-fr">Quel pays possédait Saint-Barths de 1784 à 1878 ?</div>
+      <button class="reveal-btn" onclick="revealQ(2)">REVEAL</button>
+      <div class="retrieval-reveal" id="rr2">Sweden / La Suède. France sold it in exchange for trading rights in Gothenburg (Göteborg). The capital was renamed Gustavia after King Gustav III.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 01: GRAMMAR REVIEW ══ -->
+<div class="sh">
+  <span class="sh-num">01</span>
+  <span class="sh-title">📐 Grammar — <span class="ag">Possessives Review</span></span>
+  <span class="sh-line"></span>
+  <span class="sh-time">10 MIN</span>
+</div>
+
+<div class="grammar-box">
+  <div class="grammar-box-title">
+    🔵 Adjective vs 🟡 Pronoun — The Full Table
+    <span class="fr-badge">with French</span>
+  </div>
+
+  <div class="grammar-cols">
+    <!-- Adjectives -->
+    <div class="grammar-col">
+      <div class="gc-title adj">🔵 POSSESSIVE ADJECTIVES</div>
+      <div class="gc-fr-note">🇫🇷 Adjectifs possessifs — toujours AVANT un nom<br>"Always BEFORE a noun"</div>
+
+      <div class="prow">
+        <div class="prow-sub">I<div class="sub-fr">je</div></div>
+        <div class="prow-word adj">my</div>
+        <div class="prow-ex">my island</div>
+        <div class="prow-fr">mon / ma / mes île</div>
+      </div>
+      <div class="prow">
+        <div class="prow-sub">You<div class="sub-fr">tu / vous</div></div>
+        <div class="prow-word adj">your</div>
+        <div class="prow-ex">your house</div>
+        <div class="prow-fr">ta / votre maison</div>
+      </div>
+      <div class="prow">
+        <div class="prow-sub">He<div class="sub-fr">il</div></div>
+        <div class="prow-word adj">his</div>
+        <div class="prow-ex">his boat</div>
+        <div class="prow-fr">son bateau</div>
+      </div>
+      <div class="prow">
+        <div class="prow-sub">She<div class="sub-fr">elle</div></div>
+        <div class="prow-word adj">her</div>
+        <div class="prow-ex">her view</div>
+        <div class="prow-fr">sa vue</div>
+      </div>
+      <div class="prow">
+        <div class="prow-sub">We<div class="sub-fr">nous</div></div>
+        <div class="prow-word adj">our</div>
+        <div class="prow-ex">our trip</div>
+        <div class="prow-fr">notre voyage</div>
+      </div>
+      <div class="prow">
+        <div class="prow-sub">They<div class="sub-fr">ils</div></div>
+        <div class="prow-word adj">their</div>
+        <div class="prow-ex">their island</div>
+        <div class="prow-fr">leur île</div>
+      </div>
+    </div>
+
+    <!-- Pronouns -->
+    <div class="grammar-col">
+      <div class="gc-title pro">🟡 POSSESSIVE PRONOUNS</div>
+      <div class="gc-fr-note">🇫🇷 Pronoms possessifs — remplacent le nom<br>"Replace the noun — stand alone"</div>
+
+      <div class="prow">
+        <div class="prow-sub">I<div class="sub-fr">je</div></div>
+        <div class="prow-word pro">mine</div>
+        <div class="prow-ex">it is mine</div>
+        <div class="prow-fr">c'est le mien / la mienne</div>
+      </div>
+      <div class="prow">
+        <div class="prow-sub">You<div class="sub-fr">tu</div></div>
+        <div class="prow-word pro">yours</div>
+        <div class="prow-ex">it is yours</div>
+        <div class="prow-fr">c'est le tien / la tienne</div>
+      </div>
+      <div class="prow">
+        <div class="prow-sub">He<div class="sub-fr">il</div></div>
+        <div class="prow-word pro">his</div>
+        <div class="prow-ex">it is his</div>
+        <div class="prow-fr">c'est le sien (masc.)</div>
+      </div>
+      <div class="prow">
+        <div class="prow-sub">She<div class="sub-fr">elle</div></div>
+        <div class="prow-word pro">hers</div>
+        <div class="prow-ex">it is hers</div>
+        <div class="prow-fr">c'est le sien (fém.)</div>
+      </div>
+      <div class="prow">
+        <div class="prow-sub">We<div class="sub-fr">nous</div></div>
+        <div class="prow-word pro">ours</div>
+        <div class="prow-ex">it is ours</div>
+        <div class="prow-fr">c'est le nôtre / la nôtre</div>
+      </div>
+      <div class="prow">
+        <div class="prow-sub">They<div class="sub-fr">ils</div></div>
+        <div class="prow-word pro">theirs</div>
+        <div class="prow-ex">it is theirs</div>
+        <div class="prow-fr">c'est le leur / la leur</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-rule">
+    <div class="key-rule-title">⚡ THE ONE RULE TO REMEMBER</div>
+    <div class="kr-row">
+      <span style="font-size:20px;flex-shrink:0;">🔵</span>
+      <div>
+        <span style="color:var(--sky);font-style:italic;font-weight:800;">"This is <u>my</u> island."</span> — <strong>my</strong> = before a noun ✅
+        <div class="kr-fr">C'est <strong>mon</strong> île. — "my" est un adjectif, il précède TOUJOURS un nom.</div>
+      </div>
+    </div>
+    <div class="kr-row">
+      <span style="font-size:20px;flex-shrink:0;">🟡</span>
+      <div>
+        <span style="color:var(--gold);font-style:italic;font-weight:800;">"This island is <u>mine</u>."</span> — <strong>mine</strong> = replaces the noun ✅
+        <div class="kr-fr">Cette île est <strong>la mienne</strong>. — "mine" est un pronom, il <strong>remplace</strong> "my island".</div>
+      </div>
+    </div>
+    <div class="kr-row">
+      <span style="font-size:20px;flex-shrink:0;">❌</span>
+      <div style="color:rgba(255,255,255,0.5);">
+        <span style="color:var(--red);font-style:italic;">"This is mine island"</span> ← FAUX! / WRONG! &nbsp;&nbsp;
+        <span style="color:var(--red);font-style:italic;">"This island is my"</span> ← FAUX! / WRONG!
+      </div>
+    </div>
+    <div style="background:rgba(255,208,96,0.06);border:1px solid rgba(255,208,96,0.15);border-radius:5px;padding:10px 12px;margin-top:8px;">
+      <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--fr);font-weight:700;letter-spacing:1px;margin-bottom:6px;">🇫🇷 ASTUCE POUR MICHA — Pour se souvenir :</div>
+      <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.65);line-height:1.7;">
+        🔵 <strong style="color:var(--sky);">Adjectif</strong> = "mon / ma / mes / ton / son / notre / leur" → suivi d'un nom<br>
+        🟡 <strong style="color:var(--gold);">Pronom</strong> = "le mien / le tien / le sien / le nôtre / le leur" → seul, sans nom après<br>
+        💡 En anglais : si le mot <strong>suit</strong> "is/are" et qu'il n'y a pas de nom après → c'est un pronom (mine, yours, his, hers, ours, theirs)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 02: SABA FAST FACTS ══ -->
+<div class="sh">
+  <span class="sh-num">02</span>
+  <span class="sh-title">🌿 <span class="ac">Saba</span> — Fast Facts</span>
+  <span class="sh-line"></span>
+  <span class="sh-time">5 MIN</span>
+</div>
+
+<div class="facts-grid">
+  <div class="fact-card" style="animation-delay:.05s">
+    <span class="fact-icon">🌍</span>
+    <div class="fact-label">Location</div>
+    <div class="fact-val">Dutch Caribbean</div>
+    <div class="fact-text">A tiny volcanic island in the <strong>northeastern Caribbean</strong>, near Sint Maarten. Only 13 km².</div>
+  </div>
+  <div class="fact-card" style="animation-delay:.1s">
+    <span class="fact-icon">🏔️</span>
+    <div class="fact-label">The Bottom</div>
+    <div class="fact-val">Mount Scenery</div>
+    <div class="fact-text">The capital is called <strong>"The Bottom"</strong> — and the highest peak, Mount Scenery (887m), is the highest point in the Dutch kingdom!</div>
+  </div>
+  <div class="fact-card" style="animation-delay:.15s">
+    <span class="fact-icon">🇳🇱</span>
+    <div class="fact-label">Country</div>
+    <div class="fact-val">Part of the Netherlands</div>
+    <div class="fact-text">Officially a <strong>Dutch special municipality</strong>. People use US dollars here, not euros!</div>
+  </div>
+  <div class="fact-card" style="animation-delay:.2s">
+    <span class="fact-icon">👥</span>
+    <div class="fact-label">Population</div>
+    <div class="fact-val">~2,000 people</div>
+    <div class="fact-text">One of the <strong>smallest inhabited islands</strong> on Earth — tinier than most Belgian villages!</div>
+  </div>
+  <div class="fact-card" style="animation-delay:.25s">
+    <span class="fact-icon">🏠</span>
+    <div class="fact-label">Architecture</div>
+    <div class="fact-val">White Walls, Red Roofs</div>
+    <div class="fact-text"><strong>Traditional white wooden houses</strong> with red tin roofs, surrounded by tropical gardens.</div>
+  </div>
+  <div class="fact-card" style="animation-delay:.3s">
+    <span class="fact-icon">🤿</span>
+    <div class="fact-label">Famous For</div>
+    <div class="fact-val">Diving &amp; Hiking</div>
+    <div class="fact-text">World-class scuba diving and a <strong>rainforest trail to the summit</strong> — Saba is a nature lover's paradise.</div>
+  </div>
+</div>
+
+<!-- ══ SVG SCENES ══ -->
+<div class="sh" style="margin-top:20px;margin-bottom:10px;"><span class="sh-num"></span><span class="sh-title">See <span class="ac">Saba</span></span><span class="sh-line"></span></div>
+
+<div class="scene-grid">
+
+  <!-- The Bottom village -->
+  <div class="scene-wrap">
+    <svg viewBox="0 0 380 190" xmlns="http://www.w3.org/2000/svg" style="height:190px;">
+      <defs>
+        <linearGradient id="tb-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#071018"/>
+          <stop offset="100%" stop-color="#0E2030"/>
+        </linearGradient>
+      </defs>
+      <rect width="380" height="190" fill="url(#tb-sky)"/>
+      <!-- Mountain bg -->
+      <path d="M0,190 L0,100 L60,70 L120,90 L180,55 L240,85 L300,60 L360,80 L380,75 L380,190Z" fill="#0A1A10"/>
+      <!-- Misty cloud on summit -->
+      <ellipse cx="180" cy="60" rx="45" ry="12" fill="rgba(0,180,160,0.12)"/>
+      <!-- Green foreground -->
+      <path d="M0,145 Q80,135 160,140 Q240,145 320,138 Q360,135 380,138 L380,190 L0,190Z" fill="#0E2A14"/>
+      <!-- Houses - white with red roofs, Saba style -->
+      <rect x="30" y="120" width="38" height="26" fill="#F0EDE5"/>
+      <polygon points="28,120 49,102 70,120" fill="#CC3322"/>
+      <rect x="38" y="134" width="14" height="12" fill="rgba(0,80,100,0.4)"/>
+      <rect x="80" y="125" width="32" height="22" fill="#EDE9E0"/>
+      <polygon points="78,125 96,109 112,125" fill="#BB2A1A"/>
+      <rect x="130" y="118" width="40" height="27" fill="#F5F2EA"/>
+      <polygon points="128,118 150,100 172,118" fill="#CC3322"/>
+      <rect x="140" y="131" width="16" height="14" fill="rgba(0,80,100,0.4)"/>
+      <rect x="180" y="122" width="34" height="24" fill="#ECE8DF"/>
+      <polygon points="178,122 197,106 216,122" fill="#BB2A1A"/>
+      <rect x="230" y="120" width="36" height="26" fill="#F0EDE5"/>
+      <polygon points="228,120 248,103 268,120" fill="#CC3322"/>
+      <rect x="240" y="133" width="12" height="13" fill="rgba(0,80,100,0.35)"/>
+      <!-- Tiny road -->
+      <path d="M0,152 Q190,148 380,152" stroke="rgba(255,255,255,0.15)" stroke-width="2" fill="none"/>
+      <!-- Flowers -->
+      <circle cx="110" cy="143" r="5" fill="rgba(255,60,120,0.5)"/>
+      <circle cx="215" cy="148" r="4" fill="rgba(255,100,50,0.4)"/>
+      <text x="190" y="183" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="rgba(0,180,160,0.4)" letter-spacing="2">THE BOTTOM — CAPITAL</text>
+    </svg>
+    <div class="scene-cap"><span class="sc-tag">🏘️ Capital Village</span><span class="sc-name">The Bottom</span></div>
+  </div>
+
+  <!-- Mount Scenery with cloud forest -->
+  <div class="scene-wrap">
+    <svg viewBox="0 0 240 190" xmlns="http://www.w3.org/2000/svg" style="height:190px;">
+      <defs>
+        <linearGradient id="ms-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#040C18"/>
+          <stop offset="100%" stop-color="#0A1E28"/>
+        </linearGradient>
+      </defs>
+      <rect width="240" height="190" fill="url(#ms-sky)"/>
+      <!-- Stars -->
+      <circle cx="30" cy="20" r="1" fill="rgba(255,255,255,0.4)"/>
+      <circle cx="100" cy="14" r="1.2" fill="rgba(255,255,255,0.5)"/>
+      <circle cx="190" cy="22" r="1" fill="rgba(255,255,255,0.4)"/>
+      <!-- Main volcano -->
+      <path d="M0,190 L0,140 L40,120 L80,100 L120,45 L160,100 L200,122 L240,140 L240,190Z" fill="#0A1E10"/>
+      <!-- Peak fog -->
+      <ellipse cx="120" cy="52" rx="40" ry="14" fill="rgba(0,180,160,0.18)"/>
+      <ellipse cx="120" cy="44" rx="28" ry="10" fill="rgba(0,180,160,0.12)"/>
+      <!-- Moonlight on peak -->
+      <path d="M100,70 L120,45 L140,70" fill="rgba(0,200,180,0.1)" stroke="none"/>
+      <!-- Cloud forest texture mid mountain -->
+      <ellipse cx="70" cy="110" rx="20" ry="12" fill="#0E2A16"/>
+      <ellipse cx="95" cy="102" rx="16" ry="10" fill="#102E18"/>
+      <ellipse cx="145" cy="104" rx="17" ry="10" fill="#0E2A16"/>
+      <ellipse cx="170" cy="112" rx="19" ry="11" fill="#102E18"/>
+      <!-- Hiking trail dotted line -->
+      <path d="M30,160 Q70,140 100,118 Q115,106 120,80" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none" stroke-dasharray="4,4"/>
+      <!-- Tiny hiker -->
+      <circle cx="100" cy="120" r="3" fill="rgba(255,200,100,0.7)"/>
+      <text x="120" y="183" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="rgba(0,180,160,0.4)" letter-spacing="2">MOUNT SCENERY 887M</text>
+    </svg>
+    <div class="scene-cap"><span class="sc-tag">🏔️ Highest Peak</span><span class="sc-name">Mount Scenery</span></div>
+  </div>
+
+  <!-- Diving / underwater -->
+  <div class="scene-wrap">
+    <svg viewBox="0 0 240 190" xmlns="http://www.w3.org/2000/svg" style="height:190px;">
+      <defs>
+        <linearGradient id="uw-g" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#004A5A"/>
+          <stop offset="100%" stop-color="#001A28"/>
+        </linearGradient>
+      </defs>
+      <rect width="240" height="190" fill="url(#uw-g)"/>
+      <!-- Light rays from surface -->
+      <polygon points="80,0 90,0 130,190 70,190" fill="rgba(0,180,160,0.04)"/>
+      <polygon points="130,0 145,0 175,190 155,190" fill="rgba(0,180,160,0.03)"/>
+      <polygon points="170,0 180,0 200,190 185,190" fill="rgba(0,180,160,0.025)"/>
+      <!-- Surface shimmer -->
+      <path d="M0,8 Q40,4 80,8 Q120,12 160,8 Q200,4 240,8" stroke="rgba(0,200,188,0.3)" stroke-width="2" fill="none"/>
+      <!-- Coral formations -->
+      <ellipse cx="40" cy="170" rx="18" ry="25" fill="#004840" opacity="0.8"/>
+      <ellipse cx="55" cy="165" rx="12" ry="18" fill="#005A48" opacity="0.7"/>
+      <ellipse cx="180" cy="175" rx="22" ry="20" fill="#004838" opacity="0.8"/>
+      <ellipse cx="200" cy="168" rx="14" ry="16" fill="#005A48" opacity="0.7"/>
+      <!-- Fan coral -->
+      <path d="M120,190 L118,140 Q110,120 100,110 M118,140 Q125,120 130,108 M118,155 Q130,145 145,138 M118,155 Q108,145 95,140" stroke="rgba(255,100,80,0.5)" stroke-width="2" fill="none"/>
+      <!-- Fish -->
+      <ellipse cx="100" cy="80" rx="12" ry="7" fill="rgba(255,180,0,0.6)"/>
+      <path d="M112,80 L122,74 L122,86Z" fill="rgba(255,180,0,0.5)"/>
+      <circle cx="96" cy="79" r="2" fill="rgba(0,0,0,0.5)"/>
+      <!-- Blue fish -->
+      <ellipse cx="160" cy="120" rx="9" ry="5" fill="rgba(0,200,255,0.55)"/>
+      <path d="M169,120 L177,116 L177,124Z" fill="rgba(0,200,255,0.4)"/>
+      <circle cx="157" cy="119" r="1.5" fill="rgba(0,0,0,0.5)"/>
+      <!-- Diver silhouette -->
+      <ellipse cx="80" cy="50" rx="8" ry="5" fill="rgba(255,255,255,0.2)"/>
+      <rect x="76" y="54" width="8" height="14" rx="2" fill="rgba(255,255,255,0.2)"/>
+      <path d="M76,58 L68,56" stroke="rgba(255,255,255,0.2)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M84,58 L92,56" stroke="rgba(255,255,255,0.2)" stroke-width="3" stroke-linecap="round"/>
+      <!-- Bubbles -->
+      <circle cx="82" cy="42" r="2" fill="rgba(255,255,255,0.15)"/>
+      <circle cx="78" cy="35" r="1.5" fill="rgba(255,255,255,0.12)"/>
+      <circle cx="84" cy="28" r="1" fill="rgba(255,255,255,0.1)"/>
+      <text x="120" y="183" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="rgba(0,180,160,0.4)" letter-spacing="2">WORLD-CLASS DIVING</text>
+    </svg>
+    <div class="scene-cap"><span class="sc-tag">🤿 Marine Park</span><span class="sc-name">Saba Marine Park</span></div>
+  </div>
+
+</div>
+
+<!-- ══ 03: READING ══ -->
+<div class="sh">
+  <span class="sh-num">03</span>
+  <span class="sh-title">📖 <span class="ac">Reading</span> — Teacher reads aloud</span>
+  <span class="sh-line"></span>
+  <span class="sh-time">5 MIN</span>
+</div>
+
+<div class="read-tag t">🎤 Teacher reads · Micha listens · Spot the possessives!</div>
+<div class="reading-card t">
+  <div class="reading-title">The Island That Belongs to Everyone — and No One</div>
+  <div class="reading-body">
+    Saba is <span class="adj-hl">tiny</span>, <span class="adj-hl">wild</span>, and <span class="adj-hl">unlike</span> any other island in the Caribbean. <span class="pa">Its</span> capital is called "The Bottom" — not because it is low, but because the Dutch word <span class="hl">bodem</span> means <span class="hlg">"ground"</span>. <span class="pa">Its</span> streets are <span class="adj-hl">narrow</span>, <span class="pa">its</span> houses are <span class="adj-hl">white</span> with <span class="adj-hl">red</span> roofs, and <span class="pa">its</span> people are <span class="adj-hl">proud</span> of <span class="pa">their</span> <span class="adj-hl">extraordinary</span> home.<br><br>
+
+    The island <span class="vp">belongs</span> to the Netherlands, but Saba <span class="vp">has</span> always <span class="vp">felt</span> like a place apart. <span class="pa">Its</span> <span class="adj-hl">volcanic</span> peak — Mount Scenery — is the highest point in <span class="pa">the entire Dutch kingdom</span>. When clouds <span class="vp">wrap</span> around <span class="pa">its</span> summit, the mountain looks like something from a fantasy world.<br><br>
+
+    Durim <span class="vp">is</span> here now. <span class="pa">His</span> feet are on <span class="pa">its</span> <span class="adj-hl">volcanic</span> rock. The view from <span class="pa">his</span> window is <span class="pp">his</span> alone — the <span class="adj-hl">turquoise</span> sea, the <span class="adj-hl">green</span> hills, the <span class="adj-hl">quiet</span> streets below. This lesson is <span class="pp">ours</span>.
+  </div>
+</div>
+
+<!-- ══ 04: EXERCISES ══ -->
+<div class="sh">
+  <span class="sh-num">04</span>
+  <span class="sh-title">✏️ <span class="ac">Exercises</span> — Saba Context</span>
+  <span class="sh-line"></span>
+  <span class="sh-time">15 MIN</span>
+</div>
+
+<p style="font-family:'Space Mono',monospace;font-size:10px;color:var(--dim);margin-bottom:14px;font-weight:700;">// All exercises use Saba as the context. 🇫🇷 French hints on every question.</p>
+
+<div id="exerciseSection"></div>
+
+<div style="text-align:center;margin-top:20px;">
+  <button class="check-btn" onclick="checkAll()">✦ Check Answers</button>
+</div>
+
+<div class="score-panel" id="scorePanel">
+  <div style="font-size:36px;margin-bottom:6px;" id="scoreTrophy">🌿</div>
+  <div class="score-big" id="scoreBig">0</div>
+  <div class="score-sub">POINTS SCORED</div>
+  <div class="score-msg" id="scoreMsg"></div>
+  <button class="retry-btn" onclick="resetAll()">↺ Try Again</button>
+</div>
+
+<!-- ══ 05: WRITING ══ -->
+<div class="sh">
+  <span class="sh-num">05</span>
+  <span class="sh-title">✍️ <span class="ag">Write</span> — Saba Sentences</span>
+  <span class="sh-line"></span>
+  <span class="sh-time">5 MIN</span>
+</div>
+
+<div class="writing-card">
+  <div class="writing-title">🌿 Write 4–5 sentences about Saba using possessives</div>
+  <div class="writing-sub">// Click a starter to begin — use both 🔵 adjectives and 🟡 pronouns</div>
+
+  <div class="writing-starters">
+
+    <div class="starter" onclick="insertStarter('Saba is a tiny island. Its capital is called ')">
+      <div class="starter-en">🔵 <span class="fill">Saba</span> is a tiny island. <span class="poss">Its</span> capital is called ___</div>
+      <div class="starter-fr">Saba est une petite île. <strong>Sa</strong> capitale s'appelle ___ — [adjectif possessif "its" = son/sa pour une chose]</div>
+    </div>
+
+    <div class="starter" onclick="insertStarter('The island belongs to the Netherlands, but its people are proud of their culture. ')">
+      <div class="starter-en">🔵 The island belongs to the Netherlands, but <span class="poss">its</span> people are proud of <span class="poss">their</span> culture.</div>
+      <div class="starter-fr">L'île appartient aux Pays-Bas, mais <strong>ses</strong> habitants sont fiers de <strong>leur</strong> culture. [deux adjectifs possessifs]</div>
+    </div>
+
+    <div class="starter" onclick="insertStarter('Durim visited the island. The view from his window was ')">
+      <div class="starter-en">🟡 Durim visited the island. The view from <span class="poss">his</span> window was ___ — it was all <span class="poss">his</span>.</div>
+      <div class="starter-fr">Durim a visité l'île. La vue depuis <strong>sa</strong> fenêtre était ___ — c'était tout à <strong>lui</strong>. [adjectif "his" puis pronom "his"]</div>
+    </div>
+
+    <div class="starter" onclick="insertStarter('The island has its own unique style. The red rooftops are ')">
+      <div class="starter-en">🟡 The island has <span class="poss">its</span> own unique style. The red rooftops are <span class="poss">theirs</span> — nobody else has them.</div>
+      <div class="starter-fr">L'île a <strong>son</strong> propre style unique. Les toits rouges sont <strong>les leurs</strong> — personne d'autre ne les a. [adjectif "its" puis pronom "theirs"]</div>
+    </div>
+
+  </div>
+
+  <textarea class="writing-area" id="writingArea" placeholder="Start writing here… Click a starter above or write freely!"></textarea>
+</div>
+
+<!-- ══ 06: SPEAKING ══ -->
+<div class="sh">
+  <span class="sh-num">06</span>
+  <span class="sh-title">🎤 <span class="ac">Speaking</span> — Say it out loud</span>
+  <span class="sh-line"></span>
+  <span class="sh-time">5 MIN</span>
+</div>
+
+<div class="speaking-card">
+  <div class="speaking-title">🌿 SABA SPEAKING CHALLENGE</div>
+  <div class="speaking-sub">// fluency over accuracy — use a possessive in every answer</div>
+
+  <div class="speaking-prompts">
+
+    <div class="sp-prompt">
+      <span class="sp-num">1</span>
+      <div class="sp-body">
+        <div class="sp-en">Describe Saba in 2 sentences. Use <span class="pp">its</span> and <span class="pp">their</span>.<br><em>"Saba is known for its ___ . Its people are proud of their ___."</em></div>
+        <div class="sp-fr">Décris Saba en 2 phrases. Utilise "its" (son/sa) et "their" (leur).<br>"Saba est connue pour <strong>son/sa</strong> ___ . <strong>Ses</strong> habitants sont fiers de <strong>leur</strong> ___."</div>
+      </div>
+      <span class="sp-level warm">WARM-UP</span>
+    </div>
+
+    <div class="sp-prompt">
+      <span class="sp-num">2</span>
+      <div class="sp-body">
+        <div class="sp-en">Durim is on Saba right now. <span class="hl">Tell me what you think his view looks like.</span><br>Use: <span class="pp">"His view is…"</span> / <span class="pp">"The mountain is his to explore…"</span> / <span class="pp">"The island's beauty is all his…"</span></div>
+        <div class="sp-fr">Durim est à Saba en ce moment. Décris ce que tu imagines de <strong>sa</strong> vue.<br>"<strong>Sa</strong> vue est…" / "La montagne est à <strong>lui</strong> pour explorer…" / "La beauté de l'île est toute à <strong>lui</strong>…"</div>
+      </div>
+      <span class="sp-level core">CORE</span>
+    </div>
+
+    <div class="sp-prompt">
+      <span class="sp-num">3</span>
+      <div class="sp-body">
+        <div class="sp-en"><span class="hl">Compare Saba and Saint-Barths.</span> Which do you prefer and why?<br>Try to use: <span class="pp">"Its beaches / Its history / Their culture / ours / theirs…"</span></div>
+        <div class="sp-fr">Compare Saba et Saint-Barths. Laquelle tu préfères et pourquoi ?<br>Essaie d'utiliser : "<strong>ses</strong> plages / <strong>son</strong> histoire / <strong>leur</strong> culture / c'est le nôtre / c'est le leur…"</div>
+      </div>
+      <span class="sp-level challenge">CHALLENGE</span>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- /wrap -->
+</div><!-- /main -->
+
+<!-- ══ WHITEBOARD ══ -->
+<div class="wb">
+  <div class="wb-head">
+    <div class="wb-title">TEACHER BOARD</div>
+    <div class="wb-sub">stamps · correction · notes</div>
+  </div>
+  <div class="wb-stamps">
+    <button class="stamp" onclick="addStamp('✅ Correct!')">✅<br>Correct!</button>
+    <button class="stamp r" onclick="addStamp('❌ Not quite')">❌<br>Not quite</button>
+    <button class="stamp g" onclick="addStamp('🔁 Try again')">🔁<br>Try again</button>
+    <button class="stamp" onclick="addStamp('⭐ Great job!')">⭐<br>Great job!</button>
+    <button class="stamp" onclick="addStamp('👂 Listen carefully')">👂<br>Listen</button>
+    <button class="stamp" onclick="addStamp('🗣️ Say it out loud')">🗣️<br>Say it!</button>
+    <button class="stamp g" onclick="addStamp('💡 Remember this')">💡<br>Remember</button>
+    <button class="stamp" onclick="addStamp('📝 Write it down')">📝<br>Write it</button>
+  </div>
+  <div class="wb-correction">
+    <div class="wb-correction-label">✏️ CORRECTION <span>enter → show</span></div>
+    <div class="wb-correction-wrap">
+      <input type="text" class="wb-correction-input" id="corrInput" placeholder="type correction…">
+      <button class="wb-correction-send" onclick="showCorrection()">SHOW</button>
+    </div>
+    <div class="wb-correction-display" id="corrDisplay">—</div>
+  </div>
+  <div class="wb-notes-wrap">
+    <div class="wb-notes-label">📝 NOTES <button class="wb-export-btn" onclick="exportNotes()">COPY ALL</button></div>
+    <textarea class="wb-notes" id="wbNotes" placeholder="corrections, vocab, notes…"></textarea>
+  </div>
+  <div class="wb-log" id="wbLog"><div class="wb-log-label">STAMP LOG</div></div>
+  <div class="wb-acts">
+    <button class="wb-act" onclick="clearNotes()">clear notes</button>
+    <button class="wb-act" onclick="clearLog()">clear log</button>
+    <button class="wb-act" onclick="clearCorr()">clear fix</button>
+  </div>
+</div>
+
+</div><!-- /layout -->
+
+<button class="wb-toggle" onclick="toggleWB()">📋</button>
+<div class="wb-drawer" id="wbDrawer">
+  <div class="wb-dh"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">
+    <button class="stamp" onclick="addStampM('✅ Correct!')">✅ Correct!</button>
+    <button class="stamp r" onclick="addStampM('❌ Not quite')">❌ Not quite</button>
+    <button class="stamp g" onclick="addStampM('🔁 Try again')">🔁 Try again</button>
+    <button class="stamp" onclick="addStampM('⭐ Great job!')">⭐ Great job!</button>
+    <button class="stamp" onclick="addStampM('👂 Listen')">👂 Listen</button>
+    <button class="stamp" onclick="addStampM('🗣️ Say it!')">🗣️ Say it!</button>
+    <button class="stamp g" onclick="addStampM('💡 Remember')">💡 Remember</button>
+    <button class="stamp" onclick="addStampM('📝 Write it')">📝 Write it</button>
+  </div>
+  <div style="margin-bottom:10px;">
+    <div style="font-family:'Space Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.25);margin-bottom:5px;text-transform:uppercase;">✏️ Correction</div>
+    <div style="display:flex;gap:5px;">
+      <input type="text" class="wb-correction-input" id="corrInputM" placeholder="correction…" style="flex:1;">
+      <button class="wb-correction-send" onclick="showCorrectionM()">SHOW</button>
+    </div>
+    <div class="wb-correction-display" id="corrDisplayM" style="margin-top:6px;">—</div>
+  </div>
+  <textarea id="wbNM" class="wb-notes" style="height:100px;width:100%;margin-bottom:8px;" placeholder="notes…"></textarea>
+  <div style="display:flex;gap:7px;">
+    <button class="wb-act" style="flex:1;" onclick="toggleWB()">close</button>
+    <button class="wb-act" style="flex:1;" onclick="document.getElementById('wbNM').value=''">clear</button>
+  </div>
+</div>
+
+<script>
+// ══ TIMER ══
+let tS=0,tT=0,tR=false,tI=null,cD=false;
+function setTimer(m,btn){resetTimer();tT=m*60;tS=tT;cD=true;document.getElementById('tmode').textContent=m+' MIN';document.getElementById('td').textContent=fmt(tS);document.querySelectorAll('.t-pre').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function toggleTimer(){if(tR){clearInterval(tI);tR=false;document.getElementById('tsb').textContent='▶ Start';}else{tR=true;document.getElementById('tsb').textContent='⏸ Pause';tI=setInterval(()=>{cD?tS--:tS++;if(cD&&tS<=0){tS=0;clearInterval(tI);tR=false;document.getElementById('tsb').textContent='▶ Start';}const el=document.getElementById('td');el.textContent=fmt(tS);el.classList.toggle('urgent',cD&&tS<=60);},1000);}}
+function resetTimer(){clearInterval(tI);tR=false;tS=cD?tT:0;document.getElementById('td').textContent=fmt(tS);document.getElementById('td').classList.remove('urgent');document.getElementById('tsb').textContent='▶ Start';}
+
+// ══ RETRIEVAL ══
+function revealQ(n){ document.getElementById('rr'+n).classList.add('show'); }
+
+// ══ EXERCISES ══
+const exercises = [
+  // Fill-in
+  {
+    type:'fill',
+    q:'Saba has ___ own unique architecture. The white houses are part of ___ identity.',
+    blanks:['its','its'],
+    hints:['the island → ?','the island → ?'],
+    fr:'Saba a <strong>sa</strong> propre architecture unique. Les maisons blanches font partie de <strong>son</strong> identité. [adjectif possessif pour une chose/île = its]',
+    note:'Use "its" for a thing (the island). In French: son / sa.',
+    diff:'easy'
+  },
+  {
+    type:'fill1',
+    q:'Durim looked at the volcano. The trail to the summit was ___.',
+    blank:'his',
+    hint:'Durim → ?',
+    fr:'Durim regardait le volcan. Le sentier vers le sommet était à <strong>lui</strong>. [pronom possessif = his, remplace "his trail"]',
+    note:'"his" here replaces "his trail" — it is a possessive PRONOUN standing alone.',
+    diff:'medium'
+  },
+  {
+    type:'fill1',
+    q:'Micha told his friend: "This Saba lesson is not yours — it\'s ___!"',
+    blank:'mine',
+    hint:'I → ?',
+    fr:'Micha dit à son ami : "Ce cours sur Saba n\'est pas à <strong>toi</strong> — c\'est à <strong>moi</strong> !" [pronom possessif mine = le mien]',
+    note:'"mine" replaces "my lesson" — no noun after it.',
+    diff:'easy'
+  },
+  {
+    type:'fill1',
+    q:'The people of Saba are proud of ___ island. ___ traditions are very special.',
+    blank:'their',
+    hint:'they (the people) → ?',
+    fr:'Les habitants de Saba sont fiers de <strong>leur</strong> île. <strong>Leurs</strong> traditions sont très spéciales. [adjectif possessif their = leur/leurs]',
+    note:'Two blanks — same answer "their" both times! Adjective before a noun.',
+    diff:'easy'
+  },
+
+  // Multiple choice
+  {
+    type:'mc',
+    q:'🌿 The island of Saba has ___ own unique style.',
+    opts:['his','its','their','hers'],
+    ans:'its',
+    fr:'L\'île de Saba a <strong>son</strong> propre style unique. → "its" pour une chose/un lieu (son / sa)',
+    note:'Use "its" for things and places — not "his" or "her".',
+    diff:'easy',
+    label:'adjective for a place/thing'
+  },
+  {
+    type:'mc',
+    q:'🏔️ Mount Scenery is the highest peak in the Dutch Kingdom. The record is ___.',
+    opts:['its','theirs','their','it'],
+    ans:'theirs',
+    fr:'Le record est <strong>le leur</strong>. → pronom possessif "theirs" remplace "their record"',
+    note:'"theirs" is a pronoun — it replaces "their record". No noun follows.',
+    diff:'medium',
+    label:'pronoun — replaces the noun'
+  },
+  {
+    type:'mc',
+    q:'❌ Which sentence is WRONG?',
+    opts:[
+      'The island has its own culture.',
+      'The view from the hill is ours.',
+      'This is theirs house.',
+      'Her home is beautiful.'
+    ],
+    ans:'This is theirs house.',
+    fr:'"This is theirs house" → FAUX ! "theirs" est un pronom, il ne peut pas précéder un nom. Il faut dire "This is <strong>their</strong> house."',
+    note:'"theirs" is a PRONOUN — never use it before a noun!',
+    diff:'hard',
+    label:'find the mistake!'
+  },
+  {
+    type:'mc',
+    q:'🤿 Durim went diving in Saba. ___ equipment was rented on the island.',
+    opts:['Him','His','He','Her'],
+    ans:'His',
+    fr:'<strong>Son</strong> équipement a été loué sur l\'île. → adjectif possessif "his" = son (masc.) avant le nom "equipment"',
+    note:'"His" is a possessive adjective before the noun "equipment".',
+    diff:'easy',
+    label:'adjective before a noun'
+  },
+  {
+    type:'mc',
+    q:'💬 "Whose lesson is this?" "It\'s ___!" said Micha proudly.',
+    opts:['my','mine','me','I'],
+    ans:'mine',
+    fr:'"C\'est <strong>le mien</strong> !" → pronom possessif "mine" remplace "my lesson", pas de nom après',
+    note:'"mine" stands alone after "It\'s" — no noun follows. Pronoun, not adjective.',
+    diff:'medium',
+    label:'pronoun after "It\'s"'
+  },
+  {
+    type:'mc',
+    q:'🏘️ The white houses with red roofs belong to Saba\'s people. The architecture is ___.',
+    opts:['their','theirs','them','they'],
+    ans:'theirs',
+    fr:'L\'architecture est <strong>la leur</strong>. → "theirs" pronom, remplace "their architecture"',
+    note:'"theirs" replaces "their architecture" — stands alone.',
+    diff:'medium',
+    label:'pronoun — no noun follows'
+  },
+];
+
+function buildExercises(){
+  const sec=document.getElementById('exerciseSection');
+  sec.innerHTML='';
+
+  exercises.forEach((ex,i)=>{
+    const card=document.createElement('div');
+    card.className='ex-card';
+    const dh=`<span class="ex-diff ${ex.diff}">${ex.diff.toUpperCase()}</span>`;
+
+    if(ex.type==='fill'){
+      // Two blanks
+      const pts=ex.q.split('___');
+      card.innerHTML=`
+        <div class="ex-label">FILL BOTH BLANKS ${dh} <span style="color:var(--teal2);font-size:9px;">${ex.hints[0]} → ?</span></div>
+        <div class="ex-fr">${ex.fr}</div>
+        <div class="ex-note">${ex.note}</div>
+        <div class="ex-q" style="display:flex;align-items:center;flex-wrap:wrap;gap:4px;">
+          ${pts[0]}<input type="text" class="fill-input" id="fi_${i}_a" placeholder="…" autocomplete="off" spellcheck="false" style="width:80px;display:inline-block;margin:0 3px;">${pts[1]}<input type="text" class="fill-input" id="fi_${i}_b" placeholder="…" autocomplete="off" spellcheck="false" style="width:80px;display:inline-block;margin:0 3px;">${pts[2]||''}
+        </div>
+        <div class="ex-reveal" id="fr_${i}">✅ Answers: <strong>${ex.blanks[0]}</strong> / <strong>${ex.blanks[1]}</strong></div>
+      `;
+    } else if(ex.type==='fill1'){
+      card.innerHTML=`
+        <div class="ex-label">FILL IN THE BLANK ${dh} <span style="color:var(--teal2);font-size:9px;">${ex.hint}</span></div>
+        <div class="ex-fr">${ex.fr}</div>
+        <div class="ex-note">${ex.note}</div>
+        <div class="ex-q">${ex.q.replace('___','<span style="color:var(--teal2);font-weight:800"> ___ </span>')}</div>
+        <input type="text" class="fill-input" id="fi_${i}" placeholder="your answer…" autocomplete="off" spellcheck="false">
+        <div class="ex-reveal" id="fr_${i}">✅ Answer: <strong>${ex.blank}</strong></div>
+      `;
+    } else {
+      const sh=[...ex.opts].sort(()=>Math.random()-.5);
+      card.innerHTML=`
+        <div class="ex-label">MULTIPLE CHOICE — <span style="color:var(--teal2)">${ex.label}</span> ${dh}</div>
+        <div class="ex-fr">${ex.fr}</div>
+        <div class="ex-note">${ex.note}</div>
+        <div class="ex-q">${ex.q}</div>
+        <div class="mc-opts" id="mo_${i}">
+          ${sh.map(o=>`<button class="mc-btn" data-qi="${i}" data-val="${encodeURIComponent(o)}" onclick="pickMC(this)">${o}</button>`).join('')}
+        </div>
+        <div class="ex-reveal" id="fr_${i}">✅ Answer: <strong>${ex.ans}</strong></div>
+      `;
+    }
+    sec.appendChild(card);
+  });
+}
+
+function pickMC(btn){
+  const qi=btn.dataset.qi;
+  document.querySelectorAll(`#mo_${qi} .mc-btn`).forEach(b=>b.disabled=true);
+  if(decodeURIComponent(btn.dataset.val)===exercises[qi].ans){btn.classList.add('correct');}
+  else{btn.classList.add('wrong');document.querySelectorAll(`#mo_${qi} .mc-btn`).forEach(b=>{if(decodeURIComponent(b.dataset.val)===exercises[qi].ans)b.classList.add('correct');});}
+}
+
+// ══ CHECK ALL ══
+function checkAll(){
+  let s=0,t=0;
+
+  exercises.forEach((ex,i)=>{
+    if(ex.type==='fill'){
+      t+=2;
+      const a=document.getElementById(`fi_${i}_a`);
+      const b=document.getElementById(`fi_${i}_b`);
+      if(a?.value.trim().toLowerCase()===ex.blanks[0].toLowerCase()){a.classList.add('correct');s++;}
+      else{a?.classList.add('wrong');document.getElementById('fr_'+i).classList.add('show');}
+      if(b?.value.trim().toLowerCase()===ex.blanks[1].toLowerCase()){b.classList.add('correct');s++;}
+      else{b?.classList.add('wrong');document.getElementById('fr_'+i).classList.add('show');}
+      if(a)a.disabled=true;if(b)b.disabled=true;
+    } else if(ex.type==='fill1'){
+      t++;
+      const inp=document.getElementById('fi_'+i);
+      if(inp?.value.trim().toLowerCase()===ex.blank.toLowerCase()){inp.classList.add('correct');s++;}
+      else{inp?.classList.add('wrong');document.getElementById('fr_'+i).classList.add('show');}
+      if(inp)inp.disabled=true;
+    } else {
+      t++;
+      const c=document.querySelector(`#mo_${i} .mc-btn.correct`);
+      const w=document.querySelector(`#mo_${i} .mc-btn.wrong`);
+      if(c&&!w)s++;
+      else document.getElementById('fr_'+i).classList.add('show');
+      document.querySelectorAll(`#mo_${i} .mc-btn`).forEach(b=>b.disabled=true);
+    }
+  });
+
+  const pct=s/t;
+  let msg,trophy;
+  if(pct>=.9){msg="🏆 Excellent — possessives mastered!";trophy="🌿🏆⭐⭐⭐";}
+  else if(pct>=.75){msg="💪 Great work — nearly perfect!";trophy="🌿⭐⭐";}
+  else if(pct>=.55){msg="👍 Good effort — review the grammar table!";trophy="🤿⭐";}
+  else{msg="📐 Go back to Part 01 and re-read the key rule!";trophy="🏔️";}
+
+  document.getElementById('scoreBig').textContent=`${s}/${t}`;
+  document.getElementById('scoreMsg').textContent=msg;
+  document.getElementById('scoreTrophy').textContent=trophy;
+  document.getElementById('scorePanel').classList.add('show');
+  document.getElementById('scorePanel').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function resetAll(){
+  document.getElementById('scorePanel').classList.remove('show');
+  buildExercises();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══ WRITING STARTERS ══
+function insertStarter(text){
+  const ta=document.getElementById('writingArea');
+  if(ta.value&&!ta.value.endsWith('\n'))ta.value+='\n';
+  ta.value+=text;
+  ta.focus();
+  ta.setSelectionRange(ta.value.length,ta.value.length);
+}
+
+// ══ WHITEBOARD ══
+function gT(){const n=new Date();return n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0');}
+function addStamp(t){const log=document.getElementById('wbLog');const e=document.createElement('div');e.className='wb-log-entry';e.innerHTML=`<span>${t}</span><span class="wb-log-time">${gT()}</span>`;log.appendChild(e);log.scrollTop=log.scrollHeight;const n=document.getElementById('wbNotes');if(n){n.value+=(n.value?'\n':'')+`[${gT()}] ${t}`;n.scrollTop=n.scrollHeight;}}
+function addStampM(t){const n=document.getElementById('wbNM');if(n)n.value+=(n.value?'\n':'')+`[${gT()}] ${t}`;}
+function showCorrection(){const v=document.getElementById('corrInput').value.trim();if(v)document.getElementById('corrDisplay').textContent=v;}
+function showCorrectionM(){const v=document.getElementById('corrInputM').value.trim();if(v)document.getElementById('corrDisplayM').textContent=v;}
+document.getElementById('corrInput')?.addEventListener('keydown',e=>{if(e.key==='Enter')showCorrection();});
+function clearNotes(){const n=document.getElementById('wbNotes');if(n)n.value='';}
+function clearLog(){const l=document.getElementById('wbLog');while(l.children.length>1)l.removeChild(l.lastChild);}
+function clearCorr(){document.getElementById('corrDisplay').textContent='—';document.getElementById('corrInput').value='';}
+function exportNotes(){const notes=document.getElementById('wbNotes')?.value||'';const log=[...document.querySelectorAll('.wb-log-entry')].map(e=>e.textContent.trim()).join('\n');const full=`=== NOTES ===\n${notes}\n\n=== STAMPS ===\n${log}`;navigator.clipboard?.writeText(full).then(()=>{const btn=document.querySelector('.wb-export-btn');btn.textContent='✅ COPIED';setTimeout(()=>btn.textContent='COPY ALL',2000);});}
+function toggleWB(){document.getElementById('wbDrawer').classList.toggle('open');}
+
+// ══ INIT ══
+buildExercises();
+</script>
+</body>
+</html>

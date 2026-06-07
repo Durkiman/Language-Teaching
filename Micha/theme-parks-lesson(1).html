@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World's Most Extreme Theme Parks</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Nunito:wght@400;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #080808;
+  --ink: #0F0F0F;
+  --white: #F8F5EE;
+  --yellow: #FFE500;
+  --red: #E8001C;
+  --gray: #1A1A1A;
+  --gray2: #2A2A2A;
+  --muted: #888;
+  --rule: rgba(255,255,255,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  min-height: 100vh;
+}
+
+/* ══ MASTHEAD ══ */
+.masthead {
+  border-bottom: 3px solid var(--yellow);
+  padding: 18px 24px 16px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.masthead-title {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(28px, 6vw, 46px);
+  letter-spacing: 2px;
+  color: var(--white);
+  line-height: 1;
+}
+
+.masthead-title span { color: var(--yellow); }
+
+.masthead-meta {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* ══ HERO HEADLINE ══ */
+.hero-headline {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 24px 0;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 32px;
+}
+
+.issue-tag {
+  display: inline-block;
+  background: var(--red);
+  color: white;
+  font-family: 'Anton', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  padding: 4px 12px;
+  margin-bottom: 16px;
+}
+
+.hero-headline h1 {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(40px, 9vw, 80px);
+  line-height: 0.92;
+  letter-spacing: 1px;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+
+.hero-headline h1 em {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  color: var(--yellow);
+  display: block;
+  font-size: 0.7em;
+}
+
+.hero-deck {
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.7;
+  max-width: 560px;
+  margin-bottom: 20px;
+}
+
+.hero-byline {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-transform: uppercase;
+  border-top: 1px solid var(--rule);
+  padding-top: 12px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.hero-byline span { color: var(--yellow); }
+
+/* ══ CONTAINER ══ */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+}
+
+/* ══ SECTION RULE ══ */
+.section-rule {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 40px 0 24px;
+}
+
+.section-rule-label {
+  font-family: 'Anton', sans-serif;
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: var(--yellow);
+  white-space: nowrap;
+}
+
+.rule-line {
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+/* ══ VIDEO CARD ══ */
+.video-card {
+  background: var(--gray);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 4px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.video-thumb {
+  background: linear-gradient(135deg, #1A0A00, #2A1500);
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Speed lines background effect */
+.video-thumb::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-conic-gradient(
+    from 0deg at 50% 100%,
+    rgba(255,229,0,0.04) 0deg 3deg,
+    transparent 3deg 10deg
+  );
+}
+
+.play-circle {
+  width: 60px; height: 60px;
+  background: var(--yellow);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 0 40px rgba(255,229,0,0.4);
+  transition: transform 0.2s;
+}
+.play-circle:hover { transform: scale(1.1); }
+.play-circle::after { content: '▶'; margin-left: 4px; color: var(--black); }
+
+.video-live-tag {
+  position: absolute;
+  top: 12px; left: 12px;
+  background: var(--red);
+  color: white;
+  font-family: 'Anton', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  padding: 3px 10px;
+}
+
+.video-body { padding: 18px 20px; }
+.video-title { font-family: 'Anton', sans-serif; font-size: 20px; letter-spacing: 1px; color: var(--white); margin-bottom: 6px; }
+.video-sub { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+.video-desc { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 14px; }
+
+.video-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--yellow);
+  color: var(--black);
+  font-family: 'Anton', sans-serif;
+  font-size: 13px;
+  letter-spacing: 2px;
+  padding: 8px 18px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.video-link:hover { background: white; transform: translateY(-1px); }
+
+.watch-list {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.5);
+}
+.watch-list li { list-style: none; padding: 4px 0; }
+.watch-list li::before { content: '→ '; color: var(--yellow); font-weight: 800; }
+
+/* ══ PARK FEATURE CARDS ══ */
+.park-card {
+  border: 1px solid var(--rule);
+  margin-bottom: 2px;
+  overflow: hidden;
+  background: var(--gray);
+}
+
+.park-header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0;
+}
+
+.park-rank {
+  background: var(--yellow);
+  color: var(--black);
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(48px, 8vw, 72px);
+  line-height: 1;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 90px;
+  letter-spacing: -2px;
+}
+
+.park-rank.red { background: var(--red); color: white; }
+.park-rank.white { background: var(--white); color: var(--black); }
+
+.park-title-block {
+  padding: 16px 20px;
+  border-left: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.park-category {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--yellow);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.park-category.red { color: var(--red); }
+.park-category.gray { color: var(--muted); }
+
+.park-name {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(20px, 4vw, 30px);
+  letter-spacing: 1px;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.park-location {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+/* SVG park scene */
+.park-scene {
+  border-top: 1px solid var(--rule);
+  overflow: hidden;
+  background: #0A0A0A;
+}
+
+.park-scene svg { display: block; width: 100%; }
+
+/* Stats strip */
+.park-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--rule);
+}
+
+.park-stat {
+  padding: 14px 16px;
+  border-right: 1px solid var(--rule);
+  text-align: center;
+}
+
+.park-stat:last-child { border-right: none; }
+.park-stat-val { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--yellow); letter-spacing: 1px; }
+.park-stat-val.red { color: var(--red); }
+.park-stat-label { font-size: 9px; font-weight: 800; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-top: 2px; }
+
+/* Park body text */
+.park-body {
+  padding: 20px 22px;
+  border-top: 1px solid var(--rule);
+}
+
+.park-body p {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.85;
+}
+
+.park-body .kw { color: var(--white); font-weight: 800; }
+.park-body .num { font-family: 'Anton', sans-serif; color: var(--yellow); font-size: 16px; }
+.park-body .vp { color: #FF6B6B; font-weight: 800; background: rgba(232,0,28,0.12); padding: 1px 5px; border-radius: 2px; font-size: 14px; }
+
+/* Pull quote */
+.pull-quote {
+  border-left: 4px solid var(--yellow);
+  margin: 16px 0 0;
+  padding: 10px 16px;
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
+}
+
+/* ══ VOCAB ══ */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 2px;
+}
+
+.vocab-card {
+  background: var(--gray);
+  border: 1px solid var(--rule);
+  padding: 14px 12px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.vocab-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--yellow);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.vocab-card:hover { border-color: var(--yellow); }
+.vocab-card.revealed::before { opacity: 1; }
+.vocab-card.revealed .vc-en { color: var(--black); position: relative; z-index: 1; }
+.vocab-card.revealed .vc-icon { position: relative; z-index: 1; }
+.vocab-card.revealed .vc-fr { opacity: 1; color: rgba(0,0,0,0.7); position: relative; z-index: 1; }
+.vocab-card.revealed .vc-hint { opacity: 0; }
+
+.vc-icon { font-size: 22px; display: block; margin-bottom: 6px; position: relative; z-index: 1; }
+.vc-en { font-family: 'Anton', sans-serif; font-size: 14px; letter-spacing: 1px; color: var(--white); display: block; position: relative; z-index: 1; }
+.vc-fr { font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 700; opacity: 0; transition: opacity 0.2s; display: block; margin-top: 3px; }
+.vc-hint { font-size: 9px; color: var(--yellow); font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-top: 3px; position: relative; z-index: 1; transition: opacity 0.2s; }
+
+/* ══ COMP / QUIZ ══ */
+.comp-card {
+  background: var(--gray);
+  border: 1px solid var(--rule);
+  padding: 18px 20px;
+  margin-bottom: 2px;
+}
+
+.comp-q { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--white); line-height: 1.5; }
+
+.comp-opts { display: flex; flex-direction: column; gap: 6px; }
+
+.comp-btn {
+  background: var(--gray2);
+  border: 1px solid rgba(255,255,255,0.07);
+  padding: 10px 14px;
+  color: rgba(255,255,255,0.75);
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+  border-radius: 2px;
+}
+
+.comp-btn:hover:not(:disabled) { border-color: var(--yellow); color: var(--yellow); }
+.comp-btn.correct { border-color: #4CAF50; background: rgba(76,175,80,0.12); color: #81C784; }
+.comp-btn.wrong { border-color: var(--red); background: rgba(232,0,28,0.1); color: #FF6B6B; }
+.comp-btn:disabled { pointer-events: none; }
+
+.comp-reveal { font-size: 13px; color: var(--muted); margin-top: 6px; display: none; font-weight: 600; }
+.comp-reveal.show { display: block; }
+.comp-reveal strong { color: #81C784; }
+
+/* ══ SCORE ══ */
+.score-panel {
+  background: var(--yellow);
+  padding: 40px 24px;
+  text-align: center;
+  margin-top: 32px;
+  display: none;
+  animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+.score-panel.show { display: block; }
+@keyframes popIn { from{opacity:0;transform:scale(0.8)} to{opacity:1;transform:scale(1)} }
+
+.score-big {
+  font-family: 'Anton', sans-serif;
+  font-size: 90px;
+  color: var(--black);
+  line-height: 1;
+  letter-spacing: -2px;
+}
+
+.score-label { font-size: 11px; font-weight: 800; letter-spacing: 4px; color: rgba(0,0,0,0.45); text-transform: uppercase; margin-top: 4px; }
+.score-msg { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 22px; color: var(--black); margin: 14px 0 6px; }
+
+.retry-btn {
+  background: var(--black);
+  color: var(--yellow);
+  border: none;
+  padding: 10px 28px;
+  font-family: 'Anton', sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: all 0.2s;
+}
+.retry-btn:hover { background: var(--red); color: white; }
+
+.check-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--yellow);
+  color: var(--black);
+  border: none;
+  padding: 16px 36px;
+  font-family: 'Anton', sans-serif;
+  font-size: 20px;
+  letter-spacing: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 4px 4px 0 var(--red);
+}
+
+.check-btn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--red); }
+.check-btn:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--red); }
+
+@media (max-width: 500px) {
+  .park-header { grid-template-columns: 70px 1fr; }
+  .park-rank { font-size: 44px; min-width: 70px; padding: 12px 14px; }
+  .park-stats { grid-template-columns: repeat(3, 1fr); }
+  .vocab-grid { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ MASTHEAD ══ -->
+<div class="masthead">
+  <div class="masthead-title">THRILL<span>WORLD</span></div>
+  <div class="masthead-meta">English Lesson · Issue 04</div>
+</div>
+
+<!-- ══ HERO HEADLINE ══ -->
+<div class="hero-headline">
+  <div class="issue-tag">SPECIAL REPORT</div>
+  <h1>THE 3 MOST<em>Extreme Parks on Earth</em></h1>
+  <p class="hero-deck">We sent Micha on a mission: find the wildest, fastest, scariest theme parks in the world. What he discovered will make your stomach drop.</p>
+  <div class="hero-byline">
+    <span>🎢 Thrills</span> ·
+    <span>🌍 3 Countries</span> ·
+    <span>🏆 World Records</span> ·
+    Reading + Vocab + Quiz
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ══ VIDEO ══ -->
+  <div class="section-rule">
+    <span class="section-rule-label">▶ WATCH FIRST</span>
+    <span class="rule-line"></span>
+  </div>
+
+  <div class="video-card">
+    <div class="video-thumb">
+      <div class="video-live-tag">▶ RECOMMENDED</div>
+      <div class="play-circle"></div>
+    </div>
+    <div class="video-body">
+      <div class="video-title">WORLD'S MOST EXTREME ROLLER COASTERS</div>
+      <div class="video-sub">YouTube · ~5 min · Watch together</div>
+      <div class="video-desc">Watch the craziest rides on the planet — record-breaking drops, insane speeds, and loops that defy gravity. Before you read, try to spot which parks appear!</div>
+      <a class="video-link" href="https://www.youtube.com/results?search_query=world%27s+most+extreme+roller+coasters+top+10" target="_blank">🔍 Find on YouTube</a>
+      <ul class="watch-list">
+        <li>What is the fastest thing you see?</li>
+        <li>Would YOU go on any of these rides?</li>
+        <li>Which country do you think has the best park?</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══ PARK 1 ══ -->
+  <div class="section-rule">
+    <span class="section-rule-label">THE RANKINGS</span>
+    <span class="rule-line"></span>
+  </div>
+
+  <div class="park-card">
+    <div class="park-header">
+      <div class="park-rank">01</div>
+      <div class="park-title-block">
+        <div class="park-category">🇦🇪 Dubai, UAE · Most Extreme on Earth</div>
+        <div class="park-name">FERRARI WORLD ABU DHABI</div>
+        <div class="park-location">Yas Island, Abu Dhabi · Opened 2010</div>
+      </div>
+    </div>
+
+    <!-- Ferrari park scene SVG -->
+    <div class="park-scene">
+      <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" style="height:200px;">
+        <defs>
+          <linearGradient id="fw-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0A0A0A"/>
+            <stop offset="100%" stop-color="#1A0A00"/>
+          </linearGradient>
+          <linearGradient id="fw-track" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#CC0000"/>
+            <stop offset="50%" stop-color="#FF2200"/>
+            <stop offset="100%" stop-color="#CC0000"/>
+          </linearGradient>
+        </defs>
+        <rect width="800" height="200" fill="url(#fw-sky)"/>
+        <!-- Desert dunes -->
+        <path d="M0,160 Q100,140 200,155 Q300,170 400,150 Q500,130 600,148 Q700,165 800,150 L800,200 L0,200Z" fill="#1A1000"/>
+        <!-- Speed lines -->
+        <line x1="0" y1="80" x2="200" y2="80" stroke="rgba(255,34,0,0.15)" stroke-width="1"/>
+        <line x1="0" y1="100" x2="300" y2="100" stroke="rgba(255,34,0,0.1)" stroke-width="1"/>
+        <line x1="0" y1="60" x2="150" y2="60" stroke="rgba(255,34,0,0.08)" stroke-width="1"/>
+        <!-- Massive coaster structure -->
+        <!-- Main tower -->
+        <rect x="350" y="20" width="12" height="140" fill="#333"/>
+        <!-- Track loop -->
+        <ellipse cx="356" cy="60" rx="50" ry="45" stroke="#CC0000" stroke-width="5" fill="none"/>
+        <!-- Track going out -->
+        <path d="M50,130 Q150,100 280,110 Q320,112 330,90 L356,60" stroke="url(#fw-track)" stroke-width="6" fill="none"/>
+        <path d="M356,60 L380,90 Q420,112 500,110 Q640,100 750,130" stroke="url(#fw-track)" stroke-width="6" fill="none"/>
+        <!-- Support structures -->
+        <line x1="200" y1="110" x2="180" y2="165" stroke="#444" stroke-width="3"/>
+        <line x1="200" y1="110" x2="220" y2="165" stroke="#444" stroke-width="3"/>
+        <line x1="500" y1="110" x2="480" y2="165" stroke="#444" stroke-width="3"/>
+        <line x1="500" y1="110" x2="520" y2="165" stroke="#444" stroke-width="3"/>
+        <!-- Ferrari car (tiny) -->
+        <rect x="260" y="106" width="18" height="8" rx="2" fill="#FF2200"/>
+        <circle cx="263" cy="116" r="3" fill="#222"/>
+        <circle cx="275" cy="116" r="3" fill="#222"/>
+        <!-- Stars -->
+        <circle cx="100" cy="30" r="1.5" fill="rgba(255,255,255,0.6)"/>
+        <circle cx="200" cy="15" r="1" fill="rgba(255,255,255,0.5)"/>
+        <circle cx="600" cy="25" r="1.5" fill="rgba(255,255,255,0.4)"/>
+        <circle cx="700" cy="10" r="1" fill="rgba(255,255,255,0.5)"/>
+        <!-- Speed stat text -->
+        <text x="400" y="185" text-anchor="middle" font-family="Anton, sans-serif" font-size="14" fill="rgba(255,34,0,0.6)" letter-spacing="3">FORMULA ROSSA — 240 KM/H</text>
+      </svg>
+    </div>
+
+    <div class="park-stats">
+      <div class="park-stat">
+        <div class="park-stat-val red">240</div>
+        <div class="park-stat-label">km/h top speed</div>
+      </div>
+      <div class="park-stat">
+        <div class="park-stat-val">1.2km</div>
+        <div class="park-stat-label">track length</div>
+      </div>
+      <div class="park-stat">
+        <div class="park-stat-val">4.8g</div>
+        <div class="park-stat-label">g-force on body</div>
+      </div>
+    </div>
+
+    <div class="park-body">
+      <p>Ferrari World <span class="vp">opened</span> in Abu Dhabi in 2010 and immediately <span class="vp">became</span> famous for one reason: <span class="kw">Formula Rossa</span> — the <span class="kw">fastest roller coaster on Earth.</span> It <span class="vp">was built</span> to feel like driving a real Formula 1 car. The ride <span class="vp">reaches</span> <span class="num">240 km/h</span> in just <span class="num">4.9 seconds.</span></p>
+      <p style="margin-top:12px;">Riders must <span class="vp">wear</span> goggles because the wind is so strong it could damage their eyes. The park <span class="vp">sits</span> under the world's largest roof — a giant red shape inspired by the Ferrari logo.</p>
+      <div class="pull-quote">"It doesn't feel like a ride. It feels like being fired out of a cannon." — a visitor</div>
+    </div>
+  </div>
+
+  <!-- ══ PARK 2 ══ -->
+  <div class="park-card" style="margin-top:2px;">
+    <div class="park-header">
+      <div class="park-rank red">02</div>
+      <div class="park-title-block">
+        <div class="park-category red">🇺🇸 New Jersey, USA · Most Rides in the World</div>
+        <div class="park-name">SIX FLAGS GREAT ADVENTURE</div>
+        <div class="park-location">Jackson, New Jersey · Est. 1974</div>
+      </div>
+    </div>
+
+    <div class="park-scene">
+      <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" style="height:200px;">
+        <defs>
+          <linearGradient id="sf-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#000A1A"/>
+            <stop offset="100%" stop-color="#001A2A"/>
+          </linearGradient>
+        </defs>
+        <rect width="800" height="200" fill="url(#sf-sky)"/>
+        <!-- Multiple coasters -->
+        <!-- Kingda Ka launch tower - massive vertical -->
+        <rect x="390" y="5" width="14" height="170" fill="#1A1A2A"/>
+        <rect x="392" y="5" width="10" height="170" fill="#222A3A"/>
+        <!-- Track over top -->
+        <path d="M200,150 Q280,120 350,100 Q370,93 394,10 L400,5 L406,10 Q430,93 450,100 Q520,120 600,150" stroke="#0088FF" stroke-width="5" fill="none"/>
+        <!-- Other coasters in background -->
+        <path d="M50,160 Q80,130 110,160 Q140,130 170,160 Q200,130 230,160" stroke="#FF6600" stroke-width="4" fill="none"/>
+        <!-- Loop coaster -->
+        <ellipse cx="650" cy="120" rx="40" ry="38" stroke="#FF0044" stroke-width="4" fill="none"/>
+        <line x1="550" y1="140" x2="610" y2="120" stroke="#FF0044" stroke-width="4"/>
+        <line x1="690" y1="120" x2="750" y2="140" stroke="#FF0044" stroke-width="4"/>
+        <!-- Support struts -->
+        <line x1="394" y1="175" x2="370" y2="190" stroke="#333" stroke-width="3"/>
+        <line x1="406" y1="175" x2="430" y2="190" stroke="#333" stroke-width="3"/>
+        <!-- Stars -->
+        <circle cx="50" cy="20" r="1" fill="rgba(255,255,255,0.5)"/>
+        <circle cx="150" cy="10" r="1.5" fill="rgba(255,255,255,0.4)"/>
+        <circle cx="700" cy="15" r="1" fill="rgba(255,255,255,0.6)"/>
+        <!-- Ground -->
+        <rect y="190" width="800" height="10" fill="#0A0A14"/>
+        <!-- Lights at base -->
+        <circle cx="200" cy="165" r="3" fill="#FFE500" opacity="0.7"/>
+        <circle cx="400" cy="178" r="3" fill="#0088FF" opacity="0.8"/>
+        <circle cx="600" cy="152" r="3" fill="#FF0044" opacity="0.7"/>
+        <text x="400" y="187" text-anchor="middle" font-family="Anton, sans-serif" font-size="13" fill="rgba(0,136,255,0.6)" letter-spacing="3">KINGDA KA — 139 METRES TALL</text>
+      </svg>
+    </div>
+
+    <div class="park-stats">
+      <div class="park-stat">
+        <div class="park-stat-val">139m</div>
+        <div class="park-stat-label">tallest coaster</div>
+      </div>
+      <div class="park-stat">
+        <div class="park-stat-val red">206</div>
+        <div class="park-stat-label">km/h speed</div>
+      </div>
+      <div class="park-stat">
+        <div class="park-stat-val">50+</div>
+        <div class="park-stat-label">rides total</div>
+      </div>
+    </div>
+
+    <div class="park-body">
+      <p>Six Flags Great Adventure <span class="vp">holds</span> a terrifying record: it is home to <span class="kw">Kingda Ka</span> — the <span class="kw">tallest roller coaster ever built.</span> At <span class="num">139 metres</span>, it is taller than the Statue of Liberty. The ride <span class="vp">shoots</span> passengers straight up at <span class="num">206 km/h</span>, then <span class="vp">drops</span> them almost vertically back down.</p>
+      <p style="margin-top:12px;">The whole ride <span class="vp">lasts</span> just <span class="num">28 seconds</span> — but passengers often <span class="vp">reported</span> that it <span class="vp">felt</span> like the longest 28 seconds of their lives. The park also <span class="vp">has</span> a drive-through safari with <span class="num">1,200 wild animals</span> — lions, tigers, and elephants!</p>
+      <div class="pull-quote">"I looked down and saw the whole park below me. Then I screamed." — a 14-year-old visitor</div>
+    </div>
+  </div>
+
+  <!-- ══ PARK 3 ══ -->
+  <div class="park-card" style="margin-top:2px;">
+    <div class="park-header">
+      <div class="park-rank white">03</div>
+      <div class="park-title-block">
+        <div class="park-category gray">🇯🇵 Osaka, Japan · Most Creative Park</div>
+        <div class="park-name">UNIVERSAL STUDIOS JAPAN</div>
+        <div class="park-location">Osaka, Japan · Opened 2001</div>
+      </div>
+    </div>
+
+    <div class="park-scene">
+      <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" style="height:200px;">
+        <defs>
+          <linearGradient id="usj-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0A000A"/>
+            <stop offset="100%" stop-color="#1A001A"/>
+          </linearGradient>
+        </defs>
+        <rect width="800" height="200" fill="url(#usj-sky)"/>
+        <!-- Mario Kart building -->
+        <rect x="50" y="60" width="140" height="120" rx="4" fill="#CC0000"/>
+        <rect x="70" y="40" width="100" height="30" rx="3" fill="#AA0000"/>
+        <!-- Question mark blocks -->
+        <rect x="80" y="50" width="20" height="20" rx="2" fill="#FF9900"/>
+        <text x="90" y="64" text-anchor="middle" font-family="Anton" font-size="14" fill="white">?</text>
+        <rect x="110" y="50" width="20" height="20" rx="2" fill="#FF9900"/>
+        <text x="120" y="64" text-anchor="middle" font-family="Anton" font-size="14" fill="white">?</text>
+        <rect x="140" y="50" width="20" height="20" rx="2" fill="#FF9900"/>
+        <text x="150" y="64" text-anchor="middle" font-family="Anton" font-size="14" fill="white">?</text>
+        <!-- USJ globe -->
+        <circle cx="400" cy="90" r="75" stroke="rgba(255,255,255,0.1)" stroke-width="2" fill="none"/>
+        <circle cx="400" cy="90" r="75" stroke="#1A6B8A" stroke-width="4" fill="rgba(0,50,80,0.3)"/>
+        <!-- Globe latitude lines -->
+        <ellipse cx="400" cy="90" rx="75" ry="25" stroke="rgba(255,255,255,0.1)" stroke-width="1" fill="none"/>
+        <ellipse cx="400" cy="90" rx="75" ry="50" stroke="rgba(255,255,255,0.07)" stroke-width="1" fill="none"/>
+        <line x1="400" y1="15" x2="400" y2="165" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        <!-- USJ text on globe -->
+        <text x="400" y="96" text-anchor="middle" font-family="Anton, sans-serif" font-size="18" fill="rgba(255,255,255,0.7)" letter-spacing="2">USJ</text>
+        <!-- Harry Potter castle silhouette -->
+        <path d="M560,180 L560,100 L575,80 L580,100 L590,60 L600,100 L610,100 L610,180Z" fill="#2A2A3A"/>
+        <path d="M575,80 L575,70 L580,55 L585,70 L585,80Z" fill="#3A3A4A"/>
+        <path d="M590,60 L590,45 L595,30 L600,45 L600,60Z" fill="#3A3A4A"/>
+        <!-- Castle windows (lit) -->
+        <rect x="572" y="110" width="6" height="8" rx="1" fill="#FFE500" opacity="0.8"/>
+        <rect x="596" y="105" width="6" height="8" rx="1" fill="#FFE500" opacity="0.7"/>
+        <!-- Minion figure -->
+        <ellipse cx="700" cy="140" rx="18" ry="22" fill="#FFD700"/>
+        <ellipse cx="700" cy="125" rx="14" ry="16" fill="#FFD700"/>
+        <rect x="693" y="118" width="14" height="8" rx="2" fill="#888"/>
+        <circle cx="697" cy="122" r="4" fill="white"/>
+        <circle cx="697" cy="122" r="2.5" fill="#4444AA"/>
+        <!-- Sparkles / stars -->
+        <circle cx="300" cy="30" r="2" fill="#FFE500" opacity="0.8"/>
+        <circle cx="500" cy="20" r="1.5" fill="white" opacity="0.6"/>
+        <circle cx="650" cy="35" r="2" fill="#FFE500" opacity="0.7"/>
+        <text x="400" y="193" text-anchor="middle" font-family="Anton, sans-serif" font-size="13" fill="rgba(200,100,255,0.6)" letter-spacing="3">SUPER NINTENDO WORLD · HARRY POTTER · MINIONS</text>
+      </svg>
+    </div>
+
+    <div class="park-stats">
+      <div class="park-stat">
+        <div class="park-stat-val">16M+</div>
+        <div class="park-stat-label">visitors / year</div>
+      </div>
+      <div class="park-stat">
+        <div class="park-stat-val red">7th</div>
+        <div class="park-stat-label">most visited park</div>
+      </div>
+      <div class="park-stat">
+        <div class="park-stat-val">2001</div>
+        <div class="park-stat-label">year opened</div>
+      </div>
+    </div>
+
+    <div class="park-body">
+      <p>Universal Studios Japan is not just a theme park — it is a <span class="kw">step inside a movie.</span> The park <span class="vp">opened</span> in Osaka in 2001 and since then <span class="vp">grew</span> into one of the most creative places on Earth. It <span class="vp">has</span> a full <span class="kw">Harry Potter world</span> with Hogwarts Castle, a <span class="kw">Super Nintendo World</span> where you can <span class="vp">play</span> Mario Kart in real life, and a giant <span class="kw">Minions</span> zone.</p>
+      <p style="margin-top:12px;">In 2021, they <span class="vp">added</span> <span class="kw">Super Nintendo World</span> — the first ever real-life video game world. Visitors <span class="vp">wear</span> a special wristband that <span class="vp">connects</span> to the attractions. They can <span class="vp">collect</span> coins, <span class="vp">fight</span> bosses, and <span class="vp">earn</span> points — just like in a real game!</p>
+      <div class="pull-quote">"Walking into Hogwarts felt more real than watching the films." — a Harry Potter fan</div>
+    </div>
+  </div>
+
+  <!-- ══ VOCAB ══ -->
+  <div class="section-rule">
+    <span class="section-rule-label">VOCABULARY</span>
+    <span class="rule-line"></span>
+  </div>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:12px;font-weight:700;letter-spacing:1px;">TAP EACH WORD TO REVEAL THE FRENCH MEANING</p>
+  <div class="vocab-grid" id="vocabGrid"></div>
+
+  <!-- ══ QUIZ ══ -->
+  <div class="section-rule">
+    <span class="section-rule-label">COMPREHENSION QUIZ</span>
+    <span class="rule-line"></span>
+  </div>
+  <div id="compSection"></div>
+
+  <div style="text-align:center;margin-top:28px;">
+    <button class="check-btn" onclick="checkAll()">CHECK ANSWERS</button>
+  </div>
+
+  <div class="score-panel" id="scorePanel">
+    <div class="score-big" id="scoreBig">0</div>
+    <div class="score-label">POINTS SCORED</div>
+    <div class="score-msg" id="scoreMsg"></div>
+    <button class="retry-btn" onclick="resetAll()">TRY AGAIN</button>
+  </div>
+
+</div>
+
+<script>
+const vocabWords = [
+  { en:'EXTREME', fr:'extrême', icon:'🔥' },
+  { en:'RECORD', fr:'record', icon:'🏆' },
+  { en:'SPEED', fr:'vitesse', icon:'💨' },
+  { en:'COASTER', fr:'montagnes russes', icon:'🎢' },
+  { en:'THRILLING', fr:'palpitant / excitant', icon:'😱' },
+  { en:'VERTICAL', fr:'vertical', icon:'⬇️' },
+  { en:'GRAVITY', fr:'gravité', icon:'🌍' },
+  { en:'SAFARI', fr:'safari', icon:'🦁' },
+  { en:'ATTRACTION', fr:'attraction', icon:'🎠' },
+  { en:'LAUNCH', fr:'lancement', icon:'🚀' },
+  { en:'LOOP', fr:'looping', icon:'🔄' },
+  { en:'WRISTBAND', fr:'bracelet', icon:'⌚' },
+];
+
+const compData = [
+  {
+    q: "🏎️ What is Formula Rossa and why is it special?",
+    opts: [
+      "A race track in Abu Dhabi with no coaster",
+      "The fastest roller coaster on Earth — it reaches 240 km/h",
+      "A go-kart ride at Universal Studios",
+      "The tallest coaster in the world"
+    ],
+    ans: "The fastest roller coaster on Earth — it reaches 240 km/h"
+  },
+  {
+    q: "😎 Why do riders at Ferrari World HAVE to wear goggles?",
+    opts: [
+      "It is a park rule for all visitors",
+      "The goggles light up in the dark",
+      "The wind is so strong it could damage their eyes",
+      "The ride goes underwater"
+    ],
+    ans: "The wind is so strong it could damage their eyes"
+  },
+  {
+    q: "📏 How tall is Kingda Ka at Six Flags?",
+    opts: ["50 metres", "100 metres", "139 metres", "200 metres"],
+    ans: "139 metres"
+  },
+  {
+    q: "⏱️ How long does the Kingda Ka ride last?",
+    opts: ["5 minutes", "2 minutes", "1 minute", "28 seconds"],
+    ans: "28 seconds"
+  },
+  {
+    q: "🎮 What is special about Super Nintendo World at USJ?",
+    opts: [
+      "It has the world's fastest coaster",
+      "It is the first ever real-life video game world where you can collect coins and fight bosses",
+      "It is a cinema showing Mario films",
+      "It is only for children under 12"
+    ],
+    ans: "It is the first ever real-life video game world where you can collect coins and fight bosses"
+  },
+  {
+    q: "🦁 What UNUSUAL thing does Six Flags Great Adventure also have?",
+    opts: [
+      "A real Formula 1 circuit",
+      "A Harry Potter castle",
+      "A drive-through safari with 1,200 wild animals",
+      "An underground roller coaster"
+    ],
+    ans: "A drive-through safari with 1,200 wild animals"
+  },
+  {
+    q: "🗾 Where is Universal Studios Japan located?",
+    opts: ["Tokyo", "Kyoto", "Osaka", "Hiroshima"],
+    ans: "Osaka"
+  },
+  {
+    q: "🏰 Which TWO fictional worlds can you visit at Universal Studios Japan?",
+    opts: [
+      "Star Wars and Marvel",
+      "Harry Potter and Super Nintendo World",
+      "Jurassic Park and Avatar",
+      "Disney and Pixar"
+    ],
+    ans: "Harry Potter and Super Nintendo World"
+  },
+];
+
+function buildVocab() {
+  const grid = document.getElementById('vocabGrid');
+  vocabWords.forEach(v => {
+    const c = document.createElement('div');
+    c.className = 'vocab-card';
+    c.innerHTML = `<span class="vc-icon">${v.icon}</span><span class="vc-en">${v.en}</span><span class="vc-fr">${v.fr}</span><span class="vc-hint">tap</span>`;
+    c.onclick = () => c.classList.toggle('revealed');
+    grid.appendChild(c);
+  });
+}
+
+function buildComp() {
+  const sec = document.getElementById('compSection');
+  sec.innerHTML = '';
+  compData.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'comp-card';
+    const shuffled = [...q.opts].sort(() => Math.random() - 0.5);
+    card.innerHTML = `
+      <div class="comp-q">${q.q}</div>
+      <div class="comp-opts" id="copts_${i}">
+        ${shuffled.map(o => `<button class="comp-btn" data-qi="${i}" data-val="${encodeURIComponent(o)}" onclick="pickComp(this)">${o}</button>`).join('')}
+      </div>
+      <div class="comp-reveal" id="crev_${i}">✅ Answer: <strong>${q.ans}</strong></div>
+    `;
+    sec.appendChild(card);
+  });
+}
+
+function pickComp(btn) {
+  const qi = btn.dataset.qi;
+  document.querySelectorAll(`#copts_${qi} .comp-btn`).forEach(b => b.disabled = true);
+  if (decodeURIComponent(btn.dataset.val) === compData[qi].ans) { btn.classList.add('correct'); }
+  else {
+    btn.classList.add('wrong');
+    document.querySelectorAll(`#copts_${qi} .comp-btn`).forEach(b => {
+      if (decodeURIComponent(b.dataset.val) === compData[qi].ans) b.classList.add('correct');
+    });
+    document.getElementById('crev_' + qi).classList.add('show');
+  }
+}
+
+function checkAll() {
+  let score = 0;
+  compData.forEach((q, i) => {
+    const correct = document.querySelector(`#copts_${i} .comp-btn.correct`);
+    const wrong = document.querySelector(`#copts_${i} .comp-btn.wrong`);
+    if (correct && !wrong) score++;
+    else document.getElementById('crev_' + i).classList.add('show');
+    document.querySelectorAll(`#copts_${i} .comp-btn`).forEach(b => b.disabled = true);
+  });
+
+  const total = compData.length;
+  const pct = score / total;
+  let msg;
+  if (pct >= 0.88) msg = "Legendary. You read every word.";
+  else if (pct >= 0.7) msg = "Strong result — almost perfect!";
+  else if (pct >= 0.5) msg = "Good effort — re-read and retry!";
+  else msg = "Go back to the texts and try again!";
+
+  document.getElementById('scoreBig').textContent = `${score}/${total}`;
+  document.getElementById('scoreMsg').textContent = msg;
+  document.getElementById('scorePanel').classList.add('show');
+  document.getElementById('scorePanel').scrollIntoView({ behavior:'smooth', block:'center' });
+}
+
+function resetAll() {
+  document.getElementById('scorePanel').classList.remove('show');
+  buildComp();
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+buildVocab();
+buildComp();
+</script>
+</body>
+</html>

@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHAMPIONS LEAGUE FINAL — Arsenal vs PSG</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=UnifrakturMaguntia&family=Nunito:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper:    #F8F4EC;
+  --paper2:   #F2EDE0;
+  --ink:      #1A1510;
+  --ink2:     #2C2518;
+  --red:      #CC2200;
+  --blue:     #003399;
+  --gold:     #B8860B;
+  --grey:     #6A6050;
+  --border:   rgba(26,21,16,0.15);
+  --border2:  rgba(26,21,16,0.08);
+  --psg-blue: #003399;
+  --psg-red:  #CC0000;
+  --ars-red:  #EF0107;
+  --ars-gold: #9C824A;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: #D4C8A8;
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ══ LAYOUT ══ */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 290px;
+  max-width: 1120px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.main { min-width: 0; padding-bottom: 100px; background: var(--paper); }
+
+/* ══ MASTHEAD ══ */
+.masthead {
+  background: var(--ink);
+  padding: 8px 0 6px;
+  text-align: center;
+  border-bottom: 4px double rgba(255,255,255,0.2);
+}
+
+.masthead-top {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.masthead-title {
+  font-family: 'UnifrakturMaguntia', cursive;
+  font-size: clamp(28px, 6vw, 50px);
+  color: white;
+  letter-spacing: 2px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.masthead-sub {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* ══ BANNER ══ */
+.match-banner {
+  background: var(--ink2);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 3px solid var(--gold);
+  flex-wrap: wrap;
+}
+
+.team-block {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.team-crest {
+  width: 52px; height: 52px;
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  flex-shrink: 0;
+}
+
+.team-name-block { flex: 1; }
+
+.team-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(16px, 3vw, 24px);
+  font-weight: 900;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.team-country {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  opacity: 0.6;
+  margin-top: 2px;
+  text-transform: uppercase;
+}
+
+.match-centre {
+  text-align: center;
+  flex: 1;
+  min-width: 160px;
+}
+
+.match-vs {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-style: italic;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.match-details {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 2px;
+  margin-top: 4px;
+  line-height: 1.8;
+  text-transform: uppercase;
+}
+
+.match-details strong { color: var(--gold); }
+
+/* ══ LESSON PLAN ══ */
+.plan-strip {
+  background: var(--paper2);
+  border-bottom: 2px solid var(--border);
+  padding: 8px 24px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
+}
+
+.plan-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px 16px;
+  border-right: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.plan-item:last-child { border-right: none; }
+
+.plan-time {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--red);
+}
+
+.plan-desc {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--grey);
+  text-transform: uppercase;
+  margin-top: 1px;
+  text-align: center;
+  max-width: 90px;
+}
+
+/* ══ TIMER ══ */
+.timer-bar {
+  background: var(--paper2);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 24px;
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+
+.t-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px; font-weight: 700;
+  letter-spacing: 2px; color: var(--red); min-width: 62px;
+}
+.t-num.urgent { color: var(--red); animation: tp .5s ease infinite alternate; }
+@keyframes tp { from{transform:scale(1)} to{transform:scale(1.08)} }
+
+.t-btn {
+  background: transparent; border: 1px solid var(--border);
+  color: var(--ink); font-family: 'Space Mono', monospace;
+  font-size: 10px; font-weight: 700;
+  padding: 4px 12px; cursor: pointer; letter-spacing: 1px; transition: all .15s;
+}
+.t-btn:hover { background: var(--ink); color: var(--paper); }
+.t-btn.go { background: var(--ink); color: var(--paper); }
+
+.t-pre {
+  background: transparent; border: 1px solid var(--border2);
+  color: var(--grey); font-family: 'Space Mono', monospace;
+  font-size: 10px; font-weight: 700;
+  padding: 3px 9px; cursor: pointer; transition: all .15s;
+}
+.t-pre:hover, .t-pre.active { background: var(--ink); color: var(--paper); }
+
+/* ══ WRAP ══ */
+.wrap { padding: 20px 28px 0; }
+
+/* ══ SECTION HEADS ══ */
+.sh {
+  display: flex; align-items: center; gap: 12px;
+  margin: 26px 0 14px;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 6px;
+}
+
+.sh-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; letter-spacing: 3px; color: var(--grey);
+}
+
+.sh-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(16px, 2.5vw, 22px);
+  font-weight: 700;
+  font-style: italic;
+  color: var(--ink);
+}
+
+.sh-line { flex: 1; height: 1px; background: transparent; }
+.sh-time {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; letter-spacing: 1px;
+  color: var(--red); font-weight: 700;
+  background: rgba(204,34,0,0.08);
+  border: 1px solid rgba(204,34,0,0.2);
+  padding: 2px 8px;
+}
+
+/* ══ RETRIEVAL ══ */
+.retrieval-card {
+  background: var(--paper2);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--ink);
+  padding: 16px 18px;
+  margin-bottom: 10px;
+}
+
+.retrieval-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; letter-spacing: 3px; color: var(--ink);
+  margin-bottom: 12px; text-transform: uppercase; font-weight: 700;
+}
+
+.retrieval-q {
+  display: flex; gap: 10px; align-items: flex-start;
+  margin-bottom: 10px; font-size: 14px; font-weight: 700;
+  color: var(--ink2); line-height: 1.5;
+}
+
+.rq-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 900;
+  color: var(--red); flex-shrink: 0; width: 20px; line-height: 1.1;
+}
+
+.rq-fr {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; color: var(--gold); margin-top: 3px; font-weight: 700; line-height: 1.5;
+}
+
+.retrieval-reveal {
+  background: white; border: 1px solid var(--border);
+  padding: 7px 12px; font-size: 13px; font-weight: 700;
+  color: var(--blue); margin-top: 4px; display: none;
+}
+.retrieval-reveal.show { display: block; }
+
+.reveal-btn {
+  background: transparent; border: 1px solid var(--border);
+  color: var(--grey); font-family: 'Space Mono', monospace;
+  font-size: 9px; font-weight: 700; letter-spacing: 1px;
+  padding: 3px 10px; cursor: pointer; transition: all .15s; margin-top: 5px;
+  display: inline-block;
+}
+.reveal-btn:hover { background: var(--ink); color: var(--paper); }
+
+/* ══ ARTICLE ══ */
+.article-card {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 22px 24px;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.article-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; color: white;
+  background: var(--red);
+  padding: 3px 10px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.article-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px, 3.5vw, 30px);
+  font-weight: 900;
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+}
+
+.article-byline {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; color: var(--grey); letter-spacing: 2px;
+  margin-bottom: 14px; text-transform: uppercase;
+}
+
+.article-body {
+  font-size: 14px; font-weight: 600; line-height: 1.9;
+  color: var(--ink2);
+  columns: 2; column-gap: 24px;
+}
+
+.article-body .hl { font-weight: 800; color: var(--ink); }
+.article-body .red { color: var(--ars-red); font-weight: 800; }
+.article-body .blue { color: var(--psg-blue); font-weight: 800; }
+.article-body .gold { color: var(--gold); font-weight: 800; }
+
+.article-body p { margin-bottom: 10px; }
+
+/* French margin note */
+.fr-note {
+  background: rgba(184,134,11,0.06);
+  border: 1px solid rgba(184,134,11,0.2);
+  border-left: 3px solid var(--gold);
+  padding: 10px 14px;
+  margin: 12px 0;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; font-weight: 700;
+  color: var(--gold);
+  line-height: 1.7;
+  break-inside: avoid;
+}
+.fr-note::before { content: '🇫🇷 '; }
+
+/* ══ POSITIONS SECTION ══ */
+.positions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--border2);
+  margin-bottom: 12px;
+}
+
+.position-card {
+  background: white;
+  padding: 14px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  transition: background .15s;
+}
+.position-card:hover { background: var(--paper2); }
+
+.pos-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.pos-body { flex: 1; }
+
+.pos-en {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px; font-weight: 700;
+  color: var(--ink); margin-bottom: 3px;
+}
+
+.pos-abbr {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; font-weight: 700;
+  background: var(--ink); color: var(--paper);
+  padding: 1px 6px; margin-right: 4px;
+}
+
+.pos-fr {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; color: var(--gold); font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.pos-desc {
+  font-size: 12px; color: var(--grey); font-weight: 600; line-height: 1.5;
+}
+
+/* ══ PITCH DIAGRAM ══ */
+.pitch-wrap {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.pitch-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px; font-weight: 700; font-style: italic;
+  color: var(--ink); margin-bottom: 12px; text-align: center;
+}
+
+.pitch-diagram {
+  width: 100%; max-width: 400px; margin: 0 auto; display: block;
+}
+
+/* ══ SQUAD CARDS ══ */
+.squad-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  margin-bottom: 2px;
+}
+
+.squad-badge {
+  width: 50px; height: 50px;
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+}
+
+.squad-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 900; color: var(--ink);
+}
+
+.squad-formation {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; color: var(--grey); letter-spacing: 2px; margin-top: 2px;
+}
+
+.squad-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 2px;
+  background: var(--border2);
+  margin-bottom: 4px;
+}
+
+.player-card {
+  background: white;
+  padding: 12px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border-left: 3px solid transparent;
+  transition: all .15s;
+  cursor: default;
+}
+
+.player-card:hover { background: var(--paper2); }
+
+/* Position colour coding */
+.player-card.gk { border-left-color: #FF9900; }
+.player-card.def { border-left-color: #003399; }
+.player-card.mid { border-left-color: #009933; }
+.player-card.att { border-left-color: #CC0000; }
+
+.player-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 900;
+  color: rgba(26,21,16,0.15);
+  flex-shrink: 0; width: 28px;
+  text-align: center; line-height: 1;
+}
+
+.player-info { flex: 1; min-width: 0; }
+
+.player-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px; font-weight: 700;
+  color: var(--ink); line-height: 1.2;
+}
+
+.player-pos {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; margin-top: 2px;
+}
+
+.player-pos.gk { color: #FF9900; }
+.player-pos.def { color: #003399; }
+.player-pos.mid { color: #009933; }
+.player-pos.att { color: #CC0000; }
+
+.player-nat {
+  font-size: 16px; flex-shrink: 0;
+}
+
+.player-fr {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; color: var(--gold); font-weight: 700;
+  margin-top: 1px; font-style: italic;
+}
+
+/* ══ LEGENDS ══ */
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 2px;
+  background: var(--border2);
+  margin-bottom: 12px;
+}
+
+.legend-card {
+  background: white;
+  padding: 16px 14px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  transition: background .15s;
+  cursor: default;
+}
+.legend-card:hover { background: var(--paper2); }
+
+.legend-portrait {
+  width: 54px; height: 54px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.legend-portrait svg { display: block; }
+
+.legend-info { flex: 1; }
+
+.legend-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px; font-weight: 900;
+  color: var(--ink); line-height: 1.2;
+  margin-bottom: 3px;
+}
+
+.legend-club {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--grey); margin-bottom: 5px;
+}
+
+.legend-desc {
+  font-size: 12px; font-weight: 600;
+  color: var(--grey); line-height: 1.5;
+}
+
+.legend-stat {
+  font-family: 'Playfair Display', serif;
+  font-size: 11px; font-weight: 700;
+  color: var(--gold); margin-top: 4px;
+}
+
+/* ══ VOCAB ══ */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  margin-bottom: 12px;
+}
+
+.vocab-card {
+  background: white;
+  padding: 10px 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: all .2s;
+  position: relative;
+  overflow: hidden;
+}
+.vocab-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--ink);
+  opacity: 0;
+  transition: opacity .2s;
+}
+.vocab-card:hover { background: var(--paper2); }
+.vocab-card.flipped::before { opacity: 1; }
+.vocab-card.flipped .vc-en { color: var(--paper); position: relative; z-index: 1; }
+.vocab-card.flipped .vc-icon { position: relative; z-index: 1; }
+.vocab-card.flipped .vc-fr { opacity: 1; color: var(--gold); position: relative; z-index: 1; }
+.vocab-card.flipped .vc-hint { opacity: 0; }
+.vocab-card.done { outline: 2px solid var(--gold); }
+.vocab-card.done::after { content: '✓'; position: absolute; top: 3px; right: 5px; font-size: 9px; color: var(--gold); font-weight: 800; z-index: 2; }
+
+.vc-icon { font-size: 20px; display: block; margin-bottom: 4px; position: relative; z-index: 1; }
+.vc-en { font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 700; color: var(--ink); display: block; position: relative; z-index: 1; }
+.vc-fr { font-size: 10px; font-weight: 700; color: var(--grey); opacity: 0; transition: opacity .2s; display: block; margin-top: 1px; }
+.vc-hint { font-family: 'Space Mono', monospace; font-size: 8px; color: var(--gold); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; position: relative; z-index: 1; }
+
+/* ══ QUIZ ══ */
+.quiz-card {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 15px 17px;
+  margin-bottom: 2px;
+}
+
+.ex-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--grey); margin-bottom: 6px;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+
+.ex-diff {
+  display: inline-block; font-size: 8px; font-weight: 800; letter-spacing: 1px;
+  text-transform: uppercase; padding: 2px 7px;
+}
+.ex-diff.easy { background: rgba(0,153,51,0.1); color: #006622; }
+.ex-diff.medium { background: rgba(0,51,153,0.1); color: var(--blue); }
+.ex-diff.hard { background: rgba(204,34,0,0.1); color: var(--red); }
+
+.ex-q {
+  font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 6px; line-height: 1.6;
+}
+
+.ex-fr {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; color: var(--gold); font-style: italic; font-weight: 700;
+  margin-bottom: 8px; display: flex; align-items: flex-start; gap: 6px; line-height: 1.5;
+}
+.ex-fr::before { content: '🇫🇷'; font-style: normal; flex-shrink: 0; }
+
+.fill-input {
+  background: var(--paper2);
+  border: 1px solid var(--border);
+  padding: 7px 12px; font-size: 14px; font-weight: 800;
+  color: var(--ink); outline: none; transition: border-color .2s;
+  caret-color: var(--red); font-family: 'Nunito', sans-serif;
+  max-width: 220px; width: 100%;
+}
+.fill-input:focus { border-color: var(--red); box-shadow: 0 0 0 2px rgba(204,34,0,0.1); }
+.fill-input.correct { border-color: #009933; background: rgba(0,153,51,0.06); color: #006622; }
+.fill-input.wrong { border-color: var(--red); background: rgba(204,34,0,0.06); color: var(--red); }
+
+.mc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+
+.mc-btn {
+  background: var(--paper2); border: 1px solid var(--border);
+  padding: 9px 12px; font-size: 13px; font-weight: 700;
+  color: var(--ink); cursor: pointer; text-align: left; transition: all .15s;
+}
+.mc-btn:hover:not(:disabled) { background: var(--ink); color: var(--paper); }
+.mc-btn.correct { border-color: #009933; background: rgba(0,153,51,0.08); color: #006622; }
+.mc-btn.wrong { border-color: var(--red); background: rgba(204,34,0,0.06); color: var(--red); }
+.mc-btn:disabled { pointer-events: none; }
+
+.ex-reveal {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px; color: var(--grey); margin-top: 5px; display: none; font-weight: 700;
+}
+.ex-reveal.show { display: block; }
+.ex-reveal strong { color: #006622; }
+
+/* ══ CHECK + SCORE ══ */
+.check-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--ink); color: var(--paper);
+  border: none; padding: 13px 30px;
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-style: italic; font-weight: 700;
+  cursor: pointer; box-shadow: 4px 4px 0 var(--border);
+  transition: all .15s;
+}
+.check-btn:hover { background: var(--red); box-shadow: 4px 4px 0 rgba(204,34,0,0.3); }
+
+.score-panel {
+  background: var(--ink); color: var(--paper);
+  padding: 30px 24px; text-align: center;
+  margin-top: 20px; display: none;
+  animation: popIn .4s cubic-bezier(.34,1.56,.64,1) both;
+}
+.score-panel.show { display: block; }
+@keyframes popIn { from{opacity:0;transform:scale(.85)} to{opacity:1;transform:scale(1)} }
+
+.score-big {
+  font-family: 'Playfair Display', serif;
+  font-size: 76px; font-weight: 900; color: var(--gold); line-height: 1;
+}
+.score-sub { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 4px; color: rgba(255,255,255,0.4); text-transform: uppercase; margin-top: 3px; }
+.score-msg { font-size: 18px; font-weight: 800; margin: 12px 0 5px; }
+
+.retry-btn {
+  background: transparent; border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.5); padding: 7px 20px;
+  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  cursor: pointer; margin-top: 8px; transition: all .2s;
+}
+.retry-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ══ SPEAKING ══ */
+.speaking-card {
+  background: var(--paper2);
+  border: 2px solid var(--ink);
+  padding: 20px;
+}
+
+.speaking-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 700; font-style: italic; color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.speaking-sub {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; color: var(--grey); letter-spacing: 2px; margin-bottom: 14px; text-transform: uppercase;
+}
+
+.sp-prompt {
+  background: white; border: 1px solid var(--border);
+  padding: 12px 14px; margin-bottom: 7px;
+  display: flex; gap: 10px; align-items: flex-start;
+}
+
+.sp-num { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; color: var(--red); flex-shrink: 0; width: 22px; line-height: 1; }
+.sp-body { flex: 1; }
+.sp-en { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.5; margin-bottom: 4px; }
+.sp-en .hl { color: var(--red); font-weight: 800; }
+.sp-fr { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--gold); font-style: italic; font-weight: 700; display: flex; align-items: flex-start; gap: 5px; line-height: 1.5; }
+.sp-fr::before { content: '🇫🇷'; font-style: normal; flex-shrink: 0; }
+.sp-level { font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 3px 8px; flex-shrink: 0; margin-top: 2px; border: 1px solid; }
+.sp-level.warm { border-color: #009933; color: #009933; }
+.sp-level.core { border-color: var(--blue); color: var(--blue); }
+.sp-level.challenge { border-color: var(--red); color: var(--red); }
+
+/* ══ WHITEBOARD ══ */
+.wb {
+  background: var(--ink2);
+  border-left: 3px solid var(--ink);
+  position: sticky; top: 0; height: 100vh;
+  display: flex; flex-direction: column; overflow: hidden;
+}
+
+.wb-head { background: var(--ink); padding: 13px 14px 10px; border-bottom: 2px solid rgba(255,255,255,0.1); flex-shrink: 0; }
+.wb-title { font-family: 'Playfair Display', serif; font-size: 14px; font-style: italic; font-weight: 700; color: var(--gold); }
+.wb-sub { font-family: 'Space Mono', monospace; font-size: 8px; color: rgba(255,255,255,0.3); font-weight: 600; margin-top: 2px; letter-spacing: 1px; text-transform: uppercase; }
+
+.wb-stamps { padding: 8px 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; border-bottom: 1px solid rgba(255,255,255,0.06); flex-shrink: 0; }
+.stamp { background: transparent; border: 1px solid rgba(255,255,255,0.1); padding: 6px 4px; font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.5); cursor: pointer; text-align: center; transition: all .15s; line-height: 1.4; }
+.stamp:hover { background: rgba(255,255,255,0.1); border-color: var(--gold); color: var(--gold); }
+.stamp.r:hover { border-color: #FF6644; color: #FF6644; }
+.stamp.g:hover { border-color: #66CC66; color: #66CC66; }
+
+.wb-correction { padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.06); flex-shrink: 0; }
+.wb-correction-label { font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 5px; display: flex; align-items: center; justify-content: space-between; }
+.wb-correction-wrap { display: flex; gap: 5px; }
+.wb-correction-input { flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); padding: 6px 10px; font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 800; color: white; outline: none; caret-color: var(--gold); transition: border-color .2s; }
+.wb-correction-input:focus { border-color: rgba(184,134,11,0.4); }
+.wb-correction-input::placeholder { color: rgba(255,255,255,0.2); font-size: 11px; font-style: italic; }
+.wb-correction-send { background: var(--gold); border: none; color: var(--ink); font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 800; padding: 6px 10px; cursor: pointer; transition: all .15s; }
+.wb-correction-send:hover { background: white; }
+.wb-correction-display { margin-top: 5px; min-height: 38px; background: rgba(184,134,11,0.08); border: 1px solid rgba(184,134,11,0.2); padding: 6px 10px; font-family: 'Nunito', sans-serif; font-size: 18px; font-weight: 800; color: var(--gold); text-align: center; display: flex; align-items: center; justify-content: center; transition: all .2s; }
+
+.wb-notes-wrap { flex: 1; padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; min-height: 0; }
+.wb-notes-label { font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: space-between; }
+.wb-export-btn { background: transparent; border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.25); font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700; padding: 2px 7px; cursor: pointer; transition: all .15s; }
+.wb-export-btn:hover { border-color: var(--gold); color: var(--gold); }
+.wb-notes { flex: 1; min-height: 60px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 8px 10px; font-family: 'Nunito', sans-serif; font-size: 12px; color: rgba(255,255,255,0.75); resize: none; outline: none; line-height: 1.7; caret-color: var(--gold); transition: border-color .2s; }
+.wb-notes:focus { border-color: rgba(184,134,11,0.25); }
+.wb-notes::placeholder { color: rgba(255,255,255,0.15); font-size: 11px; font-style: italic; }
+
+.wb-log { padding: 0 10px 6px; display: flex; flex-direction: column; gap: 3px; flex-shrink: 0; max-height: 90px; overflow-y: auto; }
+.wb-log-label { font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 3px; }
+.wb-log-entry { background: rgba(255,255,255,0.04); padding: 3px 7px; font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.55); display: flex; align-items: center; gap: 4px; animation: sli .2s ease; }
+@keyframes sli { from{opacity:0;transform:translateX(5px)} to{opacity:1;transform:translateX(0)} }
+.wb-log-time { font-size: 9px; color: rgba(255,255,255,0.25); margin-left: auto; }
+
+.wb-acts { padding: 4px 10px 8px; display: flex; gap: 4px; flex-shrink: 0; }
+.wb-act { flex: 1; background: transparent; border: 1px solid rgba(255,255,255,0.06); padding: 4px 3px; font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700; color: rgba(255,255,255,0.25); cursor: pointer; text-align: center; transition: all .15s; }
+.wb-act:hover { border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); }
+
+/* Mobile */
+.wb-toggle { display: none; position: fixed; bottom: 20px; right: 20px; background: var(--ink); color: var(--gold); border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 20px; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.3); z-index: 1000; }
+.wb-drawer { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--ink); border-top: 3px solid var(--gold); border-radius: 18px 18px 0 0; padding: 14px; z-index: 999; max-height: 75vh; overflow-y: auto; transform: translateY(100%); transition: transform .3s cubic-bezier(.34,1.2,.64,1); }
+.wb-drawer.open { transform: translateY(0); }
+.wb-dh { width: 34px; height: 3px; background: var(--gold); margin: 0 auto 12px; opacity: .3; }
+
+@media (max-width: 720px) {
+  .layout { grid-template-columns: 1fr; }
+  .wb { display: none; }
+  .wb-toggle { display: flex; align-items: center; justify-content: center; }
+  .wb-drawer { display: block; }
+  .mc-opts { grid-template-columns: 1fr; }
+  .positions-grid { grid-template-columns: 1fr; }
+  .article-body { columns: 1; }
+  .squad-grid { grid-template-columns: 1fr 1fr; }
+  .match-banner { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<div class="layout">
+<div class="main">
+
+<!-- ══ MASTHEAD ══ -->
+<div class="masthead">
+  <div class="masthead-top">English Lesson · Issue 11 · 30 May 2026</div>
+  <div class="masthead-title">The Football Gazette</div>
+  <div class="masthead-sub">Champions League Final Special Edition · Budapest</div>
+</div>
+
+<!-- ══ MATCH BANNER ══ -->
+<div class="match-banner">
+  <div class="team-block">
+    <div class="team-crest" style="background:rgba(239,1,7,0.15);">🔴</div>
+    <div class="team-name-block">
+      <div class="team-name" style="color:var(--ars-red);">ARSENAL</div>
+      <div class="team-country" style="color:rgba(255,255,255,0.5);">🏴󠁧󠁢󠁥󠁮󠁧󠁿 London, England</div>
+    </div>
+  </div>
+
+  <div class="match-centre">
+    <div class="match-vs">vs</div>
+    <div class="match-details">
+      <strong>CHAMPIONS LEAGUE FINAL</strong><br>
+      Puskás Aréna · Budapest · 30 May 2026<br>
+      Kick-off: 18:00 CET · Referee: Daniel Siebert
+    </div>
+  </div>
+
+  <div class="team-block" style="flex-direction:row-reverse;">
+    <div class="team-crest" style="background:rgba(0,51,153,0.2);">🔵</div>
+    <div class="team-name-block" style="text-align:right;">
+      <div class="team-name" style="color:#4488FF;">PARIS S-G</div>
+      <div class="team-country" style="color:rgba(255,255,255,0.5);">🇫🇷 Paris, France</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LESSON PLAN ══ -->
+<div class="plan-strip">
+  <div class="plan-item"><div class="plan-time">5'</div><div class="plan-desc">Warm-Up</div></div>
+  <div class="plan-item"><div class="plan-time">10'</div><div class="plan-desc">Read Article</div></div>
+  <div class="plan-item"><div class="plan-time">10'</div><div class="plan-desc">Positions + Pitch</div></div>
+  <div class="plan-item"><div class="plan-time">15'</div><div class="plan-desc">Squads + Legends</div></div>
+  <div class="plan-item"><div class="plan-time">10'</div><div class="plan-desc">Quiz + Speaking</div></div>
+</div>
+
+<!-- ══ TIMER ══ -->
+<div class="timer-bar">
+  <div>
+    <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--grey);margin-bottom:2px;text-transform:uppercase;">Lesson Timer</div>
+    <div class="t-num" id="td">00:00</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:4px;">
+    <div style="display:flex;gap:4px;">
+      <button class="t-pre" onclick="setTimer(5,this)">5</button>
+      <button class="t-pre" onclick="setTimer(10,this)">10</button>
+      <button class="t-pre" onclick="setTimer(15,this)">15</button>
+      <button class="t-pre" onclick="setTimer(20,this)">20</button>
+    </div>
+    <div style="display:flex;gap:5px;">
+      <button class="t-btn go" id="tsb" onclick="toggleTimer()">▶ Start</button>
+      <button class="t-btn" onclick="resetTimer()">↺</button>
+    </div>
+  </div>
+  <span style="font-family:'Space Mono',monospace;font-size:9px;color:var(--grey);" id="tmode">COUNT UP</span>
+</div>
+
+<div class="wrap">
+
+<!-- ══ 00: WARM-UP ══ -->
+<div class="sh">
+  <span class="sh-num">00</span>
+  <span class="sh-title">Warm-Up — Quick Recall</span>
+  <span class="sh-line"></span>
+  <span class="sh-time">5 MIN</span>
+</div>
+
+<div class="retrieval-card">
+  <div class="retrieval-title">🧠 Retrieval — Possessives + Saba</div>
+  <div class="retrieval-q">
+    <span class="rq-num">1</span>
+    <div>
+      Give the possessive pronoun for: I · she · we · they
+      <div class="rq-fr">Donne le pronom possessif pour : je → ? · elle → ? · nous → ? · ils → ?</div>
+      <button class="reveal-btn" onclick="revealQ(0)">REVEAL</button>
+      <div class="retrieval-reveal" id="rr0">I → <strong>mine</strong> (le mien) &nbsp;·&nbsp; she → <strong>hers</strong> (le sien) &nbsp;·&nbsp; we → <strong>ours</strong> (le nôtre) &nbsp;·&nbsp; they → <strong>theirs</strong> (le leur)</div>
+    </div>
+  </div>
+  <div class="retrieval-q" style="margin-bottom:0;">
+    <span class="rq-num">2</span>
+    <div>
+      Fix the mistake: "This is theirs trophy."
+      <div class="rq-fr">Corrige l'erreur : "theirs" ne peut pas précéder un nom.</div>
+      <button class="reveal-btn" onclick="revealQ(1)">REVEAL</button>
+      <div class="retrieval-reveal" id="rr1">❌ "This is theirs trophy." → ✅ "This is <strong>their</strong> trophy." — "their" est l'adjectif possessif, "theirs" est le pronom (sans nom après).</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 01: ARTICLE ══ -->
+<div class="sh">
+  <span class="sh-num">01</span>
+  <span class="sh-title">Read — Tonight's Final</span>
+  <span class="sh-line"></span>
+  <span class="sh-time">10 MIN</span>
+</div>
+
+<div class="article-card">
+  <div class="article-label">Match Preview</div>
+  <div class="article-headline">Paris Saint-Germain and Arsenal Clash in Budapest for European Glory</div>
+  <div class="article-byline">By Our Football Correspondent · Budapest, 30 May 2026</div>
+
+  <div class="article-body">
+    <p>The most prestigious club competition in world football reaches its climax tonight at the <span class="hl">Puskás Aréna in Budapest</span>, as <span class="red">Arsenal</span> and <span class="blue">Paris Saint-Germain</span> contest the <span class="gold">2026 UEFA Champions League Final</span>.</p>
+
+    <p>For <span class="red">Arsenal</span>, this is a moment that has been 20 years in the making. The Gunners last reached a Champions League final in 2006, where they lost to Barcelona in Paris. They arrive in Hungary having just won the <span class="hl">Premier League title</span> for the first time in 22 years — making this potentially the most remarkable double in the club's history.</p>
+
+    <div class="fr-note">À retenir : "to reach" = atteindre · "a moment in the making" = un moment qui se prépare depuis longtemps · "the Gunners" = surnom d'Arsenal (les artilleurs)</div>
+
+    <p><span class="blue">Paris Saint-Germain</span> enter as the defending champions. Last season, they defeated Arsenal in the semi-finals before dismantling Inter Milan 5-0 in the final in Munich. Tonight, they chase history — if they win, they will become only the <span class="hl">second club ever to defend the Champions League title</span> in the modern era, after Real Madrid's famous three-in-a-row between 2016 and 2018.</p>
+
+    <p>PSG's key danger man is <span class="blue">Khvicha Kvaratskhelia</span>, the Georgian winger who has been the tournament's most devastating attacker. He equalled Zlatan Ibrahimović's PSG record for most goals in a single Champions League campaign. Alongside him, <span class="blue">Ousmane Dembélé</span> — the Ballon d'Or winner — returns from a calf injury to start the final.</p>
+
+    <div class="fr-note">À retenir : "defending champions" = champions en titre · "to chase history" = courir après l'histoire · "danger man" = joueur le plus dangereux · "winger" = ailier</div>
+
+    <p>For Arsenal, the <span class="red">defensive trio</span> of David Raya, William Saliba, and Gabriel have been exceptional all season, conceding the fewest goals in both the Premier League and this Champions League campaign. Captain <span class="red">Martin Ødegaard</span> carries the hopes of an entire fanbase as he attempts to become the first Arsenal captain ever to lift the Champions League trophy.</p>
+
+    <p>One fascinating subplot: this final revisits last season's semi-final, where PSG knocked Arsenal out. Tonight, the Gunners have a chance for revenge. With Jurriën Timber returning from injury and the electric <span class="red">Bukayo Saka</span> in form, Arsenal have the quality to cause PSG serious problems.</p>
+  </div>
+</div>
+
+<!-- ══ 02: VOCABULARY ══ -->
+<div class="sh">
+  <span class="sh-num">02</span>
+  <span class="sh-title">Vocabulary — Before We Continue</span>
+  <span class="sh-line"></span>
+</div>
+<p style="font-family:'Space Mono',monospace;font-size:10px;color:var(--grey);margin-bottom:10px;font-weight:700;">Tap once = French · Tap again = ✓ learned</p>
+<div class="vocab-grid" id="vocabGrid"></div>
+
+<!-- ══ 03: POSITIONS ══ -->
+<div class="sh">
+  <span class="sh-num">03</span>
+  <span class="sh-title">Football Positions — On the Pitch</span>
+  <span class="sh-line"></span>
+  <span class="sh-time">10 MIN</span>
+</div>
+
+<!-- Pitch diagram -->
+<div class="pitch-wrap">
+  <div class="pitch-title">The Football Pitch — Les Positions</div>
+  <svg class="pitch-diagram" viewBox="0 0 340 520" xmlns="http://www.w3.org/2000/svg">
+    <!-- Pitch background -->
+    <rect width="340" height="520" fill="#2D7A2D" rx="4"/>
+    <!-- Stripes -->
+    <rect x="0" y="0" width="340" height="52" fill="rgba(255,255,255,0.04)"/>
+    <rect x="0" y="104" width="340" height="52" fill="rgba(255,255,255,0.04)"/>
+    <rect x="0" y="208" width="340" height="52" fill="rgba(255,255,255,0.04)"/>
+    <rect x="0" y="312" width="340" height="52" fill="rgba(255,255,255,0.04)"/>
+    <rect x="0" y="416" width="340" height="52" fill="rgba(255,255,255,0.04)"/>
+    <!-- Outer boundary -->
+    <rect x="10" y="10" width="320" height="500" rx="2" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+    <!-- Centre line -->
+    <line x1="10" y1="260" x2="330" y2="260" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+    <!-- Centre circle -->
+    <circle cx="170" cy="260" r="50" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+    <circle cx="170" cy="260" r="4" fill="rgba(255,255,255,0.8)"/>
+    <!-- Penalty areas -->
+    <rect x="75" y="10" width="190" height="70" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+    <rect x="75" y="440" width="190" height="70" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+    <!-- Goal areas -->
+    <rect x="115" y="10" width="110" height="32" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+    <rect x="115" y="478" width="110" height="32" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+    <!-- Goals -->
+    <rect x="140" y="4" width="60" height="10" fill="rgba(255,255,255,0.3)"/>
+    <rect x="140" y="506" width="60" height="10" fill="rgba(255,255,255,0.3)"/>
+    <!-- Penalty spots -->
+    <circle cx="170" cy="52" r="3" fill="rgba(255,255,255,0.7)"/>
+    <circle cx="170" cy="468" r="3" fill="rgba(255,255,255,0.7)"/>
+
+    <!-- POSITION LABELS — Team A (top, using circles with abbreviations) -->
+    <!-- GK -->
+    <circle cx="170" cy="40" r="16" fill="#FF9900" stroke="white" stroke-width="2"/>
+    <text x="170" y="44" text-anchor="middle" font-family="'Space Mono',monospace" font-size="9" fill="white" font-weight="bold">GK</text>
+
+    <!-- DEF line -->
+    <circle cx="60" cy="118" r="16" fill="#003399" stroke="white" stroke-width="2"/>
+    <text x="60" y="122" text-anchor="middle" font-family="'Space Mono',monospace" font-size="9" fill="white" font-weight="bold">LB</text>
+
+    <circle cx="130" cy="110" r="16" fill="#003399" stroke="white" stroke-width="2"/>
+    <text x="130" y="114" text-anchor="middle" font-family="'Space Mono',monospace" font-size="9" fill="white" font-weight="bold">CB</text>
+
+    <circle cx="210" cy="110" r="16" fill="#003399" stroke="white" stroke-width="2"/>
+    <text x="210" y="114" text-anchor="middle" font-family="'Space Mono',monospace" font-size="9" fill="white" font-weight="bold">CB</text>
+
+    <circle cx="280" cy="118" r="16" fill="#003399" stroke="white" stroke-width="2"/>
+    <text x="280" y="122" text-anchor="middle" font-family="'Space Mono',monospace" font-size="9" fill="white" font-weight="bold">RB</text>
+
+    <!-- MID line -->
+    <circle cx="65" cy="200" r="16" fill="#009933" stroke="white" stroke-width="2"/>
+    <text x="65" y="204" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="white" font-weight="bold">CM</text>
+
+    <circle cx="170" cy="192" r="16" fill="#009933" stroke="white" stroke-width="2"/>
+    <text x="170" y="196" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="white" font-weight="bold">DM</text>
+
+    <circle cx="275" cy="200" r="16" fill="#009933" stroke="white" stroke-width="2"/>
+    <text x="275" y="204" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="white" font-weight="bold">CM</text>
+
+    <!-- ATT line -->
+    <circle cx="60" cy="310" r="16" fill="#CC0000" stroke="white" stroke-width="2"/>
+    <text x="60" y="314" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="white" font-weight="bold">LW</text>
+
+    <circle cx="170" cy="300" r="16" fill="#CC0000" stroke="white" stroke-width="2"/>
+    <text x="170" y="304" text-anchor="middle" font-family="'Space Mono',monospace" font-size="9" fill="white" font-weight="bold">ST</text>
+
+    <circle cx="280" cy="310" r="16" fill="#CC0000" stroke="white" stroke-width="2"/>
+    <text x="280" y="314" text-anchor="middle" font-family="'Space Mono',monospace" font-size="8" fill="white" font-weight="bold">RW</text>
+
+    <!-- LEGEND -->
+    <rect x="10" y="370" width="320" height="2" fill="rgba(255,255,255,0.2)"/>
+    <text x="170" y="390" text-anchor="middle" font-family="'Space Mono',monospace" font-size="9" fill="rgba(255,255,255,0.6)" letter-spacing="2">4 - 3 - 3 FORMATION</text>
+
+    <!-- Colour legend -->
+    <circle cx="30" cy="415" r="7" fill="#FF9900"/>
+    <text x="42" y="419" font-family="'Space Mono',monospace" font-size="8" fill="rgba(255,255,255,0.7)">Goalkeeper</text>
+    <circle cx="130" cy="415" r="7" fill="#003399"/>
+    <text x="142" y="419" font-family="'Space Mono',monospace" font-size="8" fill="rgba(255,255,255,0.7)">Defender</text>
+    <circle cx="30" cy="435" r="7" fill="#009933"/>
+    <text x="42" y="439" font-family="'Space Mono',monospace" font-size="8" fill="rgba(255,255,255,0.7)">Midfielder</text>
+    <circle cx="130" cy="435" r="7" fill="#CC0000"/>
+    <text x="142" y="439" font-family="'Space Mono',monospace" font-size="8" fill="rgba(255,255,255,0.7)">Attacker</text>
+  </svg>
+</div>
+
+<!-- Positions list -->
+<div class="positions-grid">
+  <div class="position-card">
+    <div class="pos-icon">🧤</div>
+    <div class="pos-body">
+      <div class="pos-en"><span class="pos-abbr">GK</span> Goalkeeper</div>
+      <div class="pos-fr">🇫🇷 Gardien de but</div>
+      <div class="pos-desc">Protects the goal. The only player who can use their hands.</div>
+    </div>
+  </div>
+  <div class="position-card">
+    <div class="pos-icon">🛡️</div>
+    <div class="pos-body">
+      <div class="pos-en"><span class="pos-abbr">CB</span> Centre-Back</div>
+      <div class="pos-fr">🇫🇷 Défenseur central</div>
+      <div class="pos-desc">Stops the opposition's strikers. Must be strong and tall.</div>
+    </div>
+  </div>
+  <div class="position-card">
+    <div class="pos-icon">⬅️</div>
+    <div class="pos-body">
+      <div class="pos-en"><span class="pos-abbr">LB</span> Left-Back</div>
+      <div class="pos-fr">🇫🇷 Arrière gauche</div>
+      <div class="pos-desc">Defends the left side. Often attacks too — overlapping runs.</div>
+    </div>
+  </div>
+  <div class="position-card">
+    <div class="pos-icon">➡️</div>
+    <div class="pos-body">
+      <div class="pos-en"><span class="pos-abbr">RB</span> Right-Back</div>
+      <div class="pos-fr">🇫🇷 Arrière droit</div>
+      <div class="pos-desc">Defends the right side. Makes overlapping runs to support attack.</div>
+    </div>
+  </div>
+  <div class="position-card">
+    <div class="pos-icon">🧱</div>
+    <div class="pos-body">
+      <div class="pos-en"><span class="pos-abbr">DM</span> Defensive Midfielder</div>
+      <div class="pos-fr">🇫🇷 Milieu défensif / Sentinelle</div>
+      <div class="pos-desc">Sits in front of the defence. Breaks up attacks, wins the ball back.</div>
+    </div>
+  </div>
+  <div class="position-card">
+    <div class="pos-icon">⚙️</div>
+    <div class="pos-body">
+      <div class="pos-en"><span class="pos-abbr">CM</span> Central Midfielder</div>
+      <div class="pos-fr">🇫🇷 Milieu central</div>
+      <div class="pos-desc">Controls the tempo of the game. Passes, runs, defends and attacks.</div>
+    </div>
+  </div>
+  <div class="position-card">
+    <div class="pos-icon">🔟</div>
+    <div class="pos-body">
+      <div class="pos-en"><span class="pos-abbr">CAM</span> Attacking Midfielder</div>
+      <div class="pos-fr">🇫🇷 Meneur de jeu / Numéro 10</div>
+      <div class="pos-desc">Creates chances for strikers. The most creative player. The "number 10".</div>
+    </div>
+  </div>
+  <div class="position-card">
+    <div class="pos-icon">⚡</div>
+    <div class="pos-body">
+      <div class="pos-en"><span class="pos-abbr">LW / RW</span> Winger</div>
+      <div class="pos-fr">🇫🇷 Ailier gauche / Ailier droit</div>
+      <div class="pos-desc">Attacks from the sides. Fast and direct. Crosses or cuts inside to shoot.</div>
+    </div>
+  </div>
+  <div class="position-card">
+    <div class="pos-icon">🎯</div>
+    <div class="pos-body">
+      <div class="pos-en"><span class="pos-abbr">ST</span> Striker / Centre-Forward</div>
+      <div class="pos-fr">🇫🇷 Avant-centre / Attaquant de pointe</div>
+      <div class="pos-desc">The goalscorer. Always in the box, always looking to finish.</div>
+    </div>
+  </div>
+  <div class="position-card">
+    <div class="pos-icon">🔄</div>
+    <div class="pos-body">
+      <div class="pos-en"><span class="pos-abbr">SS</span> Second Striker / False 9</div>
+      <div class="pos-fr">🇫🇷 Deuxième attaquant / Faux 9</div>
+      <div class="pos-desc">Drops deep to create, not just score. Confuses defenders.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 04: PSG SQUAD ══ -->
+<div class="sh">
+  <span class="sh-num">04</span>
+  <span class="sh-title">Tonight's Squads</span>
+  <span class="sh-line"></span>
+  <span class="sh-time">15 MIN</span>
+</div>
+
+<!-- PSG -->
+<div class="squad-header" style="background:rgba(0,51,153,0.06);border:1px solid rgba(0,51,153,0.1);border-bottom:none;">
+  <div class="squad-badge" style="background:rgba(0,51,153,0.15);">🔵</div>
+  <div>
+    <div class="squad-name">Paris Saint-Germain</div>
+    <div class="squad-formation">Predicted Formation: 4-3-3 · Manager: Luis Enrique</div>
+  </div>
+</div>
+<div class="squad-grid" id="psgGrid"></div>
+
+<!-- ARSENAL -->
+<div class="squad-header" style="background:rgba(239,1,7,0.05);border:1px solid rgba(239,1,7,0.1);border-bottom:none;margin-top:16px;">
+  <div class="squad-badge" style="background:rgba(239,1,7,0.12);">🔴</div>
+  <div>
+    <div class="squad-name">Arsenal</div>
+    <div class="squad-formation">Predicted Formation: 4-3-3 · Manager: Mikel Arteta</div>
+  </div>
+</div>
+<div class="squad-grid" id="arsenalGrid"></div>
+
+<!-- ══ 05: LEGENDS ══ -->
+<div class="sh">
+  <span class="sh-num">05</span>
+  <span class="sh-title">Legendary Players — The Greatest</span>
+  <span class="sh-line"></span>
+</div>
+<p style="font-family:'Space Mono',monospace;font-size:10px;color:var(--grey);margin-bottom:12px;font-weight:700;">Five players who defined Champions League history. Talk about them with Micha!</p>
+
+<div class="legend-grid" id="legendGrid"></div>
+
+<!-- ══ 06: QUIZ ══ -->
+<div class="sh">
+  <span class="sh-num">06</span>
+  <span class="sh-title">Comprehension Quiz</span>
+  <span class="sh-line"></span>
+</div>
+<div id="quizSection"></div>
+
+<div style="text-align:center;margin-top:20px;">
+  <button class="check-btn" onclick="checkAll()">✦ Check Answers</button>
+</div>
+
+<div class="score-panel" id="scorePanel">
+  <div style="font-size:36px;margin-bottom:6px;" id="scoreTrophy">⚽</div>
+  <div class="score-big" id="scoreBig">0</div>
+  <div class="score-sub">POINTS SCORED</div>
+  <div class="score-msg" id="scoreMsg"></div>
+  <button class="retry-btn" onclick="resetAll()">↺ Try Again</button>
+</div>
+
+<!-- ══ 07: SPEAKING ══ -->
+<div class="sh">
+  <span class="sh-num">07</span>
+  <span class="sh-title">Speaking Challenge</span>
+  <span class="sh-line"></span>
+</div>
+
+<div class="speaking-card">
+  <div class="speaking-title">⚽ Football Speaking Challenge</div>
+  <div class="speaking-sub">// fluency over accuracy — use football vocabulary in every answer</div>
+
+  <div class="sp-prompt">
+    <span class="sp-num">1</span>
+    <div class="sp-body">
+      <div class="sp-en"><span class="hl">Who do you think will win tonight?</span> Give one reason using football vocabulary.<br>"I think ___ will win because their ___ is better."</div>
+      <div class="sp-fr">Qui penses-tu va gagner ce soir ? Donne une raison.<br>"Je pense que ___ va gagner parce que <strong>leur</strong> ___ est meilleur(e)."</div>
+    </div>
+    <span class="sp-level warm">WARM-UP</span>
+  </div>
+
+  <div class="sp-prompt">
+    <span class="sp-num">2</span>
+    <div class="sp-body">
+      <div class="sp-en"><span class="hl">Describe Bukayo Saka's position and role</span> to someone who doesn't know football.<br>Use: "He plays as a ___ . His job is to ___ . He is known for ___"</div>
+      <div class="sp-fr">Décris la position et le rôle de Bukayo Saka à quelqu'un qui ne connaît pas le foot.<br>"Il joue comme ___ . <strong>Son</strong> rôle est de ___ . Il est connu pour ___"</div>
+    </div>
+    <span class="sp-level core">CORE</span>
+  </div>
+
+  <div class="sp-prompt">
+    <span class="sp-num">3</span>
+    <div class="sp-body">
+      <div class="sp-en"><span class="hl">Name your dream Champions League final XI.</span><br>Use positions: "My goalkeeper is ___ . My centre-backs are ___ and ___ . My striker is ___"</div>
+      <div class="sp-fr">Nomme ton XI de rêve pour une finale de Champions League.<br>"<strong>Mon</strong> gardien est ___ . <strong>Mes</strong> défenseurs centraux sont ___ et ___ . <strong>Mon</strong> attaquant est ___"</div>
+    </div>
+    <span class="sp-level challenge">CHALLENGE</span>
+  </div>
+
+</div>
+
+</div><!-- /wrap -->
+</div><!-- /main -->
+
+<!-- ══ WHITEBOARD ══ -->
+<div class="wb">
+  <div class="wb-head">
+    <div class="wb-title">Teacher's Board</div>
+    <div class="wb-sub">stamps · correction · notes</div>
+  </div>
+  <div class="wb-stamps">
+    <button class="stamp" onclick="addStamp('✅ Correct!')">✅<br>Correct!</button>
+    <button class="stamp r" onclick="addStamp('❌ Not quite')">❌<br>Not quite</button>
+    <button class="stamp g" onclick="addStamp('🔁 Try again')">🔁<br>Try again</button>
+    <button class="stamp" onclick="addStamp('⭐ Great job!')">⭐<br>Great job!</button>
+    <button class="stamp" onclick="addStamp('👂 Listen carefully')">👂<br>Listen</button>
+    <button class="stamp" onclick="addStamp('🗣️ Say it out loud')">🗣️<br>Say it!</button>
+    <button class="stamp g" onclick="addStamp('💡 Remember this')">💡<br>Remember</button>
+    <button class="stamp" onclick="addStamp('📝 Write it down')">📝<br>Write it</button>
+  </div>
+  <div class="wb-correction">
+    <div class="wb-correction-label">✏️ CORRECTION <span>enter → show</span></div>
+    <div class="wb-correction-wrap">
+      <input type="text" class="wb-correction-input" id="corrInput" placeholder="type correction…">
+      <button class="wb-correction-send" onclick="showCorrection()">SHOW</button>
+    </div>
+    <div class="wb-correction-display" id="corrDisplay">—</div>
+  </div>
+  <div class="wb-notes-wrap">
+    <div class="wb-notes-label">📝 NOTES <button class="wb-export-btn" onclick="exportNotes()">COPY ALL</button></div>
+    <textarea class="wb-notes" id="wbNotes" placeholder="corrections, observations, vocab…"></textarea>
+  </div>
+  <div class="wb-log" id="wbLog"><div class="wb-log-label">STAMP LOG</div></div>
+  <div class="wb-acts">
+    <button class="wb-act" onclick="clearNotes()">clear notes</button>
+    <button class="wb-act" onclick="clearLog()">clear log</button>
+    <button class="wb-act" onclick="clearCorr()">clear fix</button>
+  </div>
+</div>
+
+</div><!-- /layout -->
+
+<button class="wb-toggle" onclick="toggleWB()">📋</button>
+<div class="wb-drawer" id="wbDrawer">
+  <div class="wb-dh"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">
+    <button class="stamp" onclick="addStampM('✅ Correct!')">✅ Correct!</button>
+    <button class="stamp r" onclick="addStampM('❌ Not quite')">❌ Not quite</button>
+    <button class="stamp g" onclick="addStampM('🔁 Try again')">🔁 Try again</button>
+    <button class="stamp" onclick="addStampM('⭐ Great job!')">⭐ Great job!</button>
+    <button class="stamp" onclick="addStampM('👂 Listen')">👂 Listen</button>
+    <button class="stamp" onclick="addStampM('🗣️ Say it!')">🗣️ Say it!</button>
+    <button class="stamp g" onclick="addStampM('💡 Remember')">💡 Remember</button>
+    <button class="stamp" onclick="addStampM('📝 Write it')">📝 Write it</button>
+  </div>
+  <div style="margin-bottom:10px;">
+    <div style="font-family:'Space Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-bottom:5px;text-transform:uppercase;">✏️ Correction</div>
+    <div style="display:flex;gap:5px;">
+      <input type="text" class="wb-correction-input" id="corrInputM" placeholder="correction…" style="flex:1;">
+      <button class="wb-correction-send" onclick="showCorrectionM()">SHOW</button>
+    </div>
+    <div class="wb-correction-display" id="corrDisplayM" style="margin-top:6px;">—</div>
+  </div>
+  <textarea id="wbNM" class="wb-notes" style="height:100px;width:100%;margin-bottom:8px;" placeholder="notes…"></textarea>
+  <div style="display:flex;gap:7px;">
+    <button class="wb-act" style="flex:1;" onclick="toggleWB()">close</button>
+    <button class="wb-act" style="flex:1;" onclick="document.getElementById('wbNM').value=''">clear</button>
+  </div>
+</div>
+
+<script>
+// ══ TIMER ══
+let tS=0,tT=0,tR=false,tI=null,cD=false;
+function setTimer(m,btn){resetTimer();tT=m*60;tS=tT;cD=true;document.getElementById('tmode').textContent=m+' MIN';document.getElementById('td').textContent=fmt(tS);document.querySelectorAll('.t-pre').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function toggleTimer(){if(tR){clearInterval(tI);tR=false;document.getElementById('tsb').textContent='▶ Start';}else{tR=true;document.getElementById('tsb').textContent='⏸ Pause';tI=setInterval(()=>{cD?tS--:tS++;if(cD&&tS<=0){tS=0;clearInterval(tI);tR=false;document.getElementById('tsb').textContent='▶ Start';}const el=document.getElementById('td');el.textContent=fmt(tS);el.classList.toggle('urgent',cD&&tS<=60);},1000);}}
+function resetTimer(){clearInterval(tI);tR=false;tS=cD?tT:0;document.getElementById('td').textContent=fmt(tS);document.getElementById('td').classList.remove('urgent');document.getElementById('tsb').textContent='▶ Start';}
+
+// ══ RETRIEVAL ══
+function revealQ(n){ document.getElementById('rr'+n).classList.add('show'); }
+
+// ══ VOCAB ══
+const vocab = [
+  {en:'final',fr:'finale',icon:'🏆'},
+  {en:'goalkeeper',fr:'gardien de but',icon:'🧤'},
+  {en:'striker',fr:'avant-centre',icon:'🎯'},
+  {en:'winger',fr:'ailier',icon:'⚡'},
+  {en:'midfielder',fr:'milieu de terrain',icon:'⚙️'},
+  {en:'defender',fr:'défenseur',icon:'🛡️'},
+  {en:'captain',fr:'capitaine',icon:'🎖️'},
+  {en:'formation',fr:'formation',icon:'🔢'},
+  {en:'penalty',fr:'penalty',icon:'⚽'},
+  {en:'substitute',fr:'remplaçant',icon:'🔄'},
+  {en:'trophy',fr:'trophée',icon:'🏆'},
+  {en:'champion',fr:'champion',icon:'👑'},
+  {en:'tackle',fr:'tacle',icon:'💥'},
+  {en:'cross',fr:'centre (passe)',icon:'➡️'},
+  {en:'dribble',fr:'dribble',icon:'🌀'},
+  {en:'header',fr:'coup de tête',icon:'🙆'},
+];
+
+function buildVocab(){
+  const g=document.getElementById('vocabGrid');
+  vocab.forEach(v=>{
+    const c=document.createElement('div');
+    c.className='vocab-card';
+    c.innerHTML=`<span class="vc-icon">${v.icon}</span><span class="vc-en">${v.en}</span><span class="vc-fr">${v.fr}</span><span class="vc-hint">tap · tap = ✓</span>`;
+    let clicks=0;
+    c.onclick=()=>{clicks++;if(clicks===1){c.classList.add('flipped');}else if(clicks===2){c.classList.add('done');}else{c.classList.remove('flipped','done');clicks=0;}};
+    g.appendChild(c);
+  });
+}
+
+// ══ SQUAD DATA ══
+const psgPlayers = [
+  {num:1, name:'Matvey Safonov',   nat:'🇷🇺', pos:'GK',  posClass:'gk',  posFr:'Gardien',           note:'Starting GK · exceptional in knockout stage'},
+  {num:5, name:'Marquinhos',       nat:'🇧🇷', pos:'CB',  posClass:'def', posFr:'Défenseur central', note:'Club captain · 10 years at PSG'},
+  {num:3, name:'Willian Pacho',    nat:'🇪🇨', pos:'CB',  posClass:'def', posFr:'Défenseur central', note:'Dominant in the air · excellent season'},
+  {num:25,name:'Nuno Mendes',      nat:'🇵🇹', pos:'LB',  posClass:'def', posFr:'Arrière gauche',    note:'Recovering from thigh injury — expected to start'},
+  {num:2, name:'W. Zaire-Emery',   nat:'🇫🇷', pos:'RB',  posClass:'def', posFr:'Arrière droit',     note:'Shifted to makeshift right-back · only 19 years old'},
+  {num:17,name:'Vitinha',          nat:'🇵🇹', pos:'CM',  posClass:'mid', posFr:'Milieu central',    note:'Controls tempo · the heartbeat of the team'},
+  {num:8, name:'Fabián Ruiz',      nat:'🇪🇸', pos:'CM',  posClass:'mid', posFr:'Milieu central',    note:'Scored the decisive goal vs Arsenal in semi-final 2025'},
+  {num:87,name:'João Neves',       nat:'🇵🇹', pos:'DM',  posClass:'mid', posFr:'Milieu défensif',   note:'Vital ball-winner · 21 years old'},
+  {num:10,name:'O. Dembélé',       nat:'🇫🇷', pos:'RW',  posClass:'att', posFr:'Ailier droit',      note:'Ballon d\'Or winner · returning from calf injury'},
+  {num:77,name:'Kvaratskhelia',    nat:'🇬🇪', pos:'LW',  posClass:'att', posFr:'Ailier gauche',     note:'Tournament\'s most deadly attacker · equalled Ibra\'s CL record'},
+  {num:18,name:'Désiré Doué',      nat:'🇫🇷', pos:'ST',  posClass:'att', posFr:'Avant-centre',      note:'Brilliant young forward · scored in last year\'s final vs Inter'},
+];
+
+const arsenalPlayers = [
+  {num:22,name:'David Raya',       nat:'🇪🇸', pos:'GK',  posClass:'gk',  posFr:'Gardien',           note:'First choice GK · fewest goals conceded in PL this season'},
+  {num:12,name:'Jurriën Timber',   nat:'🇳🇱', pos:'RB',  posClass:'def', posFr:'Arrière droit',     note:'Returning from ankle injury — confirmed fit by Arteta'},
+  {num:4, name:'Ben White',        nat:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', pos:'—',  posClass:'def', posFr:'Absent',            note:'❌ OUT — knee injury · only confirmed absentee'},
+  {num:12,name:'William Saliba',   nat:'🇫🇷', pos:'CB',  posClass:'def', posFr:'Défenseur central', note:'One of the best defenders in Europe · born in Bondy, near Paris!'},
+  {num:6, name:'Gabriel',          nat:'🇧🇷', pos:'CB',  posClass:'def', posFr:'Défenseur central', note:'Physical and dominant · Brazil international'},
+  {num:35,name:'Oleksandr Zinch.',  nat:'🇺🇦', pos:'LB',  posClass:'def', posFr:'Arrière gauche',    note:'Consistent and reliable left-back'},
+  {num:29,name:'Kai Havertz',      nat:'🇩🇪', pos:'ST',  posClass:'att', posFr:'Avant-centre',      note:'Versatile forward · scored crucial goals in PL title run'},
+  {num:41,name:'Declan Rice',      nat:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', pos:'DM',  posClass:'mid', posFr:'Milieu défensif',   note:'World-class box-to-box midfielder · Arsenal\'s engine'},
+  {num:8, name:'Martin Ødegaard',  nat:'🇳🇴', pos:'CAM', posClass:'mid', posFr:'Meneur de jeu',     note:'Arsenal CAPTAIN · wants to lift the first UCL trophy in club history'},
+  {num:77,name:'M. Lewis-Skelly',  nat:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', pos:'CM',  posClass:'mid', posFr:'Milieu central',    note:'Young talent · preferred over Zubimendi in recent weeks'},
+  {num:7, name:'Bukayo Saka',      nat:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', pos:'RW',  posClass:'att', posFr:'Ailier droit',      note:'Arsenal\'s most dangerous player · scored vs PSG in semi-final'},
+  {num:11,name:'Leandro Trossard', nat:'🇧🇪', pos:'LW',  posClass:'att', posFr:'Ailier gauche',     note:'🇧🇪 Belgian! Technical and direct — favourite for Michelle?'},
+];
+
+function buildSquad(players, gridId) {
+  const grid = document.getElementById(gridId);
+  players.forEach(p => {
+    const card = document.createElement('div');
+    card.className = `player-card ${p.posClass}`;
+    card.innerHTML = `
+      <div class="player-num">${p.num}</div>
+      <div class="player-info">
+        <div class="player-name">${p.name}</div>
+        <div class="player-pos ${p.posClass}">${p.pos} · ${p.posFr}</div>
+        <div class="player-fr">${p.note}</div>
+      </div>
+      <div class="player-nat">${p.nat}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ══ LEGENDS ══
+const legends = [
+  {
+    name: 'Ronaldo',
+    full: 'Cristiano Ronaldo',
+    clubs: 'Man Utd · Real Madrid · Juventus',
+    emoji: '⚽',
+    color: '#CC0000',
+    desc: 'Five-time Champions League winner. The top scorer in UCL history with 140 goals. Famous for his powerful free-kicks and incredible athleticism.',
+    stat: '140 UCL goals · 5 trophies',
+    fr: '5 victoires en LdC · meilleur buteur de l\'histoire'
+  },
+  {
+    name: 'Messi',
+    full: 'Lionel Messi',
+    clubs: 'Barcelona · PSG · Inter Miami',
+    emoji: '🐐',
+    color: '#003399',
+    desc: 'Widely considered the greatest player ever. Won the UCL four times with Barcelona and the 2022 World Cup with Argentina. Magic dribbler and passer.',
+    stat: '8 Ballon d\'Or · 4 UCL titles · 2022 World Cup',
+    fr: '4 LdC avec Barcelone · 8 Ballons d\'Or'
+  },
+  {
+    name: 'Ronaldinho',
+    full: 'Ronaldinho',
+    clubs: 'Barcelona · PSG · AC Milan',
+    emoji: '😁',
+    color: '#003366',
+    desc: 'The most entertaining player of his generation. Won the UCL with Barcelona in 2006 — the year Arsenal lost the final. Known for joy, tricks and genius.',
+    stat: 'UCL winner 2006 · 2x Ballon d\'Or',
+    fr: 'Vainqueur LdC 2006 · le joueur le plus créatif de son époque'
+  },
+  {
+    name: 'Thierry Henry',
+    full: 'Thierry Henry',
+    clubs: 'Arsenal · Barcelona · New York RB',
+    emoji: '🔴',
+    color: '#EF0107',
+    desc: 'Arsenal\'s all-time top scorer. Reached the 2006 Champions League final with Arsenal — the same final happening tonight, 20 years later. A French legend.',
+    stat: 'Arsenal legend · 228 goals · 2006 UCL finalist',
+    fr: 'Meilleur buteur de l\'histoire d\'Arsenal · finaliste LdC 2006 avec les Gunners'
+  },
+  {
+    name: 'Zlatan',
+    full: 'Zlatan Ibrahimović',
+    clubs: 'PSG · AC Milan · Man Utd · many others',
+    emoji: '🦁',
+    color: '#FF6600',
+    desc: 'Played for almost every major club. Spent 4 years at PSG, scoring 156 goals. Held the record for most PSG goals in a UCL campaign — recently matched by Kvaratskhelia.',
+    stat: '156 goals for PSG · former UCL record holder at PSG',
+    fr: '156 buts pour le PSG · son record de LdC vient d\'être égalé par Kvaratskhelia'
+  },
+  {
+    name: 'Zidane',
+    full: 'Zinedine Zidane',
+    clubs: 'Juventus · Real Madrid',
+    emoji: '🇫🇷',
+    color: '#003399',
+    desc: 'French legend and Real Madrid\'s greatest player. Won the UCL three times as a manager — making him one of only five people to win three European Cups as a coach.',
+    stat: '3 UCL titles as manager · 1998 World Cup winner',
+    fr: '3 LdC comme entraîneur · champion du monde 1998 avec la France'
+  },
+];
+
+function buildLegends(){
+  const grid = document.getElementById('legendGrid');
+  legends.forEach(l => {
+    const card = document.createElement('div');
+    card.className = 'legend-card';
+    card.innerHTML = `
+      <div class="legend-portrait">
+        <svg viewBox="0 0 54 54" width="54" height="54" xmlns="http://www.w3.org/2000/svg">
+          <rect width="54" height="54" fill="${l.color}"/>
+          <text x="27" y="36" text-anchor="middle" font-size="28">${l.emoji}</text>
+        </svg>
+      </div>
+      <div class="legend-info">
+        <div class="legend-name">${l.name}</div>
+        <div class="legend-club">${l.clubs}</div>
+        <div class="legend-desc">${l.desc}</div>
+        <div class="legend-stat">⭐ ${l.stat}</div>
+        <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--gold);margin-top:3px;font-style:italic;">🇫🇷 ${l.fr}</div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ══ QUIZ ══
+const quizData = [
+  {
+    q:'🏟️ Where is the 2026 Champions League final being played?',
+    opts:['Wembley, London','Allianz Arena, Munich','Puskás Aréna, Budapest','Parc des Princes, Paris'],
+    ans:'Puskás Aréna, Budapest',
+    fr:'Où se joue la finale de la Ligue des Champions 2026 ?',
+    diff:'easy'
+  },
+  {
+    q:'🔴 What major trophy did Arsenal win just before this final?',
+    opts:['The FA Cup','The Premier League title','The League Cup','The Europa League'],
+    ans:'The Premier League title',
+    fr:'Quel grand trophée Arsenal a-t-il remporté juste avant cette finale ?',
+    diff:'easy'
+  },
+  {
+    q:'🔵 What would PSG achieve if they win tonight?',
+    opts:['Their first ever Champions League title','Back-to-back Champions League titles','A record 5th European Cup','Their first French league title'],
+    ans:'Back-to-back Champions League titles',
+    fr:'Qu\'accomplirait le PSG s\'il gagnait ce soir ?',
+    diff:'medium'
+  },
+  {
+    q:'⚡ What position does Bukayo Saka play?',
+    opts:['Centre-back','Goalkeeper','Right winger','Defensive midfielder'],
+    ans:'Right winger',
+    fr:'À quel poste joue Bukayo Saka ?',
+    diff:'easy'
+  },
+  {
+    q:'🇬🇪 Which PSG player is described as the "most decisive attacker" of the tournament?',
+    opts:['Ousmane Dembélé','Désiré Doué','Khvicha Kvaratskhelia','Fabián Ruiz'],
+    ans:'Khvicha Kvaratskhelia',
+    fr:'Quel joueur du PSG est décrit comme l\'attaquant le plus décisif du tournoi ?',
+    diff:'medium'
+  },
+  {
+    q:'🛡️ What does a "Defensive Midfielder" (DM) do?',
+    opts:['Scores goals from midfield','Crosses the ball from the sides','Sits in front of the defence and wins the ball back','Plays behind the striker to create chances'],
+    ans:'Sits in front of the defence and wins the ball back',
+    fr:'Quel est le rôle d\'un milieu défensif ?',
+    diff:'medium'
+  },
+  {
+    q:'🔴 Which Arsenal player is trying to become the first Arsenal captain to lift the Champions League?',
+    opts:['Declan Rice','Bukayo Saka','Martin Ødegaard','William Saliba'],
+    ans:'Martin Ødegaard',
+    fr:'Quel joueur d\'Arsenal cherche à devenir le premier capitaine à soulever la LdC ?',
+    diff:'medium'
+  },
+  {
+    q:'🇧🇪 Which Arsenal player in tonight\'s squad is Belgian?',
+    opts:['Kai Havertz','Leandro Trossard','Gabriel','Jurriën Timber'],
+    ans:'Leandro Trossard',
+    fr:'Quel joueur d\'Arsenal dans le onze de ce soir est belge ?',
+    diff:'easy'
+  },
+];
+
+function buildQuiz(){
+  const sec=document.getElementById('quizSection');
+  sec.innerHTML='';
+  quizData.forEach((q,i)=>{
+    const card=document.createElement('div');
+    card.className='quiz-card';
+    const sh=[...q.opts].sort(()=>Math.random()-.5);
+    card.innerHTML=`
+      <div class="ex-label">QUESTION ${i+1} <span class="ex-diff ${q.diff}">${q.diff.toUpperCase()}</span></div>
+      <div class="ex-fr">${q.fr}</div>
+      <div class="ex-q">${q.q}</div>
+      <div class="mc-opts" id="qo_${i}">
+        ${sh.map(o=>`<button class="mc-btn" data-qi="${i}" data-val="${encodeURIComponent(o)}" onclick="pickQ(this)">${o}</button>`).join('')}
+      </div>
+      <div class="ex-reveal" id="qr_${i}">✅ Answer: <strong>${q.ans}</strong></div>
+    `;
+    sec.appendChild(card);
+  });
+}
+
+function pickQ(btn){
+  const qi=btn.dataset.qi;
+  document.querySelectorAll(`#qo_${qi} .mc-btn`).forEach(b=>b.disabled=true);
+  if(decodeURIComponent(btn.dataset.val)===quizData[qi].ans){btn.classList.add('correct');}
+  else{btn.classList.add('wrong');document.querySelectorAll(`#qo_${qi} .mc-btn`).forEach(b=>{if(decodeURIComponent(b.dataset.val)===quizData[qi].ans)b.classList.add('correct');});document.getElementById('qr_'+qi).classList.add('show');}
+}
+
+function checkAll(){
+  let s=0,t=0;
+  quizData.forEach((q,i)=>{
+    t++;
+    const c=document.querySelector(`#qo_${i} .mc-btn.correct`);
+    const w=document.querySelector(`#qo_${i} .mc-btn.wrong`);
+    if(c&&!w)s++;
+    else document.getElementById('qr_'+i).classList.add('show');
+    document.querySelectorAll(`#qo_${i} .mc-btn`).forEach(b=>b.disabled=true);
+  });
+
+  const pct=s/t;
+  let msg,trophy;
+  if(pct>=.9){msg="⚽ LEGENDARY! You know football better than the commentators!";trophy="🏆⭐⭐⭐";}
+  else if(pct>=.75){msg="🔥 Great result — nearly perfect!";trophy="⚽⭐⭐";}
+  else if(pct>=.55){msg="💪 Good effort — re-read the article!";trophy="🎯⭐";}
+  else{msg="📰 Read the article again carefully and retry!";trophy="🥅";}
+
+  document.getElementById('scoreBig').textContent=`${s}/${t}`;
+  document.getElementById('scoreMsg').textContent=msg;
+  document.getElementById('scoreTrophy').textContent=trophy;
+  document.getElementById('scorePanel').classList.add('show');
+  document.getElementById('scorePanel').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function resetAll(){
+  document.getElementById('scorePanel').classList.remove('show');
+  buildQuiz();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══ WHITEBOARD ══
+function gT(){const n=new Date();return n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0');}
+function addStamp(t){const log=document.getElementById('wbLog');const e=document.createElement('div');e.className='wb-log-entry';e.innerHTML=`<span>${t}</span><span class="wb-log-time">${gT()}</span>`;log.appendChild(e);log.scrollTop=log.scrollHeight;const n=document.getElementById('wbNotes');if(n){n.value+=(n.value?'\n':'')+`[${gT()}] ${t}`;n.scrollTop=n.scrollHeight;}}
+function addStampM(t){const n=document.getElementById('wbNM');if(n)n.value+=(n.value?'\n':'')+`[${gT()}] ${t}`;}
+function showCorrection(){const v=document.getElementById('corrInput').value.trim();if(v)document.getElementById('corrDisplay').textContent=v;}
+function showCorrectionM(){const v=document.getElementById('corrInputM').value.trim();if(v)document.getElementById('corrDisplayM').textContent=v;}
+document.getElementById('corrInput')?.addEventListener('keydown',e=>{if(e.key==='Enter')showCorrection();});
+function clearNotes(){const n=document.getElementById('wbNotes');if(n)n.value='';}
+function clearLog(){const l=document.getElementById('wbLog');while(l.children.length>1)l.removeChild(l.lastChild);}
+function clearCorr(){document.getElementById('corrDisplay').textContent='—';document.getElementById('corrInput').value='';}
+function exportNotes(){const notes=document.getElementById('wbNotes')?.value||'';const log=[...document.querySelectorAll('.wb-log-entry')].map(e=>e.textContent.trim()).join('\n');const full=`=== NOTES ===\n${notes}\n\n=== STAMPS ===\n${log}`;navigator.clipboard?.writeText(full).then(()=>{const btn=document.querySelector('.wb-export-btn');btn.textContent='✅ COPIED';setTimeout(()=>btn.textContent='COPY ALL',2000);});}
+function toggleWB(){document.getElementById('wbDrawer').classList.toggle('open');}
+
+// ══ INIT ══
+buildVocab();
+buildSquad(psgPlayers, 'psgGrid');
+buildSquad(arsenalPlayers, 'arsenalGrid');
+buildLegends();
+buildQuiz();
+</script>
+</body>
+</html>

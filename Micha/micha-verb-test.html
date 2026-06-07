@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Micha's Verb Mission</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #FFD93D;
+    --orange: #FF6B35;
+    --blue: #1E90FF;
+    --dark: #0D0D1A;
+    --card: #1A1A2E;
+    --card2: #16213E;
+    --green: #06D6A0;
+    --red: #EF233C;
+    --white: #F8F9FA;
+    --purple: #7B2FBE;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--dark);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated star background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(255,107,53,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(30,144,255,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(123,47,190,0.1) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--yellow);
+    animation: twinkle var(--dur, 3s) infinite alternate;
+    opacity: 0.6;
+  }
+
+  @keyframes twinkle { from { opacity: 0.1; transform: scale(0.8); } to { opacity: 1; transform: scale(1.2); } }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 30px 0 20px;
+    animation: dropIn 0.6s ease both;
+  }
+
+  @keyframes dropIn { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+
+  .badge {
+    display: inline-block;
+    background: var(--orange);
+    color: var(--dark);
+    font-family: 'Bangers', cursive;
+    font-size: 13px;
+    letter-spacing: 2px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 12px rgba(255,107,53,0.5);
+  }
+
+  h1 {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(36px, 8vw, 64px);
+    letter-spacing: 3px;
+    color: var(--yellow);
+    text-shadow: 4px 4px 0 var(--orange), 6px 6px 0 rgba(0,0,0,0.4);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    color: rgba(255,255,255,0.6);
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    height: 10px;
+    margin: 20px 0;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue), var(--green));
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    box-shadow: 0 0 10px var(--blue);
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+
+  /* SECTION HEADERS */
+  .section-title {
+    font-family: 'Bangers', cursive;
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: var(--yellow);
+    margin: 32px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title .icon {
+    font-size: 24px;
+  }
+
+  .section-title .tag {
+    font-family: 'Nunito', sans-serif;
+    font-size: 11px;
+    background: var(--orange);
+    color: var(--dark);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    vertical-align: middle;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 14px;
+    animation: fadeUp 0.4s ease both;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.15); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* MATCH SECTION */
+  .match-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .match-col { display: flex; flex-direction: column; gap: 8px; }
+  .match-col-label { font-size: 11px; font-weight: 800; letter-spacing: 2px; color: rgba(255,255,255,0.4); text-transform: uppercase; margin-bottom: 4px; }
+
+  .match-btn {
+    background: var(--card2);
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: var(--white);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+    user-select: none;
+  }
+
+  .match-btn:hover { border-color: var(--yellow); color: var(--yellow); transform: scale(1.03); }
+  .match-btn.selected-left { border-color: var(--blue); background: rgba(30,144,255,0.2); color: var(--blue); box-shadow: 0 0 12px rgba(30,144,255,0.3); }
+  .match-btn.selected-right { border-color: var(--orange); background: rgba(255,107,53,0.2); color: var(--orange); box-shadow: 0 0 12px rgba(255,107,53,0.3); }
+  .match-btn.correct { border-color: var(--green); background: rgba(6,214,160,0.2); color: var(--green); pointer-events: none; }
+  .match-btn.wrong { border-color: var(--red); background: rgba(239,35,60,0.2); color: var(--red); animation: shake 0.4s ease; }
+
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+
+  /* FILL IN THE BLANK */
+  .sentence-card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+  }
+
+  .sentence-text {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.7;
+    margin-bottom: 10px;
+    color: rgba(255,255,255,0.9);
+  }
+
+  .sentence-text .blank {
+    display: inline-block;
+    min-width: 100px;
+    border-bottom: 2px solid var(--blue);
+    margin: 0 4px;
+    text-align: center;
+    color: var(--yellow);
+    font-weight: 800;
+  }
+
+  .verb-hint {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 8px;
+    font-style: italic;
+  }
+
+  .fill-input {
+    background: var(--card2);
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 8px 14px;
+    color: var(--white);
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    width: 100%;
+    max-width: 220px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .fill-input:focus { border-color: var(--blue); box-shadow: 0 0 8px rgba(30,144,255,0.3); }
+  .fill-input.correct { border-color: var(--green); background: rgba(6,214,160,0.1); color: var(--green); }
+  .fill-input.wrong { border-color: var(--red); background: rgba(239,35,60,0.1); color: var(--red); }
+
+  /* MULTIPLE CHOICE */
+  .mc-question {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: var(--white);
+    line-height: 1.5;
+  }
+
+  .mc-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .mc-btn {
+    background: var(--card2);
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: var(--white);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+  }
+
+  .mc-btn:hover:not(:disabled) { border-color: var(--yellow); color: var(--yellow); }
+  .mc-btn.correct { border-color: var(--green); background: rgba(6,214,160,0.2); color: var(--green); }
+  .mc-btn.wrong { border-color: var(--red); background: rgba(239,35,60,0.2); color: var(--red); }
+  .mc-btn:disabled { pointer-events: none; opacity: 0.7; }
+
+  /* CHECK BUTTON */
+  .check-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--orange), #FF4500);
+    color: var(--dark);
+    border: none;
+    border-radius: 12px;
+    padding: 12px 28px;
+    font-family: 'Bangers', cursive;
+    font-size: 18px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 15px rgba(255,107,53,0.4);
+    margin-top: 16px;
+  }
+
+  .check-btn:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 6px 20px rgba(255,107,53,0.5); }
+  .check-btn:active { transform: scale(0.97); }
+
+  /* SCORE PANEL */
+  .score-panel {
+    display: none;
+    background: linear-gradient(135deg, var(--card), var(--card2));
+    border: 2px solid var(--yellow);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    margin-top: 30px;
+    animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  @keyframes popIn { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
+
+  .score-panel.visible { display: block; }
+
+  .score-big {
+    font-family: 'Bangers', cursive;
+    font-size: 80px;
+    color: var(--yellow);
+    text-shadow: 4px 4px 0 var(--orange);
+    line-height: 1;
+  }
+
+  .score-label {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .score-msg {
+    font-size: 20px;
+    font-weight: 800;
+    margin: 16px 0 8px;
+    color: var(--white);
+  }
+
+  .trophy-row {
+    font-size: 36px;
+    margin: 12px 0;
+  }
+
+  .retry-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card2);
+    border: 2px solid var(--yellow);
+    color: var(--yellow);
+    border-radius: 12px;
+    padding: 10px 24px;
+    font-family: 'Bangers', cursive;
+    font-size: 18px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 10px;
+  }
+
+  .retry-btn:hover { background: var(--yellow); color: var(--dark); transform: scale(1.05); }
+
+  /* ANSWER REVEAL */
+  .answer-reveal {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 6px;
+    display: none;
+  }
+
+  .answer-reveal.visible { display: block; }
+  .answer-reveal strong { color: var(--green); }
+
+  /* Confetti burst */
+  .confetti-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    overflow: hidden;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: -10px;
+    animation: confettiFall linear both;
+    border-radius: 2px;
+  }
+
+  @keyframes confettiFall {
+    to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* Timer */
+  .timer-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 8px 16px;
+    width: fit-content;
+    margin: 0 auto 20px;
+  }
+
+  .timer-icon { font-size: 20px; }
+  .timer-num {
+    font-family: 'Bangers', cursive;
+    font-size: 28px;
+    color: var(--yellow);
+    letter-spacing: 2px;
+    min-width: 56px;
+    text-align: center;
+  }
+
+  .timer-num.urgent { color: var(--red); animation: pulse 0.5s infinite alternate; }
+  @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.1); } }
+
+  @media (max-width: 500px) {
+    .match-grid { grid-template-columns: 1fr 1fr; }
+    .mc-options { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+<div class="confetti-container" id="confetti"></div>
+
+<div class="container">
+
+  <div class="header">
+    <div class="badge">🎮 BRAWL STARS EDITION</div>
+    <h1>VERB MISSION</h1>
+    <p class="subtitle">Micha's Past Tense Challenge</p>
+  </div>
+
+  <div class="timer-wrap">
+    <span class="timer-icon">⏱️</span>
+    <span class="timer-num" id="timerDisplay">10:00</span>
+  </div>
+
+  <div class="progress-label">
+    <span id="progressText">0 / 20 answered</span>
+    <span id="scoreText">Score: 0</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progressBar" style="width:0%"></div>
+  </div>
+
+  <!-- SECTION 1: MATCH -->
+  <div class="section-title">
+    <span class="icon">🔗</span> MATCH IT
+    <span class="tag">PART 1</span>
+  </div>
+  <p style="font-size:14px; color:rgba(255,255,255,0.5); margin-bottom:12px; font-weight:600;">Click a present verb, then click its past form.</p>
+
+  <div class="card" style="padding:16px 20px;">
+    <div class="match-grid">
+      <div class="match-col">
+        <div class="match-col-label">Present</div>
+        <div id="matchLeft"></div>
+      </div>
+      <div class="match-col">
+        <div class="match-col-label">Past</div>
+        <div id="matchRight"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: FILL IN BLANK -->
+  <div class="section-title">
+    <span class="icon">✏️</span> FILL THE BLANK
+    <span class="tag">PART 2</span>
+  </div>
+  <p style="font-size:14px; color:rgba(255,255,255,0.5); margin-bottom:12px; font-weight:600;">Write the correct past tense form in each gap.</p>
+  <div id="fillSection"></div>
+
+  <!-- SECTION 3: MULTIPLE CHOICE -->
+  <div class="section-title">
+    <span class="icon">🎯</span> CHOOSE THE RIGHT PAST
+    <span class="tag">PART 3</span>
+  </div>
+  <div id="mcSection"></div>
+
+  <div style="text-align:center;">
+    <button class="check-btn" onclick="checkAll()">⚡ CHECK MY ANSWERS</button>
+  </div>
+
+  <div class="score-panel" id="scorePanel">
+    <div class="trophy-row" id="trophyRow">🏆</div>
+    <div class="score-big" id="scoreBig">0</div>
+    <div class="score-label">POINTS</div>
+    <div class="score-msg" id="scoreMsg"></div>
+    <button class="retry-btn" onclick="resetAll()">🔄 TRY AGAIN</button>
+  </div>
+
+</div>
+
+<script>
+// ===== DATA =====
+const matchVerbs = [
+  { present: 'go', past: 'went' },
+  { present: 'eat', past: 'ate' },
+  { present: 'see', past: 'saw' },
+  { present: 'make', past: 'made' },
+  { present: 'take', past: 'took' },
+  { present: 'give', past: 'gave' },
+];
+
+const fillSentences = [
+  { sentence: "Shelly ___ (go) to the Brawl Stars arena.", answer: 'went', verb: 'go' },
+  { sentence: "Colt ___ (drink) water before the big fight.", answer: 'drank', verb: 'drink' },
+  { sentence: "The team ___ (win) the championship yesterday.", answer: 'won', verb: 'win' },
+  { sentence: "Spike ___ (make) a cactus trap for the enemy.", answer: 'made', verb: 'make' },
+  { sentence: "Leon ___ (take) the star from the gem mine.", answer: 'took', verb: 'take' },
+  { sentence: "Jessie ___ (play) an amazing game last night.", answer: 'played', verb: 'play' },
+  { sentence: "Brock ___ (draw) a new map on his notebook.", answer: 'drew', verb: 'draw' },
+  { sentence: "The coach ___ (begin) the match at 3 o'clock.", answer: 'began', verb: 'begin' },
+];
+
+const mcQuestions = [
+  {
+    q: "🎮 Crow ___ past the enemy to grab the trophy.",
+    options: ['flied', 'flew', 'flown', 'flews'],
+    answer: 'flew'
+  },
+  {
+    q: "🔫 Bull ___ a big hit and the enemy team lost.",
+    options: ['hitted', 'hit', 'huts', 'had hit'],
+    answer: 'hit'
+  },
+  {
+    q: "🌟 Sandy ___ (come) from the desert to help the team.",
+    options: ['comed', 'comes', 'came', 'come'],
+    answer: 'came'
+  },
+  {
+    q: "🎯 The referee ___ (see) the foul and stopped the game.",
+    options: ['seed', 'saw', 'seen', 'sawed'],
+    answer: 'saw'
+  },
+  {
+    q: "📦 Rico ___ (give) his shield to a teammate.",
+    options: ['gived', 'gives', 'gave', 'given'],
+    answer: 'gave'
+  },
+  {
+    q: "🗺️ The players ___ (be) very tired after the match.",
+    options: ['was', 'were', 'be', 'been'],
+    answer: 'were'
+  },
+];
+
+// ===== STARS =====
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 40; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.left = Math.random() * 100 + '%';
+  s.style.top = Math.random() * 100 + '%';
+  s.style.setProperty('--dur', (2 + Math.random() * 3) + 's');
+  s.style.animationDelay = Math.random() * 3 + 's';
+  starsEl.appendChild(s);
+}
+
+// ===== TIMER =====
+let timeLeft = 600;
+let timerInterval = null;
+let timerRunning = false;
+
+function startTimer() {
+  if (timerRunning) return;
+  timerRunning = true;
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    const m = Math.floor(timeLeft / 60);
+    const s = timeLeft % 60;
+    const el = document.getElementById('timerDisplay');
+    el.textContent = m + ':' + String(s).padStart(2,'0');
+    if (timeLeft <= 60) el.classList.add('urgent');
+    if (timeLeft <= 0) { clearInterval(timerInterval); checkAll(); }
+  }, 1000);
+}
+
+document.addEventListener('keydown', startTimer, { once: true });
+document.addEventListener('click', startTimer, { once: true });
+
+// ===== MATCH SECTION =====
+let matchState = { selectedLeft: null, selectedRight: null, matched: new Set() };
+let matchScore = 0;
+const shuffledPast = [...matchVerbs].map(v => v.past).sort(() => Math.random() - 0.5);
+
+function buildMatch() {
+  const leftEl = document.getElementById('matchLeft');
+  const rightEl = document.getElementById('matchRight');
+  leftEl.innerHTML = '';
+  rightEl.innerHTML = '';
+
+  matchVerbs.forEach(v => {
+    const btn = document.createElement('button');
+    btn.className = 'match-btn';
+    btn.textContent = v.present;
+    btn.dataset.value = v.present;
+    btn.dataset.side = 'left';
+    btn.onclick = () => handleMatchClick(btn, 'left');
+    leftEl.appendChild(btn);
+  });
+
+  shuffledPast.forEach(past => {
+    const btn = document.createElement('button');
+    btn.className = 'match-btn';
+    btn.textContent = past;
+    btn.dataset.value = past;
+    btn.dataset.side = 'right';
+    btn.onclick = () => handleMatchClick(btn, 'right');
+    rightEl.appendChild(btn);
+  });
+}
+
+function handleMatchClick(btn, side) {
+  startTimer();
+  if (btn.classList.contains('correct')) return;
+
+  if (side === 'left') {
+    document.querySelectorAll('.match-btn[data-side="left"]').forEach(b => b.classList.remove('selected-left'));
+    btn.classList.add('selected-left');
+    matchState.selectedLeft = btn;
+  } else {
+    document.querySelectorAll('.match-btn[data-side="right"]').forEach(b => b.classList.remove('selected-right'));
+    btn.classList.add('selected-right');
+    matchState.selectedRight = btn;
+  }
+
+  if (matchState.selectedLeft && matchState.selectedRight) {
+    const present = matchState.selectedLeft.dataset.value;
+    const past = matchState.selectedRight.dataset.value;
+    const correct = matchVerbs.find(v => v.present === present && v.past === past);
+
+    if (correct) {
+      matchState.selectedLeft.classList.remove('selected-left');
+      matchState.selectedLeft.classList.add('correct');
+      matchState.selectedRight.classList.remove('selected-right');
+      matchState.selectedRight.classList.add('correct');
+      matchScore++;
+      updateProgress();
+    } else {
+      matchState.selectedLeft.classList.add('wrong');
+      matchState.selectedRight.classList.add('wrong');
+      setTimeout(() => {
+        matchState.selectedLeft?.classList.remove('selected-left', 'wrong');
+        matchState.selectedRight?.classList.remove('selected-right', 'wrong');
+        matchState.selectedLeft = null;
+        matchState.selectedRight = null;
+      }, 600);
+    }
+    matchState.selectedLeft = null;
+    matchState.selectedRight = null;
+  }
+}
+
+// ===== FILL SECTION =====
+function buildFill() {
+  const sec = document.getElementById('fillSection');
+  sec.innerHTML = '';
+  fillSentences.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'sentence-card';
+    card.innerHTML = `
+      <div class="verb-hint">verb: <strong>${item.verb}</strong></div>
+      <div class="sentence-text">${item.sentence.replace('___', '<span class="blank">___</span>')}</div>
+      <input type="text" class="fill-input" id="fill_${i}" placeholder="past tense..." autocomplete="off" spellcheck="false">
+      <div class="answer-reveal" id="reveal_${i}">✅ Answer: <strong>${item.answer}</strong></div>
+    `;
+    sec.appendChild(card);
+    card.querySelector(`#fill_${i}`).addEventListener('input', updateProgress);
+  });
+}
+
+// ===== MC SECTION =====
+function buildMC() {
+  const sec = document.getElementById('mcSection');
+  sec.innerHTML = '';
+  mcQuestions.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    const shuffled = [...q.options].sort(() => Math.random() - 0.5);
+    card.innerHTML = `
+      <div class="mc-question">${q.q}</div>
+      <div class="mc-options" id="mc_${i}">
+        ${shuffled.map(o => `<button class="mc-btn" data-q="${i}" data-val="${o}" onclick="handleMC(this)">${o}</button>`).join('')}
+      </div>
+      <div class="answer-reveal" id="mc_reveal_${i}">✅ Answer: <strong>${q.answer}</strong></div>
+    `;
+    sec.appendChild(card);
+  });
+}
+
+function handleMC(btn) {
+  startTimer();
+  const qi = btn.dataset.q;
+  const val = btn.dataset.val;
+  const correct = mcQuestions[qi].answer;
+  document.querySelectorAll(`#mc_${qi} .mc-btn`).forEach(b => b.disabled = true);
+  if (val === correct) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll(`#mc_${qi} .mc-btn`).forEach(b => {
+      if (b.dataset.val === correct) b.classList.add('correct');
+    });
+  }
+  updateProgress();
+}
+
+// ===== PROGRESS =====
+let totalQ = matchVerbs.length + fillSentences.length + mcQuestions.length;
+
+function updateProgress() {
+  const answered = countAnswered();
+  document.getElementById('progressText').textContent = `${answered} / ${totalQ} answered`;
+  document.getElementById('progressBar').style.width = (answered / totalQ * 100) + '%';
+}
+
+function countAnswered() {
+  let n = matchScore;
+  fillSentences.forEach((_, i) => {
+    const v = document.getElementById('fill_' + i)?.value.trim();
+    if (v) n++;
+  });
+  mcQuestions.forEach((_, i) => {
+    if (document.querySelector(`#mc_${i} .mc-btn.correct, #mc_${i} .mc-btn.wrong`)) n++;
+  });
+  return n;
+}
+
+// ===== CHECK ALL =====
+function checkAll() {
+  clearInterval(timerInterval);
+  let score = 0;
+  let total = totalQ;
+
+  // Match score
+  score += matchScore;
+
+  // Fill score
+  fillSentences.forEach((item, i) => {
+    const input = document.getElementById('fill_' + i);
+    const val = input.value.trim().toLowerCase();
+    const reveal = document.getElementById('reveal_' + i);
+    if (val === item.answer) {
+      input.classList.add('correct');
+      score++;
+    } else {
+      input.classList.add('wrong');
+      input.disabled = true;
+      reveal.classList.add('visible');
+    }
+    input.disabled = true;
+  });
+
+  // MC score
+  mcQuestions.forEach((q, i) => {
+    const correct = document.querySelector(`#mc_${i} .mc-btn.correct`);
+    const wrong = document.querySelector(`#mc_${i} .mc-btn.wrong`);
+    const reveal = document.getElementById('mc_reveal_' + i);
+    if (correct && !wrong) score++;
+    else if (!correct && !wrong) {
+      // unanswered
+      reveal.classList.add('visible');
+    }
+    document.querySelectorAll(`#mc_${i} .mc-btn`).forEach(b => b.disabled = true);
+  });
+
+  // Match reveal for unmatched
+  matchVerbs.forEach(v => {
+    const leftBtns = document.querySelectorAll('.match-btn[data-side="left"]');
+    leftBtns.forEach(btn => {
+      if (!btn.classList.contains('correct')) {
+        btn.classList.add('wrong');
+      }
+    });
+  });
+
+  document.getElementById('scoreBig').textContent = score;
+  document.getElementById('scoreText').textContent = 'Score: ' + score;
+  document.getElementById('progressBar').style.width = '100%';
+  document.getElementById('progressText').textContent = `${total} / ${total} answered`;
+
+  const pct = score / total;
+  let msg, trophy;
+  if (pct >= 0.9) { msg = "🔥 LEGENDARY! You're a verb master, Micha!"; trophy = "🏆🥇⭐⭐⭐"; }
+  else if (pct >= 0.75) { msg = "💪 EPIC! Super strong result!"; trophy = "🥈⭐⭐"; }
+  else if (pct >= 0.55) { msg = "👍 GOOD GAME! Keep practising!"; trophy = "🥉⭐"; }
+  else { msg = "💡 Not bad — let's review and try again!"; trophy = "🎮"; }
+
+  document.getElementById('scoreMsg').textContent = msg;
+  document.getElementById('trophyRow').textContent = trophy;
+  document.getElementById('scorePanel').classList.add('visible');
+
+  if (pct >= 0.75) launchConfetti();
+
+  document.getElementById('scorePanel').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// ===== CONFETTI =====
+function launchConfetti() {
+  const container = document.getElementById('confetti');
+  const colors = ['#FFD93D','#FF6B35','#06D6A0','#1E90FF','#7B2FBE','#FF69B4'];
+  for (let i = 0; i < 80; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.width = (6 + Math.random() * 8) + 'px';
+    p.style.height = (6 + Math.random() * 8) + 'px';
+    p.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+    p.style.animationDelay = (Math.random() * 0.8) + 's';
+    container.appendChild(p);
+    setTimeout(() => p.remove(), 4000);
+  }
+}
+
+// ===== RESET =====
+function resetAll() {
+  timeLeft = 600;
+  timerRunning = false;
+  clearInterval(timerInterval);
+  document.getElementById('timerDisplay').textContent = '10:00';
+  document.getElementById('timerDisplay').classList.remove('urgent');
+  matchState = { selectedLeft: null, selectedRight: null, matched: new Set() };
+  matchScore = 0;
+  document.getElementById('scorePanel').classList.remove('visible');
+  buildMatch();
+  buildFill();
+  buildMC();
+  updateProgress();
+  document.getElementById('scoreText').textContent = 'Score: 0';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== INIT =====
+buildMatch();
+buildFill();
+buildMC();
+updateProgress();
+</script>
+</body>
+</html>
