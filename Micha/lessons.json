@@ -1,13 +1,13 @@
 [
-  { "file": "micha-verb-test.html", "title": "#0 Verb Test" },
-  { "file": "onepiece-lesson.html",    "title": "#1 One Piece" },
-  { "file": "saba-possessives(1).html", "title": "#1.1 Possessives" },
-  { "file": "samoa-level2-2.html",     "title": "#2 Samoa Level 2" },
-  { "file": "kauai-lesson.html",       "title": "#3 Kauai Explorer" }, 
+  { "file": "ucl-match-report.html",      "title": "#8 UCL Match Report" },
+  { "file": "ucl-final-lesson(1).html",   "title": "#7 UCL Final" },
+  { "file": "micha-nyc-food.html",        "title": "#6 NYC Food" },
+  { "file": "micha-saint-martin.html",    "title": "#5 Saint Martin" },
+  { "file": "saint-barth-lesson.html",    "title": "#4 Saint Barth" },
   { "file": "theme-parks-lesson(1).html", "title": "#3.1 Theme Parks" },
-  { "file": "saint-barth-lesson.html", "title": "#4 Saint Barth" },
-  { "file": "micha-saint-martin.html", "title": "#5 Saint Martin" },
-  { "file": "micha-nyc-food.html",     "title": "#6 NYC Food" },
-  { "file": "ucl-final-lesson(1).html", "title": "#7 UCL Final" },
-  { "file": "ucl-match-report.html", "title": "#8 UCL Match Report" }
+  { "file": "kauai-lesson.html",          "title": "#3 Kauai Explorer" },
+  { "file": "samoa-level2-2.html",        "title": "#2 Samoa Level 2" },
+  { "file": "saba-possessives(1).html",   "title": "#1.1 Possessives" },
+  { "file": "onepiece-lesson.html",       "title": "#1 One Piece" },
+  { "file": "micha-verb-test.html",       "title": "#0 Verb Test" }
 ]
