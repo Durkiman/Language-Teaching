@@ -1,6 +1,7 @@
 [
-  { "file": "mehdi-lesson1-about-yourself.html", "title": "#1 About Yourself" },
+  { "file": "mehdi-pillar2-marketing.html", "title": "#5 Pillar 2 – Marketing" },
+  { "file": "mehdi-pillar1-session2-value-summary (1).html", "title": "#4 Pillar 1 – Value Summary" },
+  { "file": "mehdi-pillar1-value-creation (1).html", "title": "#3 Pillar 1 – Value Creation" },
   { "file": "mehdi-lesson2-client-interview.html", "title": "#2 Client Interview" },
-  { "file": "mehdi-pillar1-value-creation (1).html", "title": "#3.1 Value Creation" },
-  { "file": "mehdi-pillar1-session2-value-summary (1).html", "title": "#3.2 Value Summary" }
+  { "file": "mehdi-lesson1-about-yourself.html", "title": "#1 About Yourself" }
 ]
