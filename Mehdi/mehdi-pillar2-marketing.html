@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mehdi – Pillar 2: Marketing</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ink:         #0e1520;
+    --navy:        #132244;
+    --navy-mid:    #1e3566;
+    --blue:        #2255cc;
+    --blue-light:  #ddeaff;
+    --blue-pale:   #f0f4ff;
+    --gold:        #c9963a;
+    --gold-label:  #7a5410;
+    --gold-light:  #fdf3dc;
+    --green:       #2a7c5a;
+    --green-light: #d6efe1;
+    --sand:        #f5f4f0;
+    --cream:       #fefcf8;
+    --muted:       #445060;
+    --muted2:      #7a8898;
+    --border:      #d8e0ee;
+    --red-light:   #fde8e8;
+    --red-dark:    #7a1e1e;
+    --purple:      #4a2fa0;
+    --purple-light:#ede8ff;
+    --orange:      #b85a00;
+    --orange-light:#fff0de;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(--ink); min-height: 100vh; }
+
+  /* ── HEADER ── */
+  .header { background: var(--navy); padding: 30px 28px 26px; position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(34,85,204,.3) 0%, transparent 70%); }
+  .header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--blue), var(--gold)); }
+  .header-series { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 5vw, 38px); font-weight: 700; color: #eef2ff; line-height: 1.1; }
+  .header-sub { margin-top: 8px; font-size: 13px; color: rgba(238,242,255,.55); font-weight: 400; }
+  .pillar-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); border-radius: 20px; padding: 5px 14px; margin-top: 12px; font-size: 12px; color: rgba(238,242,255,.85); font-weight: 500; }
+  .pdots { display: flex; gap: 5px; }
+  .pdot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.2); }
+  .pdot.done   { background: var(--green); }
+  .pdot.active { background: var(--gold); }
+
+  /* ── PROGRESS ── */
+  .progress-bar { height: 3px; background: #0e1a3a; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--gold)); transition: width .5s ease; }
+
+  /* ── NAV ── */
+  .nav { background: var(--cream); border-bottom: 1px solid var(--border); display: flex; gap: 5px; padding: 12px 18px; overflow-x: auto; scrollbar-width: none; position: sticky; top: 0; z-index: 40; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn { padding: 6px 14px; border-radius: 18px; border: 1.5px solid var(--border); background: transparent; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; white-space: nowrap; transition: all .18s; }
+  .nav-btn.active { background: var(--navy); border-color: var(--navy); color: var(--gold); }
+  .nav-btn.done   { background: var(--green-light); border-color: var(--green); color: var(--green); }
+
+  /* ── MAIN ── */
+  .main { padding: 22px 18px 60px; max-width: 740px; margin: 0 auto; }
+
+  /* ── PANELS ── */
+  .panel { display: none; animation: fadeUp .35s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ── SECTION LABELS ── */
+  .slabel { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 16px; margin-bottom: 10px; }
+  .sl-warm   { background: var(--gold-light);   color: var(--gold-label); }
+  .sl-read   { background: var(--blue-light);   color: var(--blue); }
+  .sl-vocab  { background: var(--purple-light); color: var(--purple); }
+  .sl-gram   { background: var(--orange-light); color: var(--orange); }
+  .sl-prac   { background: var(--green-light);  color: var(--green); }
+  .sl-speak  { background: var(--blue-light);   color: var(--navy); }
+
+  .stitle { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--ink); line-height: 1.2; margin-bottom: 6px; }
+  .sdesc  { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
+
+  /* ── CARDS ── */
+  .card { background: var(--cream); border: 1px solid var(--border); border-radius: 14px; padding: 22px; margin-bottom: 16px; }
+  .clabel { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-label); margin-bottom: 14px; }
+
+  /* ── RECALL ── */
+  .recall { background: white; border: 1.5px solid var(--border); border-radius: 11px; padding: 14px 16px; margin-bottom: 10px; display: flex; gap: 12px; align-items: flex-start; }
+  .rnum { background: var(--navy); color: var(--gold); width: 28px; height: 28px; border-radius: 50%; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .rtext { font-size: 14px; line-height: 1.55; color: var(--ink); }
+  .rhint { font-size: 12px; color: var(--muted2); font-style: italic; margin-top: 4px; }
+
+  /* ── READING ── */
+  .passage { background: white; border-left: 4px solid var(--blue); border-radius: 0 12px 12px 0; padding: 18px 20px; margin: 14px 0; font-size: 15px; line-height: 1.9; color: var(--ink); }
+  .hl { background: var(--blue-light); padding: 1px 5px; border-radius: 4px; font-weight: 600; cursor: pointer; color: var(--navy); position: relative; display: inline-block; transition: background .18s; }
+  .hl:hover, .hl.open { background: var(--navy); color: white; }
+  .hltip { display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: var(--ink); color: #eef2ff; font-size: 12px; font-weight: 400; padding: 7px 12px; border-radius: 8px; white-space: nowrap; z-index: 20; pointer-events: none; min-width: 200px; text-align: center; line-height: 1.45; }
+  .hltip::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: var(--ink); }
+  .hl.open .hltip { display: block; }
+
+  /* ── COMPARE TABLE ── */
+  .compare-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+  .compare-table th { padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+  .compare-table th.col-wom { background: var(--orange-light); color: var(--orange); border-radius: 8px 0 0 0; }
+  .compare-table th.col-dig { background: var(--blue-light); color: var(--blue); border-radius: 0 8px 0 0; }
+  .compare-table td { padding: 10px 14px; border-top: 1px solid var(--border); vertical-align: top; line-height: 1.5; color: var(--ink); }
+  .compare-table tr:nth-child(odd) td:first-child  { background: #fffaf3; }
+  .compare-table tr:nth-child(odd) td:second-child { background: var(--blue-pale); }
+  .compare-table tr:nth-child(even) td { background: white; }
+  .compare-table td:first-child { border-right: 1px solid var(--border); }
+
+  /* ── GRAMMAR BOX ── */
+  .grammar-box {
+    background: var(--navy);
+    border-radius: 14px; padding: 22px; margin-bottom: 16px;
+  }
+  .grammar-box .clabel { color: rgba(255,215,100,.8); }
+
+  .rule-block { margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,.1); }
+  .rule-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .rule-title { font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 10px; letter-spacing: .5px; }
+
+  .rule-row { display: flex; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .rule-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 10px; border-radius: 8px; flex-shrink: 0; }
+  .rt-form    { background: rgba(34,85,204,.4);  color: #a8c4ff; }
+  .rt-example { background: rgba(201,150,58,.3); color: #f5d080; }
+  .rt-warning { background: rgba(255,80,80,.25); color: #ffaaaa; }
+  .rt-french  { background: rgba(255,255,255,.1); color: rgba(238,242,255,.7); }
+
+  .rule-text { font-size: 14px; color: #c8d4ee; line-height: 1.6; }
+  .rule-text em { color: #eef2ff; font-style: normal; font-weight: 600; }
+
+  .formula-box { background: rgba(255,255,255,.07); border-radius: 10px; padding: 12px 16px; margin: 10px 0; }
+  .formula { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: #eef2ff; text-align: center; letter-spacing: .5px; }
+  .formula span { color: var(--gold); }
+
+  /* ── VOCAB FLIP CARDS ── */
+  .vgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(195px, 1fr)); gap: 10px; margin-top: 8px; }
+  .vcard { background: white; border: 1.5px solid var(--border); border-radius: 11px; padding: 13px 15px; cursor: pointer; min-height: 82px; transition: all .2s; }
+  .vcard:hover { border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 5px 16px rgba(34,85,204,.1); }
+  .vcard.flipped { background: var(--navy); border-color: var(--navy); }
+  .vcard .front .ve  { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .vcard .front .vex { font-size: 11px; color: var(--muted2); font-style: italic; line-height: 1.4; }
+  .vcard .back { display: none; }
+  .vcard.flipped .front { display: none; }
+  .vcard.flipped .back  { display: block; }
+  .vcard .back .vfr   { font-size: 14px; font-weight: 600; color: #a8c4ff; margin-bottom: 4px; }
+  .vcard .back .vhint { font-size: 11px; color: rgba(238,242,255,.82); line-height: 1.4; }
+  .tap-hint { font-size: 11px; color: var(--muted2); text-align: center; margin-top: 10px; font-style: italic; }
+
+  /* ── FILL BLANK ── */
+  .fblock { margin-bottom: 14px; }
+  .fline  { font-size: 15px; line-height: 2.5; color: var(--ink); }
+  .blank  { display: inline-block; min-width: 120px; border: none; border-bottom: 2.5px solid var(--gold); padding: 0 6px 2px; margin: 0 3px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: transparent; text-align: center; transition: border-color .18s; }
+  .blank:focus   { outline: none; border-color: var(--blue); }
+  .blank.correct { border-color: var(--green); background: var(--green-light); border-radius: 4px 4px 0 0; }
+  .blank.wrong   { border-color: #c0392b; background: var(--red-light); border-radius: 4px 4px 0 0; }
+
+  /* ── REORDER ── */
+  .reorder-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .ro-item { background: white; border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 16px; font-size: 14px; cursor: grab; display: flex; align-items: center; gap: 12px; user-select: none; transition: box-shadow .18s, border-color .18s; }
+  .ro-item:active { cursor: grabbing; opacity: .6; }
+  .ro-item.over   { border-color: var(--blue); background: var(--blue-light); }
+  .drag-handle    { color: var(--muted2); font-size: 18px; flex-shrink: 0; }
+
+  /* ── ERROR CORRECTION ── */
+  .error-q { background: white; border: 1.5px solid var(--border); border-radius: 11px; padding: 14px 16px; margin-bottom: 10px; }
+  .error-sentence { font-size: 15px; color: var(--red-dark); font-weight: 500; margin-bottom: 10px; background: var(--red-light); padding: 8px 12px; border-radius: 8px; }
+  .error-input { width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 9px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: white; transition: border-color .18s; }
+  .error-input:focus { outline: none; border-color: var(--blue); }
+  .error-input.correct { border-color: var(--green); background: var(--green-light); }
+  .error-input.wrong   { border-color: #c0392b; }
+
+  /* ── SPEAKING CARDS ── */
+  .scard { background: white; border-left: 4px solid var(--blue); border-radius: 0 12px 12px 0; padding: 15px 18px; margin-bottom: 11px; display: flex; gap: 13px; align-items: flex-start; }
+  .snum  { background: var(--blue); color: white; width: 28px; height: 28px; border-radius: 50%; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .sq    { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 4px; line-height: 1.4; }
+  .shit  { font-size: 12px; color: var(--blue); font-style: italic; }
+
+  /* ── CHIPS ── */
+  .chipwrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .chip { background: white; border: 1.5px solid var(--border); border-radius: 18px; padding: 6px 14px; font-size: 13px; color: var(--ink); cursor: pointer; transition: all .18s; }
+  .chip:hover { background: var(--navy); color: var(--gold); border-color: var(--navy); }
+  .chip.used  { background: var(--blue); color: white; border-color: var(--blue); }
+
+  /* ── NOTICES ── */
+  .notice { border-radius: 10px; padding: 12px 16px; font-size: 13px; line-height: 1.6; margin-top: 14px; }
+  .n-blue   { background: var(--blue-light);   color: var(--navy); }
+  .n-gold   { background: var(--gold-light);   color: var(--gold-label); }
+  .n-green  { background: var(--green-light);  color: var(--green); }
+  .n-orange { background: var(--orange-light); color: var(--orange); }
+  .n-purple { background: var(--purple-light); color: var(--purple); }
+
+  /* ── FEEDBACK ── */
+  .fb { padding: 12px 15px; border-radius: 10px; font-size: 14px; line-height: 1.6; margin-top: 12px; display: none; }
+  .fb.show { display: block; }
+  .fb-ok   { background: var(--green-light); color: var(--green); border: 1px solid #a0d8b8; }
+  .fb-part { background: var(--gold-light);  color: var(--gold-label); border: 1px solid #e0c060; }
+
+  /* ── REVIEW BOX ── */
+  .rbox { background: var(--navy); border-radius: 14px; padding: 22px; margin-bottom: 16px; }
+  .rbox .clabel { color: rgba(255,215,100,.8); }
+  .rlist { list-style: none; margin-top: 8px; }
+  .rlist li { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.08); font-size: 14px; color: #c8d4ee; display: flex; gap: 10px; align-items: flex-start; line-height: 1.5; }
+  .rlist li:last-child { border-bottom: none; }
+  .rlist li::before { content: '→'; color: var(--gold); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── ANSWER INPUT ── */
+  .ainput { width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: white; resize: vertical; min-height: 52px; transition: border-color .18s; }
+  .ainput:focus { outline: none; border-color: var(--blue); }
+
+  /* ── BUTTONS ── */
+  .btn { padding: 12px 26px; border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .18s; }
+  .btn-p { background: var(--navy); color: var(--gold); }
+  .btn-p:hover { background: var(--navy-mid); transform: translateY(-1px); }
+  .btn-c { background: var(--gold); color: var(--navy); margin-top: 14px; }
+  .btn-c:hover { opacity: .88; }
+  .brow { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+
+  .divider { height: 1px; background: var(--border); margin: 18px 0; }
+
+  @media (max-width: 520px) {
+    .main { padding: 16px 12px 60px; }
+    .vgrid { grid-template-columns: 1fr 1fr; }
+    .compare-table { font-size: 12px; }
+    .compare-table th, .compare-table td { padding: 8px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-series">Business English · 5-Pillar Series</div>
+  <h1>Pillar 2<br>Marketing</h1>
+  <div class="header-sub">Reading · Vocabulary · Grammar · Speaking · 50 min</div>
+  <div class="pillar-badge">
+    <div class="pdots">
+      <div class="pdot done"></div>
+      <div class="pdot done"></div>
+      <div class="pdot active"></div>
+      <div class="pdot"></div>
+      <div class="pdot"></div>
+    </div>
+    Lesson 3 of 5
+  </div>
+</div>
+<div class="progress-bar">
+  <div class="progress-fill" id="pFill" style="width:20%"></div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav-btn active" onclick="goTo(0)">🔥 Warm-up</button>
+  <button class="nav-btn" onclick="goTo(1)">📖 Reading</button>
+  <button class="nav-btn" onclick="goTo(2)">🗂️ Vocabulary</button>
+  <button class="nav-btn" onclick="goTo(3)">📐 Grammar</button>
+  <button class="nav-btn" onclick="goTo(4)">✏️ Exercises</button>
+  <button class="nav-btn" onclick="goTo(5)">🎙️ Speaking</button>
+</div>
+
+<div class="main">
+
+  <!-- ═══════════════════════════
+       0 · WARM-UP (5 min)
+  ═══════════════════════════ -->
+  <div class="panel active" id="panel-0">
+    <span class="slabel sl-warm">Warm-up · 5 min</span>
+    <div class="stitle">Quick check-in</div>
+    <div class="sdesc">Two fast recall questions, then a 2-minute homework check.</div>
+
+    <div class="card">
+      <div class="clabel">Retrieval</div>
+      <div class="recall">
+        <div class="rnum">1</div>
+        <div class="rtext">
+          From Pillar 1 — what does "value creation" mean? Give me one sentence, no notes.
+          <div class="rhint">💬 "Value creation means giving your client something they truly need…"</div>
+        </div>
+      </div>
+      <div class="recall">
+        <div class="rnum">2</div>
+        <div class="rtext">
+          Finish this: <em>"The question every client is always asking is…"</em>
+          <div class="rhint">One second. No thinking! 😄</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="clabel">Homework Check · 2 min max</div>
+      <div style="font-size:14px; color:var(--ink); line-height:1.6; margin-bottom:14px;">
+        Read your value summary homework aloud — the one you wrote about <strong>your own coaching practice</strong>.
+      </div>
+      <div class="notice n-gold">
+        💡 <strong>Teacher note:</strong> Listen for the 3-part structure (Problem → Transformation → Outcome). Note 1–2 language points to address at the end of the session. Don't correct now — keep the energy moving forward.
+      </div>
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(1)">Continue to Reading →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════
+       1 · READING (12 min)
+  ═══════════════════════════ -->
+  <div class="panel" id="panel-1">
+    <span class="slabel sl-read">Presentation · 12 min</span>
+    <div class="stitle">Two Ways to Market Your Business</div>
+    <div class="sdesc">Read the text. Tap <strong>highlighted phrases</strong> to see what they mean. Then we compare the two approaches.</div>
+
+    <div class="card">
+      <div class="clabel">Reading Text · Word of Mouth vs. Digital Marketing</div>
+
+      <div class="passage">
+        Once you know your value, the next question is: <span class="hl" onclick="this.classList.toggle('open')">how do you reach<span class="hltip">reach = contact, get to / reach your audience = find the people you want to talk to</span></span> the right people?<br><br>
+
+        <strong>Word of mouth</strong> is one of the <span class="hl" onclick="this.classList.toggle('open')">oldest and most powerful<span class="hltip">Notice the comparative structure: "one of the most powerful" = superlative. We'll study this next lesson!</span></span> forms of marketing. When a satisfied client <span class="hl" onclick="this.classList.toggle('open')">recommends<span class="hltip">recommend = suggest to someone else / recommander</span></span> your services to a friend, that recommendation is <span class="hl" onclick="this.classList.toggle('open')">more credible<span class="hltip">credible = believable, trustworthy / "more credible" = comparative of credible</span></span> than any advertisement. It builds <span class="hl" onclick="this.classList.toggle('open')">trust<span class="hltip">trust = confiance — one of the most important words in coaching and marketing</span></span> faster, and it costs nothing. However, it is also <span class="hl" onclick="this.classList.toggle('open')">slower to scale<span class="hltip">scale = grow bigger / slower to scale = takes more time to reach large numbers of people</span></span>. You depend on other people to spread your message.<br><br>
+
+        <strong>Digital marketing</strong> — through social media, a website, or email — is <span class="hl" onclick="this.classList.toggle('open')">faster and wider<span class="hltip">faster and wider = two comparatives joined with "and" — common in business English</span></span>. You can reach hundreds of people with one post. But it requires more time, more consistency, and a <span class="hl" onclick="this.classList.toggle('open')">clear message<span class="hltip">clear message = a simple, focused communication — no jargon, no confusion</span></span>. Without that, digital marketing is <span class="hl" onclick="this.classList.toggle('open')">less effective<span class="hltip">"less effective" = the negative comparative — less + adjective (no change to the adjective)</span></span> than simply talking to people directly.<br><br>
+
+        For a coach like Mehdi, the <span class="hl" onclick="this.classList.toggle('open')">most effective strategy<span class="hltip">"most effective" = superlative. Preview for next lesson — the best of all options.</span></span> is often a combination of both: start with word of mouth to build credibility, then use digital tools to <span class="hl" onclick="this.classList.toggle('open')">amplify<span class="hltip">amplify = make bigger, spread wider / amplifier in French</span></span> what is already working.
+      </div>
+
+      <div class="notice n-blue">
+        💡 <strong>Grammar preview:</strong> You saw <em>"more credible"</em>, <em>"faster and wider"</em>, and <em>"less effective"</em> in the text. These are <strong>comparatives</strong> — the grammar focus of today's lesson.
+      </div>
+    </div>
+
+    <!-- COMPARE TABLE -->
+    <div class="card">
+      <div class="clabel">At a Glance · Word of Mouth vs. Digital</div>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th class="col-wom">🤝 Word of Mouth</th>
+            <th class="col-dig">📱 Digital Marketing</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Slower to grow</td><td>Faster to reach many people</td></tr>
+          <tr><td>More personal</td><td>Less personal</td></tr>
+          <tr><td>More credible</td><td>Less credible (at first)</td></tr>
+          <tr><td>Less expensive</td><td>More time-consuming</td></tr>
+          <tr><td>Harder to control</td><td>Easier to measure</td></tr>
+          <tr><td>Better for trust</td><td>Better for visibility</td></tr>
+        </tbody>
+      </table>
+      <div class="notice n-orange" style="margin-top:12px;">
+        💡 <strong>Notice:</strong> every row in this table uses a comparative. You'll practise building these sentences in the grammar section.
+      </div>
+    </div>
+
+    <!-- COMPREHENSION -->
+    <div class="card">
+      <div class="clabel">Comprehension — Speak First, Then Write</div>
+      <div style="margin-bottom:12px;">
+        <div style="font-size:15px; font-weight:500; color:var(--ink); margin-bottom:6px;">1. What is the main advantage of word of mouth?</div>
+        <textarea class="ainput" placeholder="Answer in 1–2 sentences…" rows="2"></textarea>
+      </div>
+      <div style="margin-bottom:12px;">
+        <div style="font-size:15px; font-weight:500; color:var(--ink); margin-bottom:6px;">2. What does digital marketing require that word of mouth does not?</div>
+        <textarea class="ainput" placeholder="Answer in 1–2 sentences…" rows="2"></textarea>
+      </div>
+      <div>
+        <div style="font-size:15px; font-weight:500; color:var(--ink); margin-bottom:6px;">3. For your own coaching — which approach do you use now, and which would you like to develop?</div>
+        <textarea class="ainput" placeholder="Speak first — say it in English, then write…" rows="2"></textarea>
+      </div>
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(2)">Continue to Vocabulary →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════
+       2 · VOCABULARY (8 min)
+  ═══════════════════════════ -->
+  <div class="panel" id="panel-2">
+    <span class="slabel sl-vocab">Vocabulary · 8 min</span>
+    <div class="stitle">Marketing Vocabulary</div>
+    <div class="sdesc">Key words from today's text. Tap each card to see the French translation and a usage note.</div>
+
+    <div class="card">
+      <div class="clabel">English ↔ French · Tap to flip</div>
+      <div class="vgrid">
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">to reach</div><div class="vex">"How do you reach your ideal clients?"</div></div>
+          <div class="back"><div class="vfr">atteindre / toucher</div><div class="vhint">reach your audience = toucher votre public</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">word of mouth</div><div class="vex">"Most of my clients come from word of mouth."</div></div>
+          <div class="back"><div class="vfr">bouche-à-oreille</div><div class="vhint">No article needed: "by word of mouth"</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">to recommend</div><div class="vex">"My clients recommend me to their friends."</div></div>
+          <div class="back"><div class="vfr">recommander</div><div class="vhint">recommend someone TO someone</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">credible</div><div class="vex">"A personal recommendation is more credible."</div></div>
+          <div class="back"><div class="vfr">crédible</div><div class="vhint">credibility (n.) = crédibilité</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">to scale</div><div class="vex">"Word of mouth is slower to scale."</div></div>
+          <div class="back"><div class="vfr">se développer / monter en puissance</div><div class="vhint">scale = grow bigger and faster</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">consistency</div><div class="vex">"Digital marketing requires consistency."</div></div>
+          <div class="back"><div class="vfr">régularité / constance</div><div class="vhint">consistent (adj.) = régulier, constant</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">to amplify</div><div class="vex">"Use social media to amplify what works."</div></div>
+          <div class="back"><div class="vfr">amplifier</div><div class="vhint">Make something bigger, louder, wider</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">visibility</div><div class="vex">"Digital marketing increases your visibility."</div></div>
+          <div class="back"><div class="vfr">visibilité</div><div class="vhint">visible (adj.) → visibility (n.)</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">target audience</div><div class="vex">"Who is your target audience?"</div></div>
+          <div class="back"><div class="vfr">public cible</div><div class="vhint">target = cible (also used as a verb: "to target")</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">to stand out</div><div class="vex">"How do you stand out from competitors?"</div></div>
+          <div class="back"><div class="vfr">se démarquer</div><div class="vhint">stand out = be different, be noticed</div></div>
+        </div>
+
+      </div>
+      <div class="tap-hint">Tap a card to flip · Tap again to flip back</div>
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(3)">Continue to Grammar →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════
+       3 · GRAMMAR (8 min)
+  ═══════════════════════════ -->
+  <div class="panel" id="panel-3">
+    <span class="slabel sl-gram">Grammar · 8 min</span>
+    <div class="stitle">Comparatives</div>
+    <div class="sdesc">How to compare two things in English. Three rules — clear, fast, with business examples.</div>
+
+    <div class="grammar-box">
+      <div class="clabel">📐 The Comparative — 3 Rules</div>
+
+      <!-- RULE 1 -->
+      <div class="rule-block">
+        <div class="rule-title">Rule 1 · Short adjectives (1 syllable) → add <em style="color:#a8c4ff">-er</em></div>
+        <div class="formula-box">
+          <div class="formula"><span>adjective + -er</span> + than</div>
+        </div>
+        <div class="rule-row">
+          <span class="rule-tag rt-example">Examples</span>
+          <span class="rule-text">fast → <em>faster than</em> &nbsp;·&nbsp; cheap → <em>cheaper than</em> &nbsp;·&nbsp; clear → <em>clearer than</em></span>
+        </div>
+        <div class="rule-row">
+          <span class="rule-tag rt-example">Business</span>
+          <span class="rule-text"><em>"Word of mouth is cheaper than digital advertising."</em></span>
+        </div>
+        <div class="rule-row">
+          <span class="rule-tag rt-warning">⚠️ Spelling</span>
+          <span class="rule-text">big → <em>bigger</em> (double the consonant) &nbsp;·&nbsp; nice → <em>nicer</em> (drop the e)</span>
+        </div>
+      </div>
+
+      <!-- RULE 2 -->
+      <div class="rule-block">
+        <div class="rule-title">Rule 2 · Long adjectives (2+ syllables) → <em style="color:#a8c4ff">more / less</em> + adjective</div>
+        <div class="formula-box">
+          <div class="formula"><span>more / less</span> + adjective + than</div>
+        </div>
+        <div class="rule-row">
+          <span class="rule-tag rt-example">Examples</span>
+          <span class="rule-text">effective → <em>more effective than</em> &nbsp;·&nbsp; credible → <em>more credible than</em></span>
+        </div>
+        <div class="rule-row">
+          <span class="rule-tag rt-example">Business</span>
+          <span class="rule-text"><em>"A recommendation is more credible than an advertisement."</em></span>
+        </div>
+        <div class="rule-row">
+          <span class="rule-tag rt-warning">⚠️ Never</span>
+          <span class="rule-text"><em style="color:#ffaaaa">more faster</em> ✗ &nbsp;·&nbsp; <em style="color:#ffaaaa">more bigger</em> ✗ — short adjectives never use "more"</span>
+        </div>
+        <div class="rule-row">
+          <span class="rule-tag rt-french">🇫🇷 French link</span>
+          <span class="rule-text" style="color:rgba(238,242,255,.65);">more = plus &nbsp;·&nbsp; less = moins &nbsp;·&nbsp; than = que</span>
+        </div>
+      </div>
+
+      <!-- RULE 3 -->
+      <div class="rule-block">
+        <div class="rule-title">Rule 3 · Irregular forms — learn these by heart</div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:8px;">
+          <div style="background:rgba(255,255,255,.07); border-radius:9px; padding:12px 14px; text-align:center;">
+            <div style="font-size:13px; color:rgba(238,242,255,.5); margin-bottom:4px;">good</div>
+            <div style="font-size:18px; color:#eef2ff; font-weight:700;">better than</div>
+          </div>
+          <div style="background:rgba(255,255,255,.07); border-radius:9px; padding:12px 14px; text-align:center;">
+            <div style="font-size:13px; color:rgba(238,242,255,.5); margin-bottom:4px;">bad</div>
+            <div style="font-size:18px; color:#eef2ff; font-weight:700;">worse than</div>
+          </div>
+          <div style="background:rgba(255,255,255,.07); border-radius:9px; padding:12px 14px; text-align:center;">
+            <div style="font-size:13px; color:rgba(238,242,255,.5); margin-bottom:4px;">far</div>
+            <div style="font-size:18px; color:#eef2ff; font-weight:700;">farther / further</div>
+          </div>
+          <div style="background:rgba(255,255,255,.07); border-radius:9px; padding:12px 14px; text-align:center;">
+            <div style="font-size:13px; color:rgba(238,242,255,.5); margin-bottom:4px;">little</div>
+            <div style="font-size:18px; color:#eef2ff; font-weight:700;">less than</div>
+          </div>
+        </div>
+        <div class="rule-row" style="margin-top:12px;">
+          <span class="rule-tag rt-example">Business</span>
+          <span class="rule-text"><em>"Building trust is better than running ads."</em></span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="notice n-purple">
+      💡 <strong>Quick test:</strong> which rule for each? &nbsp;<em>expensive</em> → ? &nbsp;·&nbsp; <em>fast</em> → ? &nbsp;·&nbsp; <em>good</em> → ?
+      <br>Answers: <em>more expensive</em> · <em>faster</em> · <em>better</em>
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(4)">Continue to Exercises →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════
+       4 · EXERCISES (10 min)
+  ═══════════════════════════ -->
+  <div class="panel" id="panel-4">
+    <span class="slabel sl-prac">Exercises · 10 min</span>
+    <div class="stitle">Practise the Comparative</div>
+    <div class="sdesc">Three exercises — all in a business context. Speak each answer before you write.</div>
+
+    <!-- EXERCISE A: Fill in -->
+    <div class="card">
+      <div class="clabel">Exercise A · Fill in the comparative form</div>
+      <div style="font-size:13px; color:var(--muted); margin-bottom:16px;">Write the correct comparative form of the adjective in brackets.</div>
+
+      <div class="fblock">
+        <div class="fline">1. Word of mouth is <input class="blank" id="b1" placeholder="________" size="12"> (personal) than social media.</div>
+      </div>
+      <div class="fblock">
+        <div class="fline">2. Digital marketing is <input class="blank" id="b2" placeholder="________" size="12"> (fast) than word of mouth.</div>
+      </div>
+      <div class="fblock">
+        <div class="fline">3. A recommendation from a friend is <input class="blank" id="b3" placeholder="________" size="16"> (credible) than an online ad.</div>
+      </div>
+      <div class="fblock">
+        <div class="fline">4. Building a network is <input class="blank" id="b4" placeholder="________" size="12"> (effective) than posting every day without a strategy.</div>
+      </div>
+      <div class="fblock">
+        <div class="fline">5. A clear message is <input class="blank" id="b5" placeholder="________" size="10"> (good) than a long one.</div>
+      </div>
+      <div class="fblock">
+        <div class="fline">6. Coaching clients online is <input class="blank" id="b6" placeholder="________" size="10"> (cheap) than renting an office.</div>
+      </div>
+
+      <button class="btn btn-c" onclick="checkA()">Check answers ✓</button>
+      <div class="fb" id="fbA"></div>
+    </div>
+
+    <!-- EXERCISE B: Error correction -->
+    <div class="card">
+      <div class="clabel">Exercise B · Find and correct the mistake</div>
+      <div style="font-size:13px; color:var(--muted); margin-bottom:14px;">Each sentence has one error. Write the correct sentence in the box.</div>
+
+      <div class="error-q">
+        <div class="error-sentence">1. "Digital marketing is more faster than word of mouth."</div>
+        <input class="error-input" id="e1" placeholder="Write the correct sentence…">
+        <div style="font-size:11px; color:var(--muted2); margin-top:6px; font-style:italic;">Hint: Rule 1 — short adjectives never use "more"</div>
+      </div>
+
+      <div class="error-q">
+        <div class="error-sentence">2. "A coach is more better than a consultant."</div>
+        <input class="error-input" id="e2" placeholder="Write the correct sentence…">
+        <div style="font-size:11px; color:var(--muted2); margin-top:6px; font-style:italic;">Hint: Rule 3 — "good" is irregular</div>
+      </div>
+
+      <div class="error-q">
+        <div class="error-sentence">3. "My service is expensiver than my competitor's."</div>
+        <input class="error-input" id="e3" placeholder="Write the correct sentence…">
+        <div style="font-size:11px; color:var(--muted2); margin-top:6px; font-style:italic;">Hint: Rule 2 — long adjectives use "more"</div>
+      </div>
+
+      <div class="error-q">
+        <div class="error-sentence">4. "Building trust is more easy than running ads."</div>
+        <input class="error-input" id="e4" placeholder="Write the correct sentence…">
+        <div style="font-size:11px; color:var(--muted2); margin-top:6px; font-style:italic;">Hint: "easy" — how many syllables? Which rule?</div>
+      </div>
+
+      <button class="btn btn-c" onclick="checkB()">Check answers ✓</button>
+      <div class="fb" id="fbB"></div>
+    </div>
+
+    <!-- EXERCISE C: Free production -->
+    <div class="card">
+      <div class="clabel">Exercise C · Your Own Comparatives</div>
+      <div style="font-size:13px; color:var(--muted); margin-bottom:14px;">
+        Write 3 sentences comparing things about <em>your own coaching business</em>. Use a different comparative structure in each one.
+      </div>
+      <div style="font-size:13px; color:var(--muted2); font-style:italic; margin-bottom:12px;">
+        Ideas: compare two types of clients · two marketing channels · your service vs. competitors · before and after coaching
+      </div>
+      <textarea class="ainput" id="freeC" placeholder="1. My online clients are more…&#10;2. Working with entrepreneurs is easier than…&#10;3. A focused session is better than…" rows="5"></textarea>
+      <div class="notice n-blue" style="margin-top:12px;">
+        💡 <strong>Teacher note:</strong> Read each sentence together. Correct the form only — keep the student's ideas. If all 3 use "more", challenge them to use "-er" in one.
+      </div>
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(5)">Continue to Speaking →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════
+       5 · SPEAKING (7 min)
+  ═══════════════════════════ -->
+  <div class="panel" id="panel-5">
+    <span class="slabel sl-speak">Free Production · 7 min</span>
+    <div class="stitle">Talk About Your Marketing</div>
+    <div class="sdesc">Speak freely. Use today's vocabulary and at least 3 comparatives. Fluency first — no stopping.</div>
+
+    <div class="card">
+      <div class="clabel">Discussion Prompts</div>
+
+      <div class="scard">
+        <div class="snum">1</div>
+        <div>
+          <div class="sq">Right now, how do most of your clients find you? Is that working well?</div>
+          <div class="shit">→ Try to use: "word of mouth / reach / target audience"</div>
+        </div>
+      </div>
+      <div class="scard">
+        <div class="snum">2</div>
+        <div>
+          <div class="sq">Compare two ways you could market your coaching. Which is better for you — and why?</div>
+          <div class="shit">→ Must use at least 2 comparatives: "…is more… than… / …is better than…"</div>
+        </div>
+      </div>
+      <div class="scard">
+        <div class="snum">3</div>
+        <div>
+          <div class="sq">What is your message to a potential client — in one sentence? How do you stand out?</div>
+          <div class="shit">→ Connect back to the value summary: Problem → Transformation → Outcome</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="clabel">Useful Phrases · Tap to mark as used</div>
+      <div class="chipwrap">
+        <span class="chip" onclick="this.classList.toggle('used')">In my opinion…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">Compared to…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">On the one hand… / On the other hand…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">I think… is more… than…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">For me, the best approach is…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">The main difference is…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">It depends on…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">What makes me different is…</span>
+      </div>
+      <div class="tap-hint">Tap a phrase to mark it as used</div>
+    </div>
+
+    <!-- ERROR LOG -->
+    <div class="card">
+      <div class="clabel">Teacher's Error Log</div>
+      <textarea class="ainput" placeholder="e.g. 'more faster' → 'faster'&#10;'my clients is' → 'my clients are'&#10;'I have more visibility' ✓ (correct — praise it)" rows="4"></textarea>
+      <div class="divider"></div>
+      <div style="font-size:14px; font-weight:600; color:var(--ink); margin-bottom:8px;">Session feedback</div>
+      <textarea class="ainput" placeholder="Vocabulary used naturally? Comparatives formed correctly? Speaking confidence?" rows="3"></textarea>
+    </div>
+
+    <!-- REVIEW -->
+    <div class="rbox">
+      <div class="clabel">📅 Spaced Review & Next Steps</div>
+      <ul class="rlist">
+        <li>Session 7 — free recall: 3 comparative sentences from memory, no notes</li>
+        <li>Session 7 — revisit: "more effective / more credible / better than" — the 3 most likely to be forgotten</li>
+        <li>Next lesson — <strong>Superlatives</strong> + <strong>Pillar 3: Selling</strong> — "the most effective way to close a client"</li>
+        <li>Homework — write 3 sentences comparing your coaching to another service (therapy, mentoring, consulting) using comparatives</li>
+        <li>Homework — think about: who is your target audience? Write 2–3 sentences describing them</li>
+      </ul>
+    </div>
+
+    <div style="text-align:center; padding:18px 0;">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:700; color:var(--ink); margin-bottom:5px;">Pillar 2 complete. 📣</div>
+      <div style="font-size:13px; color:var(--muted2);">Marketing — read, discussed, compared.</div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+  let cur = 0;
+  const total = 6;
+  const btns = document.querySelectorAll('.nav-btn');
+
+  function goTo(i) {
+    document.getElementById('panel-' + cur).classList.remove('active');
+    btns[cur].classList.remove('active');
+    btns[cur].classList.add('done');
+    cur = i;
+    document.getElementById('panel-' + cur).classList.add('active');
+    btns[cur].classList.add('active');
+    btns[cur].classList.remove('done');
+    document.getElementById('pFill').style.width = Math.round(((i + 1) / total) * 100) + '%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ── EXERCISE A ── */
+  const answersA = {
+    b1: 'more personal',
+    b2: 'faster',
+    b3: 'more credible',
+    b4: 'more effective',
+    b5: 'better',
+    b6: 'cheaper'
+  };
+
+  function checkA() {
+    let score = 0;
+    const tot = Object.keys(answersA).length;
+    for (const [id, ans] of Object.entries(answersA)) {
+      const el = document.getElementById(id);
+      const val = el.value.trim().toLowerCase();
+      if (val === ans) { el.classList.add('correct'); el.classList.remove('wrong'); score++; }
+      else { el.classList.add('wrong'); el.classList.remove('correct'); }
+    }
+    const fb = document.getElementById('fbA');
+    fb.classList.add('show');
+    if (score === tot) {
+      fb.className = 'fb fb-ok show';
+      fb.innerHTML = '✅ <strong>Perfect — ' + score + '/' + tot + '!</strong> All three rules applied correctly.';
+    } else {
+      fb.className = 'fb fb-part show';
+      fb.innerHTML = '⚡ <strong>' + score + '/' + tot + ' correct.</strong> Check the red blanks — look at the grammar rules for help.';
+    }
+  }
+
+  /* ── EXERCISE B ── */
+  const answersB = {
+    e1: 'digital marketing is faster than word of mouth.',
+    e2: 'a coach is better than a consultant.',
+    e3: 'my service is more expensive than my competitor\'s.',
+    e4: 'building trust is easier than running ads.'
+  };
+
+  function checkB() {
+    let score = 0;
+    const tot = Object.keys(answersB).length;
+    for (const [id, ans] of Object.entries(answersB)) {
+      const el = document.getElementById(id);
+      const val = el.value.trim().toLowerCase().replace(/['']/g,"'");
+      // flexible match — check core correction is present
+      const checks = {
+        e1: val.includes('faster') && !val.includes('more faster'),
+        e2: val.includes('better') && !val.includes('more better'),
+        e3: val.includes('more expensive') && !val.includes('expensiver'),
+        e4: val.includes('easier') && !val.includes('more easy')
+      };
+      if (checks[id]) { el.classList.add('correct'); el.classList.remove('wrong'); score++; }
+      else { el.classList.add('wrong'); el.classList.remove('correct'); }
+    }
+    const fb = document.getElementById('fbB');
+    fb.classList.add('show');
+    if (score === tot) {
+      fb.className = 'fb fb-ok show';
+      fb.innerHTML = '✅ <strong>All ' + tot + ' errors found and corrected!</strong> You understand the three rules.';
+    } else {
+      fb.className = 'fb fb-part show';
+      fb.innerHTML = '⚡ <strong>' + score + '/' + tot + ' correct.</strong> Re-read the grammar rules and try the red ones again.';
+    }
+  }
+</script>
+</body>
+</html>
