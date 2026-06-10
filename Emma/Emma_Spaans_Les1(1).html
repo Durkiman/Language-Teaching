@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emma · Spaans · Les 1</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;1,300&family=Inter:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #F6F3EE;
+    --surface: #FFFFFF;
+    --border: #E2DDD6;
+    --sand: #EAE5DC;
+    --ink: #1A1A18;
+    --mid: #5A5750;
+    --muted: #9C988F;
+    --accent: #2F6B4A;       /* deep forest green */
+    --accent-light: #E0EDEA;
+    --accent-warm: #B85C2A;  /* warm terracotta for Spanish warmth */
+    --accent-warm-light: #F5E8DF;
+    --note-bg: #FFFBF0;
+    --note-border: #D4A843;
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 15px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink);
+    padding: 24px 28px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .header-left .kicker {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  .header-left h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 26px;
+    color: #FFFFFF;
+    line-height: 1.1;
+  }
+  .header-left h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: #B8D4CC;
+  }
+
+  /* timer */
+  .timer-wrap { text-align: right; }
+  .timer-kicker {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 3px;
+  }
+  #timerDisplay {
+    font-family: 'Fraunces', serif;
+    font-size: 34px;
+    color: #fff;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+  .timer-btns {
+    display: flex;
+    gap: 5px;
+    margin-top: 6px;
+    justify-content: flex-end;
+  }
+  .tbtn {
+    background: transparent;
+    border: 1px solid #3A3A38;
+    color: var(--muted);
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.15s;
+  }
+  .tbtn:hover, .tbtn.active { border-color: var(--accent); color: #7ABFAB; }
+
+  /* ── PHASE NAV ── */
+  .phase-nav {
+    background: var(--sand);
+    display: flex;
+    overflow-x: auto;
+    border-bottom: 2px solid var(--border);
+    padding: 0 12px;
+    scrollbar-width: none;
+  }
+  .phase-nav::-webkit-scrollbar { display: none; }
+  .ptab {
+    flex-shrink: 0;
+    padding: 13px 18px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.3px;
+  }
+  .ptab:hover { color: var(--ink); }
+  .ptab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .ptab.done { color: var(--accent); opacity: 0.6; }
+  .pnum {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: #D4CFC6;
+    color: var(--mid);
+    font-size: 10px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .ptab.active .pnum { background: var(--accent); color: white; }
+  .ptab.done .pnum { background: var(--accent); color: white; }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 28px 18px 80px;
+  }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    margin-bottom: 14px;
+  }
+  .card-kicker {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-warm);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .card h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .card p {
+    color: var(--mid);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 8px;
+  }
+  .card p:last-child { margin-bottom: 0; }
+
+  /* ── TEACHER NOTE (hidden by default) ── */
+  .tnote-wrap { margin: 10px 0; }
+  .tnote-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--muted);
+    cursor: pointer;
+    user-select: none;
+    padding: 4px 0;
+    border: none;
+    background: none;
+    font-family: 'Inter', sans-serif;
+    transition: color 0.15s;
+    letter-spacing: 0.3px;
+  }
+  .tnote-toggle:hover { color: var(--mid); }
+  .tnote-toggle .arrow {
+    display: inline-block;
+    transition: transform 0.2s;
+    font-size: 9px;
+    color: var(--muted);
+  }
+  .tnote-toggle.open .arrow { transform: rotate(90deg); }
+  .tnote-body {
+    display: none;
+    background: var(--note-bg);
+    border-left: 2px solid var(--note-border);
+    border-radius: 0 6px 6px 0;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #6B5A2A;
+    line-height: 1.6;
+    margin-top: 6px;
+  }
+  .tnote-body.open { display: block; }
+  .tnote-body strong { color: #4A3D18; }
+
+  /* ── VOCAB GRID ── */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+    gap: 9px;
+    margin-top: 12px;
+  }
+  .vcard {
+    background: var(--sand);
+    border-radius: 8px;
+    padding: 14px 11px;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  .vcard:hover { border-color: var(--accent); }
+  .vcard.revealed { border-color: var(--accent); background: var(--accent-light); }
+  .vcard .esp {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+  .vcard .nl {
+    font-size: 12px;
+    color: var(--mid);
+    display: none;
+  }
+  .vcard.revealed .nl { display: block; }
+  .vcard .hint { font-size: 10px; color: var(--muted); margin-top: 5px; letter-spacing: 0.3px; }
+  .vcard.revealed .hint { display: none; }
+
+  /* ── DIALOGUE LINES ── */
+  .dialogue { margin-top: 12px; }
+  .dline {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .dline:last-child { border-bottom: none; }
+  .dline .who {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 500;
+    min-width: 52px;
+    padding-top: 2px;
+    flex-shrink: 0;
+  }
+  .dline.jij .who { color: var(--accent-warm); }
+  .dline.zij .who { color: var(--accent); }
+  .dline .text { color: var(--ink); line-height: 1.5; }
+  .dline .vertaling { font-size: 12px; color: var(--muted); margin-top: 2px; font-style: italic; }
+
+  /* ── SPEAKING PROMPT ── */
+  .speaking-box {
+    background: var(--accent-warm-light);
+    border-left: 3px solid var(--accent-warm);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 16px 18px;
+    margin: 10px 0;
+  }
+  .speaking-box .sb-kicker {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-warm);
+    font-weight: 500;
+    margin-bottom: 7px;
+  }
+  .speaking-box p {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.5;
+    margin-bottom: 0;
+  }
+  .speaking-box .sb-hint {
+    font-size: 12px;
+    color: #8C5A3A;
+    margin-top: 5px;
+  }
+
+  /* ── NOTES AREA ── */
+  .notes-area {
+    width: 100%;
+    min-height: 90px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--ink);
+    background: var(--bg);
+    resize: vertical;
+    outline: none;
+    line-height: 1.6;
+    margin-top: 10px;
+  }
+  .notes-area:focus { border-color: var(--accent); }
+  .notes-area::placeholder { color: var(--muted); }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; }
+  .checklist li {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--mid);
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.15s;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li.checked { color: var(--accent); text-decoration: line-through; }
+  .cbox {
+    width: 19px; height: 19px;
+    border: 2px solid #C4BEB4;
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    transition: all 0.15s;
+  }
+  .checklist li.checked .cbox { background: var(--accent); border-color: var(--accent); color: white; }
+
+  /* ── PHRASE TABLE ── */
+  .ptable { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  .ptable td {
+    padding: 9px 11px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .ptable tr:last-child td { border-bottom: none; }
+  .ptable .col-esp {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    width: 50%;
+  }
+  .ptable .col-nl { color: var(--mid); width: 50%; font-size: 13px; }
+
+  /* ── TAGS ── */
+  .tag {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+    margin: 2px;
+  }
+  .tag-green { background: var(--accent-light); color: var(--accent); }
+  .tag-warm { background: var(--accent-warm-light); color: var(--accent-warm); }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: inline-block;
+    padding: 10px 22px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 24px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    margin-top: 12px;
+    letter-spacing: 0.2px;
+  }
+  .btn:hover { background: #245539; }
+  .btn:active { transform: scale(0.97); }
+  .btn-ghost {
+    background: transparent;
+    border: 1.5px solid var(--accent);
+    color: var(--accent);
+  }
+  .btn-ghost:hover { background: var(--accent-light); }
+
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 22px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  /* ── INTRO ── */
+  .intro-wrap {
+    text-align: center;
+    padding: 44px 16px 36px;
+  }
+  .intro-wrap .flag { font-size: 58px; margin-bottom: 18px; }
+  .intro-wrap h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+  .intro-wrap h2 em { font-style: italic; font-weight: 300; color: var(--mid); }
+  .intro-wrap p {
+    color: var(--mid);
+    font-size: 14px;
+    max-width: 380px;
+    margin: 0 auto 22px;
+    line-height: 1.65;
+  }
+
+  .phase-kicker {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
+
+  /* ── PRONUNCIATION TIP ── */
+  .pron-tip {
+    display: inline-block;
+    background: var(--sand);
+    border-radius: 5px;
+    padding: 3px 8px;
+    font-size: 12px;
+    color: var(--mid);
+    font-style: italic;
+    margin-left: 6px;
+  }
+
+  /* ── SCRIPT DIALOGUE ── */
+  .script { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+  .script-line {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 11px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    user-select: none;
+    position: relative;
+  }
+  .script-line.familie {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+  }
+  .script-line.emma {
+    background: var(--accent-warm-light);
+    border-left: 3px solid var(--accent-warm);
+  }
+  .script-line.done { opacity: 0.35; }
+  .sl-who {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    min-width: 48px;
+    padding-top: 2px;
+    flex-shrink: 0;
+  }
+  .familie .sl-who { color: var(--accent); }
+  .emma .sl-who { color: var(--accent-warm); }
+  .sl-content { flex: 1; }
+  .sl-text {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .sl-tr {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+    font-style: italic;
+  }
+  .sl-check {
+    font-size: 13px;
+    color: transparent;
+    flex-shrink: 0;
+    padding-top: 2px;
+    transition: color 0.15s;
+  }
+  .script-line.done .sl-check { color: var(--accent); }
+
+  /* ── LYRICS ── */
+  .lyrics-block {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-top: 12px;
+    line-height: 2.2;
+  }
+  .lyric-line {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .lyric-word {
+    cursor: pointer;
+    border-bottom: 2px dashed var(--accent-warm);
+    padding-bottom: 1px;
+    transition: all 0.15s;
+    display: inline;
+  }
+  .lyric-word:hover { color: var(--accent-warm); }
+  .lyric-word.active { color: var(--accent-warm); border-bottom-style: solid; font-weight: 600; }
+
+  /* ── PROFILE GRID ── */
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  @media(max-width:480px){ .profile-grid { grid-template-columns: 1fr; } }
+  .pitem {
+    background: var(--sand);
+    border-radius: 7px;
+    padding: 12px;
+  }
+  .pitem .pi-label {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+  .pitem textarea {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--ink);
+    resize: none;
+    outline: none;
+    min-height: 36px;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="kicker">Les 1 · Spaans voor beginners</div>
+    <h1>Hola, <em>Emma</em> 🇪🇸</h1>
+  </div>
+  <div class="timer-wrap">
+    <div class="timer-kicker">Tijd</div>
+    <div id="timerDisplay">00:00</div>
+    <div class="timer-btns">
+      <button class="tbtn" onclick="setTimer(5)">5'</button>
+      <button class="tbtn" onclick="setTimer(10)">10'</button>
+      <button class="tbtn" onclick="setTimer(15)">15'</button>
+      <button class="tbtn" onclick="toggleTimer()" id="startStopBtn">▶ Start</button>
+    </div>
+  </div>
+</header>
+
+<nav class="phase-nav">
+  <div class="ptab active" onclick="showPanel(0)" id="tab0"><span class="pnum">1</span>Welkom</div>
+  <div class="ptab" onclick="showPanel(1)" id="tab1"><span class="pnum">2</span>Eerste woorden</div>
+  <div class="ptab" onclick="showPanel(2)" id="tab2"><span class="pnum">3</span>Aan tafel</div>
+  <div class="ptab" onclick="showPanel(3)" id="tab3"><span class="pnum">4</span>Gesprek</div>
+  <div class="ptab" onclick="showPanel(4)" id="tab4"><span class="pnum">5</span>🎂 Lied</div>
+  <div class="ptab" onclick="showPanel(5)" id="tab5"><span class="pnum">6</span>Afronding</div>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════════════
+     PANEL 0 · WELKOM
+══════════════════════════════════════════ -->
+<div class="panel active" id="panel0">
+  <div class="intro-wrap">
+    <div class="flag">🌿</div>
+    <h2>Jouw eerste <em>Spaanse</em> les</h2>
+    <p>Geen stress, geen toets. Vandaag leer je de eerste woorden en zinnen die je echt kunt gebruiken.</p>
+    <p style="font-size:12px; color:var(--muted);">Werk de tabbladen op volgorde door.</p>
+    <button class="btn" onclick="showPanel(1)">Begin → Empezamos</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PANEL 1 · EERSTE WOORDEN
+══════════════════════════════════════════ -->
+<div class="panel" id="panel1">
+  <div class="phase-kicker">Fase 1 · Eerste woorden — 15 min</div>
+
+  <div class="tnote-wrap">
+    <button class="tnote-toggle" onclick="toggleNote(this)">
+      <span class="arrow">▶</span> Notitie voor de leraar
+    </button>
+    <div class="tnote-body">
+      <strong>Leraar:</strong> Introduceer elk woord in een zin, niet als lijst. Zeg het zelf eerst, laat Emma herhalen. Tik een kaart aan om de Nederlandse betekenis te tonen. Spreek eerst, lees daarna.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-kicker">Set 1 · Begroeten</div>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:2px;">Tik een kaart aan om de betekenis te zien.</p>
+    <div class="vocab-grid">
+      <div class="vcard" onclick="this.classList.toggle('revealed')">
+        <div class="esp">Hola</div>
+        <div class="nl">Hallo</div>
+        <div class="hint">tik om te zien</div>
+      </div>
+      <div class="vcard" onclick="this.classList.toggle('revealed')">
+        <div class="esp">Buenos días</div>
+        <div class="nl">Goedemorgen</div>
+        <div class="hint">tik om te zien</div>
+      </div>
+      <div class="vcard" onclick="this.classList.toggle('revealed')">
+        <div class="esp">Buenas tardes</div>
+        <div class="nl">Goedemiddag</div>
+        <div class="hint">tik om te zien</div>
+      </div>
+      <div class="vcard" onclick="this.classList.toggle('revealed')">
+        <div class="esp">Me llamo…</div>
+        <div class="nl">Ik heet…</div>
+        <div class="hint">tik om te zien</div>
+      </div>
+      <div class="vcard" onclick="this.classList.toggle('revealed')">
+        <div class="esp">Mucho gusto</div>
+        <div class="nl">Aangenaam kennis te maken</div>
+        <div class="hint">tik om te zien</div>
+      </div>
+      <div class="vcard" onclick="this.classList.toggle('revealed')">
+        <div class="esp">¿Cómo estás?</div>
+        <div class="nl">Hoe gaat het?</div>
+        <div class="hint">tik om te zien</div>
+      </div>
+      <div class="vcard" onclick="this.classList.toggle('revealed')">
+        <div class="esp">Bien, gracias</div>
+        <div class="nl">Goed, dank je</div>
+        <div class="hint">tik om te zien</div>
+      </div>
+      <div class="vcard" onclick="this.classList.toggle('revealed')">
+        <div class="esp">¿Y tú?</div>
+        <div class="nl">En jij?</div>
+        <div class="hint">tik om te zien</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-kicker">Uitspraaktips</div>
+    <p><strong>ll</strong> in <em>llamo</em> — spreek uit als een zachte <em>j</em> <span class="pron-tip">jamo</span></p>
+    <p><strong>gu</strong> in <em>mucho gusto</em> — de <em>u</em> is stil <span class="pron-tip">moetsjo goesto</span></p>
+    <p><strong>¿?</strong> — Spaans heeft een vraagteken aan het begin én het einde van de zin.</p>
+
+    <div class="tnote-wrap" style="margin-top:10px;">
+      <button class="tnote-toggle" onclick="toggleNote(this)">
+        <span class="arrow">▶</span> Notitie voor de leraar
+      </button>
+      <div class="tnote-body">
+        <strong>Leraar:</strong> Laat Emma de woorden hardop zeggen — verbeter de uitspraak pas ná de oefening, niet er tussenin. Noteer wat later aandacht verdient.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-kicker">Oefening · Snel begroeten</div>
+    <p>Jij zegt een Spaans woord of zin — Emma reageert meteen. Wissel af. Ga snel, het mag rommelig zijn.</p>
+    <div class="speaking-box">
+      <div class="sb-kicker">🗣 Spreekoefening</div>
+      <p>Leraar zegt: <em>"Hola"</em> — Emma reageert in het Spaans. Wissel 4–5 keer van beurt. Dan omgedraaid: Emma begint.</p>
+      <div class="sb-hint">Doel: vlot reageren, niet perfect zijn.</div>
+    </div>
+    <textarea class="notes-area" placeholder="Notities uitspraak of aandachtspunten (voor later)…"></textarea>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn btn-ghost" onclick="showPanel(0)">← Terug</button>
+    <button class="btn" onclick="showPanel(2)">Aan tafel →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PANEL 2 · AAN TAFEL
+══════════════════════════════════════════ -->
+<div class="panel" id="panel2">
+  <div class="phase-kicker">Fase 2 · Aan tafel — 15 min</div>
+
+  <div class="tnote-wrap">
+    <button class="tnote-toggle" onclick="toggleNote(this)">
+      <span class="arrow">▶</span> Notitie voor de leraar
+    </button>
+    <div class="tnote-body">
+      <strong>Leraar:</strong> Introduceer elk woord met een kleine situatie — stel je voor dat jullie aan tafel zitten. Gebruik gebaren. Het doel is dat Emma deze woorden instinctief gebruikt, niet dat ze ze opzegt.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-kicker">Set 2 · Aan tafel</div>
+    <div class="vocab-grid">
+      <div class="vcard" onclick="this.classList.toggle('revealed')">
+        <div class="esp">Gracias</div>
+        <div class="nl">Dank je / dankjewel</div>
+        <div class="hint">tik om te zien</div>
+      </div>
+      <div class="vcard" onclick="this.classList.toggle('revealed')">
+        <div class="esp">Por favor</div>
+        <div class="nl">Alsjeblieft</div>
+        <div class="hint">tik om te zien</div>
+      </div>
+      <div class="vcard" onclick="this.classList.toggle('revealed')">
+        <div class="esp">¡Qué rico!</div>
+        <div class="nl">Wat lekker!</div>
+        <div class="hint">tik om te zien</div>
+      </div>
+      <div class="vcard" onclick="this.classList.toggle('revealed')">
+        <div class="esp">Salud</div>
+        <div class="nl">Proost</div>
+        <div class="hint">tik om te zien</div>
+      </div>
+      <div class="vcard" onclick="this.classList.toggle('revealed')">
+        <div class="esp">Sí / No</div>
+        <div class="nl">Ja / Nee</div>
+        <div class="hint">tik om te zien</div>
+      </div>
+      <div class="vcard" onclick="this.classList.toggle('revealed')">
+        <div class="esp">No entiendo</div>
+        <div class="nl">Ik begrijp het niet</div>
+        <div class="hint">tik om te zien</div>
+      </div>
+      <div class="vcard" onclick="this.classList.toggle('revealed')">
+        <div class="esp">¿Puedes repetir?</div>
+        <div class="nl">Kun je dat herhalen?</div>
+        <div class="hint">tik om te zien</div>
+      </div>
+      <div class="vcard" onclick="this.classList.toggle('revealed')">
+        <div class="esp">Más despacio</div>
+        <div class="nl">Langzamer, alsjeblieft</div>
+        <div class="hint">tik om te zien</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-kicker">Een minidialoog · Lees mee</div>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:4px;">Leraar leest de familie, Emma leest zichzelf. Dan omgedraaid.</p>
+    <div class="dialogue">
+      <div class="dline zij">
+        <div class="who">Familie</div>
+        <div>
+          <div class="text">¡Bienvenida, Emma! ¿Cómo estás?</div>
+          <div class="vertaling">Welkom, Emma! Hoe gaat het?</div>
+        </div>
+      </div>
+      <div class="dline jij">
+        <div class="who">Emma</div>
+        <div>
+          <div class="text">Bien, gracias. ¿Y tú?</div>
+          <div class="vertaling">Goed, dank je. En jij?</div>
+        </div>
+      </div>
+      <div class="dline zij">
+        <div class="who">Familie</div>
+        <div>
+          <div class="text">¡Muy bien! Siéntate, por favor.</div>
+          <div class="vertaling">Heel goed! Ga zitten, alsjeblieft.</div>
+        </div>
+      </div>
+      <div class="dline jij">
+        <div class="who">Emma</div>
+        <div>
+          <div class="text">Gracias. ¡Qué rico huele!</div>
+          <div class="vertaling">Dank je. Wat ruikt het lekker!</div>
+        </div>
+      </div>
+      <div class="dline zij">
+        <div class="who">Familie</div>
+        <div>
+          <div class="text">¡Salud!</div>
+          <div class="vertaling">Proost!</div>
+        </div>
+      </div>
+      <div class="dline jij">
+        <div class="who">Emma</div>
+        <div>
+          <div class="text">¡Salud! ¿Puedes repetir más despacio?</div>
+          <div class="vertaling">Proost! Kun je dat langzamer herhalen?</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tnote-wrap" style="margin-top:14px;">
+      <button class="tnote-toggle" onclick="toggleNote(this)">
+        <span class="arrow">▶</span> Notitie voor de leraar
+      </button>
+      <div class="tnote-body">
+        <strong>Leraar:</strong> Lees de dialoog eerst samen, dan laat je Emma hem uit haar hoofd doen — zonder de tekst te lezen. Haal de kaartjes als steuntje weg. Dit is de overgang van lezen naar spreken.
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn btn-ghost" onclick="showPanel(1)">← Terug</button>
+    <button class="btn" onclick="showPanel(3)">Rollenspel →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PANEL 3 · GESPREK
+══════════════════════════════════════════ -->
+<div class="panel" id="panel3">
+  <div class="phase-kicker">Fase 3 · Gesprek oefenen — 15 min</div>
+
+  <div class="tnote-wrap">
+    <button class="tnote-toggle" onclick="toggleNote(this)">
+      <span class="arrow">▶</span> Notitie voor de leraar
+    </button>
+    <div class="tnote-body">
+      <strong>Leraar:</strong> Emma leest haar eigen regels — jij speelt de familie en zegt de groene regels hardop. Loop de scène eerst samen door (lezen), daarna nog een keer zonder vinger op de tekst. Tik op een regel om hem te markeren als gedaan.
+    </div>
+  </div>
+
+  <!-- SCENE 1 -->
+  <div class="card">
+    <div class="card-kicker">Scène 1 · Aan de deur 🚪</div>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">Jij = <span style="color:var(--accent); font-weight:500;">Familie</span> &nbsp;·&nbsp; Emma = <span style="color:var(--accent-warm); font-weight:500;">Emma</span></p>
+
+    <div class="script">
+      <div class="script-line familie" onclick="markLine(this)">
+        <div class="sl-who">Familie</div>
+        <div class="sl-content">
+          <div class="sl-text">¡Hola! ¡Bienvenida!</div>
+          <div class="sl-tr">Hallo! Welkom!</div>
+        </div>
+        <div class="sl-check">✓</div>
+      </div>
+      <div class="script-line emma" onclick="markLine(this)">
+        <div class="sl-who">Emma</div>
+        <div class="sl-content">
+          <div class="sl-text">¡Hola! Me llamo Emma. Mucho gusto.</div>
+          <div class="sl-tr">Hallo! Ik heet Emma. Aangenaam.</div>
+        </div>
+        <div class="sl-check">✓</div>
+      </div>
+      <div class="script-line familie" onclick="markLine(this)">
+        <div class="sl-who">Familie</div>
+        <div class="sl-content">
+          <div class="sl-text">¿Cómo estás, Emma?</div>
+          <div class="sl-tr">Hoe gaat het, Emma?</div>
+        </div>
+        <div class="sl-check">✓</div>
+      </div>
+      <div class="script-line emma" onclick="markLine(this)">
+        <div class="sl-who">Emma</div>
+        <div class="sl-content">
+          <div class="sl-text">Bien, gracias. ¿Y tú?</div>
+          <div class="sl-tr">Goed, dank je. En jij?</div>
+        </div>
+        <div class="sl-check">✓</div>
+      </div>
+      <div class="script-line familie" onclick="markLine(this)">
+        <div class="sl-who">Familie</div>
+        <div class="sl-content">
+          <div class="sl-text">¡Muy bien! Pasa, pasa.</div>
+          <div class="sl-tr">Heel goed! Kom binnen, kom binnen.</div>
+        </div>
+        <div class="sl-check">✓</div>
+      </div>
+      <div class="script-line emma" onclick="markLine(this)">
+        <div class="sl-who">Emma</div>
+        <div class="sl-content">
+          <div class="sl-text">Gracias.</div>
+          <div class="sl-tr">Dank je.</div>
+        </div>
+        <div class="sl-check">✓</div>
+      </div>
+    </div>
+
+    <div class="tnote-wrap" style="margin-top:14px;">
+      <button class="tnote-toggle" onclick="toggleNote(this)">
+        <span class="arrow">▶</span> Notitie voor de leraar
+      </button>
+      <div class="tnote-body">
+        Loop de scène twee keer door. De eerste keer lezen ze allebei mee. De tweede keer doet Emma het zonder de vertalingen te lezen — alleen de Spaanse tekst als steun. Ga langzaam, maak er een echt gesprekje van.
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENE 2 -->
+  <div class="card">
+    <div class="card-kicker">Scène 2 · Aan tafel 🍽</div>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">Jij = <span style="color:var(--accent); font-weight:500;">Familie</span> &nbsp;·&nbsp; Emma = <span style="color:var(--accent-warm); font-weight:500;">Emma</span></p>
+
+    <div class="script">
+      <div class="script-line familie" onclick="markLine(this)">
+        <div class="sl-who">Familie</div>
+        <div class="sl-content">
+          <div class="sl-text">¡La comida está lista!</div>
+          <div class="sl-tr">Het eten is klaar!</div>
+        </div>
+        <div class="sl-check">✓</div>
+      </div>
+      <div class="script-line emma" onclick="markLine(this)">
+        <div class="sl-who">Emma</div>
+        <div class="sl-content">
+          <div class="sl-text">¡Qué rico!</div>
+          <div class="sl-tr">Wat lekker!</div>
+        </div>
+        <div class="sl-check">✓</div>
+      </div>
+      <div class="script-line familie" onclick="markLine(this)">
+        <div class="sl-who">Familie</div>
+        <div class="sl-content">
+          <div class="sl-text">¿Quieres más?</div>
+          <div class="sl-tr">Wil je meer?</div>
+        </div>
+        <div class="sl-check">✓</div>
+      </div>
+      <div class="script-line emma" onclick="markLine(this)">
+        <div class="sl-who">Emma</div>
+        <div class="sl-content">
+          <div class="sl-text">Sí, por favor.</div>
+          <div class="sl-tr">Ja, alsjeblieft.</div>
+        </div>
+        <div class="sl-check">✓</div>
+      </div>
+      <div class="script-line familie" onclick="markLine(this)">
+        <div class="sl-who">Familie</div>
+        <div class="sl-content">
+          <div class="sl-text">¡Salud!</div>
+          <div class="sl-tr">Proost!</div>
+        </div>
+        <div class="sl-check">✓</div>
+      </div>
+      <div class="script-line emma" onclick="markLine(this)">
+        <div class="sl-who">Emma</div>
+        <div class="sl-content">
+          <div class="sl-text">¡Salud! Gracias por todo.</div>
+          <div class="sl-tr">Proost! Bedankt voor alles.</div>
+        </div>
+        <div class="sl-check">✓</div>
+      </div>
+    </div>
+
+    <div class="tnote-wrap" style="margin-top:14px;">
+      <button class="tnote-toggle" onclick="toggleNote(this)">
+        <span class="arrow">▶</span> Notitie voor de leraar — uitdaging
+      </button>
+      <div class="tnote-body">
+        Als scène 1 vlot ging: doe scène 2 een tweede keer waarbij Emma de vertalingen afdekt. Haal de tekst stap voor stap weg — dit is de brug naar spontaan spreken.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-kicker">Aandachtspunten — voor de afronding</div>
+    <textarea class="notes-area" placeholder="Punt 1: …&#10;Punt 2: …&#10;&#10;Aanpak:"></textarea>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn btn-ghost" onclick="showPanel(2)">← Terug</button>
+    <button class="btn" onclick="showPanel(4)">🎂 Lied →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PANEL 4 · LIED
+══════════════════════════════════════════ -->
+<div class="panel" id="panel4">
+  <div class="phase-kicker">Fase 4 · Lied — 10 min</div>
+
+  <div class="tnote-wrap">
+    <button class="tnote-toggle" onclick="toggleNote(this)">
+      <span class="arrow">▶</span> Notitie voor de leraar
+    </button>
+    <div class="tnote-body">
+      <strong>Leraar:</strong> Luister eerst samen — geen druk. Dan de woorden bekijken. Daarna eventueel meezingen. Het gaat erom dat Emma de woorden herkent die ze al kent, en dat er een positieve associatie ontstaat met Spaans klinken.
+    </div>
+  </div>
+
+  <!-- Song hero card -->
+  <div class="card" style="background: linear-gradient(135deg, #1A1A18 0%, #2C2118 100%); border-color: #3A3228;">
+    <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+      <div style="font-size:52px; line-height:1;">🎂</div>
+      <div>
+        <div style="font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:5px; font-weight:500;">Het lied van vandaag</div>
+        <div style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:white; line-height:1.2;">Cumpleaños Feliz</div>
+        <div style="font-size:12px; color:#8A8278; margin-top:4px;">Traditioneel · A0 · ~30 seconden</div>
+      </div>
+    </div>
+    <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+      <a href="https://www.youtube.com/results?search_query=cumplea%C3%B1os+feliz+canci%C3%B3n+infantil" target="_blank" style="display:inline-flex; align-items:center; gap:6px; padding:9px 16px; background:#FF0000; color:white; border-radius:20px; font-size:12px; font-weight:500; text-decoration:none; font-family:'Inter',sans-serif;">▶ YouTube</a>
+      <a href="https://open.spotify.com/search/cumplea%C3%B1os%20feliz" target="_blank" style="display:inline-flex; align-items:center; gap:6px; padding:9px 16px; background:#1DB954; color:white; border-radius:20px; font-size:12px; font-weight:500; text-decoration:none; font-family:'Inter',sans-serif;">▶ Spotify</a>
+    </div>
+  </div>
+
+  <!-- Lyrics display -->
+  <div class="card">
+    <div class="card-kicker">De tekst · Volg mee</div>
+    <div class="lyrics-block">
+      <div class="lyric-line">
+        <span class="lyric-word" onclick="toggleWord('w1')">Cumpleaños</span>
+        <span class="lyric-word" onclick="toggleWord('w2')">feliz</span>,
+      </div>
+      <div class="lyric-line">
+        <span class="lyric-word" onclick="toggleWord('w1')">Cumpleaños</span>
+        <span class="lyric-word" onclick="toggleWord('w2')">feliz</span>,
+      </div>
+      <div class="lyric-line">
+        <span class="lyric-word" onclick="toggleWord('w1')">Cumpleaños</span>
+        querido/a
+        <span class="lyric-word" onclick="toggleWord('w3')">[naam]</span>,
+      </div>
+      <div class="lyric-line">
+        <span class="lyric-word" onclick="toggleWord('w1')">Cumpleaños</span>
+        <span class="lyric-word" onclick="toggleWord('w2')">feliz</span>.
+      </div>
+    </div>
+    <p style="font-size:12px; color:var(--muted); margin-top:12px;">Tik op een woord om de uitleg te zien.</p>
+  </div>
+
+  <!-- Word explainers -->
+  <div class="card" id="w1" style="display:none; border-left:3px solid var(--accent-warm);">
+    <div class="card-kicker">📖 Cumpleaños</div>
+    <p><strong>Betekenis:</strong> verjaardag</p>
+    <p><strong>Letterlijk:</strong> <em>cumple</em> = vervuld + <em>años</em> = jaren → "de jaren zijn vervuld"</p>
+    <p><strong>Gebruik:</strong> <em>¡Feliz cumpleaños!</em> — zeg je los als felicitatie</p>
+    <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+      <span class="tag tag-warm">zelfstandig naamwoord</span>
+      <span class="tag tag-green">A0</span>
+    </div>
+  </div>
+
+  <div class="card" id="w2" style="display:none; border-left:3px solid var(--accent);">
+    <div class="card-kicker">📖 Feliz</div>
+    <p><strong>Betekenis:</strong> gelukkig / blij</p>
+    <p><strong>Gebruik:</strong> <em>¡Feliz Navidad!</em> (vrolijk kerstfeest) · <em>Feliz año nuevo</em> (gelukkig nieuwjaar)</p>
+    <p><strong>Tip:</strong> <em>Feliz</em> verandert niet voor mannelijk of vrouwelijk — altijd hetzelfde woord.</p>
+    <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+      <span class="tag tag-green">bijvoeglijk naamwoord</span>
+      <span class="tag tag-green">A0</span>
+    </div>
+  </div>
+
+  <div class="card" id="w3" style="display:none; border-left:3px solid #7A6AAA;">
+    <div class="card-kicker">📖 [naam] — querido/a</div>
+    <p><strong>Betekenis:</strong> lieve / dierbare [naam]</p>
+    <p><strong>querido</strong> = mannelijk · <strong>querida</strong> = vrouwelijk</p>
+    <p><strong>Voorbeeld:</strong> <em>querida Emma</em> · <em>querido Marcos</em></p>
+    <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+      <span class="tag" style="background:#EDE8F5; color:#7A6AAA;">bijvoeglijk naamwoord</span>
+      <span class="tag tag-green">A0</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-kicker">🎤 Nu jij</div>
+    <p>Zing het samen één keer — langzaam, zonder haast. Vervang <em>[naam]</em> door de naam van iemand die je kent.</p>
+    <div class="speaking-box" style="margin-top:10px;">
+      <div class="sb-kicker">Uitdaging</div>
+      <p>Kun je het uit je hoofd zingen, zonder de tekst te lezen?</p>
+      <div class="sb-hint">Het mag met een grappige stem. Het gaat erom dat het blijft hangen.</div>
+    </div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn btn-ghost" onclick="showPanel(3)">← Terug</button>
+    <button class="btn" onclick="showPanel(5)">Afronding →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PANEL 5 · AFRONDING
+══════════════════════════════════════════ -->
+<div class="panel" id="panel5">
+  <div class="phase-kicker">Fase 5 · Afronding — 5 min</div>
+
+  <!-- Fun recap banner -->
+  <div style="background: linear-gradient(135deg, var(--accent) 0%, #1E4D35 100%); border-radius:var(--radius); padding:22px; margin-bottom:14px; color:white; text-align:center;">
+    <div style="font-size:36px; margin-bottom:8px;">🎉</div>
+    <div style="font-family:'Fraunces',serif; font-size:20px; font-weight:600; margin-bottom:6px;">¡Lo hiciste muy bien, Emma!</div>
+    <div style="font-size:13px; opacity:0.8;">Dat was je eerste Spaanse les. Kijk eens wat je al kunt.</div>
+  </div>
+
+  <!-- What she learned today — visual recap -->
+  <div class="card">
+    <div class="card-kicker">Wat je vandaag hebt geleerd</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
+      <div style="background:var(--accent-light); border-radius:8px; padding:14px; text-align:center;">
+        <div style="font-size:28px; margin-bottom:6px;">🗣</div>
+        <div style="font-size:22px; font-family:'Fraunces',serif; font-weight:600; color:var(--accent);">16</div>
+        <div style="font-size:12px; color:var(--mid); margin-top:2px;">nieuwe woorden</div>
+      </div>
+      <div style="background:var(--accent-warm-light); border-radius:8px; padding:14px; text-align:center;">
+        <div style="font-size:28px; margin-bottom:6px;">🎭</div>
+        <div style="font-size:22px; font-family:'Fraunces',serif; font-weight:600; color:var(--accent-warm);">2</div>
+        <div style="font-size:12px; color:var(--mid); margin-top:2px;">rollenspellen</div>
+      </div>
+      <div style="background:#EDE8F5; border-radius:8px; padding:14px; text-align:center;">
+        <div style="font-size:28px; margin-bottom:6px;">💬</div>
+        <div style="font-size:22px; font-family:'Fraunces',serif; font-weight:600; color:#7A6AAA;">1</div>
+        <div style="font-size:12px; color:var(--mid); margin-top:2px;">dialoog</div>
+      </div>
+      <div style="background:var(--sand); border-radius:8px; padding:14px; text-align:center;">
+        <div style="font-size:28px; margin-bottom:6px;">🎂</div>
+        <div style="font-size:22px; font-family:'Fraunces',serif; font-weight:600; color:var(--ink);">1</div>
+        <div style="font-size:12px; color:var(--mid); margin-top:2px;">liedje</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error feedback — tucked away -->
+  <div class="card">
+    <div class="card-kicker">Terugkoppeling — aandachtspunten</div>
+    <div class="tnote-wrap">
+      <button class="tnote-toggle" onclick="toggleNote(this)">
+        <span class="arrow">▶</span> Notitie voor de leraar
+      </button>
+      <div class="tnote-body">
+        <strong>Leraar:</strong> Max. 2 dingen. Zeg het licht: <em>"Eén dingetje om op te letten de volgende keer…"</em> Eindig altijd positief — het laatste wat ze hoort moet goed voelen.
+      </div>
+    </div>
+    <textarea class="notes-area" style="min-height:70px;" placeholder="Punt 1: …&#10;Punt 2: …"></textarea>
+  </div>
+
+  <!-- Take-home phrase -->
+  <div class="card" style="border:2px solid var(--accent-warm); background:var(--accent-warm-light);">
+    <div class="card-kicker">✉️ Meenemen naar huis</div>
+    <div style="font-family:'Fraunces',serif; font-size:24px; font-weight:600; color:var(--accent-warm); margin:8px 0 4px;">Estoy aprendiendo español.</div>
+    <div style="font-size:14px; color:var(--mid); margin-bottom:12px;">Ik leer Spaans.</div>
+    <div style="font-size:13px; color:#7A4020; line-height:1.6; border-top:1px solid #E0C0B0; padding-top:12px;">
+      <strong>Huiswerk:</strong> Zeg deze zin vandaag nog tegen iemand — ook als dat een beetje gek voelt. We beginnen de volgende les ermee: hoe reageerde diegene?
+    </div>
+  </div>
+
+  <!-- Teacher-only checklist -->
+  <div class="tnote-wrap">
+    <button class="tnote-toggle" onclick="toggleNote(this)">
+      <span class="arrow">▶</span> Checklist voor de leraar
+    </button>
+    <div class="tnote-body">
+      <ul style="list-style:none; padding:0;">
+        <li style="padding:5px 0; border-bottom:1px solid #E8DFC0;">☐ 16 woorden via context geïntroduceerd</li>
+        <li style="padding:5px 0; border-bottom:1px solid #E8DFC0;">☐ Dialoog gelezen én vrij herhaald</li>
+        <li style="padding:5px 0; border-bottom:1px solid #E8DFC0;">☐ Beide rollenspelscènes gedaan</li>
+        <li style="padding:5px 0; border-bottom:1px solid #E8DFC0;">☐ Lied beluisterd + sleutelwoorden besproken</li>
+        <li style="padding:5px 0; border-bottom:1px solid #E8DFC0;">☐ Max. 2 aandachtspunten besproken</li>
+        <li style="padding:5px 0; border-bottom:1px solid #E8DFC0;">☐ Meezinzin meegegeven + huiswerk gezet</li>
+        <li style="padding:5px 0;">☐ Volgende les: herhaling 16 woorden + familie-vocabulaire</li>
+      </ul>
+      <div style="margin-top:10px; padding-top:10px; border-top:1px solid #E8DFC0;">
+        <strong>🔁 Herhaalherinnering:</strong> Breng deze woorden terug in
+        <span style="background:var(--accent-warm-light); color:var(--accent-warm); padding:1px 7px; border-radius:10px; font-size:11px;">Les 2</span> en
+        <span style="background:var(--accent-light); color:var(--accent); padding:1px 7px; border-radius:10px; font-size:11px;">Les 4</span>.
+      </div>
+    </div>
+  </div>
+
+  <!-- Lesson notes -->
+  <div class="card" style="margin-top:14px;">
+    <div class="card-kicker">Lesnotities</div>
+    <textarea class="notes-area" style="min-height:75px;" placeholder="Wat ging goed, wat aanpassen, wat reageerde ze op…"></textarea>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn btn-ghost" onclick="showPanel(4)">← Terug</button>
+    <div style="font-size:13px; color:var(--accent); font-weight:500;">Tot de volgende les! 👋</div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ── TIMER ──
+var timerInterval = null;
+var timerRunning = false;
+var totalSeconds = 0;
+var countdownFrom = 0;
+
+function pad(n){ return String(n).padStart(2,'0'); }
+
+function updateDisplay(){
+  var m = Math.floor(Math.abs(totalSeconds)/60);
+  var s = Math.abs(totalSeconds)%60;
+  var sign = totalSeconds < 0 ? '-' : '';
+  document.getElementById('timerDisplay').textContent = sign+pad(m)+':'+pad(s);
+}
+
+function setTimer(minutes){
+  clearInterval(timerInterval);
+  timerRunning = false;
+  document.getElementById('startStopBtn').textContent = '▶ Start';
+  countdownFrom = minutes * 60;
+  totalSeconds = countdownFrom;
+  updateDisplay();
+}
+
+function toggleTimer(){
+  if(timerRunning){
+    clearInterval(timerInterval);
+    timerRunning = false;
+    document.getElementById('startStopBtn').textContent = '▶ Start';
+  } else {
+    timerRunning = true;
+    document.getElementById('startStopBtn').textContent = '⏸ Pauze';
+    timerInterval = setInterval(function(){
+      if(countdownFrom > 0){ totalSeconds--; } else { totalSeconds++; }
+      updateDisplay();
+    }, 1000);
+  }
+}
+
+// ── PANELS ──
+function showPanel(n){
+  document.querySelectorAll('.panel').forEach(function(p,i){
+    p.classList.toggle('active', i===n);
+  });
+  document.querySelectorAll('.ptab').forEach(function(t,i){
+    t.classList.remove('active','done');
+    if(i===n) t.classList.add('active');
+    if(i<n) t.classList.add('done');
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── TEACHER NOTES ──
+function toggleNote(btn){
+  btn.classList.toggle('open');
+  var body = btn.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+// ── SCRIPT LINE MARK ──
+function markLine(el){
+  el.classList.toggle('done');
+}
+
+// ── LYRICS WORD TOGGLE ──
+var wordVisible = {};
+function toggleWord(id){
+  var el = document.getElementById(id);
+  if(!el) return;
+  wordVisible[id] = !wordVisible[id];
+  el.style.display = wordVisible[id] ? 'block' : 'none';
+  // highlight all matching spans
+  document.querySelectorAll('.lyric-word').forEach(function(s){
+    if(s.getAttribute('onclick') === "toggleWord('"+id+"')"){
+      s.classList.toggle('active', wordVisible[id]);
+    }
+  });
+}
+
+// ── CHECKLIST ──
+function toggleCheck(li){
+  li.classList.toggle('checked');
+  li.querySelector('.cbox').textContent = li.classList.contains('checked') ? '✓' : '';
+}
+</script>
+
+<!-- ══════════════════════════════════════════
+     WHITEBOARD BUBBLE
+══════════════════════════════════════════ -->
+<style>
+  #wbFab {
+    position: fixed;
+    bottom: 24px;
+    right: 22px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: white;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: background 0.2s, transform 0.15s;
+  }
+  #wbFab:hover { background: var(--accent); transform: scale(1.05); }
+  #wbFab.open { background: var(--accent); }
+
+  #wbDrawer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 360px;
+    max-width: 100vw;
+    background: var(--surface);
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 32px rgba(0,0,0,0.14);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+  }
+  #wbDrawer.open { transform: translateY(0); }
+
+  .wb-header {
+    background: var(--ink);
+    padding: 13px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .wb-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .wb-title span { font-size: 16px; }
+  .wb-actions { display: flex; gap: 6px; align-items: center; }
+  .wb-btn {
+    background: none;
+    border: 1px solid #3A3A38;
+    color: var(--muted);
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .wb-btn:hover { border-color: var(--accent); color: #7ABFAB; }
+  .wb-close {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 2px 4px;
+    line-height: 1;
+    transition: color 0.15s;
+  }
+  .wb-close:hover { color: white; }
+
+  #wbArea {
+    width: 100%;
+    min-height: 200px;
+    max-height: 52vh;
+    border: none;
+    padding: 16px;
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--ink);
+    background: #FDFAF6;
+    resize: none;
+    outline: none;
+    line-height: 1.5;
+    letter-spacing: 0.2px;
+  }
+  #wbArea::placeholder {
+    color: #C8C3BA;
+    font-style: italic;
+    font-size: 18px;
+  }
+
+  .wb-footer {
+    padding: 8px 14px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    flex-shrink: 0;
+  }
+  .wb-hint {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.3px;
+  }
+  .wb-clear {
+    font-size: 11px;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    padding: 3px 0;
+    transition: color 0.15s;
+  }
+  .wb-clear:hover { color: #B85C2A; }
+</style>
+
+<button id="wbFab" onclick="toggleWb()" title="Whiteboard openen">✏️</button>
+
+<div id="wbDrawer">
+  <div class="wb-header">
+    <div class="wb-title"><span>✏️</span> Whiteboard</div>
+    <div class="wb-actions">
+      <button class="wb-btn" onclick="copyWb()">Kopiëren</button>
+      <button class="wb-close" onclick="toggleWb()">✕</button>
+    </div>
+  </div>
+  <textarea id="wbArea" placeholder="Schrijf een woord, zin of uitleg…"></textarea>
+  <div class="wb-footer">
+    <span class="wb-hint">Blijft zichtbaar tijdens de les</span>
+    <button class="wb-clear" onclick="clearWb()">Wissen</button>
+  </div>
+</div>
+
+<script>
+var wbOpen = false;
+
+function toggleWb(){
+  wbOpen = !wbOpen;
+  document.getElementById('wbDrawer').classList.toggle('open', wbOpen);
+  document.getElementById('wbFab').classList.toggle('open', wbOpen);
+  if(wbOpen){
+    setTimeout(function(){ document.getElementById('wbArea').focus(); }, 300);
+  }
+}
+
+function clearWb(){
+  if(confirm('Whiteboard wissen?')){
+    document.getElementById('wbArea').value = '';
+    document.getElementById('wbArea').focus();
+  }
+}
+
+function copyWb(){
+  var text = document.getElementById('wbArea').value;
+  if(!text.trim()){ return; }
+  navigator.clipboard.writeText(text).then(function(){
+    var btn = document.querySelector('.wb-btn');
+    btn.textContent = 'Gekopieerd ✓';
+    setTimeout(function(){ btn.textContent = 'Kopiëren'; }, 1800);
+  });
+}
+</script>
+
+</body>
+</html>
