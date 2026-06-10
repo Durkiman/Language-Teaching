@@ -15,6 +15,7 @@
     --sage: #7a9e87;
     --soft: #a89bce;
     --terra: #c4714a;
+    --rose: #c0392b;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -118,6 +119,7 @@
   .student-card:nth-child(1) { animation-delay: 0.3s; }
   .student-card:nth-child(2) { animation-delay: 0.42s; }
   .student-card:nth-child(3) { animation-delay: 0.54s; }
+  .student-card:nth-child(4) { animation-delay: 0.66s; }
 
   .student-card::before {
     content: '';
@@ -130,6 +132,7 @@
   .student-card.micha::before { background: var(--sky); }
   .student-card.mehdi::before { background: var(--sage); }
   .student-card.mel::before   { background: var(--soft); }
+  .student-card.emma::before  { background: var(--rose); }
 
   .card-emoji { font-size: 28px; margin-bottom: 14px; display: block; }
 
@@ -151,6 +154,7 @@
   .student-card.micha .card-level { color: var(--sky); }
   .student-card.mehdi .card-level { color: var(--sage); }
   .student-card.mel   .card-level { color: var(--soft); }
+  .student-card.emma  .card-level { color: var(--rose); }
 
   .card-desc {
     font-size: 13px;
@@ -183,6 +187,7 @@
   .student-card.micha .lesson-list li a:hover { background: #ddeef5; color: var(--sky); }
   .student-card.mehdi .lesson-list li a:hover { background: #ddeee4; color: var(--sage); }
   .student-card.mel   .lesson-list li a:hover { background: #eae8f5; color: var(--soft); }
+  .student-card.emma  .lesson-list li a:hover { background: #fde8e8; color: var(--rose); }
 
   .lesson-list li a .icon { font-size: 14px; flex-shrink: 0; }
 
@@ -285,6 +290,17 @@
       </ul>
     </div>
 
+
+    <div class="student-card emma">
+      <span class="card-emoji">🇪🇸</span>
+      <div class="card-name">Emma</div>
+      <div class="card-level">Beginner · Spanish</div>
+      <p class="card-desc">Spanish from scratch — everyday life & conversation.</p>
+      <ul class="lesson-list" id="lessons-emma">
+        <li><div class="loading-state"><div class="spinner"></div> Loading…</div></li>
+      </ul>
+    </div>
+
   </div>
 
   <div class="footer-note">
@@ -300,6 +316,7 @@
     { id: 'micha', folder: 'Micha' },
     { id: 'mehdi', folder: 'Mehdi' },
     { id: 'mel',   folder: 'Mel'   },
+    { id: 'emma',  folder: 'Emma'  },
   ];
 
   async function loadLessons(student) {
