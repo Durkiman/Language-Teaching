@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mehdi – Pillar 2 · Session 2: Your Marketing Message</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ink:         #0e1520;
+    --navy:        #132244;
+    --navy-mid:    #1e3566;
+    --blue:        #2255cc;
+    --blue-light:  #ddeaff;
+    --blue-pale:   #f0f4ff;
+    --gold:        #c9963a;
+    --gold-label:  #7a5410;
+    --gold-light:  #fdf3dc;
+    --green:       #2a7c5a;
+    --green-light: #d6efe1;
+    --sand:        #f5f4f0;
+    --cream:       #fefcf8;
+    --muted:       #445060;
+    --muted2:      #7a8898;
+    --border:      #d8e0ee;
+    --red-light:   #fde8e8;
+    --red-dark:    #7a1e1e;
+    --purple:      #4a2fa0;
+    --purple-light:#ede8ff;
+    --orange:      #b85a00;
+    --orange-light:#fff0de;
+    --teal:        #1a6e6e;
+    --teal-light:  #d4f0f0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(--ink); min-height: 100vh; }
+
+  /* ── HEADER ── */
+  .header { background: var(--navy); padding: 30px 28px 26px; position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(34,85,204,.3) 0%, transparent 70%); }
+  .header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--blue), var(--gold)); }
+  .header-series { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 5vw, 36px); font-weight: 700; color: #eef2ff; line-height: 1.1; }
+  .header-sub { margin-top: 8px; font-size: 13px; color: rgba(238,242,255,.55); }
+  .pillar-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); border-radius: 20px; padding: 5px 14px; margin-top: 12px; font-size: 12px; color: rgba(238,242,255,.85); font-weight: 500; }
+  .pdots { display: flex; gap: 5px; }
+  .pdot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.2); }
+  .pdot.done { background: var(--green); }
+  .pdot.active { background: var(--gold); }
+
+  /* ── PROGRESS ── */
+  .progress-bar { height: 3px; background: #0e1a3a; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--gold)); transition: width .5s ease; }
+
+  /* ── NAV ── */
+  .nav { background: var(--cream); border-bottom: 1px solid var(--border); display: flex; gap: 5px; padding: 12px 18px; overflow-x: auto; scrollbar-width: none; position: sticky; top: 0; z-index: 40; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn { padding: 6px 14px; border-radius: 18px; border: 1.5px solid var(--border); background: transparent; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; white-space: nowrap; transition: all .18s; }
+  .nav-btn.active { background: var(--navy); border-color: var(--navy); color: var(--gold); }
+  .nav-btn.done   { background: var(--green-light); border-color: var(--green); color: var(--green); }
+
+  /* ── MAIN ── */
+  .main { padding: 22px 18px 60px; max-width: 740px; margin: 0 auto; }
+
+  /* ── PANELS ── */
+  .panel { display: none; animation: fadeUp .35s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ── LABELS ── */
+  .slabel { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 16px; margin-bottom: 10px; }
+  .sl-warm  { background: var(--gold-light);   color: var(--gold-label); }
+  .sl-read  { background: var(--teal-light);   color: var(--teal); }
+  .sl-vocab { background: var(--purple-light); color: var(--purple); }
+  .sl-gram  { background: var(--orange-light); color: var(--orange); }
+  .sl-prac  { background: var(--blue-light);   color: var(--blue); }
+  .sl-write { background: var(--green-light);  color: var(--green); }
+
+  .stitle { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--ink); line-height: 1.2; margin-bottom: 6px; }
+  .sdesc  { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
+
+  /* ── CARDS ── */
+  .card { background: var(--cream); border: 1px solid var(--border); border-radius: 14px; padding: 22px; margin-bottom: 16px; }
+  .clabel { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-label); margin-bottom: 14px; }
+
+  /* ── RECALL ── */
+  .recall { background: white; border: 1.5px solid var(--border); border-radius: 11px; padding: 14px 16px; margin-bottom: 10px; display: flex; gap: 12px; align-items: flex-start; }
+  .rnum { background: var(--navy); color: var(--gold); width: 28px; height: 28px; border-radius: 50%; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .rtext { font-size: 14px; line-height: 1.55; color: var(--ink); }
+  .rhint { font-size: 12px; color: var(--muted2); font-style: italic; margin-top: 4px; }
+
+  /* ── READING ── */
+  .passage { background: white; border-left: 4px solid var(--teal); border-radius: 0 12px 12px 0; padding: 18px 20px; margin: 14px 0; font-size: 15px; line-height: 1.9; color: var(--ink); }
+  .hl { background: var(--teal-light); padding: 1px 5px; border-radius: 4px; font-weight: 600; cursor: pointer; color: var(--teal); position: relative; display: inline-block; transition: background .18s; }
+  .hl:hover, .hl.open { background: var(--teal); color: white; }
+  .hltip { display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: var(--ink); color: #eef5f0; font-size: 12px; font-weight: 400; padding: 7px 12px; border-radius: 8px; white-space: nowrap; z-index: 20; pointer-events: none; min-width: 200px; text-align: center; line-height: 1.45; }
+  .hltip::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: var(--ink); }
+  .hl.open .hltip { display: block; }
+
+  /* ── ANNOTATION ── */
+  .annotate { display: inline-flex; align-items: center; gap: 6px; background: var(--purple-light); border: 1px solid #c8b8f0; border-radius: 8px; padding: 4px 10px; font-size: 12px; color: var(--purple); font-weight: 600; margin: 4px 2px; cursor: default; }
+
+  /* ── VOCAB FLIP CARDS ── */
+  .vgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(195px, 1fr)); gap: 10px; margin-top: 8px; }
+  .vcard { background: white; border: 1.5px solid var(--border); border-radius: 11px; padding: 13px 15px; cursor: pointer; min-height: 82px; transition: all .2s; }
+  .vcard:hover { border-color: var(--teal); transform: translateY(-2px); box-shadow: 0 5px 16px rgba(26,110,110,.1); }
+  .vcard.flipped { background: var(--teal); border-color: var(--teal); }
+  .vcard .front .ve  { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .vcard .front .vex { font-size: 11px; color: var(--muted2); font-style: italic; line-height: 1.4; }
+  .vcard .back { display: none; }
+  .vcard.flipped .front { display: none; }
+  .vcard.flipped .back  { display: block; }
+  .vcard .back .vfr   { font-size: 14px; font-weight: 600; color: var(--teal-light); margin-bottom: 4px; }
+  .vcard .back .vhint { font-size: 11px; color: rgba(255,255,255,.88); line-height: 1.4; }
+  .tap-hint { font-size: 11px; color: var(--muted2); text-align: center; margin-top: 10px; font-style: italic; }
+
+  /* ── GRAMMAR BOX ── */
+  .grammar-box { background: var(--navy); border-radius: 14px; padding: 22px; margin-bottom: 16px; }
+  .grammar-box .clabel { color: rgba(255,215,100,.8); }
+  .rule-block { margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,.1); }
+  .rule-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .rule-title { font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 10px; }
+  .rule-row { display: flex; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; align-items: flex-start; }
+  .rule-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 10px; border-radius: 8px; flex-shrink: 0; margin-top: 2px; }
+  .rt-form    { background: rgba(34,85,204,.4);  color: #a8c4ff; }
+  .rt-example { background: rgba(201,150,58,.3); color: #f5d080; }
+  .rt-warning { background: rgba(255,80,80,.25); color: #ffaaaa; }
+  .rt-compare { background: rgba(6,214,160,.2);  color: #80f0cc; }
+  .rule-text { font-size: 14px; color: #c8d4ee; line-height: 1.6; }
+  .rule-text em { color: #eef2ff; font-style: normal; font-weight: 600; }
+  .formula-box { background: rgba(255,255,255,.07); border-radius: 10px; padding: 12px 16px; margin: 10px 0; }
+  .formula { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: #eef2ff; text-align: center; }
+  .formula span { color: var(--gold); }
+
+  /* ── RULE CARDS (new clean grammar) ── */
+  .rule-card { background: var(--cream); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 16px; overflow: hidden; }
+  .rule-card-header { display: flex; align-items: center; gap: 12px; padding: 14px 20px; }
+  .rule-card-header.r1 { background: #fff7e6; border-bottom: 1px solid #f0e0b8; }
+  .rule-card-header.r2 { background: #eef4ff; border-bottom: 1px solid #c8d8f8; }
+  .rule-card-header.r3 { background: #edf7f0; border-bottom: 1px solid #b8dfc8; }
+  .rule-number { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; padding: 3px 10px; border-radius: 10px; flex-shrink: 0; }
+  .r1 .rule-number { background: var(--gold); color: white; }
+  .r2 .rule-number { background: var(--blue); color: white; }
+  .r3 .rule-number { background: var(--green); color: white; }
+  .rule-headline { font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+  .rule-headline strong { font-weight: 800; }
+  .rule-card-body { padding: 16px 20px 6px; }
+
+  .formula-strip { display: flex; align-items: center; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+  .fpart { padding: 6px 14px; border-radius: 8px; font-size: 14px; font-weight: 700; }
+  .fpart-the  { background: var(--navy); color: var(--gold); }
+  .fpart-adj  { background: var(--border); color: var(--muted); font-style: italic; font-weight: 400; }
+  .fpart-end  { background: var(--orange); color: white; }
+
+  .rule-examples { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+  .eg-pill { background: white; border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 14px; font-size: 13px; color: var(--ink); }
+  .eg-pill strong { color: var(--navy); }
+  .eg-pill.eg-warn { background: #fff0e8; border-color: #f0c080; color: var(--orange); font-size: 12px; }
+  .rule-sentence { font-size: 14px; color: var(--muted); font-style: italic; padding: 10px 14px; background: white; border-radius: 8px; border-left: 3px solid var(--border); margin-bottom: 14px; }
+  .rule-sentence strong { color: var(--ink); font-style: normal; }
+
+  /* Irregulars grid */
+  .irreg-grid { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .irreg-item { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .irreg-base { font-size: 14px; font-weight: 600; color: var(--muted); min-width: 36px; }
+  .irreg-arrow { color: var(--muted2); font-size: 14px; }
+  .irreg-comp { font-size: 14px; color: var(--blue); min-width: 110px; }
+  .irreg-sup { font-size: 14px; font-weight: 700; color: var(--orange); background: var(--orange-light); padding: 3px 12px; border-radius: 8px; }
+
+  /* ── DRAG EXERCISE ── */
+  .drag-exercise { background: #f8f9fc; border-top: 1px solid var(--border); padding: 16px 20px 14px; }
+  .drag-instruction { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 12px; letter-spacing: .3px; }
+  .drag-sentence { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 14px; font-size: 15px; color: var(--ink); line-height: 1.8; }
+  .ds-static { color: var(--ink); }
+  .drop-zone {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 80px; height: 36px; padding: 0 10px;
+    border: 2px dashed #b0bcd8; border-radius: 8px;
+    background: white; font-size: 14px; font-weight: 600;
+    color: var(--navy); transition: all .18s; cursor: default;
+    vertical-align: middle;
+  }
+  .drop-zone.drag-over { border-color: var(--blue); background: var(--blue-light); }
+  .drop-zone.filled    { border-style: solid; border-color: var(--blue); background: var(--blue-light); color: var(--navy); cursor: pointer; }
+  .drop-zone.correct   { border-color: var(--green); background: var(--green-light); color: var(--green); }
+  .drop-zone.wrong     { border-color: #c0392b; background: var(--red-light); color: var(--red-dark); }
+  .drag-bank { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .drag-chip {
+    padding: 7px 16px; background: white; border: 1.5px solid var(--border);
+    border-radius: 20px; font-size: 14px; font-weight: 600; color: var(--ink);
+    cursor: grab; transition: all .15s; user-select: none;
+  }
+  .drag-chip:hover { background: var(--navy); color: var(--gold); border-color: var(--navy); transform: translateY(-1px); }
+  .drag-chip.dragging { opacity: .4; }
+  .drag-chip.used { opacity: .25; pointer-events: none; }
+  .drag-feedback { font-size: 13px; font-weight: 600; min-height: 20px; margin-bottom: 6px; }
+  .drag-feedback.ok   { color: var(--green); }
+  .drag-feedback.fail { color: #c0392b; }
+  .btn-reset { background: none; border: 1px solid var(--border); border-radius: 8px; padding: 4px 12px; font-size: 12px; color: var(--muted2); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .15s; }
+  .btn-reset:hover { border-color: var(--navy); color: var(--navy); }
+
+  /* ── COMPARISON TABLE ── */
+  .comp-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; border-radius: 10px; overflow: hidden; }
+  .comp-table th { padding: 10px 14px; text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+  .comp-table th:nth-child(1) { background: rgba(255,255,255,.08); color: rgba(238,242,255,.6); text-align: left; }
+  .comp-table th:nth-child(2) { background: rgba(34,85,204,.4); color: #a8c4ff; }
+  .comp-table th:nth-child(3) { background: rgba(201,150,58,.3); color: #f5d080; }
+  .comp-table td { padding: 10px 14px; border-top: 1px solid rgba(255,255,255,.07); color: #c8d4ee; font-size: 14px; }
+  .comp-table td:nth-child(1) { font-weight: 600; color: #eef2ff; }
+  .comp-table td:nth-child(2) { text-align: center; background: rgba(34,85,204,.1); }
+  .comp-table td:nth-child(3) { text-align: center; background: rgba(201,150,58,.1); }
+
+  /* ── FILL BLANK ── */
+  .fblock { margin-bottom: 14px; }
+  .fline  { font-size: 15px; line-height: 2.5; color: var(--ink); }
+  .blank  { display: inline-block; min-width: 120px; border: none; border-bottom: 2.5px solid var(--gold); padding: 0 6px 2px; margin: 0 3px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: transparent; text-align: center; transition: border-color .18s; }
+  .blank:focus   { outline: none; border-color: var(--blue); }
+  .blank.correct { border-color: var(--green); background: var(--green-light); border-radius: 4px 4px 0 0; }
+  .blank.wrong   { border-color: #c0392b; background: var(--red-light); border-radius: 4px 4px 0 0; }
+
+  /* ── ERROR CORRECTION ── */
+  .error-q { background: white; border: 1.5px solid var(--border); border-radius: 11px; padding: 14px 16px; margin-bottom: 10px; }
+  .error-sentence { font-size: 15px; color: var(--red-dark); font-weight: 500; margin-bottom: 10px; background: var(--red-light); padding: 8px 12px; border-radius: 8px; }
+  .fix-input { width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 9px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: white; transition: border-color .18s; }
+  .fix-input:focus   { outline: none; border-color: var(--blue); }
+  .fix-input.correct { border-color: var(--green); background: var(--green-light); }
+  .fix-input.wrong   { border-color: #c0392b; }
+
+  /* ── SCAFFOLD WRITING ── */
+  .scaffold-block { background: white; border: 1.5px solid var(--border); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; }
+  .scaffold-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 10px; border-radius: 8px; margin-bottom: 10px; }
+  .st-p { background: #fde8cc; color: #7a3a00; }
+  .st-t { background: var(--blue-light); color: var(--blue); }
+  .st-o { background: var(--green-light); color: var(--green); }
+  .st-d { background: var(--purple-light); color: var(--purple); }
+  .frame-line { font-size: 15px; line-height: 1.7; color: var(--ink); display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+  .frame-text { font-weight: 600; color: var(--teal); white-space: nowrap; }
+  .frame-input { flex: 1; min-width: 160px; border: none; border-bottom: 2.5px solid var(--gold); padding: 2px 6px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: transparent; transition: border-color .18s; }
+  .frame-input:focus { outline: none; border-color: var(--teal); }
+  .frame-hint { font-size: 11px; color: var(--muted2); font-style: italic; margin-top: 3px; }
+
+  /* ── ASSEMBLED MESSAGE ── */
+  .message-box { background: var(--navy); border-radius: 14px; padding: 22px; margin-bottom: 16px; display: none; }
+  .message-box .clabel { color: rgba(255,215,100,.8); }
+  .message-text { font-family: 'Cormorant Garamond', serif; font-size: 16px; line-height: 1.9; color: #c8d4ee; font-style: italic; }
+  .message-text .mframe { color: #eef2ff; font-style: normal; font-weight: 600; }
+
+  /* ── NOTICES ── */
+  .notice { border-radius: 10px; padding: 12px 16px; font-size: 13px; line-height: 1.6; margin-top: 14px; }
+  .n-blue   { background: var(--blue-light);   color: var(--navy); }
+  .n-gold   { background: var(--gold-light);   color: var(--gold-label); }
+  .n-green  { background: var(--green-light);  color: var(--green); }
+  .n-teal   { background: var(--teal-light);   color: var(--teal); }
+  .n-orange { background: var(--orange-light); color: var(--orange); }
+  .n-purple { background: var(--purple-light); color: var(--purple); }
+
+  /* ── FEEDBACK ── */
+  .fb { padding: 12px 15px; border-radius: 10px; font-size: 14px; line-height: 1.6; margin-top: 12px; display: none; }
+  .fb.show { display: block; }
+  .fb-ok   { background: var(--green-light); color: var(--green); border: 1px solid #a0d8b8; }
+  .fb-part { background: var(--gold-light);  color: var(--gold-label); border: 1px solid #e0c060; }
+
+  /* ── REVIEW BOX ── */
+  .rbox { background: var(--navy); border-radius: 14px; padding: 22px; margin-bottom: 16px; }
+  .rbox .clabel { color: rgba(255,215,100,.8); }
+  .rlist { list-style: none; margin-top: 8px; }
+  .rlist li { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.08); font-size: 14px; color: #c8d4ee; display: flex; gap: 10px; align-items: flex-start; line-height: 1.5; }
+  .rlist li:last-child { border-bottom: none; }
+  .rlist li::before { content: '→'; color: var(--gold); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── ANSWER INPUT ── */
+  .ainput { width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: white; resize: vertical; min-height: 52px; transition: border-color .18s; }
+  .ainput:focus { outline: none; border-color: var(--teal); }
+
+  /* ── BUTTONS ── */
+  .btn { padding: 12px 26px; border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .18s; }
+  .btn-p { background: var(--navy); color: var(--gold); }
+  .btn-p:hover { background: var(--navy-mid); transform: translateY(-1px); }
+  .btn-c { background: var(--gold); color: var(--navy); margin-top: 14px; }
+  .btn-c:hover { opacity: .88; }
+  .btn-reveal { background: var(--teal); color: white; }
+  .btn-reveal:hover { opacity: .88; }
+  .brow { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+
+  .divider { height: 1px; background: var(--border); margin: 18px 0; }
+
+  @media (max-width: 520px) {
+    .main { padding: 16px 12px 60px; }
+    .vgrid { grid-template-columns: 1fr 1fr; }
+    .frame-line { flex-direction: column; align-items: flex-start; }
+    .frame-input { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-series">Business English · 5-Pillar Series</div>
+  <h1>Pillar 2 · Session 2<br>Your Marketing Message</h1>
+  <div class="header-sub">Reading · Vocabulary · Superlatives · Writing · 50 min</div>
+  <div class="pillar-badge">
+    <div class="pdots">
+      <div class="pdot done"></div>
+      <div class="pdot done"></div>
+      <div class="pdot done"></div>
+      <div class="pdot active"></div>
+      <div class="pdot"></div>
+    </div>
+    Session 4 of 5
+  </div>
+</div>
+<div class="progress-bar">
+  <div class="progress-fill" id="pFill" style="width:20%"></div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav-btn active" onclick="goTo(0)">🔥 Warm-up</button>
+  <button class="nav-btn" onclick="goTo(1)">📖 Reading</button>
+  <button class="nav-btn" onclick="goTo(2)">🗂️ Vocabulary</button>
+  <button class="nav-btn" onclick="goTo(3)">📐 Grammar</button>
+  <button class="nav-btn" onclick="goTo(4)">✏️ Exercises</button>
+  <button class="nav-btn" onclick="goTo(5)">✍️ Write</button>
+  <button class="nav-btn" onclick="goTo(6)">📚 Appendix</button>
+</div>
+
+<div class="main">
+
+  <!-- ══════════════════════
+       0 · WARM-UP (5 min)
+  ══════════════════════ -->
+  <div class="panel active" id="panel-0">
+    <span class="slabel sl-warm">Warm-up · 5 min</span>
+    <div class="stitle">What do you remember?</div>
+    <div class="sdesc">Three quick recall questions — no notes, just speak.</div>
+
+    <div class="card">
+      <div class="clabel">Retrieval — Last Session</div>
+
+      <div class="recall">
+        <div class="rnum">1</div>
+        <div class="rtext">
+          What are the two types of marketing we talked about last lesson?
+          <div class="rhint">Name them and say one difference between them.</div>
+        </div>
+      </div>
+      <div class="recall">
+        <div class="rnum">2</div>
+        <div class="rtext">
+          Give me a comparative sentence about marketing — use "more… than" or "-er than".
+          <div class="rhint">💬 "Word of mouth is more… than…" / "Digital marketing is… than…"</div>
+        </div>
+      </div>
+      <div class="recall">
+        <div class="rnum">3</div>
+        <div class="rtext">
+          What does "to stand out" mean? Use it in a sentence about your business.
+          <div class="rhint">One sentence — speak first, then we move on.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice n-gold">
+      💡 <strong>Teacher note:</strong> If comparative recall is shaky, spend 2 extra minutes here before moving on — the grammar section builds directly on it. If it's solid, keep momentum and get to the reading.
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(1)">Continue to Reading →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       1 · READING (10 min)
+  ══════════════════════ -->
+  <div class="panel" id="panel-1">
+    <span class="slabel sl-read">Presentation · 10 min</span>
+    <div class="stitle">A Real Marketing Message</div>
+    <div class="sdesc">Read this real example from a wellness coaching brand. As you read, notice <em>how</em> they talk about themselves — not just <em>what</em> they say. Tap highlighted phrases to explore them.</div>
+
+    <div class="card">
+      <div class="clabel">Real Example · Wellness Coaching Brand Copy</div>
+
+      <div class="passage">
+        <strong>Are you living in your head — or living in your life?</strong><br><br>
+
+        Most people spend their days <span class="hl" onclick="this.classList.toggle('open')">managing stress<span class="hltip">manage stress = deal with stress day to day (not eliminate it)</span></span> rather than understanding it. They push through, stay busy, and hope things will get better. They rarely do — not without the right tools.<br><br>
+
+        At <em>Breathe Forward</em>, we believe that <span class="hl" onclick="this.classList.toggle('open')">the most powerful transformation<span class="hltip">"the most powerful" = superlative of "powerful" — today's grammar focus!</span></span> starts with the simplest thing: your breath. Our breathwork coaching helps you <span class="hl" onclick="this.classList.toggle('open')">reconnect with your body<span class="hltip">reconnect = come back to a connection you lost / se reconnecter</span></span>, release what you've been carrying, and find a <span class="hl" onclick="this.classList.toggle('open')">sustainable calm<span class="hltip">sustainable = that lasts, that you can maintain / durable</span></span> that actually lasts.<br><br>
+
+        This isn't <span class="hl" onclick="this.classList.toggle('open')">the fastest fix<span class="hltip">"the fastest" = superlative of "fast" — another one! Notice how superlatives make marketing more confident.</span></span>. But it is <span class="hl" onclick="this.classList.toggle('open')">the deepest one<span class="hltip">"the deepest" = superlative of "deep" — short adjective, add -est</span></span>.<br><br>
+
+        Our clients don't just feel better — they <span class="hl" onclick="this.classList.toggle('open')">understand why<span class="hltip">This is the same structure from Pillar 1! "They don't just… — they…" You already know this pattern.</span></span>. They leave with a personal practice, real insight, and <span class="hl" onclick="this.classList.toggle('open')">the confidence to keep going<span class="hltip">confidence = confiance — essential in coaching and marketing language</span></span> — even when things get hard.
+      </div>
+
+      <div class="notice n-teal">
+        💡 <strong>Notice:</strong> The text uses <em>"the most powerful"</em>, <em>"the fastest"</em>, and <em>"the deepest"</em>. These are <strong>superlatives</strong> — the grammar for today. They make marketing copy sound confident and clear.
+      </div>
+    </div>
+
+    <!-- ANALYSIS CARD -->
+    <div class="card">
+      <div class="clabel">Read Like a Coach — Analyse the Copy</div>
+      <div style="font-size:14px; color:var(--muted); margin-bottom:14px;">Answer orally first. Write key words only.</div>
+
+      <div style="margin-bottom:14px;">
+        <div style="font-size:15px; font-weight:500; color:var(--ink); margin-bottom:6px;">1. What problem does this brand describe? Does it match what you know about breathwork clients?</div>
+        <textarea class="ainput" placeholder="Your thoughts — agree / disagree / add to it…" rows="2"></textarea>
+      </div>
+      <div style="margin-bottom:14px;">
+        <div style="font-size:15px; font-weight:500; color:var(--ink); margin-bottom:6px;">2. What is the strongest sentence in this text — and why?</div>
+        <textarea class="ainput" placeholder="Your choice — explain in English…" rows="2"></textarea>
+      </div>
+      <div>
+        <div style="font-size:15px; font-weight:500; color:var(--ink); margin-bottom:6px;">3. What would you change or add, based on your experience?</div>
+        <textarea class="ainput" placeholder="You're the expert here — what's missing?" rows="2"></textarea>
+      </div>
+
+      <div class="notice n-gold" style="margin-top:14px;">
+        💡 <strong>Teacher note:</strong> Question 3 is the key one — let him speak at length. His expertise is real. Note the vocabulary he reaches for but doesn't have — those are the words to teach.
+      </div>
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(2)">Continue to Vocabulary →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       2 · VOCABULARY (7 min)
+  ══════════════════════ -->
+  <div class="panel" id="panel-2">
+    <span class="slabel sl-vocab">Vocabulary · 7 min</span>
+    <div class="stitle">Marketing & Wellness Language</div>
+    <div class="sdesc">Words from the reading — and words Mehdi will need to write his own marketing message. Tap to flip.</div>
+
+    <div class="card">
+      <div class="clabel">English ↔ French · Tap to flip</div>
+      <div class="vgrid">
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">to reconnect with</div><div class="vex">"I help clients reconnect with their body."</div></div>
+          <div class="back"><div class="vfr">se reconnecter à</div><div class="vhint">reconnect with your body / your breath / yourself</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">sustainable</div><div class="vex">"We build a sustainable calm."</div></div>
+          <div class="back"><div class="vfr">durable / pérenne</div><div class="vhint">sustainable = lasts over time, not just a quick fix</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">to release</div><div class="vex">"Breathwork helps you release tension."</div></div>
+          <div class="back"><div class="vfr">relâcher / libérer</div><div class="vhint">release stress / tension / emotion / blocks</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">transformation</div><div class="vex">"The most powerful transformation starts with breath."</div></div>
+          <div class="back"><div class="vfr">transformation</div><div class="vhint">Same word! But pronounced differently in English.</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">insight</div><div class="vex">"Clients leave with real insight."</div></div>
+          <div class="back"><div class="vfr">prise de conscience / compréhension profonde</div><div class="vhint">insight = a deep understanding you didn't have before</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">to push through</div><div class="vex">"Most people just push through the stress."</div></div>
+          <div class="back"><div class="vfr">forcer, persévérer malgré tout</div><div class="vhint">push through = continue despite difficulty</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">positioning</div><div class="vex">"What is your positioning in the market?"</div></div>
+          <div class="back"><div class="vfr">positionnement</div><div class="vhint">How you place yourself vs. competitors</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">to resonate</div><div class="vex">"This message resonates with my clients."</div></div>
+          <div class="back"><div class="vfr">résonner / parler à quelqu'un</div><div class="vhint">"It resonates" = it connects, it feels true</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">awareness</div><div class="vex">"Breathwork builds body awareness."</div></div>
+          <div class="back"><div class="vfr">conscience / prise de conscience</div><div class="vhint">awareness = the state of being conscious of something</div></div>
+        </div>
+
+        <div class="vcard" onclick="this.classList.toggle('flipped')">
+          <div class="front"><div class="ve">to carry (weight / stress)</div><div class="vex">"Release what you've been carrying."</div></div>
+          <div class="back"><div class="vfr">porter (un poids, du stress)</div><div class="vhint">Metaphorical use — very common in wellness language</div></div>
+        </div>
+
+      </div>
+      <div class="tap-hint">Tap a card to flip · Tap again to flip back</div>
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(3)">Continue to Grammar →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       3 · GRAMMAR (8 min)
+  ══════════════════════ -->
+  <div class="panel" id="panel-3">
+    <span class="slabel sl-gram">Grammar · 8 min</span>
+    <div class="stitle">Superlatives</div>
+    <div class="sdesc">Last lesson you learned comparatives. Today: superlatives — when something is the best, the strongest, the most. Read each rule, then do the drag exercise underneath it.</div>
+
+    <!-- ── RULE 1 ── -->
+    <div class="rule-card">
+      <div class="rule-card-header r1">
+        <span class="rule-number">Rule 1</span>
+        <span class="rule-headline">Short adjectives (1 syllable) → <strong>the</strong> + adjective + <strong>-est</strong></span>
+      </div>
+      <div class="rule-card-body">
+        <div class="formula-strip">
+          <span class="fpart fpart-the">the</span>
+          <span class="fpart fpart-adj">adjective</span>
+          <span class="fpart fpart-end">-est</span>
+        </div>
+        <div class="rule-examples">
+          <span class="eg-pill">fast → <strong>the fastest</strong></span>
+          <span class="eg-pill">deep → <strong>the deepest</strong></span>
+          <span class="eg-pill">clear → <strong>the clearest</strong></span>
+          <span class="eg-pill eg-warn">big → <strong>the biggest</strong> ⚠️ double consonant</span>
+        </div>
+        <div class="rule-sentence">"This is <strong>the fastest</strong> way to build trust with a client."</div>
+      </div>
+
+      <!-- DRAG EXERCISE 1 -->
+      <div class="drag-exercise">
+        <div class="drag-instruction">🎯 Drag each word into the correct slot to build the superlative sentence.</div>
+        <div class="drag-sentence" id="ds1">
+          <span class="ds-static">Breathwork is</span>
+          <span class="drop-zone" data-answer="the" data-ex="1" id="dz1a"></span>
+          <span class="drop-zone" data-answer="deepest" data-ex="1" id="dz1b"></span>
+          <span class="ds-static">form of bodywork.</span>
+        </div>
+        <div class="drag-bank" id="bank1">
+          <span class="drag-chip" draggable="true" data-word="the" data-ex="1">the</span>
+          <span class="drag-chip" draggable="true" data-word="most" data-ex="1">most</span>
+          <span class="drag-chip" draggable="true" data-word="deepest" data-ex="1">deepest</span>
+          <span class="drag-chip" draggable="true" data-word="deeper" data-ex="1">deeper</span>
+        </div>
+        <div class="drag-feedback" id="df1"></div>
+        <button class="btn-reset" onclick="resetDrag(1)">↺ Reset</button>
+      </div>
+    </div>
+
+    <!-- ── RULE 2 ── -->
+    <div class="rule-card">
+      <div class="rule-card-header r2">
+        <span class="rule-number">Rule 2</span>
+        <span class="rule-headline">Long adjectives (2+ syllables) → <strong>the most</strong> / <strong>the least</strong> + adjective</span>
+      </div>
+      <div class="rule-card-body">
+        <div class="formula-strip">
+          <span class="fpart fpart-the">the most</span>
+          <span class="fpart fpart-adj">adjective</span>
+        </div>
+        <div class="rule-examples">
+          <span class="eg-pill">effective → <strong>the most effective</strong></span>
+          <span class="eg-pill">powerful → <strong>the most powerful</strong></span>
+          <span class="eg-pill eg-warn">❌ the most fastest &nbsp;·&nbsp; ❌ the most biggest</span>
+        </div>
+        <div class="rule-sentence">"Word of mouth is <strong>the most powerful</strong> tool a coach has."</div>
+      </div>
+
+      <!-- DRAG EXERCISE 2 -->
+      <div class="drag-exercise">
+        <div class="drag-instruction">🎯 Drag the words into the right order.</div>
+        <div class="drag-sentence" id="ds2">
+          <span class="ds-static">A clear message is</span>
+          <span class="drop-zone" data-answer="the" data-ex="2" id="dz2a"></span>
+          <span class="drop-zone" data-answer="most" data-ex="2" id="dz2b"></span>
+          <span class="drop-zone" data-answer="important" data-ex="2" id="dz2c"></span>
+          <span class="ds-static">part of your marketing.</span>
+        </div>
+        <div class="drag-bank" id="bank2">
+          <span class="drag-chip" draggable="true" data-word="the" data-ex="2">the</span>
+          <span class="drag-chip" draggable="true" data-word="most" data-ex="2">most</span>
+          <span class="drag-chip" draggable="true" data-word="important" data-ex="2">important</span>
+          <span class="drag-chip" draggable="true" data-word="more" data-ex="2">more</span>
+        </div>
+        <div class="drag-feedback" id="df2"></div>
+        <button class="btn-reset" onclick="resetDrag(2)">↺ Reset</button>
+      </div>
+    </div>
+
+    <!-- ── RULE 3 ── -->
+    <div class="rule-card">
+      <div class="rule-card-header r3">
+        <span class="rule-number">Rule 3</span>
+        <span class="rule-headline">Irregular forms — must be memorised</span>
+      </div>
+      <div class="rule-card-body">
+        <div class="irreg-grid">
+          <div class="irreg-item">
+            <div class="irreg-base">good</div>
+            <div class="irreg-arrow">→</div>
+            <div class="irreg-comp">better than</div>
+            <div class="irreg-arrow">→</div>
+            <div class="irreg-sup">the best</div>
+          </div>
+          <div class="irreg-item">
+            <div class="irreg-base">bad</div>
+            <div class="irreg-arrow">→</div>
+            <div class="irreg-comp">worse than</div>
+            <div class="irreg-arrow">→</div>
+            <div class="irreg-sup">the worst</div>
+          </div>
+          <div class="irreg-item">
+            <div class="irreg-base">far</div>
+            <div class="irreg-arrow">→</div>
+            <div class="irreg-comp">farther than</div>
+            <div class="irreg-arrow">→</div>
+            <div class="irreg-sup">the farthest</div>
+          </div>
+        </div>
+        <div class="rule-sentence">"<strong>The best</strong> marketing is a client who tells their story."</div>
+      </div>
+
+      <!-- DRAG EXERCISE 3 -->
+      <div class="drag-exercise">
+        <div class="drag-instruction">🎯 Complete the sentence with the correct irregular superlative.</div>
+        <div class="drag-sentence" id="ds3">
+          <span class="ds-static">Building trust is</span>
+          <span class="drop-zone" data-answer="the" data-ex="3" id="dz3a"></span>
+          <span class="drop-zone" data-answer="best" data-ex="3" id="dz3b"></span>
+          <span class="ds-static">investment for your business.</span>
+        </div>
+        <div class="drag-bank" id="bank3">
+          <span class="drag-chip" draggable="true" data-word="the" data-ex="3">the</span>
+          <span class="drag-chip" draggable="true" data-word="best" data-ex="3">best</span>
+          <span class="drag-chip" draggable="true" data-word="most" data-ex="3">most</span>
+          <span class="drag-chip" draggable="true" data-word="better" data-ex="3">better</span>
+        </div>
+        <div class="drag-feedback" id="df3"></div>
+        <button class="btn-reset" onclick="resetDrag(3)">↺ Reset</button>
+      </div>
+    </div>
+
+    <!-- ── SIDE BY SIDE TABLE ── -->
+    <div class="card" style="margin-top:4px;">
+      <div class="clabel">🔁 Comparatives vs. Superlatives — at a glance</div>
+      <table style="width:100%; border-collapse:collapse; font-size:14px;">
+        <thead>
+          <tr>
+            <th style="padding:9px 14px; text-align:left; background:#f0f4ff; color:var(--navy); font-size:11px; letter-spacing:1px; text-transform:uppercase; border-radius:8px 0 0 0;">Adjective</th>
+            <th style="padding:9px 14px; text-align:center; background:#ddeaff; color:var(--blue); font-size:11px; letter-spacing:1px; text-transform:uppercase;">Comparative</th>
+            <th style="padding:9px 14px; text-align:center; background:var(--orange-light); color:var(--orange); font-size:11px; letter-spacing:1px; text-transform:uppercase; border-radius:0 8px 0 0;">Superlative</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-top:1px solid var(--border);">
+            <td style="padding:9px 14px; font-weight:600; color:var(--ink);">fast</td>
+            <td style="padding:9px 14px; text-align:center; color:var(--muted);">faster than</td>
+            <td style="padding:9px 14px; text-align:center; font-weight:600; color:var(--orange);">the fastest</td>
+          </tr>
+          <tr style="border-top:1px solid var(--border); background:#fafbfd;">
+            <td style="padding:9px 14px; font-weight:600; color:var(--ink);">deep</td>
+            <td style="padding:9px 14px; text-align:center; color:var(--muted);">deeper than</td>
+            <td style="padding:9px 14px; text-align:center; font-weight:600; color:var(--orange);">the deepest</td>
+          </tr>
+          <tr style="border-top:1px solid var(--border);">
+            <td style="padding:9px 14px; font-weight:600; color:var(--ink);">effective</td>
+            <td style="padding:9px 14px; text-align:center; color:var(--muted);">more effective than</td>
+            <td style="padding:9px 14px; text-align:center; font-weight:600; color:var(--orange);">the most effective</td>
+          </tr>
+          <tr style="border-top:1px solid var(--border); background:#fafbfd;">
+            <td style="padding:9px 14px; font-weight:600; color:var(--ink);">powerful</td>
+            <td style="padding:9px 14px; text-align:center; color:var(--muted);">more powerful than</td>
+            <td style="padding:9px 14px; text-align:center; font-weight:600; color:var(--orange);">the most powerful</td>
+          </tr>
+          <tr style="border-top:1px solid var(--border);">
+            <td style="padding:9px 14px; font-weight:600; color:var(--ink);">good</td>
+            <td style="padding:9px 14px; text-align:center; color:var(--muted);">better than</td>
+            <td style="padding:9px 14px; text-align:center; font-weight:600; color:var(--orange);">the best</td>
+          </tr>
+          <tr style="border-top:1px solid var(--border); background:#fafbfd;">
+            <td style="padding:9px 14px; font-weight:600; color:var(--ink);">bad</td>
+            <td style="padding:9px 14px; text-align:center; color:var(--muted);">worse than</td>
+            <td style="padding:9px 14px; text-align:center; font-weight:600; color:var(--orange);">the worst</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(4)">Continue to Exercises →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       4 · EXERCISES (8 min)
+  ══════════════════════ -->
+  <div class="panel" id="panel-4">
+    <span class="slabel sl-prac">Exercises · 8 min</span>
+    <div class="stitle">Practise the Superlative</div>
+    <div class="sdesc">Two exercises. Speak each answer first — then write.</div>
+
+    <!-- EXERCISE A -->
+    <div class="card">
+      <div class="clabel">Exercise A · Fill in the superlative form</div>
+      <div style="font-size:13px; color:var(--muted); margin-bottom:16px;">Write the correct superlative form of the adjective in brackets.</div>
+
+      <div class="fblock">
+        <div class="fline">1. Breathwork is <input class="blank" id="b1" placeholder="________" size="16"> (direct) way to access the nervous system.</div>
+      </div>
+      <div class="fblock">
+        <div class="fline">2. Word of mouth is <input class="blank" id="b2" placeholder="________" size="10"> (powerful) marketing tool a coach has.</div>
+      </div>
+      <div class="fblock">
+        <div class="fline">3. A clear message is <input class="blank" id="b3" placeholder="________" size="10"> (important) part of any marketing strategy.</div>
+      </div>
+      <div class="fblock">
+        <div class="fline">4. Building trust is <input class="blank" id="b4" placeholder="________" size="10"> (good) thing you can do for your business.</div>
+      </div>
+      <div class="fblock">
+        <div class="fline">5. This is <input class="blank" id="b5" placeholder="________" size="10"> (deep) work I have ever done with a client.</div>
+      </div>
+      <div class="fblock">
+        <div class="fline">6. The <input class="blank" id="b6" placeholder="________" size="10"> (big) mistake in marketing is talking about yourself instead of your client.</div>
+      </div>
+
+      <button class="btn btn-c" onclick="checkA()">Check answers ✓</button>
+      <div class="fb" id="fbA"></div>
+    </div>
+
+    <!-- EXERCISE B: Error correction -->
+    <div class="card">
+      <div class="clabel">Exercise B · Correct the mistake</div>
+      <div style="font-size:13px; color:var(--muted); margin-bottom:14px;">Each sentence has one error. Write the correct version.</div>
+
+      <div class="error-q">
+        <div class="error-sentence">1. "Breathwork is the most deepest form of bodywork."</div>
+        <input class="fix-input" id="e1" placeholder="Write the correct sentence…">
+        <div style="font-size:11px; color:var(--muted2); margin-top:6px; font-style:italic;">Hint: "deep" is short — which rule?</div>
+      </div>
+      <div class="error-q">
+        <div class="error-sentence">2. "This is the more effective approach for stress."</div>
+        <input class="fix-input" id="e2" placeholder="Write the correct sentence…">
+        <div style="font-size:11px; color:var(--muted2); margin-top:6px; font-style:italic;">Hint: superlative needs "the most" — not "the more"</div>
+      </div>
+      <div class="error-q">
+        <div class="error-sentence">3. "My clients get the most best results in 4 sessions."</div>
+        <input class="fix-input" id="e3" placeholder="Write the correct sentence…">
+        <div style="font-size:11px; color:var(--muted2); margin-top:6px; font-style:italic;">Hint: "good" is irregular — what's the superlative?</div>
+      </div>
+
+      <button class="btn btn-c" onclick="checkB()">Check answers ✓</button>
+      <div class="fb" id="fbB"></div>
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(5)">Continue to Writing →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       5 · WRITING (12 min)
+  ══════════════════════ -->
+  <div class="panel" id="panel-5">
+    <span class="slabel sl-write">Guided Writing · 12 min</span>
+    <div class="stitle">Write Durim's Marketing Message</div>
+    <div class="sdesc">Use the sentence frames to write a short marketing message for the breathwork practice. <strong>Speak each sentence aloud before you write it.</strong> Use at least one superlative.</div>
+
+    <div class="notice n-teal" style="margin-bottom:18px;">
+      🧘 <strong>Remember:</strong> You're writing for Durim's breathwork practice. You know this business — you interviewed him in Lesson 2. Use what you know. Think from the <em>client's</em> perspective.
+    </div>
+
+    <!-- HOOK -->
+    <div class="card">
+      <div class="clabel">① Opening Hook — 1 sentence</div>
+      <div class="scaffold-block">
+        <span class="scaffold-tag st-p">The Hook</span>
+        <div style="font-size:13px; color:var(--muted); margin-bottom:10px;">A strong marketing message starts with a question or a bold statement that the reader recognises.</div>
+        <div class="frame-line">
+          <span class="frame-text">Do you feel</span>
+          <input class="frame-input" id="s1" placeholder="stressed / disconnected / trapped in your head…">
+          <span class="frame-text">?</span>
+        </div>
+        <div class="frame-hint">→ Use a feeling your client has. Make them say "yes, that's me."</div>
+      </div>
+    </div>
+
+    <!-- PROBLEM -->
+    <div class="card">
+      <div class="clabel">② The Problem — 1–2 sentences</div>
+      <div class="scaffold-block">
+        <span class="scaffold-tag st-p">Problem</span>
+        <div class="frame-line">
+          <span class="frame-text">Most people</span>
+          <input class="frame-input" id="s2" placeholder="live in their head / hold their breath without knowing…">
+        </div>
+        <div class="frame-hint">→ Describe the problem your client has — in their words, not yours.</div>
+      </div>
+      <div class="scaffold-block">
+        <span class="scaffold-tag st-p">Consequence</span>
+        <div class="frame-line">
+          <span class="frame-text">Without support, they</span>
+          <input class="frame-input" id="s3" placeholder="stay stuck / lose energy / can't sleep…">
+        </div>
+        <div class="frame-hint">→ What happens if they do nothing?</div>
+      </div>
+    </div>
+
+    <!-- TRANSFORMATION -->
+    <div class="card">
+      <div class="clabel">③ The Solution — 1–2 sentences</div>
+      <div class="scaffold-block">
+        <span class="scaffold-tag st-t">What you do</span>
+        <div class="frame-line">
+          <span class="frame-text">Through breathwork, I help clients</span>
+          <input class="frame-input" id="s4" placeholder="reconnect with their body / release stress / find calm…">
+        </div>
+        <div class="frame-hint">→ Use a verb from today's vocabulary: reconnect / release / build awareness / carry less…</div>
+      </div>
+      <div class="scaffold-block">
+        <span class="scaffold-tag st-t">How it's different</span>
+        <div class="frame-line">
+          <span class="frame-text">This is</span>
+          <input class="frame-input" id="s5" placeholder="the most direct / the deepest / the most natural…">
+          <span class="frame-text" style="white-space:nowrap;">approach to</span>
+          <input class="frame-input" id="s5b" placeholder="stress / the nervous system / emotional health…" style="flex:1; min-width:120px;">
+        </div>
+        <div class="frame-hint">→ Use a <strong>superlative</strong> here — make it confident.</div>
+      </div>
+    </div>
+
+    <!-- OUTCOME -->
+    <div class="card">
+      <div class="clabel">④ The Outcome — 1–2 sentences</div>
+      <div class="scaffold-block">
+        <span class="scaffold-tag st-o">Result</span>
+        <div class="frame-line">
+          <span class="frame-text">As a result, my clients</span>
+          <input class="frame-input" id="s6" placeholder="feel calmer / sleep better / have more energy…">
+        </div>
+        <div class="frame-hint">→ Concrete, measurable, real. What do they tell you after?</div>
+      </div>
+      <div class="scaffold-block">
+        <span class="scaffold-tag st-o">Closing line</span>
+        <div class="frame-line">
+          <span class="frame-text">They don't just feel better —</span>
+          <input class="frame-input" id="s7" placeholder="they understand why / they have a practice / they breathe differently…">
+        </div>
+        <div class="frame-hint">→ Same powerful structure from Pillar 1. End strong.</div>
+      </div>
+    </div>
+
+    <!-- ASSEMBLE -->
+    <button class="btn btn-reveal" onclick="buildMessage()" style="margin-bottom:16px; width:100%; padding:14px;">
+      Assemble my marketing message →
+    </button>
+
+    <div class="message-box" id="msgBox">
+      <div class="clabel">📣 Durim's Marketing Message</div>
+      <div class="message-text" id="msgText"></div>
+    </div>
+
+    <div class="notice n-green">
+      💡 <strong>Teacher note:</strong> Once assembled, read it together. Ask: <em>"Is this true? Would you use this?"</em> If Mehdi has better words, help him say them in English — don't impose the frame over his expertise. The frames are a starting point, not a ceiling.
+    </div>
+
+    <!-- REVIEW -->
+    <div class="rbox" style="margin-top:18px;">
+      <div class="clabel">📅 Spaced Review & Next Steps</div>
+      <ul class="rlist">
+        <li>Session 6 — free recall: superlative of 5 adjectives from memory — fast / effective / good / deep / powerful</li>
+        <li>Session 6 — spaced check: read the marketing message aloud again — what would he change now?</li>
+        <li>Next lesson — <strong>Pillar 3: Selling</strong> — how do you turn interest into a client? + superlatives in context</li>
+        <li>Homework — write a 3–5 sentence marketing message for <em>his own</em> coaching practice using the same frames</li>
+        <li>Homework — find one sentence in English from a brand he likes — bring it to next session to discuss</li>
+      </ul>
+    </div>
+
+    <div style="text-align:center; padding:18px 0;">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:700; color:var(--ink); margin-bottom:5px;">Pillar 2 · Session 2 complete. ✍️</div>
+      <div style="font-size:13px; color:var(--muted2);">Marketing message — read, analysed, written.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       6 · APPENDIX — Irregular Adjectives
+  ══════════════════════════════════ -->
+  <div class="panel" id="panel-6">
+    <span class="slabel" style="background:#f0f4ff; color:var(--navy);">📚 Appendix</span>
+    <div class="stitle">Irregular Adjectives</div>
+    <div class="sdesc">These adjectives do <strong>not</strong> follow the normal rules. They must be memorised. Study the table, then test yourself with the flashcards below.</div>
+
+    <!-- FULL TABLE -->
+    <div class="card">
+      <div class="clabel">Complete Reference Table</div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%; border-collapse:collapse; font-size:14px; min-width:480px;">
+          <thead>
+            <tr>
+              <th style="padding:10px 14px; text-align:left; background:#f0f4ff; color:var(--navy); font-size:11px; letter-spacing:1.5px; text-transform:uppercase; border-bottom:2px solid var(--border);">Base form</th>
+              <th style="padding:10px 14px; text-align:center; background:#ddeaff; color:var(--blue); font-size:11px; letter-spacing:1.5px; text-transform:uppercase; border-bottom:2px solid var(--border);">Comparative</th>
+              <th style="padding:10px 14px; text-align:center; background:var(--orange-light); color:var(--orange); font-size:11px; letter-spacing:1.5px; text-transform:uppercase; border-bottom:2px solid var(--border);">Superlative</th>
+              <th style="padding:10px 14px; text-align:left; background:#f5f4f0; color:var(--muted); font-size:11px; letter-spacing:1.5px; text-transform:uppercase; border-bottom:2px solid var(--border);">Example sentence</th>
+            </tr>
+          </thead>
+          <tbody id="irreg-table-body">
+            <!-- rows injected by JS -->
+          </tbody>
+        </table>
+      </div>
+      <div class="notice n-gold" style="margin-top:14px;">
+        💡 <strong>How to study:</strong> Cover the comparative and superlative columns with your hand. Look at the base form — say both forms out loud. Then check. Repeat until all 12 come instantly.
+      </div>
+    </div>
+
+    <!-- SELF-TEST FLASHCARDS -->
+    <div class="card">
+      <div class="clabel">Self-Test · Flashcards</div>
+      <div style="font-size:13px; color:var(--muted); margin-bottom:16px;">
+        Tap the card to reveal the comparative and superlative. Work through all 12 until you get every one right first time.
+      </div>
+
+      <!-- PROGRESS -->
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+        <div style="flex:1; height:6px; background:var(--border); border-radius:3px; overflow:hidden;">
+          <div id="fc-progress-bar" style="height:100%; background:linear-gradient(90deg, var(--green), var(--blue)); border-radius:3px; width:0%; transition:width .4s;"></div>
+        </div>
+        <div id="fc-progress-text" style="font-size:13px; font-weight:600; color:var(--muted); white-space:nowrap;">0 / 12</div>
+      </div>
+
+      <!-- CARD DISPLAY -->
+      <div id="fc-card" style="background:white; border:2px solid var(--border); border-radius:14px; padding:28px 22px; text-align:center; cursor:pointer; min-height:140px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; transition:border-color .2s;" onclick="flipCard()">
+        <div id="fc-front">
+          <div style="font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted2); margin-bottom:8px;">Base form</div>
+          <div id="fc-base" style="font-family:'Cormorant Garamond',serif; font-size:36px; font-weight:700; color:var(--ink);"></div>
+          <div style="font-size:12px; color:var(--muted2); margin-top:8px;">Tap to reveal →</div>
+        </div>
+        <div id="fc-back" style="display:none; width:100%;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+            <div style="background:var(--blue-light); border-radius:10px; padding:12px; text-align:center;">
+              <div style="font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--blue); margin-bottom:5px;">Comparative</div>
+              <div id="fc-comp" style="font-size:18px; font-weight:700; color:var(--navy);"></div>
+            </div>
+            <div style="background:var(--orange-light); border-radius:10px; padding:12px; text-align:center;">
+              <div style="font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--orange); margin-bottom:5px;">Superlative</div>
+              <div id="fc-sup" style="font-size:18px; font-weight:700; color:var(--orange);"></div>
+            </div>
+          </div>
+          <div id="fc-example" style="font-size:13px; color:var(--muted); font-style:italic; background:#f8f9fc; padding:8px 12px; border-radius:8px; text-align:left;"></div>
+        </div>
+      </div>
+
+      <!-- SELF-MARK BUTTONS -->
+      <div id="fc-mark-row" style="display:none; margin-top:14px; display:none;">
+        <div style="font-size:13px; color:var(--muted); text-align:center; margin-bottom:10px;">Did you know it?</div>
+        <div style="display:flex; gap:10px; justify-content:center;">
+          <button onclick="markCard(false)" style="padding:10px 24px; border:2px solid #e0b0b0; border-radius:10px; background:#fff5f5; color:#b00020; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer;">✗ Not yet</button>
+          <button onclick="markCard(true)"  style="padding:10px 24px; border:2px solid #a8d8b8; border-radius:10px; background:var(--green-light); color:var(--green); font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer;">✓ Got it</button>
+        </div>
+      </div>
+
+      <!-- NAVIGATION -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px;">
+        <button onclick="prevCard()" style="padding:8px 16px; border:1.5px solid var(--border); border-radius:9px; background:white; font-family:'DM Sans',sans-serif; font-size:13px; color:var(--muted); cursor:pointer;">← Previous</button>
+        <div id="fc-counter" style="font-size:13px; font-weight:600; color:var(--muted);">1 / 12</div>
+        <button onclick="nextCard()" style="padding:8px 16px; border:1.5px solid var(--border); border-radius:9px; background:white; font-family:'DM Sans',sans-serif; font-size:13px; color:var(--muted); cursor:pointer;">Next →</button>
+      </div>
+
+      <!-- RESET -->
+      <div style="text-align:center; margin-top:14px;">
+        <button onclick="resetFlashcards()" style="padding:7px 18px; border:1px solid var(--border); border-radius:8px; background:none; font-family:'DM Sans',sans-serif; font-size:12px; color:var(--muted2); cursor:pointer;">↺ Restart from beginning</button>
+      </div>
+    </div>
+
+    <!-- HOMEWORK REMINDER -->
+    <div class="rbox">
+      <div class="clabel">📝 Homework — Irregular Adjectives</div>
+      <ul class="rlist">
+        <li>Study all 12 irregular forms until you can produce the comparative and superlative instantly from the base form</li>
+        <li>Write one original sentence for each of these 5: <em>good, bad, little, much/many, far</em></li>
+        <li>Next session — teacher will test 6 at random from memory, no notes</li>
+      </ul>
+    </div>
+
+  </div>
+
+</div><!-- /main -->
+
+<script>
+  let cur = 0;
+  const total = 7;
+  const btns = document.querySelectorAll('.nav-btn');
+
+  function goTo(i) {
+    document.getElementById('panel-' + cur).classList.remove('active');
+    btns[cur].classList.remove('active');
+    btns[cur].classList.add('done');
+    cur = i;
+    document.getElementById('panel-' + cur).classList.add('active');
+    btns[cur].classList.add('active');
+    btns[cur].classList.remove('done');
+    document.getElementById('pFill').style.width = Math.round(((i + 1) / total) * 100) + '%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ── EXERCISE A ── */
+  const answersA = {
+    b1: 'the most direct',
+    b2: 'the most powerful',
+    b3: 'the most important',
+    b4: 'the best',
+    b5: 'the deepest',
+    b6: 'the biggest'
+  };
+
+  function checkA() {
+    let score = 0;
+    const tot = Object.keys(answersA).length;
+    for (const [id, ans] of Object.entries(answersA)) {
+      const el = document.getElementById(id);
+      const val = el.value.trim().toLowerCase();
+      if (val === ans) { el.classList.add('correct'); el.classList.remove('wrong'); score++; }
+      else { el.classList.add('wrong'); el.classList.remove('correct'); }
+    }
+    const fb = document.getElementById('fbA');
+    fb.classList.add('show');
+    if (score === tot) {
+      fb.className = 'fb fb-ok show';
+      fb.innerHTML = '✅ <strong>Perfect — ' + score + '/' + tot + '!</strong> All three superlative rules applied correctly.';
+    } else {
+      fb.className = 'fb fb-part show';
+      fb.innerHTML = '⚡ <strong>' + score + '/' + tot + ' correct.</strong> Check the red blanks — look at the grammar rules.';
+    }
+  }
+
+  /* ── EXERCISE B ── */
+  function checkB() {
+    const checks = {
+      e1: v => v.includes('the deepest') && !v.includes('most deep'),
+      e2: v => v.includes('the most effective') && !v.includes('the more'),
+      e3: v => v.includes('the best') && !v.includes('most best')
+    };
+    let score = 0;
+    const tot = Object.keys(checks).length;
+    for (const [id, fn] of Object.entries(checks)) {
+      const el = document.getElementById(id);
+      const val = el.value.trim().toLowerCase().replace(/['']/g, "'");
+      if (fn(val)) { el.classList.add('correct'); el.classList.remove('wrong'); score++; }
+      else { el.classList.add('wrong'); el.classList.remove('correct'); }
+    }
+    const fb = document.getElementById('fbB');
+    fb.classList.add('show');
+    if (score === tot) {
+      fb.className = 'fb fb-ok show';
+      fb.innerHTML = '✅ <strong>All ' + tot + ' errors corrected!</strong> You know the difference between comparatives and superlatives.';
+    } else {
+      fb.className = 'fb fb-part show';
+      fb.innerHTML = '⚡ <strong>' + score + '/' + tot + ' correct.</strong> Re-read the grammar table and try the red ones again.';
+    }
+  }
+
+  /* ── DRAG & DROP ── */
+  const dragState = { word: null, chip: null, ex: null };
+
+  // Config per exercise: drop zone ids and correct answers
+  const dragConfig = {
+    1: { zones: ['dz1a','dz1b'], bank: 'bank1', fb: 'df1' },
+    2: { zones: ['dz2a','dz2b','dz2c'], bank: 'bank2', fb: 'df2' },
+    3: { zones: ['dz3a','dz3b'], bank: 'bank3', fb: 'df3' }
+  };
+
+  function initDrag() {
+    document.querySelectorAll('.drag-chip').forEach(chip => {
+      chip.addEventListener('dragstart', e => {
+        dragState.word = chip.dataset.word;
+        dragState.chip = chip;
+        dragState.ex   = parseInt(chip.dataset.ex);
+        chip.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+      });
+      chip.addEventListener('dragend', () => chip.classList.remove('dragging'));
+    });
+
+    document.querySelectorAll('.drop-zone').forEach(zone => {
+      zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+      zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+      zone.addEventListener('drop', e => {
+        e.preventDefault();
+        zone.classList.remove('drag-over');
+        if (!dragState.word) return;
+        // If zone already filled, return word to bank
+        if (zone.dataset.filled) returnToBank(zone.dataset.filled, parseInt(zone.dataset.ex));
+        // Place word
+        zone.textContent = dragState.word;
+        zone.dataset.filled = dragState.word;
+        zone.classList.add('filled');
+        dragState.chip.classList.add('used');
+        checkDragEx(parseInt(zone.dataset.ex));
+        dragState.word = null; dragState.chip = null;
+      });
+      // Click filled zone to return word
+      zone.addEventListener('click', () => {
+        if (zone.dataset.filled) {
+          returnToBank(zone.dataset.filled, parseInt(zone.dataset.ex));
+          zone.textContent = '';
+          delete zone.dataset.filled;
+          zone.classList.remove('filled','correct','wrong');
+          clearFeedback(parseInt(zone.dataset.ex));
+        }
+      });
+    });
+  }
+
+  function returnToBank(word, ex) {
+    const bank = document.getElementById('bank' + ex);
+    bank.querySelectorAll('.drag-chip').forEach(c => {
+      if (c.dataset.word === word && c.classList.contains('used')) {
+        c.classList.remove('used');
+      }
+    });
+  }
+
+  function checkDragEx(ex) {
+    const cfg   = dragConfig[ex];
+    const zones = cfg.zones.map(id => document.getElementById(id));
+    const allFilled = zones.every(z => z.dataset.filled);
+    if (!allFilled) return;
+
+    let allCorrect = true;
+    zones.forEach(z => {
+      const correct = z.dataset.filled === z.dataset.answer;
+      z.classList.remove('filled');
+      z.classList.toggle('correct', correct);
+      z.classList.toggle('wrong', !correct);
+      if (!correct) allCorrect = false;
+    });
+
+    const fb = document.getElementById(cfg.fb);
+    if (allCorrect) {
+      fb.textContent = '✅ Correct! Well done.';
+      fb.className = 'drag-feedback ok';
+    } else {
+      fb.textContent = '✗ Not quite — click a word to return it and try again.';
+      fb.className = 'drag-feedback fail';
+    }
+  }
+
+  function clearFeedback(ex) {
+    const fb = document.getElementById(dragConfig[ex].fb);
+    fb.textContent = '';
+    fb.className = 'drag-feedback';
+  }
+
+  function resetDrag(ex) {
+    const cfg = dragConfig[ex];
+    cfg.zones.forEach(id => {
+      const z = document.getElementById(id);
+      if (z.dataset.filled) returnToBank(z.dataset.filled, ex);
+      z.textContent = '';
+      delete z.dataset.filled;
+      z.classList.remove('filled','correct','wrong','drag-over');
+    });
+    clearFeedback(ex);
+  }
+
+  // Init on load
+  initDrag();
+
+
+  /* ── IRREGULAR ADJECTIVES DATA ── */
+  const irregulars = [
+    { base:'good',        comp:'better than',       sup:'the best',          ex:'"The best marketing tool you have is a happy client."' },
+    { base:'bad',         comp:'worse than',         sup:'the worst',         ex:'"A bad review is worse than no review at all."' },
+    { base:'far',         comp:'farther / further than', sup:'the farthest / furthest', ex:'"We can go further than we think with the right support."' },
+    { base:'little',      comp:'less than',          sup:'the least',         ex:'"Spend the least time on tasks that don\'t grow your business."' },
+    { base:'much / many', comp:'more than',          sup:'the most',          ex:'"The most important thing is to show up consistently."' },
+    { base:'old',         comp:'older / elder than', sup:'the oldest / eldest', ex:'"Word of mouth is one of the oldest marketing strategies."' },
+    { base:'late',        comp:'later / latter than',sup:'the latest / last', ex:'"The latest research shows breathwork reduces cortisol."' },
+    { base:'near',        comp:'nearer than',        sup:'the nearest / next',ex:'"Find the nearest client first — start local."' },
+    { base:'fore',        comp:'former than',        sup:'the foremost',      ex:'"She is the foremost expert in somatic coaching."' },
+    { base:'ill / sick',  comp:'worse than',         sup:'the worst',         ex:'"Stress makes everything feel worse than it is."' },
+    { base:'well',        comp:'better than',        sup:'the best',          ex:'"You know your clients better than anyone."' },
+    { base:'hind',        comp:'—',                  sup:'the hindmost',      ex:'(Rare — means furthest behind. Useful to know, not to use often.)' },
+  ];
+
+  /* ── BUILD REFERENCE TABLE ── */
+  (function buildTable() {
+    const tbody = document.getElementById('irreg-table-body');
+    if (!tbody) return;
+    irregulars.forEach((item, i) => {
+      const tr = document.createElement('tr');
+      tr.style.borderTop = '1px solid var(--border)';
+      if (i % 2 === 1) tr.style.background = '#fafbfd';
+      tr.innerHTML = `
+        <td style="padding:9px 14px; font-weight:700; color:var(--ink);">${item.base}</td>
+        <td style="padding:9px 14px; text-align:center; color:var(--blue); font-weight:500;">${item.comp}</td>
+        <td style="padding:9px 14px; text-align:center; font-weight:700; color:var(--orange);">${item.sup}</td>
+        <td style="padding:9px 14px; font-size:13px; color:var(--muted); font-style:italic;">${item.ex}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  })();
+
+  /* ── FLASHCARDS ── */
+  let fcIndex = 0;
+  let fcFlipped = false;
+  const fcKnown = new Array(irregulars.length).fill(null); // null=unseen, true=known, false=not yet
+
+  function renderCard() {
+    const item = irregulars[fcIndex];
+    document.getElementById('fc-base').textContent = item.base;
+    document.getElementById('fc-comp').textContent = item.comp;
+    document.getElementById('fc-sup').textContent  = item.sup;
+    document.getElementById('fc-example').textContent = item.ex;
+    document.getElementById('fc-counter').textContent = (fcIndex + 1) + ' / ' + irregulars.length;
+
+    // Reset flip state
+    fcFlipped = false;
+    document.getElementById('fc-front').style.display = '';
+    document.getElementById('fc-back').style.display  = 'none';
+    document.getElementById('fc-mark-row').style.display = 'none';
+    document.getElementById('fc-card').style.borderColor = 'var(--border)';
+
+    updateProgress();
+  }
+
+  function flipCard() {
+    if (fcFlipped) return;
+    fcFlipped = true;
+    document.getElementById('fc-front').style.display = 'none';
+    document.getElementById('fc-back').style.display  = '';
+    document.getElementById('fc-mark-row').style.display = 'block';
+    document.getElementById('fc-card').style.borderColor = 'var(--blue)';
+  }
+
+  function markCard(known) {
+    fcKnown[fcIndex] = known;
+    document.getElementById('fc-card').style.borderColor = known ? 'var(--green)' : '#c0392b';
+    updateProgress();
+    setTimeout(() => {
+      if (fcIndex < irregulars.length - 1) { fcIndex++; renderCard(); }
+      else showComplete();
+    }, 500);
+  }
+
+  function nextCard() {
+    if (fcIndex < irregulars.length - 1) { fcIndex++; renderCard(); }
+  }
+  function prevCard() {
+    if (fcIndex > 0) { fcIndex--; renderCard(); }
+  }
+
+  function updateProgress() {
+    const known = fcKnown.filter(v => v === true).length;
+    document.getElementById('fc-progress-bar').style.width  = Math.round((known / irregulars.length) * 100) + '%';
+    document.getElementById('fc-progress-text').textContent = known + ' / ' + irregulars.length;
+  }
+
+  function resetFlashcards() {
+    fcIndex = 0;
+    fcKnown.fill(null);
+    renderCard();
+    document.getElementById('fc-progress-bar').style.width  = '0%';
+    document.getElementById('fc-progress-text').textContent = '0 / ' + irregulars.length;
+  }
+
+  function showComplete() {
+    const known = fcKnown.filter(v => v === true).length;
+    const card  = document.getElementById('fc-card');
+    card.style.borderColor = 'var(--green)';
+    card.innerHTML = `
+      <div style="text-align:center;">
+        <div style="font-size:36px; margin-bottom:8px;">🎉</div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:700; color:var(--ink); margin-bottom:6px;">Round complete</div>
+        <div style="font-size:15px; color:var(--muted);">${known} / ${irregulars.length} known</div>
+        ${known < irregulars.length ? '<div style="font-size:13px; color:var(--muted2); margin-top:6px;">Restart to keep practising the ones you missed.</div>' : '<div style="font-size:13px; color:var(--green); margin-top:6px;">All 12 mastered! ✓</div>'}
+      </div>`;
+  }
+
+  // Init flashcards on first render
+  renderCard();
+
+  /* ── BUILD MESSAGE ── */
+  function buildMessage() {
+    const s1  = document.getElementById('s1').value.trim()  || '___';
+    const s2  = document.getElementById('s2').value.trim()  || '___';
+    const s3  = document.getElementById('s3').value.trim()  || '___';
+    const s4  = document.getElementById('s4').value.trim()  || '___';
+    const s5  = document.getElementById('s5').value.trim()  || '___';
+    const s5b = document.getElementById('s5b').value.trim() || '___';
+    const s6  = document.getElementById('s6').value.trim()  || '___';
+    const s7  = document.getElementById('s7').value.trim()  || '___';
+
+    document.getElementById('msgText').innerHTML = `
+      <span class="mframe">Do you feel</span> ${s1}?<br><br>
+      <span class="mframe">Most people</span> ${s2}. <span class="mframe">Without support, they</span> ${s3}.<br><br>
+      <span class="mframe">Through breathwork, I help clients</span> ${s4}. <span class="mframe">This is</span> ${s5} <span class="mframe">approach to</span> ${s5b}.<br><br>
+      <span class="mframe">As a result, my clients</span> ${s6}. <span class="mframe">They don't just feel better —</span> ${s7}.
+    `;
+    const box = document.getElementById('msgBox');
+    box.style.display = 'block';
+    box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
+</body>
+</html>
