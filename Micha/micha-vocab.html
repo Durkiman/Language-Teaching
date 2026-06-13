@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Micha's English Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0F1018; --surface:#1A1C28; --surface2:#222438; --surface3:#2A2D45;
+  --border:rgba(255,255,255,0.07); --text:#F0EEF8; --muted:#7B7A9A;
+  --teal:#2AAFA0; --teal-dim:rgba(42,175,160,0.15);
+  --gold:#F0C040; --gold-dim:rgba(240,192,64,0.15);
+  --red:#E85050; --red-dim:rgba(232,80,80,0.12);
+  --green:#3DBA7B; --green-dim:rgba(61,186,123,0.12);
+  --purple:#9B6FD4; --blue:#4A90D9; --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100%;}
+.screen{display:none;flex-direction:column;min-height:100dvh;}
+.screen.active{display:flex;}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);display:flex;z-index:200;padding-bottom:env(safe-area-inset-bottom);}
+.bnav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:10px 8px;background:transparent;border:none;color:var(--muted);font-family:'Nunito',sans-serif;font-size:10px;font-weight:700;cursor:pointer;transition:all .15s;}
+.bnav-btn.active{color:var(--teal);}
+.bnav-icon{font-size:20px;}
+.home-hero{padding:36px 20px 20px;background:linear-gradient(160deg,#1A1E38 0%,var(--bg) 100%);position:relative;overflow:hidden;}
+.home-hero::before{content:'';position:absolute;width:220px;height:220px;background:radial-gradient(circle,rgba(42,175,160,0.12) 0%,transparent 70%);top:-50px;right:-40px;pointer-events:none;}
+.home-title{font-size:clamp(1.7rem,7vw,2.2rem);font-weight:900;line-height:1.1;margin-bottom:4px;}
+.home-title span{color:var(--teal);}
+.home-sub{font-size:0.83rem;color:var(--muted);font-weight:600;}
+.stats-row{display:flex;gap:8px;padding:12px 16px;}
+.stat-pill{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 8px;text-align:center;}
+.stat-val{font-size:1.3rem;font-weight:900;color:var(--teal);}
+.stat-label{font-size:0.62rem;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;}
+.section-label{font-size:0.67rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:9px;padding:0 3px;}
+.mode-section{padding:0 16px 14px;}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.mode-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:15px 13px;cursor:pointer;transition:all .18s;user-select:none;}
+.mode-card:active{transform:scale(0.95);}
+.mode-card.selected{border-color:var(--gold);}
+.mode-card.wide{grid-column:span 2;}
+.mode-icon{font-size:1.7rem;margin-bottom:6px;display:block;}
+.mode-name{font-size:0.92rem;font-weight:800;margin-bottom:2px;}
+.mode-desc{font-size:0.71rem;color:var(--muted);font-weight:600;line-height:1.4;}
+.dir-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:0 16px 10px;}
+.dir-toggle{display:flex;background:var(--surface2);border-radius:10px;overflow:hidden;border:1px solid var(--border);}
+.dir-opt{padding:7px 14px;font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;background:transparent;border:none;color:var(--muted);cursor:pointer;transition:all .15s;}
+.dir-opt.active{background:var(--teal);color:#0F1018;}
+.cat-section{padding:0 16px 14px;}
+.cat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;}
+.cat-pill{background:var(--surface);border:1.5px solid var(--border);border-radius:11px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .15s;user-select:none;}
+.cat-pill:active{transform:scale(0.92);}
+.cat-pill.selected{border-width:2px;}
+.cat-pill-icon{font-size:1.1rem;display:block;margin-bottom:2px;}
+.cat-pill-label{font-size:0.62rem;font-weight:700;color:var(--muted);line-height:1.3;}
+.cat-pill.selected .cat-pill-label{color:var(--text);}
+.cat-pill-count{font-size:0.58rem;color:var(--muted);margin-top:1px;display:block;}
+.start-btn{display:block;width:calc(100% - 32px);margin:0 16px 100px;padding:16px;background:var(--teal);color:#0F1018;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:900;border:none;border-radius:var(--radius);cursor:pointer;transition:all .18s;}
+.start-btn:active{transform:scale(0.97);}
+.top-bar{display:flex;align-items:center;gap:10px;padding:14px 16px 10px;flex-shrink:0;background:var(--bg);}
+.back-btn{width:36px;height:36px;background:var(--surface);border:none;border-radius:10px;color:var(--text);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.top-info{flex:1;}
+.top-counter{font-size:0.78rem;font-weight:700;color:var(--muted);}
+.top-extra{font-size:0.72rem;color:var(--teal);font-weight:700;margin-top:1px;}
+.top-timer{font-size:0.78rem;font-weight:700;color:var(--muted);background:var(--surface);border-radius:8px;padding:4px 9px;}
+.score-pill{background:var(--gold-dim);border-radius:20px;padding:4px 11px;font-size:0.78rem;font-weight:800;color:var(--gold);}
+.progress-track{height:3px;background:var(--surface2);flex-shrink:0;}
+.progress-fill{height:100%;background:var(--teal);transition:width .3s ease;border-radius:0 2px 2px 0;}
+.fc-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 18px;}
+.fc-wrap{width:100%;max-width:360px;perspective:1000px;cursor:pointer;margin-bottom:20px;}
+.fc-card{width:100%;min-height:200px;position:relative;transform-style:preserve-3d;transition:transform .42s cubic-bezier(.4,2,.6,1);border-radius:var(--radius);}
+.fc-card.flipped{transform:rotateY(180deg);}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:26px 20px;text-align:center;}
+.fc-front{background:var(--surface);border:1px solid var(--border);}
+.fc-back{background:var(--surface2);border:1px solid rgba(42,175,160,0.2);transform:rotateY(180deg);}
+.fc-cat{font-size:0.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.fc-main{font-size:clamp(1.3rem,5.5vw,2rem);font-weight:900;line-height:1.25;margin-bottom:4px;color:var(--gold);}
+.fc-main.secondary{color:var(--text);font-size:clamp(1.1rem,4.5vw,1.6rem);}
+.fc-hint-card{font-size:0.78rem;font-weight:700;color:var(--teal);margin-top:8px;line-height:1.5;}
+.fc-tap{font-size:0.68rem;color:var(--muted);font-weight:600;margin-top:14px;opacity:0.6;}
+.fc-actions{display:flex;gap:10px;width:100%;max-width:360px;margin-bottom:8px;}
+.fc-btn{flex:1;padding:13px;border:1px solid;border-radius:12px;font-family:'Nunito',sans-serif;font-size:0.88rem;font-weight:900;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:5px;}
+.fc-btn:active{transform:scale(0.94);}
+.fc-btn:disabled{opacity:0.2;cursor:default;transform:none;}
+.fc-btn.miss{background:var(--red-dim);color:var(--red);border-color:rgba(232,80,80,0.25);}
+.fc-btn.got{background:var(--green-dim);color:var(--green);border-color:rgba(61,186,123,0.25);}
+.fc-hint-text{font-size:0.7rem;color:var(--muted);font-weight:600;text-align:center;}
+.quiz-scroll{flex:1;overflow-y:auto;padding:14px 16px 24px;}
+.quiz-q-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 18px;margin-bottom:12px;text-align:center;}
+.quiz-q-label{font-size:0.68rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.quiz-q-word{font-size:clamp(1.5rem,6vw,2.1rem);font-weight:900;color:var(--gold);margin-bottom:4px;line-height:1.2;}
+.quiz-q-cat{font-size:0.7rem;color:var(--muted);font-weight:700;}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px;}
+.quiz-opt{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:13px 9px;font-family:'Nunito',sans-serif;font-size:0.86rem;font-weight:700;color:var(--text);cursor:pointer;text-align:center;transition:all .12s;line-height:1.3;}
+.quiz-opt:active:not(:disabled){transform:scale(0.95);}
+.quiz-opt:disabled{pointer-events:none;}
+.quiz-opt.correct{background:var(--green-dim);border-color:var(--green);color:var(--green);}
+.quiz-opt.wrong{background:var(--red-dim);border-color:var(--red);color:var(--red);}
+.quiz-fb{background:var(--surface2);border-radius:10px;padding:11px 13px;font-size:0.85rem;font-weight:700;display:none;margin-bottom:9px;line-height:1.5;border:1px solid var(--border);}
+.quiz-fb.show{display:block;}
+.quiz-fb.ok{color:var(--green);border-color:rgba(61,186,123,0.2);}
+.quiz-fb.bad{color:var(--red);border-color:rgba(232,80,80,0.15);}
+.fb-ans{color:var(--green);font-weight:900;}
+.fb-hint{color:var(--teal);display:block;margin-top:3px;font-size:0.78rem;}
+.quiz-next{display:none;width:100%;padding:14px;background:var(--teal);color:#0F1018;font-family:'Nunito',sans-serif;font-size:0.95rem;font-weight:900;border:none;border-radius:12px;cursor:pointer;}
+.quiz-next.show{display:block;}
+.speed-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 18px;}
+.speed-ring-wrap{position:relative;width:78px;height:78px;margin-bottom:14px;}
+.speed-ring-wrap svg{transform:rotate(-90deg);}
+.ring-bg{fill:none;stroke:var(--surface2);stroke-width:6;}
+.ring-fill{fill:none;stroke:var(--teal);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .1s linear;stroke-dasharray:220;}
+.ring-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:900;color:var(--teal);}
+.speed-score-label{font-size:0.68rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.speed-score-val{font-size:1.9rem;font-weight:900;color:var(--gold);margin-bottom:16px;}
+.speed-q{width:100%;max-width:340px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 16px;text-align:center;margin-bottom:12px;}
+.speed-q-from{font-size:0.68rem;color:var(--muted);font-weight:700;margin-bottom:7px;}
+.speed-q-word{font-size:clamp(1.4rem,5.5vw,1.9rem);font-weight:900;color:var(--gold);line-height:1.2;}
+.speed-opts{display:grid;grid-template-columns:1fr 1fr;gap:7px;width:100%;max-width:340px;}
+.speed-opt{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:12px 8px;font-family:'Nunito',sans-serif;font-size:0.84rem;font-weight:700;color:var(--text);cursor:pointer;text-align:center;transition:all .1s;line-height:1.3;}
+.speed-opt:active:not(:disabled){transform:scale(0.94);}
+.speed-opt:disabled{pointer-events:none;}
+.speed-opt.correct{background:var(--green-dim);border-color:var(--green);color:var(--green);}
+.speed-opt.wrong{background:var(--red-dim);border-color:var(--red);color:var(--red);}
+.results-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px 18px;text-align:center;padding-bottom:90px;}
+.r-emoji{font-size:3.5rem;margin-bottom:8px;}
+.r-title{font-size:1.5rem;font-weight:900;margin-bottom:3px;}
+.r-sub{font-size:0.83rem;color:var(--muted);font-weight:600;margin-bottom:20px;}
+.r-stats{display:flex;gap:10px;margin-bottom:22px;width:100%;}
+.r-stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px;flex:1;}
+.r-stat-val{font-size:1.7rem;font-weight:900;}
+.r-stat-val.ok{color:var(--green);}
+.r-stat-val.bad{color:var(--red);}
+.r-stat-label{font-size:0.62rem;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
+.missed-wrap{width:100%;text-align:left;margin-bottom:20px;}
+.missed-head{font-size:0.67rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.missed-row{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:9px 12px;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+.missed-en{font-size:0.88rem;font-weight:800;color:var(--text);}
+.missed-fr{font-size:0.75rem;color:var(--teal);font-weight:700;flex-shrink:0;}
+.r-btns{display:flex;flex-direction:column;gap:7px;width:100%;}
+.r-btn{padding:14px;border:none;border-radius:12px;font-family:'Nunito',sans-serif;font-size:0.95rem;font-weight:900;cursor:pointer;}
+.r-btn.primary{background:var(--teal);color:#0F1018;}
+.r-btn.secondary{background:var(--surface);color:var(--text);border:1px solid var(--border);}
+.grammar-home{flex:1;overflow-y:auto;padding:16px 16px 100px;}
+.grammar-hero{padding:28px 20px 20px;background:linear-gradient(160deg,#1A1E38 0%,var(--bg) 100%);margin:-16px -16px 16px;position:relative;overflow:hidden;}
+.grammar-hero::before{content:'';position:absolute;width:180px;height:180px;background:radial-gradient(circle,rgba(155,111,212,0.14) 0%,transparent 70%);top:-40px;right:-30px;pointer-events:none;}
+.grammar-hero-title{font-size:clamp(1.5rem,6vw,2rem);font-weight:900;margin-bottom:3px;}
+.grammar-hero-title span{color:var(--purple);}
+.grammar-hero-sub{font-size:0.82rem;color:var(--muted);font-weight:600;}
+.grammar-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;}
+.grammar-block-header{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;user-select:none;transition:background .15s;}
+.grammar-block-header:active{background:var(--surface2);}
+.grammar-block-icon{font-size:1.5rem;flex-shrink:0;}
+.grammar-block-info{flex:1;}
+.grammar-block-title{font-size:0.95rem;font-weight:900;color:var(--text);}
+.grammar-block-sub{font-size:0.72rem;color:var(--muted);font-weight:700;margin-top:1px;}
+.grammar-block-arrow{color:var(--muted);font-size:0.9rem;transition:transform .2s;}
+.grammar-block.open .grammar-block-arrow{transform:rotate(90deg);}
+.grammar-content{display:none;border-top:1px solid var(--border);}
+.grammar-block.open .grammar-content{display:block;}
+.grammar-content-inner{padding:16px;}
+.rule-row{background:var(--surface2);border-radius:10px;padding:12px 14px;margin-bottom:9px;}
+.rule-label{font-size:0.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.rule-formula{font-size:0.9rem;font-weight:800;color:var(--text);line-height:1.6;margin-bottom:4px;}
+.rule-formula .kw{color:var(--teal);}
+.rule-example{font-size:0.85rem;font-weight:700;color:var(--gold);font-style:italic;margin-bottom:4px;line-height:1.5;}
+.rule-fr{font-size:0.78rem;font-weight:700;color:var(--teal);}
+.rule-fr::before{content:'🇫🇷 ';}
+.mistake-box{background:rgba(232,80,80,0.06);border:1px solid rgba(232,80,80,0.18);border-radius:10px;padding:12px 14px;margin-bottom:9px;}
+.mistake-label{font-size:0.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:8px;}
+.mistake-row{font-size:0.84rem;font-weight:700;margin-bottom:7px;line-height:1.5;}
+.mistake-row:last-child{margin-bottom:0;}
+.m-bad{color:var(--red);text-decoration:line-through;}
+.m-good{color:var(--green);}
+.m-why{font-size:0.74rem;color:var(--muted);display:block;margin-top:1px;}
+.gram-table{width:100%;border-collapse:collapse;font-size:0.78rem;margin-bottom:9px;border-radius:8px;overflow:hidden;border:1px solid var(--border);}
+.gram-table thead tr{background:var(--surface3);}
+.gram-table thead th{padding:8px 9px;font-size:0.62rem;letter-spacing:1px;color:var(--muted);text-align:left;text-transform:uppercase;font-weight:800;border-bottom:1px solid var(--border);}
+.gram-table tbody tr{background:var(--surface);border-bottom:1px solid var(--border);}
+.gram-table tbody tr:last-child{border-bottom:none;}
+.gram-table td{padding:8px 9px;vertical-align:middle;line-height:1.5;}
+.gram-table td:first-child{font-size:0.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;}
+.t-pos{color:var(--green);} .t-neg{color:var(--red);} .t-q{color:var(--blue);}
+.t-kw{color:var(--teal);font-weight:800;} .t-ex{color:var(--gold);font-style:italic;font-weight:700;}
+.t-fr{color:var(--teal);font-size:0.72rem;font-weight:700;} .t-muted{color:var(--muted);font-weight:700;}
+.t-comp{color:var(--blue);font-weight:800;} .t-sup{color:var(--gold);font-weight:800;} .t-irreg{color:var(--red);font-weight:800;}
+.info-box{background:var(--teal-dim);border:1px solid rgba(42,175,160,0.2);border-radius:10px;padding:12px 14px;margin-bottom:9px;font-size:0.84rem;font-weight:700;color:var(--text);line-height:1.7;}
+.info-box .kw{color:var(--teal);font-weight:900;}
+</style>
+</head>
+<body>
+<!-- VOCAB HOME -->
+<div class="screen active" id="screen-vocab-home">
+  <div style="flex:1;overflow-y:auto;padding-bottom:90px;">
+    <div class="home-hero">
+      <div class="home-title">Micha's English<br><span>Vocabulary</span></div>
+      <div class="home-sub">Every word from every lesson — 3 game modes</div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-pill"><div class="stat-val" id="total-words">0</div><div class="stat-label">Words</div></div>
+      <div class="stat-pill"><div class="stat-val" id="total-mastered">0</div><div class="stat-label">Mastered</div></div>
+      <div class="stat-pill"><div class="stat-val" id="total-cats">0</div><div class="stat-label">Categories</div></div>
+    </div>
+    <div class="mode-section">
+      <div class="section-label">Game mode</div>
+      <div class="mode-grid">
+        <div class="mode-card selected" id="mc-flash" onclick="selectMode('flashcards',this)"><span class="mode-icon">🃏</span><div class="mode-name">Flashcards</div><div class="mode-desc">Flip & mark at your own pace</div></div>
+        <div class="mode-card" id="mc-quiz" onclick="selectMode('quiz',this)"><span class="mode-icon">🎯</span><div class="mode-name">Quiz</div><div class="mode-desc">Pick the right translation</div></div>
+        <div class="mode-card wide" id="mc-speed" onclick="selectMode('speed',this)"><span class="mode-icon">⚡</span><div class="mode-name">Speed Round</div><div class="mode-desc">5 seconds per word — how fast are you?</div></div>
+      </div>
+    </div>
+    <div class="dir-toggle-row">
+      <div class="section-label" style="margin-bottom:0;">Direction</div>
+      <div class="dir-toggle">
+        <button class="dir-opt active" onclick="setDir('en',this)">EN → FR</button>
+        <button class="dir-opt" onclick="setDir('fr',this)">FR → EN</button>
+      </div>
+    </div>
+    <div class="cat-section" style="margin-top:12px;">
+      <div class="section-label">Categories</div>
+      <div class="cat-grid" id="cat-grid"></div>
+    </div>
+    <button class="start-btn" onclick="startSession()">▶ Start</button>
+  </div>
+</div>
+
+<!-- FLASHCARDS -->
+<div class="screen" id="screen-flashcards">
+  <div class="top-bar">
+    <button class="back-btn" onclick="goVocabHome()">←</button>
+    <div class="top-info"><div class="top-counter" id="fc-counter">Card 1 of 0</div><div class="top-extra" id="fc-cat-label"></div></div>
+    <div class="top-timer" id="fc-timer">0:00</div>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="fc-prog" style="width:0%"></div></div>
+  <div class="fc-body">
+    <div class="fc-wrap">
+      <div class="fc-card" id="fc-card" onclick="flipCard()">
+        <div class="fc-face fc-front">
+          <div class="fc-cat" id="fc-cat-f"></div>
+          <div class="fc-main" id="fc-front-word"></div>
+          <div class="fc-tap">Tap to reveal</div>
+        </div>
+        <div class="fc-face fc-back">
+          <div class="fc-cat" id="fc-cat-b"></div>
+          <div class="fc-main secondary" id="fc-back-word"></div>
+          <div class="fc-hint-card" id="fc-back-hint"></div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-actions">
+      <button class="fc-btn miss" id="fc-miss" onclick="fcAnswer(false)" disabled>✕ Miss</button>
+      <button class="fc-btn got"  id="fc-got"  onclick="fcAnswer(true)"  disabled>✓ Got it</button>
+    </div>
+    <div class="fc-hint-text" id="fc-hint-text">Tap the card to reveal</div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div class="screen" id="screen-quiz">
+  <div class="top-bar">
+    <button class="back-btn" onclick="goVocabHome()">←</button>
+    <div class="top-info"><div class="top-counter" id="q-counter">Q 1 of 15</div></div>
+    <div class="score-pill" id="q-score">0 ✓</div>
+    <div class="top-timer" id="q-timer">0:00</div>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="q-prog" style="width:0%"></div></div>
+  <div class="quiz-scroll" id="quiz-body"></div>
+</div>
+
+<!-- SPEED -->
+<div class="screen" id="screen-speed">
+  <div class="top-bar">
+    <button class="back-btn" onclick="goVocabHome()">←</button>
+    <div class="top-info"><div class="top-counter" id="sp-counter">Round 1 of 20</div></div>
+    <div class="top-timer" id="sp-timer">0:00</div>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="sp-prog" style="width:0%"></div></div>
+  <div class="speed-body">
+    <div class="speed-ring-wrap">
+      <svg width="78" height="78" viewBox="0 0 78 78">
+        <circle class="ring-bg" cx="39" cy="39" r="35"/>
+        <circle class="ring-fill" id="sp-ring" cx="39" cy="39" r="35"/>
+      </svg>
+      <div class="ring-num" id="sp-num">5</div>
+    </div>
+    <div class="speed-score-label">Score</div>
+    <div class="speed-score-val" id="sp-score">0</div>
+    <div class="speed-q"><div class="speed-q-from" id="sp-from"></div><div class="speed-q-word" id="sp-word"></div></div>
+    <div class="speed-opts" id="sp-opts"></div>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div class="screen" id="screen-results">
+  <div class="results-body">
+    <div class="r-emoji" id="r-emoji">🎉</div>
+    <div class="r-title" id="r-title">Done!</div>
+    <div class="r-sub" id="r-sub"></div>
+    <div class="r-stats">
+      <div class="r-stat"><div class="r-stat-val ok" id="r-correct">0</div><div class="r-stat-label">Correct</div></div>
+      <div class="r-stat"><div class="r-stat-val bad" id="r-wrong">0</div><div class="r-stat-label">Missed</div></div>
+    </div>
+    <div class="missed-wrap" id="missed-wrap"></div>
+    <div class="r-btns">
+      <button class="r-btn primary" onclick="startSession()">▶ Play Again</button>
+      <button class="r-btn secondary" onclick="goVocabHome()">← Back to Menu</button>
+    </div>
+  </div>
+</div>
+
+<!-- GRAMMAR -->
+<div class="screen" id="screen-grammar">
+  <div class="grammar-home">
+    <div class="grammar-hero">
+      <div class="grammar-hero-title">Grammar<br><span>Reference</span></div>
+      <div class="grammar-hero-sub">Every rule we've studied — tap to expand</div>
+    </div>
+
+    <div class="grammar-block" id="gb-past">
+      <div class="grammar-block-header" onclick="toggleG('past')">
+        <div class="grammar-block-icon">⏪</div>
+        <div class="grammar-block-info"><div class="grammar-block-title">Past Simple</div><div class="grammar-block-sub">Actions finished in the past — regular & irregular</div></div>
+        <div class="grammar-block-arrow">›</div>
+      </div>
+      <div class="grammar-content"><div class="grammar-content-inner">
+        <div class="info-box">Use Past Simple for actions that <span class="kw">started and finished in the past</span>.<br>🇫🇷 Comme le passé composé en français — actions <span class="kw">terminées dans le passé</span>.</div>
+        <table class="gram-table"><thead><tr><th>Type</th><th>Formula</th><th>Example</th><th>🇫🇷</th></tr></thead><tbody>
+          <tr><td class="t-pos">Positive</td><td><span class="t-kw">Subject + past verb</span></td><td class="t-ex">Havertz scored in the 6th minute.</td><td class="t-fr">Havertz a marqué à la 6e.</td></tr>
+          <tr><td class="t-neg">Negative</td><td><span class="t-neg">Subject + didn't + BASE</span></td><td class="t-ex">Arsenal didn't win the trophy.</td><td class="t-fr">Arsenal n'a pas gagné.</td></tr>
+          <tr><td class="t-q">Question</td><td><span class="t-q">Did + subject + BASE?</span></td><td class="t-ex">Did Saka score?</td><td class="t-fr">Est-ce que Saka a marqué ?</td></tr>
+        </tbody></table>
+        <div class="rule-row"><div class="rule-label">Regular verbs — add -ED</div><div class="rule-formula">play → <span class="kw">played</span> · score → <span class="kw">scored</span> · miss → <span class="kw">missed</span> · tackle → <span class="kw">tackled</span></div><div class="rule-fr">Les verbes réguliers ajoutent -ed au passé</div></div>
+        <div class="rule-row"><div class="rule-label">Irregular verbs — must learn by heart!</div><div class="rule-formula">go → <span class="kw">went</span> · win → <span class="kw">won</span> · see → <span class="kw">saw</span> · make → <span class="kw">made</span> · hit → <span class="kw">hit</span></div><div class="rule-fr">Les verbes irréguliers changent de forme — à mémoriser !</div></div>
+        <div class="mistake-box"><div class="mistake-label">⚠️ Classic mistakes</div>
+          <div class="mistake-row"><span class="m-bad">"He didn't scored"</span> → <span class="m-good">"He didn't score"</span><span class="m-why">After didn't — always BASE form</span></div>
+          <div class="mistake-row"><span class="m-bad">"Did he won?"</span> → <span class="m-good">"Did he win?"</span><span class="m-why">After Did — always BASE form</span></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="grammar-block" id="gb-poss">
+      <div class="grammar-block-header" onclick="toggleG('poss')">
+        <div class="grammar-block-icon">🏷️</div>
+        <div class="grammar-block-info"><div class="grammar-block-title">Possessives</div><div class="grammar-block-sub">Adjectives (my/your…) and pronouns (mine/yours…)</div></div>
+        <div class="grammar-block-arrow">›</div>
+      </div>
+      <div class="grammar-content"><div class="grammar-content-inner">
+        <div class="info-box">Possessive <span class="kw">adjectives</span> go BEFORE a noun. Possessive <span class="kw">pronouns</span> stand ALONE — no noun after.<br>🇫🇷 Adjectifs possessifs avant un nom. Pronoms possessifs seuls, sans nom.</div>
+        <table class="gram-table"><thead><tr><th>Person</th><th>Adjective</th><th>Pronoun</th><th>🇫🇷</th></tr></thead><tbody>
+          <tr><td class="t-muted">I</td><td class="t-kw">my</td><td class="t-kw">mine</td><td class="t-fr">mon/ma — le mien/la mienne</td></tr>
+          <tr><td class="t-muted">You</td><td class="t-kw">your</td><td class="t-kw">yours</td><td class="t-fr">ton/ta — le tien/la tienne</td></tr>
+          <tr><td class="t-muted">He</td><td class="t-kw">his</td><td class="t-kw">his</td><td class="t-fr">son/sa (à lui) — le sien</td></tr>
+          <tr><td class="t-muted">She</td><td class="t-kw">her</td><td class="t-kw">hers</td><td class="t-fr">son/sa (à elle) — le sien</td></tr>
+          <tr><td class="t-muted">We</td><td class="t-kw">our</td><td class="t-kw">ours</td><td class="t-fr">notre/nos — le nôtre</td></tr>
+          <tr><td class="t-muted">They</td><td class="t-kw">their</td><td class="t-kw">theirs</td><td class="t-fr">leur/leurs — le leur</td></tr>
+        </tbody></table>
+        <div class="mistake-box"><div class="mistake-label">⚠️ Classic mistakes</div>
+          <div class="mistake-row"><span class="m-bad">"This is theirs trophy"</span> → <span class="m-good">"This is their trophy"</span><span class="m-why">Theirs = pronoun, no noun after. Use their before a noun.</span></div>
+          <div class="mistake-row"><span class="m-bad">"The trophy is their"</span> → <span class="m-good">"The trophy is theirs"</span><span class="m-why">Standing alone with no noun → use pronoun form.</span></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="grammar-block" id="gb-comp">
+      <div class="grammar-block-header" onclick="toggleG('comp')">
+        <div class="grammar-block-icon">📊</div>
+        <div class="grammar-block-info"><div class="grammar-block-title">Comparatives</div><div class="grammar-block-sub">Comparing 2 things — bigger than, more beautiful than</div></div>
+        <div class="grammar-block-arrow">›</div>
+      </div>
+      <div class="grammar-content"><div class="grammar-content-inner">
+        <div class="info-box">Comparatives compare <span class="kw">2 things</span>. Always use <span class="kw">"than"</span> after.<br>🇫🇷 Le comparatif compare 2 choses — toujours "que" après l'adjectif.</div>
+        <table class="gram-table"><thead><tr><th>Type</th><th>Rule</th><th>Example</th><th>🇫🇷</th></tr></thead><tbody>
+          <tr><td class="t-comp">Short (1 syllable)</td><td>add <span class="t-kw">-er than</span><br><small style="color:var(--muted);">CVC → double last letter</small></td><td class="t-ex">bigger · hotter · deeper · greener</td><td class="t-fr">plus grand · plus chaud · plus profond</td></tr>
+          <tr><td class="t-comp">Ending -y</td><td>change to <span class="t-kw">-ier than</span></td><td class="t-ex">prettier · rockier</td><td class="t-fr">plus joli</td></tr>
+          <tr><td class="t-comp">Long (2+ syllables)</td><td><span class="t-kw">more + adj + than</span></td><td class="t-ex">more beautiful · more volcanic</td><td class="t-fr">plus beau · plus volcanique</td></tr>
+          <tr><td class="t-irreg">Irregular</td><td>memorise!</td><td class="t-ex">better · worse · further</td><td class="t-fr">meilleur · pire · plus loin</td></tr>
+        </tbody></table>
+        <div class="mistake-box"><div class="mistake-label">⚠️ Classic mistakes</div>
+          <div class="mistake-row"><span class="m-bad">"more bigger than"</span> → <span class="m-good">"bigger than"</span><span class="m-why">Never "more" AND "-er" together</span></div>
+          <div class="mistake-row"><span class="m-bad">"bigger Belgium"</span> → <span class="m-good">"bigger than Belgium"</span><span class="m-why">Always need "than" when comparing</span></div>
+          <div class="mistake-row"><span class="m-bad">"more far"</span> → <span class="m-good">"further"</span><span class="m-why">Irregular: far → further → the furthest</span></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="grammar-block" id="gb-sup">
+      <div class="grammar-block-header" onclick="toggleG('sup')">
+        <div class="grammar-block-icon">🏆</div>
+        <div class="grammar-block-info"><div class="grammar-block-title">Superlatives</div><div class="grammar-block-sub">The most extreme — the biggest, the best, the most beautiful</div></div>
+        <div class="grammar-block-arrow">›</div>
+      </div>
+      <div class="grammar-content"><div class="grammar-content-inner">
+        <div class="info-box">Superlatives = the <span class="kw">most extreme</span> in a group. Always use <span class="kw">"the"</span> before.<br>🇫🇷 Toujours "le/la plus ___" — et toujours "the" en anglais.</div>
+        <table class="gram-table"><thead><tr><th>Type</th><th>Rule</th><th>Example</th><th>🇫🇷</th></tr></thead><tbody>
+          <tr><td class="t-sup">Short</td><td>the + <span class="t-kw">adj-est</span></td><td class="t-ex">the biggest · the hottest · the deepest</td><td class="t-fr">le plus grand · le plus profond</td></tr>
+          <tr><td class="t-sup">Ending -y</td><td>the + <span class="t-kw">adj-iest</span></td><td class="t-ex">the prettiest</td><td class="t-fr">le plus joli</td></tr>
+          <tr><td class="t-sup">Long</td><td><span class="t-kw">the most + adj</span></td><td class="t-ex">the most beautiful · the most volcanic</td><td class="t-fr">le plus beau · le plus volcanique</td></tr>
+          <tr><td class="t-irreg">Irregular</td><td>memorise!</td><td class="t-ex">the best · the worst · the furthest</td><td class="t-fr">le meilleur · le pire · le plus loin</td></tr>
+        </tbody></table>
+        <div class="mistake-box"><div class="mistake-label">⚠️ Classic mistakes</div>
+          <div class="mistake-row"><span class="m-bad">"the most biggest"</span> → <span class="m-good">"the biggest"</span><span class="m-why">Never "the most" AND "-est" together</span></div>
+          <div class="mistake-row"><span class="m-bad">"the most good"</span> → <span class="m-good">"the best"</span><span class="m-why">Irregular: good → better → the best</span></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="grammar-block" id="gb-going">
+      <div class="grammar-block-header" onclick="toggleG('going')">
+        <div class="grammar-block-icon">🔮</div>
+        <div class="grammar-block-info"><div class="grammar-block-title">"Going to" Future</div><div class="grammar-block-sub">Plans & predictions — is going to, are going to…</div></div>
+        <div class="grammar-block-arrow">›</div>
+      </div>
+      <div class="grammar-content"><div class="grammar-content-inner">
+        <div class="info-box">Use for <span class="kw">plans already decided</span> and <span class="kw">predictions based on evidence</span>.<br>🇫🇷 Pour des plans décidés et des prédictions basées sur des indices.</div>
+        <table class="gram-table"><thead><tr><th>Type</th><th>Formula</th><th>Example</th><th>🇫🇷</th></tr></thead><tbody>
+          <tr><td class="t-pos">Positive</td><td><span class="t-kw">am/is/are going to + BASE</span></td><td class="t-ex">Spain is going to win.</td><td class="t-fr">L'Espagne va gagner.</td></tr>
+          <tr><td class="t-neg">Negative</td><td><span style="color:var(--red);font-weight:800;">am/is/are NOT going to + BASE</span></td><td class="t-ex">Arsenal is not going to win.</td><td class="t-fr">Arsenal ne va pas gagner.</td></tr>
+          <tr><td class="t-q">Question</td><td><span style="color:var(--blue);font-weight:800;">Is/Are + subject + going to + BASE?</span></td><td class="t-ex">Is France going to qualify?</td><td class="t-fr">Est-ce que la France va se qualifier ?</td></tr>
+        </tbody></table>
+        <div class="rule-row"><div class="rule-label">Am / Is / Are — which one?</div><div class="rule-formula"><span class="kw">I</span> am · <span class="kw">He/She/It</span> is · <span class="kw">We/You/They</span> are going to…</div><div class="rule-fr">Je vais · Il/Elle va · Nous/Vous/Ils vont</div></div>
+        <div class="mistake-box"><div class="mistake-label">⚠️ Classic mistakes</div>
+          <div class="mistake-row"><span class="m-bad">"Spain is going to wins"</span> → <span class="m-good">"Spain is going to win"</span><span class="m-why">After "going to" — always BASE form</span></div>
+          <div class="mistake-row"><span class="m-bad">"They going to play"</span> → <span class="m-good">"They are going to play"</span><span class="m-why">Can't drop "are" — am/is/are is always required</span></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="grammar-block" id="gb-prep">
+      <div class="grammar-block-header" onclick="toggleG('prep')">
+        <div class="grammar-block-icon">📍</div>
+        <div class="grammar-block-info"><div class="grammar-block-title">Prepositions of Place</div><div class="grammar-block-sub">in, on, at, next to, between, behind…</div></div>
+        <div class="grammar-block-arrow">›</div>
+      </div>
+      <div class="grammar-content"><div class="grammar-content-inner">
+        <table class="gram-table"><thead><tr><th>English</th><th>🇫🇷 French</th><th>Example</th></tr></thead><tbody>
+          <tr><td class="t-kw">in</td><td class="t-fr">dans / en</td><td class="t-ex">The ball is in the net.</td></tr>
+          <tr><td class="t-kw">on</td><td class="t-fr">sur</td><td class="t-ex">On the pitch.</td></tr>
+          <tr><td class="t-kw">at</td><td class="t-fr">à</td><td class="t-ex">At the stadium.</td></tr>
+          <tr><td class="t-kw">next to</td><td class="t-fr">à côté de</td><td class="t-ex">Next to the goal.</td></tr>
+          <tr><td class="t-kw">in front of</td><td class="t-fr">devant</td><td class="t-ex">In front of the goalkeeper.</td></tr>
+          <tr><td class="t-kw">behind</td><td class="t-fr">derrière</td><td class="t-ex">Behind the last defender.</td></tr>
+          <tr><td class="t-kw">between</td><td class="t-fr">entre</td><td class="t-ex">Between the posts.</td></tr>
+          <tr><td class="t-kw">above / over</td><td class="t-fr">au-dessus de</td><td class="t-ex">Gabriel headed it over the bar.</td></tr>
+          <tr><td class="t-kw">under</td><td class="t-fr">sous</td><td class="t-ex">Under the goalkeeper.</td></tr>
+          <tr><td class="t-kw">near</td><td class="t-fr">près de</td><td class="t-ex">Near the corner flag.</td></tr>
+          <tr><td class="t-kw">far from</td><td class="t-fr">loin de</td><td class="t-ex">The Azores is far from Belgium.</td></tr>
+          <tr><td class="t-kw">through</td><td class="t-fr">à travers</td><td class="t-ex">He dribbled through them all.</td></tr>
+        </tbody></table>
+      </div></div>
+    </div>
+
+    <div class="grammar-block" id="gb-irreg">
+      <div class="grammar-block-header" onclick="toggleG('irreg')">
+        <div class="grammar-block-icon">⚡</div>
+        <div class="grammar-block-info"><div class="grammar-block-title">Irregular Verbs — Full Table</div><div class="grammar-block-sub">All 28 verbs — present → past</div></div>
+        <div class="grammar-block-arrow">›</div>
+      </div>
+      <div class="grammar-content"><div class="grammar-content-inner">
+        <table class="gram-table"><thead><tr><th>Base</th><th>Past</th><th>🇫🇷</th><th>Base</th><th>Past</th><th>🇫🇷</th></tr></thead><tbody>
+          <tr><td class="t-muted">be</td><td class="t-kw">was/were</td><td class="t-fr">être</td><td class="t-muted">lose</td><td class="t-kw">lost</td><td class="t-fr">perdre</td></tr>
+          <tr><td class="t-muted">go</td><td class="t-kw">went</td><td class="t-fr">aller</td><td class="t-muted">begin</td><td class="t-kw">began</td><td class="t-fr">commencer</td></tr>
+          <tr><td class="t-muted">eat</td><td class="t-kw">ate</td><td class="t-fr">manger</td><td class="t-muted">draw</td><td class="t-kw">drew</td><td class="t-fr">dessiner / nul</td></tr>
+          <tr><td class="t-muted">drink</td><td class="t-kw">drank</td><td class="t-fr">boire</td><td class="t-muted">cost</td><td class="t-kw">cost</td><td class="t-fr">coûter</td></tr>
+          <tr><td class="t-muted">see</td><td class="t-kw">saw</td><td class="t-fr">voir</td><td class="t-muted">become</td><td class="t-kw">became</td><td class="t-fr">devenir</td></tr>
+          <tr><td class="t-muted">come</td><td class="t-kw">came</td><td class="t-fr">venir</td><td class="t-muted">hit</td><td class="t-kw">hit</td><td class="t-fr">frapper</td></tr>
+          <tr><td class="t-muted">win</td><td class="t-kw">won</td><td class="t-fr">gagner</td><td class="t-muted">shoot</td><td class="t-kw">shot</td><td class="t-fr">tirer</td></tr>
+          <tr><td class="t-muted">give</td><td class="t-kw">gave</td><td class="t-fr">donner</td><td class="t-muted">rise</td><td class="t-kw">rose</td><td class="t-fr">monter</td></tr>
+          <tr><td class="t-muted">make</td><td class="t-kw">made</td><td class="t-fr">faire</td><td class="t-muted">grow</td><td class="t-kw">grew</td><td class="t-fr">grandir</td></tr>
+          <tr><td class="t-muted">take</td><td class="t-kw">took</td><td class="t-fr">prendre</td><td class="t-muted">spread</td><td class="t-kw">spread</td><td class="t-fr">répandre</td></tr>
+          <tr><td class="t-muted">run</td><td class="t-kw">ran</td><td class="t-fr">courir</td><td class="t-muted">build</td><td class="t-kw">built</td><td class="t-fr">construire</td></tr>
+          <tr><td class="t-muted">know</td><td class="t-kw">knew</td><td class="t-fr">savoir</td><td class="t-muted">choose</td><td class="t-kw">chose</td><td class="t-fr">choisir</td></tr>
+          <tr><td class="t-muted">get</td><td class="t-kw">got</td><td class="t-fr">obtenir</td><td class="t-muted">find</td><td class="t-kw">found</td><td class="t-fr">trouver</td></tr>
+          <tr><td class="t-muted">fall</td><td class="t-kw">fell</td><td class="t-fr">tomber</td><td class="t-muted">think</td><td class="t-kw">thought</td><td class="t-fr">penser</td></tr>
+        </tbody></table>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="bnav-btn active" id="bnav-vocab" onclick="showSection('vocab')"><span class="bnav-icon">📚</span>Vocabulary</button>
+  <button class="bnav-btn" id="bnav-grammar" onclick="showSection('grammar')"><span class="bnav-icon">📐</span>Grammar</button>
+</nav>
+<script>
+const VOCAB={
+  actions:{label:'Actions',emoji:'⚡',color:'#F0C040',words:[
+    {en:'score',fr:'marquer',hint:'He scored in the 6th minute'},
+    {en:'win',fr:'gagner',hint:'PSG won on penalties'},
+    {en:'lose',fr:'perdre',hint:'Arsenal lost the final'},
+    {en:'play',fr:'jouer',hint:'They played brilliantly'},
+    {en:'run',fr:'courir',hint:'Saka ran past the defender'},
+    {en:'kick',fr:'frapper / botter',hint:'He kicked the ball hard'},
+    {en:'shoot',fr:'tirer au but',hint:'He shot at goal'},
+    {en:'save',fr:'arrêter un tir',hint:'The goalkeeper saved it'},
+    {en:'miss',fr:'rater',hint:'Eze missed the penalty'},
+    {en:'tackle',fr:'tacler',hint:'Rice tackled brilliantly'},
+    {en:'cross',fr:'centrer',hint:'He crossed to Havertz'},
+    {en:'head',fr:'faire une tête',hint:'He headed the ball in'},
+    {en:'dribble',fr:'dribbler',hint:'Saka dribbled past two players'},
+    {en:'defend',fr:'défendre',hint:'Saliba defended all night'},
+    {en:'attack',fr:'attaquer',hint:'France attacked from the left'},
+    {en:'celebrate',fr:'célébrer',hint:'They celebrated together'},
+    {en:'equalise',fr:'égaliser',hint:"Dembélé equalised on 65'"},
+    {en:'dominate',fr:'dominer',hint:'PSG dominated possession'},
+    {en:'qualify',fr:'se qualifier',hint:'Belgium qualified!'},
+    {en:'compete',fr:'concourir',hint:'48 teams compete in 2026'},
+    {en:'train',fr:"s'entraîner",hint:'They train every day'},
+    {en:'recover',fr:'récupérer',hint:'He recovered from injury'},
+    {en:'challenge',fr:'défier',hint:'France will challenge for the trophy'},
+    {en:'perform',fr:'jouer / performer',hint:'He performed brilliantly'},
+    {en:'discover',fr:'découvrir',hint:'Explorers discovered the island'},
+    {en:'transform',fr:'transformer',hint:'Lava transformed the landscape'},
+    {en:'spread',fr:'se répandre',hint:'The news spread fast'},
+    {en:'build',fr:'construire / bâtir',hint:'They built the stadium'},
+    {en:'release',fr:'sortir / lancer',hint:'He released the album in 1982'},
+    {en:'influence',fr:'influencer',hint:'MJ influenced every artist'},
+  ]},
+  football:{label:'Football',emoji:'⚽',color:'#2AAFA0',words:[
+    {en:'goalkeeper',fr:'gardien de but',hint:'protects the goal'},
+    {en:'defender',fr:'défenseur',hint:'stops the strikers'},
+    {en:'midfielder',fr:'milieu de terrain',hint:'controls the tempo'},
+    {en:'striker',fr:'avant-centre',hint:'scores goals'},
+    {en:'winger',fr:'ailier',hint:'attacks from the sides'},
+    {en:'centre-back',fr:'défenseur central',hint:'the main defender'},
+    {en:'left-back',fr:'arrière gauche',hint:'defends the left side'},
+    {en:'right-back',fr:'arrière droit',hint:'defends the right side'},
+    {en:'captain',fr:'capitaine',hint:'wears the armband'},
+    {en:'substitute',fr:'remplaçant',hint:'comes on during the game'},
+    {en:'formation',fr:'formation',hint:'e.g. 4-3-3'},
+    {en:'squad',fr:'effectif',hint:'all players in the team'},
+    {en:'penalty',fr:'penalty',hint:'free kick from 11m'},
+    {en:'free kick',fr:'coup franc',hint:'kick after a foul'},
+    {en:'corner',fr:'corner',hint:'kick from the corner flag'},
+    {en:'offside',fr:'hors-jeu',hint:'position rule'},
+    {en:'red card',fr:'carton rouge',hint:'you are sent off!'},
+    {en:'yellow card',fr:'carton jaune',hint:'a warning'},
+    {en:'extra time',fr:'prolongations',hint:'30 extra minutes'},
+    {en:'penalty shootout',fr:'tirs au but',hint:'5 penalties each'},
+    {en:'the pitch',fr:'le terrain',hint:'where the match is played'},
+    {en:'the crossbar',fr:'la barre transversale',hint:'the top bar of the goal'},
+    {en:'the post',fr:'le poteau',hint:'the side bar of the goal'},
+    {en:'the net',fr:'le filet',hint:'inside the goal'},
+    {en:'the crowd',fr:'la foule',hint:'the fans in the stadium'},
+    {en:'the referee',fr:"l'arbitre",hint:'controls the game'},
+    {en:'foul',fr:'faute',hint:'an illegal action'},
+    {en:'trophy',fr:'trophée',hint:'the prize for winning'},
+    {en:'champion',fr:'champion',hint:'the winner'},
+    {en:'tournament',fr:'tournoi',hint:'a competition with many teams'},
+    {en:'final',fr:'finale',hint:'the last match'},
+    {en:'semi-final',fr:'demi-finale',hint:'the match before the final'},
+    {en:'quarter-final',fr:'quart de finale',hint:'top 8'},
+    {en:'anthem',fr:'hymne national',hint:'sung before the match'},
+    {en:'ceremony',fr:'cérémonie',hint:'the opening ritual'},
+    {en:'legend',fr:'légende',hint:'Ronaldo, Messi — legends'},
+    {en:'formation',fr:'formation',hint:'how the team is organised'},
+    {en:'a header',fr:'un coup de tête',hint:'scoring with your head'},
+    {en:'a dribble',fr:'un dribble',hint:'running past a player with the ball'},
+  ]},
+  nature:{label:'Nature & World',emoji:'🌍',color:'#3DBA7B',words:[
+    {en:'volcano',fr:'volcan',hint:'Azores — still active!'},
+    {en:'crater',fr:'cratère',hint:'Sete Cidades crater lake'},
+    {en:'island',fr:'île',hint:'São Miguel, Samoa, Kauai'},
+    {en:'archipelago',fr:'archipel',hint:'group of islands'},
+    {en:'ocean',fr:'océan',hint:'the Atlantic Ocean'},
+    {en:'sea',fr:'mer',hint:'the Caribbean Sea'},
+    {en:'lake',fr:'lac',hint:'crater lake — blue and green'},
+    {en:'river',fr:'rivière',hint:'runs through valleys'},
+    {en:'mountain',fr:'montagne',hint:'volcanic peaks'},
+    {en:'waterfall',fr:'cascade',hint:'Samoa lesson'},
+    {en:'beach',fr:'plage',hint:'Kauai, Saint-Barths'},
+    {en:'coast',fr:'côte',hint:'where land meets sea'},
+    {en:'reef',fr:'récif',hint:'coral reef, Pacific Ocean'},
+    {en:'forest',fr:'forêt',hint:'tropical rainforest'},
+    {en:'valley',fr:'vallée',hint:'Furnas Valley, Azores'},
+    {en:'cliff',fr:'falaise',hint:'tall rocky edge'},
+    {en:'landscape',fr:'paysage',hint:'everything you can see'},
+    {en:'wildlife',fr:'faune sauvage',hint:'wild animals and plants'},
+    {en:'whale',fr:'baleine',hint:'sperm whale, Azores'},
+    {en:'lava',fr:'lave',hint:'hot melted rock'},
+    {en:'hot spring',fr:'source chaude',hint:'Furnas Valley'},
+    {en:'altitude',fr:'altitude',hint:'Mexico City is very high'},
+    {en:'climate',fr:'climat',hint:'the weather over a long time'},
+    {en:'tide',fr:'marée',hint:'the sea rises and falls'},
+    {en:'horizon',fr:'horizon',hint:'where sky meets sea'},
+    {en:'soil',fr:'sol / terre',hint:'they cook in the volcanic soil'},
+    {en:'current',fr:'courant',hint:'movement of water in the ocean'},
+    {en:'coral',fr:'corail',hint:'underwater structures'},
+    {en:'desert',fr:'désert',hint:'very dry, hot, sandy'},
+    {en:'trail',fr:'sentier',hint:'hiking trail in Kauai'},
+  ]},
+  descriptions:{label:'Descriptions',emoji:'✨',color:'#4A90D9',words:[
+    {en:'beautiful',fr:'beau / belle',hint:'Sete Cidades is beautiful'},
+    {en:'stunning',fr:'époustouflant',hint:'amazing, breathtaking'},
+    {en:'spectacular',fr:'spectaculaire',hint:'amazing to look at'},
+    {en:'enormous',fr:'énorme',hint:'very big'},
+    {en:'tiny',fr:'minuscule',hint:'very small'},
+    {en:'ancient',fr:'ancien / vieux',hint:'very old'},
+    {en:'modern',fr:'moderne',hint:'new style'},
+    {en:'famous',fr:'célèbre / connu',hint:'everyone knows it'},
+    {en:'legendary',fr:'légendaire',hint:'famous throughout history'},
+    {en:'iconic',fr:'iconique',hint:'a symbol everyone recognises'},
+    {en:'remote',fr:'isolé / éloigné',hint:'far from everywhere'},
+    {en:'isolated',fr:'isolé',hint:'alone, far away'},
+    {en:'lush',fr:'luxuriant / verdoyant',hint:'very green and full of plants'},
+    {en:'volcanic',fr:'volcanique',hint:'related to a volcano'},
+    {en:'tropical',fr:'tropical',hint:'hot, humid, green'},
+    {en:'subtropical',fr:'subtropical',hint:'warm, between tropical and temperate'},
+    {en:'unpredictable',fr:'imprévisible',hint:'you never know what happens'},
+    {en:'dramatic',fr:'dramatique',hint:'very intense, powerful'},
+    {en:'peaceful',fr:'paisible / calme',hint:'quiet, relaxing'},
+    {en:'electric',fr:'électrique',hint:'exciting and full of energy'},
+    {en:'powerful',fr:'puissant',hint:'very strong'},
+    {en:'talented',fr:'talentueux',hint:'naturally very good'},
+    {en:'dominant',fr:'dominant',hint:'clearly the best'},
+    {en:'consistent',fr:'régulier / constant',hint:'always performs well'},
+    {en:'creative',fr:'créatif',hint:'full of new ideas'},
+    {en:'technical',fr:'technique',hint:'skilled and precise'},
+    {en:'confident',fr:'confiant',hint:'believes in themselves'},
+    {en:'heartbreaking',fr:'déchirant / crève-coeur',hint:'very sad, painful'},
+    {en:'unforgettable',fr:'inoubliable',hint:'you can never forget it'},
+    {en:'unique',fr:'unique',hint:'one of a kind'},
+    {en:'incredible',fr:'incroyable',hint:"hard to believe it's real"},
+    {en:'magnificent',fr:'magnifique',hint:'extremely beautiful'},
+    {en:'rare',fr:'rare',hint:'not often seen'},
+    {en:'autonomous',fr:'autonome',hint:'Azores is autonomous region of Portugal'},
+  ]},
+  people:{label:'People & Places',emoji:'👥',color:'#9B6FD4',words:[
+    {en:'pirate',fr:'pirate',hint:'One Piece — Luffy!'},
+    {en:'explorer',fr:'explorateur',hint:'someone who discovers new places'},
+    {en:'crew',fr:'équipage',hint:'the people on a ship or team'},
+    {en:'captain',fr:'capitaine',hint:'leader of a ship or team'},
+    {en:'king',fr:'roi',hint:'ruler of a kingdom'},
+    {en:'enemy',fr:'ennemi',hint:'the person against you'},
+    {en:'journalist',fr:'journaliste',hint:'writes or reports news'},
+    {en:'commentator',fr:'commentateur',hint:'describes the match on TV'},
+    {en:'coach',fr:'entraîneur',hint:'Arteta coaches Arsenal'},
+    {en:'fan',fr:'supporter / fan',hint:'they cheer for their team'},
+    {en:'opponent',fr:'adversaire',hint:'the team you play against'},
+    {en:'generation',fr:'génération',hint:"England's golden generation"},
+    {en:'colony',fr:'colonie',hint:'Saint-Barths was a Swedish colony'},
+    {en:'ancestor',fr:'ancêtre',hint:'your great-great-grandparents'},
+    {en:'resident',fr:'résident / habitant',hint:'someone who lives there'},
+    {en:'performer',fr:'artiste / interprète',hint:'Michael Jackson was a performer'},
+    {en:'tradition',fr:'tradition',hint:'something done for a long time'},
+    {en:'heritage',fr:'patrimoine',hint:'cultural heritage'},
+    {en:'culture',fr:'culture',hint:'Samoan culture'},
+    {en:'territory',fr:'territoire',hint:'French territory'},
+    {en:'independent',fr:'indépendant',hint:'an independent country'},
+  ]},
+  time:{label:'Time & Sequence',emoji:'⏱️',color:'#E8A020',words:[
+    {en:'before',fr:'avant',hint:'before the match started'},
+    {en:'after',fr:'après',hint:'after the final whistle'},
+    {en:'during',fr:'pendant',hint:'during the game'},
+    {en:'since',fr:'depuis',hint:'since 2006'},
+    {en:'until',fr:"jusqu'à",hint:'until the final minute'},
+    {en:'finally',fr:'finalement',hint:'and finally, PSG won'},
+    {en:'suddenly',fr:'soudainement',hint:'suddenly Kvaratskhelia hit the post'},
+    {en:'immediately',fr:'immédiatement',hint:'immediately after the whistle'},
+    {en:'eventually',fr:'finalement / par la suite',hint:'they eventually scored'},
+    {en:'at first',fr:"d'abord",hint:'at first Arsenal were winning'},
+    {en:'then',fr:'puis / ensuite',hint:'then Dembélé equalised'},
+    {en:'meanwhile',fr:'pendant ce temps',hint:'meanwhile the fans were nervous'},
+    {en:'afterwards',fr:'après / ensuite',hint:'afterwards they celebrated'},
+    {en:'recently',fr:'récemment',hint:'recently qualified'},
+    {en:'in the end',fr:'au final',hint:'in the end PSG won'},
+    {en:'for the first time',fr:'pour la première fois',hint:'for the first time in history'},
+    {en:'century',fr:'siècle',hint:'100 years'},
+    {en:'decade',fr:'décennie',hint:'10 years'},
+    {en:'era',fr:'ère / époque',hint:'the modern era of football'},
+    {en:'moment',fr:'moment',hint:'a moment of history'},
+    {en:'season',fr:'saison',hint:'this season Arsenal were amazing'},
+    {en:'minute',fr:'minute',hint:'in the 90th minute'},
+  ]},
+  feelings:{label:'Feelings & Opinions',emoji:'💬',color:'#E85050',words:[
+    {en:'I think',fr:'je pense / je crois',hint:'I think Arsenal will win'},
+    {en:'I believe',fr:'je crois',hint:'I believe it was unfair'},
+    {en:'in my opinion',fr:'à mon avis',hint:'in my opinion PSG deserved it'},
+    {en:'I feel',fr:'je ressens / je me sens',hint:'I feel sad for Arsenal'},
+    {en:'I agree',fr:"je suis d'accord",hint:'I agree with you'},
+    {en:'I disagree',fr:"je ne suis pas d'accord",hint:'I disagree — it was a foul'},
+    {en:'disappointed',fr:'déçu',hint:'Arsenal fans were disappointed'},
+    {en:'excited',fr:'excité / enthousiaste',hint:'I was so excited for the final'},
+    {en:'proud',fr:'fier / fière',hint:'they were proud of their season'},
+    {en:'nervous',fr:'nerveux / angoissé',hint:'the fans were nervous in extra time'},
+    {en:'heartbroken',fr:'le coeur brisé',hint:'Ødegaard was heartbroken'},
+    {en:'relieved',fr:'soulagé',hint:'they felt relieved after the win'},
+    {en:'surprised',fr:'surpris',hint:'everyone was surprised by the result'},
+    {en:'lucky',fr:'chanceux',hint:'PSG were a bit lucky'},
+    {en:'unlucky',fr:'malchanceux',hint:'Arsenal were so unlucky'},
+    {en:'deserve',fr:'mériter',hint:'did they deserve to win?'},
+    {en:'although',fr:'bien que / même si',hint:'although they lost, they played well'},
+    {en:'however',fr:'cependant / pourtant',hint:'however, PSG were the best team'},
+    {en:'to be honest',fr:'pour être honnête',hint:'to be honest I preferred PSG'},
+    {en:'in my view',fr:'selon moi',hint:'in my view it was unfair'},
+  ]},
+  movement:{label:'Movement & Direction',emoji:'🧭',color:'#2AAFA0',words:[
+    {en:'north',fr:'nord',hint:'go north on the map'},
+    {en:'south',fr:'sud',hint:'sail south'},
+    {en:'east',fr:'est',hint:'east of Europe'},
+    {en:'west',fr:'ouest',hint:'1,500km west of Lisbon'},
+    {en:'left',fr:'gauche',hint:'turn left'},
+    {en:'right',fr:'droite',hint:'pass it to the right'},
+    {en:'forward',fr:'en avant',hint:'run forward'},
+    {en:'backwards',fr:'en arrière',hint:'step backwards'},
+    {en:'towards',fr:'vers',hint:'running towards goal'},
+    {en:'away from',fr:'loin de',hint:'move away from the defender'},
+    {en:'through',fr:'à travers',hint:'he dribbled through them all'},
+    {en:'across',fr:"à travers / de l'autre côté",hint:'cross it across the box'},
+    {en:'straight',fr:'tout droit',hint:'shoot straight at goal'},
+    {en:'wide',fr:'large / à côté',hint:'Eze shot wide'},
+    {en:'navigate',fr:'naviguer',hint:'to sail and find the way'},
+    {en:'compass',fr:'boussole',hint:'shows you the direction'},
+    {en:'route',fr:'route / itinéraire',hint:'the route to the island'},
+    {en:'destination',fr:'destination',hint:'our next destination is Samoa'},
+    {en:'journey',fr:'voyage / trajet',hint:'the journey across the Atlantic'},
+  ]},
+  music:{label:'Music & Culture',emoji:'🎵',color:'#9B6FD4',words:[
+    {en:'beat',fr:'rythme / beat',hint:'MJ lesson — the beat of the song'},
+    {en:'rhythm',fr:'rythme',hint:'feel the rhythm'},
+    {en:'lyrics',fr:'paroles',hint:'the words of a song'},
+    {en:'verse',fr:'couplet',hint:'the first verse of the song'},
+    {en:'chorus',fr:'refrain',hint:'the part everyone sings'},
+    {en:'rhyme',fr:'rime',hint:'cat rhymes with hat'},
+    {en:'rhyme scheme',fr:'schéma de rimes',hint:'AABB or ABAB patterns'},
+    {en:'stage',fr:'scène',hint:'he danced on stage'},
+    {en:'concert',fr:'concert',hint:'thousands at the concert'},
+    {en:'album',fr:'album',hint:'Thriller is an album'},
+    {en:'hit',fr:'tube / succès',hint:'Billie Jean was a huge hit'},
+    {en:'influence',fr:'influence',hint:'MJ influenced every artist'},
+  ]},
+  grammar_phrases:{label:'Grammar Phrases',emoji:'📐',color:'#F0C040',words:[
+    {en:'is going to win',fr:'va gagner',hint:'he/she/it IS going to + base verb'},
+    {en:'are going to play',fr:'vont jouer',hint:'they ARE going to + base verb'},
+    {en:'am going to watch',fr:'vais regarder',hint:'I AM going to + base verb'},
+    {en:'is not going to score',fr:'ne va pas marquer',hint:'is NOT going to + base verb'},
+    {en:'Are they going to qualify?',fr:'Vont-ils se qualifier ?',hint:'ARE + subject + going to + verb?'},
+    {en:'bigger than',fr:'plus grand(e) que',hint:'comparative: short adj + -er + than'},
+    {en:'more beautiful than',fr:'plus beau/belle que',hint:'comparative: more + long adj + than'},
+    {en:'better than',fr:'meilleur(e) que',hint:'irregular: good → better'},
+    {en:'worse than',fr:'pire que',hint:'irregular: bad → worse'},
+    {en:'further than',fr:'plus loin que',hint:'irregular: far → further'},
+    {en:'the biggest',fr:'le/la plus grand(e)',hint:'superlative: the + adj + -est'},
+    {en:'the most beautiful',fr:'le/la plus beau/belle',hint:'superlative: the most + long adj'},
+    {en:'the best',fr:'le/la meilleur(e)',hint:'irregular superlative: good → the best'},
+    {en:'the worst',fr:'le/la pire',hint:'irregular superlative: bad → the worst'},
+    {en:'my / mine',fr:'mon/ma — le mien',hint:'my before noun, mine alone'},
+    {en:'their / theirs',fr:'leur — le leur',hint:'their before noun, theirs alone'},
+    {en:"didn't + base verb",fr:"n'a pas + infinitif",hint:"didn't score — base form after didn't"},
+    {en:'Did + subject + base verb?',fr:'Est-ce que + sujet + infinitif ?',hint:'Did he score? — question form'},
+  ]},
+};
+
+let selectedMode='flashcards', selectedCats=new Set(Object.keys(VOCAB));
+let sessionCards=[], sessionIndex=0, sessionCorrect=0, sessionWrong=0, missedCards=[];
+let fcFlipped=false, fcDir='en', quizData=[];
+let speedTimer=null, speedTimeLeft=5, speedScore=0, speedIndex=0, speedAnswered=false;
+let totalMastered=0, timerInterval=null, timerSeconds=0;
+const CIRC=2*Math.PI*35;
+
+function init(){
+  const grid=document.getElementById('cat-grid');
+  Object.entries(VOCAB).forEach(function([key,cat]){
+    const el=document.createElement('div');
+    el.className='cat-pill selected'; el.id='cp-'+key;
+    el.style.borderColor=cat.color;
+    el.innerHTML='<span class="cat-pill-icon">'+cat.emoji+'</span><span class="cat-pill-label">'+cat.label+'</span><span class="cat-pill-count">'+cat.words.length+'</span>';
+    el.onclick=function(){toggleCat(key,cat.color);};
+    grid.appendChild(el);
+  });
+  const saved=localStorage.getItem('micha_hub_mastered');
+  if(saved)totalMastered=parseInt(saved)||0;
+  let total=0; Object.values(VOCAB).forEach(function(c){total+=c.words.length;});
+  document.getElementById('total-words').textContent=total;
+  document.getElementById('total-mastered').textContent=totalMastered;
+  document.getElementById('total-cats').textContent=Object.keys(VOCAB).length;
+}
+
+function toggleCat(key,color){
+  if(selectedCats.has(key)){if(selectedCats.size<=1)return;selectedCats.delete(key);const el=document.getElementById('cp-'+key);el.classList.remove('selected');el.style.borderColor='rgba(255,255,255,0.07)';}
+  else{selectedCats.add(key);const el=document.getElementById('cp-'+key);el.classList.add('selected');el.style.borderColor=color;}
+}
+function selectMode(mode,el){selectedMode=mode;document.querySelectorAll('.mode-card').forEach(function(c){c.classList.remove('selected');});el.classList.add('selected');}
+function setDir(dir,btn){fcDir=dir;document.querySelectorAll('.dir-opt').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');}
+function shuffle(arr){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildDeck(){const all=[];selectedCats.forEach(function(key){if(VOCAB[key])VOCAB[key].words.forEach(function(w){all.push(Object.assign({},w,{cat:key}));});});return shuffle(all);}
+function goScreen(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+function goVocabHome(){clearInterval(timerInterval);clearInterval(speedTimer);goScreen('screen-vocab-home');}
+function showSection(sec){document.querySelectorAll('.bnav-btn').forEach(function(b){b.classList.remove('active');});document.getElementById('bnav-'+sec).classList.add('active');if(sec==='vocab'){clearInterval(timerInterval);clearInterval(speedTimer);goScreen('screen-vocab-home');}else goScreen('screen-grammar');}
+
+function startTimer(){clearInterval(timerInterval);timerSeconds=0;timerInterval=setInterval(function(){timerSeconds++;const m=Math.floor(timerSeconds/60),s=timerSeconds%60,str=m+':'+String(s).padStart(2,'0');['fc-timer','q-timer','sp-timer'].forEach(function(id){const el=document.getElementById(id);if(el)el.textContent=str;});},1000);}
+
+function startSession(){sessionCards=buildDeck();sessionIndex=0;sessionCorrect=0;sessionWrong=0;missedCards=[];startTimer();if(selectedMode==='flashcards')startFC();else if(selectedMode==='quiz')startQuiz();else startSpeed();}
+
+function startFC(){goScreen('screen-flashcards');fcFlipped=false;loadFC();}
+function loadFC(){
+  if(sessionIndex>=sessionCards.length){showResults();return;}
+  const c=sessionCards[sessionIndex],cat=VOCAB[c.cat];
+  document.getElementById('fc-prog').style.width=(sessionIndex/sessionCards.length*100)+'%';
+  document.getElementById('fc-counter').textContent='Card '+(sessionIndex+1)+' of '+sessionCards.length;
+  document.getElementById('fc-cat-label').textContent=cat.emoji+' '+cat.label;
+  const fw=fcDir==='en'?c.en:c.fr, bw=fcDir==='en'?c.fr:c.en;
+  const inner=document.getElementById('fc-card');
+  inner.style.transition='none';inner.classList.remove('flipped');fcFlipped=false;
+  document.getElementById('fc-cat-f').textContent=cat.emoji+' '+cat.label;
+  document.getElementById('fc-cat-b').textContent=cat.emoji+' '+cat.label;
+  document.getElementById('fc-front-word').textContent=fw;
+  document.getElementById('fc-front-word').style.color=fcDir==='en'?'var(--gold)':'var(--text)';
+  document.getElementById('fc-back-word').textContent=bw;
+  document.getElementById('fc-back-word').style.color=fcDir==='en'?'var(--text)':'var(--gold)';
+  document.getElementById('fc-back-hint').textContent=c.hint?'💡 '+c.hint:'';
+  requestAnimationFrame(function(){requestAnimationFrame(function(){inner.style.transition='';});});
+  document.getElementById('fc-miss').disabled=true;document.getElementById('fc-got').disabled=true;
+  document.getElementById('fc-hint-text').textContent='Tap the card to reveal';
+}
+function flipCard(){const c=document.getElementById('fc-card');c.classList.toggle('flipped');fcFlipped=!fcFlipped;document.getElementById('fc-miss').disabled=!fcFlipped;document.getElementById('fc-got').disabled=!fcFlipped;document.getElementById('fc-hint-text').textContent=fcFlipped?'How did you do?':'Tap to reveal';}
+function fcAnswer(ok){if(ok){sessionCorrect++;totalMastered++;localStorage.setItem('micha_hub_mastered',totalMastered);}else{sessionWrong++;missedCards.push(sessionCards[sessionIndex]);}sessionIndex++;loadFC();}
+
+function startQuiz(){goScreen('screen-quiz');quizData=sessionCards.slice(0,15);sessionIndex=0;sessionCorrect=0;sessionWrong=0;missedCards=[];renderQ();}
+function renderQ(){
+  if(sessionIndex>=quizData.length){showResults();return;}
+  const c=quizData[sessionIndex],cat=VOCAB[c.cat];
+  document.getElementById('q-prog').style.width=(sessionIndex/quizData.length*100)+'%';
+  document.getElementById('q-counter').textContent='Q '+(sessionIndex+1)+' of '+quizData.length;
+  document.getElementById('q-score').textContent=sessionCorrect+' ✓';
+  const fw=fcDir==='en'?c.en:c.fr, ca=fcDir==='en'?c.fr:c.en, pf=fcDir==='en'?'fr':'en';
+  const dist=shuffle(buildDeck().filter(function(x){return x.en!==c.en;})).slice(0,3).map(function(x){return x[pf];});
+  const opts=shuffle([ca].concat(dist));
+  const idx=sessionIndex;
+  document.getElementById('quiz-body').innerHTML=
+    '<div class="quiz-q-card"><div class="quiz-q-label">'+cat.emoji+' '+cat.label+(fcDir==='en'?' — What is the French?':' — What is the English?')+'</div><div class="quiz-q-word">'+fw+'</div>'+(c.hint?'<div class="quiz-q-cat">💡 '+c.hint+'</div>':'')+'</div>'+
+    '<div class="quiz-opts">'+opts.map(function(o){return '<button class="quiz-opt" onclick="qAns(this,'+JSON.stringify(o)+','+JSON.stringify(ca)+','+JSON.stringify(c.hint||'')+','+idx+')">'+o+'</button>';}).join('')+'</div>'+
+    '<div class="quiz-fb" id="qfb-'+idx+'"></div><button class="quiz-next" id="qnxt-'+idx+'" onclick="qNext()">Next →</button>';
+}
+function qAns(btn,chosen,correct,hint,idx){
+  document.querySelectorAll('.quiz-opt').forEach(function(b){b.disabled=true;});
+  const fb=document.getElementById('qfb-'+idx),nxt=document.getElementById('qnxt-'+idx);
+  fb.classList.add('show');nxt.classList.add('show');
+  if(chosen===correct){btn.classList.add('correct');sessionCorrect++;fb.className='quiz-fb show ok';fb.innerHTML='✓ Correct!'+(hint?'<span class="fb-hint">💡 '+hint+'</span>':'');}
+  else{btn.classList.add('wrong');sessionWrong++;missedCards.push(quizData[idx]);document.querySelectorAll('.quiz-opt').forEach(function(b){if(b.textContent===correct)b.classList.add('correct');});fb.className='quiz-fb show bad';fb.innerHTML='Answer: <span class="fb-ans">'+correct+'</span>'+(hint?'<span class="fb-hint">💡 '+hint+'</span>':'');}
+  document.getElementById('q-score').textContent=sessionCorrect+' ✓';
+}
+function qNext(){sessionIndex++;renderQ();document.getElementById('quiz-body').scrollTop=0;}
+
+function startSpeed(){goScreen('screen-speed');speedScore=0;speedIndex=0;sessionCorrect=0;sessionWrong=0;missedCards=[];document.getElementById('sp-score').textContent='0';loadSp();}
+function loadSp(){
+  if(speedIndex>=Math.min(20,sessionCards.length)){showResults();return;}
+  speedAnswered=false;
+  const c=sessionCards[speedIndex],cat=VOCAB[c.cat];
+  document.getElementById('sp-prog').style.width=(speedIndex/Math.min(20,sessionCards.length)*100)+'%';
+  document.getElementById('sp-counter').textContent='Round '+(speedIndex+1)+' of '+Math.min(20,sessionCards.length);
+  document.getElementById('sp-from').textContent=cat.emoji+' '+cat.label;
+  const fw=fcDir==='en'?c.en:c.fr, ca=fcDir==='en'?c.fr:c.en, pf=fcDir==='en'?'fr':'en';
+  document.getElementById('sp-word').textContent=fw;
+  const dist=shuffle(buildDeck().filter(function(x){return x.en!==c.en;})).slice(0,3).map(function(x){return x[pf];});
+  const opts=shuffle([ca].concat(dist));
+  document.getElementById('sp-opts').innerHTML=opts.map(function(o){return '<button class="speed-opt" onclick="spAns(this,'+JSON.stringify(o)+','+JSON.stringify(ca)+','+speedIndex+')">'+o+'</button>';}).join('');
+  startSpTimer(ca);
+}
+function startSpTimer(ca){
+  clearInterval(speedTimer);speedTimeLeft=5;updateRing();
+  speedTimer=setInterval(function(){
+    speedTimeLeft-=0.1;updateRing();
+    if(speedTimeLeft<=0){clearInterval(speedTimer);if(!speedAnswered){document.querySelectorAll('.speed-opt').forEach(function(b){b.disabled=true;if(b.textContent===ca)b.classList.add('correct');});sessionWrong++;missedCards.push(sessionCards[speedIndex]);setTimeout(function(){speedIndex++;loadSp();},800);}}
+  },100);
+}
+function updateRing(){
+  const p=Math.max(0,speedTimeLeft/5),off=CIRC*(1-p),u=speedTimeLeft<=2;
+  const r=document.getElementById('sp-ring');
+  r.style.strokeDashoffset=off;r.style.stroke=u?'var(--red)':'var(--teal)';
+  document.getElementById('sp-num').textContent=Math.ceil(speedTimeLeft);
+  document.getElementById('sp-num').style.color=u?'var(--red)':'var(--teal)';
+}
+function spAns(btn,chosen,correct,idx){
+  if(speedAnswered)return;speedAnswered=true;clearInterval(speedTimer);
+  document.querySelectorAll('.speed-opt').forEach(function(b){b.disabled=true;});
+  if(chosen===correct){btn.classList.add('correct');speedScore++;sessionCorrect++;totalMastered++;localStorage.setItem('micha_hub_mastered',totalMastered);document.getElementById('sp-score').textContent=speedScore;}
+  else{btn.classList.add('wrong');sessionWrong++;missedCards.push(sessionCards[idx]);document.querySelectorAll('.speed-opt').forEach(function(b){if(b.textContent===correct)b.classList.add('correct');});}
+  setTimeout(function(){speedIndex++;loadSp();},600);
+}
+
+function showResults(){
+  clearInterval(timerInterval);clearInterval(speedTimer);
+  const total=sessionCorrect+sessionWrong,p=total>0?sessionCorrect/total:0;
+  let emoji,title,sub;
+  if(p>=.9){emoji='🏆';title='Legendary!';sub='Basically fluent — Brawl Stars champion level';}
+  else if(p>=.75){emoji='⚽';title='Really solid!';sub='Great session, Micha';}
+  else if(p>=.55){emoji='💪';title='Good effort!';sub='Review the missed words and try again';}
+  else{emoji='🔁';title='Keep going!';sub='Practice makes perfect';}
+  document.getElementById('r-emoji').textContent=emoji;
+  document.getElementById('r-title').textContent=title;
+  document.getElementById('r-sub').textContent=sub;
+  document.getElementById('r-correct').textContent=sessionCorrect;
+  document.getElementById('r-wrong').textContent=sessionWrong;
+  const mw=document.getElementById('missed-wrap');
+  mw.innerHTML=missedCards.length>0?'<div class="missed-head">📝 Review these — '+missedCards.length+' missed</div>'+missedCards.slice(0,10).map(function(c){return '<div class="missed-row"><span class="missed-en">'+c.en+'</span><span class="missed-fr">'+c.fr+'</span></div>';}).join(''):'';
+  goScreen('screen-results');
+}
+
+function toggleG(id){document.getElementById('gb-'+id).classList.toggle('open');}
+
+init();
+</script>
+</body>
+</html>
