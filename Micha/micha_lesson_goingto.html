@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Micha – Going To</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4F6F8;
+    --surface: #FFFFFF;
+    --teal: #2A8A8A;
+    --teal-light: #E6F4F4;
+    --teal-dark: #1d6666;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --red: #e53e3e;
+    --green: #2f855a;
+    --orange: #c05621;
+    --yellow: #d69e2e;
+    --shadow: 0 2px 8px rgba(0,0,0,0.08);
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 100px; }
+
+  /* TAB BAR */
+  .tab-bar {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--surface);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    display: flex; overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex: 0 0 auto; padding: 14px 18px;
+    font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 700;
+    background: none; border: none; cursor: pointer;
+    color: var(--muted); white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+  }
+  .tab-btn.active { color: var(--teal); border-bottom-color: var(--teal); }
+  .tab-btn:hover:not(.active) { color: var(--text); background: var(--bg); }
+
+  /* PAGES */
+  .page { display: none; padding: 20px 16px; max-width: 720px; margin: 0 auto; }
+  .page.active { display: block; }
+
+  /* NAV BUTTONS */
+  .nav-row {
+    display: flex; justify-content: space-between; margin-top: 28px; gap: 10px;
+  }
+  .nav-btn {
+    background: var(--teal); color: white; border: none; border-radius: 10px;
+    padding: 12px 24px; font-family: 'Nunito', sans-serif; font-weight: 800;
+    font-size: 15px; cursor: pointer; transition: background 0.2s;
+  }
+  .nav-btn:hover { background: var(--teal-dark); }
+  .nav-btn:disabled { background: #ccc; cursor: default; }
+
+  /* CARDS */
+  .card {
+    background: var(--surface); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 20px; margin-bottom: 16px;
+  }
+  .card h2 { font-size: 18px; font-weight: 800; color: var(--teal); margin-bottom: 14px; }
+  .card h3 { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+
+  /* SECTION LABEL */
+  .label {
+    display: inline-block; font-size: 11px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 3px 10px; border-radius: 20px; margin-bottom: 12px;
+  }
+  .label-warmup { background: #FEF3C7; color: #92400E; }
+  .label-grammar { background: #DBEAFE; color: #1e40af; }
+  .label-content { background: #F3E8FF; color: #6B21A8; }
+  .label-reading { background: #DCFCE7; color: #166534; }
+  .label-writing { background: #FFE4E6; color: #9F1239; }
+
+  /* REVEAL BUTTON */
+  .reveal-btn {
+    background: var(--teal); color: white; border: none; border-radius: 8px;
+    padding: 8px 16px; font-family: 'Nunito', sans-serif; font-weight: 700;
+    font-size: 13px; cursor: pointer; transition: background 0.2s; margin-top: 8px;
+  }
+  .reveal-btn:hover { background: var(--teal-dark); }
+  .reveal-box {
+    display: none; background: var(--teal-light); border-radius: 8px;
+    padding: 12px 14px; margin-top: 10px; font-weight: 700; font-size: 15px;
+    color: var(--teal-dark);
+  }
+  .reveal-box.shown { display: block; }
+  .fr-hint { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 4px; }
+
+  /* GRAMMAR TABLE */
+  .grammar-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 10px; }
+  .grammar-table th {
+    background: var(--teal); color: white; padding: 10px 12px; text-align: left; font-weight: 800;
+  }
+  .grammar-table td { padding: 10px 12px; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
+  .grammar-table tr:nth-child(even) td { background: #f9fafb; }
+  .grammar-table .fr { font-size: 12px; color: var(--muted); font-style: italic; }
+
+  /* MISTAKE BOX */
+  .mistake-box { background: #FFF5F5; border: 2px solid #FEB2B2; border-radius: 10px; padding: 14px; margin-top: 14px; }
+  .mistake-box h4 { font-size: 14px; font-weight: 800; color: var(--red); margin-bottom: 10px; }
+  .mistake-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; font-size: 14px; }
+  .mistake-bad { color: var(--red); text-decoration: line-through; }
+  .mistake-good { color: var(--green); font-weight: 700; }
+
+  /* 3-COLUMN OVERVIEW */
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 14px 0; }
+  .three-col-card {
+    background: var(--teal-light); border-radius: 10px; padding: 14px 12px; text-align: center;
+  }
+  .three-col-card .col-title { font-size: 12px; font-weight: 800; color: var(--teal); text-transform: uppercase; margin-bottom: 6px; }
+  .three-col-card .col-example { font-size: 14px; font-weight: 700; color: var(--text); }
+  .three-col-card .col-fr { font-size: 11px; color: var(--muted); font-style: italic; margin-top: 4px; }
+
+  /* VOCAB CARDS */
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-top: 12px; }
+  .vocab-card {
+    background: var(--surface); border: 2px solid #e5e7eb; border-radius: 10px;
+    padding: 12px; text-align: center; cursor: pointer; transition: all 0.2s; user-select: none;
+  }
+  .vocab-card:hover { border-color: var(--teal); }
+  .vocab-card.flipped { background: #F0FFF4; border-color: var(--green); }
+  .vocab-card.confirmed { background: #F0FFF4; border-color: var(--green); }
+  .vocab-card .word { font-weight: 800; font-size: 15px; }
+  .vocab-card .translation { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 4px; display: none; }
+  .vocab-card.flipped .translation { display: block; }
+  .vocab-card.confirmed .translation { display: block; color: var(--green); font-weight: 700; }
+
+  /* SVG SCENES */
+  .scene-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 14px 0; }
+  .scene-card { background: var(--surface); border-radius: 10px; box-shadow: var(--shadow); padding: 14px; text-align: center; }
+  .scene-card svg { width: 80px; height: 80px; }
+  .scene-card .scene-label { font-size: 12px; font-weight: 700; margin-top: 8px; color: var(--text); }
+  .scene-card .scene-en { font-size: 13px; font-weight: 800; color: var(--teal); margin-top: 4px; }
+  .scene-card .scene-fr { font-size: 11px; color: var(--muted); font-style: italic; }
+
+  /* FAST FACTS */
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+  .fact-card { background: var(--teal-light); border-radius: 10px; padding: 14px; }
+  .fact-card .fact-icon { font-size: 22px; margin-bottom: 6px; }
+  .fact-card .fact-text { font-size: 14px; font-weight: 700; }
+  .fact-card .fact-fr { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 3px; }
+
+  /* READING TEXT */
+  .reading-text { background: #f9fafb; border-radius: 10px; padding: 16px; font-size: 14px; line-height: 1.8; margin: 10px 0; }
+  .hl-going { background: #BBF7D0; color: #166534; border-radius: 4px; padding: 1px 3px; font-weight: 700; }
+  .reader-label { font-size: 12px; font-weight: 800; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 8px; }
+  .reader-teacher { background: #DBEAFE; color: #1e40af; }
+  .reader-student { background: #DCFCE7; color: #166534; }
+
+  /* EXERCISE CARDS */
+  .ex-card { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; margin-bottom: 14px; }
+  .ex-card .difficulty { font-size: 11px; font-weight: 800; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 10px; }
+  .difficulty.easy { background: #DCFCE7; color: #166534; }
+  .difficulty.medium { background: #FEF3C7; color: #92400E; }
+  .difficulty.hard { background: #FFE4E6; color: #9F1239; }
+  .ex-question { font-size: 15px; font-weight: 700; margin-bottom: 10px; line-height: 1.6; }
+  .ex-input { border: 2px solid #e5e7eb; border-radius: 8px; padding: 8px 12px; font-family: 'Nunito', sans-serif; font-size: 15px; font-weight: 700; width: 140px; outline: none; transition: border 0.2s; }
+  .ex-input:focus { border-color: var(--teal); }
+  .mc-options { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .mc-btn {
+    background: #f3f4f6; border: 2px solid #e5e7eb; border-radius: 8px;
+    padding: 8px 16px; font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .mc-btn:hover { border-color: var(--teal); background: var(--teal-light); }
+  .mc-btn.correct { background: #F0FFF4; border-color: var(--green); color: var(--green); }
+  .mc-btn.wrong { background: #FFF5F5; border-color: var(--red); color: var(--red); }
+  .ex-hint-row { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .hint-tag { font-size: 12px; padding: 4px 10px; border-radius: 20px; font-weight: 700; }
+  .hint-fr { background: #FEF3C7; color: #92400E; cursor: pointer; }
+  .hint-grammar { background: #DBEAFE; color: #1e40af; cursor: pointer; }
+  .hint-popup { display: none; font-size: 13px; margin-top: 6px; padding: 8px 12px; background: #f9fafb; border-radius: 8px; color: var(--muted); font-style: italic; }
+  .hint-popup.show { display: block; }
+  .check-btn {
+    background: var(--teal); color: white; border: none; border-radius: 8px;
+    padding: 8px 16px; font-family: 'Nunito', sans-serif; font-weight: 800;
+    font-size: 13px; cursor: pointer; margin-top: 10px;
+  }
+  .check-btn:hover { background: var(--teal-dark); }
+  .ex-feedback { display: none; font-size: 14px; font-weight: 700; margin-top: 8px; padding: 8px 12px; border-radius: 8px; }
+  .ex-feedback.correct { background: #F0FFF4; color: var(--green); display: block; }
+  .ex-feedback.wrong { background: #FFF5F5; color: var(--red); display: block; }
+
+  /* WRITING TAB */
+  .starter-grid { display: grid; gap: 10px; margin: 12px 0; }
+  .starter-btn {
+    background: var(--surface); border: 2px solid #e5e7eb; border-radius: 10px;
+    padding: 14px; text-align: left; cursor: pointer; transition: all 0.2s;
+    font-family: 'Nunito', sans-serif;
+  }
+  .starter-btn:hover { border-color: var(--teal); background: var(--teal-light); }
+  .starter-en { font-size: 15px; font-weight: 800; color: var(--text); }
+  .starter-fr { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 3px; }
+  .starter-structure { font-size: 11px; font-weight: 800; color: var(--teal); margin-top: 4px; }
+  textarea {
+    width: 100%; min-height: 120px; border: 2px solid #e5e7eb; border-radius: 10px;
+    padding: 14px; font-family: 'Nunito', sans-serif; font-size: 15px; font-weight: 600;
+    resize: vertical; outline: none; transition: border 0.2s; background: var(--surface);
+  }
+  textarea:focus { border-color: var(--teal); }
+
+  /* SPEAKING PROMPTS */
+  .speak-card { background: var(--surface); border-radius: 10px; box-shadow: var(--shadow); padding: 16px; margin-bottom: 12px; }
+  .speak-level { font-size: 11px; font-weight: 800; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 8px; }
+  .speak-warmup { background: #DCFCE7; color: #166534; }
+  .speak-core { background: #DBEAFE; color: #1e40af; }
+  .speak-challenge { background: #FFE4E6; color: #9F1239; }
+  .speak-q { font-size: 16px; font-weight: 800; margin-bottom: 6px; }
+  .speak-fr { font-size: 12px; color: var(--muted); font-style: italic; }
+
+  /* TIMER BUBBLE */
+  #timer-bubble {
+    position: fixed; bottom: 20px; left: 20px; z-index: 200;
+    width: 58px; height: 58px; border-radius: 50%;
+    background: var(--teal); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 12px;
+    cursor: pointer; box-shadow: 0 4px 16px rgba(42,138,138,0.4);
+    transition: background 0.3s; user-select: none; text-align: center; line-height: 1.2;
+    flex-direction: column;
+  }
+  #timer-bubble.red { background: var(--red); box-shadow: 0 4px 16px rgba(229,62,62,0.4); }
+
+  /* WHITEBOARD PANEL */
+  #wb-panel {
+    position: fixed; bottom: -100%; left: 0; right: 0; z-index: 300;
+    background: var(--surface); border-radius: 20px 20px 0 0;
+    box-shadow: 0 -4px 30px rgba(0,0,0,0.15);
+    padding: 20px 20px 30px; transition: bottom 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    max-height: 75vh; overflow-y: auto;
+  }
+  #wb-panel.open { bottom: 0; }
+  .wb-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .wb-header h3 { font-size: 17px; font-weight: 800; color: var(--teal); }
+  .wb-close { background: #f3f4f6; border: none; border-radius: 8px; padding: 6px 14px; cursor: pointer; font-weight: 800; font-size: 14px; }
+  .wb-section { margin-bottom: 16px; }
+  .wb-section h4 { font-size: 13px; font-weight: 800; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+  .timer-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .timer-input { border: 2px solid #e5e7eb; border-radius: 8px; padding: 6px 10px; font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 700; width: 70px; outline: none; }
+  .preset-btn {
+    background: var(--teal-light); color: var(--teal); border: none; border-radius: 8px;
+    padding: 6px 12px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 13px; cursor: pointer;
+  }
+  .ctrl-btn {
+    background: var(--teal); color: white; border: none; border-radius: 8px;
+    padding: 7px 14px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 13px; cursor: pointer;
+  }
+  .ctrl-btn.pause { background: var(--orange); }
+  .ctrl-btn.reset { background: #718096; }
+  .stamps { display: flex; flex-wrap: wrap; gap: 8px; }
+  .stamp-btn {
+    font-size: 20px; background: #f3f4f6; border: none; border-radius: 8px;
+    padding: 8px; cursor: pointer; transition: background 0.15s;
+  }
+  .stamp-btn:hover { background: var(--teal-light); }
+  #correction-input { width: 100%; border: 2px solid #e5e7eb; border-radius: 8px; padding: 8px 12px; font-family: 'Nunito', sans-serif; font-size: 15px; font-weight: 700; outline: none; }
+  #correction-display { font-size: 28px; font-weight: 900; color: var(--teal); margin-top: 10px; min-height: 40px; word-break: break-all; }
+  #notes-area { width: 100%; min-height: 80px; border: 2px solid #e5e7eb; border-radius: 8px; padding: 10px; font-family: 'Nunito', sans-serif; font-size: 14px; outline: none; resize: vertical; }
+  .notes-actions { display: flex; gap: 8px; margin-top: 6px; }
+  .notes-btn { background: var(--teal-light); color: var(--teal); border: none; border-radius: 8px; padding: 6px 14px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 13px; cursor: pointer; }
+
+  /* EMOJI OVERLAY */
+  #emoji-overlay {
+    display: none; position: fixed; inset: 0; z-index: 999;
+    background: rgba(0,0,0,0.85);
+    align-items: center; justify-content: center;
+    font-size: 0px; cursor: pointer;
+    transition: font-size 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  #emoji-overlay.show { display: flex; font-size: 180px; }
+</style>
+</head>
+<body>
+
+<!-- TAB BAR -->
+<div class="tab-bar" id="tabBar">
+  <button class="tab-btn active" onclick="showTab(0)">🔥 Warm-Up</button>
+  <button class="tab-btn" onclick="showTab(1)">📘 Grammar</button>
+  <button class="tab-btn" onclick="showTab(2)">🌍 Content</button>
+  <button class="tab-btn" onclick="showTab(3)">📖 Reading & Exercises</button>
+  <button class="tab-btn" onclick="showTab(4)">✏️ Writing & Speaking</button>
+</div>
+
+<!-- ===== PAGE 0: WARM-UP ===== -->
+<div class="page active" id="page-0">
+  <div class="card">
+    <span class="label label-warmup">Warm-Up — Retrieval</span>
+    <h2>What do you remember? 🤔</h2>
+    <p style="font-size:14px; color:var(--muted); margin-bottom:18px;">Try to answer first — <em>then</em> check! 🇫🇷 = hint in French</p>
+
+    <!-- Q1 -->
+    <div class="card" style="background:var(--bg); box-shadow:none; border:2px solid #e5e7eb;">
+      <h3>Question 1</h3>
+      <p style="font-size:16px; font-weight:700; margin-bottom:6px;">Make a comparative sentence with these words:<br><strong>"Luffy / strong / Zoro"</strong></p>
+      <div class="fr-hint">🇫🇷 Tu te souviens du comparatif ? <em>plus … que</em> en anglais c'est… ?</div>
+      <button class="reveal-btn" onclick="toggleReveal('r1')">👁 Reveal</button>
+      <div class="reveal-box" id="r1">
+        ✅ <strong>Luffy is stronger than Zoro.</strong><br>
+        <span style="font-size:13px; color:var(--muted);">🇫🇷 Luffy est plus fort que Zoro.</span>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="card" style="background:var(--bg); box-shadow:none; border:2px solid #e5e7eb; margin-top:12px;">
+      <h3>Question 2</h3>
+      <p style="font-size:16px; font-weight:700; margin-bottom:6px;">What is the superlative of <strong>"bad"</strong>? Use it in a sentence about a brawler you don't like.</p>
+      <div class="fr-hint">🇫🇷 Le superlatif de <em>bad</em> est irrégulier — tu t'en souviens ?</div>
+      <button class="reveal-btn" onclick="toggleReveal('r2')">👁 Reveal</button>
+      <div class="reveal-box" id="r2">
+        ✅ <strong>the worst</strong> — e.g. "He is the worst brawler in the game."<br>
+        <span style="font-size:13px; color:var(--muted);">🇫🇷 <em>le pire</em> — ex: Il est le pire brawler du jeu.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" disabled>← Back</button>
+    <button class="nav-btn" onclick="showTab(1)">Grammar →</button>
+  </div>
+</div>
+
+<!-- ===== PAGE 1: GRAMMAR ===== -->
+<div class="page" id="page-1">
+  <div class="card">
+    <span class="label label-grammar">Grammar — Going To</span>
+    <h2>Talking about the future 🚀</h2>
+    <p style="font-size:14px; color:var(--muted); margin-bottom:14px;">We use <strong>going to</strong> when we have a <em>plan</em> or <em>intention</em>. You already decided! 🇫🇷 On l'utilise pour les <em>projets et intentions</em> — tu as déjà décidé !</p>
+
+    <!-- 3-column overview -->
+    <div class="three-col">
+      <div class="three-col-card">
+        <div class="col-title">Subject</div>
+        <div class="col-example">I / She / They…</div>
+        <div class="col-fr">🇫🇷 Sujet</div>
+      </div>
+      <div class="three-col-card">
+        <div class="col-title">am/is/are + going to</div>
+        <div class="col-example">am going to<br>is going to<br>are going to</div>
+        <div class="col-fr">🇫🇷 aller + infinitif</div>
+      </div>
+      <div class="three-col-card">
+        <div class="col-title">Base Verb</div>
+        <div class="col-example">play / eat / win…</div>
+        <div class="col-fr">🇫🇷 Infinitif</div>
+      </div>
+    </div>
+
+    <!-- Full rules table -->
+    <h3 style="margin-top:14px;">All forms 🇫🇷</h3>
+    <table class="grammar-table">
+      <thead><tr><th>Pronoun</th><th>Form</th><th>Example</th><th>🇫🇷 French</th></tr></thead>
+      <tbody>
+        <tr><td>I</td><td><strong>am going to</strong></td><td>I am going to play.</td><td class="fr">Je vais jouer.</td></tr>
+        <tr><td>You</td><td><strong>are going to</strong></td><td>You are going to win.</td><td class="fr">Tu vas gagner.</td></tr>
+        <tr><td>He / She / It</td><td><strong>is going to</strong></td><td>She is going to eat.</td><td class="fr">Elle va manger.</td></tr>
+        <tr><td>We</td><td><strong>are going to</strong></td><td>We are going to travel.</td><td class="fr">Nous allons voyager.</td></tr>
+        <tr><td>They</td><td><strong>are going to</strong></td><td>They are going to run.</td><td class="fr">Ils vont courir.</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Negative & Question -->
+    <h3 style="margin-top:18px;">Negative & Questions 🇫🇷</h3>
+    <table class="grammar-table">
+      <thead><tr><th>Type</th><th>Structure</th><th>Example</th><th>🇫🇷 French</th></tr></thead>
+      <tbody>
+        <tr><td>❌ Negative</td><td>am/is/are + <strong>not</strong> going to</td><td>I am not going to lose.</td><td class="fr">Je ne vais pas perdre.</td></tr>
+        <tr><td>❓ Question</td><td><strong>Am/Is/Are</strong> + subject + going to?</td><td>Are you going to come?</td><td class="fr">Tu vas venir ?</td></tr>
+        <tr><td>✅ Short answer</td><td>Yes, I am. / No, I'm not.</td><td>Are you going to play? Yes, I am!</td><td class="fr">Oui, je vais le faire ! / Non.</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Mistake box -->
+    <div class="mistake-box">
+      <h4>⚠️ Common Mistakes — Erreurs fréquentes</h4>
+      <div class="mistake-row">
+        <span class="mistake-bad">I going to eat.</span>
+        <span>→</span>
+        <span class="mistake-good">I am going to eat.</span>
+        <span style="font-size:12px; color:var(--muted);">🇫🇷 Oublie pas le verbe <em>be</em> !</span>
+      </div>
+      <div class="mistake-row">
+        <span class="mistake-bad">She is going to played.</span>
+        <span>→</span>
+        <span class="mistake-good">She is going to play.</span>
+        <span style="font-size:12px; color:var(--muted);">🇫🇷 Après <em>going to</em> : infinitif, pas past tense !</span>
+      </div>
+      <div class="mistake-row">
+        <span class="mistake-bad">They are go to win.</span>
+        <span>→</span>
+        <span class="mistake-good">They are going to win.</span>
+        <span style="font-size:12px; color:var(--muted);">🇫🇷 C'est <em>going to</em>, pas juste <em>go to</em> !</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="showTab(0)">← Warm-Up</button>
+    <button class="nav-btn" onclick="showTab(2)">Content →</button>
+  </div>
+</div>
+
+<!-- ===== PAGE 2: CONTENT ===== -->
+<div class="page" id="page-2">
+  <div class="card">
+    <span class="label label-content">Content — Future Plans</span>
+    <h2>People and their plans 🌟</h2>
+    <p style="font-size:14px; color:var(--muted); margin-bottom:14px;">Meet four people. They all have big plans for the future! 🇫🇷 Voici quatre personnes avec de grands projets !</p>
+
+    <!-- Fast facts -->
+    <div class="fact-grid">
+      <div class="fact-card">
+        <div class="fact-icon">🧑‍🍳</div>
+        <div class="fact-text">Marco is going to open a restaurant in Italy.</div>
+        <div class="fact-fr">🇫🇷 Marco va ouvrir un restaurant en Italie.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-icon">🏄</div>
+        <div class="fact-text">Léa is going to learn to surf in Portugal.</div>
+        <div class="fact-fr">🇫🇷 Léa va apprendre à surfer au Portugal.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-icon">🎮</div>
+        <div class="fact-text">Ryu is going to compete in a gaming tournament.</div>
+        <div class="fact-fr">🇫🇷 Ryu va participer à un tournoi de jeux vidéo.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-icon">🎨</div>
+        <div class="fact-text">Sara is going to paint a huge mural.</div>
+        <div class="fact-fr">🇫🇷 Sara va peindre une grande fresque.</div>
+      </div>
+    </div>
+
+    <!-- 3 SVG illustrated scenes -->
+    <h3 style="margin-top:18px; margin-bottom:4px;">What do their futures look like? 👀</h3>
+    <div class="scene-grid">
+      <!-- Scene 1: plane/travel -->
+      <div class="scene-card">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <rect width="80" height="80" rx="12" fill="#E0F2FE"/>
+          <text x="40" y="48" text-anchor="middle" font-size="36">✈️</text>
+        </svg>
+        <div class="scene-label">She is going to fly.</div>
+        <div class="scene-en">travel plan</div>
+        <div class="scene-fr">🇫🇷 Elle va prendre l'avion.</div>
+      </div>
+      <!-- Scene 2: food -->
+      <div class="scene-card">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <rect width="80" height="80" rx="12" fill="#FEF9C3"/>
+          <text x="40" y="48" text-anchor="middle" font-size="36">🍕</text>
+        </svg>
+        <div class="scene-label">He is going to cook.</div>
+        <div class="scene-en">food plan</div>
+        <div class="scene-fr">🇫🇷 Il va cuisiner.</div>
+      </div>
+      <!-- Scene 3: sport -->
+      <div class="scene-card">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <rect width="80" height="80" rx="12" fill="#DCFCE7"/>
+          <text x="40" y="48" text-anchor="middle" font-size="36">🏆</text>
+        </svg>
+        <div class="scene-label">They are going to win.</div>
+        <div class="scene-en">competition plan</div>
+        <div class="scene-fr">🇫🇷 Ils vont gagner.</div>
+      </div>
+    </div>
+
+    <!-- Vocab cards -->
+    <h3 style="margin-top:18px; margin-bottom:4px;">Key vocabulary 🗝️ <span style="font-size:12px; color:var(--muted); font-weight:400">— tap once = French, tap again = ✅</span></h3>
+    <div class="vocab-grid" id="vocab-grid">
+      <!-- filled by JS -->
+    </div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="showTab(1)">← Grammar</button>
+    <button class="nav-btn" onclick="showTab(3)">Reading & Exercises →</button>
+  </div>
+</div>
+
+<!-- ===== PAGE 3: READING & EXERCISES ===== -->
+<div class="page" id="page-3">
+  <div class="card">
+    <span class="label label-reading">Reading</span>
+    <h2>Read together 📖</h2>
+
+    <!-- Text A: teacher reads -->
+    <span class="reader-label reader-teacher">🧑‍🏫 Durim reads — you listen</span>
+    <div class="reading-text">
+      Marco has big dreams. Next month, he <span class="hl-going">is going to open</span> his first restaurant in Rome. He <span class="hl-going">is going to cook</span> traditional Italian food. His sister <span class="hl-going">is going to help</span> him with the decoration. They <span class="hl-going">are going to work</span> very hard, but Marco is excited. He says: "I <span class="hl-going">am not going to give up</span>. This <span class="hl-going">is going to be</span> the best restaurant in the city!"
+    </div>
+    <div class="fr-hint" style="margin-bottom:14px;">🇫🇷 Marco a de grands rêves. Le mois prochain, il va ouvrir son premier restaurant à Rome…</div>
+
+    <!-- Text B: student reads -->
+    <span class="reader-label reader-student">🎮 Micha reads aloud</span>
+    <div class="reading-text">
+      Ryu loves gaming. This weekend, he <span class="hl-going">is going to compete</span> in a big online tournament. He <span class="hl-going">is going to practise</span> every day before the event. His friends <span class="hl-going">are going to watch</span> the stream. Ryu says: "<span class="hl-going">Are you going to cheer</span> for me?" They answer: "Yes, we are! You <span class="hl-going">are going to win</span>!"
+    </div>
+    <div class="fr-hint">🇫🇷 Ryu adore les jeux vidéo. Ce week-end, il va participer à un grand tournoi en ligne…</div>
+  </div>
+
+  <!-- EXERCISES -->
+  <div class="card">
+    <span class="label label-reading">Exercises</span>
+    <h2>Practice time 💪</h2>
+
+    <!-- Ex 1 — fill in blank (easy) -->
+    <div class="ex-card">
+      <span class="difficulty easy">Easy</span>
+      <div class="ex-question">1. Complete: She _______ going to travel tomorrow.</div>
+      <input class="ex-input" id="ex1" placeholder="am/is/are" type="text">
+      <button class="check-btn" onclick="checkFill('ex1','is','fb1')">Check ✓</button>
+      <div class="ex-hint-row">
+        <span class="hint-tag hint-fr" onclick="toggleHint('h1fr')">🇫🇷 Hint</span>
+        <span class="hint-tag hint-grammar" onclick="toggleHint('h1gr')">💡 Grammar</span>
+      </div>
+      <div class="hint-popup" id="h1fr">🇫🇷 Elle va voyager demain. — <em>she</em> → quelle forme de <em>be</em> ?</div>
+      <div class="hint-popup" id="h1gr">💡 He / She / It → <strong>is</strong></div>
+      <div class="ex-feedback" id="fb1"></div>
+    </div>
+
+    <!-- Ex 2 — fill in blank (easy) -->
+    <div class="ex-card">
+      <span class="difficulty easy">Easy</span>
+      <div class="ex-question">2. Complete: They _______ going to win the tournament.</div>
+      <input class="ex-input" id="ex2" placeholder="am/is/are" type="text">
+      <button class="check-btn" onclick="checkFill('ex2','are','fb2')">Check ✓</button>
+      <div class="ex-hint-row">
+        <span class="hint-tag hint-fr" onclick="toggleHint('h2fr')">🇫🇷 Hint</span>
+        <span class="hint-tag hint-grammar" onclick="toggleHint('h2gr')">💡 Grammar</span>
+      </div>
+      <div class="hint-popup" id="h2fr">🇫🇷 Ils vont gagner le tournoi. — <em>they</em> → ?</div>
+      <div class="hint-popup" id="h2gr">💡 We / You / They → <strong>are</strong></div>
+      <div class="ex-feedback" id="fb2"></div>
+    </div>
+
+    <!-- Ex 3 — fill in blank (medium) -->
+    <div class="ex-card">
+      <span class="difficulty medium">Medium</span>
+      <div class="ex-question">3. Write the full sentence: I / not / going to / lose</div>
+      <input class="ex-input" id="ex3" placeholder="I am not…" type="text" style="width:100%; max-width:340px;">
+      <button class="check-btn" onclick="checkFill('ex3','i am not going to lose','fb3', true)">Check ✓</button>
+      <div class="ex-hint-row">
+        <span class="hint-tag hint-fr" onclick="toggleHint('h3fr')">🇫🇷 Hint</span>
+        <span class="hint-tag hint-grammar" onclick="toggleHint('h3gr')">💡 Grammar</span>
+      </div>
+      <div class="hint-popup" id="h3fr">🇫🇷 Je ne vais pas perdre.</div>
+      <div class="hint-popup" id="h3gr">💡 Négatif : <strong>am/is/are + not + going to + base verb</strong></div>
+      <div class="ex-feedback" id="fb3"></div>
+    </div>
+
+    <!-- Ex 4 — multiple choice (medium) -->
+    <div class="ex-card">
+      <span class="difficulty medium">Medium</span>
+      <div class="ex-question">4. Which sentence is correct?</div>
+      <div class="mc-options">
+        <button class="mc-btn" onclick="checkMC(this,'wrong','fb4')">He going to eat pizza.</button>
+        <button class="mc-btn" onclick="checkMC(this,'correct','fb4')">He is going to eat pizza.</button>
+        <button class="mc-btn" onclick="checkMC(this,'wrong','fb4')">He is go to eat pizza.</button>
+      </div>
+      <div class="ex-hint-row">
+        <span class="hint-tag hint-fr" onclick="toggleHint('h4fr')">🇫🇷 Hint</span>
+        <span class="hint-tag hint-grammar" onclick="toggleHint('h4gr')">💡 Grammar</span>
+      </div>
+      <div class="hint-popup" id="h4fr">🇫🇷 Il va manger une pizza. — Besoin du verbe <em>be</em> + <em>going to</em> complet !</div>
+      <div class="hint-popup" id="h4gr">💡 He → <strong>is</strong> going to + base verb</div>
+      <div class="ex-feedback" id="fb4"></div>
+    </div>
+
+    <!-- Ex 5 — multiple choice (hard) -->
+    <div class="ex-card">
+      <span class="difficulty hard">Hard</span>
+      <div class="ex-question">5. Make a question: _______ she going to cook tonight?</div>
+      <div class="mc-options">
+        <button class="mc-btn" onclick="checkMC(this,'wrong','fb5')">Am</button>
+        <button class="mc-btn" onclick="checkMC(this,'correct','fb5')">Is</button>
+        <button class="mc-btn" onclick="checkMC(this,'wrong','fb5')">Are</button>
+      </div>
+      <div class="ex-hint-row">
+        <span class="hint-tag hint-fr" onclick="toggleHint('h5fr')">🇫🇷 Hint</span>
+        <span class="hint-tag hint-grammar" onclick="toggleHint('h5gr')">💡 Grammar</span>
+      </div>
+      <div class="hint-popup" id="h5fr">🇫🇷 Est-ce qu'elle va cuisiner ce soir ? — <em>she</em> → quelle forme de <em>be</em> ?</div>
+      <div class="hint-popup" id="h5gr">💡 Question : <strong>Is/Are/Am</strong> + subject + going to?<br>she → <strong>Is</strong></div>
+      <div class="ex-feedback" id="fb5"></div>
+    </div>
+
+    <!-- Ex 6 — fill in (hard) -->
+    <div class="ex-card">
+      <span class="difficulty hard">Hard</span>
+      <div class="ex-question">6. Translate to English: <em>Nous allons commencer demain.</em></div>
+      <input class="ex-input" id="ex6" placeholder="We are…" type="text" style="width:100%; max-width:380px;">
+      <button class="check-btn" onclick="checkFill('ex6','we are going to start tomorrow','fb6', true)">Check ✓</button>
+      <div class="ex-hint-row">
+        <span class="hint-tag hint-fr" onclick="toggleHint('h6fr')">🇫🇷 Hint</span>
+        <span class="hint-tag hint-grammar" onclick="toggleHint('h6gr')">💡 Grammar</span>
+      </div>
+      <div class="hint-popup" id="h6fr">🇫🇷 <em>nous</em> → <strong>we</strong> · <em>allons commencer</em> → <strong>are going to start</strong></div>
+      <div class="hint-popup" id="h6gr">💡 We → <strong>are going to</strong> + base verb</div>
+      <div class="ex-feedback" id="fb6"></div>
+    </div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="showTab(2)">← Content</button>
+    <button class="nav-btn" onclick="showTab(4)">Writing & Speaking →</button>
+  </div>
+</div>
+
+<!-- ===== PAGE 4: WRITING & SPEAKING ===== -->
+<div class="page" id="page-4">
+  <div class="card">
+    <span class="label label-writing">Writing</span>
+    <h2>Your future plans ✍️</h2>
+    <p style="font-size:14px; color:var(--muted); margin-bottom:14px;">Tap a starter — it appears in the box. Finish the sentence in your own words! 🇫🇷 Clique sur un début de phrase, puis complète !</p>
+
+    <div class="starter-grid">
+      <button class="starter-btn" onclick="fillStarter('This weekend, I am going to ')">
+        <div class="starter-en">This weekend, I am going to…</div>
+        <div class="starter-fr">🇫🇷 Ce week-end, je vais…</div>
+        <div class="starter-structure">Structure: I am going to + verb</div>
+      </button>
+      <button class="starter-btn" onclick="fillStarter('Next summer, my friends and I are going to ')">
+        <div class="starter-en">Next summer, my friends and I are going to…</div>
+        <div class="starter-fr">🇫🇷 L'été prochain, mes amis et moi allons…</div>
+        <div class="starter-structure">Structure: [we] are going to + verb</div>
+      </button>
+      <button class="starter-btn" onclick="fillStarter('I am not going to ')">
+        <div class="starter-en">I am not going to… (something you refuse to do!)</div>
+        <div class="starter-fr">🇫🇷 Je ne vais pas… (quelque chose que tu refuses !)</div>
+        <div class="starter-structure">Structure: I am not going to + verb (negative)</div>
+      </button>
+      <button class="starter-btn" onclick="fillStarter('My favourite brawler is going to ')">
+        <div class="starter-en">My favourite brawler is going to…</div>
+        <div class="starter-fr">🇫🇷 Mon brawler préféré va…</div>
+        <div class="starter-structure">Structure: [he/she] is going to + verb</div>
+      </button>
+    </div>
+
+    <textarea id="writing-area" placeholder="Start writing here…"></textarea>
+  </div>
+
+  <div class="card">
+    <span class="label label-writing">Speaking</span>
+    <h2>Talk about it! 🗣️</h2>
+    <p style="font-size:14px; color:var(--muted); margin-bottom:14px;">Fluency first — no stopping, just speak! 🇫🇷 Parle d'abord — pas d'interruptions, juste parler !</p>
+
+    <div class="speak-card">
+      <span class="speak-level speak-warmup">Warm-up</span>
+      <div class="speak-q">What are you going to do after this lesson today?</div>
+      <div class="speak-fr">🇫🇷 Qu'est-ce que tu vas faire après ce cours aujourd'hui ?</div>
+    </div>
+
+    <div class="speak-card">
+      <span class="speak-level speak-core">Core</span>
+      <div class="speak-q">Tell me 3 things you are going to do this week. Try to use different subjects — I, my friend, we…</div>
+      <div class="speak-fr">🇫🇷 Dis-moi 3 choses que tu vas faire cette semaine. Essaie d'utiliser différents sujets — moi, mon ami, nous…</div>
+    </div>
+
+    <div class="speak-card">
+      <span class="speak-level speak-challenge">Challenge</span>
+      <div class="speak-q">Imagine you are a famous gamer. Describe your plans for the next month — where are you going to play? Who are you going to beat? What are you going to buy with your prize money?</div>
+      <div class="speak-fr">🇫🇷 Imagine que tu es un gamer célèbre. Décris tes plans pour le mois prochain — où vas-tu jouer ? Qui vas-tu battre ? Qu'est-ce que tu vas acheter avec l'argent du prix ?</div>
+    </div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="showTab(3)">← Reading & Exercises</button>
+    <button class="nav-btn" disabled>End ✓</button>
+  </div>
+</div>
+
+<!-- TIMER BUBBLE -->
+<div id="timer-bubble" onclick="openWB()">
+  <span id="bubble-display">⏱</span>
+</div>
+
+<!-- WHITEBOARD PANEL -->
+<div id="wb-panel">
+  <div class="wb-header">
+    <h3>🖊 Teacher Panel</h3>
+    <button class="wb-close" onclick="closeWB()">✕ Close</button>
+  </div>
+
+  <div class="wb-section">
+    <h4>⏱ Timer</h4>
+    <div class="timer-controls">
+      <input class="timer-input" id="timer-minutes" type="number" min="1" max="60" value="5" placeholder="min">
+      <button class="preset-btn" onclick="setPreset(2)">2m</button>
+      <button class="preset-btn" onclick="setPreset(5)">5m</button>
+      <button class="preset-btn" onclick="setPreset(10)">10m</button>
+      <button class="ctrl-btn" id="start-btn" onclick="startTimer()">▶ Start</button>
+      <button class="ctrl-btn pause" id="pause-btn" onclick="pauseTimer()" style="display:none">⏸ Pause</button>
+      <button class="ctrl-btn reset" onclick="resetTimer()">↺ Reset</button>
+    </div>
+  </div>
+
+  <div class="wb-section">
+    <h4>🔖 Stamps</h4>
+    <div class="stamps">
+      <button class="stamp-btn" onclick="addStamp('✅')">✅</button>
+      <button class="stamp-btn" onclick="addStamp('❌')">❌</button>
+      <button class="stamp-btn" onclick="addStamp('🔁')">🔁</button>
+      <button class="stamp-btn" onclick="addStamp('⭐')">⭐</button>
+      <button class="stamp-btn" onclick="addStamp('👂')">👂</button>
+      <button class="stamp-btn" onclick="addStamp('🗣️')">🗣️</button>
+      <button class="stamp-btn" onclick="addStamp('💡')">💡</button>
+      <button class="stamp-btn" onclick="addStamp('📝')">📝</button>
+    </div>
+    <div id="stamp-display" style="font-size:22px; margin-top:8px; min-height:32px; letter-spacing:4px;"></div>
+  </div>
+
+  <div class="wb-section">
+    <h4>✏️ Correction</h4>
+    <input id="correction-input" type="text" placeholder="Type correction, press Enter…" onkeydown="if(event.key==='Enter')showCorrection()">
+    <div id="correction-display"></div>
+  </div>
+
+  <div class="wb-section">
+    <h4>📋 Notes</h4>
+    <textarea id="notes-area" placeholder="Session notes…"></textarea>
+    <div class="notes-actions">
+      <button class="notes-btn" onclick="copyNotes()">📋 Copy</button>
+      <button class="notes-btn" onclick="clearNotes()">🗑 Clear</button>
+    </div>
+  </div>
+</div>
+
+<!-- EMOJI OVERLAY -->
+<div id="emoji-overlay" onclick="dismissEmoji()"></div>
+
+<script>
+// ---- VOCAB DATA ----
+var vocabWords = [
+  { en: 'travel', fr: 'voyager' },
+  { en: 'compete', fr: 'participer / rivaliser' },
+  { en: 'tournament', fr: 'tournoi' },
+  { en: 'practise', fr: 'pratiquer / s\'entraîner' },
+  { en: 'open (a restaurant)', fr: 'ouvrir (un restaurant)' },
+  { en: 'cook', fr: 'cuisiner' },
+  { en: 'win', fr: 'gagner' },
+  { en: 'cheer', fr: 'encourager / acclamer' },
+  { en: 'paint', fr: 'peindre' },
+  { en: 'plan', fr: 'plan / projet' }
+];
+
+function buildVocab() {
+  var grid = document.getElementById('vocab-grid');
+  if (!grid) return;
+  vocabWords.forEach(function(w, i) {
+    var card = document.createElement('div');
+    card.className = 'vocab-card';
+    card.dataset.state = '0';
+    card.innerHTML = '<div class="word">' + w.en + '</div><div class="translation">' + w.fr + '</div>';
+    card.onclick = function() {
+      var s = parseInt(card.dataset.state);
+      if (s === 0) { card.classList.add('flipped'); card.dataset.state = '1'; }
+      else if (s === 1) { card.classList.add('confirmed'); card.dataset.state = '2'; }
+      else { card.classList.remove('flipped','confirmed'); card.dataset.state = '0'; }
+    };
+    grid.appendChild(card);
+  });
+}
+buildVocab();
+
+// ---- TABS ----
+var currentTab = 0;
+function showTab(n) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('page-' + n).classList.add('active');
+  document.querySelectorAll('.tab-btn')[n].classList.add('active');
+  currentTab = n;
+  window.scrollTo(0, 0);
+}
+
+// ---- REVEAL ----
+function toggleReveal(id) {
+  var el = document.getElementById(id);
+  el.classList.toggle('shown');
+}
+
+// ---- HINT TOGGLE ----
+function toggleHint(id) {
+  var el = document.getElementById(id);
+  el.classList.toggle('show');
+}
+
+// ---- EXERCISE CHECK ----
+function checkFill(inputId, correct, fbId, loose) {
+  var val = document.getElementById(inputId).value.trim();
+  var cmp = loose ? val.toLowerCase().replace(/[^a-z ]/g,'') : val.toLowerCase();
+  var ans = loose ? correct.toLowerCase().replace(/[^a-z ]/g,'') : correct.toLowerCase();
+  var fb = document.getElementById(fbId);
+  if (cmp === ans) {
+    fb.className = 'ex-feedback correct';
+    fb.textContent = '✅ Correct! Great job!';
+  } else {
+    fb.className = 'ex-feedback wrong';
+    fb.textContent = '❌ Not quite — the answer is: ' + correct;
+  }
+}
+
+function checkMC(btn, result, fbId) {
+  var parent = btn.closest('.ex-card');
+  parent.querySelectorAll('.mc-btn').forEach(function(b) {
+    b.classList.remove('correct','wrong');
+    b.disabled = true;
+  });
+  btn.classList.add(result);
+  var fb = document.getElementById(fbId);
+  if (result === 'correct') {
+    fb.className = 'ex-feedback correct';
+    fb.textContent = '✅ Correct!';
+  } else {
+    fb.className = 'ex-feedback wrong';
+    fb.textContent = '❌ Not quite — look at the green answer!';
+    parent.querySelectorAll('.mc-btn').forEach(function(b) {
+      if (!b.classList.contains('wrong')) { b.classList.add('correct'); }
+    });
+  }
+}
+
+// ---- WRITING STARTERS ----
+function fillStarter(text) {
+  var ta = document.getElementById('writing-area');
+  ta.value = text;
+  ta.focus();
+  ta.setSelectionRange(ta.value.length, ta.value.length);
+}
+
+// ---- TIMER ----
+var timerInterval = null;
+var timerSeconds = 0;
+var timerRunning = false;
+var sessionSeconds = 0;
+var sessionInterval = setInterval(function() {
+  sessionSeconds++;
+  if (!timerRunning) {
+    var m = Math.floor(sessionSeconds / 60);
+    var s = sessionSeconds % 60;
+    document.getElementById('bubble-display').textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+  }
+}, 1000);
+
+function setPreset(min) { document.getElementById('timer-minutes').value = min; }
+
+function startTimer() {
+  if (timerRunning) return;
+  timerSeconds = parseInt(document.getElementById('timer-minutes').value || 5) * 60;
+  timerRunning = true;
+  document.getElementById('start-btn').style.display = 'none';
+  document.getElementById('pause-btn').style.display = 'inline-block';
+  var bubble = document.getElementById('timer-bubble');
+  timerInterval = setInterval(function() {
+    timerSeconds--;
+    var m = Math.floor(timerSeconds / 60);
+    var s = timerSeconds % 60;
+    var display = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    document.getElementById('bubble-display').textContent = display;
+    if (timerSeconds <= 30) { bubble.classList.add('red'); }
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      bubble.classList.remove('red');
+      document.getElementById('start-btn').style.display = 'inline-block';
+      document.getElementById('pause-btn').style.display = 'none';
+      var emojis = ['😂','😱','😤','🤩','😎','🥳','😜','🤪','😤','🙃'];
+      var pick = emojis[Math.floor(Math.random() * emojis.length)];
+      showEmoji(pick);
+    }
+  }, 1000);
+}
+
+function pauseTimer() {
+  if (!timerRunning) return;
+  clearInterval(timerInterval);
+  timerRunning = false;
+  document.getElementById('start-btn').style.display = 'inline-block';
+  document.getElementById('pause-btn').style.display = 'none';
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  timerSeconds = 0;
+  document.getElementById('bubble-display').textContent = '⏱';
+  document.getElementById('timer-bubble').classList.remove('red');
+  document.getElementById('start-btn').style.display = 'inline-block';
+  document.getElementById('pause-btn').style.display = 'none';
+}
+
+// ---- EMOJI OVERLAY ----
+function showEmoji(e) {
+  var ov = document.getElementById('emoji-overlay');
+  ov.textContent = e;
+  ov.style.display = 'flex';
+  setTimeout(function() { ov.classList.add('show'); }, 10);
+}
+function dismissEmoji() {
+  var ov = document.getElementById('emoji-overlay');
+  ov.classList.remove('show');
+  setTimeout(function() { ov.style.display = 'none'; }, 300);
+}
+
+// ---- WHITEBOARD ----
+function openWB() { document.getElementById('wb-panel').classList.add('open'); }
+function closeWB() { document.getElementById('wb-panel').classList.remove('open'); }
+
+var stamps = '';
+function addStamp(s) {
+  stamps += s;
+  document.getElementById('stamp-display').textContent = stamps;
+}
+
+function showCorrection() {
+  var val = document.getElementById('correction-input').value.trim();
+  if (val) { document.getElementById('correction-display').textContent = val; }
+}
+
+function copyNotes() {
+  var t = document.getElementById('notes-area').value;
+  if (navigator.clipboard) { navigator.clipboard.writeText(t); }
+}
+
+function clearNotes() { document.getElementById('notes-area').value = ''; }
+</script>
+</body>
+</html>
