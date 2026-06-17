@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Artemis II — Mission to the Moon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F6F8;
+  --surface:#FFFFFF;
+  --teal:#2A8A8A;
+  --teal-light:#E3F2F2;
+  --ink:#1F2B33;
+  --muted:#6B7A82;
+  --border:#E3E8EB;
+  --orange:#E08A3C;
+  --blue:#3E6FB0;
+  --green:#3FA66A;
+  --green-light:#E5F6EC;
+  --red:#D9534F;
+  --easy:#3FA66A;
+  --medium:#E0A83C;
+  --hard:#D9534F;
+  --shadow: 0 2px 8px rgba(31,43,51,0.06), 0 1px 2px rgba(31,43,51,0.04);
+  --shadow-lg: 0 8px 24px rgba(31,43,51,0.10), 0 2px 6px rgba(31,43,51,0.06);
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:'Nunito',sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  padding-bottom:90px;
+}
+.app-header{
+  background:var(--surface);
+  padding:20px 20px 16px;
+  border-bottom:1px solid var(--border);
+}
+.app-header h1{
+  margin:0 0 4px;
+  font-size:22px;
+  font-weight:800;
+}
+.app-header p{
+  margin:0;
+  font-size:13px;
+  color:var(--muted);
+  font-weight:600;
+}
+.tabbar{
+  position:sticky;
+  top:0;
+  z-index:50;
+  display:flex;
+  overflow-x:auto;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  box-shadow:var(--shadow);
+  -webkit-overflow-scrolling:touch;
+}
+.tabbar::-webkit-scrollbar{display:none;}
+.tab-btn{
+  flex:0 0 auto;
+  padding:14px 16px;
+  font-family:'Nunito',sans-serif;
+  font-weight:700;
+  font-size:13px;
+  color:var(--muted);
+  background:none;
+  border:none;
+  border-bottom:3px solid transparent;
+  cursor:pointer;
+  white-space:nowrap;
+}
+.tab-btn.active{
+  color:var(--teal);
+  border-bottom-color:var(--teal);
+}
+.panel{
+  display:none;
+  padding:18px 16px 30px;
+  max-width:680px;
+  margin:0 auto;
+}
+.panel.active{display:block;}
+.card{
+  background:var(--surface);
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:14px;
+  box-shadow:var(--shadow);
+  border:1px solid var(--border);
+}
+.card h2{
+  margin:0 0 10px;
+  font-size:17px;
+  font-weight:800;
+}
+.card h3{
+  margin:0 0 8px;
+  font-size:14px;
+  font-weight:800;
+  color:var(--teal);
+}
+.fr{
+  color:var(--blue);
+  font-size:13px;
+  font-style:italic;
+  font-weight:600;
+  margin-top:4px;
+}
+.tag{
+  display:inline-block;
+  font-size:11px;
+  font-weight:800;
+  padding:3px 10px;
+  border-radius:20px;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  margin-bottom:8px;
+}
+.tag.easy{background:var(--green-light);color:var(--easy);}
+.tag.medium{background:#FCF1DD;color:var(--medium);}
+.tag.hard{background:#FBE5E4;color:var(--hard);}
+.nav-buttons{
+  display:flex;
+  justify-content:space-between;
+  margin-top:18px;
+  gap:10px;
+}
+.btn{
+  font-family:'Nunito',sans-serif;
+  font-weight:800;
+  font-size:14px;
+  padding:12px 22px;
+  border-radius:12px;
+  border:none;
+  cursor:pointer;
+}
+.btn-primary{background:var(--teal);color:#fff;}
+.btn-secondary{background:var(--surface);color:var(--teal);border:2px solid var(--teal);}
+.btn-primary:active, .btn-secondary:active{transform:scale(0.97);}
+
+/* VOCAB HUB BANNER */
+.hub-banner{
+  background:linear-gradient(135deg, var(--teal) 0%, #1f6b6b 100%);
+  border-radius:18px;
+  padding:22px;
+  color:#fff;
+  margin-bottom:16px;
+  position:relative;
+  overflow:hidden;
+}
+.hub-banner::after{
+  content:"🚀";
+  position:absolute;
+  right:-10px;
+  bottom:-20px;
+  font-size:90px;
+  opacity:.18;
+}
+.hub-banner h2{color:#fff;margin-bottom:6px;}
+.hub-banner p{margin:0 0 14px;font-size:14px;opacity:.95;line-height:1.5;}
+.hub-banner .fr{color:#D7F0F0;}
+.hub-link-btn{
+  display:inline-block;
+  background:#fff;
+  color:var(--teal);
+  font-weight:800;
+  font-size:14px;
+  padding:12px 20px;
+  border-radius:12px;
+  text-decoration:none;
+  box-shadow:var(--shadow);
+}
+
+/* VOCAB CARDS */
+.vocab-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.vocab-card{
+  background:var(--surface);
+  border:2px solid var(--border);
+  border-radius:14px;
+  padding:14px 10px;
+  text-align:center;
+  cursor:pointer;
+  transition:all .2s;
+  min-height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.vocab-card .en{font-weight:800;font-size:15px;}
+.vocab-card .fr-word{font-size:13px;color:var(--blue);font-style:italic;display:none;font-weight:700;}
+.vocab-card.revealed .fr-word{display:block;}
+.vocab-card.revealed .en{font-size:13px;color:var(--muted);}
+.vocab-card.mastered{
+  background:var(--green);
+  border-color:var(--green);
+}
+.vocab-card.mastered .en, .vocab-card.mastered .fr-word{color:#fff;}
+
+/* RETRIEVAL */
+.retrieval-q{
+  background:var(--teal-light);
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:10px;
+}
+.retrieval-q p{margin:0 0 8px;font-weight:700;font-size:14px;}
+.reveal-btn{
+  background:none;
+  border:2px dashed var(--teal);
+  color:var(--teal);
+  font-weight:800;
+  font-size:12px;
+  padding:6px 12px;
+  border-radius:8px;
+  cursor:pointer;
+}
+.reveal-answer{
+  display:none;
+  margin-top:8px;
+  font-size:13px;
+  color:var(--ink);
+  background:#fff;
+  padding:8px 10px;
+  border-radius:8px;
+}
+.reveal-answer.shown{display:block;}
+
+/* DRAG ACTIVITIES */
+.drag-card{
+  margin-top:10px;
+  background:#fff;
+  border-radius:12px;
+  padding:12px;
+  border:1px solid var(--border);
+}
+.drag-sentence{
+  font-size:15px;
+  font-weight:700;
+  line-height:2;
+  margin:0 0 4px;
+}
+.drop-slot{
+  display:inline-block;
+  min-width:70px;
+  padding:4px 10px;
+  border-bottom:3px dashed var(--teal);
+  border-radius:6px;
+  background:var(--teal-light);
+  color:var(--muted);
+  font-weight:700;
+  font-size:13px;
+  text-align:center;
+  vertical-align:middle;
+  transition:all .2s;
+}
+.drop-slot.over{background:#cdeaea;border-bottom-style:solid;}
+.drop-slot.filled{
+  color:var(--ink);
+  border-bottom-style:solid;
+  background:var(--teal-light);
+}
+.drop-slot.correct{
+  background:var(--green);
+  color:#fff;
+  border-bottom-color:var(--green);
+  animation:snapPop .4s ease;
+}
+.drop-slot.incorrect{
+  background:#FBE5E4;
+  border-bottom-color:var(--red);
+  animation:shake .3s ease;
+}
+.tile-bank{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:10px;
+  min-height:44px;
+}
+.drag-tile{
+  padding:9px 14px;
+  background:var(--teal);
+  color:#fff;
+  border-radius:10px;
+  font-weight:800;
+  font-size:14px;
+  cursor:grab;
+  user-select:none;
+  touch-action:none;
+  box-shadow:var(--shadow);
+  transition:transform .15s, opacity .15s;
+}
+.drag-tile.dragging{
+  opacity:.85;
+  transform:scale(1.08);
+  cursor:grabbing;
+  z-index:300;
+}
+.drag-tile.placed{
+  background:var(--green);
+}
+.order-slots{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:6px;
+}
+.order-slot{
+  min-width:54px;
+  min-height:40px;
+  border-bottom:3px dashed var(--teal);
+  border-radius:8px;
+  background:var(--teal-light);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all .2s;
+}
+.order-slot.over{background:#cdeaea;}
+.order-slot.filled{border-bottom-style:solid;}
+@keyframes snapPop{
+  0%{transform:scale(1);}
+  40%{transform:scale(1.18);}
+  100%{transform:scale(1);}
+}
+@keyframes shake{
+  0%,100%{transform:translateX(0);}
+  25%{transform:translateX(-5px);}
+  75%{transform:translateX(5px);}
+}
+.confetti-piece{
+  position:fixed;
+  top:0;
+  width:8px;
+  height:8px;
+  border-radius:2px;
+  pointer-events:none;
+  z-index:600;
+  animation:confettiFall 1s ease-out forwards;
+}
+@keyframes confettiFall{
+  0%{transform:translateY(0) rotate(0deg);opacity:1;}
+  100%{transform:translateY(220px) rotate(540deg);opacity:0;}
+}
+
+/* FAST FACTS */
+.facts-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:8px;
+}
+.fact-box{
+  background:var(--teal-light);
+  border-radius:12px;
+  padding:12px;
+  text-align:center;
+}
+.fact-box .num{font-size:20px;font-weight:900;color:var(--teal);}
+.fact-box .lbl{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;}
+
+/* ASTRONAUT CARDS */
+.astro-card{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:12px;
+  margin-bottom:10px;
+}
+.astro-emoji{font-size:32px;}
+.astro-info b{font-size:14px;}
+.astro-info .role{font-size:12px;color:var(--teal);font-weight:700;}
+.astro-info .fr{margin-top:2px;}
+
+/* GRAMMAR */
+.formula-box{
+  background:var(--teal-light);
+  border-radius:12px;
+  padding:14px;
+  text-align:center;
+  font-weight:800;
+  font-size:15px;
+  color:var(--teal);
+  margin-bottom:12px;
+}
+table.conj{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+  margin-bottom:10px;
+}
+table.conj th, table.conj td{
+  border:1px solid var(--border);
+  padding:8px 6px;
+  text-align:left;
+}
+table.conj th{background:var(--teal-light);font-weight:800;color:var(--teal);}
+.mistake-box{
+  background:#FBE5E4;
+  border-radius:12px;
+  padding:12px;
+  font-size:13px;
+}
+.mistake-box b{color:var(--red);}
+
+/* EXERCISES */
+.ex-card{margin-bottom:16px;}
+.hint-row{display:flex;gap:8px;margin:8px 0;flex-wrap:wrap;}
+.hint-chip{
+  font-size:12px;
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:5px 10px;
+  cursor:pointer;
+  font-weight:700;
+}
+.hint-text{display:none;font-size:13px;background:#FFF8E8;border-radius:8px;padding:8px 10px;margin-top:6px;}
+.hint-text.shown{display:block;}
+input.blank{
+  border:none;
+  border-bottom:2px solid var(--teal);
+  background:var(--teal-light);
+  font-family:'Nunito',sans-serif;
+  font-weight:700;
+  font-size:14px;
+  padding:4px 8px;
+  width:120px;
+  border-radius:4px;
+}
+.mc-options{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+.mc-opt{
+  padding:10px 14px;
+  border:2px solid var(--border);
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  font-size:14px;
+}
+.mc-opt.correct{background:var(--green-light);border-color:var(--green);}
+.mc-opt.wrong{background:#FBE5E4;border-color:var(--red);}
+
+/* WRITING STARTERS */
+.starter-chip{
+  display:block;
+  width:100%;
+  text-align:left;
+  background:var(--teal-light);
+  border:none;
+  border-radius:10px;
+  padding:10px 12px;
+  font-family:'Nunito',sans-serif;
+  font-weight:700;
+  font-size:13px;
+  color:var(--teal);
+  margin-bottom:8px;
+  cursor:pointer;
+}
+textarea.write-box{
+  width:100%;
+  min-height:120px;
+  border:2px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+  font-family:'Nunito',sans-serif;
+  font-size:14px;
+  resize:vertical;
+}
+
+/* SPEAKING PROMPTS */
+.speak-card{
+  border-radius:14px;
+  padding:14px;
+  margin-bottom:10px;
+  color:#fff;
+}
+.speak-card.warmup{background:#7AAFC2;}
+.speak-card.core{background:var(--teal);}
+.speak-card.challenge{background:#B0586B;}
+.speak-card .lvl{font-size:11px;font-weight:800;text-transform:uppercase;opacity:.85;letter-spacing:.5px;}
+.speak-card p{margin:6px 0 0;font-weight:700;font-size:14px;}
+.speak-card .fr{color:#fff;opacity:.85;}
+
+/* TIMER BUBBLE */
+#timerBubble{
+  position:fixed;
+  bottom:18px;
+  left:18px;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:var(--teal);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  font-size:13px;
+  box-shadow:var(--shadow-lg);
+  cursor:pointer;
+  z-index:200;
+  user-select:none;
+}
+#timerBubble.danger{background:var(--red);}
+
+#emojiOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:500;
+  font-size:120px;
+}
+#emojiOverlay.show{display:flex;animation:zoomIn .5s ease-out;}
+@keyframes zoomIn{from{transform:scale(0.2);opacity:0;}to{transform:scale(1);opacity:1;}}
+
+/* WHITEBOARD PANEL */
+#wbOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  display:none;
+  align-items:flex-end;
+  z-index:400;
+}
+#wbOverlay.show{display:flex;}
+#wbPanel{
+  background:var(--surface);
+  width:100%;
+  border-radius:24px 24px 0 0;
+  padding:20px 18px 28px;
+  max-height:85vh;
+  overflow-y:auto;
+}
+#wbPanel h3{margin:0 0 12px;font-size:16px;font-weight:800;}
+.wb-close{
+  float:right;
+  background:none;
+  border:none;
+  font-size:20px;
+  color:var(--muted);
+  cursor:pointer;
+}
+.timer-controls{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.timer-controls button{
+  flex:1;
+  min-width:60px;
+  padding:10px;
+  border-radius:10px;
+  border:2px solid var(--border);
+  background:var(--bg);
+  font-weight:800;
+  font-family:'Nunito',sans-serif;
+  cursor:pointer;
+}
+.stamp-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.stamp-btn{
+  font-size:20px;
+  background:var(--bg);
+  border:2px solid var(--border);
+  border-radius:10px;
+  padding:8px 10px;
+  cursor:pointer;
+}
+#correctionLog{
+  background:var(--bg);
+  border-radius:10px;
+  padding:10px;
+  min-height:60px;
+  font-size:13px;
+  margin-bottom:10px;
+  white-space:pre-wrap;
+}
+#wbNotes{
+  width:100%;
+  min-height:80px;
+  border:2px solid var(--border);
+  border-radius:10px;
+  padding:10px;
+  font-family:'Nunito',sans-serif;
+  font-size:13px;
+  margin-bottom:10px;
+  resize:vertical;
+}
+.wb-actions{display:flex;gap:8px;}
+.wb-actions button{
+  flex:1;
+  padding:10px;
+  border-radius:10px;
+  border:none;
+  font-weight:800;
+  font-family:'Nunito',sans-serif;
+  cursor:pointer;
+}
+.wb-copy{background:var(--teal);color:#fff;}
+.wb-clear{background:#FBE5E4;color:var(--red);}
+
+/* FOCUS TAB */
+.focus-input-area{margin-bottom:14px;}
+.focus-input-area textarea{
+  width:100%;
+  min-height:90px;
+  border:2px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+  font-family:'Nunito',sans-serif;
+  font-size:15px;
+  resize:vertical;
+}
+.focus-toolbar{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.focus-toolbar button{
+  flex:1;
+  min-width:100px;
+  padding:11px;
+  border-radius:10px;
+  border:2px solid var(--teal);
+  background:#fff;
+  color:var(--teal);
+  font-weight:800;
+  font-family:'Nunito',sans-serif;
+  cursor:pointer;
+  font-size:13px;
+}
+.focus-toolbar button.go{background:var(--teal);color:#fff;}
+.focus-legend{
+  display:flex;
+  gap:14px;
+  justify-content:center;
+  margin:14px 0;
+  font-size:12px;
+  font-weight:700;
+  flex-wrap:wrap;
+}
+.legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;}
+#focusStage{
+  display:none;
+  background:#10222B;
+  border-radius:20px;
+  padding:40px 20px;
+  min-height:220px;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  flex-wrap:wrap;
+  gap:10px;
+}
+#focusStage.show{display:flex;}
+#focusStage .word{
+  font-size:26px;
+  font-weight:800;
+  color:#E8EEF0;
+  line-height:1.5;
+}
+#focusStage .word.gw-subject{color:#6FB3FF;}
+#focusStage .word.gw-goingto{color:#5DDCC8;}
+#focusStage .word.gw-pastverb{color:#5DDCC8;}
+#focusStage .word.gw-time{color:#F2A65A;}
+#focusStage.wordmode .word{
+  font-size:54px;
+  display:none;
+}
+#focusStage.wordmode .word.active{display:inline-block;}
+.gw-subject{}
+.gw-goingto{}
+.gw-pastverb{}
+.gw-time{}
+.focus-progress{
+  text-align:center;
+  font-size:12px;
+  color:var(--muted);
+  font-weight:700;
+  margin-top:10px;
+}
+.focus-hint{
+  font-size:12px;
+  color:var(--muted);
+  text-align:center;
+  margin-top:6px;
+}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <h1>🚀 Mission to the Moon</h1>
+  <p>Artemis II — Predictions &amp; Past Missions</p>
+</div>
+
+<div class="tabbar" id="tabbar">
+  <button class="tab-btn active" data-tab="warmup">Warm-Up</button>
+  <button class="tab-btn" data-tab="hub">Vocab Hub</button>
+  <button class="tab-btn" data-tab="content">Content</button>
+  <button class="tab-btn" data-tab="grammar">Grammar</button>
+  <button class="tab-btn" data-tab="exercises">Exercises</button>
+  <button class="tab-btn" data-tab="listening">🎧 Listening</button>
+  <button class="tab-btn" data-tab="speaking">Writing &amp; Speaking</button>
+  <button class="tab-btn" data-tab="focus">🔍 Focus</button>
+</div>
+
+<!-- WARM UP -->
+<div class="panel active" id="warmup">
+  <div class="card">
+    <h2>🧠 Quick Recall</h2>
+    <p class="fr">Rappel rapide — d'abord de mémoire, puis on construit !</p>
+  </div>
+  <div class="retrieval-q">
+    <p>1. What were we predicting last lesson with "going to"?</p>
+    <p class="fr">Que prédisions-nous la dernière fois avec "going to" ?</p>
+    <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('shown')">Show example</button>
+    <div class="reveal-answer">e.g. "I'm going to play Brawl Stars this weekend." / "It's going to rain."</div>
+  </div>
+
+  <div class="retrieval-q">
+    <p>2. Tell me one irregular past tense verb you remember. What's its past form?</p>
+    <p class="fr">Donne-moi un verbe irrégulier au passé. Quelle est sa forme passée ?</p>
+    <p style="margin-top:10px;font-size:13px;color:var(--muted);font-weight:700;">Now drag the missing word into the gap 👇</p>
+    <div class="drag-card" id="dragQ2">
+      <p class="drag-sentence">
+        Last year, astronauts <span class="drop-slot" data-answer="went">drop here</span> to the Moon.
+      </p>
+      <div class="tile-bank" id="bankQ2">
+        <div class="drag-tile" data-word="went">went</div>
+        <div class="drag-tile" data-word="goes">goes</div>
+        <div class="drag-tile" data-word="going">going</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="retrieval-q">
+    <p>3. Tell me one thing you are going to do after this lesson.</p>
+    <p class="fr">Dis-moi une chose que tu vas faire après cette leçon.</p>
+    <p style="margin-top:10px;font-size:13px;color:var(--muted);font-weight:700;">Now rebuild this sentence — drag the words into the right order 👇</p>
+    <div class="drag-card" id="dragQ3">
+      <div class="order-slots" id="slotsQ3">
+        <div class="order-slot" data-index="0"></div>
+        <div class="order-slot" data-index="1"></div>
+        <div class="order-slot" data-index="2"></div>
+        <div class="order-slot" data-index="3"></div>
+        <div class="order-slot" data-index="4"></div>
+      </div>
+      <div class="tile-bank" id="bankQ3">
+        <div class="drag-tile" data-word="I" data-order="0">I</div>
+        <div class="drag-tile" data-word="am" data-order="1">am</div>
+        <div class="drag-tile" data-word="going" data-order="2">going</div>
+        <div class="drag-tile" data-word="to" data-order="3">to</div>
+        <div class="drag-tile" data-word="rest" data-order="4">rest</div>
+      </div>
+      <button class="btn btn-secondary" style="margin-top:10px;font-size:12px;padding:8px 14px;" onclick="resetOrderActivity('slotsQ3','bankQ3')">↺ Reset</button>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <span></span>
+    <button class="btn btn-primary" onclick="goTab('hub')">Next →</button>
+  </div>
+</div>
+
+<!-- VOCAB HUB -->
+<div class="panel" id="hub">
+  <div class="hub-banner">
+    <h2>📚 New: Your Vocab Trainer!</h2>
+    <p>You now have your own vocabulary &amp; grammar app — flashcards, quizzes, and a speed round!</p>
+    <p class="fr">Tu as maintenant ta propre appli de vocabulaire — cartes mémo, quiz, et un mode rapide !</p>
+    <a href="https://durkiman.github.io/Language-Teaching/Micha/micha-vocab.html" target="_blank" class="hub-link-btn">Open the Vocab Hub →</a>
+  </div>
+  <div class="card">
+    <h3>What's inside</h3>
+    <p>📚 <b>Vocabulary</b> — Actions, Football, Nature, Feelings, and more, organized by topic.</p>
+    <p class="fr">Vocabulaire organisé par catégories.</p>
+    <p style="margin-top:10px;">📐 <b>Grammar</b> — every rule we've learned, with examples and common mistakes.</p>
+    <p class="fr">Grammaire — toutes les règles apprises, avec exemples.</p>
+  </div>
+  <div class="card">
+    <h3>Try it now — Speed Round!</h3>
+    <p class="fr">Essaie le mode rapide maintenant avec ton tuteur !</p>
+    <p style="font-size:13px;color:var(--muted);">Open the link above, choose a category, and try Speed Round mode together before we continue.</p>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('warmup')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('content')">Next →</button>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="panel" id="content">
+  <div class="card">
+    <h2>🌕 Artemis II — Going Around the Moon</h2>
+    <p class="fr">Artemis II — un voyage autour de la Lune</p>
+    <p style="margin-top:10px;">In 2026, four astronauts <b>are going to fly</b> around the Moon. They are <b>not going to land</b> — that comes later, with Artemis III.</p>
+    <p class="fr">En 2026, quatre astronautes vont voler autour de la Lune. Ils ne vont pas atterrir — ça viendra plus tard, avec Artemis III.</p>
+  </div>
+
+  <div class="card">
+    <h3>Fast Facts</h3>
+    <div class="facts-grid">
+      <div class="fact-box"><div class="num">4</div><div class="lbl">Astronauts</div></div>
+      <div class="fact-box"><div class="num">10</div><div class="lbl">Days</div></div>
+      <div class="fact-box"><div class="num">1</div><div class="lbl">Trip Around Moon</div></div>
+      <div class="fact-box"><div class="num">0</div><div class="lbl">Moon Landings</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>The Crew</h3>
+    <div class="astro-card">
+      <div class="astro-emoji">👨‍🚀</div>
+      <div class="astro-info">
+        <b>Reid Wiseman</b><br>
+        <span class="role">Mission Commander</span>
+        <p class="fr" style="margin-top:2px;">Commandant de mission</p>
+      </div>
+    </div>
+    <div class="astro-card">
+      <div class="astro-emoji">👨‍🚀</div>
+      <div class="astro-info">
+        <b>Victor Glover</b><br>
+        <span class="role">Pilot</span>
+        <p class="fr" style="margin-top:2px;">Pilote</p>
+      </div>
+    </div>
+    <div class="astro-card">
+      <div class="astro-emoji">👩‍🚀</div>
+      <div class="astro-info">
+        <b>Christina Koch</b><br>
+        <span class="role">Mission Specialist</span>
+        <p class="fr" style="margin-top:2px;">Spécialiste de mission</p>
+      </div>
+    </div>
+    <div class="astro-card">
+      <div class="astro-emoji">👨‍🚀</div>
+      <div class="astro-info">
+        <b>Jeremy Hansen</b><br>
+        <span class="role">Mission Specialist (Canada 🇨🇦)</span>
+        <p class="fr" style="margin-top:2px;">Spécialiste de mission</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📚 Vocabulary</h3>
+    <p class="fr" style="margin-bottom:10px;">Tape une fois pour la traduction, deux fois pour maîtriser (vert), trois fois pour réinitialiser.</p>
+    <div class="vocab-grid" id="vocabGrid">
+      <div class="vocab-card" data-fr="la fusée"><span class="en">rocket</span><span class="fr-word">la fusée</span></div>
+      <div class="vocab-card" data-fr="l'équipage"><span class="en">crew</span><span class="fr-word">l'équipage</span></div>
+      <div class="vocab-card" data-fr="lancer"><span class="en">to launch</span><span class="fr-word">lancer</span></div>
+      <div class="vocab-card" data-fr="atterrir"><span class="en">to land</span><span class="fr-word">atterrir</span></div>
+      <div class="vocab-card" data-fr="l'orbite"><span class="en">orbit</span><span class="fr-word">l'orbite</span></div>
+      <div class="vocab-card" data-fr="le vaisseau spatial"><span class="en">spacecraft</span><span class="fr-word">le vaisseau spatial</span></div>
+      <div class="vocab-card" data-fr="la mission"><span class="en">mission</span><span class="fr-word">la mission</span></div>
+      <div class="vocab-card" data-fr="sans danger / en sécurité"><span class="en">safe</span><span class="fr-word">sans danger</span></div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('hub')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('grammar')">Next →</button>
+  </div>
+</div>
+
+<!-- GRAMMAR -->
+<div class="panel" id="grammar">
+  <div class="card">
+    <h2>📐 "Going to" — Predictions &amp; Plans</h2>
+    <p class="fr">Prédictions et plans</p>
+    <div class="formula-box">subject + am/is/are + going to + verb</div>
+    <table class="conj">
+      <tr><th>Subject</th><th>Form</th><th>Example</th></tr>
+      <tr><td>I</td><td>am going to</td><td>I am going to watch the launch.</td></tr>
+      <tr><td>You / We / They</td><td>are going to</td><td>They are going to fly around the Moon.</td></tr>
+      <tr><td>He / She / It</td><td>is going to</td><td>She is going to be the pilot.</td></tr>
+    </table>
+    <p class="fr" style="margin-bottom:10px;">Je vais... / Ils vont... / Elle va...</p>
+    <h3>Negative</h3>
+    <p style="font-weight:700;">subject + am/is/are + <b>not</b> + going to + verb</p>
+    <p>e.g. "They are not going to land on the Moon."</p>
+    <p class="fr">Ils ne vont pas atterrir sur la Lune.</p>
+    <div class="mistake-box">
+      <b>⚠️ Common mistake:</b> Don't forget "to"! Not "going land" → "going <u>to</u> land".
+      <p class="fr" style="margin-top:4px;color:var(--red);">N'oublie pas "to" !</p>
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('content')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('exercises')">Next →</button>
+  </div>
+</div>
+
+<!-- EXERCISES -->
+<div class="panel" id="exercises">
+  <div class="card">
+    <h2>📝 Reading — Mission Briefing</h2>
+    <p class="fr">Lecture — Briefing de mission</p>
+    <p style="margin-top:8px;line-height:1.6;">Next year, four astronauts <b>are going to fly</b> around the Moon on Artemis II. They <b>are not going to land</b> — they <b>are going to test</b> the spacecraft first. Last time, in the Apollo missions, astronauts <b>went</b> to the Moon and <b>walked</b> on it. This time is different. The crew <b>is going to spend</b> ten days in space and then <b>is going to come</b> back safely to Earth.</p>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag easy">Easy</span>
+    <p style="font-weight:700;">1. Fill in the blank: The astronauts ___ ___ fly around the Moon.</p>
+    <input type="text" class="blank" placeholder="...">
+    <div class="hint-row">
+      <span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">💡 Grammar tip</span>
+    </div>
+    <div class="hint-text">Use "are going to" because the subject is plural (astronauts = they).</div>
+    <div class="hint-row">
+      <span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">🇫🇷 French hint</span>
+    </div>
+    <div class="hint-text">"sont en train d'aller" → are going to</div>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag easy">Easy</span>
+    <p style="font-weight:700;">2. Choose the correct form: Christina ___ the Mission Specialist.</p>
+    <div class="mc-options">
+      <div class="mc-opt" onclick="checkMC(this, true)">is going to be</div>
+      <div class="mc-opt" onclick="checkMC(this, false)">are going to be</div>
+      <div class="mc-opt" onclick="checkMC(this, false)">is going be</div>
+    </div>
+    <div class="hint-row">
+      <span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">🇫🇷 French hint</span>
+    </div>
+    <div class="hint-text">Christina = elle → "is going to"</div>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag medium">Medium</span>
+    <p style="font-weight:700;">3. Make it negative: "They are going to land on the Moon."</p>
+    <input type="text" class="blank" style="width:100%;" placeholder="Write the negative sentence...">
+    <div class="hint-row">
+      <span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">💡 Grammar tip</span>
+    </div>
+    <div class="hint-text">Add "not" right after "are": are + not + going to</div>
+    <div class="hint-row">
+      <span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">🇫🇷 French hint</span>
+    </div>
+    <div class="hint-text">Ils ne vont pas atterrir sur la Lune.</div>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag medium">Medium</span>
+    <p style="font-weight:700;">4. Past or future? "Last year, astronauts went to the ISS."</p>
+    <div class="mc-options">
+      <div class="mc-opt" onclick="checkMC(this, true)">Past Simple</div>
+      <div class="mc-opt" onclick="checkMC(this, false)">Going to future</div>
+    </div>
+    <div class="hint-row">
+      <span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">🇫🇷 French hint</span>
+    </div>
+    <div class="hint-text">"went" = forme passée de "go" → c'est le passé !</div>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag hard">Hard</span>
+    <p style="font-weight:700;">5. Fill in both blanks: Last time, astronauts ___ (walk) on the Moon. This time, they ___ ___ just fly around it.</p>
+    <input type="text" class="blank" placeholder="walk →"> &nbsp; <input type="text" class="blank" placeholder="going to →">
+    <div class="hint-row">
+      <span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">💡 Grammar tip</span>
+    </div>
+    <div class="hint-text">First blank = Past Simple (it happened). Second blank = going to (it's planned).</div>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag hard">Hard</span>
+    <p style="font-weight:700;">6. Predict! What do you think is going to happen on Artemis III? Write one full sentence.</p>
+    <input type="text" class="blank" style="width:100%;" placeholder="I think astronauts are going to...">
+    <div class="hint-row">
+      <span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">🇫🇷 French hint</span>
+    </div>
+    <div class="hint-text">Je pense que les astronautes vont...</div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('grammar')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('listening')">Next →</button>
+  </div>
+</div>
+
+<!-- LISTENING -->
+<div class="panel" id="listening">
+  <div class="card">
+    <h2>🎧 Mission Complete!</h2>
+    <p class="fr">Mission terminée !</p>
+    <p style="margin-top:8px;">Remember our predictions? Let's see what really happened. Watch this real NASA video about the end of the Artemis II mission.</p>
+    <p class="fr">Tu te souviens de nos prédictions ? Regardons ce qui s'est vraiment passé. Regarde cette vraie vidéo de la NASA.</p>
+  </div>
+
+  <div class="card">
+    <h3>📺 Watch: Artemis II Moon Mission Complete!</h3>
+    <p class="fr" style="margin-bottom:10px;">Source officielle : NASA</p>
+    <a href="https://www.youtube.com/watch?v=IfRqrrBbT-Y" target="_blank" class="hub-link-btn" style="background:var(--teal);color:#fff;display:block;text-align:center;">▶ Watch on YouTube</a>
+    <p style="font-size:12px;color:var(--muted);margin-top:10px;">If the video doesn't load or play, use the script below — read it aloud together and listen for the bold words.</p>
+    <p class="fr" style="font-size:12px;">Si la vidéo ne se charge pas, utilise le script ci-dessous.</p>
+  </div>
+
+  <div class="card">
+    <h3>📝 Teacher-Read Fallback Script</h3>
+    <p class="fr" style="margin-bottom:10px;">Script de secours — lis à voix haute, mots-clés en gras</p>
+    <p style="line-height:1.8;">"Our <b>Artemis II</b> Moon mission is <b>complete</b>! The <b>Space Launch System rocket</b> launched the <b>crew</b> into space. The <b>Orion spacecraft</b> gave the astronauts a safe home away from home. They <b>flew around the Moon</b>, observed its <b>far side</b>, and did <b>science</b>. It was a new <b>human spaceflight distance record</b>. The crew <b>safely returned to Earth</b>. It <b>inspired the world</b>!"</p>
+  </div>
+
+  <div class="card">
+    <h3>🧠 Listen &amp; Check</h3>
+    <p class="fr" style="margin-bottom:10px;">Écoute et vérifie</p>
+    <div class="retrieval-q">
+      <p>1. Did the astronauts land on the Moon during Artemis II?</p>
+      <p class="fr">Les astronautes ont-ils atterri sur la Lune pendant Artemis II ?</p>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('shown')">Check answer</button>
+      <div class="reveal-answer">No — they flew around the Moon but did not land. That comes with Artemis III!</div>
+    </div>
+    <div class="retrieval-q">
+      <p>2. What record did the crew set?</p>
+      <p class="fr">Quel record l'équipage a-t-il établi ?</p>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('shown')">Check answer</button>
+      <div class="reveal-answer">A new human spaceflight distance record!</div>
+    </div>
+    <div class="retrieval-q">
+      <p>3. Was this past simple or going-to future in the video? Why?</p>
+      <p class="fr">C'était le passé simple ou le futur "going to" dans la vidéo ? Pourquoi ?</p>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('shown')">Check answer</button>
+      <div class="reveal-answer">Past Simple — because the mission already happened, it's not a prediction anymore!</div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('exercises')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('speaking')">Next →</button>
+  </div>
+</div>
+
+<!-- WRITING & SPEAKING -->
+<div class="panel" id="speaking">
+  <div class="card">
+    <h2>✍️ Writing — Mission Log</h2>
+    <p class="fr">Journal de mission — choisis un début de phrase</p>
+    <button class="starter-chip" onclick="setStarter('I am going to be an astronaut and I am going to ')">I am going to be an astronaut and I am going to...</button>
+    <button class="starter-chip" onclick="setStarter('The Artemis II crew is going to ')">The Artemis II crew is going to...</button>
+    <button class="starter-chip" onclick="setStarter('I am not going to ')">I am not going to...</button>
+    <button class="starter-chip" onclick="setStarter('Last year, I went to ')">Last year, I went to...</button>
+    <textarea class="write-box" id="writeBox" placeholder="Write here..."></textarea>
+  </div>
+
+  <div class="card">
+    <h2>🎤 Speaking</h2>
+    <p class="fr">À l'oral — pas de correction pendant, on note les erreurs pour la fin</p>
+    <div class="speak-card warmup">
+      <span class="lvl">Warm-up</span>
+      <p>What is going to happen when the rocket launches?</p>
+      <p class="fr">Que va-t-il se passer quand la fusée sera lancée ?</p>
+    </div>
+    <div class="speak-card core">
+      <span class="lvl">Core</span>
+      <p>Tell me 3 things the astronauts are going to do during the mission.</p>
+      <p class="fr">Dis-moi 3 choses que les astronautes vont faire pendant la mission.</p>
+    </div>
+    <div class="speak-card challenge">
+      <span class="lvl">Challenge</span>
+      <p>If you were an astronaut, what would you do differently? What are you going to bring with you to the Moon, and why?</p>
+      <p class="fr">Si tu étais astronaute, que ferais-tu différemment ? Qu'est-ce que tu vas emporter sur la Lune, et pourquoi ?</p>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('listening')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('focus')">Next →</button>
+  </div>
+</div>
+
+<!-- FOCUS TAB -->
+<div class="panel" id="focus">
+  <div class="card">
+    <h2>🔍 Focus — Read Aloud</h2>
+    <p class="fr">Pour le tuteur : tape une phrase, la structure grammaticale s'illumine</p>
+    <div class="focus-input-area">
+      <textarea id="focusInput" placeholder="Type or paste a sentence here... e.g. They are going to fly to the Moon next year."></textarea>
+    </div>
+    <div class="focus-toolbar">
+      <button class="go" onclick="renderFocusSentence()">Show sentence</button>
+      <button onclick="renderFocusWords()">Word by word</button>
+      <button onclick="clearFocus()">Clear</button>
+    </div>
+    <div class="focus-legend">
+      <span><span class="legend-dot" style="background:#6FB3FF;"></span>Subject</span>
+      <span><span class="legend-dot" style="background:#5DDCC8;"></span>Going to / Past verb</span>
+      <span><span class="legend-dot" style="background:#F2A65A;"></span>Time / Place</span>
+    </div>
+    <div id="focusStage"></div>
+    <div class="focus-progress" id="focusProgress"></div>
+    <div class="focus-hint" id="focusHintText"></div>
+  </div>
+</div>
+
+<!-- TIMER BUBBLE -->
+<div id="timerBubble" onclick="openWb()">50:00</div>
+
+<!-- EMOJI OVERLAY -->
+<div id="emojiOverlay" onclick="this.classList.remove('show')"></div>
+
+<!-- WHITEBOARD OVERLAY -->
+<div id="wbOverlay" onclick="if(event.target===this) closeWb()">
+  <div id="wbPanel">
+    <button class="wb-close" onclick="closeWb()">✕</button>
+    <h3>⏱ Whiteboard</h3>
+    <div class="timer-controls">
+      <button onclick="setTimerMin(5)">5m</button>
+      <button onclick="setTimerMin(10)">10m</button>
+      <button onclick="setTimerMin(15)">15m</button>
+      <button onclick="toggleRun()" id="runBtn">▶ Start</button>
+      <button onclick="resetTimer()">↺ Reset</button>
+    </div>
+    <h3 style="font-size:14px;">Correction Stamps</h3>
+    <div class="stamp-row">
+      <button class="stamp-btn" onclick="addStamp('✅')">✅</button>
+      <button class="stamp-btn" onclick="addStamp('⭐')">⭐</button>
+      <button class="stamp-btn" onclick="addStamp('🔁 Try again')">🔁</button>
+      <button class="stamp-btn" onclick="addStamp('🗣 Pronunciation')">🗣</button>
+      <button class="stamp-btn" onclick="addStamp('📐 Grammar')">📐</button>
+    </div>
+    <div id="correctionLog"></div>
+    <h3 style="font-size:14px;">Notes</h3>
+    <textarea id="wbNotes" placeholder="Notes for this lesson..."></textarea>
+    <div class="wb-actions">
+      <button class="wb-copy" onclick="copyWb()">Copy</button>
+      <button class="wb-clear" onclick="clearWb()">Clear</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// TAB NAVIGATION
+function goTab(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector(`.tab-btn[data-tab="${id}"]`).classList.add('active');
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>goTab(btn.dataset.tab));
+});
+
+// VOCAB CARDS (tap cycle: reveal -> mastered -> reset)
+document.querySelectorAll('.vocab-card').forEach(card=>{
+  let state = 0;
+  card.addEventListener('click', ()=>{
+    state = (state+1)%3;
+    if(state===1){ card.classList.add('revealed'); card.classList.remove('mastered'); }
+    else if(state===2){ card.classList.add('mastered'); }
+    else { card.classList.remove('revealed','mastered'); }
+  });
+});
+
+// MULTIPLE CHOICE
+function checkMC(el, correct){
+  const siblings = el.parentElement.querySelectorAll('.mc-opt');
+  siblings.forEach(s=>s.classList.remove('correct','wrong'));
+  el.classList.add(correct ? 'correct' : 'wrong');
+}
+
+// CONFETTI BURST
+function fireConfetti(x, y){
+  const colors = ['#2A8A8A','#E08A3C','#3E6FB0','#3FA66A','#D9534F'];
+  for(let i=0;i<18;i++){
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = (x + (Math.random()*60-30)) + 'px';
+    piece.style.top = y + 'px';
+    piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+    piece.style.animationDelay = (Math.random()*0.15) + 's';
+    document.body.appendChild(piece);
+    setTimeout(()=>piece.remove(), 1200);
+  }
+}
+
+// DRAG-AND-DROP ENGINE (pointer events — works for mouse, touch, stylus)
+let dragState = null;
+
+function initDragTile(tile){
+  tile.addEventListener('pointerdown', (e)=>{
+    if(tile.classList.contains('placed')) return;
+    e.preventDefault();
+    const rect = tile.getBoundingClientRect();
+    dragState = {
+      tile,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+      originParent: tile.parentElement,
+      originNext: tile.nextSibling
+    };
+    tile.classList.add('dragging');
+    tile.style.position = 'fixed';
+    tile.style.left = rect.left + 'px';
+    tile.style.top = rect.top + 'px';
+    tile.style.width = rect.width + 'px';
+    document.body.appendChild(tile);
+    tile.setPointerCapture(e.pointerId);
+  });
+}
+
+document.addEventListener('pointermove', (e)=>{
+  if(!dragState) return;
+  dragState.tile.style.left = (e.clientX - dragState.offsetX) + 'px';
+  dragState.tile.style.top = (e.clientY - dragState.offsetY) + 'px';
+  document.querySelectorAll('.drop-slot, .order-slot').forEach(s=>s.classList.remove('over'));
+  dragState.tile.style.visibility = 'hidden';
+  const el = document.elementFromPoint(e.clientX, e.clientY);
+  dragState.tile.style.visibility = 'visible';
+  const target = el && el.closest('.drop-slot, .order-slot');
+  if(target) target.classList.add('over');
+});
+
+document.addEventListener('pointerup', (e)=>{
+  if(!dragState) return;
+  const tile = dragState.tile;
+  tile.classList.remove('dragging');
+  tile.style.position = '';
+  tile.style.left = '';
+  tile.style.top = '';
+  tile.style.width = '';
+  tile.style.visibility = 'visible';
+
+  document.querySelectorAll('.drop-slot, .order-slot').forEach(s=>s.classList.remove('over'));
+
+  tile.style.visibility = 'hidden';
+  const el = document.elementFromPoint(e.clientX, e.clientY);
+  tile.style.visibility = 'visible';
+  const slot = el && el.closest('.drop-slot, .order-slot');
+
+  if(slot && slot.classList.contains('drop-slot')){
+    handleFillBlankDrop(tile, slot);
+  } else if(slot && slot.classList.contains('order-slot')){
+    handleOrderSlotDrop(tile, slot);
+  } else {
+    // dropped nowhere valid — snap back to origin
+    if(dragState.originNext){
+      dragState.originParent.insertBefore(tile, dragState.originNext);
+    } else {
+      dragState.originParent.appendChild(tile);
+    }
+  }
+  dragState = null;
+});
+
+function handleFillBlankDrop(tile, slot){
+  if(slot.classList.contains('filled')){
+    // slot occupied — snap tile back
+    dragState.originParent.appendChild(tile);
+    return;
+  }
+  const correct = slot.dataset.answer === tile.dataset.word;
+  slot.textContent = tile.dataset.word;
+  slot.classList.add('filled');
+  tile.remove();
+  if(correct){
+    slot.classList.add('correct');
+    const rect = slot.getBoundingClientRect();
+    fireConfetti(rect.left + rect.width/2, rect.top);
+  } else {
+    slot.classList.add('incorrect');
+    setTimeout(()=>{
+      slot.textContent = 'drop here';
+      slot.classList.remove('filled','incorrect');
+      // put tile back in its bank
+      document.getElementById('bankQ2').appendChild(rebuildTile(tile));
+    }, 700);
+  }
+}
+
+function rebuildTile(oldTile){
+  const fresh = document.createElement('div');
+  fresh.className = 'drag-tile';
+  fresh.dataset.word = oldTile.dataset.word;
+  fresh.textContent = oldTile.dataset.word;
+  initDragTile(fresh);
+  return fresh;
+}
+
+function handleOrderSlotDrop(tile, slot){
+  if(slot.classList.contains('filled')){
+    dragState.originParent.appendChild(tile);
+    return;
+  }
+  slot.appendChild(tile);
+  slot.classList.add('filled');
+  tile.style.position = '';
+  tile.style.left = '';
+  tile.style.top = '';
+  tile.style.width = '';
+  tile.classList.add('placed');
+  checkOrderComplete();
+}
+
+function checkOrderComplete(){
+  const slots = Array.from(document.querySelectorAll('#slotsQ3 .order-slot'));
+  if(slots.some(s=>!s.classList.contains('filled'))) return;
+  const correct = slots.every((s,i)=>{
+    const tile = s.querySelector('.drag-tile');
+    return tile && parseInt(tile.dataset.order,10) === i;
+  });
+  if(correct){
+    slots.forEach(s=>{
+      s.classList.add('correct');
+      s.querySelector('.drag-tile').classList.add('placed');
+    });
+    const rect = document.getElementById('slotsQ3').getBoundingClientRect();
+    fireConfetti(rect.left + rect.width/2, rect.top);
+  } else {
+    slots.forEach(s=>s.classList.add('incorrect'));
+    setTimeout(()=>resetOrderActivity('slotsQ3','bankQ3'), 800);
+  }
+}
+
+function shuffleBank(bankId){
+  const bank = document.getElementById(bankId);
+  let tiles = Array.from(bank.children);
+  let attempts = 0;
+  let isSorted = true;
+  while(isSorted && attempts < 10){
+    for(let i = tiles.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
+    }
+    isSorted = tiles.every((t,i)=> parseInt(t.dataset.order,10) === i);
+    attempts++;
+  }
+  tiles.forEach(t => bank.appendChild(t));
+}
+
+function resetOrderActivity(slotsId, bankId){
+  const slotsContainer = document.getElementById(slotsId);
+  const bank = document.getElementById(bankId);
+  slotsContainer.querySelectorAll('.order-slot').forEach(s=>{
+    s.classList.remove('filled','correct','incorrect','over');
+    const tile = s.querySelector('.drag-tile');
+    if(tile){
+      tile.classList.remove('placed');
+      bank.appendChild(tile);
+    }
+  });
+  shuffleBank(bankId);
+}
+
+document.querySelectorAll('.drag-tile').forEach(initDragTile);
+shuffleBank('bankQ3');
+
+// WRITING STARTERS
+function setStarter(text){
+  const box = document.getElementById('writeBox');
+  box.value = text;
+  box.focus();
+}
+
+// TIMER
+let totalSeconds = 50*60;
+let timerInterval = null;
+let isRunning = false;
+
+function updateTimerDisplay(){
+  const m = Math.floor(totalSeconds/60).toString().padStart(2,'0');
+  const s = (totalSeconds%60).toString().padStart(2,'0');
+  const bubble = document.getElementById('timerBubble');
+  bubble.textContent = `${m}:${s}`;
+  bubble.classList.toggle('danger', isRunning && totalSeconds <= 30);
+}
+function toggleRun(){
+  isRunning = !isRunning;
+  document.getElementById('runBtn').textContent = isRunning ? '⏸ Pause' : '▶ Start';
+  if(isRunning){
+    timerInterval = setInterval(()=>{
+      totalSeconds--;
+      updateTimerDisplay();
+      if(totalSeconds<=0){
+        clearInterval(timerInterval);
+        isRunning = false;
+        document.getElementById('runBtn').textContent = '▶ Start';
+        fireEmoji();
+      }
+    },1000);
+  } else {
+    clearInterval(timerInterval);
+  }
+}
+function setTimerMin(min){
+  totalSeconds = min*60;
+  updateTimerDisplay();
+}
+function resetTimer(){
+  clearInterval(timerInterval);
+  isRunning = false;
+  document.getElementById('runBtn').textContent = '▶ Start';
+  totalSeconds = 50*60;
+  updateTimerDisplay();
+}
+const faces = ['😀','😎','🤩','😜','🥳','😯','🤓','😼','🙃','😺'];
+function fireEmoji(){
+  const overlay = document.getElementById('emojiOverlay');
+  overlay.textContent = faces[Math.floor(Math.random()*faces.length)];
+  overlay.classList.add('show');
+}
+updateTimerDisplay();
+
+// WHITEBOARD
+function openWb(){ document.getElementById('wbOverlay').classList.add('show'); }
+function closeWb(){ document.getElementById('wbOverlay').classList.remove('show'); }
+function addStamp(label){
+  const log = document.getElementById('correctionLog');
+  log.textContent += (log.textContent? '\n':'') + label;
+}
+function copyWb(){
+  const text = document.getElementById('correctionLog').textContent + '\n\n' + document.getElementById('wbNotes').value;
+  navigator.clipboard.writeText(text).catch(()=>{});
+}
+function clearWb(){
+  document.getElementById('correctionLog').textContent = '';
+  document.getElementById('wbNotes').value = '';
+}
+
+// FOCUS TAB — grammar auto-detection (phrase-level, longest-match-first)
+const IRREGULAR_PAST_LIST = ['was','were','went','ate','drank','saw','came','won','gave','made','took','ran','knew','got','fell','chose','found','thought','rose','grew','spread','built','lost','began','drew','cost','became','hit','shot'];
+
+// Ordered list of {regex, class}. Order matters: more specific / longer patterns first.
+const PHRASE_PATTERNS = [
+  // going-to future, with optional negation: "is not going to", "are going to", "am going to"
+  { re: /\b(am|is|are)\s+not\s+going\s+to\s+\w+/gi, cls: 'gw-goingto' },
+  { re: /\b(am|is|are)\s+going\s+to\s+\w+/gi, cls: 'gw-goingto' },
+  // multi-word time expressions (longest first so "next year" wins over "year")
+  { re: /\b(this\s+weekend|this\s+year|this\s+week|next\s+year|next\s+week|next\s+month|last\s+year|last\s+week|last\s+month|in\s+2026|right\s+now)\b/gi, cls: 'gw-time' },
+  // single-word time markers
+  { re: /\b(today|tomorrow|yesterday|soon|later|now|recently|eventually)\b/gi, cls: 'gw-time' },
+  // irregular past verbs + regular -ed past verbs
+  { re: new RegExp('\\b(' + IRREGULAR_PAST_LIST.join('|') + ')\\b', 'gi'), cls: 'gw-pastverb' },
+  { re: /\b\w{4,}ed\b/gi, cls: 'gw-pastverb' },
+  // subject pronouns + common proper-noun subjects from this lesson
+  { re: /\b(I|you|he|she|it|we|they|astronauts|crew|christina|reid|victor|jeremy)\b/gi, cls: 'gw-subject' },
+];
+
+// Build an array of {text, cls} segments by scanning the sentence once,
+// always taking the earliest + longest unclaimed match across all patterns.
+function buildSpans(text){
+  const claimed = new Array(text.length).fill(false);
+  const matches = [];
+  PHRASE_PATTERNS.forEach(p=>{
+    let m;
+    const re = new RegExp(p.re.source, p.re.flags.includes('g') ? p.re.flags : p.re.flags+'g');
+    while((m = re.exec(text)) !== null){
+      matches.push({start:m.index, end:m.index+m[0].length, cls:p.cls});
+      if(m[0].length===0) re.lastIndex++;
+    }
+  });
+  // sort by start asc, then by length desc (longer match wins at same start)
+  matches.sort((a,b)=> a.start-b.start || (b.end-b.start)-(a.end-a.start));
+  const accepted = [];
+  for(const m of matches){
+    let overlaps = false;
+    for(let i=m.start;i<m.end;i++){ if(claimed[i]){ overlaps = true; break; } }
+    if(overlaps) continue;
+    for(let i=m.start;i<m.end;i++){ claimed[i] = true; }
+    accepted.push(m);
+  }
+  accepted.sort((a,b)=>a.start-b.start);
+
+  const out = [];
+  let cursor = 0;
+  accepted.forEach(m=>{
+    if(m.start > cursor) out.push({text:text.slice(cursor,m.start), cls:''});
+    out.push({text:text.slice(m.start,m.end), cls:m.cls});
+    cursor = m.end;
+  });
+  if(cursor < text.length) out.push({text:text.slice(cursor), cls:''});
+  return out;
+}
+
+function escapeHtml(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// Sentence view: render segments as-is (plain text spans get no color, matched spans get a single colored chunk)
+function buildSentenceHtml(text){
+  return buildSpans(text).map(seg=>{
+    if(!seg.text) return '';
+    const safe = escapeHtml(seg.text);
+    return seg.cls ? `<span class="word ${seg.cls}">${safe}</span>` : `<span class="word">${safe}</span>`;
+  }).join('');
+}
+
+// Word-by-word view: split into individual tokens for stepping, but matched phrases
+// (e.g. "is going to") stay together as one step so the chunk is seen as a unit.
+function buildWordTokens(text){
+  const segs = buildSpans(text);
+  const tokens = [];
+  segs.forEach(seg=>{
+    if(!seg.text) return;
+    if(seg.cls){
+      tokens.push({text:seg.text.trim(), cls:seg.cls});
+    } else {
+      seg.text.split(/\s+/).filter(w=>w.length>0).forEach(w=>tokens.push({text:w, cls:''}));
+    }
+  });
+  return tokens;
+}
+
+function renderFocusSentence(){
+  const text = document.getElementById('focusInput').value;
+  if(!text.trim()) return;
+  const stage = document.getElementById('focusStage');
+  stage.classList.remove('wordmode');
+  stage.classList.add('show');
+  stage.innerHTML = buildSentenceHtml(text);
+  document.getElementById('focusProgress').textContent = '';
+  document.getElementById('focusHintText').textContent = '';
+}
+
+let focusTokens = [];
+let focusIndex = 0;
+
+function renderFocusWords(){
+  const text = document.getElementById('focusInput').value;
+  if(!text.trim()) return;
+  const stage = document.getElementById('focusStage');
+  stage.classList.add('show','wordmode');
+  const tokens = buildWordTokens(text);
+  stage.innerHTML = tokens.map(t=>{
+    const safe = escapeHtml(t.text);
+    return `<span class="word ${t.cls}">${safe}</span>`;
+  }).join(' ');
+  focusTokens = Array.from(stage.querySelectorAll('.word'));
+  focusIndex = 0;
+  focusTokens.forEach(w=>w.classList.remove('active'));
+  if(focusTokens.length) focusTokens[0].classList.add('active');
+  updateFocusProgress();
+  document.getElementById('focusHintText').textContent = 'Tap the box, or press → to advance';
+  stage.onclick = advanceFocusWord;
+}
+
+function advanceFocusWord(){
+  if(!focusTokens.length) return;
+  focusTokens[focusIndex].classList.remove('active');
+  focusIndex = (focusIndex+1) % focusTokens.length;
+  focusTokens[focusIndex].classList.add('active');
+  updateFocusProgress();
+}
+function rewindFocusWord(){
+  if(!focusTokens.length) return;
+  focusTokens[focusIndex].classList.remove('active');
+  focusIndex = (focusIndex-1+focusTokens.length) % focusTokens.length;
+  focusTokens[focusIndex].classList.add('active');
+  updateFocusProgress();
+}
+function updateFocusProgress(){
+  if(!focusTokens.length) { document.getElementById('focusProgress').textContent=''; return; }
+  document.getElementById('focusProgress').textContent = `${focusIndex+1} / ${focusTokens.length}`;
+}
+document.addEventListener('keydown', (e)=>{
+  if(document.getElementById('focus').classList.contains('active')){
+    if(e.key==='ArrowRight') advanceFocusWord();
+    if(e.key==='ArrowLeft') rewindFocusWord();
+  }
+});
+function clearFocus(){
+  document.getElementById('focusInput').value='';
+  const stage = document.getElementById('focusStage');
+  stage.classList.remove('show','wordmode');
+  stage.innerHTML='';
+  focusTokens=[];
+  focusIndex=0;
+  document.getElementById('focusProgress').textContent='';
+  document.getElementById('focusHintText').textContent='';
+}
+</script>
+</body>
+</html>
