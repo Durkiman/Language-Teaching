@@ -16,6 +16,9 @@
     --soft: #a89bce;
     --terra: #c4714a;
     --rose: #c0392b;
+    --gray: #8a9099;
+    --amber: #c49a3c;
+    --teal: #2a8a8a;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -120,6 +123,9 @@
   .student-card:nth-child(2) { animation-delay: 0.42s; }
   .student-card:nth-child(3) { animation-delay: 0.54s; }
   .student-card:nth-child(4) { animation-delay: 0.66s; }
+  .student-card:nth-child(5) { animation-delay: 0.78s; }
+  .student-card:nth-child(6) { animation-delay: 0.90s; }
+  .student-card:nth-child(7) { animation-delay: 1.02s; }
 
   .student-card::before {
     content: '';
@@ -132,7 +138,10 @@
   .student-card.micha::before { background: var(--sky); }
   .student-card.mehdi::before { background: var(--sage); }
   .student-card.mel::before   { background: var(--soft); }
-  .student-card.emma::before  { background: var(--rose); }
+  .student-card.emma::before     { background: var(--rose); }
+  .student-card.thomas::before   { background: var(--gray); }
+  .student-card.angelique::before { background: var(--amber); }
+  .student-card.greg::before      { background: var(--teal); }
 
   .card-emoji { font-size: 28px; margin-bottom: 14px; display: block; }
 
@@ -154,7 +163,10 @@
   .student-card.micha .card-level { color: var(--sky); }
   .student-card.mehdi .card-level { color: var(--sage); }
   .student-card.mel   .card-level { color: var(--soft); }
-  .student-card.emma  .card-level { color: var(--rose); }
+  .student-card.emma      .card-level { color: var(--rose); }
+  .student-card.thomas    .card-level { color: var(--gray); }
+  .student-card.angelique .card-level { color: var(--amber); }
+  .student-card.greg      .card-level { color: var(--teal); }
 
   .card-desc {
     font-size: 13px;
@@ -187,7 +199,10 @@
   .student-card.micha .lesson-list li a:hover { background: #ddeef5; color: var(--sky); }
   .student-card.mehdi .lesson-list li a:hover { background: #ddeee4; color: var(--sage); }
   .student-card.mel   .lesson-list li a:hover { background: #eae8f5; color: var(--soft); }
-  .student-card.emma  .lesson-list li a:hover { background: #fde8e8; color: var(--rose); }
+  .student-card.emma      .lesson-list li a:hover { background: #fde8e8; color: var(--rose); }
+  .student-card.thomas    .lesson-list li a:hover { background: #e8eaec; color: var(--gray); }
+  .student-card.angelique .lesson-list li a:hover { background: #fdf3e0; color: var(--amber); }
+  .student-card.greg      .lesson-list li a:hover { background: #d6f0f0; color: var(--teal); }
 
   .lesson-list li a .icon { font-size: 14px; flex-shrink: 0; }
 
@@ -301,6 +316,37 @@
       </ul>
     </div>
 
+
+    <div class="student-card thomas">
+      <span class="card-emoji">📖</span>
+      <div class="card-name">Thomas</div>
+      <div class="card-level">Intermediate · English</div>
+      <p class="card-desc">Building confidence and fluency at B1 level.</p>
+      <ul class="lesson-list" id="lessons-thomas">
+        <li><div class="loading-state"><div class="spinner"></div> Loading…</div></li>
+      </ul>
+    </div>
+
+    <div class="student-card angelique">
+      <span class="card-emoji">🌸</span>
+      <div class="card-name">Angelique</div>
+      <div class="card-level">Beginner · English</div>
+      <p class="card-desc">Gentle English for travel and everyday life.</p>
+      <ul class="lesson-list" id="lessons-angelique">
+        <li><div class="loading-state"><div class="spinner"></div> Loading…</div></li>
+      </ul>
+    </div>
+
+    <div class="student-card greg">
+      <span class="card-emoji">💬</span>
+      <div class="card-name">Greg</div>
+      <div class="card-level">Pre-Intermediate · English</div>
+      <p class="card-desc">Building practical English for everyday communication.</p>
+      <ul class="lesson-list" id="lessons-greg">
+        <li><div class="loading-state"><div class="spinner"></div> Loading…</div></li>
+      </ul>
+    </div>
+
   </div>
 
   <div class="footer-note">
@@ -316,7 +362,10 @@
     { id: 'micha', folder: 'Micha' },
     { id: 'mehdi', folder: 'Mehdi' },
     { id: 'mel',   folder: 'Mel'   },
-    { id: 'emma',  folder: 'Emma'  },
+    { id: 'emma',      folder: 'Emma'      },
+    { id: 'thomas',    folder: 'Thomas'    },
+    { id: 'angelique', folder: 'Angelique' },
+    { id: 'greg',      folder: 'Greg'      },
   ];
 
   async function loadLessons(student) {
