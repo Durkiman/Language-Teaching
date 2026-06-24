@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 1 — Discovery</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F4F6F8;
+  --surface: #FFFFFF;
+  --teal: #2A8A8A;
+  --teal-light: #E6F2F2;
+  --teal-mid: #9BCECE;
+  --ink: #1C2B33;
+  --muted: #6B7884;
+  --border: #E1E6EA;
+  --share-bg: #1C2B33;
+  --share-surface: #263540;
+  --share-accent: #3DBDBD;
+  --share-text: #EEF4F4;
+  --warn: #C45000;
+  --good: #3E8E5C;
+  --radius: 14px;
+  --radius-sm: 9px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+/* ── LAYOUT ── */
+.shell { display: flex; height: 100vh; overflow: hidden; }
+
+/* Sidebar nav */
+.sidebar {
+  width: 210px; flex-shrink: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  padding: 18px 0;
+  overflow-y: auto;
+}
+.sidebar-logo {
+  font-size: 0.78rem; font-weight: 800; color: var(--teal);
+  text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 0 16px 16px; border-bottom: 1px solid var(--border);
+}
+.sidebar-logo span { display: block; font-size: 1rem; color: var(--ink); letter-spacing: 0; text-transform: none; margin-top: 1px; }
+.nav-list { list-style: none; padding: 10px 0; flex: 1; }
+.nav-item {
+  padding: 10px 16px; cursor: pointer; border-radius: 0;
+  font-size: 0.85rem; font-weight: 700; color: var(--muted);
+  display: flex; align-items: center; gap: 9px;
+  transition: all .15s; position: relative;
+}
+.nav-item:hover { color: var(--teal); background: var(--teal-light); }
+.nav-item.active { color: var(--teal); background: var(--teal-light); }
+.nav-item.active::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; background: var(--teal); border-radius: 0 3px 3px 0;
+}
+.nav-item.done .nav-check { color: var(--good); }
+.nav-check { font-size: 0.9rem; margin-left: auto; opacity: 0; }
+.nav-item.done .nav-check { opacity: 1; }
+.nav-sep { height: 1px; background: var(--border); margin: 8px 10px; }
+
+.sidebar-bottom { padding: 12px 14px; }
+.profile-btn {
+  width: 100%; padding: 10px; border-radius: var(--radius-sm);
+  background: var(--teal); color: #fff; border: none;
+  font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.82rem;
+  cursor: pointer; transition: opacity .15s;
+}
+.profile-btn:hover { opacity: 0.88; }
+
+/* Main panel */
+.main { flex: 1; overflow-y: auto; padding: 28px 32px; }
+
+/* Section cards */
+.phase {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 24px;
+  margin-bottom: 20px; display: none;
+}
+.phase.active { display: block; }
+
+.phase-eyebrow {
+  font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.07em; color: var(--teal); margin-bottom: 4px;
+}
+.phase h2 { font-size: 1.2rem; font-weight: 900; margin-bottom: 3px; }
+.phase .desc { font-size: 0.85rem; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
+
+/* Teacher prompt cards */
+.prompt-block { margin-bottom: 16px; }
+.prompt-label {
+  font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.05em; color: var(--muted); margin-bottom: 6px;
+}
+.prompts { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+.prompt-pill {
+  background: var(--teal-light); border-radius: var(--radius-sm);
+  padding: 9px 12px; font-size: 0.875rem; font-weight: 600;
+  color: var(--ink); line-height: 1.4;
+  border-left: 3px solid var(--teal);
+}
+.prompt-pill em { color: var(--teal); font-style: normal; font-weight: 800; }
+
+/* Observation fields */
+.obs-label {
+  font-size: 0.8rem; font-weight: 700; color: var(--ink); margin-bottom: 5px; display: block;
+}
+.obs-note {
+  font-size: 0.72rem; color: var(--muted); margin-bottom: 6px; font-style: italic;
+}
+textarea.obs {
+  width: 100%; font-family: 'Nunito', sans-serif; font-size: 0.875rem;
+  padding: 10px 12px; border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  background: #FCFDFD; color: var(--ink); resize: vertical; min-height: 58px;
+  transition: border-color .15s; margin-bottom: 14px; line-height: 1.45;
+}
+textarea.obs:focus { outline: none; border-color: var(--teal); }
+
+/* Chip selectors */
+.chip-group { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.chip {
+  padding: 7px 13px; border-radius: 999px;
+  border: 1.5px solid var(--border); background: #FCFDFD;
+  font-size: 0.82rem; font-weight: 700; color: var(--ink);
+  cursor: pointer; transition: all .12s; user-select: none;
+}
+.chip:hover { border-color: var(--teal); }
+.chip.selected { background: var(--teal); border-color: var(--teal); color: #fff; }
+
+/* CEFR row */
+.cefr-grid { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 4px; }
+.cefr-chip {
+  flex: 1; min-width: 42px; text-align: center;
+  padding: 10px 4px; border-radius: 10px;
+  border: 1.5px solid var(--border);
+  font-weight: 800; font-size: 0.88rem;
+  cursor: pointer; background: #FCFDFD; color: var(--muted);
+  transition: all .12s;
+}
+.cefr-chip:hover { border-color: var(--teal); }
+.cefr-chip.selected { background: var(--teal); border-color: var(--teal); color: #fff; }
+.cefr-desc { font-size: 0.75rem; color: var(--muted); text-align: center; margin: 4px 0 14px; }
+
+/* Scales */
+.scale-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.scale-lbl { min-width: 100px; font-size: 0.82rem; font-weight: 700; }
+.scale-row input[type=range] { flex: 1; accent-color: var(--teal); }
+.scale-val {
+  min-width: 32px; text-align: center; font-weight: 800; color: var(--teal);
+  background: var(--teal-light); border-radius: 7px; padding: 3px 0; font-size: 0.82rem;
+}
+.scale-ends { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--muted); margin: -6px 0 12px 110px; }
+
+/* Divider */
+.divider { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
+
+/* ── SHARE PANEL ── */
+.share-panel {
+  background: var(--share-bg); color: var(--share-text);
+  border-radius: var(--radius); padding: 22px;
+  margin-top: 18px; display: none;
+}
+.share-panel.visible { display: block; }
+.share-header {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.07em; color: var(--share-accent); margin-bottom: 14px;
+}
+.share-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--share-accent); animation: blink 1.4s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.share-panel h3 { font-size: 1.05rem; font-weight: 900; margin-bottom: 8px; color: #fff; }
+.share-panel p { font-size: 0.875rem; line-height: 1.55; color: #c8dada; margin-bottom: 12px; }
+.share-options { display: flex; flex-wrap: wrap; gap: 7px; }
+.share-chip {
+  padding: 8px 14px; border-radius: 999px;
+  border: 1.5px solid #3a5060; background: var(--share-surface);
+  font-size: 0.82rem; font-weight: 700; color: var(--share-text);
+  cursor: pointer; transition: all .12s; user-select: none;
+}
+.share-chip:hover { border-color: var(--share-accent); }
+.share-chip.selected { background: var(--share-accent); border-color: var(--share-accent); color: #1C2B33; }
+.share-input {
+  width: 100%; font-family: 'Nunito', sans-serif; font-size: 0.875rem;
+  padding: 10px 12px; border: 1.5px solid #3a5060; border-radius: var(--radius-sm);
+  background: var(--share-surface); color: var(--share-text); resize: vertical;
+  min-height: 54px; margin-top: 10px;
+}
+.share-input:focus { outline: none; border-color: var(--share-accent); }
+
+/* Schedule builder */
+.sched-row {
+  display: flex; gap: 10px; align-items: flex-start; margin-bottom: 8px;
+}
+.sched-num {
+  min-width: 26px; height: 26px; border-radius: 50%; background: var(--teal-light);
+  color: var(--teal); font-weight: 800; font-size: 0.8rem; display: flex;
+  align-items: center; justify-content: center; flex-shrink: 0; margin-top: 8px;
+}
+.sched-input {
+  flex: 1; font-family: 'Nunito', sans-serif; font-size: 0.85rem;
+  padding: 8px 11px; border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  background: #FCFDFD; color: var(--ink);
+}
+.sched-input:focus { outline: none; border-color: var(--teal); }
+
+/* Nav footer */
+.phase-nav {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--border);
+}
+.btn {
+  font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.9rem;
+  padding: 11px 20px; border-radius: 10px; border: none; cursor: pointer; transition: opacity .15s;
+}
+.btn:active { opacity: 0.8; }
+.btn-primary { background: var(--teal); color: #fff; }
+.btn-ghost { background: transparent; color: var(--muted); border: 1.5px solid var(--border) !important; }
+.btn-ghost:hover { border-color: var(--teal) !important; color: var(--teal); }
+.btn-small { font-size: 0.78rem; padding: 7px 13px; }
+
+/* Profile modal */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+  display: none; align-items: center; justify-content: center;
+  z-index: 200; padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--surface); border-radius: var(--radius);
+  width: 100%; max-width: 640px; max-height: 88vh;
+  overflow-y: auto; padding: 28px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+.modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+.modal-header h2 { font-size: 1.1rem; font-weight: 900; }
+.modal-close { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--muted); line-height: 1; }
+.profile-section { margin-bottom: 18px; }
+.profile-section h3 {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--teal); font-weight: 800; border-bottom: 1px solid var(--border);
+  padding-bottom: 6px; margin-bottom: 10px;
+}
+.profile-row { display: flex; gap: 8px; font-size: 0.875rem; margin-bottom: 6px; line-height: 1.45; }
+.profile-row .k { min-width: 140px; color: var(--muted); font-weight: 700; flex-shrink: 0; }
+.profile-row .v { color: var(--ink); }
+.tag-pill {
+  display: inline-block; background: var(--teal-light); color: var(--teal);
+  font-size: 0.76rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin: 2px 3px 2px 0;
+}
+.export-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+.export-row button {
+  font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.82rem;
+  padding: 9px 15px; border-radius: 9px; border: 1.5px solid var(--teal);
+  background: #fff; color: var(--teal); cursor: pointer;
+}
+.export-row button.filled { background: var(--teal); color: #fff; border-color: var(--teal); }
+
+.toast {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+  background: var(--ink); color: #fff; padding: 9px 16px; border-radius: 9px;
+  font-size: 0.82rem; font-weight: 700; opacity: 0; pointer-events: none;
+  transition: opacity .2s; z-index: 300;
+}
+.toast.show { opacity: 1; }
+
+/* ── WHITEBOARD ── */
+.wb-toolbar {
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.wb-tool-btn {
+  font-family: 'Nunito', sans-serif; font-size: 0.78rem; font-weight: 800;
+  padding: 6px 12px; border-radius: 8px; border: 1.5px solid var(--border);
+  background: #FCFDFD; color: var(--ink); cursor: pointer; transition: all .12s;
+}
+.wb-tool-btn:hover { border-color: var(--teal); color: var(--teal); }
+.wb-tool-btn.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+.wb-tool-btn.danger { border-color: #e5b4b4; color: #a33; }
+.wb-tool-btn.danger:hover { background: #a33; border-color: #a33; color: #fff; }
+.wb-sep { width: 1px; height: 22px; background: var(--border); flex-shrink: 0; }
+.wb-size-row { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--muted); }
+.wb-size-row input[type=range] { width: 70px; accent-color: var(--teal); }
+
+.wb-area {
+  position: relative; width: 100%; border: 2px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; background: #fff;
+  margin-bottom: 10px;
+}
+.wb-canvas { display: block; width: 100%; cursor: crosshair; touch-action: none; }
+.wb-text-layer {
+  position: absolute; inset: 0; pointer-events: none;
+}
+.wb-text-field {
+  position: absolute; font-family: 'Nunito', sans-serif;
+  font-size: 1.4rem; font-weight: 700; color: var(--ink);
+  background: transparent; border: none; outline: none;
+  white-space: pre; min-width: 40px; pointer-events: all;
+  cursor: text; resize: none; overflow: hidden; line-height: 1.3;
+}
+.wb-quick-inserts {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;
+}
+.wb-insert-btn {
+  font-family: 'Nunito', sans-serif; font-size: 0.8rem; font-weight: 700;
+  padding: 6px 11px; border-radius: 8px; border: 1.5px solid var(--border);
+  background: var(--teal-light); color: var(--teal); cursor: pointer;
+  transition: all .12s;
+}
+.wb-insert-btn:hover { background: var(--teal); color: #fff; }
+.wb-hint { font-size: 0.72rem; color: var(--muted); margin-bottom: 8px; }
+
+/* ── FLOATING WHITEBOARD ── */
+.wb-float {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  width: 520px; max-width: calc(100vw - 48px);
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+  z-index: 150;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  resize: both;
+  min-width: 320px; min-height: 260px;
+}
+.wb-float.open { display: flex; }
+.wb-float-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--ink); color: #fff;
+  cursor: move; user-select: none; flex-shrink: 0;
+}
+.wb-float-header-left { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 800; }
+.wb-float-header-right { display: flex; gap: 6px; }
+.wb-hdr-btn {
+  background: rgba(255,255,255,0.12); border: none; color: #fff;
+  font-size: 0.75rem; font-weight: 800; padding: 4px 9px; border-radius: 6px;
+  cursor: pointer; font-family: 'Nunito', sans-serif;
+}
+.wb-hdr-btn:hover { background: rgba(255,255,255,0.22); }
+.wb-hdr-btn.close { background: rgba(200,60,60,0.3); }
+.wb-hdr-btn.close:hover { background: rgba(200,60,60,0.7); }
+
+.wb-float-toolbar {
+  display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
+  padding: 8px 12px; border-bottom: 1px solid var(--border);
+  background: var(--bg); flex-shrink: 0;
+}
+.wb-float-canvas-wrap {
+  flex: 1; position: relative; overflow: hidden; background: #fff; min-height: 200px;
+}
+.wb-float-canvas { display: block; width: 100%; height: 100%; cursor: crosshair; touch-action: none; }
+
+.wb-float-quick {
+  display: flex; gap: 5px; flex-wrap: wrap;
+  padding: 7px 10px; border-top: 1px solid var(--border);
+  background: var(--bg); flex-shrink: 0;
+}
+.wb-float-quick .wb-insert-btn { font-size: 0.72rem; padding: 4px 9px; }
+
+/* FAB trigger */
+.wb-fab {
+  position: fixed; bottom: 24px; right: 24px;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--ink); color: #fff; border: none;
+  font-size: 1.3rem; cursor: pointer; z-index: 140;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .15s, box-shadow .15s;
+}
+.wb-fab:hover { transform: scale(1.08); box-shadow: 0 6px 22px rgba(0,0,0,0.3); }
+.wb-fab.hidden { display: none; }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .sidebar { width: 56px; }
+  .sidebar-logo span, .nav-item span, .nav-check, .sidebar-bottom .profile-btn span { display: none; }
+  .nav-item { justify-content: center; }
+  .main { padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">Session 1<span>Discovery</span></div>
+    <ul class="nav-list" id="navList">
+      <li class="nav-item active" data-step="0" onclick="goTo(0)">
+        <span>👋</span><span>Welcome</span><span class="nav-check">✓</span>
+      </li>
+      <li class="nav-item" data-step="1" onclick="goTo(1)">
+        <span>💬</span><span>First words</span><span class="nav-check">✓</span>
+      </li>
+      <li class="nav-item" data-step="2" onclick="goTo(2)">
+        <span>🎯</span><span>Goals</span><span class="nav-check">✓</span>
+      </li>
+      <li class="nav-item" data-step="3" onclick="goTo(3)">
+        <span>📊</span><span>Level check</span><span class="nav-check">✓</span>
+      </li>
+      <li class="nav-item" data-step="4" onclick="goTo(4)">
+        <span>🎨</span><span>Interests</span><span class="nav-check">✓</span>
+      </li>
+      <li class="nav-item" data-step="5" onclick="goTo(5)">
+        <span>🗓</span><span>Plan</span><span class="nav-check">✓</span>
+      </li>
+    </ul>
+    <div class="sidebar-bottom">
+      <button class="profile-btn" onclick="openProfile()" style="margin-bottom:8px;">📋 <span>View profile</span></button>
+      <button class="profile-btn" onclick="toggleWb()" style="background:var(--ink);">✏️ <span>Whiteboard</span></button>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- 0. Welcome -->
+    <section class="phase active" id="phase-0">
+      <div class="phase-eyebrow">Before you start</div>
+      <h2>Session 1 — Discovery</h2>
+      <p class="desc">This is your guide for the whole first session. You see everything — the student only sees what you screen-share. Work through each section in order; jot observations as you talk. At the end, generate a profile you can save.</p>
+
+      <div class="prompt-block">
+        <div class="prompt-label">Quick setup</div>
+        <label class="obs-label">Student name</label>
+        <textarea class="obs" id="s_name" rows="1" placeholder="First name (or nickname they prefer)"></textarea>
+        <label class="obs-label">Age</label>
+        <textarea class="obs" id="s_age" rows="1" placeholder="e.g. 14"></textarea>
+        <label class="obs-label">First language</label>
+        <textarea class="obs" id="s_l1" rows="1" placeholder="e.g. French"></textarea>
+        <label class="obs-label">Language being learned</label>
+        <textarea class="obs" id="s_lang" rows="1" placeholder="e.g. English"></textarea>
+      </div>
+
+      <div class="prompt-block">
+        <div class="prompt-label">Opening the session — say something like:</div>
+        <div class="prompts">
+          <div class="prompt-pill">"Today is just about getting to know each other — no tests, no pressure. I'm going to ask you some questions, and I'd love to hear your answers in as much detail as you want."</div>
+          <div class="prompt-pill">"If I ask something in <em>English</em> and you're not sure of a word, just say it in your language — that's totally fine here."</div>
+        </div>
+      </div>
+
+      <div class="phase-nav">
+        <span></span>
+        <button class="btn btn-primary" onclick="goTo(1)">Start session →</button>
+      </div>
+    </section>
+
+    <!-- 1. First words / comfort check -->
+    <section class="phase" id="phase-1">
+      <div class="phase-eyebrow">Phase 1 · Speaking comfort</div>
+      <h2>First Words</h2>
+      <p class="desc">Low-stakes conversation to hear their natural language. You're not correcting anything — you're listening for fluency, range, and confidence.</p>
+
+      <div class="prompt-block">
+        <div class="prompt-label">Conversation starters — pick 2–3</div>
+        <div class="prompts">
+          <div class="prompt-pill">"Tell me a little about yourself — where you're from, what you do, what you like."</div>
+          <div class="prompt-pill">"What did you do last weekend? Tell me three things."</div>
+          <div class="prompt-pill">"Is there a place you really want to visit one day? Why that place?"</div>
+          <div class="prompt-pill">"Tell me about something you're good at — anything at all."</div>
+          <div class="prompt-pill">"What's one thing that made you happy this week?"</div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="prompt-block">
+        <div class="prompt-label">What you're listening for</div>
+        <label class="obs-label">Sentence length & complexity</label>
+        <div class="chip-group" id="chips_sent">
+          <div class="chip" onclick="toggleChip(this,'sent')">Single words / short phrases</div>
+          <div class="chip" onclick="toggleChip(this,'sent')">Simple sentences</div>
+          <div class="chip" onclick="toggleChip(this,'sent')">Connected sentences</div>
+          <div class="chip" onclick="toggleChip(this,'sent')">Extended discourse</div>
+        </div>
+
+        <label class="obs-label">Vocabulary range</label>
+        <div class="chip-group" id="chips_vocab">
+          <div class="chip" onclick="toggleChip(this,'vocab')">Very limited</div>
+          <div class="chip" onclick="toggleChip(this,'vocab')">Basic, functional</div>
+          <div class="chip" onclick="toggleChip(this,'vocab')">Good range</div>
+          <div class="chip" onclick="toggleChip(this,'vocab')">Wide range</div>
+        </div>
+
+        <label class="obs-label">Hesitation & self-correction</label>
+        <div class="chip-group" id="chips_hes">
+          <div class="chip" onclick="toggleChip(this,'hes')">Frequent, long pauses</div>
+          <div class="chip" onclick="toggleChip(this,'hes')">Hesitates on unknown words</div>
+          <div class="chip" onclick="toggleChip(this,'hes')">Self-corrects naturally</div>
+          <div class="chip" onclick="toggleChip(this,'hes')">Flows without stopping</div>
+        </div>
+
+        <label class="obs-label">Overall speaking comfort (1 = very anxious, 5 = relaxed)</label>
+        <div class="scale-row">
+          <span class="scale-lbl">Comfort level</span>
+          <input type="range" min="1" max="5" value="3" oninput="updateScale(this,'s_speak_comfort')">
+          <div class="scale-val" id="s_speak_comfort">3</div>
+        </div>
+        <div class="scale-ends"><span>very anxious</span><span>totally relaxed</span></div>
+
+        <label class="obs-label">Notes on speaking</label>
+        <textarea class="obs" id="s_speaking_notes" placeholder="Anything notable — accent, rhythm, specific gaps, good phrases they used..."></textarea>
+      </div>
+
+      <div class="phase-nav">
+        <button class="btn btn-ghost" onclick="goTo(0)">← Back</button>
+        <button class="btn btn-primary" onclick="goTo(2)">Goals →</button>
+      </div>
+    </section>
+
+    <!-- 2. Goals & motivation -->
+    <section class="phase" id="phase-2">
+      <div class="phase-eyebrow">Phase 2 · Motivation</div>
+      <h2>Goals & Why</h2>
+      <p class="desc">Find the real-world situation they want to handle. That situation becomes the outcome for every task you set.</p>
+
+      <div class="prompt-block">
+        <div class="prompt-label">Questions to ask</div>
+        <div class="prompts">
+          <div class="prompt-pill">"Why do you want to learn <em>[language]</em>? What made you start now?"</div>
+          <div class="prompt-pill">"Imagine it's one year from now and your <em>[language]</em> is much better. What are you doing? Who are you talking to?"</div>
+          <div class="prompt-pill">"Is there a specific situation — a trip, a meeting, a conversation — that you really want to be able to handle?"</div>
+          <div class="prompt-pill">"Have you tried learning before? What worked, what didn't?"</div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <label class="obs-label">Primary motivation</label>
+      <div class="chip-group">
+        <div class="chip" onclick="toggleChipSingle(this,'s_motivation')">Travel</div>
+        <div class="chip" onclick="toggleChipSingle(this,'s_motivation')">Family / relationship</div>
+        <div class="chip" onclick="toggleChipSingle(this,'s_motivation')">Work / career</div>
+        <div class="chip" onclick="toggleChipSingle(this,'s_motivation')">Move abroad</div>
+        <div class="chip" onclick="toggleChipSingle(this,'s_motivation')">Exam</div>
+        <div class="chip" onclick="toggleChipSingle(this,'s_motivation')">Social / friends</div>
+        <div class="chip" onclick="toggleChipSingle(this,'s_motivation')">School requirement</div>
+        <div class="chip" onclick="toggleChipSingle(this,'s_motivation')">Personal interest</div>
+      </div>
+      <input type="hidden" id="s_motivation" value="">
+
+      <label class="obs-label">The specific real-world goal (in their words)</label>
+      <div class="obs-note">Write it as they said it — this becomes the anchor for lesson tasks.</div>
+      <textarea class="obs" id="s_goal" placeholder='e.g. "talk to my boyfriend\'s family at dinner", "pass my B2 exam in June", "order food and ask for directions on my trip to London"'></textarea>
+
+      <label class="obs-label">Urgency / timeline</label>
+      <div class="chip-group">
+        <div class="chip" onclick="toggleChipSingle(this,'s_urgency')">No deadline — ongoing</div>
+        <div class="chip" onclick="toggleChipSingle(this,'s_urgency')">Within 3 months</div>
+        <div class="chip" onclick="toggleChipSingle(this,'s_urgency')">3–6 months</div>
+        <div class="chip" onclick="toggleChipSingle(this,'s_urgency')">6–12 months</div>
+      </div>
+      <input type="hidden" id="s_urgency" value="">
+
+      <div class="phase-nav">
+        <button class="btn btn-ghost" onclick="goTo(1)">← Back</button>
+        <button class="btn btn-primary" onclick="goTo(3)">Level check →</button>
+      </div>
+    </section>
+
+    <!-- 3. Level check -->
+    <section class="phase" id="phase-3">
+      <div class="phase-eyebrow">Phase 3 · Proficiency</div>
+      <h2>Level Check</h2>
+      <p class="desc">Work through these indicators in sequence — the more you tick, the more precise your placement. You don't need to complete every probe; stop when the picture is clear.</p>
+
+      <!-- Oral probes by level -->
+      <div class="prompt-block">
+        <div class="prompt-label">🎙 Oral probes — use these live, listen and tick what you hear</div>
+        <div class="prompts">
+          <div class="prompt-pill"><em>A0–A1:</em> "What's your name? How old are you? Where are you from?" — Can they answer at all?</div>
+          <div class="prompt-pill"><em>A1–A2:</em> "Tell me about your day today — morning to now." — Do they form simple past/present sentences?</div>
+          <div class="prompt-pill"><em>A2–B1:</em> "Tell me about a trip or holiday you've been on. What did you do?" — Can they narrate in past tense with some detail?</div>
+          <div class="prompt-pill"><em>B1–B2:</em> "Tell me about a time something went wrong. How did you handle it?" — Can they express opinions and explain cause/effect?</div>
+          <div class="prompt-pill"><em>B2+:</em> "What do you think is the biggest challenge facing your generation? Why?" — Can they argue a point, use hedging language, recover from errors?</div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Grammar observable checklist -->
+      <div class="prompt-label" style="margin-bottom:8px;">✅ Grammar indicators observed in speech</div>
+      <div class="obs-note">Tick everything you actually heard — this builds your level picture.</div>
+      <div class="chip-group" id="chips_grammar">
+        <div class="chip" onclick="toggleChip(this)">Present simple (I work, she likes)</div>
+        <div class="chip" onclick="toggleChip(this)">Present continuous (I am going)</div>
+        <div class="chip" onclick="toggleChip(this)">Past simple regular (I walked)</div>
+        <div class="chip" onclick="toggleChip(this)">Past simple irregular (I went, I saw)</div>
+        <div class="chip" onclick="toggleChip(this)">Future (going to / will)</div>
+        <div class="chip" onclick="toggleChip(this)">Comparatives / superlatives</div>
+        <div class="chip" onclick="toggleChip(this)">Modal verbs (can, should, might)</div>
+        <div class="chip" onclick="toggleChip(this)">Present perfect (I have been)</div>
+        <div class="chip" onclick="toggleChip(this)">Conditionals (if I had…)</div>
+        <div class="chip" onclick="toggleChip(this)">Passive voice</div>
+        <div class="chip" onclick="toggleChip(this)">Relative clauses (which, who, that)</div>
+        <div class="chip" onclick="toggleChip(this)">Reported speech</div>
+      </div>
+
+      <!-- Vocabulary -->
+      <div class="prompt-label" style="margin-bottom:8px;">📖 Vocabulary indicators</div>
+      <div class="chip-group" id="chips_vocab2">
+        <div class="chip" onclick="toggleChip(this)">Numbers, colours, days, family</div>
+        <div class="chip" onclick="toggleChip(this)">Daily routines & common objects</div>
+        <div class="chip" onclick="toggleChip(this)">Feelings, opinions, preferences</div>
+        <div class="chip" onclick="toggleChip(this)">Topic-specific (work, travel, food…)</div>
+        <div class="chip" onclick="toggleChip(this)">Abstract concepts & ideas</div>
+        <div class="chip" onclick="toggleChip(this)">Idiomatic / natural expressions</div>
+        <div class="chip" onclick="toggleChip(this)">Circumlocution when stuck (talks around unknown words)</div>
+      </div>
+
+      <!-- Fluency & interaction -->
+      <div class="prompt-label" style="margin-bottom:8px;">💬 Interaction & fluency</div>
+      <div class="chip-group" id="chips_fluency">
+        <div class="chip" onclick="toggleChip(this)">Can respond to a direct question</div>
+        <div class="chip" onclick="toggleChip(this)">Can ask a question back</div>
+        <div class="chip" onclick="toggleChip(this)">Keeps talking beyond one sentence</div>
+        <div class="chip" onclick="toggleChip(this)">Uses linkers (and, but, because, so)</div>
+        <div class="chip" onclick="toggleChip(this)">Uses discourse markers (well, actually, you know)</div>
+        <div class="chip" onclick="toggleChip(this)">Repairs errors mid-sentence</div>
+        <div class="chip" onclick="toggleChip(this)">Adjusts register (formal vs casual)</div>
+        <div class="chip" onclick="toggleChip(this)">Initiates topics unprompted</div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Screen share: self-rating -->
+      <div class="share-panel" id="share-cefr">
+        <div class="share-header"><div class="share-dot"></div> Screen share this with the student</div>
+        <h3>How would you describe your level right now?</h3>
+        <p>Pick what feels most like you — there's no wrong answer, and we'll fine-tune it together.</p>
+        <div class="share-options" id="share_cefr_opts">
+          <div class="share-chip" onclick="toggleShareChip(this,'s_cefr_self')">A0 — Total beginner, starting from scratch</div>
+          <div class="share-chip" onclick="toggleShareChip(this,'s_cefr_self')">A1 — I know a few words and basic phrases</div>
+          <div class="share-chip" onclick="toggleShareChip(this,'s_cefr_self')">A2 — I can handle simple everyday conversations</div>
+          <div class="share-chip" onclick="toggleShareChip(this,'s_cefr_self')">B1 — I get by in most situations but make mistakes</div>
+          <div class="share-chip" onclick="toggleShareChip(this,'s_cefr_self')">B2 — I'm fairly fluent, occasional gaps</div>
+          <div class="share-chip" onclick="toggleShareChip(this,'s_cefr_self')">C1/C2 — Very advanced, near-native</div>
+        </div>
+        <input type="hidden" id="s_cefr_self" value="">
+      </div>
+      <button class="btn btn-ghost btn-small" style="margin:12px 0 0;" onclick="toggleShare('share-cefr')">📺 Toggle screen-share panel</button>
+
+      <hr class="divider">
+
+      <!-- Teacher's assessment -->
+      <label class="obs-label">Your CEFR assessment</label>
+      <div class="cefr-grid">
+        <div class="cefr-chip" onclick="selectCefr(this,'A0')">A0</div>
+        <div class="cefr-chip" onclick="selectCefr(this,'A1')">A1</div>
+        <div class="cefr-chip" onclick="selectCefr(this,'A2')">A2</div>
+        <div class="cefr-chip" onclick="selectCefr(this,'B1')">B1</div>
+        <div class="cefr-chip" onclick="selectCefr(this,'B2')">B2</div>
+        <div class="cefr-chip" onclick="selectCefr(this,'C1')">C1</div>
+        <div class="cefr-chip" onclick="selectCefr(this,'C2')">C2</div>
+      </div>
+      <div class="cefr-desc" id="cefr_desc">Select a level above</div>
+      <input type="hidden" id="s_cefr" value="">
+
+      <label class="obs-label">Observed skill strengths (1 = weak, 5 = strong)</label>
+      <div class="scale-row">
+        <span class="scale-lbl">Listening</span>
+        <input type="range" min="1" max="5" value="3" oninput="updateScale(this,'sc_listening')">
+        <div class="scale-val" id="sc_listening">3</div>
+      </div>
+      <div class="scale-row">
+        <span class="scale-lbl">Speaking</span>
+        <input type="range" min="1" max="5" value="3" oninput="updateScale(this,'sc_speaking')">
+        <div class="scale-val" id="sc_speaking">3</div>
+      </div>
+      <div class="scale-row">
+        <span class="scale-lbl">Reading</span>
+        <input type="range" min="1" max="5" value="3" oninput="updateScale(this,'sc_reading')">
+        <div class="scale-val" id="sc_reading">3</div>
+      </div>
+      <div class="scale-row">
+        <span class="scale-lbl">Writing</span>
+        <input type="range" min="1" max="5" value="3" oninput="updateScale(this,'sc_writing')">
+        <div class="scale-val" id="sc_writing">3</div>
+      </div>
+
+      <label class="obs-label" style="margin-top:6px;">Level notes</label>
+      <textarea class="obs" id="s_level_notes" placeholder="Key grammar gaps, strong areas, anything to probe in lesson 2..."></textarea>
+
+      <div class="phase-nav">
+        <button class="btn btn-ghost" onclick="goTo(2)">← Back</button>
+        <button class="btn btn-primary" onclick="goTo(4)">Interests →</button>
+      </div>
+    </section>
+
+    <!-- 4. Interests & learning style -->
+    <section class="phase" id="phase-4">
+      <div class="phase-eyebrow">Phase 4 · What hooks them</div>
+      <h2>Interests & How They Learn</h2>
+      <p class="desc">This shapes every topic you pick and how you present material. Let them discover their own preferences — don't lead with options yet.</p>
+
+      <div class="prompt-block">
+        <div class="prompt-label">Questions to ask first (open-ended, listen before showing options)</div>
+        <div class="prompts">
+          <div class="prompt-pill">"Outside of language learning, what do you spend your time on? What are you into?"</div>
+          <div class="prompt-pill">"Is there a subject, hobby, or world you could talk about for hours?"</div>
+          <div class="prompt-pill">"When you've learned something new and it stuck — what made it stick?"</div>
+          <div class="prompt-pill">"Do you prefer working with visuals, listening to things, doing exercises, or just talking?"</div>
+        </div>
+      </div>
+
+      <!-- SCREEN SHARE: topic picker -->
+      <div class="share-panel" id="share-interests">
+        <div class="share-header"><div class="share-dot"></div> Screen share this with the student</div>
+        <h3>Which of these sounds like you?</h3>
+        <p>Pick as many as you like — we'll use these as themes for your lessons.</p>
+        <div class="share-options" id="share_interests_opts">
+          <div class="share-chip" onclick="toggleShareChipMulti(this,'s_interests')">🎮 Gaming</div>
+          <div class="share-chip" onclick="toggleShareChipMulti(this,'s_interests')">⚽ Sport</div>
+          <div class="share-chip" onclick="toggleShareChipMulti(this,'s_interests')">🎵 Music</div>
+          <div class="share-chip" onclick="toggleShareChipMulti(this,'s_interests')">🎬 Movies & series</div>
+          <div class="share-chip" onclick="toggleShareChipMulti(this,'s_interests')">📺 YouTube / Streaming</div>
+          <div class="share-chip" onclick="toggleShareChipMulti(this,'s_interests')">✈️ Travel</div>
+          <div class="share-chip" onclick="toggleShareChipMulti(this,'s_interests')">🍕 Food & cooking</div>
+          <div class="share-chip" onclick="toggleShareChipMulti(this,'s_interests')">🌿 Nature & outdoors</div>
+          <div class="share-chip" onclick="toggleShareChipMulti(this,'s_interests')">💼 Business & news</div>
+          <div class="share-chip" onclick="toggleShareChipMulti(this,'s_interests')">🎨 Art & design</div>
+          <div class="share-chip" onclick="toggleShareChipMulti(this,'s_interests')">📚 Books</div>
+          <div class="share-chip" onclick="toggleShareChipMulti(this,'s_interests')">🚀 Science & space</div>
+          <div class="share-chip" onclick="toggleShareChipMulti(this,'s_interests')">🐾 Animals</div>
+          <div class="share-chip" onclick="toggleShareChipMulti(this,'s_interests')">💻 Tech</div>
+          <div class="share-chip" onclick="toggleShareChipMulti(this,'s_interests')">🧘 Wellness / mindfulness</div>
+        </div>
+        <input type="hidden" id="s_interests" value="">
+        <textarea class="share-input" id="s_interests_other" placeholder="Anything else? Write it here..."></textarea>
+      </div>
+
+      <button class="btn btn-ghost btn-small" style="margin:12px 0 16px;" onclick="toggleShare('share-interests')">📺 Toggle screen-share panel</button>
+
+      <label class="obs-label">Learning style — what they described or you observed</label>
+      <div class="chip-group">
+        <div class="chip" onclick="toggleChip(this,'lstyle')">Visual / diagrams</div>
+        <div class="chip" onclick="toggleChip(this,'lstyle')">Listening to audio</div>
+        <div class="chip" onclick="toggleChip(this,'lstyle')">Talking it through</div>
+        <div class="chip" onclick="toggleChip(this,'lstyle')">Games & competition</div>
+        <div class="chip" onclick="toggleChip(this,'lstyle')">Reading texts</div>
+        <div class="chip" onclick="toggleChip(this,'lstyle')">Writing things down</div>
+        <div class="chip" onclick="toggleChip(this,'lstyle')">Repetition & drills</div>
+        <div class="chip" onclick="toggleChip(this,'lstyle')">Real-world tasks</div>
+      </div>
+
+      <label class="obs-label">Correction preference — discuss openly</label>
+      <div class="prompts" style="margin-bottom:10px;">
+        <div class="prompt-pill">"When you make a mistake, do you prefer I stop you and correct it straight away, or let you finish and tell you at the end?"</div>
+      </div>
+      <div class="chip-group">
+        <div class="chip" onclick="toggleChipSingle(this,'s_correction')">After (fluency-first)</div>
+        <div class="chip" onclick="toggleChipSingle(this,'s_correction')">Gentle in the moment</div>
+        <div class="chip" onclick="toggleChipSingle(this,'s_correction')">Not sure yet</div>
+      </div>
+      <input type="hidden" id="s_correction" value="">
+
+      <label class="obs-label">Interest & style notes</label>
+      <textarea class="obs" id="s_interest_notes" placeholder="Anything specific they mentioned — a show, team, game, person — plus any strong learning style signals..."></textarea>
+
+      <div class="phase-nav">
+        <button class="btn btn-ghost" onclick="goTo(3)">← Back</button>
+        <button class="btn btn-primary" onclick="goTo(5)">Plan →</button>
+      </div>
+    </section>
+
+    <!-- 5. Plan & schedule -->
+    <section class="phase" id="phase-5">
+      <div class="phase-eyebrow">Phase 5 · Forward plan</div>
+      <h2>Session Schedule & Plan</h2>
+      <p class="desc">Close the session by agreeing on logistics and sketching the first few lessons. Screen-share the plan section so the student sees and buys into it.</p>
+
+      <div class="prompt-block">
+        <div class="prompt-label">Logistics to confirm</div>
+        <div class="prompts">
+          <div class="prompt-pill">"How often do you want to meet? Once or twice a week works best for steady progress."</div>
+          <div class="prompt-pill">"Are you happy to do a small task between sessions, or would you prefer we keep everything to the lesson?"</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:16px;">
+        <label class="obs-label">Frequency</label>
+        <div class="chip-group">
+          <div class="chip" onclick="toggleChipSingle(this,'s_freq')">1× per week</div>
+          <div class="chip" onclick="toggleChipSingle(this,'s_freq')">2× per week</div>
+          <div class="chip" onclick="toggleChipSingle(this,'s_freq')">Irregular</div>
+        </div>
+        <input type="hidden" id="s_freq" value="">
+      </div>
+
+      <label class="obs-label">Homework appetite</label>
+      <div class="chip-group">
+        <div class="chip" onclick="toggleChipSingle(this,'s_hw')">Yes — short tasks between sessions</div>
+        <div class="chip" onclick="toggleChipSingle(this,'s_hw')">Maybe — light review only</div>
+        <div class="chip" onclick="toggleChipSingle(this,'s_hw')">No — lessons only</div>
+      </div>
+      <input type="hidden" id="s_hw" value="">
+
+      <hr class="divider">
+
+      <!-- SCREEN SHARE: lesson sketch -->
+      <div class="share-panel" id="share-plan">
+        <div class="share-header"><div class="share-dot"></div> Screen share this with the student</div>
+        <h3>Your first few lessons — rough sketch</h3>
+        <p>We'll adjust as we go. This is just a starting direction based on what you've told me.</p>
+        <div id="sched-rows">
+          <div class="sched-row">
+            <div class="sched-num">1</div>
+            <input class="sched-input" type="text" placeholder='e.g. "Introducing yourself confidently + key vocabulary for your goal"'>
+          </div>
+          <div class="sched-row">
+            <div class="sched-num">2</div>
+            <input class="sched-input" type="text" placeholder='e.g. "Past tense — describing experiences"'>
+          </div>
+          <div class="sched-row">
+            <div class="sched-num">3</div>
+            <input class="sched-input" type="text" placeholder='e.g. "Asking questions + listening practice"'>
+          </div>
+          <div class="sched-row">
+            <div class="sched-num">4</div>
+            <input class="sched-input" type="text" placeholder='e.g. "Review session 1–3 + vocabulary consolidation"'>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-ghost btn-small" style="margin:12px 0 16px;" onclick="toggleShare('share-plan')">📺 Toggle screen-share panel</button>
+
+      <label class="obs-label">Any other notes from this session</label>
+      <textarea class="obs" id="s_session_notes" placeholder="Anything else worth remembering about this student..."></textarea>
+
+      <div class="phase-nav">
+        <button class="btn btn-ghost" onclick="goTo(4)">← Back</button>
+        <button class="btn btn-primary" onclick="openProfile()">📋 Generate profile →</button>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- FAB -->
+<button class="wb-fab" id="wb-fab" onclick="toggleWb()" title="Open whiteboard">✏️</button>
+
+<!-- Floating whiteboard -->
+<div class="wb-float" id="wb-float">
+  <div class="wb-float-header" id="wb-drag-handle">
+    <div class="wb-float-header-left">✏️ Whiteboard</div>
+    <div class="wb-float-header-right">
+      <button class="wb-hdr-btn" onclick="clearBoard()">🗑 Clear</button>
+      <button class="wb-hdr-btn" onclick="downloadBoard()">⬇ Save</button>
+      <button class="wb-hdr-btn close" onclick="toggleWb()">✕</button>
+    </div>
+  </div>
+  <div class="wb-float-toolbar" id="wb-toolbar-float">
+    <button class="wb-tool-btn active" id="wb-pen-btn" onclick="setTool('pen')">✏️</button>
+    <button class="wb-tool-btn" id="wb-text-btn" onclick="setTool('text')">T</button>
+    <button class="wb-tool-btn" id="wb-erase-btn" onclick="setTool('erase')">⬜</button>
+    <div class="wb-sep"></div>
+    <input type="range" min="2" max="24" value="4" oninput="setBrushSize(this.value)" style="width:60px;accent-color:var(--teal);">
+    <div class="wb-sep"></div>
+    <input type="color" value="#1C2B33" oninput="setBrushColor(this.value)" title="Colour" style="width:26px;height:26px;border:none;border-radius:5px;cursor:pointer;padding:0;">
+    <button class="wb-tool-btn" style="background:#2A8A8A;border-color:#2A8A8A;color:#fff;padding:5px 8px;" onclick="setBrushColor('#2A8A8A')">●</button>
+    <button class="wb-tool-btn" style="background:#C45000;border-color:#C45000;color:#fff;padding:5px 8px;" onclick="setBrushColor('#C45000')">●</button>
+    <button class="wb-tool-btn" style="background:#3E8E5C;border-color:#3E8E5C;color:#fff;padding:5px 8px;" onclick="setBrushColor('#3E8E5C')">●</button>
+  </div>
+  <div class="wb-float-canvas-wrap" id="wb-canvas-wrap">
+    <canvas class="wb-float-canvas" id="wb-canvas"></canvas>
+  </div>
+  <div class="wb-float-quick">
+    <button class="wb-insert-btn" onclick="insertText('✓')">✓</button>
+    <button class="wb-insert-btn" onclick="insertText('✗')">✗</button>
+    <button class="wb-insert-btn" onclick="insertText('Try again →')">Try again</button>
+    <button class="wb-insert-btn" onclick="insertText('S + V + O')">S+V+O</button>
+    <button class="wb-insert-btn" onclick="insertText('I went ✓  /  I go ✗')">went/go</button>
+    <button class="wb-insert-btn" onclick="promptCustomText()">+ Custom…</button>
+  </div>
+</div>
+
+<!-- Profile modal -->
+<div class="modal-overlay" id="profileModal" onclick="closeProfileOutside(event)">
+  <div class="modal" id="profileContent">
+    <div class="modal-header">
+      <h2>Student Profile</h2>
+      <button class="modal-close" onclick="closeProfile()">×</button>
+    </div>
+    <div id="profileBody"></div>
+    <div class="export-row">
+      <button class="filled" onclick="copyProfile()">📋 Copy as text</button>
+      <button onclick="window.print()">🖨️ Print / PDF</button>
+      <button onclick="closeProfile()">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+/* ── State helpers ── */
+const completedSteps = new Set([0]);
+
+function goTo(step) {
+  document.querySelectorAll('.phase').forEach(p => p.classList.remove('active'));
+  document.getElementById('phase-' + step).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach((el, i) => {
+    el.classList.toggle('active', i === step);
+    if (i < step) el.classList.add('done');
+  });
+  completedSteps.add(step);
+  window.scrollTo && document.querySelector('.main').scrollTo(0,0);
+}
+
+/* ── Chip logic ── */
+function toggleChip(el, group) {
+  el.classList.toggle('selected');
+}
+
+function toggleChipSingle(el, hiddenId) {
+  const group = el.parentElement;
+  group.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById(hiddenId).value = el.textContent.trim();
+}
+
+function toggleShareChip(el, hiddenId) {
+  el.parentElement.querySelectorAll('.share-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById(hiddenId).value = el.textContent.trim();
+}
+
+function toggleShareChipMulti(el, hiddenId) {
+  el.classList.toggle('selected');
+  const selected = [...el.parentElement.querySelectorAll('.share-chip.selected')].map(c => c.textContent.trim());
+  document.getElementById(hiddenId).value = selected.join(', ');
+}
+
+function updateScale(input, valId) {
+  document.getElementById(valId).textContent = input.value;
+}
+
+/* ── CEFR ── */
+const cefrDescs = {
+  A0: 'Complete beginner — no prior exposure',
+  A1: 'Beginner — a few words and fixed phrases',
+  A2: 'Elementary — simple sentences, familiar topics',
+  B1: 'Intermediate — can handle most everyday situations',
+  B2: 'Upper-intermediate — fairly fluent, nuanced expression',
+  C1: 'Advanced — natural and flexible use',
+  C2: 'Proficient — near-native'
+};
+function selectCefr(el, val) {
+  document.querySelectorAll('.cefr-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('s_cefr').value = val;
+  document.getElementById('cefr_desc').textContent = cefrDescs[val];
+}
+
+/* ── Share panels ── */
+function toggleShare(id) {
+  const panel = document.getElementById(id);
+  panel.classList.toggle('visible');
+}
+
+/* ── Profile modal ── */
+function gv(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+function gt(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+function getSelectedChips(groupSelector) {
+  return [...document.querySelectorAll(groupSelector + ' .chip.selected')].map(c => c.textContent.trim()).join(', ');
+}
+function getSelectedShareChips(id) {
+  const el = document.getElementById(id);
+  return el ? el.value : '';
+}
+
+function profileRow(k, v) {
+  if (!v) return '';
+  const row = document.createElement('div');
+  row.className = 'profile-row';
+  row.innerHTML = '<div class="k">' + k + '</div><div class="v">' + v + '</div>';
+  return row;
+}
+
+function openProfile() {
+  const body = document.getElementById('profileBody');
+  body.innerHTML = '';
+
+  const name = gt('s_name') || 'Student';
+  const sections = [
+    {
+      title: 'Basics',
+      rows: [
+        ['Name', gt('s_name')],
+        ['Age', gt('s_age')],
+        ['First language', gt('s_l1')],
+        ['Target language', gt('s_lang')],
+      ]
+    },
+    {
+      title: 'Speaking & Comfort',
+      rows: [
+        ['Sentence complexity', getSelectedChips('#chips_sent')],
+        ['Vocabulary range', getSelectedChips('#chips_vocab')],
+        ['Hesitation pattern', getSelectedChips('#chips_hes')],
+        ['Speaking comfort', gv('s_speak_comfort') + ' / 5'],
+        ['Notes', gt('s_speaking_notes')],
+      ]
+    },
+    {
+      title: 'Goals & Motivation',
+      rows: [
+        ['Primary motivation', gv('s_motivation')],
+        ['Real-world goal', gt('s_goal')],
+        ['Timeline', gv('s_urgency')],
+      ]
+    },
+    {
+      title: 'Level Assessment',
+      rows: [
+        ['Student self-rating', getSelectedShareChips('s_cefr_self')],
+        ['Teacher assessment', gv('s_cefr')],
+        ['Grammar observed', [...document.querySelectorAll('#chips_grammar .chip.selected')].map(c=>c.textContent.trim()).join(', ')],
+        ['Vocabulary range', [...document.querySelectorAll('#chips_vocab2 .chip.selected')].map(c=>c.textContent.trim()).join(', ')],
+        ['Fluency indicators', [...document.querySelectorAll('#chips_fluency .chip.selected')].map(c=>c.textContent.trim()).join(', ')],
+        ['Listening', gv('sc_listening') + '/5'],
+        ['Speaking', gv('sc_speaking') + '/5'],
+        ['Reading', gv('sc_reading') + '/5'],
+        ['Writing', gv('sc_writing') + '/5'],
+        ['Notes', gt('s_level_notes')],
+      ]
+    },
+    {
+      title: 'Interests & Learning Style',
+      rows: [
+        ['Interests', getSelectedShareChips('s_interests') + (gt('s_interests_other') ? ', ' + gt('s_interests_other') : '')],
+        ['Learning style', getSelectedChips('#chips_lstyle') || getSelectedChips('[onclick*="lstyle"]')],
+        ['Correction pref', gv('s_correction')],
+        ['Notes', gt('s_interest_notes')],
+      ]
+    },
+    {
+      title: 'Schedule',
+      rows: [
+        ['Frequency', gv('s_freq')],
+        ['Homework', gv('s_hw')],
+      ]
+    },
+    {
+      title: 'Session Notes',
+      rows: [
+        ['General notes', gt('s_session_notes')],
+      ]
+    }
+  ];
+
+  sections.forEach(sec => {
+    const filled = sec.rows.filter(([k,v]) => v);
+    if (!filled.length) return;
+    const div = document.createElement('div');
+    div.className = 'profile-section';
+    div.innerHTML = '<h3>' + sec.title + '</h3>';
+    filled.forEach(([k,v]) => {
+      const r = profileRow(k, v);
+      if (r) div.appendChild(r);
+    });
+    body.appendChild(div);
+  });
+
+  document.getElementById('profileModal').classList.add('open');
+}
+
+function closeProfile() { document.getElementById('profileModal').classList.remove('open'); }
+function closeProfileOutside(e) { if (e.target.id === 'profileModal') closeProfile(); }
+
+function copyProfile() {
+  const name = gt('s_name') || 'Student';
+  let txt = 'STUDENT PROFILE — ' + name + '\n' + new Date().toLocaleDateString() + '\n\n';
+
+  txt += 'BASICS\n';
+  txt += 'Name: ' + (gt('s_name')||'—') + '\n';
+  txt += 'Age: ' + (gt('s_age')||'—') + '\n';
+  txt += 'L1: ' + (gt('s_l1')||'—') + '\n';
+  txt += 'Language: ' + (gt('s_lang')||'—') + '\n\n';
+
+  txt += 'SPEAKING & COMFORT\n';
+  txt += 'Complexity: ' + (getSelectedChips('#chips_sent')||'—') + '\n';
+  txt += 'Vocabulary: ' + (getSelectedChips('#chips_vocab')||'—') + '\n';
+  txt += 'Hesitation: ' + (getSelectedChips('#chips_hes')||'—') + '\n';
+  txt += 'Comfort: ' + gv('s_speak_comfort') + '/5\n';
+  txt += 'Notes: ' + (gt('s_speaking_notes')||'—') + '\n\n';
+
+  txt += 'GOALS\n';
+  txt += 'Motivation: ' + (gv('s_motivation')||'—') + '\n';
+  txt += 'Goal: ' + (gt('s_goal')||'—') + '\n';
+  txt += 'Timeline: ' + (gv('s_urgency')||'—') + '\n\n';
+
+  txt += 'LEVEL\n';
+  txt += 'Self-rated: ' + (getSelectedShareChips('s_cefr_self')||'—') + '\n';
+  txt += 'Teacher assessment: ' + (gv('s_cefr')||'—') + '\n';
+  txt += 'Grammar observed: ' + ([...document.querySelectorAll('#chips_grammar .chip.selected')].map(c=>c.textContent.trim()).join(', ')||'—') + '\n';
+  txt += 'Vocabulary: ' + ([...document.querySelectorAll('#chips_vocab2 .chip.selected')].map(c=>c.textContent.trim()).join(', ')||'—') + '\n';
+  txt += 'Fluency: ' + ([...document.querySelectorAll('#chips_fluency .chip.selected')].map(c=>c.textContent.trim()).join(', ')||'—') + '\n';
+  txt += 'Skills — L:' + gv('sc_listening') + ' S:' + gv('sc_speaking') + ' R:' + gv('sc_reading') + ' W:' + gv('sc_writing') + '\n';
+  txt += 'Notes: ' + (gt('s_level_notes')||'—') + '\n\n';
+
+  txt += 'INTERESTS & STYLE\n';
+  txt += 'Interests: ' + (getSelectedShareChips('s_interests')||'—') + '\n';
+  txt += 'Learning style: ' + (getSelectedChips('[onclick*="lstyle"]')||'—') + '\n';
+  txt += 'Correction pref: ' + (gv('s_correction')||'—') + '\n';
+  txt += 'Notes: ' + (gt('s_interest_notes')||'—') + '\n\n';
+
+  txt += 'SCHEDULE\n';
+  txt += 'Frequency: ' + (gv('s_freq')||'—') + '\n';
+  txt += 'Homework: ' + (gv('s_hw')||'—') + '\n\n';
+
+  const schedInputs = document.querySelectorAll('#sched-rows .sched-input');
+  const schedFilled = [...schedInputs].map((inp,i) => inp.value.trim() ? ('Session '+(i+2)+': '+inp.value.trim()) : null).filter(Boolean);
+  if (schedFilled.length) txt += 'LESSON SKETCH\n' + schedFilled.join('\n') + '\n\n';
+
+  txt += 'SESSION NOTES\n' + (gt('s_session_notes')||'—');
+
+  navigator.clipboard.writeText(txt).then(() => {
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 1800);
+  });
+}
+
+/* ── FLOATING WHITEBOARD ── */
+let wbTool = 'pen';
+let wbColor = '#1C2B33';
+let wbSize = 4;
+let wbDrawing = false;
+let wbPendingText = null;
+let wbCtx = null;
+let wbCanvas = null;
+let wbInited = false;
+
+function toggleWb() {
+  const panel = document.getElementById('wb-float');
+  const fab = document.getElementById('wb-fab');
+  const open = panel.classList.toggle('open');
+  fab.classList.toggle('hidden', open);
+  if (open && !wbInited) { setTimeout(initWhiteboard, 30); wbInited = true; }
+}
+
+function initWhiteboard() {
+  wbCanvas = document.getElementById('wb-canvas');
+  const wrap = document.getElementById('wb-canvas-wrap');
+  if (!wbCanvas || !wrap) return;
+  wbCtx = wbCanvas.getContext('2d');
+
+  function resizeCanvas() {
+    const snapshot = wbCanvas.toDataURL();
+    const w = wrap.offsetWidth, h = wrap.offsetHeight || 300;
+    const r = window.devicePixelRatio || 1;
+    wbCanvas.width = w * r; wbCanvas.height = h * r;
+    wbCanvas.style.width = w + 'px'; wbCanvas.style.height = h + 'px';
+    wbCtx.scale(r, r);
+    wbCtx.lineCap = 'round'; wbCtx.lineJoin = 'round';
+    const img = new Image(); img.onload = () => wbCtx.drawImage(img, 0, 0);
+    img.src = snapshot;
+  }
+  resizeCanvas();
+  new ResizeObserver(resizeCanvas).observe(wrap);
+
+  function getPos(e) {
+    const rect = wbCanvas.getBoundingClientRect();
+    const src = e.touches ? e.touches[0] : e;
+    return { x: src.clientX - rect.left, y: src.clientY - rect.top };
+  }
+
+  wbCanvas.addEventListener('pointerdown', function(e) {
+    if (wbTool === 'text') {
+      if (wbPendingText) { commitText(); return; }
+      const pos = getPos(e);
+      placeTextInput(pos.x, pos.y);
+      return;
+    }
+    wbDrawing = true;
+    const pos = getPos(e);
+    wbCtx.beginPath(); wbCtx.moveTo(pos.x, pos.y);
+    wbCanvas.setPointerCapture(e.pointerId);
+  });
+
+  wbCanvas.addEventListener('pointermove', function(e) {
+    if (!wbDrawing) return;
+    const pos = getPos(e);
+    wbCtx.lineWidth = wbTool === 'erase' ? wbSize * 6 : wbSize;
+    wbCtx.strokeStyle = wbTool === 'erase' ? '#ffffff' : wbColor;
+    wbCtx.lineTo(pos.x, pos.y); wbCtx.stroke();
+  });
+
+  wbCanvas.addEventListener('pointerup', () => { wbDrawing = false; });
+
+  // Drag panel by header
+  const handle = document.getElementById('wb-drag-handle');
+  const panel = document.getElementById('wb-float');
+  let dragOX, dragOY, dragging = false;
+  handle.addEventListener('pointerdown', function(e) {
+    dragging = true;
+    const rect = panel.getBoundingClientRect();
+    dragOX = e.clientX - rect.left; dragOY = e.clientY - rect.top;
+    handle.setPointerCapture(e.pointerId);
+    e.preventDefault();
+  });
+  handle.addEventListener('pointermove', function(e) {
+    if (!dragging) return;
+    let x = e.clientX - dragOX, y = e.clientY - dragOY;
+    x = Math.max(0, Math.min(window.innerWidth - panel.offsetWidth, x));
+    y = Math.max(0, Math.min(window.innerHeight - panel.offsetHeight, y));
+    panel.style.right = 'auto'; panel.style.bottom = 'auto';
+    panel.style.left = x + 'px'; panel.style.top = y + 'px';
+  });
+  handle.addEventListener('pointerup', () => { dragging = false; });
+}
+
+function setTool(tool) {
+  wbTool = tool;
+  document.getElementById('wb-pen-btn').classList.toggle('active', tool === 'pen');
+  document.getElementById('wb-text-btn').classList.toggle('active', tool === 'text');
+  document.getElementById('wb-erase-btn').classList.toggle('active', tool === 'erase');
+  if (wbCanvas) wbCanvas.style.cursor = tool === 'text' ? 'text' : tool === 'erase' ? 'cell' : 'crosshair';
+  if (tool !== 'text' && wbPendingText) commitText();
+}
+
+function setBrushSize(v) { wbSize = parseInt(v); }
+function setBrushColor(c) { wbColor = c; }
+
+function clearBoard() {
+  if (!wbCtx || !wbCanvas) return;
+  wbCtx.clearRect(0, 0, wbCanvas.width, wbCanvas.height);
+  document.querySelectorAll('.wb-text-field').forEach(f => f.remove());
+  wbPendingText = null;
+}
+
+function downloadBoard() {
+  if (!wbCanvas) return;
+  const link = document.createElement('a');
+  link.download = 'whiteboard.png'; link.href = wbCanvas.toDataURL(); link.click();
+}
+
+function placeTextInput(x, y) {
+  if (wbPendingText) commitText();
+  const wrap = document.getElementById('wb-canvas-wrap');
+  const inp = document.createElement('textarea');
+  inp.className = 'wb-text-field';
+  inp.style.cssText = `left:${x}px;top:${y}px;color:${wbColor};font-size:${Math.max(18, wbSize*4)}px;`;
+  inp.rows = 1; inp.placeholder = 'Type…';
+  wrap.appendChild(inp); inp.focus();
+  inp.addEventListener('input', function() {
+    inp.style.width = Math.max(80, inp.scrollWidth) + 'px';
+    inp.style.height = 'auto'; inp.style.height = inp.scrollHeight + 'px';
+  });
+  inp.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { inp.remove(); wbPendingText = null; setTool('pen'); }
+  });
+  wbPendingText = inp;
+}
+
+function commitText() {
+  if (!wbPendingText) return;
+  const inp = wbPendingText;
+  const txt = inp.value;
+  if (txt.trim()) {
+    const x = parseInt(inp.style.left), y = parseInt(inp.style.top);
+    const fs = parseInt(inp.style.fontSize);
+    wbCtx.font = `bold ${fs}px Nunito, sans-serif`;
+    wbCtx.fillStyle = inp.style.color || wbColor;
+    txt.split('\n').forEach((line, i) => wbCtx.fillText(line, x, y + fs + i * fs * 1.3));
+  }
+  inp.remove(); wbPendingText = null;
+}
+
+function insertText(text) {
+  if (!wbInited) { toggleWb(); setTimeout(() => insertText(text), 80); return; }
+  setTool('text');
+  if (wbPendingText) commitText();
+  placeTextInput(20, 24);
+  wbPendingText.value = text;
+  wbPendingText.style.width = Math.max(80, text.length * 13) + 'px';
+  wbPendingText.dispatchEvent(new Event('input'));
+}
+
+function promptCustomText() {
+  const txt = window.prompt('Text to add to board:');
+  if (txt) insertText(txt);
+}
+
+/* Fix learning style chip selector */
+document.querySelectorAll('#phase-4 .chip-group:nth-of-type(1) .chip').forEach(c => {
+  c.setAttribute('data-group', 'lstyle');
+});
+function getSelectedLearningStyle() {
+  return [...document.querySelectorAll('[data-group="lstyle"].selected')].map(c => c.textContent.trim()).join(', ');
+}
+</script>
+
+</body>
+</html>
