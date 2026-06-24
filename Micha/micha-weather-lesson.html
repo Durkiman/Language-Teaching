@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>The Big Heat — Weather in English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F4F6F8;
+  --surface: #FFFFFF;
+  --teal: #2A8A8A;
+  --teal-light: #E3F2F2;
+  --ink: #1F2B33;
+  --muted: #6B7A82;
+  --border: #E3E8EB;
+  --orange: #E08A3C;
+  --orange-light: #FFF3E6;
+  --blue: #3E6FB0;
+  --green: #3FA66A;
+  --green-light: #E5F6EC;
+  --red: #D9534F;
+  --shadow: 0 2px 8px rgba(31,43,51,.06), 0 1px 2px rgba(31,43,51,.04);
+  --shadow-lg: 0 8px 24px rgba(31,43,51,.10);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  padding-bottom: 90px;
+}
+
+/* ── header ── */
+.app-header {
+  background: var(--teal);
+  padding: 20px 20px 16px;
+  position: relative;
+  overflow: hidden;
+}
+.app-header::after {
+  content: "🌡️";
+  position: absolute;
+  right: -10px; top: -14px;
+  font-size: 90px;
+  opacity: .12;
+}
+.app-header h1 { margin: 0 0 4px; font-size: 22px; font-weight: 900; color: #fff; }
+.app-header p  { margin: 0; font-size: 13px; color: #D7F0F0; font-weight: 600; }
+
+/* ── tabbar ── */
+.tabbar {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; overflow-x: auto;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  -webkit-overflow-scrolling: touch;
+}
+.tabbar::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex: 0 0 auto;
+  padding: 14px 16px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700; font-size: 13px;
+  color: var(--muted);
+  background: none; border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer; white-space: nowrap;
+}
+.tab-btn.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+/* ── panels ── */
+.panel { display: none; padding: 18px 16px 30px; max-width: 680px; margin: 0 auto; }
+.panel.active { display: block; }
+
+/* ── cards ── */
+.card {
+  background: var(--surface);
+  border-radius: 16px; padding: 18px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+.card h2 { margin: 0 0 10px; font-size: 17px; font-weight: 800; }
+.card h3 { margin: 0 0 8px; font-size: 14px; font-weight: 800; color: var(--teal); }
+.fr {
+  color: var(--blue); font-size: 13px;
+  font-style: italic; font-weight: 600; margin-top: 4px;
+}
+
+/* ── heat meter banner ── */
+.heat-banner {
+  background: linear-gradient(135deg, #E05A2A 0%, #E08A3C 100%);
+  border-radius: 18px; padding: 22px;
+  color: #fff; margin-bottom: 14px;
+  position: relative; overflow: hidden;
+}
+.heat-banner::after {
+  content: "🔥"; position: absolute;
+  right: -8px; bottom: -18px;
+  font-size: 90px; opacity: .18;
+}
+.heat-banner h2 { color: #fff; margin: 0 0 6px; font-size: 20px; }
+.heat-banner p  { margin: 0; font-size: 14px; opacity: .95; line-height: 1.5; }
+.heat-stat {
+  background: rgba(255,255,255,.18);
+  border-radius: 12px; padding: 10px 14px;
+  margin-top: 12px; font-weight: 800;
+  font-size: 22px; letter-spacing: .5px;
+}
+.heat-stat span { font-size: 12px; font-weight: 600; opacity: .85; display: block; }
+
+/* ── fact grid ── */
+.facts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.fact-box {
+  background: var(--teal-light); border-radius: 12px;
+  padding: 12px; text-align: center;
+}
+.fact-box .num { font-size: 20px; font-weight: 900; color: var(--teal); }
+.fact-box .lbl { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; }
+
+/* ── vocab cards ── */
+.vocab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.vocab-card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 14px; padding: 14px 10px;
+  text-align: center; cursor: pointer;
+  transition: all .2s; min-height: 64px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.vocab-card .en { font-weight: 800; font-size: 15px; }
+.vocab-card .fr-word { font-size: 13px; color: var(--blue); font-style: italic; display: none; font-weight: 700; }
+.vocab-card.revealed .fr-word { display: block; }
+.vocab-card.revealed .en { font-size: 13px; color: var(--muted); }
+.vocab-card.mastered { background: var(--green); border-color: var(--green); }
+.vocab-card.mastered .en,
+.vocab-card.mastered .fr-word { color: #fff; }
+
+/* ── weather emoji card ── */
+.weather-row {
+  display: flex; gap: 10px;
+  flex-wrap: wrap; margin-bottom: 10px;
+}
+.weather-chip {
+  background: var(--teal-light); border-radius: 12px;
+  padding: 10px 14px; font-weight: 700; font-size: 13px;
+  border: 2px solid var(--border); flex: 1; min-width: 120px;
+  text-align: center;
+}
+.weather-chip .icon { font-size: 22px; display: block; margin-bottom: 4px; }
+
+/* ── grammar ── */
+.formula-box {
+  background: var(--teal-light); border-radius: 12px;
+  padding: 14px; text-align: center;
+  font-weight: 800; font-size: 15px; color: var(--teal);
+  margin-bottom: 12px;
+}
+table.conj { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 10px; }
+table.conj th, table.conj td {
+  border: 1px solid var(--border); padding: 8px 6px; text-align: left;
+}
+table.conj th { background: var(--teal-light); font-weight: 800; color: var(--teal); }
+.mistake-box {
+  background: #FBE5E4; border-radius: 12px;
+  padding: 12px; font-size: 13px;
+}
+.mistake-box b { color: var(--red); }
+.tip-box {
+  background: var(--orange-light); border-radius: 12px;
+  padding: 12px; font-size: 13px; margin-bottom: 10px;
+}
+
+/* ── exercises ── */
+.tag {
+  display: inline-block; font-size: 11px; font-weight: 800;
+  padding: 3px 10px; border-radius: 20px;
+  text-transform: uppercase; letter-spacing: .4px; margin-bottom: 8px;
+}
+.tag.easy   { background: var(--green-light); color: var(--green); }
+.tag.medium { background: #FCF1DD; color: var(--orange); }
+.tag.hard   { background: #FBE5E4; color: var(--red); }
+.hint-row { display: flex; gap: 8px; margin: 8px 0; flex-wrap: wrap; }
+.hint-chip {
+  font-size: 12px; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 20px; padding: 5px 10px; cursor: pointer; font-weight: 700;
+}
+.hint-text {
+  display: none; font-size: 13px; background: #FFF8E8;
+  border-radius: 8px; padding: 8px 10px; margin-top: 6px;
+}
+.hint-text.shown { display: block; }
+input.blank {
+  border: none; border-bottom: 2px solid var(--teal);
+  background: var(--teal-light); font-family: 'Nunito', sans-serif;
+  font-weight: 700; font-size: 14px; padding: 4px 8px;
+  width: 130px; border-radius: 4px;
+}
+.mc-options { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.mc-opt {
+  padding: 10px 14px; border: 2px solid var(--border);
+  border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 14px;
+}
+.mc-opt.correct { background: var(--green-light); border-color: var(--green); }
+.mc-opt.wrong   { background: #FBE5E4; border-color: var(--red); }
+.ex-card { margin-bottom: 16px; }
+
+/* ── retrieval ── */
+.retrieval-q {
+  background: var(--teal-light); border-radius: 12px;
+  padding: 14px; margin-bottom: 10px;
+}
+.retrieval-q p { margin: 0 0 8px; font-weight: 700; font-size: 14px; }
+.reveal-btn {
+  background: none; border: 2px dashed var(--teal);
+  color: var(--teal); font-weight: 800; font-size: 12px;
+  padding: 6px 12px; border-radius: 8px; cursor: pointer;
+}
+.reveal-answer {
+  display: none; margin-top: 8px; font-size: 13px;
+  background: #fff; padding: 8px 10px; border-radius: 8px;
+}
+.reveal-answer.shown { display: block; }
+
+/* ── DRAG ACTIVITIES ── */
+.drag-card {
+  margin-top: 10px; background: #fff; border-radius: 12px;
+  padding: 12px; border: 1px solid var(--border);
+}
+.drag-sentence { font-size: 15px; font-weight: 700; line-height: 2.2; margin: 0 0 4px; }
+.drop-slot {
+  display: inline-block; min-width: 80px;
+  padding: 4px 10px; border-bottom: 3px dashed var(--teal);
+  border-radius: 6px; background: var(--teal-light);
+  color: var(--muted); font-weight: 700; font-size: 13px;
+  text-align: center; vertical-align: middle; transition: all .2s;
+}
+.drop-slot.over    { background: #cdeaea; border-bottom-style: solid; }
+.drop-slot.filled  { color: var(--ink); border-bottom-style: solid; }
+.drop-slot.correct { background: var(--green); color: #fff; border-bottom-color: var(--green); animation: snapPop .4s ease; }
+.drop-slot.incorrect { background: #FBE5E4; border-bottom-color: var(--red); animation: shake .3s ease; }
+.tile-bank { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; min-height: 44px; }
+.drag-tile {
+  padding: 9px 14px; background: var(--teal); color: #fff;
+  border-radius: 10px; font-weight: 800; font-size: 14px;
+  cursor: grab; user-select: none; touch-action: none;
+  box-shadow: var(--shadow); transition: transform .15s, opacity .15s;
+}
+.drag-tile.dragging { opacity: .85; transform: scale(1.08); cursor: grabbing; z-index: 300; }
+.drag-tile.placed   { background: var(--green); }
+.order-slots { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+.order-slot {
+  min-width: 62px; min-height: 40px;
+  border-bottom: 3px dashed var(--teal); border-radius: 8px;
+  background: var(--teal-light);
+  display: flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.order-slot.over   { background: #cdeaea; }
+.order-slot.filled { border-bottom-style: solid; }
+.order-slot.correct   { background: var(--green); border-bottom-color: var(--green); }
+.order-slot.incorrect { background: #FBE5E4; border-bottom-color: var(--red); animation: shake .3s ease; }
+@keyframes snapPop { 0%{transform:scale(1)} 40%{transform:scale(1.18)} 100%{transform:scale(1)} }
+@keyframes shake   { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+.confetti-piece {
+  position: fixed; top: 0; width: 8px; height: 8px;
+  border-radius: 2px; pointer-events: none; z-index: 600;
+  animation: confettiFall 1s ease-out forwards;
+}
+@keyframes confettiFall {
+  0%  { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100%{ transform: translateY(220px) rotate(540deg); opacity: 0; }
+}
+
+/* ── speaking ── */
+.speak-card { border-radius: 14px; padding: 14px; margin-bottom: 10px; color: #fff; }
+.speak-card.warmup    { background: #7AAFC2; }
+.speak-card.core      { background: var(--teal); }
+.speak-card.challenge { background: #B0586B; }
+.speak-card .lvl { font-size: 11px; font-weight: 800; text-transform: uppercase; opacity: .85; letter-spacing: .5px; }
+.speak-card p { margin: 6px 0 0; font-weight: 700; font-size: 14px; }
+.speak-card .fr { color: #fff; opacity: .85; }
+
+/* ── writing ── */
+.starter-chip {
+  display: block; width: 100%; text-align: left;
+  background: var(--teal-light); border: none; border-radius: 10px;
+  padding: 10px 12px; font-family: 'Nunito', sans-serif;
+  font-weight: 700; font-size: 13px; color: var(--teal);
+  margin-bottom: 8px; cursor: pointer;
+}
+textarea.write-box {
+  width: 100%; min-height: 120px; border: 2px solid var(--border);
+  border-radius: 12px; padding: 12px;
+  font-family: 'Nunito', sans-serif; font-size: 14px; resize: vertical;
+}
+
+/* ── listening ── */
+.yt-link-btn {
+  display: block; text-align: center;
+  background: #FF0000; color: #fff; font-weight: 800;
+  font-size: 15px; padding: 14px 20px; border-radius: 12px;
+  text-decoration: none; box-shadow: var(--shadow); margin-bottom: 10px;
+}
+
+/* ── nav buttons ── */
+.nav-buttons { display: flex; justify-content: space-between; margin-top: 18px; gap: 10px; }
+.btn { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 14px; padding: 12px 22px; border-radius: 12px; border: none; cursor: pointer; }
+.btn-primary   { background: var(--teal); color: #fff; }
+.btn-secondary { background: var(--surface); color: var(--teal); border: 2px solid var(--teal); }
+.btn:active { transform: scale(.97); }
+
+/* ── FOCUS TAB ── */
+.focus-input-area textarea {
+  width: 100%; min-height: 90px; border: 2px solid var(--border);
+  border-radius: 12px; padding: 12px;
+  font-family: 'Nunito', sans-serif; font-size: 15px; resize: vertical;
+}
+.focus-toolbar { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.focus-toolbar button {
+  flex: 1; min-width: 90px; padding: 11px;
+  border-radius: 10px; border: 2px solid var(--teal);
+  background: #fff; color: var(--teal); font-weight: 800;
+  font-family: 'Nunito', sans-serif; cursor: pointer; font-size: 13px;
+}
+.focus-toolbar button.go { background: var(--teal); color: #fff; }
+.focus-legend {
+  display: flex; gap: 14px; justify-content: center;
+  margin: 14px 0; font-size: 12px; font-weight: 700; flex-wrap: wrap;
+}
+.legend-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; }
+#focusStage {
+  display: none; background: #10222B; border-radius: 20px;
+  padding: 40px 20px; min-height: 220px;
+  align-items: center; justify-content: center;
+  text-align: center; flex-wrap: wrap; gap: 10px;
+}
+#focusStage.show { display: flex; }
+#focusStage .word { font-size: 26px; font-weight: 800; color: #E8EEF0; line-height: 1.5; }
+#focusStage .word.gw-subject  { color: #6FB3FF; }
+#focusStage .word.gw-goingto  { color: #5DDCC8; }
+#focusStage .word.gw-pastverb { color: #5DDCC8; }
+#focusStage .word.gw-pressimp { color: #F9D066; }
+#focusStage .word.gw-time     { color: #F2A65A; }
+#focusStage.wordmode .word { font-size: 54px; display: none; }
+#focusStage.wordmode .word.active { display: inline-block; }
+.focus-progress { text-align: center; font-size: 12px; color: var(--muted); font-weight: 700; margin-top: 10px; }
+.focus-hint { font-size: 12px; color: var(--muted); text-align: center; margin-top: 6px; }
+
+/* ── TIMER BUBBLE ── */
+#timerBubble {
+  position: fixed; bottom: 18px; left: 18px;
+  width: 60px; height: 60px; border-radius: 50%;
+  background: var(--teal); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 13px;
+  box-shadow: var(--shadow-lg); cursor: pointer; z-index: 200; user-select: none;
+}
+#timerBubble.danger { background: var(--red); }
+#emojiOverlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.4);
+  display: none; align-items: center; justify-content: center;
+  z-index: 500; font-size: 120px;
+}
+#emojiOverlay.show { display: flex; animation: zoomIn .5s ease-out; }
+@keyframes zoomIn { from{transform:scale(.2);opacity:0} to{transform:scale(1);opacity:1} }
+
+/* ── WHITEBOARD ── */
+#wbOverlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: none; align-items: flex-end; z-index: 400; }
+#wbOverlay.show { display: flex; }
+#wbPanel {
+  background: var(--surface); width: 100%;
+  border-radius: 24px 24px 0 0; padding: 20px 18px 28px;
+  max-height: 85vh; overflow-y: auto;
+}
+#wbPanel h3 { margin: 0 0 12px; font-size: 16px; font-weight: 800; }
+.wb-close { float: right; background: none; border: none; font-size: 20px; color: var(--muted); cursor: pointer; }
+.timer-controls { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.timer-controls button {
+  flex: 1; min-width: 60px; padding: 10px; border-radius: 10px;
+  border: 2px solid var(--border); background: var(--bg);
+  font-weight: 800; font-family: 'Nunito', sans-serif; cursor: pointer;
+}
+.stamp-row { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.stamp-btn { font-size: 20px; background: var(--bg); border: 2px solid var(--border); border-radius: 10px; padding: 8px 10px; cursor: pointer; }
+#correctionLog { background: var(--bg); border-radius: 10px; padding: 10px; min-height: 60px; font-size: 13px; margin-bottom: 10px; white-space: pre-wrap; }
+#wbNotes { width: 100%; min-height: 80px; border: 2px solid var(--border); border-radius: 10px; padding: 10px; font-family: 'Nunito', sans-serif; font-size: 13px; margin-bottom: 10px; resize: vertical; }
+.wb-actions { display: flex; gap: 8px; }
+.wb-actions button { flex: 1; padding: 10px; border-radius: 10px; border: none; font-weight: 800; font-family: 'Nunito', sans-serif; cursor: pointer; }
+.wb-copy { background: var(--teal); color: #fff; }
+.wb-clear { background: #FBE5E4; color: var(--red); }
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <h1>🌡️ The Big Heat</h1>
+  <p>Weather in English — Belgium, June 2026</p>
+</div>
+
+<div class="tabbar" id="tabbar">
+  <button class="tab-btn active" data-tab="warmup">Warm-Up</button>
+  <button class="tab-btn" data-tab="content">Content</button>
+  <button class="tab-btn" data-tab="grammar">Grammar</button>
+  <button class="tab-btn" data-tab="exercises">Exercises</button>
+  <button class="tab-btn" data-tab="listening">🎧 Listening</button>
+  <button class="tab-btn" data-tab="speaking">Writing &amp; Speaking</button>
+  <button class="tab-btn" data-tab="focus">🔍 Focus</button>
+</div>
+
+<!-- ══════════════ WARM-UP ══════════════ -->
+<div class="panel active" id="warmup">
+  <div class="card">
+    <h2>🌤️ Weather Check-In</h2>
+    <p class="fr">Réchauffement — pas de choix multiple, juste ta mémoire et tes mots !</p>
+  </div>
+
+  <div class="retrieval-q">
+    <p>1. Look outside or think about today. What is the weather like right now?</p>
+    <p class="fr">Regarde dehors. Quel temps fait-il en ce moment ?</p>
+    <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('shown')">Show example answer</button>
+    <div class="reveal-answer">e.g. "It is very hot." / "The sun is shining." / "It is 35 degrees."</div>
+  </div>
+
+  <div class="retrieval-q">
+    <p>2. How does the heat make you feel? Give me one word or sentence.</p>
+    <p class="fr">Comment la chaleur te fait-elle sentir ? Donne-moi un mot ou une phrase.</p>
+    <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('shown')">Show example answer</button>
+    <div class="reveal-answer">e.g. "I feel tired." / "I feel hot." / "I feel uncomfortable."</div>
+  </div>
+
+  <div class="retrieval-q">
+    <p>3. Predict: What is the weather going to be like tomorrow?</p>
+    <p class="fr">Prédit : Quel temps va-t-il faire demain ?</p>
+    <p style="font-size:13px;color:var(--muted);font-weight:700;margin-top:10px;">Now rebuild this sentence — drag the words into the right order 👇</p>
+    <div class="drag-card">
+      <div class="order-slots" id="slotsWU">
+        <div class="order-slot" data-index="0"></div>
+        <div class="order-slot" data-index="1"></div>
+        <div class="order-slot" data-index="2"></div>
+        <div class="order-slot" data-index="3"></div>
+        <div class="order-slot" data-index="4"></div>
+        <div class="order-slot" data-index="5"></div>
+      </div>
+      <div class="tile-bank" id="bankWU">
+        <div class="drag-tile" data-word="It" data-order="0">It</div>
+        <div class="drag-tile" data-word="is" data-order="1">is</div>
+        <div class="drag-tile" data-word="going" data-order="2">going</div>
+        <div class="drag-tile" data-word="to" data-order="3">to</div>
+        <div class="drag-tile" data-word="be" data-order="4">be</div>
+        <div class="drag-tile" data-word="hot" data-order="5">hot</div>
+      </div>
+      <button class="btn btn-secondary" style="margin-top:10px;font-size:12px;padding:8px 14px;" onclick="resetOrderActivity('slotsWU','bankWU')">↺ Reset</button>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <span></span>
+    <button class="btn btn-primary" onclick="goTab('content')">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════ CONTENT ══════════════ -->
+<div class="panel" id="content">
+  <div class="heat-banner">
+    <h2>🔥 Europe is on fire!</h2>
+    <p>Right now, Belgium and most of Europe are in the middle of a historic heatwave. This is not a normal summer — it is one of the hottest Junes ever recorded.</p>
+    <div class="heat-stat">35°C+ in Belgium today <span>Orange alert — whole country</span></div>
+  </div>
+
+  <div class="card">
+    <h3>Fast Facts</h3>
+    <div class="facts-grid">
+      <div class="fact-box"><div class="num">35°C+</div><div class="lbl">Belgium today</div></div>
+      <div class="fact-box"><div class="num">44°C</div><div class="lbl">France peak</div></div>
+      <div class="fact-box"><div class="num">38°C</div><div class="lbl">UK record June</div></div>
+      <div class="fact-box"><div class="num">26</div><div class="lbl">Countries on alert</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>What is a heat dome?</h3>
+    <p>A <b>heat dome</b> is a bubble of hot air trapped over Europe. It acts like a lid on a pot — it keeps hot air in and does not let it escape.</p>
+    <p class="fr">Un dôme de chaleur est une bulle d'air chaud piégée au-dessus de l'Europe. Il agit comme un couvercle sur une casserole.</p>
+    <p style="margin-top:10px;">The hot air comes from the <b>Sahara Desert</b> in Africa. It travels north and gets trapped by the <b>high pressure</b> system above Europe.</p>
+    <p class="fr">L'air chaud vient du Sahara en Afrique. Il voyage vers le nord et reste coincé par un système de haute pression au-dessus de l'Europe.</p>
+  </div>
+
+  <div class="card">
+    <h3>🌊 What is El Niño?</h3>
+    <p>El Niño means <b>"The Little Boy"</b> in Spanish. It is a natural climate pattern that starts in the <b>Pacific Ocean</b> — and it affects the weather all over the world, including Europe.</p>
+    <p class="fr" style="margin-top:6px;">El Niño signifie "Le Petit Garçon" en espagnol. C'est un phénomène climatique naturel qui commence dans l'océan Pacifique.</p>
+
+    <p style="margin-top:12px;font-weight:700;">Normally:</p>
+    <p>Strong <b>trade winds</b> blow warm water <b>west</b> across the Pacific, towards Asia. The eastern Pacific (near South America) stays cool.</p>
+    <p class="fr">Les vents alizés soufflent l'eau chaude vers l'ouest. Le Pacifique est frais près de l'Amérique du Sud.</p>
+
+    <p style="margin-top:10px;font-weight:700;">During El Niño:</p>
+    <p>The trade winds <b>weaken</b>. The warm water moves <b>east</b> instead. The whole Pacific gets warmer — and this pushes hot air and warm weather all the way to Europe.</p>
+    <p class="fr">Les vents alizés s'affaiblissent. L'eau chaude se déplace vers l'est. Tout le Pacifique se réchauffe — et cela pousse l'air chaud jusqu'en Europe.</p>
+
+    <div style="background:var(--orange-light);border-radius:12px;padding:12px;margin-top:12px;">
+      <b style="color:var(--orange);">🔗 El Niño + Belgium's heatwave:</b>
+      <p style="margin:6px 0 0;font-size:13px;">El Niño warms the whole planet slightly. Combined with the heat dome over Europe, it makes heatwaves like this one <b>more extreme</b> and <b>more likely</b>.</p>
+      <p class="fr" style="font-size:12px;">El Niño réchauffe légèrement toute la planète. Combiné avec le dôme de chaleur, il rend les canicules plus extrêmes.</p>
+    </div>
+
+    <div style="margin-top:14px;">
+      <a href="https://www.youtube.com/watch?v=b0TCiAQ5RNE" target="_blank" style="display:block;text-align:center;background:var(--teal);color:#fff;font-weight:800;font-size:14px;padding:12px 16px;border-radius:12px;text-decoration:none;">▶ Watch: El Niño Explained — CBC Kids News (2 min)</a>
+      <p style="font-size:12px;color:var(--muted);margin-top:6px;text-align:center;">Animated · Made for kids · Clear English</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📚 Vocabulary — tap to reveal</h3>
+    <p class="fr" style="margin-bottom:10px;">Tape une fois → traduction · Tape deux fois → vert (maîtrisé) · Tape trois fois → réinitialise</p>
+    <div class="vocab-grid" id="vocabGrid">
+      <div class="vocab-card"><span class="en">☀️ sunny</span><span class="fr-word">ensoleillé</span></div>
+      <div class="vocab-card"><span class="en">🌡️ temperature</span><span class="fr-word">la température</span></div>
+      <div class="vocab-card"><span class="en">🔥 heatwave</span><span class="fr-word">une canicule</span></div>
+      <div class="vocab-card"><span class="en">💧 humidity</span><span class="fr-word">l'humidité</span></div>
+      <div class="vocab-card"><span class="en">🌬️ breeze</span><span class="fr-word">une brise</span></div>
+      <div class="vocab-card"><span class="en">⛅ cloudy</span><span class="fr-word">nuageux</span></div>
+      <div class="vocab-card"><span class="en">🌩️ thunderstorm</span><span class="fr-word">un orage</span></div>
+      <div class="vocab-card"><span class="en">❄️ cool / chilly</span><span class="fr-word">frais / froid</span></div>
+      <div class="vocab-card"><span class="en">🌧️ shower</span><span class="fr-word">une averse</span></div>
+      <div class="vocab-card"><span class="en">🌫️ humid</span><span class="fr-word">humide</span></div>
+      <div class="vocab-card"><span class="en">🏔️ heat dome</span><span class="fr-word">un dôme de chaleur</span></div>
+      <div class="vocab-card"><span class="en">⚠️ alert</span><span class="fr-word">une alerte</span></div>
+      <div class="vocab-card"><span class="en">🌊 El Niño</span><span class="fr-word">El Niño</span></div>
+      <div class="vocab-card"><span class="en">💨 trade winds</span><span class="fr-word">les vents alizés</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Weather expressions</h3>
+    <div class="weather-row">
+      <div class="weather-chip"><span class="icon">☀️</span>It is sunny.</div>
+      <div class="weather-chip"><span class="icon">🌧️</span>It rains. / It is raining.</div>
+    </div>
+    <div class="weather-row">
+      <div class="weather-chip"><span class="icon">🌬️</span>It is windy.</div>
+      <div class="weather-chip"><span class="icon">⛅</span>It is cloudy.</div>
+    </div>
+    <div class="weather-row">
+      <div class="weather-chip"><span class="icon">🌡️</span>It is 35 degrees.</div>
+      <div class="weather-chip"><span class="icon">🔥</span>It is boiling hot!</div>
+    </div>
+    <p class="fr" style="margin-top:8px;">Il fait chaud · Il pleut · Il y a du vent · Il fait nuageux · Il fait 35 degrés · Il fait une chaleur torride</p>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('warmup')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('grammar')">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════ GRAMMAR ══════════════ -->
+<div class="panel" id="grammar">
+  <div class="card">
+    <h2>📐 Present Simple — Weather Facts</h2>
+    <p class="fr">Le présent simple pour parler de la météo</p>
+    <div class="tip-box">
+      <b>When do we use it?</b> For things that are <i>always true</i> or <i>generally true</i> — facts about weather, seasons, and habits.
+      <p class="fr" style="margin-top:6px;">Quand on l'utilise ? Pour des vérités générales — des faits sur la météo, les saisons, les habitudes.</p>
+    </div>
+    <div class="formula-box">subject + verb (base form) &nbsp;|&nbsp; He/She/It + verb + <b>-s</b></div>
+    <table class="conj">
+      <tr><th>Subject</th><th>Form</th><th>Example</th></tr>
+      <tr><td>I / You / We / They</td><td>verb</td><td>It <b>rain</b>s in Belgium a lot.</td></tr>
+      <tr><td>He / She / It</td><td>verb + <b>s</b></td><td>The sun <b>shine</b>s every day in July.</td></tr>
+    </table>
+    <p class="fr">Il pleut beaucoup en Belgique. · Le soleil brille tous les jours en juillet.</p>
+  </div>
+
+  <div class="card">
+    <h3>Special weather verbs</h3>
+    <p style="font-size:13px;">Some weather verbs use "It" as the subject — there is no real subject, "it" is just a placeholder.</p>
+    <p class="fr">Certains verbes météo utilisent "It" comme sujet — c'est un sujet vide, comme "il" dans "il pleut".</p>
+    <table class="conj" style="margin-top:10px;">
+      <tr><th>Expression</th><th>Meaning</th><th>French</th></tr>
+      <tr><td><b>It rains</b></td><td>Rain is falling</td><td>Il pleut</td></tr>
+      <tr><td><b>It snows</b></td><td>Snow is falling</td><td>Il neige</td></tr>
+      <tr><td><b>It is hot</b></td><td>The temperature is high</td><td>Il fait chaud</td></tr>
+      <tr><td><b>It is sunny</b></td><td>The sun is out</td><td>Il fait soleil</td></tr>
+      <tr><td><b>It is windy</b></td><td>There is wind</td><td>Il y a du vent</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="mistake-box">
+      <b>⚠️ Common mistakes:</b>
+      <p style="margin:8px 0 4px;">❌ "It hot." → ✅ "<b>It is</b> hot." (never forget "is"!)</p>
+      <p style="margin:4px 0 4px;">❌ "The weather are nice." → ✅ "The weather <b>is</b> nice." (weather = singular)</p>
+      <p style="margin:4px 0 0;">❌ "It rain." → ✅ "It <b>rains</b>." (add -s with "it"!)</p>
+      <p class="fr" style="margin-top:8px;">N'oublie jamais "is" · "weather" est singulier · Ajoute -s avec "it"</p>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('content')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('exercises')">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════ EXERCISES ══════════════ -->
+<div class="panel" id="exercises">
+
+  <div class="card">
+    <h2>📝 Reading — The Orange Alert</h2>
+    <p class="fr">Lecture — L'alerte orange</p>
+    <p style="line-height:1.7;margin-top:10px;">
+      Belgium <b>is</b> in a heatwave. The sun <b>shines</b> all day and the temperature <b>reaches</b> 35°C. It <b>is</b> very humid and there <b>is</b> almost no wind. People <b>drink</b> a lot of water to stay safe.
+      In France, it <b>is</b> even hotter — up to 44°C in some places. Schools <b>close</b> early and people <b>stay</b> inside. Scientists say this kind of heat <b>is going to</b> happen more often in the future.
+    </p>
+    <p class="fr" style="margin-top:8px;">La Belgique est en canicule. Le soleil brille toute la journée et la température atteint 35°C...</p>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag easy">Easy</span>
+    <p style="font-weight:700;">1. Fill in the blank: The sun _____ all day in Belgium.</p>
+    <input type="text" class="blank" placeholder="shine...">
+    <div class="hint-row">
+      <span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">💡 Grammar tip</span>
+    </div>
+    <div class="hint-text">Subject = "The sun" → it/she/he → add -s to the verb. shine → shine<b>s</b></div>
+    <div class="hint-row">
+      <span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">🇫🇷 French hint</span>
+    </div>
+    <div class="hint-text">Le soleil brille — "brille" = shines</div>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag easy">Easy</span>
+    <p style="font-weight:700;">2. Choose the correct sentence about weather:</p>
+    <div class="mc-options">
+      <div class="mc-opt" onclick="checkMC(this, false)">It hot today.</div>
+      <div class="mc-opt" onclick="checkMC(this, true)">It is hot today.</div>
+      <div class="mc-opt" onclick="checkMC(this, false)">It are hot today.</div>
+    </div>
+    <div class="hint-row">
+      <span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">🇫🇷 French hint</span>
+    </div>
+    <div class="hint-text">Il fait chaud → "It <b>is</b> hot" — ne jamais oublier "is" !</div>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag easy">Easy</span>
+    <p style="font-weight:700;">3. Fill in: In Belgium, it _____ (rain) a lot in autumn.</p>
+    <input type="text" class="blank" placeholder="rain...">
+    <div class="hint-row">
+      <span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">💡 Grammar tip</span>
+    </div>
+    <div class="hint-text">Subject = "it" → verb + -s. rain → rain<b>s</b></div>
+    <div class="hint-row">
+      <span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">🇫🇷 French hint</span>
+    </div>
+    <div class="hint-text">Il pleut beaucoup en automne en Belgique.</div>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag medium">Medium</span>
+    <p style="font-weight:700;">4. Choose: The weather _____ really unusual this summer.</p>
+    <div class="mc-options">
+      <div class="mc-opt" onclick="checkMC(this, false)">are</div>
+      <div class="mc-opt" onclick="checkMC(this, true)">is</div>
+      <div class="mc-opt" onclick="checkMC(this, false)">am</div>
+    </div>
+    <div class="hint-row">
+      <span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">🇫🇷 French hint</span>
+    </div>
+    <div class="hint-text">"weather" = singulier en anglais → "is" (comme "Il fait..." en français)</div>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag medium">Medium</span>
+    <p style="font-weight:700;">5. Fill in the blanks: In summer, the temperature _____ (rise) and people _____ (go) to the beach.</p>
+    <input type="text" class="blank" placeholder="rise..."> &nbsp;
+    <input type="text" class="blank" placeholder="go...">
+    <div class="hint-row">
+      <span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">💡 Grammar tip</span>
+    </div>
+    <div class="hint-text">Both subjects need -s: "temperature" → rise<b>s</b>, "people" → go (wait — people is plural! no -s needed)</div>
+    <div class="hint-row">
+      <span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">🇫🇷 French hint</span>
+    </div>
+    <div class="hint-text">En été, la température monte et les gens vont à la plage.</div>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag hard">Hard</span>
+    <p style="font-weight:700;">6. Present Simple or Going to? Choose and explain why.</p>
+    <p style="font-size:13px;color:var(--muted);">"It _____ (be) very hot in Belgium every summer." vs "It _____ (be) 40°C tomorrow."</p>
+    <div class="mc-options">
+      <div class="mc-opt" onclick="checkMC(this, true)">First blank = is (general fact) · Second blank = is going to be (prediction)</div>
+      <div class="mc-opt" onclick="checkMC(this, false)">Both = is going to be (both are predictions)</div>
+      <div class="mc-opt" onclick="checkMC(this, false)">Both = is (both are facts)</div>
+    </div>
+    <div class="hint-row">
+      <span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">💡 Grammar tip</span>
+    </div>
+    <div class="hint-text">Present Simple = general truth (every summer = always true). Going to = specific future prediction (tomorrow = a plan/forecast).</div>
+    <div class="hint-row">
+      <span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">🇫🇷 French hint</span>
+    </div>
+    <div class="hint-text">Fait général → présent simple. Prédiction spécifique → "going to".</div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('grammar')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('listening')">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════ LISTENING ══════════════ -->
+<div class="panel" id="listening">
+  <div class="card">
+    <h2>🎧 Why is it so hot?</h2>
+    <p class="fr">Pourquoi fait-il si chaud ? — BBC News</p>
+    <p style="margin-top:8px;">BBC News explains the European heatwave. The language is challenging — focus on key words, not every word.</p>
+    <p class="fr">La langue est difficile — concentre-toi sur les mots-clés, pas sur chaque mot.</p>
+  </div>
+
+  <div class="card">
+    <h3>📺 Watch the video</h3>
+    <a href="https://www.youtube.com/watch?v=29R6URF6Zt8" target="_blank" class="yt-link-btn">▶ BBC News — Why is Europe so hot? (YouTube)</a>
+    <div style="background:var(--orange-light);border-radius:12px;padding:12px;margin-top:4px;">
+      <b style="color:var(--orange);font-size:13px;">🎓 Teacher note — two ways to use this clip:</b>
+      <p style="font-size:13px;margin:6px 0 4px;"><b>Option A (harder):</b> Watch once, then answer the questions below from memory.</p>
+      <p style="font-size:13px;margin:4px 0 4px;"><b>Option B (easier):</b> Watch with the sound on, but only listen for the bold words in the fallback script — check them off as you hear them.</p>
+      <p style="font-size:13px;margin:4px 0 0;">If the video doesn't load → use the script below as a teacher read-aloud.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📝 Teacher-Read Fallback Script</h3>
+    <p class="fr" style="margin-bottom:10px;">Lis à voix haute — écoute et retiens les mots en gras</p>
+    <p style="line-height:1.9;">
+      "Much of <b>western Europe</b> is in the grip of an extreme <b>heatwave</b>. In Belgium, the temperature <b>reaches</b> over 35 degrees Celsius today. The country <b>is</b> on an <b>orange alert</b>.
+      The heat <b>comes</b> from a <b>heat dome</b> — a bubble of hot, dry <b>Saharan air</b> that <b>sits</b> over Europe like a lid. It <b>does not</b> move, and temperatures <b>rise</b> higher every day.
+      In France, it <b>is</b> even worse — <b>schools close</b>, <b>trains stop</b>, and the <b>Eiffel Tower</b> restricts its hours. Scientists say this kind of heat <b>is going to</b> happen more often because of <b>climate change</b>."
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🧠 Listen &amp; Respond</h3>
+    <p class="fr">Écoute et réponds</p>
+    <div class="retrieval-q">
+      <p>1. What country is the video about? Where else is affected?</p>
+      <p class="fr">De quel pays parle la vidéo ? Quels autres pays sont touchés ?</p>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('shown')">Check</button>
+      <div class="reveal-answer">Belgium, France, UK, Spain, Italy — much of western Europe.</div>
+    </div>
+    <div class="retrieval-q">
+      <p>2. What is a heat dome? Explain it in your own words.</p>
+      <p class="fr">Qu'est-ce qu'un dôme de chaleur ? Explique avec tes propres mots.</p>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('shown')">Check</button>
+      <div class="reveal-answer">A heat dome is a bubble of hot air trapped over Europe. It acts like a lid — hot air comes in but can't escape, so temperatures keep rising.</div>
+    </div>
+    <div class="retrieval-q">
+      <p>3. Find two Present Simple verbs in the script. Why are they Present Simple and not Going to?</p>
+      <p class="fr">Trouve deux verbes au présent simple dans le script. Pourquoi ce n'est pas "going to" ?</p>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('shown')">Check</button>
+      <div class="reveal-answer">e.g. "reaches", "comes", "sits", "rises" — Present Simple because these are general facts about how heatwaves work, not specific predictions.</div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('exercises')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('speaking')">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════ WRITING & SPEAKING ══════════════ -->
+<div class="panel" id="speaking">
+  <div class="card">
+    <h2>✍️ Writing — Weather Reporter</h2>
+    <p class="fr">Rédige un bulletin météo — choisis un début de phrase</p>
+    <button class="starter-chip" onclick="setStarter('Today in Belgium, it is ')">Today in Belgium, it is...</button>
+    <button class="starter-chip" onclick="setStarter('The temperature reaches ')">The temperature reaches...</button>
+    <button class="starter-chip" onclick="setStarter('Tomorrow, it is going to be ')">Tomorrow, it is going to be...</button>
+    <button class="starter-chip" onclick="setStarter('In winter, Belgium is usually ')">In winter, Belgium is usually...</button>
+    <textarea class="write-box" id="writeBox" placeholder="Write your weather report here..."></textarea>
+  </div>
+
+  <div class="card">
+    <h2>🎤 Speaking</h2>
+    <p class="fr">À l'oral — pas de correction pendant la tâche, on note les erreurs pour la fin</p>
+    <div class="speak-card warmup">
+      <span class="lvl">Warm-up</span>
+      <p>Describe the weather right now in 3 sentences. Use Present Simple.</p>
+      <p class="fr">Décris le temps qu'il fait maintenant en 3 phrases. Utilise le présent simple.</p>
+    </div>
+    <div class="speak-card core">
+      <span class="lvl">Core</span>
+      <p>You are a TV weather reporter. Tell me about the weather in Belgium today AND what it is going to be like this week.</p>
+      <p class="fr">Tu es présentateur météo. Parle du temps en Belgique aujourd'hui ET de ce qu'il va faire cette semaine.</p>
+    </div>
+    <div class="speak-card challenge">
+      <span class="lvl">Challenge</span>
+      <p>Why do you think Europe gets heatwaves? Use Present Simple for your explanation. What is going to happen to the weather in the future?</p>
+      <p class="fr">Pourquoi penses-tu que l'Europe subit des canicules ? Utilise le présent simple. Qu'est-ce qui va arriver à la météo dans le futur ?</p>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('listening')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('focus')">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════ FOCUS ══════════════ -->
+<div class="panel" id="focus">
+  <div class="card">
+    <h2>🔍 Focus — Read Aloud</h2>
+    <p class="fr">Pour le tuteur : tape une phrase — la structure s'illumine</p>
+    <div class="focus-input-area">
+      <textarea id="focusInput" placeholder="Type a sentence here... e.g. The sun shines every day in July."></textarea>
+    </div>
+    <div class="focus-toolbar">
+      <button class="go" onclick="renderFocusSentence()">Show sentence</button>
+      <button onclick="renderFocusWords()">Word by word</button>
+      <button onclick="clearFocus()">Clear</button>
+    </div>
+    <div class="focus-legend">
+      <span><span class="legend-dot" style="background:#6FB3FF"></span>Subject</span>
+      <span><span class="legend-dot" style="background:#F9D066"></span>Pres. Simple verb</span>
+      <span><span class="legend-dot" style="background:#5DDCC8"></span>Going to / Past verb</span>
+      <span><span class="legend-dot" style="background:#F2A65A"></span>Time / Place</span>
+    </div>
+    <div id="focusStage"></div>
+    <div class="focus-progress" id="focusProgress"></div>
+    <div class="focus-hint" id="focusHintText"></div>
+  </div>
+</div>
+
+<!-- ── TIMER BUBBLE ── -->
+<div id="timerBubble" onclick="openWb()">50:00</div>
+<div id="emojiOverlay" onclick="this.classList.remove('show')"></div>
+
+<!-- ── WHITEBOARD ── -->
+<div id="wbOverlay" onclick="if(event.target===this)closeWb()">
+  <div id="wbPanel">
+    <button class="wb-close" onclick="closeWb()">✕</button>
+    <h3>⏱ Whiteboard</h3>
+    <div class="timer-controls">
+      <button onclick="setTimerMin(5)">5m</button>
+      <button onclick="setTimerMin(10)">10m</button>
+      <button onclick="setTimerMin(15)">15m</button>
+      <button onclick="toggleRun()" id="runBtn">▶ Start</button>
+      <button onclick="resetTimer()">↺ Reset</button>
+    </div>
+    <h3 style="font-size:14px;">Correction Stamps</h3>
+    <div class="stamp-row">
+      <button class="stamp-btn" onclick="addStamp('✅')">✅</button>
+      <button class="stamp-btn" onclick="addStamp('⭐')">⭐</button>
+      <button class="stamp-btn" onclick="addStamp('🔁 Try again')">🔁</button>
+      <button class="stamp-btn" onclick="addStamp('🗣 Pronunciation')">🗣</button>
+      <button class="stamp-btn" onclick="addStamp('📐 Grammar')">📐</button>
+    </div>
+    <div id="correctionLog"></div>
+    <h3 style="font-size:14px;">Notes</h3>
+    <textarea id="wbNotes" placeholder="Notes for this lesson..."></textarea>
+    <div class="wb-actions">
+      <button class="wb-copy" onclick="copyWb()">Copy</button>
+      <button class="wb-clear" onclick="clearWb()">Clear</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── TABS ────────────────────────────────────────────────────────────────────
+function goTab(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector(`.tab-btn[data-tab="${id}"]`).classList.add('active');
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => goTab(btn.dataset.tab));
+});
+
+// ── VOCAB CARDS ─────────────────────────────────────────────────────────────
+document.querySelectorAll('.vocab-card').forEach(card => {
+  let state = 0;
+  card.addEventListener('click', () => {
+    state = (state + 1) % 3;
+    if (state === 1) { card.classList.add('revealed'); card.classList.remove('mastered'); }
+    else if (state === 2) { card.classList.add('mastered'); }
+    else { card.classList.remove('revealed', 'mastered'); }
+  });
+});
+
+// ── MC ───────────────────────────────────────────────────────────────────────
+function checkMC(el, correct) {
+  el.parentElement.querySelectorAll('.mc-opt').forEach(s => s.classList.remove('correct', 'wrong'));
+  el.classList.add(correct ? 'correct' : 'wrong');
+}
+
+// ── CONFETTI ─────────────────────────────────────────────────────────────────
+function fireConfetti(x, y) {
+  const colors = ['#2A8A8A', '#E08A3C', '#3E6FB0', '#3FA66A', '#D9534F', '#F9D066'];
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.left = (x + (Math.random() * 60 - 30)) + 'px';
+    p.style.top = y + 'px';
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.animationDelay = (Math.random() * 0.15) + 's';
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 1200);
+  }
+}
+
+// ── DRAG ENGINE (Pointer Events) ─────────────────────────────────────────────
+let dragState = null;
+
+function initDragTile(tile) {
+  tile.addEventListener('pointerdown', e => {
+    if (tile.classList.contains('placed')) return;
+    e.preventDefault();
+    const rect = tile.getBoundingClientRect();
+    dragState = { tile, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top, originParent: tile.parentElement, originNext: tile.nextSibling };
+    tile.classList.add('dragging');
+    tile.style.position = 'fixed';
+    tile.style.left = rect.left + 'px';
+    tile.style.top = rect.top + 'px';
+    tile.style.width = rect.width + 'px';
+    document.body.appendChild(tile);
+    tile.setPointerCapture(e.pointerId);
+  });
+}
+
+document.addEventListener('pointermove', e => {
+  if (!dragState) return;
+  dragState.tile.style.left = (e.clientX - dragState.offsetX) + 'px';
+  dragState.tile.style.top  = (e.clientY - dragState.offsetY) + 'px';
+  document.querySelectorAll('.drop-slot, .order-slot').forEach(s => s.classList.remove('over'));
+  dragState.tile.style.visibility = 'hidden';
+  const el = document.elementFromPoint(e.clientX, e.clientY);
+  dragState.tile.style.visibility = 'visible';
+  const t = el && el.closest('.drop-slot, .order-slot');
+  if (t) t.classList.add('over');
+});
+
+document.addEventListener('pointerup', e => {
+  if (!dragState) return;
+  const tile = dragState.tile;
+  tile.classList.remove('dragging');
+  tile.style.position = tile.style.left = tile.style.top = tile.style.width = '';
+  tile.style.visibility = 'hidden';
+  document.querySelectorAll('.drop-slot, .order-slot').forEach(s => s.classList.remove('over'));
+  const el = document.elementFromPoint(e.clientX, e.clientY);
+  tile.style.visibility = 'visible';
+  const slot = el && el.closest('.drop-slot, .order-slot');
+  if (slot && slot.classList.contains('order-slot')) {
+    handleOrderSlotDrop(tile, slot);
+  } else {
+    if (dragState.originNext) dragState.originParent.insertBefore(tile, dragState.originNext);
+    else dragState.originParent.appendChild(tile);
+  }
+  dragState = null;
+});
+
+function handleOrderSlotDrop(tile, slot) {
+  if (slot.classList.contains('filled')) {
+    if (dragState.originNext) dragState.originParent.insertBefore(tile, dragState.originNext);
+    else dragState.originParent.appendChild(tile);
+    return;
+  }
+  slot.appendChild(tile);
+  slot.classList.add('filled');
+  tile.style.position = tile.style.left = tile.style.top = tile.style.width = '';
+  tile.classList.add('placed');
+  checkOrderComplete('slotsWU');
+}
+
+function checkOrderComplete(slotsId) {
+  const slots = Array.from(document.querySelectorAll(`#${slotsId} .order-slot`));
+  if (slots.some(s => !s.classList.contains('filled'))) return;
+  const correct = slots.every((s, i) => {
+    const t = s.querySelector('.drag-tile');
+    return t && parseInt(t.dataset.order, 10) === i;
+  });
+  if (correct) {
+    slots.forEach(s => { s.classList.add('correct'); s.querySelector('.drag-tile').classList.add('placed'); });
+    const rect = document.getElementById(slotsId).getBoundingClientRect();
+    fireConfetti(rect.left + rect.width / 2, rect.top);
+  } else {
+    slots.forEach(s => s.classList.add('incorrect'));
+    setTimeout(() => resetOrderActivity(slotsId, 'bank' + slotsId.replace('slots', '')), 800);
+  }
+}
+
+function resetOrderActivity(slotsId, bankId) {
+  const sc = document.getElementById(slotsId);
+  const bank = document.getElementById(bankId);
+  sc.querySelectorAll('.order-slot').forEach(s => {
+    s.classList.remove('filled', 'correct', 'incorrect', 'over');
+    const t = s.querySelector('.drag-tile');
+    if (t) { t.classList.remove('placed'); bank.appendChild(t); }
+  });
+  shuffleBank(bankId);
+}
+
+function shuffleBank(bankId) {
+  const bank = document.getElementById(bankId);
+  if (!bank) return;
+  let tiles = Array.from(bank.children).filter(el => el.classList.contains('drag-tile'));
+  let sorted = true, attempts = 0;
+  while (sorted && attempts < 10) {
+    for (let i = tiles.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
+    }
+    sorted = tiles.every((t, i) => parseInt(t.dataset.order, 10) === i);
+    attempts++;
+  }
+  tiles.forEach(t => bank.appendChild(t));
+}
+
+document.querySelectorAll('.drag-tile').forEach(initDragTile);
+shuffleBank('bankWU');
+
+// ── WRITING STARTERS ─────────────────────────────────────────────────────────
+function setStarter(text) {
+  const box = document.getElementById('writeBox');
+  box.value = text; box.focus();
+}
+
+// ── TIMER ────────────────────────────────────────────────────────────────────
+let totalSeconds = 50 * 60, timerInterval = null, isRunning = false;
+function updateTimerDisplay() {
+  const m = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+  const s = (totalSeconds % 60).toString().padStart(2, '0');
+  const b = document.getElementById('timerBubble');
+  b.textContent = `${m}:${s}`;
+  b.classList.toggle('danger', isRunning && totalSeconds <= 30);
+}
+function toggleRun() {
+  isRunning = !isRunning;
+  document.getElementById('runBtn').textContent = isRunning ? '⏸ Pause' : '▶ Start';
+  if (isRunning) {
+    timerInterval = setInterval(() => {
+      totalSeconds--;
+      updateTimerDisplay();
+      if (totalSeconds <= 0) { clearInterval(timerInterval); isRunning = false; document.getElementById('runBtn').textContent = '▶ Start'; fireEmoji(); }
+    }, 1000);
+  } else { clearInterval(timerInterval); }
+}
+function setTimerMin(min) { totalSeconds = min * 60; updateTimerDisplay(); }
+function resetTimer() { clearInterval(timerInterval); isRunning = false; document.getElementById('runBtn').textContent = '▶ Start'; totalSeconds = 50 * 60; updateTimerDisplay(); }
+const faces = ['😀','😎','🤩','😜','🥳','😯','🤓','😼','🙃','😺'];
+function fireEmoji() {
+  const o = document.getElementById('emojiOverlay');
+  o.textContent = faces[Math.floor(Math.random() * faces.length)];
+  o.classList.add('show');
+}
+updateTimerDisplay();
+
+// ── WHITEBOARD ───────────────────────────────────────────────────────────────
+function openWb()  { document.getElementById('wbOverlay').classList.add('show'); }
+function closeWb() { document.getElementById('wbOverlay').classList.remove('show'); }
+function addStamp(label) {
+  const log = document.getElementById('correctionLog');
+  log.textContent += (log.textContent ? '\n' : '') + label;
+}
+function copyWb() {
+  const text = document.getElementById('correctionLog').textContent + '\n\n' + document.getElementById('wbNotes').value;
+  navigator.clipboard.writeText(text).catch(() => {});
+}
+function clearWb() { document.getElementById('correctionLog').textContent = ''; document.getElementById('wbNotes').value = ''; }
+
+// ── FOCUS TAB ────────────────────────────────────────────────────────────────
+const IRREGULAR_PAST_LIST = ['was','were','went','ate','drank','saw','came','won','gave','made','took','ran','knew','got','fell','chose','found','thought','rose','grew','spread','built','lost','began','drew','cost','became','hit','shot'];
+
+// Present Simple weather/general verbs (3rd person -s forms and base forms)
+const PRES_SIMPLE_VERBS = ['is','are','am','shines','shine','rains','rain','reaches','reach','rises','rise','stays','stay','closes','close','comes','come','sits','sit','acts','act','gets','get','heats','heat','feels','feel','causes','cause','brings','bring','traps','trap','moves','move','blows','blow','increases','increase','happens','happen','means','mean'];
+
+const SUBJECTS_LIST = ['i','you','he','she','it','we','they','belgium','europe','france','the sun','the temperature','the weather','the heat','the wind','people','scientists','the country'];
+
+const PHRASE_PATTERNS = [
+  { re: /\b(am|is|are)\s+not\s+going\s+to\s+\w+/gi, cls: 'gw-goingto' },
+  { re: /\b(am|is|are)\s+going\s+to\s+\w+/gi,       cls: 'gw-goingto' },
+  { re: /\b(this\s+weekend|this\s+year|this\s+week|next\s+year|next\s+week|next\s+month|last\s+year|last\s+week|last\s+month|in\s+2026|right\s+now|every\s+summer|every\s+day|every\s+year|in\s+winter|in\s+summer|in\s+autumn|in\s+spring|in\s+july|in\s+june|in\s+belgium)\b/gi, cls: 'gw-time' },
+  { re: /\b(today|tomorrow|yesterday|soon|later|now|recently|usually|always|often|sometimes|never|every|generally)\b/gi, cls: 'gw-time' },
+  { re: new RegExp('\\b(' + IRREGULAR_PAST_LIST.join('|') + ')\\b', 'gi'), cls: 'gw-pastverb' },
+  { re: /\b\w{4,}ed\b/gi, cls: 'gw-pastverb' },
+  { re: new RegExp('\\b(' + PRES_SIMPLE_VERBS.join('|') + ')\\b', 'gi'), cls: 'gw-pressimp' },
+  { re: /\b(I|you|he|she|it|we|they|belgium|europe|france|the\s+sun|the\s+temperature|the\s+weather|the\s+heat|people|scientists)\b/gi, cls: 'gw-subject' },
+];
+
+function buildSegments(text) {
+  const claimed = new Array(text.length).fill(false);
+  const matches = [];
+  PHRASE_PATTERNS.forEach(p => {
+    const re = new RegExp(p.re.source, p.re.flags.replace(/g/g, '') + 'g');
+    let m;
+    while ((m = re.exec(text)) !== null) {
+      matches.push({ start: m.index, end: m.index + m[0].length, cls: p.cls });
+      if (m[0].length === 0) re.lastIndex++;
+    }
+  });
+  matches.sort((a, b) => a.start - b.start || (b.end - b.start) - (a.end - a.start));
+  const accepted = [];
+  for (const m of matches) {
+    let overlap = false;
+    for (let i = m.start; i < m.end; i++) { if (claimed[i]) { overlap = true; break; } }
+    if (overlap) continue;
+    for (let i = m.start; i < m.end; i++) claimed[i] = true;
+    accepted.push(m);
+  }
+  accepted.sort((a, b) => a.start - b.start);
+  const out = [];
+  let cursor = 0;
+  accepted.forEach(m => {
+    if (m.start > cursor) out.push({ text: text.slice(cursor, m.start), cls: '' });
+    out.push({ text: text.slice(m.start, m.end), cls: m.cls });
+    cursor = m.end;
+  });
+  if (cursor < text.length) out.push({ text: text.slice(cursor), cls: '' });
+  return out;
+}
+
+function escapeHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function buildSentenceHtml(text) {
+  return buildSegments(text).map(seg => {
+    if (!seg.text) return '';
+    const safe = escapeHtml(seg.text);
+    return seg.cls ? `<span class="word ${seg.cls}">${safe}</span>` : `<span class="word">${safe}</span>`;
+  }).join('');
+}
+
+function buildWordTokens(text) {
+  const tokens = [];
+  buildSegments(text).forEach(seg => {
+    if (!seg.text) return;
+    if (seg.cls) { tokens.push({ text: seg.text.trim(), cls: seg.cls }); }
+    else { seg.text.split(/\s+/).filter(w => w.length > 0).forEach(w => tokens.push({ text: w, cls: '' })); }
+  });
+  return tokens;
+}
+
+let focusTokens = [], focusIndex = 0;
+
+function renderFocusSentence() {
+  const text = document.getElementById('focusInput').value;
+  if (!text.trim()) return;
+  const stage = document.getElementById('focusStage');
+  stage.classList.remove('wordmode');
+  stage.classList.add('show');
+  stage.innerHTML = buildSentenceHtml(text);
+  document.getElementById('focusProgress').textContent = '';
+  document.getElementById('focusHintText').textContent = '';
+}
+
+function renderFocusWords() {
+  const text = document.getElementById('focusInput').value;
+  if (!text.trim()) return;
+  const stage = document.getElementById('focusStage');
+  stage.classList.add('show', 'wordmode');
+  const tokens = buildWordTokens(text);
+  stage.innerHTML = tokens.map(t => `<span class="word ${t.cls}">${escapeHtml(t.text)}</span>`).join(' ');
+  focusTokens = Array.from(stage.querySelectorAll('.word'));
+  focusIndex = 0;
+  focusTokens.forEach(w => w.classList.remove('active'));
+  if (focusTokens.length) focusTokens[0].classList.add('active');
+  updateFocusProgress();
+  document.getElementById('focusHintText').textContent = 'Tap the box or press → to advance';
+  stage.onclick = advanceFocusWord;
+}
+
+function advanceFocusWord() {
+  if (!focusTokens.length) return;
+  focusTokens[focusIndex].classList.remove('active');
+  focusIndex = (focusIndex + 1) % focusTokens.length;
+  focusTokens[focusIndex].classList.add('active');
+  updateFocusProgress();
+}
+function rewindFocusWord() {
+  if (!focusTokens.length) return;
+  focusTokens[focusIndex].classList.remove('active');
+  focusIndex = (focusIndex - 1 + focusTokens.length) % focusTokens.length;
+  focusTokens[focusIndex].classList.add('active');
+  updateFocusProgress();
+}
+function updateFocusProgress() {
+  document.getElementById('focusProgress').textContent = focusTokens.length ? `${focusIndex + 1} / ${focusTokens.length}` : '';
+}
+function clearFocus() {
+  document.getElementById('focusInput').value = '';
+  const stage = document.getElementById('focusStage');
+  stage.classList.remove('show', 'wordmode');
+  stage.innerHTML = '';
+  focusTokens = []; focusIndex = 0;
+  document.getElementById('focusProgress').textContent = '';
+  document.getElementById('focusHintText').textContent = '';
+}
+document.addEventListener('keydown', e => {
+  if (document.getElementById('focus').classList.contains('active')) {
+    if (e.key === 'ArrowRight') advanceFocusWord();
+    if (e.key === 'ArrowLeft')  rewindFocusWord();
+  }
+});
+</script>
+</body>
+</html>
