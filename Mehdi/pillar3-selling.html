@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mehdi – Pillar 3: You Are the Coach</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ink:         #0e1520;
+    --deep:        #1c1a2e;
+    --deep-mid:    #2e2a4a;
+    --purple:      #5a3fa8;
+    --purple-light:#ede8ff;
+    --purple-pale: #f6f4ff;
+    --gold:        #c9963a;
+    --gold-label:  #7a5410;
+    --gold-light:  #fdf3dc;
+    --green:       #2a7c5a;
+    --green-light: #d6efe1;
+    --teal:        #1a7a6e;
+    --teal-light:  #d4f0ec;
+    --teal-pale:   #edf8f7;
+    --sand:        #f5f4f0;
+    --cream:       #fefcf8;
+    --muted:       #445060;
+    --muted2:      #7a8898;
+    --border:      #ddd8ee;
+    --red-light:   #fde8e8;
+    --blue:        #2255cc;
+    --blue-light:  #ddeaff;
+    --orange:      #b85a00;
+    --orange-light:#fff0de;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(--ink); min-height: 100vh; }
+
+  /* ── HEADER ── */
+  .header { background: var(--deep); padding: 30px 28px 26px; position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: -50px; right: -50px; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(90,63,168,.4) 0%, transparent 70%); }
+  .header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--purple), var(--gold)); }
+  .header-series { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 5vw, 38px); font-weight: 700; color: #f0eeff; line-height: 1.1; }
+  .header-sub { margin-top: 8px; font-size: 13px; color: rgba(240,238,255,.5); }
+  .pillar-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); border-radius: 20px; padding: 5px 14px; margin-top: 12px; font-size: 12px; color: rgba(240,238,255,.8); font-weight: 500; }
+  .pdots { display: flex; gap: 5px; }
+  .pdot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.2); }
+  .pdot.done { background: var(--green); }
+  .pdot.active { background: var(--gold); }
+
+  /* ── PROGRESS ── */
+  .progress-bar { height: 3px; background: #100e20; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--purple), var(--gold)); transition: width .5s ease; }
+
+  /* ── NAV ── */
+  .nav { background: var(--cream); border-bottom: 1px solid var(--border); display: flex; gap: 5px; padding: 12px 18px; overflow-x: auto; scrollbar-width: none; position: sticky; top: 0; z-index: 40; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn { padding: 6px 14px; border-radius: 18px; border: 1.5px solid var(--border); background: transparent; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; white-space: nowrap; transition: all .18s; }
+  .nav-btn.active { background: var(--deep); border-color: var(--deep); color: var(--gold); }
+  .nav-btn.done   { background: var(--green-light); border-color: var(--green); color: var(--green); }
+
+  /* ── MAIN ── */
+  .main { padding: 22px 18px 60px; max-width: 740px; margin: 0 auto; }
+
+  /* ── PANELS ── */
+  .panel { display: none; animation: fadeUp .35s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ── LABELS ── */
+  .slabel { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 16px; margin-bottom: 10px; }
+  .sl-warm  { background: var(--gold-light);   color: var(--gold-label); }
+  .sl-read  { background: var(--purple-light); color: var(--purple); }
+  .sl-coach { background: var(--teal-light);   color: var(--teal); }
+  .sl-ref   { background: var(--orange-light); color: var(--orange); }
+  .sl-cool  { background: var(--green-light);  color: var(--green); }
+
+  .stitle { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--ink); line-height: 1.2; margin-bottom: 6px; }
+  .sdesc  { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
+
+  /* ── CARDS ── */
+  .card { background: var(--cream); border: 1px solid var(--border); border-radius: 14px; padding: 22px; margin-bottom: 16px; }
+  .clabel { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-label); margin-bottom: 14px; }
+
+  /* ── RECALL ── */
+  .recall { background: white; border: 1.5px solid var(--border); border-radius: 11px; padding: 14px 16px; margin-bottom: 10px; display: flex; gap: 12px; align-items: flex-start; }
+  .rnum { background: var(--deep); color: var(--gold); width: 28px; height: 28px; border-radius: 50%; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .rtext { font-size: 14px; line-height: 1.55; color: var(--ink); }
+  .rhint { font-size: 12px; color: var(--muted2); font-style: italic; margin-top: 4px; }
+
+  /* ── READING ── */
+  .passage { background: white; border-left: 4px solid var(--purple); border-radius: 0 12px 12px 0; padding: 20px 22px; margin: 14px 0; font-size: 15px; line-height: 2.0; color: var(--ink); }
+  .hl { background: var(--purple-light); padding: 1px 5px; border-radius: 4px; font-weight: 600; cursor: pointer; color: var(--purple); position: relative; display: inline-block; transition: background .18s; }
+  .hl:hover, .hl.open { background: var(--purple); color: white; }
+  .hltip { display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: var(--ink); color: #f0eeff; font-size: 12px; padding: 7px 12px; border-radius: 8px; white-space: nowrap; z-index: 20; pointer-events: none; min-width: 210px; text-align: center; line-height: 1.45; }
+  .hltip::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: var(--ink); }
+  .hl.open .hltip { display: block; }
+
+  /* ── COACHING SESSION CARDS ── */
+  .coaching-card {
+    border-radius: 14px; overflow: hidden; margin-bottom: 16px;
+    border: 1px solid var(--border);
+  }
+  .coaching-header {
+    padding: 14px 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .ch-mehdi { background: #f0eeff; border-bottom: 1px solid #d0c8f8; }
+  .ch-durim { background: var(--teal-pale); border-bottom: 1px solid #b8dcd8; }
+  .ch-notes { background: var(--gold-light); border-bottom: 1px solid #e8d898; }
+  .role-badge { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; padding: 3px 10px; border-radius: 10px; flex-shrink: 0; }
+  .rb-mehdi { background: var(--purple); color: white; }
+  .rb-durim { background: var(--teal); color: white; }
+  .rb-notes { background: var(--gold); color: white; }
+  .role-label { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .coaching-body { background: var(--cream); padding: 16px 20px; }
+
+  /* Question list for Mehdi */
+  .q-list { list-style: none; }
+  .q-list li {
+    padding: 10px 14px; background: white;
+    border: 1.5px solid var(--border); border-radius: 10px;
+    font-size: 14px; color: var(--ink); margin-bottom: 8px;
+    display: flex; gap: 12px; align-items: flex-start;
+    line-height: 1.5;
+  }
+  .q-list li .q-mark { color: var(--purple); font-weight: 800; flex-shrink: 0; font-size: 16px; margin-top: -1px; }
+  .q-list li .q-hint { font-size: 11px; color: var(--muted2); font-style: italic; display: block; margin-top: 3px; }
+
+  /* Response prompts for Durim */
+  .durim-prompt {
+    background: var(--teal-pale); border: 1.5px solid #b8dcd8;
+    border-radius: 10px; padding: 12px 16px; margin-bottom: 10px;
+  }
+  .dp-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--teal); margin-bottom: 6px; }
+  .dp-text { font-size: 14px; color: var(--ink); line-height: 1.6; font-style: italic; }
+
+  /* Coaching notes area */
+  .ainput { width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 9px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: white; resize: vertical; min-height: 52px; transition: border-color .18s; }
+  .ainput:focus { outline: none; border-color: var(--purple); }
+
+  /* ── REFORMULATION BOX ── */
+  .reform-box { background: var(--deep); border-radius: 14px; padding: 22px; margin-bottom: 16px; }
+  .reform-box .clabel { color: rgba(255,215,100,.8); }
+  .reform-step { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .reform-step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .step-num { background: var(--gold); color: var(--deep); width: 28px; height: 28px; border-radius: 50%; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .step-text { font-size: 14px; color: #d0c8f0; line-height: 1.65; }
+  .step-text strong { color: #f0eeff; }
+  .step-text em { color: var(--gold); font-style: normal; font-weight: 600; }
+
+  /* ── PHRASE CHIPS ── */
+  .chipwrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .chip { padding: 6px 14px; border: 1.5px solid var(--border); border-radius: 18px; font-size: 13px; color: var(--ink); cursor: pointer; transition: all .18s; background: white; }
+  .chip:hover { background: var(--deep); color: var(--gold); border-color: var(--deep); }
+  .chip.used  { background: var(--purple); color: white; border-color: var(--purple); }
+  .tap-hint { font-size: 11px; color: var(--muted2); text-align: center; margin-top: 10px; font-style: italic; }
+
+  /* ── NOTICES ── */
+  .notice { border-radius: 10px; padding: 12px 16px; font-size: 13px; line-height: 1.6; margin-top: 14px; }
+  .n-purple { background: var(--purple-light); color: var(--purple); }
+  .n-gold   { background: var(--gold-light);   color: var(--gold-label); }
+  .n-green  { background: var(--green-light);  color: var(--green); }
+  .n-teal   { background: var(--teal-light);   color: var(--teal); }
+  .n-orange { background: var(--orange-light); color: var(--orange); }
+
+  /* ── REVIEW BOX ── */
+  .rbox { background: var(--deep); border-radius: 14px; padding: 22px; margin-bottom: 16px; }
+  .rbox .clabel { color: rgba(255,215,100,.8); }
+  .rlist { list-style: none; margin-top: 8px; }
+  .rlist li { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.08); font-size: 14px; color: #c8c0e8; display: flex; gap: 10px; align-items: flex-start; line-height: 1.5; }
+  .rlist li:last-child { border-bottom: none; }
+  .rlist li::before { content: '→'; color: var(--gold); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── BUTTONS ── */
+  .btn { padding: 12px 26px; border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .18s; }
+  .btn-p { background: var(--deep); color: var(--gold); }
+  .btn-p:hover { background: var(--deep-mid); transform: translateY(-1px); }
+  .brow { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  .divider { height: 1px; background: var(--border); margin: 18px 0; }
+
+  @media (max-width: 520px) {
+    .main { padding: 16px 12px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-series">Business English · 5-Pillar Series</div>
+  <h1>Pillar 3 · Session 2<br>You Are the Coach</h1>
+  <div class="header-sub">Reading · Coaching Session · Reformulation · 50 min</div>
+  <div class="pillar-badge">
+    <div class="pdots">
+      <div class="pdot done"></div>
+      <div class="pdot done"></div>
+      <div class="pdot active"></div>
+      <div class="pdot"></div>
+      <div class="pdot"></div>
+    </div>
+    Pillar 3 of 5
+  </div>
+</div>
+<div class="progress-bar">
+  <div class="progress-fill" id="pFill" style="width:20%"></div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav-btn active" onclick="goTo(0)">🔥 Warm-up</button>
+  <button class="nav-btn" onclick="goTo(1)">📖 Reading</button>
+  <button class="nav-btn" onclick="goTo(2)">🧠 Coach</button>
+  <button class="nav-btn" onclick="goTo(3)">🔁 Reformulation</button>
+  <button class="nav-btn" onclick="goTo(4)">📋 Cool-down</button>
+</div>
+
+<div class="main">
+
+  <!-- ══════════════════
+       0 · WARM-UP 5 min
+  ══════════════════ -->
+  <div class="panel active" id="panel-0">
+    <span class="slabel sl-warm">Warm-up · 5 min</span>
+    <div class="stitle">How are you today?</div>
+    <div class="sdesc">Just a conversation. No grammar focus — just speak.</div>
+
+    <div class="card">
+      <div class="clabel">Open Conversation</div>
+      <div class="recall">
+        <div class="rnum">1</div>
+        <div class="rtext">
+          How was your week? What's happening in your work right now?
+          <div class="rhint">💬 Anything — clients, projects, ideas, challenges.</div>
+        </div>
+      </div>
+      <div class="recall">
+        <div class="rnum">2</div>
+        <div class="rtext">
+          When someone asks "what do you do?" — what do you say in English, right now, without thinking too much?
+          <div class="rhint">💬 Your instinctive answer. No preparation.</div>
+        </div>
+      </div>
+      <div class="recall">
+        <div class="rnum">3</div>
+        <div class="rtext">
+          Today you are the coach and I am your client. How does that feel? Are you ready?
+          <div class="rhint">💬 A simple warm-up — gets him into the coaching mindset.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice n-gold">
+      💡 <strong>Teacher note:</strong> Listen to question 2 carefully — note which vocabulary and structures he reaches for naturally. This is your baseline for today. Don't correct anything yet.
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(1)">Continue to Reading →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════
+       1 · READING 10 min
+  ══════════════════ -->
+  <div class="panel" id="panel-1">
+    <span class="slabel sl-read">Input · 10 min</span>
+    <div class="stitle">The Uncomfortable Truth About Selling</div>
+    <div class="sdesc">Read this text carefully — out loud if possible. It gives you the language and ideas you'll need to coach your client today. Tap highlighted phrases to explore them.</div>
+
+    <div class="card">
+      <div class="clabel">Reading Text</div>
+      <div class="passage">
+        For many people who work in wellness, coaching, or creative fields, selling <span class="hl" onclick="this.classList.toggle('open')">feels wrong<span class="hltip">feel wrong = seem inappropriate, uncomfortable — sembler faux / mal à l'aise</span></span>. It feels like they are <span class="hl" onclick="this.classList.toggle('open')">putting a price<span class="hltip">put a price on = assign a monetary value to something — mettre un prix sur</span></span> on something that should be about <span class="hl" onclick="this.classList.toggle('open')">genuine connection<span class="hltip">genuine connection = a real, authentic relationship — connexion authentique</span></span> and transformation, not money.<br><br>
+
+        But this <span class="hl" onclick="this.classList.toggle('open')">resistance to selling<span class="hltip">resistance = the feeling of pushing back, refusing / résistance</span></span> often comes from a <span class="hl" onclick="this.classList.toggle('open')">misunderstanding<span class="hltip">misunderstanding = a wrong idea about something — malentendu / idée fausse</span></span>. Selling is not about convincing someone to <span class="hl" onclick="this.classList.toggle('open')">buy something they don't need<span class="hltip">A common fear — but good selling is the opposite: it helps people access what they genuinely need.</span></span>. It is about helping them <span class="hl" onclick="this.classList.toggle('open')">see the value<span class="hltip">see the value = understand what they will gain / réaliser la valeur</span></span> of something they already want.<br><br>
+
+        When a practitioner <span class="hl" onclick="this.classList.toggle('open')">struggles to charge<span class="hltip">struggle to charge = find it hard to ask for money / avoir du mal à facturer</span></span> for their work, it is often because they <span class="hl" onclick="this.classList.toggle('open')">don't fully believe<span class="hltip">don't fully believe = aren't completely convinced — ne croient pas entièrement</span></span> in the value they offer. Or they <span class="hl" onclick="this.classList.toggle('open')">fear rejection<span class="hltip">fear rejection = are afraid the person will say no — peur du rejet</span></span> — and confuse a "no" to their price with a "no" to them as a person.<br><br>
+
+        The <span class="hl" onclick="this.classList.toggle('open')">shift<span class="hltip">shift = a change in thinking or perspective — changement, glissement</span></span> happens when you realise: <span class="hl" onclick="this.classList.toggle('open')">not selling is also a choice<span class="hltip">Powerful reframe — staying silent or undercharging is an active choice, not neutrality.</span></span>. When you don't offer your work clearly, the person who needs it <span class="hl" onclick="this.classList.toggle('open')">never finds it<span class="hltip">never finds it = doesn't get the help they need — ne le trouve jamais</span></span>. Selling, then, is not about you. It is a <span class="hl" onclick="this.classList.toggle('open')">service to the client<span class="hltip">service to the client = an act of helping them, not an act of self-promotion</span></span>.
+      </div>
+
+      <div class="notice n-purple">
+        💡 <strong>Key idea for today's coaching session:</strong> Selling = helping someone see the value of what they already want. Not convincing. Not pushing. Serving.
+      </div>
+    </div>
+
+    <!-- QUICK COMPREHENSION — oral only -->
+    <div class="card">
+      <div class="clabel">Quick Check — Speak Only, No Writing</div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div style="background:white; border:1.5px solid var(--border); border-radius:10px; padding:13px 16px; font-size:14px; color:var(--ink); line-height:1.5;">
+          1. Why do many wellness or coaching practitioners feel uncomfortable with selling?
+        </div>
+        <div style="background:white; border:1.5px solid var(--border); border-radius:10px; padding:13px 16px; font-size:14px; color:var(--ink); line-height:1.5;">
+          2. According to the text — what is selling, really? Say it in one sentence.
+        </div>
+        <div style="background:white; border:1.5px solid var(--border); border-radius:10px; padding:13px 16px; font-size:14px; color:var(--ink); line-height:1.5;">
+          3. What does the text say about the fear of rejection?
+        </div>
+      </div>
+      <div class="notice n-teal" style="margin-top:12px;">
+        💡 <strong>Teacher note:</strong> Keep this fast — 3 minutes max. The real work is in the coaching session. These questions just check he read closely enough to coach from a solid foundation.
+      </div>
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(2)">Continue to Coaching →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════
+       2 · COACHING SESSION 20 min
+  ══════════════════════════ -->
+  <div class="panel" id="panel-2">
+    <span class="slabel sl-coach">Coaching Session · 20 min</span>
+    <div class="stitle">Mehdi Coaches Durim</div>
+    <div class="sdesc">You are the coach. Durim is your client. He is building his breathwork and teaching business — and today, the topic is his relationship with selling. Run the session in English.</div>
+
+    <!-- CONTEXT BOX -->
+    <div style="background:var(--deep); border-radius:14px; padding:20px 22px; margin-bottom:16px;">
+      <div class="clabel" style="color:rgba(255,215,100,.8);">🎭 Session Setup</div>
+      <div style="font-size:14px; color:#c8c0e8; line-height:1.7; margin-bottom:10px;">
+        <strong style="color:#f0eeff;">Your client:</strong> Durim — breathwork practitioner and language teacher, based in Brooklyn. He is starting to build his business more seriously but struggles to talk about money and sell his services confidently.
+      </div>
+      <div style="font-size:14px; color:#c8c0e8; line-height:1.7;">
+        <strong style="color:#f0eeff;">Your goal as coach:</strong> Help him explore his relationship with selling. Understand where the discomfort comes from. Help him see it differently — without telling him what to think.
+      </div>
+    </div>
+
+    <!-- PHASE 1: OPENING -->
+    <div class="coaching-card">
+      <div class="coaching-header ch-mehdi">
+        <span class="role-badge rb-mehdi">Mehdi · Coach</span>
+        <span class="role-label">Phase 1 — Open the Session (5 min)</span>
+      </div>
+      <div class="coaching-body">
+        <div style="font-size:13px; color:var(--muted); margin-bottom:12px;">Start with open questions. Make Durim feel at ease. Let him talk — don't fill the silence.</div>
+        <ul class="q-list">
+          <li><span class="q-mark">?</span><div>How do you feel about selling your work — breathwork, teaching, coaching?<span class="q-hint">Open question — no right answer. Just listen.</span></div></li>
+          <li><span class="q-mark">?</span><div>When did you last have a conversation where someone asked about your prices? What happened?<span class="q-hint">Concrete, recent — brings it to life.</span></div></li>
+          <li><span class="q-mark">?</span><div>On a scale of 1 to 10, how comfortable are you asking someone to invest in your services?<span class="q-hint">A number forces clarity. Then ask: "Why that number?"</span></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- DURIM RESPONSES (for teacher to play) -->
+    <div class="coaching-card">
+      <div class="coaching-header ch-durim">
+        <span class="role-badge rb-durim">Durim · Client</span>
+        <span class="role-label">Possible Responses — Teacher Plays These</span>
+      </div>
+      <div class="coaching-body">
+        <div class="durim-prompt">
+          <div class="dp-label">Response to Q1</div>
+          <div class="dp-text">"Honestly, it feels uncomfortable. I believe in what I do — but asking for money feels like I'm reducing it to a transaction. It doesn't feel right."</div>
+        </div>
+        <div class="durim-prompt">
+          <div class="dp-label">Response to Q2</div>
+          <div class="dp-text">"Last week, someone asked me about a private breathwork session. When they asked the price, I hesitated and said 'it depends'… I didn't even give a clear number."</div>
+        </div>
+        <div class="durim-prompt">
+          <div class="dp-label">Response to Q3</div>
+          <div class="dp-text">"Maybe a 4 or 5. I know my work has value — but when I say the price out loud, I always feel like they're going to say it's too expensive."</div>
+        </div>
+        <div class="notice n-teal" style="margin-top:10px;">
+          💡 <strong>Teacher tip:</strong> Respond naturally — don't just read the script. Add a hesitation, a pause, a real emotion. Make him work for the information.
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 2: DEEPENING -->
+    <div class="coaching-card">
+      <div class="coaching-header ch-mehdi">
+        <span class="role-badge rb-mehdi">Mehdi · Coach</span>
+        <span class="role-label">Phase 2 — Go Deeper (8 min)</span>
+      </div>
+      <div class="coaching-body">
+        <div style="font-size:13px; color:var(--muted); margin-bottom:12px;">Now dig into the <em>why</em>. Use what he said. Reflect it back. Ask questions that help him see it differently.</div>
+        <ul class="q-list">
+          <li><span class="q-mark">?</span><div>You said it feels like a transaction. Can you tell me more about that? What does "transaction" mean to you in this context?<span class="q-hint">Reflect his own word back to him — powerful coaching move.</span></div></li>
+          <li><span class="q-mark">?</span><div>When you hesitated and said "it depends" — what were you afraid of?<span class="q-hint">Go to the fear directly. Don't soften it.</span></div></li>
+          <li><span class="q-mark">?</span><div>If a friend told you they felt uncomfortable charging for their work — what would you say to them?<span class="q-hint">Classic reframe — shifts perspective from inside to outside.</span></div></li>
+          <li><span class="q-mark">?</span><div>Do you think not selling your work clearly is fair to the people who need it?<span class="q-hint">The text's key idea — selling is a service. Let him arrive at it himself.</span></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- DURIM RESPONSES PHASE 2 -->
+    <div class="coaching-card">
+      <div class="coaching-header ch-durim">
+        <span class="role-badge rb-durim">Durim · Client</span>
+        <span class="role-label">Possible Responses — Phase 2</span>
+      </div>
+      <div class="coaching-body">
+        <div class="durim-prompt">
+          <div class="dp-label">On "transaction"</div>
+          <div class="dp-text">"I think… when money enters the conversation, it changes something. It becomes about the price, not the experience. And I don't want people to feel like they're just buying a product."</div>
+        </div>
+        <div class="durim-prompt">
+          <div class="dp-label">On the fear</div>
+          <div class="dp-text">"I was afraid they'd say no. And somehow… a 'no' to my price feels like a 'no' to me. Like they don't value what I do."</div>
+        </div>
+        <div class="durim-prompt">
+          <div class="dp-label">On the reframe</div>
+          <div class="dp-text">"That's a good question. If a friend said that, I'd probably tell them they're undervaluing themselves… Hmm. I guess I do the same thing."</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 3: INSIGHT -->
+    <div class="coaching-card">
+      <div class="coaching-header ch-mehdi">
+        <span class="role-badge rb-mehdi">Mehdi · Coach</span>
+        <span class="role-label">Phase 3 — Land the Insight (5 min)</span>
+      </div>
+      <div class="coaching-body">
+        <div style="font-size:13px; color:var(--muted); margin-bottom:12px;">Don't give him the answer — help him find it. One or two powerful questions, then let him sit with it.</div>
+        <ul class="q-list">
+          <li><span class="q-mark">?</span><div>Based on what you just said — what do you think is the real reason you hesitate?<span class="q-hint">He often already knows. Give him space to say it.</span></div></li>
+          <li><span class="q-mark">?</span><div>What would change if you truly believed your work was worth what you charge?<span class="q-hint">Hypothetical — opens the door to a different reality.</span></div></li>
+          <li><span class="q-mark">?</span><div>What is one small thing you could do differently next time someone asks about your prices?<span class="q-hint">Always end with a concrete, actionable insight.</span></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- COACHING NOTES -->
+    <div class="coaching-card">
+      <div class="coaching-header ch-notes">
+        <span class="role-badge rb-notes">Notes</span>
+        <span class="role-label">Teacher's Language Log — During the Session</span>
+      </div>
+      <div class="coaching-body">
+        <div style="font-size:13px; color:var(--muted); margin-bottom:10px;">Note errors to address after — not during. Keep the session flowing.</div>
+        <textarea class="ainput" placeholder="Errors heard during coaching:&#10;e.g. 'He don't believe' → 'He doesn't believe'&#10;'I am agree' → 'I agree'&#10;'More comfortable' used correctly ✓" rows="4"></textarea>
+        <div class="notice n-orange" style="margin-top:12px;">
+          💡 <strong>After the session:</strong> Pick the 1–2 most recurring errors. Name them once, specifically. Then move to reformulation — that's where he fixes them.
+        </div>
+      </div>
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(3)">Continue to Reformulation →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════
+       3 · REFORMULATION 10 min
+  ══════════════════════════ -->
+  <div class="panel" id="panel-3">
+    <span class="slabel sl-ref">Reformulation · 10 min</span>
+    <div class="stitle">Hear It Right</div>
+    <div class="sdesc">Three rounds. Mehdi speaks — teacher reflects back corrected. Mehdi repeats. This is how errors become habits — not through correction, but through hearing the right version in context.</div>
+
+    <div class="reform-box">
+      <div class="clabel">The Method</div>
+      <div class="reform-step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>Mehdi speaks</strong> for 60 seconds on the prompt — no stopping, no self-correcting.</div>
+      </div>
+      <div class="reform-step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>Teacher reformulates</strong> — naturally, warmly: <em>"So what you're saying is…"</em> or <em>"If I understand you correctly…"</em> — with all errors silently corrected.</div>
+      </div>
+      <div class="reform-step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>Mehdi repeats</strong> the teacher's version out loud — with conviction, not mechanically. Then we go again.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="clabel">Round 1</div>
+      <div style="background:var(--purple-pale); border:1.5px solid #c8b8f8; border-radius:12px; padding:16px 18px; font-size:16px; font-weight:500; color:var(--ink); line-height:1.6;">
+        "Tell me what you discovered about yourself in the coaching session today. What was the most important insight for you?"
+      </div>
+      <div class="notice n-purple" style="margin-top:10px; font-size:12px;">
+        💡 This reflects on the content of the session — he's speaking from real experience, which means real vocabulary, real grammar challenges.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="clabel">Round 2</div>
+      <div style="background:var(--purple-pale); border:1.5px solid #c8b8f8; border-radius:12px; padding:16px 18px; font-size:16px; font-weight:500; color:var(--ink); line-height:1.6;">
+        "As a coach — what did you notice about Durim's relationship with selling? What do you think is really holding him back?"
+      </div>
+      <div class="notice n-teal" style="margin-top:10px; font-size:12px;">
+        💡 Switches perspective — he's now analysing you as a client. More complex sentences, more opinion language.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="clabel">Round 3</div>
+      <div style="background:var(--purple-pale); border:1.5px solid #c8b8f8; border-radius:12px; padding:16px 18px; font-size:16px; font-weight:500; color:var(--ink); line-height:1.6;">
+        "Now think about yourself — do you have the same problem with selling your own coaching? How do you feel about it?"
+      </div>
+      <div class="notice n-orange" style="margin-top:10px; font-size:12px;">
+        💡 The hardest round — personal and vulnerable. Longest silences, most authentic language. Give him time.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="clabel">Useful Phrases for Mehdi — Tap When Used</div>
+      <div class="chipwrap">
+        <span class="chip" onclick="this.classList.toggle('used')">I think what you're saying is…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">If I understand correctly…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">What I noticed is…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">In my opinion…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">I believe that…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">The most important thing for me was…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">I feel the same way because…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">What surprised me was…</span>
+      </div>
+      <div class="tap-hint">Tap a phrase to mark it as used</div>
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(4)">Continue to Cool-down →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════
+       4 · COOL-DOWN 5 min
+  ══════════════════════════ -->
+  <div class="panel" id="panel-4">
+    <span class="slabel sl-cool">Cool-down · 5 min</span>
+    <div class="stitle">Close the Session</div>
+    <div class="sdesc">Two parts — a quick language debrief, then a session takeaway for both of you.</div>
+
+    <div class="card">
+      <div class="clabel">Language Debrief — 2 min</div>
+      <div style="font-size:14px; color:var(--muted); margin-bottom:14px; line-height:1.6;">Name the 1–2 recurring patterns observed today. Be specific, brief, and forward-looking — not a correction session.</div>
+      <div style="background:white; border:1.5px solid var(--border); border-radius:10px; padding:14px 16px; margin-bottom:10px;">
+        <div style="font-size:13px; font-weight:700; color:var(--purple); margin-bottom:6px; letter-spacing:.5px;">PATTERN TO WATCH</div>
+        <textarea class="ainput" placeholder="e.g. 'Third person -s: he believes, he struggles, it feels' — noticed 3 times today without the -s. Let's watch for this next session." rows="2"></textarea>
+      </div>
+      <div style="background:white; border:1.5px solid var(--border); border-radius:10px; padding:14px 16px;">
+        <div style="font-size:13px; font-weight:700; color:var(--purple); margin-bottom:6px; letter-spacing:.5px;">WHAT WENT WELL</div>
+        <textarea class="ainput" placeholder="e.g. Used 'I believe' correctly (not 'I am believing') — state verb progress!" rows="2"></textarea>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="clabel">Session Takeaway — Mehdi Speaks</div>
+      <div style="background:var(--purple-pale); border:1.5px solid #c8b8f8; border-radius:12px; padding:16px 18px; font-size:15px; font-weight:500; color:var(--ink); margin-bottom:12px; line-height:1.6;">
+        "In one or two sentences — what is the most useful thing you are taking from today's session? As a coach AND as a learner."
+      </div>
+      <div class="notice n-green">
+        💡 This closing question asks him to reflect in both roles at once — his coaching insight <em>and</em> his English progress. It's a powerful way to end.
+      </div>
+    </div>
+
+    <!-- REVIEW -->
+    <div class="rbox">
+      <div class="clabel">📅 Review & Next Steps</div>
+      <ul class="rlist">
+        <li>Next session — warm-up: "Last time you coached me on selling. What do you remember about what I said?"</li>
+        <li>Homework — write 3 sentences in English: what Durim's main block with selling is, and what you think he should do about it</li>
+        <li>Homework — write one sentence about your own relationship with selling in your coaching business</li>
+        <li>Next pillar — <strong>Pillar 4: Operations</strong> — how do you run your business day to day?</li>
+      </ul>
+    </div>
+
+    <div style="text-align:center; padding:18px 0;">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:700; color:var(--ink); margin-bottom:5px;">Session complete. 🤝</div>
+      <div style="font-size:13px; color:var(--muted2);">Mehdi coached. Durim reflected. Both learned.</div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+  let cur = 0;
+  const total = 5;
+  const btns = document.querySelectorAll('.nav-btn');
+
+  function goTo(i) {
+    document.getElementById('panel-' + cur).classList.remove('active');
+    btns[cur].classList.remove('active');
+    btns[cur].classList.add('done');
+    cur = i;
+    document.getElementById('panel-' + cur).classList.add('active');
+    btns[cur].classList.add('active');
+    btns[cur].classList.remove('done');
+    document.getElementById('pFill').style.width = Math.round(((i + 1) / total) * 100) + '%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
