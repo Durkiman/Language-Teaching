@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Kujto — Mel's Lesson 6</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#F7F5F0; --surface:#FFFFFF; --surface2:#F0EDE6; --card:#FAFAF7;
+  --border:rgba(0,0,0,0.09); --text:#1C1814; --muted:#8A7E6E;
+  --gold:#B8860B; --gold-dim:rgba(184,134,11,0.10);
+  --teal:#2A7A68; --teal-dim:rgba(42,122,104,0.10);
+  --rose:#B04060; --rose-dim:rgba(176,64,96,0.10);
+  --violet:#5848A0; --violet-dim:rgba(88,72,160,0.10);
+  --blue:#2C5F9E; --radius:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.screen{display:none}.screen.active{display:block}
+
+/* NAV */
+.nav{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:50}
+.nav-back{width:34px;height:34px;background:var(--surface);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:0.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif}
+.nav-label{flex:1;font-size:0.78rem;font-weight:600;color:var(--muted)}
+.nav-timer{font-size:0.78rem;font-weight:600;color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:4px 10px;min-width:40px;text-align:center;font-variant-numeric:tabular-nums}
+.nav-timer.running{color:var(--gold);border-color:rgba(212,168,75,0.3)}
+
+/* HOME */
+#home{padding-bottom:48px}
+.home-hero{background:linear-gradient(160deg,#EDE8DC 0%,var(--bg) 100%);padding:48px 24px 40px}
+.hero-kicker{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,8vw,3.4rem);font-weight:700;line-height:1.05;margin-bottom:10px}
+.hero-title em{color:var(--gold);font-style:italic}
+.hero-desc{font-size:0.88rem;color:rgba(28,24,20,0.55);line-height:1.7;font-weight:300}
+.home-plan{padding:24px 20px 0}
+.plan-label{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.plan-items{display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
+.plan-item{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:14px;cursor:pointer;-webkit-user-select:none;user-select:none}
+.plan-item:active{opacity:.75}
+.plan-item.done{border-color:rgba(61,158,140,0.3);background:rgba(61,158,140,0.05)}
+.plan-num{width:28px;height:28px;border-radius:50%;background:var(--surface2);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:var(--muted);flex-shrink:0;transition:all .2s}
+.plan-item.done .plan-num{background:var(--teal);border-color:var(--teal);color:white}
+.plan-info{flex:1}.plan-name{font-size:.9rem;font-weight:600;color:var(--text)}.plan-time{font-size:.72rem;color:var(--muted);margin-top:2px}
+.plan-arrow{font-size:.8rem;color:var(--muted)}
+
+/* SECTION BODY */
+.section-body{padding:20px;display:flex;flex-direction:column;gap:16px;padding-bottom:80px}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.card-label{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+
+/* DIFFICULTY BADGE */
+.diff-badge{display:inline-flex;align-items:center;gap:5px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-bottom:10px}
+.diff-easy{background:var(--teal-dim);color:var(--teal)}
+.diff-medium{background:var(--gold-dim);color:var(--gold)}
+.diff-hard{background:var(--rose-dim);color:var(--rose)}
+
+/* VOCAB TABLE */
+.vocab-table{display:flex;flex-direction:column}
+.vocab-row{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.vocab-row:last-child{border-bottom:none}
+.v-left{min-width:155px;flex-shrink:0}
+.v-alb{font-size:.9rem;font-weight:600;color:var(--gold)}
+.v-pres{font-size:.7rem;color:var(--muted);margin-top:2px}
+.v-ex{font-size:.7rem;color:rgba(28,24,20,0.35);margin-top:3px;font-style:italic}
+.v-right{flex:1}
+.v-en{font-size:.82rem;color:var(--muted)}
+.v-fr{font-size:.73rem;color:var(--blue);font-style:italic;margin-top:2px}
+
+/* GRAMMAR BOX */
+.grammar-box{background:var(--surface2);border-radius:12px;padding:14px 16px;margin-bottom:12px;border-left:3px solid var(--gold)}
+.grammar-title{font-size:.78rem;font-weight:700;color:var(--gold);margin-bottom:8px}
+.grammar-body{font-size:.84rem;line-height:1.8;color:rgba(28,24,20,0.75)}
+.grammar-body strong{color:var(--gold)}
+.grammar-body em{color:var(--blue);font-style:italic}
+.conj-table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:10px}
+.conj-table th{text-align:left;font-weight:700;color:var(--muted);font-size:.68rem;letter-spacing:1px;text-transform:uppercase;padding:4px 8px;border-bottom:1px solid var(--border)}
+.conj-table td{padding:7px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+.conj-table td:first-child{color:var(--muted);font-size:.8rem}
+.conj-table td:nth-child(2){color:var(--gold);font-weight:600}
+.conj-table td:nth-child(3){color:var(--text)}
+.conj-table td:nth-child(4){color:var(--muted);font-size:.75rem;font-style:italic}
+.conj-table tr:last-child td{border-bottom:none}
+
+/* MCQ */
+.mcq-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:10px}
+.mcq-q{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--text);line-height:1.4;margin-bottom:16px}
+.mcq-fr{font-size:.78rem;color:var(--blue);font-style:italic;margin-top:-10px;margin-bottom:14px}
+.mcq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mcq-opt{background:var(--surface2);border:2px solid var(--border);border-radius:12px;padding:12px 10px;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:600;color:var(--text);cursor:pointer;text-align:center;transition:all .15s;line-height:1.3;-webkit-user-select:none;user-select:none}
+.mcq-opt:active:not(:disabled){opacity:.7}
+.mcq-opt.correct{background:var(--teal-dim);border-color:var(--teal);color:var(--teal)}
+.mcq-opt.wrong{background:var(--rose-dim);border-color:var(--rose);color:var(--rose)}
+.mcq-opt:disabled{cursor:default}
+.mcq-feedback{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:.84rem;line-height:1.6;display:none}
+.mcq-feedback.show{display:block}
+.mcq-feedback.correct{background:var(--teal-dim);border-left:3px solid var(--teal);color:var(--teal)}
+.mcq-feedback.wrong{background:var(--rose-dim);border-left:3px solid var(--rose);color:var(--text)}
+.mcq-next{display:none;width:100%;margin-top:10px;padding:12px;background:var(--gold);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;border:none;border-radius:12px;cursor:pointer}
+.mcq-next.show{display:block}
+.mcq-next:active{opacity:.8}
+
+/* GAP FILL */
+.gap-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:10px}
+.gap-sentence{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--text);line-height:1.7;margin-bottom:8px}
+.gap-input{background:transparent;border:none;border-bottom:2px solid var(--gold);color:var(--gold);font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;width:110px;text-align:center;outline:none;padding:2px 4px;margin:0 4px}
+.gap-input.correct-input{border-color:var(--teal);color:var(--teal)}
+.gap-input.wrong-input{border-color:var(--rose);color:var(--rose)}
+.gap-fr{font-size:.78rem;color:var(--blue);font-style:italic;margin-bottom:12px}
+.gap-check-btn{background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:600;padding:7px 14px;cursor:pointer;-webkit-user-select:none;user-select:none}
+.gap-check-btn:active{opacity:.7}
+.gap-check-btn:disabled{opacity:.35;cursor:default}
+.gap-result{margin-top:10px;font-size:.82rem;line-height:1.6;display:none}
+.gap-result.show{display:block}
+.gap-result.correct{color:var(--teal)}
+.gap-result.wrong{color:var(--rose)}
+
+/* ORDERING */
+.order-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:10px}
+.order-instruction{font-size:.84rem;color:rgba(28,24,20,0.65);margin-bottom:12px;line-height:1.6}
+.order-words{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;min-height:44px;padding:10px;background:var(--surface2);border-radius:10px;border:1px dashed var(--border)}
+.order-bank{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.order-word{background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:7px 12px;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:600;color:var(--text);cursor:pointer;-webkit-user-select:none;user-select:none;transition:all .15s}
+.order-word:active{opacity:.7}
+.order-word.placed{background:var(--violet-dim);border-color:rgba(112,96,168,.4);color:var(--text)}
+.order-word.in-zone{background:var(--card);border-color:var(--violet);cursor:pointer}
+.order-check{background:var(--gold);border:none;border-radius:10px;color:var(--bg);font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:700;padding:10px 18px;cursor:pointer;-webkit-user-select:none;user-select:none}
+.order-check:active{opacity:.8}
+.order-feedback{margin-top:10px;font-size:.82rem;line-height:1.6;display:none}
+.order-feedback.show{display:block}
+.order-feedback.correct{color:var(--teal)}
+.order-feedback.wrong{color:var(--rose)}
+
+/* SPEAK CARD */
+.speak-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:10px}
+.speak-prompt{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--text);line-height:1.4;margin-bottom:6px}
+.speak-fr{font-size:.78rem;color:var(--blue);font-style:italic;margin-bottom:10px}
+.speak-targets{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.speak-target{background:var(--gold-dim);border:1px solid rgba(212,168,75,.3);border-radius:20px;padding:4px 10px;font-size:.72rem;font-weight:600;color:var(--gold)}
+.hint-box{background:var(--gold-dim);border-left:2px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 12px;font-size:.82rem;color:var(--gold);margin-top:10px;display:none;line-height:1.6}
+.hint-box.show{display:block}
+.answer-box{background:var(--teal-dim);border-left:2px solid var(--teal);border-radius:0 8px 8px 0;padding:12px 14px;margin-top:10px;display:none}
+.answer-box.show{display:block}
+.answer-alb{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--text);margin-bottom:4px;line-height:1.4}
+.answer-en{font-size:.8rem;color:var(--muted)}
+.answer-fr{font-size:.74rem;color:var(--blue);font-style:italic;margin-top:3px}
+.chunks{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.chunk{background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:3px 9px;font-size:.72rem;text-align:center}
+.chunk-alb{font-weight:600;color:var(--text)}.chunk-en{color:var(--muted);font-size:.66rem;margin-top:1px}
+.hint-btn{background:transparent;border:1.5px solid var(--border);border-radius:8px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:600;padding:7px 12px;cursor:pointer;margin-right:8px;-webkit-user-select:none;user-select:none}
+.hint-btn:active{opacity:.7}
+.tried-btn{background:var(--rose);border:none;border-radius:8px;color:white;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:700;padding:7px 14px;cursor:pointer;-webkit-user-select:none;user-select:none}
+.tried-btn:active{opacity:.8}
+.tried-btn:disabled{opacity:.35;cursor:default}
+
+/* SONG */
+.song-hero{background:linear-gradient(145deg,#F5EEF0,#EDE8DC);border:1px solid rgba(176,64,96,0.15);border-radius:var(--radius);padding:24px 20px;text-align:center}
+.song-artist{font-size:.75rem;font-weight:600;color:var(--rose);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.song-title{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;margin-bottom:4px}
+.song-meaning{font-size:.82rem;color:var(--muted);margin-bottom:4px;font-style:italic}
+.song-genre{font-size:.72rem;color:var(--muted);margin-bottom:18px}
+.yt-btn{display:inline-flex;align-items:center;gap:8px;background:var(--rose);color:white;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:600;padding:10px 22px;border-radius:30px;text-decoration:none;border:none;cursor:pointer}
+.yt-btn:active{opacity:.8}
+.genius-intro{background:var(--surface2);border-radius:12px;padding:12px 14px;font-size:.82rem;color:rgba(28,24,20,0.55);line-height:1.6;display:flex;gap:10px;align-items:flex-start}
+.lyrics-tag{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--rose);padding:14px 0 6px}
+.lyric-line{padding:10px 14px;border-radius:10px;cursor:pointer;margin-bottom:2px;-webkit-user-select:none;user-select:none}
+.lyric-line:active{background:rgba(212,168,75,.08)}
+.lyric-line.active{background:var(--gold-dim);border-left:3px solid var(--gold);padding-left:11px}
+.lyric-alb{font-size:.95rem;font-weight:500;color:var(--text);line-height:1.5}
+.lyric-alb em{color:var(--gold);font-style:normal;font-weight:700}
+.translation-bubble{display:none;background:#F5F2EC;border:1px solid var(--gold);border-radius:12px;padding:12px 14px;margin-top:6px}
+.lyric-line.active .translation-bubble{display:block}
+.tb-en{font-size:.88rem;color:var(--text);line-height:1.5;margin-bottom:5px}
+.tb-fr{font-size:.78rem;color:var(--blue);font-style:italic;margin-bottom:7px}
+.tb-note{font-size:.74rem;color:var(--muted);line-height:1.5}
+.tb-note strong{color:var(--gold)}
+
+/* RECAP CHIPS */
+.recap-block{background:var(--card);border-radius:12px;padding:14px 16px;margin-bottom:10px;border-left:3px solid var(--violet)}
+.recap-block-title{font-size:.78rem;font-weight:700;color:var(--violet);margin-bottom:10px}
+.recap-chips{display:flex;flex-wrap:wrap;gap:6px}
+.recap-chip{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:6px 12px;font-size:.8rem;color:var(--text);cursor:pointer;-webkit-user-select:none;user-select:none}
+.recap-chip:active{opacity:.7}
+.recap-chip.lit{background:var(--violet-dim);border-color:rgba(112,96,168,.4)}
+.recap-chip .en{display:none;font-size:.7rem;color:var(--muted);margin-top:3px}
+.recap-chip.lit .en{display:block}
+.recap-note{font-size:.83rem;line-height:1.7;color:rgba(28,24,20,0.65);margin-top:8px}
+.recap-alb{color:var(--gold);font-weight:600}
+
+/* TAKEHOME */
+.takehome-card{background:linear-gradient(145deg,#F5F0E8,#EDE8DC);border:1px solid rgba(184,134,11,.25);border-radius:var(--radius);padding:24px 20px;text-align:center}
+.th-phrase{font-family:'Playfair Display',serif;font-size:clamp(1.3rem,5vw,1.8rem);color:var(--gold);line-height:1.3;margin:16px 0 6px}
+.th-sub{font-size:.85rem;color:var(--muted);margin-bottom:20px}
+.th-pips{display:flex;justify-content:center;gap:10px;margin-bottom:14px}
+.th-pip{width:30px;height:30px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--muted);transition:all .3s}
+.th-pip.done{background:var(--gold);border-color:var(--gold);color:var(--bg)}
+.say-btn{display:block;width:100%;max-width:260px;margin:0 auto 10px;padding:14px;background:var(--gold);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:700;border:none;border-radius:50px;cursor:pointer}
+.say-btn:active{opacity:.8}
+.say-btn:disabled{opacity:.4;cursor:default}
+.th-tip{display:none;font-size:.78rem;color:var(--muted);text-align:center;padding:8px 12px;background:var(--surface2);border-radius:8px;margin-top:6px;line-height:1.6}
+.done-banner{background:linear-gradient(145deg,#EBF5F0,#E8F0EB);border:1px solid rgba(42,122,104,.3);border-radius:var(--radius);padding:28px 20px;text-align:center;display:none}
+.done-emoji{font-size:3rem;display:block;margin-bottom:12px}
+.done-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;margin-bottom:8px}
+.done-sub{font-size:.88rem;color:rgba(28,24,20,0.50);line-height:1.7}
+
+/* BUTTONS */
+.section-done-btn{display:block;width:100%;padding:15px;background:var(--gold);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:700;border:none;border-radius:var(--radius);cursor:pointer}
+.section-done-btn:active{opacity:.8}
+.back-home-btn{display:block;width:100%;padding:13px;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;margin-top:8px}
+
+/* CORRECTION DRAWER */
+.corr-fab{position:fixed;bottom:24px;right:20px;z-index:200;background:var(--gold);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:700;padding:10px 16px;border:none;border-radius:50px;cursor:pointer;display:flex;align-items:center;gap:7px;box-shadow:0 4px 20px rgba(212,168,75,.3);-webkit-user-select:none;user-select:none}
+.corr-fab:active{opacity:.85}
+.corr-fab-badge{background:var(--bg);color:var(--gold);font-size:.68rem;font-weight:800;padding:1px 7px;border-radius:10px;min-width:20px;text-align:center}
+.corr-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300}
+.corr-backdrop.open{display:block}
+.corr-drawer{position:fixed;bottom:0;left:0;right:0;z-index:400;background:var(--surface);border-radius:22px 22px 0 0;border-top:2px solid var(--gold);transform:translateY(100%);transition:transform .32s cubic-bezier(.32,.72,0,1);max-height:70vh;display:flex;flex-direction:column}
+.corr-drawer.open{transform:translateY(0)}
+.corr-handle{width:36px;height:4px;background:rgba(255,255,255,.12);border-radius:2px;margin:12px auto 0;cursor:pointer;flex-shrink:0}
+.corr-drawer-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 12px;flex-shrink:0;border-bottom:1px solid var(--border)}
+.corr-drawer-title{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold)}
+.corr-close{background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:1rem;width:30px;height:30px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif}
+.corr-drawer-body{flex:1;overflow-y:auto;padding:14px 20px 32px;-webkit-overflow-scrolling:touch}
+.corr-form{display:flex;gap:8px;margin-bottom:14px}
+.corr-input{flex:1;font-family:'DM Sans',sans-serif;font-size:.85rem;padding:10px 12px;background:var(--card);border:1.5px solid var(--border);border-radius:10px;color:var(--text);outline:none}
+.corr-input:focus{border-color:var(--gold)}
+.corr-add{font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:700;padding:10px 16px;background:var(--gold);color:var(--bg);border:none;border-radius:10px;cursor:pointer;white-space:nowrap}
+.corr-hint{font-size:.7rem;color:var(--muted);font-style:italic;margin-bottom:10px}
+.corr-empty{font-size:.82rem;color:var(--muted);font-style:italic;text-align:center;padding:12px 0}
+.corr-item{background:var(--card);border-radius:10px;padding:11px 14px;margin-bottom:8px;display:flex;align-items:flex-start;gap:10px;border-left:2px solid var(--gold)}
+.corr-text{flex:1;font-size:.85rem;line-height:1.55;color:var(--text)}
+.corr-dismiss{background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer;padding:0 2px;line-height:1;flex-shrink:0}
+.corr-dismiss:active{color:var(--rose)}
+
+.confetti-piece{position:fixed;pointer-events:none;z-index:9999;border-radius:2px;animation:cfall 2.8s ease-in forwards}
+@keyframes cfall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(540deg);opacity:0}}
+</style>
+</head>
+<body>
+
+<!-- ══ HOME ══ -->
+<div class="screen active" id="home">
+  <div class="home-hero">
+    <div class="hero-kicker">🇽🇰 Lesson 6 · ~50 minutes</div>
+    <div class="hero-title">Kujto<br><em>& trego.</em></div>
+    <div class="hero-desc">Today you unlock the past tense — the ability to tell stories, share memories, and say what happened. Work through each section at your own pace.</div>
+  </div>
+  <div class="home-plan">
+    <div class="plan-label">Today's plan — tap to begin any section</div>
+    <div class="plan-items">
+      <div class="plan-item" id="plan-1" onclick="goSection('s1')"><div class="plan-num" id="pn-1">1</div><div class="plan-info"><div class="plan-name">🔁 Warm-up — What do you remember?</div><div class="plan-time">8 min · Recap from Lesson 5</div></div><div class="plan-arrow">→</div></div>
+      <div class="plan-item" id="plan-2" onclick="goSection('s2')"><div class="plan-num" id="pn-2">2</div><div class="plan-info"><div class="plan-name">📖 The past tense — how it works</div><div class="plan-time">10 min · 6 verbs + time markers</div></div><div class="plan-arrow">→</div></div>
+      <div class="plan-item" id="plan-22" onclick="goSection('s2b')"><div class="plan-num" id="pn-22">📄</div><div class="plan-info"><div class="plan-name">📄 Reading — A day in Pristina</div><div class="plan-time">7 min · See past tense forms in a real story</div></div><div class="plan-arrow">→</div></div>
+      <div class="plan-item" id="plan-3" onclick="goSection('s3')"><div class="plan-num" id="pn-3">3</div><div class="plan-info"><div class="plan-name">✏️ Exercises — from easy to complex</div><div class="plan-time">12 min · Recognition → gap fill → ordering → speaking</div></div><div class="plan-arrow">→</div></div>
+      <div class="plan-item" id="plan-4" onclick="goSection('s4')"><div class="plan-num" id="pn-4">4</div><div class="plan-info"><div class="plan-name">🎵 Song — Yll Limani · Qaj</div><div class="plan-time">10 min · Full lyrics, tap to translate</div></div><div class="plan-arrow">→</div></div>
+      <div class="plan-item" id="plan-5" onclick="goSection('s5')"><div class="plan-num" id="pn-5">5</div><div class="plan-info"><div class="plan-name">🗣️ Free speaking — tell a story</div><div class="plan-time">10 min · Use the past to speak like yourself</div></div><div class="plan-arrow">→</div></div>
+      <div class="plan-item" id="plan-6" onclick="goSection('s6')"><div class="plan-num" id="pn-6">6</div><div class="plan-info"><div class="plan-name">✅ Take-home phrase</div><div class="plan-time">2 min · One sentence to carry with you</div></div><div class="plan-arrow">→</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ S1: WARM-UP ══ -->
+<div class="screen" id="s1">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">🔁 Warm-up</div><div class="nav-timer" id="t1">0:00</div></div>
+  <div class="section-body">
+
+    <div class="card">
+      <div class="card-label">Before you look — free recall</div>
+      <p style="font-size:.84rem;line-height:1.7;color:rgba(28,24,20,0.65);margin-bottom:6px">Without looking at any notes, say out loud everything you remember from last lesson. Words, phrases, the song — anything. Then tap the chips below to check yourself.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Lesson 5 in full — tap each chip to reveal the English</div>
+      <div class="recap-block">
+        <div class="recap-block-title">❓ Question words</div>
+        <div class="recap-chips">
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Çka?</div><div class="en">What?</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Ku?</div><div class="en">Where?</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Kur?</div><div class="en">When?</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Kush?</div><div class="en">Who?</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Pse?</div><div class="en">Why?</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Si / Qysh?</div><div class="en">How?</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Sa?</div><div class="en">How much?</div></div>
+        </div>
+      </div>
+      <div class="recap-block">
+        <div class="recap-block-title">💬 Bounce-back phrases</div>
+        <div class="recap-chips">
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Vërtet?</div><div class="en">Really?</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Interesante! Dhe?</div><div class="en">Interesting! And?</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Pse mendon kështu?</div><div class="en">Why do you think that?</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Po ty si të duket?</div><div class="en">And what do you think?</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Mund të tregosh më shumë?</div><div class="en">Can you tell me more?</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Edhe unë!</div><div class="en">Me too!</div></div>
+        </div>
+      </div>
+      <div class="recap-block">
+        <div class="recap-block-title">🎸 Song — Mall by Eugent Bushpepa</div>
+        <div class="recap-note">Key words: <span class="recap-alb">mall</span> (yearning) · <span class="recap-alb">zemra</span> (heart) · <span class="recap-alb">natë</span> (night) · <span class="recap-alb">lot</span> (tear) · <span class="recap-alb">dhimbja</span> (the pain). Can you use one of these in a sentence right now?</div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:rgba(212,168,75,.2)">
+      <div class="card-label">Quick activation — say these out loud</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="background:var(--surface2);border-radius:10px;padding:12px 14px"><div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold)">Ask a question using "Ku" — about anything.</div></div>
+        <div style="background:var(--surface2);border-radius:10px;padding:12px 14px"><div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold)">Say how you're feeling today using "Ndihem e..."</div></div>
+        <div style="background:var(--surface2);border-radius:10px;padding:12px 14px"><div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold)">React to this: "Sonte po shkoj në Paris." — bounce back.</div></div>
+      </div>
+    </div>
+
+    <button class="section-done-btn" onclick="completeSection(1,'s2')">Done — next section →</button>
+  </div>
+</div>
+
+<!-- ══ S2: PRESENTATION ══ -->
+<div class="screen" id="s2">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">📖 The past tense</div><div class="nav-timer" id="t2">0:00</div></div>
+  <div class="section-body">
+
+    <div class="card">
+      <div class="card-label">Why this matters to you</div>
+      <p style="font-size:.84rem;line-height:1.7;color:rgba(28,24,20,0.65)">Right now you can say what you feel and what you want. But you can't tell a story yet. You can't say <em style="color:var(--gold)">I went, I saw, it was beautiful.</em> Every real conversation with Durim's family will involve the past — where you've been, what you ate, how it was. Today you unlock that.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-label">The 6 verbs you need right now</div>
+      <p style="font-size:.82rem;color:rgba(28,24,20,0.55);margin-bottom:14px">These are the most common verbs in any story or memory. Learn these and you can already tell a lot.</p>
+      <div class="vocab-table">
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Shkova</div><div class="v-pres">present: shkoj → I go</div><div class="v-ex">Dje shkova në qytet.</div></div><div class="v-right"><div class="v-en">I went</div><div class="v-fr">Je suis allé(e)</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Pashë</div><div class="v-pres">present: shoh → I see</div><div class="v-ex">Pashë diçka të bukur.</div></div><div class="v-right"><div class="v-en">I saw</div><div class="v-fr">J'ai vu</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Hëngra</div><div class="v-pres">present: ha → I eat</div><div class="v-ex">Hëngra byrek sonte.</div></div><div class="v-right"><div class="v-en">I ate</div><div class="v-fr">J'ai mangé</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Piva</div><div class="v-pres">present: pi → I drink</div><div class="v-ex">Piva kafe me nanën.</div></div><div class="v-right"><div class="v-en">I drank</div><div class="v-fr">J'ai bu</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Isha</div><div class="v-pres">present: jam → I am</div><div class="v-ex">Isha shumë e emocionuar.</div></div><div class="v-right"><div class="v-en">I was</div><div class="v-fr">J'étais</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Ishte</div><div class="v-pres">present: asht → it is</div><div class="v-ex">Ishte shumë e bukur.</div></div><div class="v-right"><div class="v-en">It was / She was / He was</div><div class="v-fr">C'était / Elle était / Il était</div></div></div>
+      </div>
+    </div>
+
+    <div class="grammar-box">
+      <div class="grammar-title">The pattern — how most verbs go past</div>
+      <div class="grammar-body">Verbs ending in <strong>-oj</strong> in the present become <strong>-ova</strong> in the past:<br><br>
+      punoj → <strong>punova</strong> · lexoj → <strong>lexova</strong> · mësoj → <strong>mësova</strong><br><br>
+      Think: <em>🇫🇷 -ai in French (je parlai, j'achetai)</em> — same principle, just a different sound.<br><br>
+      The 6 verbs above are irregular — just memorise them. They're the most frequent in any real conversation.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Full conjugation — shkova (I went)</div>
+      <p style="font-size:.78rem;color:rgba(28,24,20,0.45);margin-bottom:12px">Focus on <strong style="color:var(--gold)">shkova</strong> (I) and <strong style="color:var(--gold)">shkove</strong> (you) — those are the ones you'll use most.</p>
+      <table class="conj-table">
+        <tr><th>Who</th><th>Albanian</th><th>English</th><th>French</th></tr>
+        <tr><td>Unë (I)</td><td>shkova</td><td>I went</td><td>je suis allé(e)</td></tr>
+        <tr><td>Ti (you)</td><td>shkove</td><td>you went</td><td>tu es allé(e)</td></tr>
+        <tr><td>Ai/Ajo (he/she)</td><td>shkoi</td><td>he/she went</td><td>il/elle est allé(e)</td></tr>
+        <tr><td>Na (we)</td><td>shkum</td><td>we went</td><td>nous sommes allé(e)s</td></tr>
+        <tr><td>Ju (you pl.)</td><td>shkut</td><td>you all went</td><td>vous êtes allé(e)s</td></tr>
+        <tr><td>Ata/Ato (they)</td><td>shkun</td><td>they went</td><td>ils/elles sont allé(e)s</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Time markers — anchor your story in time</div>
+      <div class="vocab-table">
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Dje</div></div><div class="v-right"><div class="v-en">Yesterday</div><div class="v-fr">Hier</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Pramë</div></div><div class="v-right"><div class="v-en">Last night</div><div class="v-fr">Hier soir</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Javën e kaluar</div></div><div class="v-right"><div class="v-en">Last week</div><div class="v-fr">La semaine dernière</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Para dy ditësh</div></div><div class="v-right"><div class="v-en">Two days ago</div><div class="v-fr">Il y a deux jours</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Herën e fundit</div></div><div class="v-right"><div class="v-en">Last time</div><div class="v-fr">La dernière fois</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Kur isha e vogël</div></div><div class="v-right"><div class="v-en">When I was little</div><div class="v-fr">Quand j'étais petite</div></div></div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:rgba(212,168,75,.2)">
+      <div class="card-label">The big unlock — past + feelings together</div>
+      <p style="font-size:.82rem;color:rgba(28,24,20,0.60);margin-bottom:12px">You already know feeling words. Now combine them with the past. Read each sentence aloud:</p>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="background:var(--surface2);border-radius:10px;padding:12px 14px"><div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold)">Shkova Kosovë dhe isha shumë e emocionuar.</div><div style="font-size:.78rem;color:var(--muted);margin-top:4px">I went to Kosovo and I was very excited.</div></div>
+        <div style="background:var(--surface2);border-radius:10px;padding:12px 14px"><div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold)">Pashë familjen e tij dhe ndihem e lumtur.</div><div style="font-size:.78rem;color:var(--muted);margin-top:4px">I saw his family and I feel happy.</div></div>
+        <div style="background:var(--surface2);border-radius:10px;padding:12px 14px"><div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold)">Hëngra byrek dhe ishte e shijshme.</div><div style="font-size:.78rem;color:var(--muted);margin-top:4px">I ate byrek and it was delicious.</div></div>
+      </div>
+    </div>
+
+    <button class="section-done-btn" onclick="completeSection(2,'s2b')">Done — on to reading →</button>
+  </div>
+</div>
+
+<!-- ══ S2b: READING ══ -->
+<div class="screen" id="s2b">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">📄 Reading</div><div class="nav-timer" id="t2b">0:00</div></div>
+  <div class="section-body">
+
+    <div class="card">
+      <div class="card-label">How to read this</div>
+      <p style="font-size:.84rem;line-height:1.7;color:rgba(28,24,20,0.60)">Read the text below once for meaning. Then read it again and notice every verb highlighted in <strong style="color:var(--teal)">green</strong> — those are all past tense forms you just learned. After reading, answer the questions without looking back.</p>
+    </div>
+
+    <div class="card" style="border-left:3px solid var(--teal)">
+      <div class="card-label">Një ditë në Prishtinë — A day in Pristina</div>
+      <div style="font-size:.95rem;line-height:2;color:var(--text);font-family:'Playfair Display',serif">
+        Pramë, <mark style="background:rgba(42,122,104,.15);color:var(--teal);border-radius:4px;padding:1px 3px">shkova</mark> Prishtinë me Durimin për herën e parë. <mark style="background:rgba(42,122,104,.15);color:var(--teal);border-radius:4px;padding:1px 3px">Isha</mark> shumë e emocionuar — dhe pak e nervozme gjithashtu.<br><br>
+        Kur <mark style="background:rgba(42,122,104,.15);color:var(--teal);border-radius:4px;padding:1px 3px">mbërritëm</mark> në qytet, <mark style="background:rgba(42,122,104,.15);color:var(--teal);border-radius:4px;padding:1px 3px">shkuam</mark> direkt te shtëpia e familjes. Nana e Durimit <mark style="background:rgba(42,122,104,.15);color:var(--teal);border-radius:4px;padding:1px 3px">hapi</mark> derën dhe <mark style="background:rgba(42,122,104,.15);color:var(--teal);border-radius:4px;padding:1px 3px">buzëqeshi</mark> shumë. <mark style="background:rgba(42,122,104,.15);color:var(--teal);border-radius:4px;padding:1px 3px">Ishte</mark> shumë e ngrohtë dhe e mirëpritur.<br><br>
+        Ne <mark style="background:rgba(42,122,104,.15);color:var(--teal);border-radius:4px;padding:1px 3px">hëngëm</mark> bashkë — <mark style="background:rgba(42,122,104,.15);color:var(--teal);border-radius:4px;padding:1px 3px">hëngra</mark> byrek, tavë kosi, dhe shumë fruta. <mark style="background:rgba(42,122,104,.15);color:var(--teal);border-radius:4px;padding:1px 3px">Piva</mark> kafe turke për herën e parë — <mark style="background:rgba(42,122,104,.15);color:var(--teal);border-radius:4px;padding:1px 3px">ishte</mark> e fortë por e shijshme.<br><br>
+        Pasdite, <mark style="background:rgba(42,122,104,.15);color:var(--teal);border-radius:4px;padding:1px 3px">shkova</mark> me Durimin në shëtitoren e Prishtinës. <mark style="background:rgba(42,122,104,.15);color:var(--teal);border-radius:4px;padding:1px 3px">Pashë</mark> shumë njerëz, kafene, muzikë rrugore. <mark style="background:rgba(42,122,104,.15);color:var(--teal);border-radius:4px;padding:1px 3px">Ishte</mark> gjallë dhe plot energji.<br><br>
+        Natën, <mark style="background:rgba(42,122,104,.15);color:var(--teal);border-radius:4px;padding:1px 3px">isha</mark> e lodhur por shumë e lumtur. Mendova: <em>"Du me ardhë sërish."</em>
+      </div>
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+        <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Vocabulary from the text</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:.8rem">
+          <div style="background:var(--surface2);border-radius:8px;padding:7px 10px"><span style="color:var(--teal);font-weight:600">mbërritëm</span> <span style="color:var(--muted)">we arrived</span></div>
+          <div style="background:var(--surface2);border-radius:8px;padding:7px 10px"><span style="color:var(--teal);font-weight:600">shkuam</span> <span style="color:var(--muted)">we went</span></div>
+          <div style="background:var(--surface2);border-radius:8px;padding:7px 10px"><span style="color:var(--teal);font-weight:600">hapi</span> <span style="color:var(--muted)">she opened</span></div>
+          <div style="background:var(--surface2);border-radius:8px;padding:7px 10px"><span style="color:var(--teal);font-weight:600">buzëqeshi</span> <span style="color:var(--muted)">she smiled</span></div>
+          <div style="background:var(--surface2);border-radius:8px;padding:7px 10px"><span style="color:var(--teal);font-weight:600">hëngëm</span> <span style="color:var(--muted)">we ate</span></div>
+          <div style="background:var(--surface2);border-radius:8px;padding:7px 10px"><span style="color:var(--teal);font-weight:600">mendova</span> <span style="color:var(--muted)">I thought</span></div>
+          <div style="background:var(--surface2);border-radius:8px;padding:7px 10px"><span style="color:var(--teal);font-weight:600">shëtitorja</span> <span style="color:var(--muted)">the promenade</span></div>
+          <div style="background:var(--surface2);border-radius:8px;padding:7px 10px"><span style="color:var(--teal);font-weight:600">gjallë</span> <span style="color:var(--muted)">lively, alive</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Comprehension — answer in Albanian if you can, English if you need to</div>
+      <div id="reading-qs"></div>
+    </div>
+
+    <div class="card" style="border-color:rgba(42,122,104,.2);background:rgba(42,122,104,.04)">
+      <div class="card-label">Notice the pattern</div>
+      <p style="font-size:.84rem;line-height:1.7;color:rgba(28,24,20,0.65)">Count the green verbs in the text — there are <strong style="color:var(--teal)">13</strong>. You already know most of them: <strong style="color:var(--teal)">shkova, isha, ishte, hëngra, piva, pashë.</strong><br><br>
+      The new ones follow the same pattern — <strong style="color:var(--teal)">mendova</strong> (I thought, from mëndoj), <strong style="color:var(--teal)">shkuam / hëngëm</strong> (we forms). Same verb, different person ending.</p>
+    </div>
+
+    <button class="section-done-btn" onclick="completeSection(22,'s3')">Done — on to exercises →</button>
+  </div>
+</div>
+<div class="screen" id="s3">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">✏️ Exercises</div><div class="nav-timer" id="t3">0:00</div></div>
+  <div class="section-body">
+
+    <div class="card">
+      <div class="card-label">How these work</div>
+      <p style="font-size:.84rem;line-height:1.7;color:rgba(28,24,20,0.60)">The exercises get gradually harder. Start with recognition, move to gap fill, then sentence ordering, then free speaking. Take your time — accuracy here builds fluency later.</p>
+    </div>
+
+    <!-- LEVEL 1: MCQ RECOGNITION -->
+    <div class="diff-badge diff-easy">⬤ Easy — Recognition</div>
+    <div id="mcq-area"></div>
+
+    <!-- LEVEL 2: GAP FILL -->
+    <div class="diff-badge diff-medium" style="margin-top:8px">⬤ Medium — Gap fill</div>
+    <div id="gap-area"></div>
+
+    <!-- LEVEL 3: SENTENCE ORDERING -->
+    <div class="diff-badge diff-hard" style="margin-top:8px">⬤ Hard — Put the sentence in order</div>
+    <div id="order-area"></div>
+
+    <!-- LEVEL 4: SPEAK FIRST -->
+    <div class="diff-badge diff-hard" style="margin-top:8px; background:rgba(112,96,168,.15);color:var(--violet)">⬤ Challenge — Speak it yourself</div>
+    <div id="speak-area"></div>
+
+    <button class="section-done-btn" onclick="completeSection(3,'s4')">Done — on to the song →</button>
+  </div>
+</div>
+
+<!-- ══ S4: SONG ══ -->
+<div class="screen" id="s4">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">🎵 Qaj · Yll Limani</div><div class="nav-timer" id="t4">0:00</div></div>
+  <div class="section-body">
+
+    <div class="song-hero">
+      <div class="song-artist">Yll Limani</div>
+      <div class="song-title">Qaj</div>
+      <div class="song-meaning">"Cry" — a Kosovo ballad about nostalgia, years passing, and people lost</div>
+      <div class="song-genre">Albanian ballad · Written by Yll Limani & Fatjon Miftari</div>
+      <a class="yt-btn" href="https://www.youtube.com/results?search_query=Yll+Limani+Qaj" target="_blank">▶ Find on YouTube</a>
+    </div>
+
+    <div class="genius-intro">
+      <div>👆</div>
+      <div>Tap any line to see the English translation, French, and a language note. Tap again to close. As you listen, spot the past tense verbs — they're everywhere.</div>
+    </div>
+
+    <div class="card" style="border-color:rgba(196,88,112,.2)">
+      <div class="card-label">Before you press play — one question</div>
+      <p style="font-size:.84rem;line-height:1.7;color:rgba(28,24,20,0.65)">The song opens with: <em style="color:var(--gold)">"As vetë se di prej ka vjen kjo nostalgji"</em> — I don't even know where this nostalgia comes from.<br><br>Think about this before you listen: when do <em>you</em> feel nostalgic? What memory comes to you? You don't need to say it in Albanian yet — just feel it. Then press play.</p>
+    </div>
+
+    <div class="card"><div class="card-label">Full lyrics — tap any line to translate</div><div id="lyrics-container"></div></div>
+
+    <div class="card">
+      <div class="card-label">After listening — 3 things to say in Albanian</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="background:var(--surface2);border-radius:10px;padding:12px 14px">
+          <div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--text);margin-bottom:4px">How did the song make you feel?</div>
+          <div style="font-size:.75rem;color:var(--muted);font-style:italic">Try: <strong style="color:var(--gold)">Kjo këngë më bëri të ndihem e... / Ishte shumë...</strong></div>
+        </div>
+        <div style="background:var(--surface2);border-radius:10px;padding:12px 14px">
+          <div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--text);margin-bottom:4px">Have you ever felt a nostalgia like this?</div>
+          <div style="font-size:.75rem;color:var(--muted);font-style:italic">Try: <strong style="color:var(--gold)">Po, herën e fundit ndihem e tillë kur... / Isha...</strong></div>
+        </div>
+        <div style="background:var(--surface2);border-radius:10px;padding:12px 14px">
+          <div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--text);margin-bottom:4px">Spot the past tense — say one line from the song that uses it.</div>
+          <div style="font-size:.75rem;color:var(--muted);font-style:italic">Hint: look for <strong style="color:var(--gold)">ke shku, e humbe, shkuan</strong> in the lyrics.</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="section-done-btn" onclick="completeSection(4,'s5')">Done — on to free speaking →</button>
+  </div>
+</div>
+
+<!-- ══ S5: FREE SPEAKING ══ -->
+<div class="screen" id="s5">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">🗣️ Tell a story</div><div class="nav-timer" id="t5">0:00</div></div>
+  <div class="section-body">
+
+    <div class="card">
+      <div class="card-label">Your challenge for this section</div>
+      <p style="font-size:.84rem;line-height:1.7;color:rgba(28,24,20,0.65)">For each prompt, speak for at least <strong style="color:var(--gold)">1 minute</strong>. Use at least <strong style="color:var(--gold)">2 past tense verbs</strong> and <strong style="color:var(--gold)">1 feeling word or opinion</strong>. Tap the scaffold button only if you get truly stuck — try first. Your teacher is listening and noting anything to correct at the end.</p>
+    </div>
+
+    <div id="free-speak-area"></div>
+
+    <button class="section-done-btn" onclick="completeSection(5,'s6')">Done — take-home phrase →</button>
+  </div>
+</div>
+
+<!-- ══ S6: TAKE HOME ══ -->
+<div class="screen" id="s6">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">✅ Take-home</div><div class="nav-timer" id="t6">0:00</div></div>
+  <div class="section-body">
+
+    <div class="card">
+      <div class="card-label">Your phrase to carry out of today</div>
+      <p style="font-size:.84rem;line-height:1.7;color:rgba(28,24,20,0.65)">Say it out loud three times. Each time, a little louder and more confident. Own it.</p>
+    </div>
+
+    <div class="takehome-card">
+      <div class="card-label" style="color:var(--muted)">Today's take-home phrase</div>
+      <div class="th-phrase">Shkova atje dhe ishte e paharrueshme.</div>
+      <div class="th-sub">I went there and it was unforgettable.</div>
+      <div class="th-pips"><div class="th-pip" id="tp1">1</div><div class="th-pip" id="tp2">2</div><div class="th-pip" id="tp3">3</div></div>
+      <button class="say-btn" id="say-btn" onclick="doTakeHome()">▶ I said it!</button>
+      <div class="th-tip" id="th-tip">💡 <strong style="color:var(--gold)">Shkova</strong> = I went &nbsp;·&nbsp; <strong style="color:var(--gold)">atje</strong> = there &nbsp;·&nbsp; <strong style="color:var(--gold)">ishte</strong> = it was &nbsp;·&nbsp; <strong style="color:var(--gold)">e paharrueshme</strong> = unforgettable (f.)</div>
+    </div>
+
+    <div class="done-banner" id="done-banner">
+      <span class="done-emoji">✨</span>
+      <div class="done-title">Shumë mirë!</div>
+      <div class="done-sub">You went somewhere and now you can say so in Albanian.<br>That's what the past tense gives you — your experiences, in your words.</div>
+    </div>
+
+    <button class="back-home-btn" onclick="goHome()">← Back to lesson plan</button>
+  </div>
+</div>
+
+<!-- ══ CORRECTION DRAWER ══ -->
+<div class="corr-backdrop" id="corr-backdrop" onclick="closeCorr()"></div>
+<button class="corr-fab" onclick="openCorr()">📝 Notes <span class="corr-fab-badge" id="corr-badge">0</span></button>
+<div class="corr-drawer" id="corr-drawer">
+  <div class="corr-handle" onclick="closeCorr()"></div>
+  <div class="corr-drawer-header"><div class="corr-drawer-title">Teacher corrections</div><button class="corr-close" onclick="closeCorr()">×</button></div>
+  <div class="corr-drawer-body">
+    <div class="corr-form"><input class="corr-input" id="corr-input" placeholder="Note a correction…" onkeydown="if(event.key==='Enter')addCorr()"/><button class="corr-add" onclick="addCorr()">+ Add</button></div>
+    <div class="corr-hint">Tap × to dismiss each one when reviewed</div>
+    <div id="corr-list"><div class="corr-empty" id="corr-empty">No corrections yet.</div></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════ DATA
+
+var MCQ = [
+  { q:'Which is the past tense of "shkoj" (I go)?', opts:['shkoj','shkoja','shkova','shkojsha'], correct:'shkova', fb:'✓ Shkova — I went. The -oj ending becomes -ova in the past. Same for punoj→punova, lexoj→lexova.' },
+  { q:'"Pashë" means…?', opts:['I looked','I see','I saw','I watch'], correct:'I saw', fb:'✓ Pashë — I saw. Present is "shoh". Irregular — just memorise it.' },
+  { q:'Which sentence is in the past?', opts:['Ndihem e lumtur.','Isha e lodhur.','Du me hangër.','Po shkoj tash.'], correct:'Isha e lodhur.', fb:'✓ Isha e lodhur — I was tired. Isha is the past of "jam" (I am).' },
+  { q:'How do you say "It was beautiful"?', opts:['Asht e bukur.','Ishte e bukur.','Isha e bukur.','Qe e bukur.'], correct:'Ishte e bukur.', fb:'✓ Ishte e bukur. "Ishte" = it was / she was / he was. "Asht" = present tense (it is).' },
+  { q:'"Hëngra" comes from which verb?', opts:['ha','hangër','haj','ngrëna'], correct:'ha', fb:'✓ Ha (I eat) → hëngra (I ate). Completely irregular — the form changes entirely.' },
+  { q:'How do you say "I drank coffee"?', opts:['Pi kafe.','Pova kafe.','Piva kafe.','Pisha kafe.'], correct:'Piva kafe.', fb:'✓ Piva kafe. Pi → piva. You already know "pi" (I drink) — now you have "piva" (I drank).' },
+];
+
+var GAPS = [
+  { before:'Dje', input:'shkova', after:'në Paris dhe ishte e mrekullueshme.', full:'Dje shkova në Paris dhe ishte e mrekullueshme.', en:'Yesterday I went to Paris and it was wonderful.', fr:'Hier je suis allée à Paris et c\'était merveilleux.', hint:'shkova' },
+  { before:'Në mëngjes', input:'hëngra', after:'bukë me djathë dhe', input2:'piva', after2:'kafe.', full:'Në mëngjes hëngra bukë me djathë dhe piva kafe.', en:'This morning I ate bread and cheese and drank coffee.', fr:'Ce matin j\'ai mangé du pain avec du fromage et bu du café.', hint:'hëngra · piva' },
+  { before:'Herën e parë kur dëgjova shqip,', input:'isha', after:'shumë e hutuar.', full:'Herën e parë kur dëgjova shqip, isha shumë e hutuar.', en:'The first time I heard Albanian, I was very confused.', fr:'La première fois que j\'ai entendu l\'albanais, j\'étais très confuse.', hint:'isha' },
+  { before:'', input:'Pashë', after:'familjen e Durimit dhe ndihem e lumtur.', full:'Pashë familjen e Durimit dhe ndihem e lumtur.', en:'I saw Durim\'s family and I feel happy.', fr:'J\'ai vu la famille de Durim et je me sens heureuse.', hint:'Pashë' },
+];
+
+var ORDERING = [
+  { words:['Dje','shkova','Paris','dhe','ishte','shumë','e bukur'], answer:'Dje shkova Paris dhe ishte shumë e bukur.', en:'Yesterday I went to Paris and it was very beautiful.', fr:'Hier je suis allée à Paris et c\'était très beau.' },
+  { words:['Isha','shumë','e emocionuar','kur','e pashë','familjen'], answer:'Isha shumë e emocionuar kur e pashë familjen.', en:'I was very excited when I saw the family.', fr:'J\'étais très émue quand j\'ai vu la famille.' },
+  { words:['Hëngra','byrek','dhe','ishte','ushqimi','ma i shijshëm'], answer:'Hëngra byrek dhe ishte ushqimi ma i shijshëm.', en:'I ate byrek and it was the tastiest food.', fr:'J\'ai mangé du byrek et c\'était le plat le plus délicieux.' },
+];
+
+var SPEAK = [
+  { situation:'You arrive at Durim\'s family home for the first time. His mother asks how you got there. Say where you came from, how you travelled, and how you were feeling.', hint:'<strong style="color:var(--gold)">Shkova... me...</strong> (I went by...) + <strong style="color:var(--gold)">isha e...</strong> (I was...)', targets:['shkova','isha','+ a feeling word'] },
+  { situation:'Tell someone about something you ate recently that you loved (or hated). Where did you eat it? What was it? How was it?', hint:'<strong style="color:var(--gold)">Hëngra... në...</strong> + <strong style="color:var(--gold)">ishte shumë...</strong> + opinion', targets:['hëngra','ishte','+ opinion'] },
+  { situation:'Describe a memory from when you were little. Where were you? What did you see or do? How did you feel?', hint:'<strong style="color:var(--gold)">Kur isha e vogël, shkova... / pashë... / isha...</strong>', targets:['kur isha','shkova or pashë','+ feeling'] },
+];
+
+var FREE_SPEAK = [
+  { situation:'2 past verbs + 1 feeling — minimum', q:'Trego diçka interesante që bëre javën e kaluar.', fr:'Tell me something interesting you did last week.', scaffold:'Start with <strong style="color:var(--gold)">Javën e kaluar shkova...</strong> then add <strong style="color:var(--gold)">pashë / hëngra / piva...</strong> then <strong style="color:var(--gold)">isha e... / ishte...</strong>' },
+  { situation:'A childhood memory — use "kur isha e vogël"', q:'Trego një kujtim kur ishe e vogël. Ku ishe? Çka bëje? Si ndiheshe?', fr:'Tell me a childhood memory. Where were you? What were you doing? How did you feel?', scaffold:'<strong style="color:var(--gold)">Kur isha e vogël, shkova... / isha... / pashë...</strong> + <strong style="color:var(--gold)">ishte shumë e bukur / e mrekullueshme</strong>' },
+  { situation:'A place that moved you — combine past + opinion', q:'Trego për një vend që të ka lënë ndjesë. Çka pashë? Çka hëngre? Si ishte?', fr:'Tell me about a place that left an impression. What did you see? What did you eat? How was it?', scaffold:'<strong style="color:var(--gold)">Shkova... pashë... hëngra... ishte e paharrueshme</strong> → then bounce: <strong style="color:var(--gold)">A ke shku ndonjëherë atje?</strong>' },
+  { situation:'Free — use the past however you want', q:'Trego diçka — çdo gjë. Vetëm folë dhe përdor kohën e shkuar.', fr:'Tell me anything. Just speak and use the past tense.', scaffold:'Any past verb + any time marker + any feeling. The story is yours.' },
+];
+
+var LYRICS = [
+  { section:'Verse 1', lines:[
+    { alb:'As vetë se di prej ka vjen kjo nostalgji', en:'I don\'t even know where this nostalgia comes from', fr:'Je ne sais même pas d\'où vient cette nostalgie', note:'<strong>As vetë</strong> = not even (myself). <strong>Se di</strong> = I don\'t know. <strong>Nostalgji</strong> = nostalgia — same word in French!' },
+    { alb:'Ky pikëllim në çdo fjalë e melodi', en:'This sadness in every word and melody', fr:'Cette tristesse dans chaque mot et mélodie', note:'<strong>Pikëllim</strong> = sadness/grief. <strong>Çdo</strong> = every. <strong>Fjalë</strong> = word.' },
+    { alb:'Je i ri po me thonë je shumë i ri', en:'You\'re young but they tell me you\'re too young', fr:'Tu es jeune mais on me dit que tu es trop jeune', note:'<strong>I ri</strong> = young (m.). <strong>Shumë</strong> = too/very. <strong>Me thonë</strong> = they tell me.' },
+    { alb:'Për me pi e mu deh në mërzi', en:'To drink and drown in boredom', fr:'Pour boire et se noyer dans l\'ennui', note:'<strong>Me pi</strong> = to drink. <strong>Mu deh</strong> = to get drunk. <strong>Mërzi</strong> = boredom/sadness — a heavy, weighted feeling.' },
+    { alb:'E po m\'duket këtë jetë unë i paguj gjynahet e tjetërkujt', en:'It seems I\'m paying for someone else\'s sins in this life', fr:'Il me semble que je paie les péchés de quelqu\'un d\'autre dans cette vie', note:'<strong>Po m\'duket</strong> = it seems to me. <strong>Paguj</strong> = I pay. <strong>Gjynah</strong> = sin (from Turkish — very common in Kosovo Albanian).' },
+  ]},
+  { section:'Chorus', lines:[
+    { alb:'Oj zemra ime sonte vetëm qaj', en:'Oh my heart, tonight just cry', fr:'Oh mon cœur, ce soir pleure seulement', note:'<strong>Zemra ime</strong> = my heart. <strong>Sonte</strong> = tonight (you know this!). <strong>Qaj</strong> = cry / I cry.' },
+    { alb:'Për vitet që po shkojnë ti qaj', en:'For the years that are passing, cry', fr:'Pour les années qui passent, pleure', note:'<strong>Vitet</strong> = the years. <strong>Që po shkojnë</strong> = that are going/passing. Present continuous — time never stops.' },
+    { alb:'Për krejt që iken se ti pate faj', en:'For everything that leaves, because it was your fault', fr:'Pour tout ce qui s\'en va, parce que c\'était ta faute', note:'<strong>Krejt</strong> = everything — a key Kosovo dialect word. <strong>Pate faj</strong> = it was your fault. <strong>Past tense!</strong>' },
+    { alb:'Qaj qaj qaj', en:'Cry, cry, cry', fr:'Pleure, pleure, pleure', note:'Repetition for emotional emphasis — very common in Albanian song. Simple, but piercing.' },
+    { alb:'Për shoqët e humbun diku nëpër botë', en:'For friends lost somewhere in the world', fr:'Pour les amis perdus quelque part dans le monde', note:'<strong>Shoqët</strong> = the friends. <strong>E humbun</strong> = lost. <strong>Nëpër botë</strong> = around the world.' },
+    { alb:'Për dashnin që e humbe shfryhu n\'vaj', en:'For the love you lost, release it in tears', fr:'Pour l\'amour que tu as perdu, libère-le dans les larmes', note:'<strong>E humbe</strong> = you lost it. <strong>Past tense!</strong> Same root as <strong>humbur</strong> (lost). <strong>Shfryhu</strong> = release/let it out. <strong>Vaj</strong> = tears.' },
+  ]},
+  { section:'Verse 2', lines:[
+    { alb:'Plot me njerëz e unë prap po ndihem vetëm', en:'Full of people and I still feel alone', fr:'Plein de monde et moi je me sens encore seule', note:'<strong>Plot</strong> = full of. <strong>Prap</strong> = still/again. <strong>Ndihem vetëm</strong> = I feel alone — you know <strong>ndihem</strong>!' },
+    { alb:'Kon e du janë bo vjet që nuk m\'u thrret', en:'Those I used to love — it\'s been years since they called', fr:'Ceux que j\'aimais — ça fait des années qu\'ils n\'ont pas appelé', note:'<strong>Janë bo vjet</strong> = it\'s been years. <strong>Nuk m\'u thrret</strong> = didn\'t call me. Time and absence in one line.' },
+    { alb:'Nuk po du mo n\'kujtime me jetuar', en:'I don\'t want to live in memories anymore', fr:'Je ne veux plus vivre dans les souvenirs', note:'<strong>Nuk po du</strong> = I don\'t want. <strong>Mo</strong> = anymore (Kosovo dialect, very common). <strong>N\'kujtime</strong> = in memories.' },
+    { alb:'Pse ke shku? Pse nuk rrijshe këtu me mu?', en:'Why did you go? Why didn\'t you stay here with me?', fr:'Pourquoi es-tu parti(e)? Pourquoi ne restais-tu pas ici avec moi?', note:'<strong>Ke shku</strong> = you went/have gone — <strong>past tense!</strong> <strong>Nuk rrijshe</strong> = you didn\'t stay. Two past forms in one line. Notice: these are also questions!' },
+    { alb:'Premtimet që s\'i kom majt', en:'The promises I haven\'t kept', fr:'Les promesses que je n\'ai pas tenues', note:'<strong>Premtimet</strong> = the promises. <strong>S\'i kom majt</strong> = I haven\'t kept them. Guilt as nostalgia — a very human line.' },
+  ]},
+  { section:'Bridge', lines:[
+    { alb:'E ti qaj', en:'And you cry', fr:'Et toi, tu pleures', note:'Three words. <strong>E</strong> = and. <strong>Ti</strong> = you. <strong>Qaj</strong> = cry. The song keeps returning to this word like a heartbeat.' },
+  ]},
+];
+
+// ══════════════════════ STATE
+var corrections = [], corrOpen = false;
+var sectionTimers = {}, sectionSeconds = {}, completedSections = [];
+var takeHomeDone = 0, activeLyricLine = null;
+var mcqIndex = 0, mcqScore = 0;
+var orderStates = [];
+
+var READING_QS = [
+  { q:'Ku shkoi Mel pramë?', en:'Where did Mel go last night?', answer:'Shkoi Prishtinë / She went to Pristina.' },
+  { q:'Si ndihej Mel kur mbërriti?', en:'How did Mel feel when she arrived?', answer:'Ishte e emocionuar dhe pak e nervozme. / She was excited and a little nervous.' },
+  { q:'Çka hëngri Mel te familja?', en:'What did Mel eat at the family home?', answer:'Hëngri byrek, tavë kosi dhe fruta. / She ate byrek, tavë kosi and fruit.' },
+  { q:'Si ishte kafja turke?', en:'What was the Turkish coffee like?', answer:'Ishte e fortë por e shijshme. / It was strong but delicious.' },
+  { q:'Si ndihej Mel natën?', en:'How did Mel feel in the evening?', answer:'Ishte e lodhur por shumë e lumtur. / She was tired but very happy.' },
+];
+
+function renderReadingQs(){
+  var area = document.getElementById('reading-qs');
+  if(!area) return;
+  area.innerHTML = READING_QS.map(function(q,i){
+    return '<div style="background:var(--surface2);border-radius:12px;padding:14px 16px;margin-bottom:10px">'
+      +'<div style="font-family:\'Playfair Display\',serif;font-size:1rem;color:var(--text);margin-bottom:4px">'+q.q+'</div>'
+      +'<div style="font-size:.75rem;color:var(--muted);font-style:italic;margin-bottom:10px">'+q.en+'</div>'
+      +'<div id="rqa-'+i+'" style="background:var(--teal-dim);border-left:2px solid var(--teal);border-radius:0 8px 8px 0;padding:9px 12px;font-size:.82rem;color:var(--teal);display:none;line-height:1.6">'+q.answer+'</div>'
+      +'<button style="background:transparent;border:1.5px solid var(--border);border-radius:8px;color:var(--muted);font-family:\'DM Sans\',sans-serif;font-size:.75rem;font-weight:600;padding:6px 12px;cursor:pointer" id="rqb-'+i+'" onclick="showRQA('+i+')">'
+      +'Check answer</button>'
+    +'</div>';
+  }).join('');
+}
+
+function showRQA(i){
+  document.getElementById('rqa-'+i).style.display='block';
+  document.getElementById('rqb-'+i).style.display='none';
+}
+
+(function init(){
+  renderMCQ(0);
+  renderGaps();
+  renderOrdering();
+  renderSpeak();
+  renderFreeSpeak();
+  renderLyrics();
+  renderReadingQs();
+})();
+
+// ══════════════════════ MCQ
+function renderMCQ(idx){
+  var area = document.getElementById('mcq-area');
+  if(idx >= MCQ.length){
+    area.innerHTML += '<div class="card" style="border-color:rgba(61,158,140,.3);text-align:center;padding:16px"><div style="font-family:\'Playfair Display\',serif;font-size:1.1rem;color:var(--teal)">✓ All done! Score: '+mcqScore+'/'+MCQ.length+'</div><div style="font-size:.82rem;color:var(--muted);margin-top:6px">'+( mcqScore>=5?'Excellent — you\'ve got the pattern.':'Review the ones you missed above before moving on.')+'</div></div>';
+    return;
+  }
+  var q = MCQ[idx];
+  var shuffled = q.opts.slice().sort(function(){return Math.random()-.5});
+  var html = '<div class="mcq-card" id="mcq-'+idx+'">'
+    +'<div class="card-label">Question '+(idx+1)+' of '+MCQ.length+'</div>'
+    +'<div class="mcq-q">'+q.q+'</div>'
+    +'<div class="mcq-opts">'
+    +shuffled.map(function(o){return '<button class="mcq-opt" onclick="answerMCQ(this,\''+o.replace(/'/g,"\\'")+"','"+q.correct.replace(/'/g,"\\'")+'\','+idx+')">'+o+'</button>'}).join('')
+    +'</div>'
+    +'<div class="mcq-feedback" id="mf-'+idx+'"></div>'
+    +'<button class="mcq-next" id="mn-'+idx+'" onclick="renderMCQ('+(idx+1)+')">Next →</button>'
+    +'</div>';
+  area.innerHTML += html;
+}
+
+function answerMCQ(btn,chosen,correct,idx){
+  document.querySelectorAll('#mcq-'+idx+' .mcq-opt').forEach(function(b){b.disabled=true});
+  var fb = document.getElementById('mf-'+idx);
+  var nxt = document.getElementById('mn-'+idx);
+  fb.classList.add('show'); nxt.classList.add('show');
+  if(chosen===correct){
+    btn.classList.add('correct'); mcqScore++;
+    fb.className='mcq-feedback show correct'; fb.textContent=MCQ[idx].fb;
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('#mcq-'+idx+' .mcq-opt').forEach(function(b){if(b.textContent===correct)b.classList.add('correct')});
+    fb.className='mcq-feedback show wrong'; fb.innerHTML='The answer is <strong>'+correct+'</strong>. '+MCQ[idx].fb;
+  }
+}
+
+// ══════════════════════ GAP FILL
+function renderGaps(){
+  var area = document.getElementById('gap-area');
+  area.innerHTML = GAPS.map(function(g,i){
+    var mid = g.input2
+      ? 'Në mëngjes <input class="gap-input" id="gi-'+i+'-0" placeholder="___"> bukë me djathë dhe <input class="gap-input" id="gi-'+i+'-1" placeholder="___"> kafe.'
+      : g.before+' <input class="gap-input" id="gi-'+i+'-0" placeholder="___"> '+g.after;
+    return '<div class="gap-card">'
+      +'<div class="gap-sentence">'+mid+'</div>'
+      +'<div class="gap-fr">🇫🇷 '+g.fr+'</div>'
+      +'<button class="gap-check-btn" id="gc-'+i+'" onclick="checkGap('+i+')">Check →</button>'
+      +'<div class="gap-result" id="gr-'+i+'"></div>'
+    +'</div>';
+  }).join('');
+}
+
+function checkGap(i){
+  var g = GAPS[i];
+  var v0 = document.getElementById('gi-'+i+'-0');
+  var v1 = document.getElementById('gi-'+i+'-1');
+  var correct0 = v0.value.trim().toLowerCase() === g.input.toLowerCase();
+  var correct1 = !g.input2 || (v1 && v1.value.trim().toLowerCase() === (g.input2||'').toLowerCase());
+  var allCorrect = correct0 && correct1;
+  v0.className = 'gap-input '+(correct0?'correct-input':'wrong-input');
+  if(v1) v1.className = 'gap-input '+(correct1?'correct-input':'wrong-input');
+  document.getElementById('gc-'+i).disabled = true;
+  var res = document.getElementById('gr-'+i);
+  res.classList.add('show');
+  if(allCorrect){
+    res.className='gap-result show correct';
+    res.innerHTML='✓ Saktë! &nbsp;<em style="color:var(--muted);font-size:.78rem">'+g.en+'</em>';
+  } else {
+    res.className='gap-result show wrong';
+    res.innerHTML='The correct answer: <strong style="color:var(--gold)">'+g.input+(g.input2?' · '+g.input2:'')+'</strong><br><em style="font-size:.78rem;color:var(--muted)">'+g.en+'</em>';
+    if(!correct0){v0.value=g.input;v0.className='gap-input correct-input'}
+    if(v1&&!correct1){v1.value=g.input2;v1.className='gap-input correct-input'}
+  }
+}
+
+// ══════════════════════ ORDERING
+function renderOrdering(){
+  var area = document.getElementById('order-area');
+  orderStates = ORDERING.map(function(){return{placed:[],remaining:[]}});
+  area.innerHTML = ORDERING.map(function(o,i){
+    var shuffled = o.words.slice().sort(function(){return Math.random()-.5});
+    orderStates[i].remaining = shuffled.slice();
+    var bankHtml = shuffled.map(function(w,wi){
+      return '<div class="order-word" id="ow-'+i+'-'+wi+'" onclick="clickWord('+i+',\''+w.replace(/'/g,"\\'")+'\',this)">'+w+'</div>';
+    }).join('');
+    return '<div class="order-card">'
+      +'<div class="order-instruction">Put the words in the correct order to make a past tense sentence.<br><span style="font-size:.74rem;color:var(--blue);font-style:italic">🇫🇷 '+o.fr+'</span></div>'
+      +'<div class="order-words" id="oz-'+i+'"></div>'
+      +'<div class="order-bank" id="ob-'+i+'">'+bankHtml+'</div>'
+      +'<div style="display:flex;gap:8px">'
+      +'<button class="order-check" onclick="checkOrder('+i+')">Check →</button>'
+      +'<button class="order-check" style="background:var(--surface2);color:var(--muted)" onclick="resetOrder('+i+')">Reset</button>'
+      +'</div>'
+      +'<div class="order-feedback" id="of-'+i+'"></div>'
+    +'</div>';
+  }).join('');
+}
+
+function clickWord(i, word, el){
+  var zone = document.getElementById('oz-'+i);
+  var state = orderStates[i];
+  if(el.classList.contains('in-zone')){
+    el.classList.remove('in-zone');
+    state.placed = state.placed.filter(function(w){return w!==word||true&&state.placed.splice(state.placed.indexOf(word),1)&&false});
+    // remove last occurrence
+    var idx = state.placed.lastIndexOf(word);
+    if(idx>-1) state.placed.splice(idx,1);
+    // remove from zone
+    var chips = zone.querySelectorAll('.order-word');
+    chips.forEach(function(c){if(c.dataset.word===word&&!c.dataset.removed){c.dataset.removed='1';c.remove()}});
+    el.classList.remove('in-zone');
+    return;
+  }
+  el.classList.add('in-zone');
+  state.placed.push(word);
+  var chip = document.createElement('div');
+  chip.className='order-word in-zone';
+  chip.dataset.word=word;
+  chip.textContent=word;
+  chip.onclick=function(){
+    chip.remove();
+    var idx2=state.placed.lastIndexOf(word);
+    if(idx2>-1)state.placed.splice(idx2,1);
+    el.classList.remove('in-zone');
+  };
+  zone.appendChild(chip);
+}
+
+function checkOrder(i){
+  var o = ORDERING[i];
+  var placed = orderStates[i].placed.join(' ');
+  var fb = document.getElementById('of-'+i);
+  fb.classList.add('show');
+  if(placed===o.answer||placed===o.answer.replace('.','')+'.'||placed.replace('.','')===o.answer.replace('.','')){
+    fb.className='order-feedback show correct';
+    fb.innerHTML='✓ Saktë! <em style="color:var(--muted);font-size:.78rem">'+o.en+'</em>';
+  } else {
+    fb.className='order-feedback show wrong';
+    fb.innerHTML='The correct order: <strong style="color:var(--gold)">'+o.answer+'</strong>';
+  }
+}
+
+function resetOrder(i){
+  var zone = document.getElementById('oz-'+i);
+  zone.innerHTML='';
+  orderStates[i].placed=[];
+  document.querySelectorAll('#ob-'+i+' .order-word').forEach(function(el){el.classList.remove('in-zone')});
+  var fb = document.getElementById('of-'+i);
+  fb.classList.remove('show');
+}
+
+// ══════════════════════ SPEAK (scaffolded)
+function renderSpeak(){
+  var area = document.getElementById('speak-area');
+  area.innerHTML = SPEAK.map(function(s,i){
+    var targetHtml = s.targets.map(function(t){return '<span class="speak-target">'+t+'</span>'}).join('');
+    return '<div class="speak-card">'
+      +'<div class="practice-situation" style="font-size:.78rem;color:var(--muted);font-style:italic;margin-bottom:8px">'+s.situation+'</div>'
+      +'<div class="speak-targets">'+targetHtml+'</div>'
+      +'<div class="hint-box" id="sh-'+i+'">'+s.hint+'</div>'
+      +'<div class="answer-box" id="sa-'+i+'"></div>'
+      +'<div style="margin-top:12px">'
+      +'<button class="hint-btn" id="shb-'+i+'" onclick="showSHint('+i+')">💡 Hint</button>'
+      +'<button class="tried-btn" id="stb-'+i+'" onclick="markSpoken('+i+')">I said it →</button>'
+      +'</div>'
+    +'</div>';
+  }).join('');
+}
+
+function showSHint(i){document.getElementById('sh-'+i).classList.add('show');document.getElementById('shb-'+i).disabled=true}
+function markSpoken(i){
+  document.getElementById('stb-'+i).textContent='✓ Done';
+  document.getElementById('stb-'+i).disabled=true;
+  document.getElementById('stb-'+i).style.background='var(--teal)';
+}
+
+// ══════════════════════ FREE SPEAK
+function renderFreeSpeak(){
+  var area = document.getElementById('free-speak-area');
+  area.innerHTML = FREE_SPEAK.map(function(s,i){
+    return '<div class="speak-card">'
+      +'<div class="practice-situation" style="font-size:.78rem;color:var(--muted);font-style:italic;margin-bottom:8px">'+s.situation+'</div>'
+      +'<div class="speak-prompt">'+s.q+'</div>'
+      +'<div class="speak-fr">'+s.fr+'</div>'
+      +'<div class="scaffold-box" id="fs-'+i+'" style="background:var(--violet-dim);border-left:2px solid var(--violet);border-radius:0 8px 8px 0;padding:10px 12px;font-size:.82rem;color:rgba(28,24,20,0.80);margin-top:10px;display:none;line-height:1.6">'+s.scaffold+'</div>'
+      +'<button class="scaffold-btn" id="fsb-'+i+'" style="background:transparent;border:1.5px solid var(--border);border-radius:8px;color:var(--muted);font-family:\'DM Sans\',sans-serif;font-size:.78rem;font-weight:600;padding:7px 12px;cursor:pointer" onclick="showFScaffold('+i+')">💡 Scaffold</button>'
+    +'</div>';
+  }).join('');
+}
+
+function showFScaffold(i){document.getElementById('fs-'+i).style.display='block';document.getElementById('fsb-'+i).disabled=true}
+
+// ══════════════════════ LYRICS
+function renderLyrics(){
+  var c = document.getElementById('lyrics-container');
+  var html='';
+  LYRICS.forEach(function(sec){
+    html+='<div class="lyrics-tag">'+sec.section+'</div>';
+    sec.lines.forEach(function(line,idx){
+      var id='ln-'+sec.section.replace(/\s/g,'')+idx;
+      html+='<div class="lyric-line" id="'+id+'" data-id="'+id+'" onclick="toggleLine(this.dataset.id)">'
+        +'<div class="lyric-alb">'+line.alb+'</div>'
+        +'<div class="translation-bubble">'
+        +'<div class="tb-en">'+line.en+'</div>'
+        +'<div class="tb-fr">'+line.fr+'</div>'
+        +(line.note?'<div class="tb-note">📝 '+line.note+'</div>':'')
+        +'</div></div>';
+    });
+  });
+  c.innerHTML=html;
+}
+
+function toggleLine(id){
+  var el=document.getElementById(id);
+  var isActive=el.classList.contains('active');
+  if(activeLyricLine&&activeLyricLine!==id){var p=document.getElementById(activeLyricLine);if(p)p.classList.remove('active')}
+  if(isActive){el.classList.remove('active');activeLyricLine=null}
+  else{el.classList.add('active');activeLyricLine=id;setTimeout(function(){el.scrollIntoView({behavior:'smooth',block:'nearest'})},50)}
+}
+
+// ══════════════════════ TAKE HOME
+function doTakeHome(){
+  if(takeHomeDone>=3)return;
+  takeHomeDone++;
+  var pips=['tp1','tp2','tp3'];
+  var el=document.getElementById(pips[takeHomeDone-1]);
+  el.style.background='var(--gold)';el.style.borderColor='var(--gold)';el.style.color='var(--bg)';el.textContent='✓';
+  document.getElementById('th-tip').style.display='block';
+  var btn=document.getElementById('say-btn');
+  if(takeHomeDone===1)btn.textContent='▶ Louder!';
+  else if(takeHomeDone===2)btn.textContent='▶ Own it!';
+  else{btn.textContent='✓ Done!';btn.disabled=true;document.getElementById('done-banner').style.display='block';completeSection(6,null);launchConfetti()}
+}
+
+// ══════════════════════ TIMERS
+function startTimer(id){
+  stopAllTimers();
+  sectionSeconds[id]=sectionSeconds[id]||0;
+  var el=document.getElementById('t'+id);
+  if(el)el.className='nav-timer running';
+  sectionTimers[id]=setInterval(function(){
+    sectionSeconds[id]++;
+    var m=Math.floor(sectionSeconds[id]/60),s=sectionSeconds[id]%60;
+    if(el)el.textContent=m+':'+(s<10?'0':'')+s;
+  },1000);
+}
+
+// ══════════════════════ NAV
+function goSection(id){
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  var num = id === 's2b' ? '2b' : parseInt(id.replace('s',''));
+  startTimer(num);
+}
+
+function goHome(){
+  stopAllTimers();
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});
+  document.getElementById('home').classList.add('active');
+  window.scrollTo(0,0);
+}
+function completeSection(num,nextId){
+  if(completedSections.indexOf(num)===-1)completedSections.push(num);
+  var p=document.getElementById('plan-'+num),n=document.getElementById('pn-'+num);
+  if(p)p.classList.add('done');if(n)n.textContent='✓';
+  if(nextId)setTimeout(function(){goSection(nextId)},300);
+}
+
+function stopAllTimers(){Object.keys(sectionTimers).forEach(function(k){clearInterval(sectionTimers[k])})}
+
+// ══════════════════════ CORRECTIONS
+function openCorr(){corrOpen=true;document.getElementById('corr-drawer').classList.add('open');document.getElementById('corr-backdrop').classList.add('open');setTimeout(function(){var i=document.getElementById('corr-input');if(i)i.focus()},350)}
+function closeCorr(){corrOpen=false;document.getElementById('corr-drawer').classList.remove('open');document.getElementById('corr-backdrop').classList.remove('open')}
+function addCorr(){var input=document.getElementById('corr-input'),text=input.value.trim();if(!text)return;corrections.push({id:Date.now(),text:text});input.value='';renderCorr();if(!corrOpen)openCorr()}
+function dismissCorr(id){corrections=corrections.filter(function(c){return c.id!==id});renderCorr()}
+function renderCorr(){
+  var list=document.getElementById('corr-list'),empty=document.getElementById('corr-empty');
+  document.getElementById('corr-badge').textContent=corrections.length;
+  if(!corrections.length){list.innerHTML='';list.appendChild(empty);empty.style.display='block';return}
+  empty.style.display='none';
+  list.innerHTML=corrections.map(function(c){return'<div class="corr-item"><div class="corr-text">'+c.text+'</div><button class="corr-dismiss" onclick="dismissCorr('+c.id+')">×</button></div>'}).join('');
+}
+
+// ══════════════════════ CONFETTI
+function launchConfetti(){
+  var colors=['#D4A84B','#C45870','#3D9E8C','#7060A8','#4A7EC4'];
+  for(var i=0;i<60;i++){
+    var el=document.createElement('div');el.className='confetti-piece';
+    el.style.cssText='left:'+(Math.random()*100)+'vw;top:-8px;background:'+colors[Math.floor(Math.random()*colors.length)]+';width:'+(5+Math.random()*7)+'px;height:'+(5+Math.random()*7)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation-delay:'+(Math.random()*.5)+'s;animation-duration:'+(2+Math.random()*1.5)+'s';
+    document.body.appendChild(el);
+    setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el)},4000);
+  }
+}
+</script>
+</body>
+</html>
