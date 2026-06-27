@@ -1,7 +1,8 @@
 [
-{ "file": "albanian-lesson1.html", "title": "#1 restart" },
-{ "file": "albanian-lesson2.html", "title": "#2 Çka don?" },
-{ "file": "mel-lesson4.html", "title": "#3 Ndihem & mendoj" },
+{ "file": "mel-lesson6.html", "title": "#5 Kujto & trego" },
+{ "file": "mel-lesson5.html", "title": "#4 Fol si ti" },
 { "file": "mel-vocab.html", "title": "# Vocabulary builder" },
-{ "file": "mel-lesson5.html", "title": "#4 Fol si ti" }
+{ "file": "mel-lesson4.html", "title": "#3 Ndihem & mendoj" },
+{ "file": "albanian-lesson2.html", "title": "#2 Çka don?" },
+{ "file": "albanian-lesson1.html", "title": "#1 restart" }
 ]
