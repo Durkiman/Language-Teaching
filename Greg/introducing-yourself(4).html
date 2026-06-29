@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introducing Yourself</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F5F2;
+    --surface: #FFFFFF;
+    --border: #E2DDD8;
+    --ink: #1C1C1C;
+    --muted: #6B6560;
+    --accent: #2A6B8A;
+    --accent-light: #EAF3F8;
+    --accent-dark: #1D4F66;
+    --gold: #C9922B;
+    --gold-light: #FDF3E3;
+    --green: #2E7D5E;
+    --green-light: #E8F5EF;
+    --radius: 12px;
+    --tab-h: 56px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    padding-bottom: 80px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--accent);
+    color: white;
+    padding: 20px 24px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    line-height: 1.2;
+  }
+  .header p {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    margin-top: 2px;
+  }
+  .level-badge {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* ── TABS ── */
+  .tabs {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    background: var(--accent-dark);
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex: 1;
+    min-width: 80px;
+    padding: 10px 6px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: rgba(255,255,255,0.65);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .tab-btn.active {
+    color: white;
+    border-bottom-color: var(--gold);
+  }
+
+  /* ── PANELS ── */
+  .panel { display: none; padding: 20px 16px; max-width: 680px; margin: 0 auto; }
+  .panel.active { display: block; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .card-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+  .card p, .card li {
+    font-size: 0.93rem;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+  .card ul { padding-left: 18px; }
+  .card li { margin-bottom: 4px; }
+
+  /* ── TIMER BOX ── */
+  .timer-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gold-light);
+    border: 1px solid #E8C97A;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+
+  /* ── VOCAB CARDS ── */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .vocab-card {
+    background: var(--accent-light);
+    border: 1.5px solid #C2DCE9;
+    border-radius: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .vocab-card:active { transform: scale(0.97); }
+  .vocab-phrase {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--accent-dark);
+    margin-bottom: 2px;
+  }
+  .vocab-example {
+    font-size: 0.78rem;
+    color: var(--muted);
+    display: none;
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+  .vocab-card.revealed .vocab-example { display: block; }
+  .vocab-card.mastered {
+    background: var(--green-light);
+    border-color: #9DCFB8;
+  }
+  .vocab-card.mastered .vocab-phrase { color: var(--green); }
+  .tap-hint {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  /* ── MODEL TEXT ── */
+  .model-text {
+    background: var(--gold-light);
+    border-left: 4px solid var(--gold);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 18px;
+    margin: 12px 0;
+    font-size: 0.93rem;
+    line-height: 1.75;
+    color: var(--ink);
+  }
+  .model-text strong { color: var(--accent-dark); }
+
+  /* ── QUESTIONS ── */
+  .question-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .question-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .q-num {
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-top: 1px;
+  }
+
+  /* ── GAP FILL ── */
+  .gap-sentence {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+  .gap-sentence input {
+    border: none;
+    border-bottom: 2px solid var(--accent);
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    color: var(--ink);
+    width: 130px;
+    outline: none;
+    padding: 0 4px;
+    margin: 0 2px;
+  }
+  .gap-sentence input::placeholder { color: #BBBBBB; }
+
+  /* ── SPEAKING PROMPTS ── */
+  .speaking-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .speaking-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: var(--surface);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .speaking-tag {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+  .tag-warmup { background: #EAF3F8; color: var(--accent); }
+  .tag-core { background: var(--gold-light); color: var(--gold); }
+  .tag-challenge { background: #F3EAF8; color: #7A3FA0; }
+  .speaking-body {
+    display: none;
+    padding: 12px 16px 14px;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+  .speaking-body.open { display: block; }
+
+  /* ── WRITING ── */
+  .writing-starters {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .starter-btn {
+    background: var(--accent-light);
+    border: 1.5px solid #C2DCE9;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    color: var(--accent-dark);
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.2s;
+  }
+  .starter-btn:hover { background: #D8EAF4; }
+  textarea {
+    width: 100%;
+    min-height: 140px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--ink);
+    background: var(--surface);
+    resize: vertical;
+    outline: none;
+    line-height: 1.65;
+  }
+  textarea:focus { border-color: var(--accent); }
+
+  /* ── HOMEWORK BADGE ── */
+  .hw-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #F3EAF8;
+    border: 1px solid #D4B8E8;
+    border-radius: 20px;
+    padding: 5px 13px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #7A3FA0;
+    margin-bottom: 12px;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 18px 0;
+  }
+
+  /* ── TIPS ── */
+  .tip {
+    background: var(--green-light);
+    border-left: 3px solid var(--green);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+    font-size: 0.82rem;
+    color: #1F5C42;
+    line-height: 1.55;
+    margin-top: 10px;
+  }
+  .tip strong { font-weight: 600; }
+
+  /* ── TEACHER NOTE ── */
+  .teacher-note {
+    background: #FFF8E6;
+    border: 1px dashed var(--gold);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 0.82rem;
+    color: #7A5C10;
+    line-height: 1.6;
+    margin-top: 12px;
+  }
+  .teacher-note strong { font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div>
+      <h1>Introducing Yourself</h1>
+      <p>Speaking & Vocabulary — Lesson 1</p>
+    </div>
+    <span class="level-badge">A2 – B1</span>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('warmup')">Warm-Up</button>
+    <button class="tab-btn" onclick="showTab('vocab')">Vocabulary</button>
+    <button class="tab-btn" onclick="showTab('reading')">Model Text</button>
+    <button class="tab-btn" onclick="showTab('practice')">Practice</button>
+    <button class="tab-btn" onclick="showTab('speaking')">Speaking</button>
+    <button class="tab-btn" onclick="showTab('askback')">Ask Back</button>
+    <button class="tab-btn" onclick="showTab('writing')">Writing</button>
+  </div>
+</div>
+
+<!-- ══ WARM-UP ══ -->
+<div id="tab-warmup" class="panel active">
+  <div class="timer-box">⏱ 5 min</div>
+
+  <div class="card">
+    <div class="card-label">Retrieval — Think First</div>
+    <h2>What can you say about yourself in English?</h2>
+    <p>Before we look at anything, try to answer these questions out loud. Don't worry if you're not sure — just try.</p>
+    <hr class="divider">
+    <ul class="question-list" style="margin-top:0">
+      <li class="question-item"><span class="q-num">1</span>What's your name, and where are you from?</li>
+      <li class="question-item"><span class="q-num">2</span>What do you do for work?</li>
+      <li class="question-item"><span class="q-num">3</span>What do you do in your free time?</li>
+      <li class="question-item"><span class="q-num">4</span>Why are you learning English?</li>
+    </ul>
+    <div class="tip" style="margin-top:14px">
+      <strong>Teacher note:</strong> Listen without correcting. Note recurring errors silently. The goal is to hear their natural English baseline.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Today's Goal</div>
+    <p>By the end of this lesson, you'll be able to introduce yourself clearly and confidently in English — your name, where you're from, what you do, your interests, and why you're here.</p>
+  </div>
+</div>
+
+<!-- ══ VOCABULARY ══ -->
+<div id="tab-vocab" class="panel">
+  <div class="timer-box">⏱ 10 min</div>
+
+  <div class="card">
+    <div class="card-label">Key Phrases</div>
+    <h2>How to talk about yourself</h2>
+    <p>Tap a card to see an example. Tap again to mark it as learned.</p>
+    <div class="vocab-grid" style="margin-top:14px">
+
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">My name is…</div>
+        <div class="vocab-example">My name is Marco. People call me Marc.</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">I'm from…</div>
+        <div class="vocab-example">I'm from Brussels, in Belgium.</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">I work as…</div>
+        <div class="vocab-example">I work as a bar manager. I run my own place.</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">I'm interested in…</div>
+        <div class="vocab-example">I'm interested in travel and meeting new people.</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">In my free time…</div>
+        <div class="vocab-example">In my free time, I like to cook and go hiking.</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">I'm learning English because…</div>
+        <div class="vocab-example">I'm learning English because I want to talk more easily with clients and travellers.</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">I've been to… / I'd like to go to…</div>
+        <div class="vocab-example">I've been to Portugal. I'd like to go to Japan one day.</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">Nice to meet you.</div>
+        <div class="vocab-example">Nice to meet you! I hope we can practise a lot together.</div>
+      </div>
+
+    </div>
+    <p class="tap-hint">Tap once → example · Tap again → learned ✓</p>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Useful connectors</div>
+    <p style="margin-bottom:10px">These small words make your English sound much more natural.</p>
+    <ul>
+      <li><strong>also</strong> — I work at a bar. I also teach yoga.</li>
+      <li><strong>and</strong> — I like music and travel.</li>
+      <li><strong>but</strong> — My English is okay, but I want to improve.</li>
+      <li><strong>so</strong> — I meet a lot of tourists, so English is important for me.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══ MODEL TEXT ══ -->
+<div id="tab-reading" class="panel">
+  <div class="timer-box">⏱ 10 min</div>
+
+  <div class="card">
+    <div class="card-label">Read & Listen</div>
+    <h2>Meet Alex</h2>
+    <p style="margin-bottom:12px">Read this short introduction. Then answer the questions below.</p>
+
+    <div class="model-text">
+      Hi! <strong>My name is Alex.</strong> I'm 34 years old and <strong>I'm from</strong> Lyon, in France. I live there now, but I grew up in a small town near the mountains.<br><br>
+      <strong>I work as</strong> a chef in a restaurant. I love cooking — it's creative and I meet interesting people every day.<br><br>
+      <strong>In my free time</strong>, I like to run, travel, and listen to music. <strong>I've been to</strong> Spain, Italy, and Morocco. <strong>I'd like to go to</strong> Japan one day — the food culture there is incredible.<br><br>
+      <strong>I'm learning English because</strong> I want to talk with more customers at the restaurant — a lot of them are tourists. I also want to travel more and feel confident when I speak. My English is okay, but I want to improve!
+    </div>
+
+    <hr class="divider">
+    <p style="margin-bottom:10px; font-weight:600; font-size:0.9rem">Comprehension questions — answer out loud:</p>
+    <ul class="question-list">
+      <li class="question-item"><span class="q-num">1</span>Where is Alex from?</li>
+      <li class="question-item"><span class="q-num">2</span>What does he do for work?</li>
+      <li class="question-item"><span class="q-num">3</span>What does he do in his free time?</li>
+      <li class="question-item"><span class="q-num">4</span>Why is he learning English?</li>
+      <li class="question-item"><span class="q-num">5</span>Which country does he want to visit?</li>
+    </ul>
+    <div class="tip">
+      <strong>Notice:</strong> Alex uses simple, clear sentences. He connects ideas with <em>and, but, also, because</em>. You can do exactly the same.
+    </div>
+  </div>
+</div>
+
+<!-- ══ PRACTICE ══ -->
+<div id="tab-practice" class="panel">
+  <div class="timer-box">⏱ 10 min</div>
+
+  <div class="card">
+    <div class="card-label">Personalise It</div>
+    <h2>Now it's your turn</h2>
+    <p style="margin-bottom:14px">Fill in these sentences about <em>you</em>. Use the vocabulary from the previous tab if you need help.</p>
+
+    <div class="gap-sentence">
+      My name is <input type="text" placeholder="your name"> and I'm <input type="text" placeholder="age"> years old.
+    </div>
+    <div class="gap-sentence">
+      I'm from <input type="text" placeholder="city / country">.
+    </div>
+    <div class="gap-sentence">
+      I work as <input type="text" placeholder="your job">.
+    </div>
+    <div class="gap-sentence">
+      In my free time, I like to <input type="text" placeholder="hobby or activity">.
+    </div>
+    <div class="gap-sentence">
+      I've been to <input type="text" placeholder="country or place">. I'd like to go to <input type="text" placeholder="dream destination"> one day.
+    </div>
+    <div class="gap-sentence">
+      I'm learning English because <input type="text" placeholder="your reason">.
+    </div>
+
+    <div class="tip" style="margin-top:14px">
+      <strong>Next step:</strong> Read your sentences out loud — without looking at the screen. Can you remember them?
+    </div>
+  </div>
+</div>
+
+<!-- ══ SPEAKING ══ -->
+<div id="tab-speaking" class="panel">
+  <div class="timer-box">⏱ 15 min</div>
+
+  <div class="card">
+    <div class="card-label">Free Production</div>
+    <h2>Say it — no notes</h2>
+    <p style="margin-bottom:14px">Tap each prompt to open it. Try to speak for at least 30 seconds. Fluency first — don't stop to correct yourself.</p>
+
+    <div class="speaking-card">
+      <div class="speaking-header" onclick="toggleSpeaking(this)">
+        <span class="speaking-tag tag-warmup">Warm-up</span>
+        Introduce yourself like you're meeting someone for the first time. Just your name and where you're from.
+      </div>
+      <div class="speaking-body">
+        Try: <em>"Hi, my name is… I'm from… It's nice to meet you."</em><br><br>
+        Keep it simple. Smile. Make eye contact. This is the version you use every day.
+      </div>
+    </div>
+
+    <div class="speaking-card">
+      <div class="speaking-header" onclick="toggleSpeaking(this)">
+        <span class="speaking-tag tag-core">Core</span>
+        You're at an international event and someone asks: "Tell me about yourself." Speak for 30–60 seconds.
+      </div>
+      <div class="speaking-body">
+        Include: your name, where you're from, what you do, one hobby, and why you're learning English.<br><br>
+        <strong>Challenge yourself:</strong> use <em>also, but, because</em> naturally in your answer.
+      </div>
+    </div>
+
+    <div class="speaking-card">
+      <div class="speaking-header" onclick="toggleSpeaking(this)">
+        <span class="speaking-tag tag-challenge">Challenge</span>
+        A tourist walks into your workplace and starts a conversation. They say: "This is a great place — are you the owner?" — Continue the conversation for 2 minutes.
+      </div>
+      <div class="speaking-body">
+        This is a roleplay. Your teacher plays the tourist.<br><br>
+        Ideas to talk about: how long you've worked there, what you enjoy about it, where you'd recommend they visit next, whether you've been there yourself.<br><br>
+        <em>Focus on keeping the conversation going, not on being perfect.</em>
+      </div>
+    </div>
+
+    <div class="teacher-note">
+      <strong>Teacher:</strong> Take notes on errors during free production. Don't interrupt. Bring 2–3 key patterns to the cool-down.
+    </div>
+  </div>
+</div>
+
+<!-- ══ ASK BACK ══ -->
+<div id="tab-askback" class="panel">
+  <div class="timer-box">⏱ 10 min</div>
+
+  <div class="card">
+    <div class="card-label">Conversation skill</div>
+    <h2>Don't just answer — ask back</h2>
+    <p>A conversation is not an interview. When someone asks you something, answer — then ask them something back. This keeps the conversation alive and makes you sound confident and natural.</p>
+    <div class="tip" style="margin-top:14px">
+      <strong>The rule:</strong> Answer + ask back. Every time.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Question toolkit</div>
+    <h2>Phrases to bounce it back</h2>
+    <p style="margin-bottom:14px">Tap to reveal an example. Tap again to mark as learned.</p>
+    <div class="vocab-grid">
+
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">What about you?</div>
+        <div class="vocab-example">"I'm from Belgium. What about you — where are you from?"</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">And you?</div>
+        <div class="vocab-example">"I love travelling. And you — do you travel much?"</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">Have you ever…?</div>
+        <div class="vocab-example">"I've been to Spain. Have you ever been there?"</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">What do you do?</div>
+        <div class="vocab-example">"I work in a bar. What do you do — are you here for work or holiday?"</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">Do you like…?</div>
+        <div class="vocab-example">"I really like live music. Do you like it too?"</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">How long are you here for?</div>
+        <div class="vocab-example">"Welcome! How long are you here for?"</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">Is this your first time in…?</div>
+        <div class="vocab-example">"Is this your first time in Belgium? What do you think so far?"</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">What brings you here?</div>
+        <div class="vocab-example">"Nice to meet you! What brings you here today?"</div>
+      </div>
+
+    </div>
+    <p class="tap-hint">Tap once → example · Tap again → learned ✓</p>
+  </div>
+
+  <div class="card">
+    <div class="card-label">See the difference</div>
+    <h2>Interview vs. conversation</h2>
+    <p style="margin-bottom:12px">Look at these two versions. Which one sounds more natural?</p>
+
+    <div style="background:#FEF0F0;border-left:4px solid #C0392B;border-radius:0 10px 10px 0;padding:14px 16px;margin-bottom:10px;font-size:0.9rem;line-height:1.7">
+      <strong style="color:#C0392B">❌ Interview</strong><br>
+      <em>Tourist: "Where are you from?"</em><br>
+      You: "I'm from Brussels."<br>
+      <em>Tourist: "What do you do?"</em><br>
+      You: "I work in a bar."<br>
+      <em>Tourist: "Do you travel much?"</em><br>
+      You: "Yes, I like to travel."
+    </div>
+
+    <div style="background:var(--green-light);border-left:4px solid var(--green);border-radius:0 10px 10px 0;padding:14px 16px;font-size:0.9rem;line-height:1.7">
+      <strong style="color:var(--green)">✓ Conversation</strong><br>
+      <em>Tourist: "Where are you from?"</em><br>
+      You: "I'm from Brussels — have you been before?"<br>
+      <em>Tourist: "No, first time! What do you do?"</em><br>
+      You: "I run a bar, actually — what brings you to the city?"<br>
+      <em>Tourist: "Just a weekend trip."</em><br>
+      You: "Nice! Do you like trying local food? I can recommend a few places."
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Roleplay</div>
+    <h2>Keep it going</h2>
+    <p style="margin-bottom:14px">Your teacher starts the conversation. Your job: answer every question <strong>and</strong> ask something back. Try to keep it going for 3 minutes without stopping.</p>
+
+    <div class="speaking-card">
+      <div class="speaking-header" onclick="toggleSpeaking(this)">
+        <span class="speaking-tag tag-warmup">Round 1</span>
+        You meet someone at a café. They say: "Hi! Is this seat taken?"
+      </div>
+      <div class="speaking-body">
+        Say no, invite them to sit. Then ask where they're from or what they're doing in the city.<br><br>
+        <strong>Rule:</strong> You must ask at least one question before the teacher asks the next one.
+      </div>
+    </div>
+
+    <div class="speaking-card">
+      <div class="speaking-header" onclick="toggleSpeaking(this)">
+        <span class="speaking-tag tag-core">Round 2</span>
+        An English-speaking customer sits at your bar and says: "Quiet night tonight, isn't it?"
+      </div>
+      <div class="speaking-body">
+        Agree or disagree — then ask them something to start a real conversation.<br><br>
+        Ideas: where they're from, how long they're in town, what they do, if they've tried local drinks.
+      </div>
+    </div>
+
+    <div class="speaking-card">
+      <div class="speaking-header" onclick="toggleSpeaking(this)">
+        <span class="speaking-tag tag-challenge">Challenge</span>
+        Full 3-minute conversation — no topic given. Your teacher is a stranger. Keep it natural.
+      </div>
+      <div class="speaking-body">
+        No script. No prompts. Just talk.<br><br>
+        <strong>Goal:</strong> ask at least 4 questions during the conversation. Your teacher will count silently.
+      </div>
+    </div>
+
+    <div class="teacher-note">
+      <strong>Teacher:</strong> Count the questions the student asks during the challenge round. Share the number at the end — "You asked 4 questions — great!" — then model any missed opportunities naturally.
+    </div>
+  </div>
+</div>
+
+<!-- ══ WRITING ══ -->
+<div id="tab-writing" class="panel">
+
+  <div class="hw-badge">📝 Homework — optional for today</div>
+
+  <div class="card">
+    <div class="card-label">Writing Task</div>
+    <h2>Write your introduction</h2>
+    <p style="margin-bottom:12px">Write 5–8 sentences about yourself in English. Use the phrases from this lesson. You can use a starter below, or write freely.</p>
+
+    <div class="writing-starters">
+      <button class="starter-btn" onclick="setStarter(this)">Hi! My name is ___. I'm from ___ and I work as a ___.</button>
+      <button class="starter-btn" onclick="setStarter(this)">Let me tell you a little about myself. I'm ___ years old and I live in ___.</button>
+      <button class="starter-btn" onclick="setStarter(this)">I'm learning English because ___. In my free time, I like to ___.</button>
+    </div>
+
+    <textarea id="writing-area" placeholder="Write your introduction here…"></textarea>
+
+    <div class="tip" style="margin-top:12px">
+      <strong>Tip:</strong> Try to write without stopping to translate. Write what you know. You can check vocabulary afterwards.
+    </div>
+    <div class="teacher-note" style="margin-top:10px">
+      <strong>Teacher:</strong> Review this at the start of the next session as a retrieval warm-up. Ask them to read it aloud from memory.
+    </div>
+  </div>
+</div>
+
+<!-- ── FLOATING WRITE BUBBLE ── -->
+<button class="write-fab" onclick="toggleWriteDrawer()" title="Open journal">✏️</button>
+
+<div class="write-overlay" id="writeOverlay" onclick="toggleWriteDrawer()"></div>
+
+<div class="write-drawer" id="writeDrawer">
+  <div class="write-drawer-handle"></div>
+  <div class="write-drawer-header">
+    <span class="write-drawer-title">📝 My Notes</span>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span class="write-saved-indicator" id="writeSaved"></span>
+      <button class="write-clear-btn" onclick="clearWriteDrawer()">Clear</button>
+      <button class="write-close-btn" onclick="toggleWriteDrawer()">✕</button>
+    </div>
+  </div>
+  <textarea class="write-drawer-area" id="writeDrawerArea" placeholder="Write freely here — your own sentences, words you want to remember, questions for your teacher…"></textarea>
+  <button class="write-save-btn" onclick="saveNote()">Save note</button>
+  <div class="saved-notes-list" id="savedNotesList"></div>
+</div>
+
+<!-- ── TIMER BUBBLE ── -->
+<div class="timer-bubble" id="timerBubble" onclick="toggleTimer()">
+  <span id="timerDisplay">50:00</span>
+</div>
+
+<style>
+  .write-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .write-fab:active { transform: scale(0.94); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+
+  .write-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 300;
+  }
+  .write-overlay.open { display: block; }
+
+  .write-drawer {
+    position: fixed;
+    bottom: -100%;
+    left: 0; right: 0;
+    background: var(--surface);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.15);
+    z-index: 400;
+    padding: 12px 20px 32px;
+    transition: bottom 0.3s cubic-bezier(0.32,0.72,0,1);
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .write-drawer.open { bottom: 0; }
+
+  .write-drawer-handle {
+    width: 40px; height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 0 auto 14px;
+  }
+  .write-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .write-drawer-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+  .write-saved-indicator {
+    font-size: 0.72rem;
+    color: var(--green);
+    font-weight: 500;
+    min-width: 40px;
+  }
+  .write-clear-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .write-close-btn {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 4px 6px;
+    line-height: 1;
+  }
+  .write-drawer-area {
+    flex: 1;
+    width: 100%;
+    min-height: 180px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    color: var(--ink);
+    background: var(--bg);
+    resize: none;
+    outline: none;
+    line-height: 1.65;
+  }
+  .write-drawer-area:focus { border-color: var(--accent); }
+
+  .write-save-btn {
+    margin-top: 10px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background 0.15s;
+  }
+  .write-save-btn:hover { background: var(--accent-dark); }
+  .write-save-btn:active { transform: scale(0.97); }
+
+  .saved-notes-list {
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    max-height: 200px;
+  }
+  .saved-note-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .saved-note-text { flex: 1; white-space: pre-wrap; }
+  .saved-note-time {
+    font-size: 0.7rem;
+    color: var(--muted);
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+  .saved-note-delete {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 0.8rem;
+    padding: 0 2px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .saved-note-delete:hover { color: #C0392B; }
+  .saved-notes-empty {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-style: italic;
+    text-align: center;
+    padding: 8px 0;
+  }
+
+  /* ── TIMER BUBBLE ── */
+  .timer-bubble {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    background: var(--ink);
+    color: white;
+    border-radius: 28px;
+    padding: 10px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    z-index: 200;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    user-select: none;
+    transition: background 0.3s;
+    letter-spacing: 0.03em;
+  }
+  .timer-bubble.running { background: var(--accent); }
+  .timer-bubble.warning { background: #C0392B; }
+</style>
+
+<script>
+  // ── TABS ──
+  function showTab(name) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // ── VOCAB ──
+  function cycleVocab(card) {
+    if (!card.classList.contains('revealed')) {
+      card.classList.add('revealed');
+    } else if (!card.classList.contains('mastered')) {
+      card.classList.add('mastered');
+    } else {
+      card.classList.remove('revealed', 'mastered');
+    }
+  }
+
+  // ── SPEAKING ──
+  function toggleSpeaking(header) {
+    const body = header.nextElementSibling;
+    body.classList.toggle('open');
+  }
+
+  // ── WRITING TAB STARTERS ──
+  function setStarter(btn) {
+    const ta = document.getElementById('writing-area');
+    ta.value = btn.textContent + ' ';
+    ta.focus();
+  }
+
+  // ── WRITE DRAWER ──
+  const STORAGE_KEY = 'intro-yourself-notes';
+  const SAVED_KEY = 'intro-yourself-saved-notes';
+
+  function toggleWriteDrawer() {
+    const drawer = document.getElementById('writeDrawer');
+    const overlay = document.getElementById('writeOverlay');
+    const isOpen = drawer.classList.contains('open');
+    drawer.classList.toggle('open', !isOpen);
+    overlay.classList.toggle('open', !isOpen);
+    if (!isOpen) {
+      renderSavedNotes();
+      setTimeout(() => document.getElementById('writeDrawerArea').focus(), 320);
+    }
+  }
+
+  function clearWriteDrawer() {
+    if (confirm('Clear the current note?')) {
+      document.getElementById('writeDrawerArea').value = '';
+      localStorage.removeItem(STORAGE_KEY);
+      showSaved('Cleared');
+    }
+  }
+
+  function showSaved(msg) {
+    const el = document.getElementById('writeSaved');
+    el.textContent = msg || 'Saved ✓';
+    setTimeout(() => el.textContent = '', 2000);
+  }
+
+  function saveNote() {
+    const text = document.getElementById('writeDrawerArea').value.trim();
+    if (!text) return;
+    const notes = JSON.parse(localStorage.getItem(SAVED_KEY) || '[]');
+    notes.unshift({ text, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) });
+    localStorage.setItem(SAVED_KEY, JSON.stringify(notes));
+    document.getElementById('writeDrawerArea').value = '';
+    localStorage.removeItem(STORAGE_KEY);
+    showSaved('Note saved ✓');
+    renderSavedNotes();
+  }
+
+  function deleteNote(index) {
+    const notes = JSON.parse(localStorage.getItem(SAVED_KEY) || '[]');
+    notes.splice(index, 1);
+    localStorage.setItem(SAVED_KEY, JSON.stringify(notes));
+    renderSavedNotes();
+  }
+
+  function renderSavedNotes() {
+    const container = document.getElementById('savedNotesList');
+    const notes = JSON.parse(localStorage.getItem(SAVED_KEY) || '[]');
+    if (!notes.length) {
+      container.innerHTML = '<p class="saved-notes-empty">No saved notes yet.</p>';
+      return;
+    }
+    container.innerHTML = notes.map((n, i) => `
+      <div class="saved-note-item">
+        <div>
+          <div class="saved-note-text">${n.text.replace(/</g,'&lt;')}</div>
+          <div class="saved-note-time">${n.time}</div>
+        </div>
+        <button class="saved-note-delete" onclick="deleteNote(${i})" title="Delete">✕</button>
+      </div>
+    `).join('');
+  }
+
+  // Autosave draft to localStorage
+  const drawerArea = document.getElementById('writeDrawerArea');
+  const savedDraft = localStorage.getItem(STORAGE_KEY);
+  if (savedDraft) drawerArea.value = savedDraft;
+
+  let saveTimer;
+  drawerArea.addEventListener('input', () => {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      localStorage.setItem(STORAGE_KEY, drawerArea.value);
+    }, 800);
+  });
+
+  // ── TIMER ──
+  let timerSeconds = 50 * 60;
+  let timerInterval = null;
+  let timerRunning = false;
+
+  function toggleTimer() {
+    if (timerRunning) {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      document.getElementById('timerBubble').classList.remove('running', 'warning');
+    } else {
+      timerRunning = true;
+      document.getElementById('timerBubble').classList.add('running');
+      timerInterval = setInterval(() => {
+        timerSeconds--;
+        if (timerSeconds < 0) timerSeconds = 0;
+        updateTimerDisplay();
+        const bubble = document.getElementById('timerBubble');
+        if (timerSeconds <= 30) {
+          bubble.classList.remove('running');
+          bubble.classList.add('warning');
+        }
+        if (timerSeconds === 0) {
+          clearInterval(timerInterval);
+          timerRunning = false;
+        }
+      }, 1000);
+    }
+  }
+
+  function updateTimerDisplay() {
+    const m = Math.floor(timerSeconds / 60);
+    const s = timerSeconds % 60;
+    document.getElementById('timerDisplay').textContent =
+      String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  }
+</script>
+</body>
+</html>
