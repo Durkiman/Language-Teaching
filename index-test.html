@@ -129,6 +129,46 @@ h1 em { font-style: italic; color: #c4714a; }
   line-height: 1.65;
   margin-bottom: 16px;
 }
+.progress-block {
+  margin-bottom: 18px;
+}
+.stars-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+.star {
+  font-size: 15px;
+  line-height: 1;
+  color: #e0dcd3;
+}
+.star.filled { color: var(--accent); }
+.level-title {
+  margin-left: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent);
+}
+.progress-track {
+  width: 100%;
+  height: 6px;
+  border-radius: 6px;
+  background: var(--warm);
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 6px;
+  background: var(--accent);
+  transition: width 0.6s ease;
+  width: 0%;
+}
+.progress-caption {
+  font-size: 10.5px;
+  color: #aaa;
+  margin-top: 6px;
+}
 .lesson-list {
   list-style: none;
   display: flex;
@@ -269,6 +309,37 @@ h1 em { font-style: italic; color: #c4714a; }
 const REPO_RAW = 'https://raw.githubusercontent.com/Durkiman/Language-Teaching/main';
 const PREVIEW = 3;
 const FETCH_TIMEOUT_MS = 8000;
+const LESSONS_PER_STAR = 5;
+const MAX_STARS = 4; // 4 stars = "max level" badge (20 lessons on this scale)
+const LEVEL_TITLES = ['Beginner', 'Explorer', 'Rising Star', 'Champion', 'Master'];
+
+function renderProgress(student, lessonCount) {
+  const el = document.getElementById('progress-' + student.id);
+  const starsEarned = Math.min(MAX_STARS, Math.floor(lessonCount / LESSONS_PER_STAR));
+  const levelTitle = LEVEL_TITLES[starsEarned];
+  const isMaxed = starsEarned >= MAX_STARS;
+
+  const starsHtml = Array.from({ length: MAX_STARS }, (_, i) =>
+    `<span class="star ${i < starsEarned ? 'filled' : ''}">★</span>`
+  ).join('');
+
+  let captionHtml = '';
+  let pct = 100;
+  if (!isMaxed) {
+    const intoCurrentStar = lessonCount % LESSONS_PER_STAR;
+    pct = (intoCurrentStar / LESSONS_PER_STAR) * 100;
+    const remaining = LESSONS_PER_STAR - intoCurrentStar;
+    captionHtml = `<div class="progress-caption">${remaining} more lesson${remaining > 1 ? 's' : ''} to ${LEVEL_TITLES[starsEarned + 1]}</div>`;
+  } else {
+    captionHtml = `<div class="progress-caption">Max level reached 🎉</div>`;
+  }
+
+  el.innerHTML = `
+    <div class="stars-row">${starsHtml}<span class="level-title">${levelTitle}</span></div>
+    <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+    ${captionHtml}
+  `;
+}
 
 // Single source of truth for every student card.
 const students = [
@@ -291,6 +362,7 @@ function renderCardShell(student) {
     <div class="card-name">${student.name}</div>
     <div class="card-level">${student.level}</div>
     <p class="card-desc">${student.desc}</p>
+    <div class="progress-block" id="progress-${student.id}"></div>
     <ul class="lesson-list" id="lessons-${student.id}"></ul>
     <div id="meta-${student.id}"></div>
   `;
@@ -306,6 +378,8 @@ function fetchWithTimeout(url, ms) {
 async function loadLessonsFor(student, lessons) {
   const listEl = document.getElementById('lessons-' + student.id);
   const metaEl = document.getElementById('meta-' + student.id);
+
+  renderProgress(student, lessons ? lessons.length : 0);
 
   if (!lessons || !lessons.length) {
     listEl.innerHTML = '<li><span class="empty-state">No lessons yet.</span></li>';
