@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Durim's Language Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1a2e;
+  --cream: #f5f0e8;
+  --warm: #e8ddd0;
+  --gold: #c9a84c;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background-color: var(--cream);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 32px 80px;
+}
+header {
+  margin-bottom: 64px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards;
+}
+.eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ink);
+}
+h1 em { font-style: italic; color: #c4714a; }
+.tagline {
+  margin-top: 16px;
+  font-size: 15px;
+  font-weight: 300;
+  color: #666;
+  max-width: 420px;
+  line-height: 1.7;
+}
+.divider {
+  width: 48px;
+  height: 2px;
+  background: var(--gold);
+  margin: 24px 0;
+}
+.students-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.2s forwards;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  margin-bottom: 56px;
+}
+.student-card {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards;
+  display: flex;
+  flex-direction: column;
+  /* per-card accent set via inline style --accent */
+}
+.student-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  border-radius: 16px 16px 0 0;
+  background: var(--accent);
+}
+.card-emoji { font-size: 28px; margin-bottom: 14px; display: block; }
+.card-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.card-level {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  color: var(--accent);
+}
+.card-desc {
+  font-size: 13px;
+  color: #888;
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+.lesson-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.lesson-list li a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--cream);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.lesson-list li a:hover {
+  background: color-mix(in srgb, var(--accent) 15%, white);
+  color: var(--accent);
+}
+.lesson-list li a .icon { font-size: 13px; flex-shrink: 0; }
+.see-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  margin-top: 6px;
+  padding: 6px 2px;
+  border-radius: 6px;
+  transition: gap 0.2s ease;
+  color: var(--accent);
+}
+.see-all:hover { gap: 10px; }
+.lesson-count {
+  font-size: 11px;
+  color: #bbb;
+  margin-top: 2px;
+  margin-bottom: 10px;
+}
+.empty-state {
+  font-size: 13px;
+  color: #bbb;
+  font-style: italic;
+  padding: 8px 4px;
+}
+.error-state {
+  font-size: 13px;
+  color: #c0392b;
+  padding: 8px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.retry-btn {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--cream);
+  border: none;
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+.retry-btn:hover { opacity: 0.8; }
+.loading-state {
+  font-size: 13px;
+  color: #ccc;
+  padding: 8px 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.spinner {
+  width: 12px; height: 12px;
+  border: 2px solid #ddd;
+  border-top-color: #aaa;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+.footer-note {
+  border-top: 1px solid var(--warm);
+  padding-top: 32px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.7s forwards;
+}
+.footer-note p { font-size: 12px; color: #aaa; line-height: 1.6; }
+.footer-note strong { color: #888; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (max-width: 600px) {
+  .page { padding: 40px 20px 60px; }
+  .grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <p class="eyebrow">Language Studio</p>
+    <h1>Hello,<br><em>let's learn.</em></h1>
+    <div class="divider"></div>
+    <p class="tagline">Your students and their lessons, all in one place.</p>
+  </header>
+
+  <p class="students-label">Your students</p>
+  <div class="grid" id="grid"></div>
+
+  <div class="footer-note">
+    <p>Made with care by <strong>Durim</strong> · Tools open directly in your browser · No account needed</p>
+  </div>
+</div>
+
+<script>
+/*
+  WHAT CHANGED FROM index.html:
+  1. Single manifest.json fetch instead of 7 separate lessons.json fetches.
+     -> See bottom of file: falls back to per-student lessons.json if manifest.json
+        doesn't exist yet, so this works with ZERO changes to your repo right now.
+  2. No more cache-busting timestamp param -> browser can actually cache responses.
+  3. Fetches have an 8s timeout and show a real error + retry button instead of
+     spinning forever.
+  4. Cards (HTML + CSS color/icon) are generated entirely from the `students`
+     array below. Adding a student = adding one object to this array, not
+     editing 5 different places in the file.
+*/
+
+const REPO_RAW = 'https://raw.githubusercontent.com/Durkiman/Language-Teaching/main';
+const PREVIEW = 3;
+const FETCH_TIMEOUT_MS = 8000;
+
+// Single source of truth for every student card.
+const students = [
+  { id: 'micha',     folder: 'Micha',     emoji: '🎮', name: 'Micha',     level: 'Elementary · English',       desc: 'Brawl Stars explorer & verb champion.',                 accent: '#5b8fa8' },
+  { id: 'mehdi',     folder: 'Mehdi',     emoji: '💼', name: 'Mehdi',     level: 'Pre-Intermediate · English', desc: 'Business English & professional communication.',        accent: '#7a9e87' },
+  { id: 'mel',       folder: 'Mel',       emoji: '🌿', name: 'Mel',       level: 'Beginner · Albanian',         desc: 'Kosovo Albanian — family, feelings & everyday life.',    accent: '#a89bce' },
+  { id: 'emma',      folder: 'Emma',      emoji: '🇪🇸', name: 'Emma',      level: 'Beginner · Spanish',          desc: 'Spanish from scratch — everyday life & conversation.',  accent: '#c0392b' },
+  { id: 'thomas',    folder: 'Thomas',    emoji: '📖', name: 'Thomas',    level: 'Intermediate · English',      desc: 'Building confidence and fluency at B1 level.',           accent: '#8a9099' },
+  { id: 'angelique', folder: 'Angelique', emoji: '🌸', name: 'Angelique', level: 'Beginner · English',          desc: 'Gentle English for travel and everyday life.',           accent: '#c49a3c' },
+  { id: 'greg',      folder: 'Greg',      emoji: '💬', name: 'Greg',      level: 'Pre-Intermediate · English', desc: 'Building practical English for everyday communication.', accent: '#2a8a8a' },
+];
+
+function renderCardShell(student) {
+  const el = document.createElement('div');
+  el.className = 'student-card';
+  el.style.setProperty('--accent', student.accent);
+  el.style.animationDelay = (0.3 + students.indexOf(student) * 0.12) + 's';
+  el.innerHTML = `
+    <span class="card-emoji">${student.emoji}</span>
+    <div class="card-name">${student.name}</div>
+    <div class="card-level">${student.level}</div>
+    <p class="card-desc">${student.desc}</p>
+    <ul class="lesson-list" id="lessons-${student.id}"></ul>
+    <div id="meta-${student.id}"></div>
+  `;
+  return el;
+}
+
+function fetchWithTimeout(url, ms) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), ms);
+  return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(timer));
+}
+
+async function loadLessonsFor(student, lessons) {
+  const listEl = document.getElementById('lessons-' + student.id);
+  const metaEl = document.getElementById('meta-' + student.id);
+
+  if (!lessons || !lessons.length) {
+    listEl.innerHTML = '<li><span class="empty-state">No lessons yet.</span></li>';
+    metaEl.innerHTML = '';
+    return;
+  }
+
+  const preview = lessons.slice(0, PREVIEW);
+  const remaining = lessons.length - PREVIEW;
+
+  listEl.innerHTML = preview.map(lesson => `
+    <li>
+      <a href="${student.folder}/${lesson.file}">
+        <span class="icon">📄</span>
+        ${lesson.title}
+      </a>
+    </li>
+  `).join('');
+
+  metaEl.innerHTML = remaining > 0
+    ? `<div class="lesson-count">${remaining} more lesson${remaining > 1 ? 's' : ''} available</div>
+       <a class="see-all" href="${student.folder}/">See all ${lessons.length} lessons →</a>`
+    : `<a class="see-all" href="${student.folder}/">Open lesson page →</a>`;
+}
+
+function showError(student, retryFn) {
+  const listEl = document.getElementById('lessons-' + student.id);
+  listEl.innerHTML = `
+    <li>
+      <div class="error-state">
+        <span>Couldn't load lessons.</span>
+        <button class="retry-btn" type="button">Retry</button>
+      </div>
+    </li>
+  `;
+  listEl.querySelector('.retry-btn').addEventListener('click', retryFn);
+}
+
+function showLoading(student) {
+  const listEl = document.getElementById('lessons-' + student.id);
+  listEl.innerHTML = '<li><div class="loading-state"><div class="spinner"></div> Loading…</div></li>';
+}
+
+async function loadStudentDirect(student) {
+  showLoading(student);
+  try {
+    const res = await fetchWithTimeout(`${REPO_RAW}/${student.folder}/lessons.json`, FETCH_TIMEOUT_MS);
+    if (!res.ok) {
+      await loadLessonsFor(student, []);
+      return;
+    }
+    const lessons = await res.json();
+    await loadLessonsFor(student, lessons);
+  } catch (err) {
+    showError(student, () => loadStudentDirect(student));
+  }
+}
+
+async function init() {
+  const grid = document.getElementById('grid');
+  students.forEach(s => grid.appendChild(renderCardShell(s)));
+
+  // Try a single combined manifest first (optional optimization — create
+  // manifest.json at the repo root shaped like:
+  // { "micha": [...lessons], "mehdi": [...lessons], ... }
+  // If it doesn't exist yet, this silently falls back to per-student fetches
+  // so the page works today with zero other changes.
+  try {
+    const res = await fetchWithTimeout(`${REPO_RAW}/manifest.json`, FETCH_TIMEOUT_MS);
+    if (res.ok) {
+      const manifest = await res.json();
+      students.forEach(s => loadLessonsFor(s, manifest[s.id] || []));
+      return;
+    }
+  } catch (err) {
+    // fall through to per-student fetches
+  }
+
+  students.forEach(s => loadStudentDirect(s));
+}
+
+init();
+</script>
+</body>
+</html>
