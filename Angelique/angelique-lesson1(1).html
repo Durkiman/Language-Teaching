@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Energy & Calm — Angelique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Lora:ital,wght@0,600;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF7F2;
+  --surface:#FFFFFF;
+  --surface-soft:#F3EEE4;
+  --sage:#6B8C7A;
+  --sage-dark:#46604F;
+  --sand:#8F4F22;
+  --ink:#2E3934;
+  --ink-soft:#54605A;
+  --line:#CFC2A8;
+  --radius:18px;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{font-size:19px;}
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  line-height:1.6;
+  padding-bottom:120px;
+}
+
+/* ── SECTIONS ── */
+.section{
+  max-width:680px;
+  margin:0 auto;
+  padding:40px 20px 0;
+}
+.eyebrow{
+  font-size:0.78rem;
+  font-weight:800;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--sage-dark);
+  margin-bottom:10px;
+}
+.section-title{
+  font-family:'Lora',serif;
+  font-size:1.9rem;
+  font-weight:600;
+  color:var(--ink);
+  margin-bottom:6px;
+  line-height:1.25;
+}
+.section-sub{
+  color:var(--ink-soft);
+  font-size:1rem;
+  margin-bottom:24px;
+  line-height:1.55;
+}
+.fr{
+  display:block;
+  font-style:italic;
+  color:var(--ink-soft);
+  font-size:0.93rem;
+  margin-top:4px;
+  line-height:1.5;
+}
+
+/* ── CARDS ── */
+.card{
+  background:var(--surface);
+  border-radius:var(--radius);
+  padding:26px 24px;
+  margin-bottom:16px;
+  border:2px solid var(--line);
+  box-shadow:0 4px 20px rgba(46,57,52,0.06);
+}
+
+/* ── BREATHE SECTION ── */
+.breathe-card{
+  background:linear-gradient(135deg,#EDF2EE,#E8EFE9);
+  border-color:#C2D4C6;
+}
+.breathe-card p{
+  font-size:1.05rem;
+  line-height:1.65;
+  color:var(--ink);
+}
+
+/* ── VIDEO SECTION ── */
+.video-btn{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  background:var(--ink);
+  color:#fff;
+  border:none;
+  border-radius:16px;
+  padding:20px 22px;
+  width:100%;
+  cursor:pointer;
+  text-decoration:none;
+  margin-bottom:14px;
+}
+.yt-badge{
+  flex:0 0 auto;
+  width:52px;height:52px;
+  background:#FF0000;
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;
+  color:#fff;
+}
+.vtext strong{display:block;font-size:1.05rem;font-weight:800;}
+.vtext span{font-size:0.88rem;opacity:0.7;display:block;margin-top:2px;}
+.video-tip{
+  font-size:0.95rem;
+  color:var(--ink-soft);
+  line-height:1.55;
+  padding:12px 16px;
+  background:var(--surface-soft);
+  border-radius:12px;
+  border-left:4px solid var(--sage);
+}
+
+/* ── SPINE / CHAKRA VISUALISER ── */
+.chakra-section{
+  max-width:680px;
+  margin:0 auto;
+  padding:40px 20px 0;
+}
+.spine-wrap{
+  display:flex;
+  justify-content:center;
+  margin-bottom:32px;
+}
+.spine-svg{
+  width:min(320px, 90vw);
+  cursor:default;
+}
+.chakra-dot{
+  cursor:pointer;
+  transition:r 0.2s ease, filter 0.2s ease;
+}
+.chakra-dot:hover{filter:brightness(1.15);}
+.chakra-dot.active{filter:brightness(1.2) drop-shadow(0 0 10px currentColor);}
+
+/* ── CHAKRA CARDS ── */
+.chakra-cards{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+.chakra-card{
+  border-radius:var(--radius);
+  border:2px solid transparent;
+  overflow:hidden;
+  margin-bottom:12px;
+  transition:border-color 0.3s;
+}
+.chakra-card-header{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:18px 20px;
+  cursor:pointer;
+  background:var(--surface);
+  border-radius:calc(var(--radius) - 2px);
+  transition:background 0.2s;
+}
+.chakra-card-header:active{transform:scale(0.99);}
+.chakra-dot-small{
+  flex:0 0 auto;
+  width:44px;height:44px;
+  border-radius:50%;
+  box-shadow:0 2px 12px rgba(0,0,0,0.18);
+  transition:transform 0.2s;
+}
+.chakra-card.open .chakra-dot-small{transform:scale(1.1);}
+.chakra-name{
+  font-family:'Lora',serif;
+  font-size:1.2rem;
+  font-style:italic;
+  font-weight:600;
+  flex:1;
+}
+.chakra-location{
+  font-size:0.88rem;
+  color:var(--ink-soft);
+  font-weight:600;
+}
+.chevron{
+  font-size:1.1rem;
+  color:var(--ink-soft);
+  transition:transform 0.3s;
+  flex:0 0 auto;
+}
+.chakra-card.open .chevron{transform:rotate(180deg);}
+
+.chakra-body{
+  display:none;
+  padding:0 20px 20px;
+  background:var(--surface);
+  border-top:1px solid var(--line);
+}
+.chakra-card.open .chakra-body{display:block;}
+
+.chakra-keyword{
+  font-size:2rem;
+  font-weight:800;
+  margin:14px 0 6px;
+  line-height:1.1;
+}
+.chakra-meaning{
+  font-size:1rem;
+  color:var(--ink-soft);
+  margin-bottom:16px;
+  line-height:1.5;
+}
+.speak-frame{
+  border-radius:14px;
+  padding:16px 18px;
+  margin-top:4px;
+}
+.speak-label{
+  font-size:0.78rem;
+  font-weight:800;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  margin-bottom:8px;
+  display:block;
+}
+.speak-sentence{
+  font-size:1.15rem;
+  font-weight:700;
+  line-height:1.45;
+}
+.speak-fr{
+  font-size:0.95rem;
+  color:var(--ink-soft);
+  font-style:italic;
+  margin-top:6px;
+}
+
+/* ── SPEAK SECTION ── */
+.speak-section{
+  max-width:680px;
+  margin:0 auto;
+  padding:40px 20px 0;
+}
+.speak-prompts{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.speak-prompt{
+  background:var(--surface);
+  border:2px solid var(--line);
+  border-radius:var(--radius);
+  padding:20px 22px;
+}
+.sp-label{
+  font-size:0.78rem;
+  font-weight:800;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--sand);
+  margin-bottom:6px;
+  display:block;
+}
+.sp-text{
+  font-size:1.15rem;
+  font-weight:700;
+  line-height:1.45;
+}
+.sp-fr{font-size:0.95rem;color:var(--ink-soft);font-style:italic;margin-top:6px;}
+
+/* ── FLOATING BUTTONS ── */
+.calm-fab{
+  position:fixed;bottom:24px;right:20px;z-index:200;
+  width:84px;height:84px;border-radius:50%;
+  background:linear-gradient(145deg,#46604F,#344A3C);
+  color:#fff;border:3px solid #fff;
+  box-shadow:0 6px 20px rgba(46,57,52,0.5);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;animation:breathe-pulse 4s ease-in-out infinite;
+}
+.calm-fab svg{width:36px;height:36px;}
+.calm-fab .fab-label{font-size:0.78rem;font-weight:800;margin-top:2px;}
+@keyframes breathe-pulse{
+  0%,100%{box-shadow:0 6px 20px rgba(46,57,52,0.5);}
+  50%{box-shadow:0 6px 30px rgba(46,57,52,0.8);}
+}
+.journal-fab{
+  position:fixed;bottom:24px;left:20px;z-index:200;
+  width:84px;height:84px;border-radius:50%;
+  background:linear-gradient(145deg,#8F4F22,#6B3A18);
+  color:#fff;border:3px solid #fff;
+  box-shadow:0 6px 20px rgba(143,79,34,0.5);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;
+}
+.journal-fab svg{width:34px;height:34px;}
+.journal-fab .fab-label{font-size:0.78rem;font-weight:800;margin-top:2px;}
+
+/* ── CALM OVERLAY ── */
+.calm-overlay{
+  position:fixed;inset:0;
+  background:linear-gradient(160deg,#F4F7F2,#EAF0E6);
+  z-index:500;display:none;flex-direction:column;overflow-y:auto;
+}
+.calm-overlay.open{display:flex;}
+.overlay-header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:20px 20px 0;
+}
+.overlay-close{
+  background:none;border:none;font-size:2.2rem;
+  color:var(--sage-dark);cursor:pointer;
+  padding:8px 14px;line-height:1;min-width:44px;min-height:44px;
+}
+.overlay-title{text-align:center;padding:6px 20px 20px;}
+.overlay-title h2{
+  font-family:'Lora',serif;font-size:1.7rem;
+  color:var(--sage-dark);margin:0;
+}
+.overlay-title p{margin:6px 0 0;color:var(--ink-soft);font-size:1rem;}
+.ex-grid{padding:0 20px 20px;display:flex;flex-direction:column;gap:10px;}
+.ex-card{
+  background:rgba(255,255,255,0.85);border:2px solid rgba(70,96,79,0.4);
+  border-radius:16px;padding:20px 22px;cursor:pointer;
+  transition:background 0.2s;text-align:left;min-height:44px;
+}
+.ex-card.selected{background:var(--sage-dark);border-color:var(--sage-dark);}
+.ex-card.selected .ex-name,.ex-card.selected .ex-desc,.ex-card.selected .ex-pattern{color:#fff;}
+.ex-name{font-family:'Lora',serif;font-size:1.25rem;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.ex-desc{font-size:1rem;color:var(--ink-soft);margin-bottom:4px;}
+.ex-pattern{font-size:0.95rem;color:var(--sand);font-weight:800;}
+.dur-row{display:flex;justify-content:center;gap:10px;padding:0 20px 16px;}
+.dur-btn{
+  padding:12px 24px;border-radius:24px;
+  border:2px solid rgba(70,96,79,0.45);
+  background:rgba(255,255,255,0.7);color:var(--sage-dark);
+  font-weight:800;font-size:1.05rem;cursor:pointer;min-height:44px;
+}
+.dur-btn.active{background:var(--sage-dark);color:#fff;border-color:var(--sage-dark);}
+.start-row{padding:0 20px 30px;display:flex;justify-content:center;}
+.start-btn{
+  padding:18px 44px;border-radius:30px;
+  background:var(--sage-dark);color:#fff;border:none;
+  font-size:1.15rem;font-weight:800;cursor:pointer;
+  box-shadow:0 6px 18px rgba(46,57,52,0.4);min-height:44px;
+}
+.start-btn:disabled{background:#A9B3AC;box-shadow:none;cursor:not-allowed;}
+.session-view{
+  flex:1;display:none;flex-direction:column;
+  align-items:center;justify-content:center;padding:20px;text-align:center;
+}
+.session-view.active{display:flex;}
+.breath-stage{
+  position:relative;width:300px;height:300px;
+  display:flex;align-items:center;justify-content:center;margin-bottom:32px;
+}
+.shape-bubble{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.ring{position:absolute;border-radius:50%;border:2px solid rgba(70,96,79,0.3);}
+.ring1{width:300px;height:300px;}
+.ring2{width:240px;height:240px;}
+.bubble{
+  width:140px;height:140px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#8FB39E,#46604F 70%,#344A3C);
+  box-shadow:0 0 40px rgba(70,96,79,0.55);
+  transition:transform 1s linear,box-shadow 1s linear;
+}
+.shape-box,.shape-triangle{width:260px;height:260px;}
+#boxDot,#triDot{transition:cx 1s linear,cy 1s linear;}
+.shape-vertical{position:relative;width:90px;height:260px;display:flex;align-items:center;justify-content:center;}
+.v-track{
+  position:absolute;top:10px;bottom:10px;left:50%;
+  width:10px;margin-left:-5px;border-radius:8px;
+  background:rgba(70,96,79,0.22);
+}
+.v-dot{
+  position:absolute;width:54px;height:54px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#8FB39E,#46604F 70%,#344A3C);
+  box-shadow:0 0 30px rgba(70,96,79,0.55);
+  left:50%;margin-left:-27px;top:10px;transition:top 1s linear;
+}
+.phase-label{font-family:'Lora',serif;font-size:1.8rem;color:var(--sage-dark);font-weight:700;min-height:36px;}
+.phase-fr{font-size:1.05rem;color:var(--ink-soft);font-style:italic;margin-top:4px;min-height:22px;}
+.phase-count{font-size:3.2rem;font-weight:800;color:var(--ink);margin-top:12px;font-family:'Lora',serif;}
+.session-meta{margin-top:26px;font-size:1rem;color:var(--ink-soft);font-weight:700;}
+.session-controls{margin-top:32px;display:flex;gap:14px;}
+.sbtn{
+  padding:14px 26px;border-radius:24px;
+  border:2px solid rgba(70,96,79,0.45);
+  background:rgba(255,255,255,0.7);color:var(--sage-dark);
+  font-weight:800;font-size:1.05rem;cursor:pointer;min-height:44px;
+}
+.sbtn.stop{background:var(--sage-dark);color:#fff;border-color:var(--sage-dark);}
+.done-view{
+  flex:1;display:none;flex-direction:column;
+  align-items:center;justify-content:center;padding:30px;text-align:center;
+}
+.done-view.active{display:flex;}
+.done-check{font-size:3.2rem;margin-bottom:14px;}
+.done-view h3{font-family:'Lora',serif;font-size:1.6rem;color:var(--sage-dark);margin:0 0 10px;}
+.done-view p{color:var(--ink-soft);font-size:1.05rem;line-height:1.6;margin:0 0 28px;}
+
+/* ── JOURNAL OVERLAY ── */
+.journal-overlay{
+  position:fixed;inset:0;
+  background:linear-gradient(160deg,#FBF6EE,#F3E6D3);
+  z-index:500;display:none;flex-direction:column;overflow-y:auto;
+}
+.journal-overlay.open{display:flex;}
+.journal-title h2{font-family:'Lora',serif;font-size:1.7rem;color:var(--sand);margin:0;}
+.journal-title p{margin:8px 0 0;color:var(--ink-soft);font-size:1rem;line-height:1.55;}
+.journal-title .fr-block{display:block;font-style:italic;margin-top:4px;}
+.journal-body{flex:1;display:flex;flex-direction:column;padding:0 20px 30px;max-width:680px;width:100%;margin:0 auto;}
+.journal-textarea{
+  flex:1;min-height:320px;
+  background:rgba(255,255,255,0.85);
+  border:2px solid rgba(143,79,34,0.3);border-radius:16px;
+  padding:22px;font-family:'Nunito',sans-serif;
+  font-size:1.15rem;line-height:1.7;color:var(--ink);resize:vertical;
+}
+.journal-textarea:focus{outline:3px solid var(--sand);outline-offset:2px;}
+.journal-status{text-align:center;margin-top:10px;font-size:0.95rem;color:var(--ink-soft);min-height:20px;}
+.journal-actions{display:flex;justify-content:center;gap:14px;margin-top:16px;}
+.journal-actions .sbtn{border-color:rgba(143,79,34,0.45);color:var(--sand);}
+.journal-actions .sbtn.stop{background:var(--sand);color:#fff;border-color:var(--sand);}
+
+/* ── PAGE HEADER ── */
+.page-header{
+  text-align:center;
+  padding:40px 24px 0;
+  max-width:680px;
+  margin:0 auto;
+}
+.page-header .eyebrow{display:block;margin-bottom:10px;}
+.page-header h1{
+  font-family:'Lora',serif;
+  font-size:2.4rem;font-weight:600;
+  color:var(--ink);line-height:1.2;margin-bottom:8px;
+}
+.page-header p{color:var(--ink-soft);font-size:1.05rem;}
+
+/* ── SECTION DIVIDER ── */
+.divider{
+  max-width:680px;margin:48px auto 0;
+  padding:0 20px;
+  display:flex;align-items:center;gap:16px;
+}
+.divider-line{flex:1;height:1px;background:var(--line);}
+.divider-num{
+  font-size:0.78rem;font-weight:800;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--sage-dark);
+  white-space:nowrap;
+}
+
+@media (prefers-reduced-motion:reduce){
+  .calm-fab{animation:none;}
+  .bubble,.v-dot{transition:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <span class="eyebrow">Session 1</span>
+  <h1>Energy &amp; Calm 🌿</h1>
+  <p>Take your time. There is no pressure today.</p>
+  <p class="fr">Prenez votre temps. Pas de pression aujourd'hui.</p>
+</div>
+
+<!-- ① BREATHE -->
+<div class="divider"><div class="divider-line"></div><div class="divider-num">① Breathe first</div><div class="divider-line"></div></div>
+<div class="section">
+  <div class="card breathe-card">
+    <p>Before we start — one round of breathing together. The green circle in the bottom corner is your calm space. It's there for the whole session, any time you need it.</p>
+    <p class="fr">Avant de commencer — une respiration ensemble. Le cercle vert en bas de l'écran est votre espace calme, disponible à tout moment.</p>
+  </div>
+</div>
+
+<!-- ② WATCH -->
+<div class="divider"><div class="divider-line"></div><div class="divider-num">② Watch</div><div class="divider-line"></div></div>
+<div class="section">
+  <a class="video-btn" href="https://www.youtube.com/watch?v=SuEOYppXMsg" target="_blank" rel="noopener">
+    <div class="yt-badge">▶</div>
+    <div class="vtext">
+      <strong>What are chakras?</strong>
+      <span>YouTube · opens in new tab</span>
+    </div>
+  </a>
+  <div class="video-tip">
+    Just watch. Don't worry about every word — listen for words you already know.
+    <span class="fr">Regardez simplement. Ne vous souciez pas de chaque mot — écoutez les mots que vous connaissez déjà.</span>
+  </div>
+</div>
+
+<!-- ③ CHAKRAS -->
+<div class="divider"><div class="divider-line"></div><div class="divider-num">③ Your chakras</div><div class="divider-line"></div></div>
+<div class="chakra-section">
+  <p style="font-size:1rem;color:var(--ink-soft);text-align:center;margin-bottom:28px;">Tap each chakra to explore it. <span class="fr" style="display:inline;">Touchez chaque chakra pour l'explorer.</span></p>
+
+  <!-- SPINE SVG -->
+  <div class="spine-wrap">
+    <svg class="spine-svg" viewBox="0 0 200 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- body silhouette -->
+      <ellipse cx="100" cy="62" rx="32" ry="38" fill="#E8DFD0" opacity="0.7"/>
+      <path d="M68 96 C55 110 48 135 50 165 L52 240 C52 248 48 256 44 262 L28 300 C24 308 26 318 34 322 C42 326 50 320 52 312 L60 280 L62 360 C62 372 72 380 84 378 L88 460 C88 472 96 480 100 480 C104 480 112 472 112 460 L116 378 C128 380 138 372 138 360 L140 280 L148 312 C150 320 158 326 166 322 C174 318 176 308 172 300 L156 262 C152 256 148 248 148 240 L150 165 C152 135 145 110 132 96 Z" fill="#E8DFD0" opacity="0.7"/>
+
+      <!-- spine line -->
+      <line x1="100" y1="95" x2="100" y2="460" stroke="#CFC2A8" stroke-width="2.5" stroke-dasharray="5 5"/>
+
+      <!-- chakra dots — tap targets -->
+      <!-- 1 Root -->
+      <circle class="chakra-dot" id="dot-1" cx="100" cy="430" r="16" fill="#C0392B" opacity="0.85" onclick="openChakra(1)"/>
+      <!-- 2 Sacral -->
+      <circle class="chakra-dot" id="dot-2" cx="100" cy="370" r="16" fill="#E67E22" opacity="0.85" onclick="openChakra(2)"/>
+      <!-- 3 Solar Plexus -->
+      <circle class="chakra-dot" id="dot-3" cx="100" cy="300" r="16" fill="#F1C40F" opacity="0.85" onclick="openChakra(3)"/>
+      <!-- 4 Heart -->
+      <circle class="chakra-dot" id="dot-4" cx="100" cy="230" r="16" fill="#27AE60" opacity="0.85" onclick="openChakra(4)"/>
+      <!-- 5 Throat -->
+      <circle class="chakra-dot" id="dot-5" cx="100" cy="170" r="16" fill="#2980B9" opacity="0.85" onclick="openChakra(5)"/>
+      <!-- 6 Third Eye -->
+      <circle class="chakra-dot" id="dot-6" cx="100" cy="115" r="16" fill="#6C3483" opacity="0.85" onclick="openChakra(6)"/>
+      <!-- 7 Crown -->
+      <circle class="chakra-dot" id="dot-7" cx="100" cy="62" r="16" fill="#8E44AD" opacity="0.85" onclick="openChakra(7)"/>
+    </svg>
+  </div>
+
+  <!-- CHAKRA CARDS -->
+  <div class="chakra-cards" id="chakraCards">
+
+    <div class="chakra-card" id="card-1" style="border-color:#C0392B22;">
+      <div class="chakra-card-header" onclick="openChakra(1)">
+        <div class="chakra-dot-small" style="background:#C0392B;"></div>
+        <div>
+          <div class="chakra-name">Root Chakra</div>
+          <div class="chakra-location">Base of the spine</div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="chakra-body">
+        <div class="chakra-keyword" style="color:#C0392B;">Strength</div>
+        <div class="chakra-meaning">The root chakra connects you to the earth. It gives you a feeling of safety and stability.<span class="fr">Le chakra racine vous connecte à la terre. Il vous donne un sentiment de sécurité et de stabilité.</span></div>
+        <div class="speak-frame" style="background:#FDF0EF;border-radius:14px;padding:16px 18px;">
+          <span class="speak-label" style="color:#C0392B;">Say it out loud</span>
+          <div class="speak-sentence">"The root chakra gives me <strong>strength</strong>."</div>
+          <div class="speak-fr">Le chakra racine me donne de la force.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chakra-card" id="card-2" style="border-color:#E67E2222;">
+      <div class="chakra-card-header" onclick="openChakra(2)">
+        <div class="chakra-dot-small" style="background:#E67E22;"></div>
+        <div>
+          <div class="chakra-name">Sacral Chakra</div>
+          <div class="chakra-location">Lower abdomen</div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="chakra-body">
+        <div class="chakra-keyword" style="color:#E67E22;">Creativity</div>
+        <div class="chakra-meaning">The sacral chakra is the centre of creativity and feeling. It helps you enjoy life and connect with others.<span class="fr">Le chakra sacré est le centre de la créativité et des émotions. Il vous aide à apprécier la vie et à vous connecter aux autres.</span></div>
+        <div class="speak-frame" style="background:#FEF5EC;border-radius:14px;padding:16px 18px;">
+          <span class="speak-label" style="color:#E67E22;">Say it out loud</span>
+          <div class="speak-sentence">"The sacral chakra gives me <strong>creativity</strong>."</div>
+          <div class="speak-fr">Le chakra sacré me donne de la créativité.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chakra-card" id="card-3" style="border-color:#F1C40F33;">
+      <div class="chakra-card-header" onclick="openChakra(3)">
+        <div class="chakra-dot-small" style="background:#F1C40F;"></div>
+        <div>
+          <div class="chakra-name">Solar Plexus Chakra</div>
+          <div class="chakra-location">Upper abdomen</div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="chakra-body">
+        <div class="chakra-keyword" style="color:#B7950B;">Confidence</div>
+        <div class="chakra-meaning">The solar plexus chakra is your centre of personal power. It gives you confidence and inner fire.<span class="fr">Le chakra du plexus solaire est votre centre de puissance personnelle. Il vous donne confiance et feu intérieur.</span></div>
+        <div class="speak-frame" style="background:#FEFDE7;border-radius:14px;padding:16px 18px;">
+          <span class="speak-label" style="color:#B7950B;">Say it out loud</span>
+          <div class="speak-sentence">"The solar plexus chakra gives me <strong>confidence</strong>."</div>
+          <div class="speak-fr">Le chakra du plexus solaire me donne de la confiance.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chakra-card" id="card-4" style="border-color:#27AE6022;">
+      <div class="chakra-card-header" onclick="openChakra(4)">
+        <div class="chakra-dot-small" style="background:#27AE60;"></div>
+        <div>
+          <div class="chakra-name">Heart Chakra</div>
+          <div class="chakra-location">Centre of the chest</div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="chakra-body">
+        <div class="chakra-keyword" style="color:#1E8449;">Love</div>
+        <div class="chakra-meaning">The heart chakra is the centre of love and compassion. It connects the body and the spirit.<span class="fr">Le chakra du cœur est le centre de l'amour et de la compassion. Il relie le corps et l'esprit.</span></div>
+        <div class="speak-frame" style="background:#EAFAF1;border-radius:14px;padding:16px 18px;">
+          <span class="speak-label" style="color:#1E8449;">Say it out loud</span>
+          <div class="speak-sentence">"The heart chakra gives me <strong>love</strong>."</div>
+          <div class="speak-fr">Le chakra du cœur me donne de l'amour.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chakra-card" id="card-5" style="border-color:#2980B922;">
+      <div class="chakra-card-header" onclick="openChakra(5)">
+        <div class="chakra-dot-small" style="background:#2980B9;"></div>
+        <div>
+          <div class="chakra-name">Throat Chakra</div>
+          <div class="chakra-location">Throat</div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="chakra-body">
+        <div class="chakra-keyword" style="color:#1A5276;">Expression</div>
+        <div class="chakra-meaning">The throat chakra is the centre of voice and truth. It helps you speak clearly and with confidence.<span class="fr">Le chakra de la gorge est le centre de la voix et de la vérité. Il vous aide à parler clairement et avec confiance.</span></div>
+        <div class="speak-frame" style="background:#EBF5FB;border-radius:14px;padding:16px 18px;">
+          <span class="speak-label" style="color:#1A5276;">Say it out loud</span>
+          <div class="speak-sentence">"The throat chakra gives me <strong>expression</strong>."</div>
+          <div class="speak-fr">Le chakra de la gorge me donne l'expression.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chakra-card" id="card-6" style="border-color:#6C348322;">
+      <div class="chakra-card-header" onclick="openChakra(6)">
+        <div class="chakra-dot-small" style="background:#6C3483;"></div>
+        <div>
+          <div class="chakra-name">Third Eye Chakra</div>
+          <div class="chakra-location">Between the eyebrows</div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="chakra-body">
+        <div class="chakra-keyword" style="color:#6C3483;">Intuition</div>
+        <div class="chakra-meaning">The third eye chakra is the centre of intuition and inner vision. It helps you see beyond the surface of things.<span class="fr">Le chakra du troisième œil est le centre de l'intuition et de la vision intérieure. Il vous aide à voir au-delà des apparences.</span></div>
+        <div class="speak-frame" style="background:#F5EEF8;border-radius:14px;padding:16px 18px;">
+          <span class="speak-label" style="color:#6C3483;">Say it out loud</span>
+          <div class="speak-sentence">"The third eye chakra gives me <strong>intuition</strong>."</div>
+          <div class="speak-fr">Le chakra du troisième œil me donne l'intuition.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chakra-card" id="card-7" style="border-color:#8E44AD22;">
+      <div class="chakra-card-header" onclick="openChakra(7)">
+        <div class="chakra-dot-small" style="background:#8E44AD;"></div>
+        <div>
+          <div class="chakra-name">Crown Chakra</div>
+          <div class="chakra-location">Top of the head</div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="chakra-body">
+        <div class="chakra-keyword" style="color:#8E44AD;">Peace</div>
+        <div class="chakra-meaning">The crown chakra connects you to the universe and to pure consciousness. It brings deep peace and light.<span class="fr">Le chakra couronne vous connecte à l'univers et à la conscience pure. Il apporte une paix profonde et de la lumière.</span></div>
+        <div class="speak-frame" style="background:#F9F0FF;border-radius:14px;padding:16px 18px;">
+          <span class="speak-label" style="color:#8E44AD;">Say it out loud</span>
+          <div class="speak-sentence">"The crown chakra gives me <strong>peace</strong>."</div>
+          <div class="speak-fr">Le chakra couronne me donne la paix.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ④ SPEAK -->
+<div class="divider"><div class="divider-line"></div><div class="divider-num">④ Speak</div><div class="divider-line"></div></div>
+<div class="speak-section">
+  <p style="font-size:1rem;color:var(--ink-soft);margin-bottom:20px;line-height:1.55;">Now put it all together — take your time, breathe if you need to. <span class="fr" style="display:inline;font-style:italic;">Maintenant, mettez tout ensemble — prenez votre temps, respirez si besoin.</span></p>
+  <div class="speak-prompts">
+    <div class="speak-prompt">
+      <span class="sp-label">Warm-up</span>
+      <div class="sp-text">Choose one chakra. Say: "The ___ chakra gives me ___."</div>
+      <div class="sp-fr">Choisissez un chakra. Dites la phrase.</div>
+    </div>
+    <div class="speak-prompt">
+      <span class="sp-label">Go further</span>
+      <div class="sp-text">Say two chakras: "The heart chakra gives me love. The throat chakra gives me expression."</div>
+      <div class="sp-fr">Dites deux chakras à la suite.</div>
+    </div>
+    <div class="speak-prompt">
+      <span class="sp-label">Your own words</span>
+      <div class="sp-text">Which chakra do you feel most today? Say one sentence about it — any words you want.</div>
+      <div class="sp-fr">Quel chakra ressentez-vous le plus aujourd'hui ? Une phrase, avec les mots que vous voulez.</div>
+    </div>
+  </div>
+  <p style="font-size:0.95rem;color:var(--ink-soft);margin-top:20px;line-height:1.5;text-align:center;">📌 <em>Review: session 3 — chakra names + sentences. Again ~1 week later.</em></p>
+</div>
+
+<!-- FLOATING CALM -->
+<button class="calm-fab" onclick="openCalm()" aria-label="Breathing space">
+  <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white" stroke-width="1.5" opacity="0.6"/><circle cx="12" cy="12" r="4.5" fill="white" opacity="0.95"/></svg>
+  <span class="fab-label">Calm</span>
+</button>
+
+<!-- FLOATING JOURNAL -->
+<button class="journal-fab" onclick="openJournal()" aria-label="Writing space">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3h7.5l5 5v11.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19.5v-15z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/><path d="M14 3v5h5" stroke="white" stroke-width="1.5" stroke-linejoin="round"/><line x1="8" y1="12" x2="16" y2="12" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="15.5" x2="14" y2="15.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+  <span class="fab-label">Write</span>
+</button>
+
+<!-- CALM OVERLAY -->
+<div class="calm-overlay" id="calmOverlay">
+  <div class="overlay-header">
+    <div></div>
+    <button class="overlay-close" onclick="closeCalm()">×</button>
+  </div>
+  <div id="pickerView">
+    <div class="overlay-title">
+      <h2>A moment to breathe</h2>
+      <p>Choose what feels right — Choisissez ce qui vous convient</p>
+    </div>
+    <div class="ex-grid">
+      <button class="ex-card" data-ex="box"><div class="ex-name">Box Breathing</div><div class="ex-desc">Steady and grounding · Stable et ancré</div><div class="ex-pattern">IN 4 · HOLD 4 · OUT 4 · HOLD 4</div></button>
+      <button class="ex-card" data-ex="478"><div class="ex-name">4-7-8 Calm Down</div><div class="ex-desc">For fast relief · Pour un soulagement rapide</div><div class="ex-pattern">IN 4 · HOLD 7 · OUT 8</div></button>
+      <button class="ex-card" data-ex="coherent"><div class="ex-name">Coherent Breathing</div><div class="ex-desc">Gentle, no holding · Doux, sans rétention</div><div class="ex-pattern">IN 5 · OUT 5</div></button>
+      <button class="ex-card" data-ex="triangle"><div class="ex-name">Triangle Breath</div><div class="ex-desc">Quick reset · Réinitialisation rapide</div><div class="ex-pattern">IN 3 · HOLD 3 · OUT 3</div></button>
+      <button class="ex-card" data-ex="extended"><div class="ex-name">Extended Exhale</div><div class="ex-desc">Simple and easy · Simple et facile</div><div class="ex-pattern">IN 4 · OUT 6</div></button>
+    </div>
+    <div class="dur-row">
+      <button class="dur-btn" data-dur="1">1 min</button>
+      <button class="dur-btn active" data-dur="2">2 min</button>
+      <button class="dur-btn" data-dur="3">3 min</button>
+    </div>
+    <div class="start-row">
+      <button class="start-btn" id="startBtn" disabled onclick="startSession()">Choose an exercise above</button>
+    </div>
+  </div>
+  <div class="session-view" id="sessionView">
+    <div class="breath-stage">
+      <div class="shape-bubble" id="shapeBubble"><div class="ring ring1"></div><div class="ring ring2"></div><div class="bubble" id="bubble"></div></div>
+      <svg class="shape-box" id="shapeBox" viewBox="0 0 220 220" style="display:none;"><rect x="20" y="20" width="180" height="180" rx="14" fill="none" stroke="rgba(70,96,79,0.45)" stroke-width="5"/><circle id="boxDot" cx="200" cy="200" r="16" fill="#46604F"/></svg>
+      <svg class="shape-triangle" id="shapeTriangle" viewBox="0 0 220 220" style="display:none;"><polygon points="110,18 198,192 22,192" fill="none" stroke="rgba(70,96,79,0.45)" stroke-width="5" stroke-linejoin="round"/><circle id="triDot" cx="22" cy="192" r="16" fill="#46604F"/></svg>
+      <div class="shape-vertical" id="shapeVertical" style="display:none;"><div class="v-track"></div><div class="v-dot" id="vDot"></div></div>
+    </div>
+    <div class="phase-label" id="phaseLabel">Get ready</div>
+    <div class="phase-fr" id="phaseFr">Préparez-vous</div>
+    <div class="phase-count" id="phaseCount">&nbsp;</div>
+    <div class="session-meta" id="sessionMeta"></div>
+    <div class="session-controls"><button class="sbtn stop" onclick="stopSession()">Stop · Arrêter</button></div>
+  </div>
+  <div class="done-view" id="doneView">
+    <div class="done-check">🌿</div>
+    <h3>Well done</h3>
+    <p>Return to the lesson whenever you're ready.<span class="fr" style="display:block;margin-top:4px;">Retournez à la leçon quand vous serez prête.</span></p>
+    <button class="start-btn" onclick="resetCalm()" style="width:100%;max-width:340px;">Breathe again · Respirer encore</button>
+    <button class="sbtn" style="margin-top:14px;width:100%;max-width:340px;" onclick="closeCalm()">Back to lesson · Retour</button>
+  </div>
+</div>
+
+<!-- JOURNAL OVERLAY -->
+<div class="journal-overlay" id="journalOverlay">
+  <div class="overlay-header" style="justify-content:flex-end;">
+    <button class="overlay-close" style="color:var(--sand);" onclick="closeJournal()">×</button>
+  </div>
+  <div class="overlay-title" style="text-align:center;padding:4px 20px 20px;">
+    <h2 style="font-family:'Lora',serif;font-size:1.7rem;color:var(--sand);margin:0;">Your writing space</h2>
+    <p style="margin:8px 0 0;color:var(--ink-soft);font-size:1rem;">Write anything in English — no rules here.<span style="display:block;font-style:italic;margin-top:4px;" class="fr">Écrivez ce que vous voulez, en anglais — pas de règles ici.</span></p>
+  </div>
+  <div class="journal-body">
+    <textarea id="journalText" class="journal-textarea" placeholder="Start writing here... / Commencez à écrire ici..."></textarea>
+    <div class="journal-status" id="journalStatus">&nbsp;</div>
+    <div class="journal-actions">
+      <button class="sbtn journal-actions" onclick="clearJournal()">Clear · Effacer</button>
+      <button class="sbtn stop journal-actions" onclick="closeJournal()">Done · Terminé</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── CHAKRA TOGGLE ──
+function openChakra(n){
+  const card = document.getElementById('card-'+n);
+  const isOpen = card.classList.contains('open');
+  // close all
+  document.querySelectorAll('.chakra-card').forEach(c=>c.classList.remove('open'));
+  document.querySelectorAll('.chakra-dot').forEach(d=>{d.setAttribute('opacity','0.85');d.setAttribute('r','16');});
+  if(!isOpen){
+    card.classList.add('open');
+    card.scrollIntoView({behavior:'smooth',block:'nearest'});
+    const dot = document.getElementById('dot-'+n);
+    dot.setAttribute('opacity','1');
+    dot.setAttribute('r','20');
+  }
+}
+
+// ── BREATHING ──
+const patterns = {
+  box:      {name:'Box Breathing',      shape:'box',      phases:[['Breathe in','Inspirez',4],['Hold','Retenez',4],['Breathe out','Expirez',4],['Hold','Retenez',4]]},
+  '478':    {name:'4-7-8 Calm Down',    shape:'bubble',   phases:[['Breathe in','Inspirez',4],['Hold','Retenez',7],['Breathe out','Expirez',8]]},
+  coherent: {name:'Coherent Breathing', shape:'vertical', phases:[['Breathe in','Inspirez',5],['Breathe out','Expirez',5]]},
+  triangle: {name:'Triangle Breath',    shape:'triangle', phases:[['Breathe in','Inspirez',3],['Hold','Retenez',3],['Breathe out','Expirez',3]]},
+  extended: {name:'Extended Exhale',    shape:'bubble',   phases:[['Breathe in','Inspirez',4],['Breathe out','Expirez',6]]}
+};
+const boxCorners=[[200,200],[200,20],[20,20],[20,200],[200,200]];
+const triCorners=[[22,192],[110,18],[198,192],[22,192]];
+let selectedEx=null,selectedDur=2,sessionTimer=null,phaseTimer=null,totalSecondsLeft=0;
+const calmOverlay=document.getElementById('calmOverlay');
+const pickerView=document.getElementById('pickerView');
+const sessionView=document.getElementById('sessionView');
+const doneView=document.getElementById('doneView');
+const startBtn=document.getElementById('startBtn');
+
+function openCalm(){calmOverlay.classList.add('open');resetCalm();}
+function closeCalm(){calmOverlay.classList.remove('open');clearTimeout(phaseTimer);clearInterval(sessionTimer);}
+function resetCalm(){
+  pickerView.style.display='block';
+  sessionView.classList.remove('active');
+  doneView.classList.remove('active');
+  clearTimeout(phaseTimer);clearInterval(sessionTimer);
+}
+document.querySelectorAll('.ex-card').forEach(card=>{
+  card.addEventListener('click',()=>{
+    document.querySelectorAll('.ex-card').forEach(c=>c.classList.remove('selected'));
+    card.classList.add('selected');
+    selectedEx=card.dataset.ex;
+    startBtn.disabled=false;
+    startBtn.textContent='Begin · Commencer';
+  });
+});
+document.querySelectorAll('.dur-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.dur-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedDur=parseInt(btn.dataset.dur,10);
+  });
+});
+function showShape(shape){
+  document.getElementById('shapeBubble').style.display=shape==='bubble'?'flex':'none';
+  document.getElementById('shapeBox').style.display=shape==='box'?'block':'none';
+  document.getElementById('shapeTriangle').style.display=shape==='triangle'?'block':'none';
+  document.getElementById('shapeVertical').style.display=shape==='vertical'?'flex':'none';
+}
+function setBoxDot(i,dur){
+  const d=document.getElementById('boxDot');
+  d.style.transition=dur?`cx ${dur}s linear,cy ${dur}s linear`:'none';
+  d.setAttribute('cx',boxCorners[i][0]);d.setAttribute('cy',boxCorners[i][1]);
+}
+function setTriDot(i,dur){
+  const d=document.getElementById('triDot');
+  d.style.transition=dur?`cx ${dur}s linear,cy ${dur}s linear`:'none';
+  d.setAttribute('cx',triCorners[i][0]);d.setAttribute('cy',triCorners[i][1]);
+}
+function setVDot(toTop,dur){
+  const d=document.getElementById('vDot');
+  d.style.transition=dur?`top ${dur}s linear`:'none';
+  d.style.top=toTop?'10px':'calc(100% - 64px)';
+}
+function startSession(){
+  if(!selectedEx)return;
+  pickerView.style.display='none';
+  sessionView.classList.add('active');
+  totalSecondsLeft=selectedDur*60;
+  const p=patterns[selectedEx];
+  document.getElementById('sessionMeta').textContent=p.name;
+  showShape(p.shape);
+  if(p.shape==='box')setBoxDot(0,0);
+  if(p.shape==='triangle')setTriDot(0,0);
+  if(p.shape==='vertical')setVDot(false,0);
+  if(p.shape==='bubble'){const b=document.getElementById('bubble');b.style.transition='none';b.style.transform='scale(1)';}
+  setTimeout(()=>runPhaseLoop(0),50);
+  sessionTimer=setInterval(()=>{totalSecondsLeft--;if(totalSecondsLeft<=0)finishSession();},1000);
+}
+function runPhaseLoop(phaseIndex){
+  if(totalSecondsLeft<=0)return;
+  const p=patterns[selectedEx];
+  const [label,labelFr,duration]=p.phases[phaseIndex];
+  const isIn=label.toLowerCase().includes('in');
+  const isOut=label.toLowerCase().includes('out');
+  document.getElementById('phaseLabel').textContent=label;
+  document.getElementById('phaseFr').textContent=labelFr;
+  if(p.shape==='bubble'){
+    const b=document.getElementById('bubble');
+    b.style.transition=`transform ${duration}s linear,box-shadow ${duration}s linear`;
+    if(isIn){b.style.transform='scale(1.7)';b.style.boxShadow='0 0 60px rgba(70,96,79,0.75)';}
+    else if(isOut){b.style.transform='scale(0.75)';b.style.boxShadow='0 0 25px rgba(70,96,79,0.35)';}
+  }else if(p.shape==='box'){setBoxDot(phaseIndex+1,duration);}
+  else if(p.shape==='triangle'){setTriDot(phaseIndex+1,duration);}
+  else if(p.shape==='vertical'){if(isIn)setVDot(true,duration);else if(isOut)setVDot(false,duration);}
+  let count=duration;
+  document.getElementById('phaseCount').textContent=count;
+  clearTimeout(phaseTimer);
+  const tick=()=>{count--;if(count>0){document.getElementById('phaseCount').textContent=count;phaseTimer=setTimeout(tick,1000);}else{const next=(phaseIndex+1)%p.phases.length;phaseTimer=setTimeout(()=>runPhaseLoop(next),200);}};
+  phaseTimer=setTimeout(tick,1000);
+}
+function finishSession(){clearTimeout(phaseTimer);clearInterval(sessionTimer);sessionView.classList.remove('active');doneView.classList.add('active');}
+function stopSession(){clearTimeout(phaseTimer);clearInterval(sessionTimer);resetCalm();}
+
+// ── JOURNAL ──
+const journalOverlay=document.getElementById('journalOverlay');
+const journalText=document.getElementById('journalText');
+const journalStatus=document.getElementById('journalStatus');
+const JKEY='angelique_journal_s1';
+let jTimer=null;
+function openJournal(){
+  try{const s=localStorage.getItem(JKEY);if(s!==null)journalText.value=s;}catch(e){}
+  journalOverlay.classList.add('open');
+  setTimeout(()=>journalText.focus(),200);
+}
+function closeJournal(){journalOverlay.classList.remove('open');}
+function clearJournal(){journalText.value='';try{localStorage.removeItem(JKEY);}catch(e){}journalStatus.textContent='Cleared · Effacé';clearTimeout(jTimer);}
+journalText.addEventListener('input',()=>{
+  clearTimeout(jTimer);journalStatus.textContent='';
+  jTimer=setTimeout(()=>{try{localStorage.setItem(JKEY,journalText.value);journalStatus.textContent='Saved · Enregistré';}catch(e){}},600);
+});
+</script>
+</body>
+</html>
