@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel & Recommendations — Brazil</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5F7F6;
+    --surface: #FFFFFF;
+    --border: #DCE5E2;
+    --ink: #1C2422;
+    --muted: #667370;
+    --accent: #2A8A8A;
+    --accent-light: #E4F3F3;
+    --accent-dark: #1C6363;
+    --gold: #C9922B;
+    --gold-light: #FDF3E3;
+    --green: #2E7D5E;
+    --green-light: #E8F5EF;
+    --coral: #C0392B;
+    --coral-light: #FEF0F0;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--ink); min-height:100vh; padding-bottom:80px; }
+
+  .header { background:var(--accent); color:white; padding:20px 24px 16px; position:sticky; top:0; z-index:100; }
+  .header-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+  .header h1 { font-family:'Playfair Display',serif; font-size:1.35rem; line-height:1.2; }
+  .header p { font-size:0.8rem; opacity:0.8; margin-top:2px; }
+  .level-badge { background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.35); border-radius:20px; padding:4px 12px; font-size:0.75rem; font-weight:600; white-space:nowrap; }
+
+  .tabs { display:flex; gap:0; overflow-x:auto; scrollbar-width:none; background:var(--accent-dark); }
+  .tabs::-webkit-scrollbar { display:none; }
+  .tab-btn { flex:1; min-width:80px; padding:10px 6px; background:none; border:none; border-bottom:3px solid transparent; color:rgba(255,255,255,0.65); font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:500; cursor:pointer; white-space:nowrap; text-align:center; transition:all .2s; }
+  .tab-btn.active { color:white; border-bottom-color:var(--gold); }
+
+  .panel { display:none; padding:20px 16px; max-width:680px; margin:0 auto; }
+  .panel.active { display:block; }
+
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:16px; }
+  .card-label { font-size:0.7rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent); margin-bottom:8px; }
+  .card h2 { font-family:'Playfair Display',serif; font-size:1.15rem; margin-bottom:10px; }
+  .card p, .card li { font-size:0.93rem; line-height:1.65; }
+  .card ul { padding-left:18px; }
+  .card li { margin-bottom:4px; }
+
+  .timer-box { display:inline-flex; align-items:center; gap:6px; background:var(--gold-light); border:1px solid #E8C97A; border-radius:20px; padding:4px 12px; font-size:0.78rem; font-weight:600; color:var(--gold); margin-bottom:14px; }
+
+  .model-text { background:var(--gold-light); border-left:4px solid var(--gold); border-radius:0 10px 10px 0; padding:16px 18px; margin:12px 0; font-size:0.93rem; line-height:1.75; }
+  .model-text strong.pp { color:var(--accent-dark); background:var(--accent-light); padding:0 4px; border-radius:4px; }
+  .model-text strong.ps { color:#8A4B1C; background:#FBE7D4; padding:0 4px; border-radius:4px; }
+
+  .legend { display:flex; gap:16px; margin-top:12px; font-size:0.8rem; }
+  .legend-item { display:flex; align-items:center; gap:6px; }
+  .legend-dot { width:12px; height:12px; border-radius:3px; }
+  .dot-pp { background:var(--accent-light); border:1.5px solid var(--accent); }
+  .dot-ps { background:#FBE7D4; border:1.5px solid #C97A2E; }
+
+  .rule-box { display:flex; gap:14px; margin-top:14px; }
+  .rule-col { flex:1; border-radius:10px; padding:14px; font-size:0.85rem; line-height:1.6; }
+  .rule-pp { background:var(--accent-light); border:1px solid #B9DEDE; }
+  .rule-ps { background:#FBE7D4; border:1px solid #E0B278; }
+  .rule-col h3 { font-family:'Playfair Display',serif; font-size:0.95rem; margin-bottom:6px; }
+  .rule-pp h3 { color:var(--accent-dark); }
+  .rule-ps h3 { color:#8A4B1C; }
+
+  .vocab-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
+  .vocab-card { background:var(--accent-light); border:1.5px solid #B9DEDE; border-radius:10px; padding:12px 14px; cursor:pointer; transition:all .2s; user-select:none; }
+  .vocab-card:active { transform:scale(0.97); }
+  .vocab-phrase { font-size:0.88rem; font-weight:600; color:var(--accent-dark); margin-bottom:2px; }
+  .vocab-example { font-size:0.78rem; color:var(--muted); display:none; margin-top:4px; line-height:1.5; }
+  .vocab-card.revealed .vocab-example { display:block; }
+  .vocab-card.mastered { background:var(--green-light); border-color:#9DCFB8; }
+  .vocab-card.mastered .vocab-phrase { color:var(--green); }
+  .tap-hint { font-size:0.75rem; color:var(--muted); margin-top:6px; font-style:italic; }
+
+  .gap-sentence { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin-bottom:10px; font-size:0.92rem; line-height:1.7; }
+  .gap-sentence select, .gap-sentence input { border:none; border-bottom:2px solid var(--accent); background:transparent; font-family:'DM Sans',sans-serif; font-size:0.92rem; color:var(--ink); outline:none; padding:0 4px; margin:0 2px; }
+  .gap-sentence select { min-width:150px; }
+  .gap-sentence input { width:120px; }
+
+  .speaking-card { border:1px solid var(--border); border-radius:10px; overflow:hidden; margin-bottom:10px; }
+  .speaking-header { display:flex; align-items:center; gap:10px; padding:12px 16px; background:var(--surface); cursor:pointer; font-size:0.9rem; font-weight:500; }
+  .speaking-tag { font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; padding:3px 9px; border-radius:20px; white-space:nowrap; }
+  .tag-warmup { background:var(--accent-light); color:var(--accent); }
+  .tag-core { background:var(--gold-light); color:var(--gold); }
+  .tag-challenge { background:#F3EAF8; color:#7A3FA0; }
+  .speaking-body { display:none; padding:12px 16px 14px; border-top:1px solid var(--border); background:var(--bg); font-size:0.88rem; line-height:1.65; }
+  .speaking-body.open { display:block; }
+
+  .divider { border:none; border-top:1px solid var(--border); margin:18px 0; }
+
+  .tip { background:var(--green-light); border-left:3px solid var(--green); border-radius:0 8px 8px 0; padding:10px 14px; font-size:0.82rem; color:#1F5C42; line-height:1.55; margin-top:10px; }
+  .tip strong { font-weight:600; }
+
+  .teacher-note { background:#FFF8E6; border:1px dashed var(--gold); border-radius:10px; padding:12px 16px; font-size:0.82rem; color:#7A5C10; line-height:1.6; margin-top:12px; display:none; }
+  .teacher-note.open { display:block; }
+  .teacher-note strong { font-weight:600; }
+  .teacher-note-toggle { display:inline-flex; align-items:center; gap:6px; background:none; border:1px solid var(--gold); border-radius:20px; padding:4px 12px; font-size:0.75rem; font-weight:600; color:var(--gold); cursor:pointer; margin-top:12px; font-family:'DM Sans',sans-serif; }
+  .teacher-note-toggle:active { transform:scale(0.97); }
+
+  .diff-box { border-radius:0 10px 10px 0; padding:14px 16px; margin-bottom:10px; font-size:0.9rem; line-height:1.7; }
+  .diff-wrong { background:var(--coral-light); border-left:4px solid var(--coral); }
+  .diff-right { background:var(--green-light); border-left:4px solid var(--green); }
+
+  .write-fab { position:fixed; bottom:24px; right:24px; width:54px; height:54px; border-radius:50%; background:var(--accent); color:white; border:none; font-size:1.3rem; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,0.2); z-index:200; display:flex; align-items:center; justify-content:center; transition:transform .15s; }
+  .write-fab:active { transform:scale(0.94); }
+  .write-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.3); z-index:300; }
+  .write-overlay.open { display:block; }
+  .write-drawer { position:fixed; bottom:-100%; left:0; right:0; background:var(--surface); border-radius:20px 20px 0 0; box-shadow:0 -4px 24px rgba(0,0,0,0.15); z-index:400; padding:12px 20px 32px; transition:bottom .3s cubic-bezier(.32,.72,0,1); max-height:80vh; display:flex; flex-direction:column; }
+  .write-drawer.open { bottom:0; }
+  .write-drawer-handle { width:40px; height:4px; background:var(--border); border-radius:2px; margin:0 auto 14px; }
+  .write-drawer-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+  .write-drawer-title { font-weight:600; font-size:0.95rem; }
+  .write-saved-indicator { font-size:0.72rem; color:var(--green); font-weight:500; min-width:40px; }
+  .write-clear-btn { background:none; border:1px solid var(--border); border-radius:6px; padding:4px 10px; font-size:0.75rem; color:var(--muted); cursor:pointer; font-family:'DM Sans',sans-serif; }
+  .write-close-btn { background:none; border:none; font-size:1rem; color:var(--muted); cursor:pointer; padding:4px 6px; line-height:1; }
+  .write-drawer-area { flex:1; width:100%; min-height:150px; border:1.5px solid var(--border); border-radius:10px; padding:14px; font-family:'DM Sans',sans-serif; font-size:0.92rem; color:var(--ink); background:var(--bg); resize:none; outline:none; line-height:1.65; }
+  .write-drawer-area:focus { border-color:var(--accent); }
+  .write-save-btn { margin-top:10px; background:var(--accent); color:white; border:none; border-radius:8px; padding:10px 20px; font-family:'DM Sans',sans-serif; font-size:0.88rem; font-weight:600; cursor:pointer; align-self:flex-start; }
+  .write-save-btn:active { transform:scale(0.97); }
+  .saved-notes-list { margin-top:14px; display:flex; flex-direction:column; gap:8px; overflow-y:auto; max-height:180px; }
+  .saved-note-item { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:10px 12px; font-size:0.85rem; line-height:1.55; display:flex; justify-content:space-between; gap:10px; }
+  .saved-note-text { flex:1; white-space:pre-wrap; }
+  .saved-note-time { font-size:0.7rem; color:var(--muted); white-space:nowrap; margin-top:2px; }
+  .saved-note-delete { background:none; border:none; color:var(--muted); cursor:pointer; font-size:0.8rem; }
+  .saved-notes-empty { font-size:0.8rem; color:var(--muted); font-style:italic; text-align:center; padding:8px 0; }
+
+  .timer-bubble { position:fixed; bottom:24px; left:24px; background:var(--ink); color:white; border-radius:28px; padding:10px 18px; font-family:'DM Sans',sans-serif; font-size:1.05rem; font-weight:600; cursor:pointer; z-index:200; box-shadow:0 4px 16px rgba(0,0,0,0.2); user-select:none; transition:background .3s; letter-spacing:0.03em; }
+  .timer-bubble.running { background:var(--accent); }
+  .timer-bubble.warning { background:var(--coral); }
+
+  .hero-img { width:100%; height:180px; object-fit:cover; border-radius:10px; margin-bottom:6px; display:block; box-shadow:0 4px 14px rgba(0,0,0,0.12); }
+  .hero-caption { font-size:0.75rem; color:var(--muted); margin-bottom:14px; font-style:italic; }
+  .photo-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0; }
+  .photo-grid img { width:100%; height:110px; object-fit:cover; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+  .photo-grid figure { margin:0; }
+  .photo-grid figcaption { font-size:0.7rem; color:var(--muted); text-align:center; margin-top:4px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div style="display:flex;align-items:center;gap:12px">
+      <img src="https://flagcdn.com/w80/br.png" alt="Brazil flag" style="width:38px;height:auto;border-radius:5px;box-shadow:0 2px 8px rgba(0,0,0,0.25);flex-shrink:0">
+      <div>
+        <h1>Travel & Recommendations</h1>
+        <p>Present Perfect vs Past Simple</p>
+      </div>
+    </div>
+    <span class="level-badge">A2 – B1</span>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('warmup')">Warm-Up</button>
+    <button class="tab-btn" onclick="showTab('story')">Story</button>
+    <button class="tab-btn" onclick="showTab('grammar')">Grammar</button>
+    <button class="tab-btn" onclick="showTab('vocab')">Vocab</button>
+    <button class="tab-btn" onclick="showTab('practice')">Practice</button>
+    <button class="tab-btn" onclick="showTab('speaking')">Speaking</button>
+    <button class="tab-btn" onclick="showTab('cooldown')">Cool-down</button>
+  </div>
+</div>
+
+<!-- ══ WARM-UP ══ -->
+<div id="tab-warmup" class="panel active">
+  <div class="timer-box">⏱ 5 min</div>
+
+  <div class="card">
+    <div class="card-label">Retrieval — Ask each other</div>
+    <h2>Talking about past travels</h2>
+    <p style="margin-bottom:14px">Before we start, ask your teacher these questions — then answer them yourself. Don't look ahead. Just talk.</p>
+
+    <ul style="padding-left:18px">
+      <li>Have you ever been somewhere that surprised you?</li>
+      <li>Where did you go on your last trip?</li>
+      <li>What's the best meal you've ever had while travelling?</li>
+      <li>Have you ever been somewhere you'd never go back to?</li>
+      <li>What's one place you've never been but really want to visit?</li>
+    </ul>
+
+    <div class="tip" style="margin-top:14px">
+      <strong>Rule:</strong> Every time you answer, ask the question back. It's a conversation, not an interview.
+    </div>
+    <button class="teacher-note-toggle" onclick="toggleNote(this)">👁 Teacher note</button>
+    <div class="teacher-note">
+      <strong>Teacher:</strong> Answer genuinely and briefly — this models natural Present Perfect / Past Simple use before the lesson even starts. Don't correct here, just listen.
+    </div>
+  </div>
+</div>
+
+<!-- ══ STORY ══ -->
+<div id="tab-story" class="panel">
+  <div class="timer-box">⏱ 12 min</div>
+
+  <div class="card">
+    <div class="card-label">Read & Listen</div>
+    <h2>Sam's Trip to Brazil</h2>
+    <img class="hero-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Rio_de_janeiro_copacabana_beach_2010.JPG?width=800" alt="Copacabana beach, Rio de Janeiro" onerror="this.style.display='none'; this.nextElementSibling.style.display='none'">
+    <p class="hero-caption">Copacabana beach, Rio de Janeiro</p>
+    <p style="margin-bottom:12px">Read the text. Notice the two highlighted colours — they're different for a reason.</p>
+
+    <div class="model-text">
+      <strong class="pp">I've travelled</strong> to a lot of places over the years, but Brazil is still my favourite.<br><br>
+      <strong class="ps">Two years ago, I went</strong> to Rio de Janeiro with a friend. <strong class="ps">We stayed</strong> near Copacabana beach and <strong class="ps">we watched</strong> the sunrise from Sugarloaf Mountain on our first morning. <strong class="ps">I even tried</strong> a caipirinha for the first time — it's the national cocktail, made with a spirit called cachaça.<br><br>
+      <strong class="pp">I've also been</strong> to São Paulo and Salvador. <strong class="pp">I've never been</strong> to the Amazon though — that's still on my list. <strong class="pp">Have you ever heard</strong> live samba music? It's completely different when you hear it in person.<br><br>
+      <strong class="ps">In 2023, I went</strong> back for Carnival. <strong class="ps">It was</strong> one of the best experiences of my life — <strong class="ps">we danced</strong> in the street for three days straight.<br><br>
+      If you're planning a trip to Brazil, <strong class="pp">I'd suggest</strong> learning a few words of Portuguese first — people really appreciate it. <strong class="pp">It's worth</strong> asking locals where they actually eat, not just the tourist spots.
+    </div>
+
+    <div class="photo-grid">
+      <figure>
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Sugarloaf_Mountain,_Rio_de_Janeiro,_Brazil.jpg?width=400" alt="Sugarloaf Mountain, Rio de Janeiro" onerror="this.parentElement.style.display='none'">
+        <figcaption>Sugarloaf Mountain</figcaption>
+      </figure>
+      <figure>
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Carnival_in_Rio_de_Janeiro.jpg?width=400" alt="Carnival parade, Rio de Janeiro" onerror="this.parentElement.style.display='none'">
+        <figcaption>Carnival, Rio de Janeiro</figcaption>
+      </figure>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><span class="legend-dot dot-pp"></span>Present Perfect — experience, no specific time</div>
+      <div class="legend-item"><span class="legend-dot dot-ps"></span>Past Simple — specific time, finished story</div>
+    </div>
+
+    <hr class="divider">
+    <p style="margin-bottom:10px; font-weight:600; font-size:0.9rem">Answer out loud:</p>
+    <ul style="padding-left:18px">
+      <li>Where did Sam go two years ago?</li>
+      <li>Which Brazilian cities has Sam been to?</li>
+      <li>What happened in 2023?</li>
+      <li>What does Sam suggest before visiting Brazil?</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══ GRAMMAR ══ -->
+<div id="tab-grammar" class="panel">
+  <div class="timer-box">⏱ 8 min</div>
+
+  <div class="card">
+    <div class="card-label">The rule</div>
+    <h2>Two ways to talk about the past</h2>
+    <div class="rule-box">
+      <div class="rule-col rule-pp">
+        <h3>Present Perfect</h3>
+        <p><strong>have/has + past participle</strong></p>
+        <p style="margin-top:6px">Experience. We don't say exactly when.</p>
+        <p style="margin-top:6px"><em>I've been to Spain.<br>Have you ever tried sushi?</em></p>
+      </div>
+      <div class="rule-col rule-ps">
+        <h3>Past Simple</h3>
+        <p><strong>verb + -ed / irregular</strong></p>
+        <p style="margin-top:6px">A specific moment. We say when.</p>
+        <p style="margin-top:6px"><em>I went to Spain in 2022.<br>I tried sushi last week.</em></p>
+      </div>
+    </div>
+
+    <div class="tip" style="margin-top:14px">
+      <strong>Quick test:</strong> Is there a specific time word (last year, in 2019, yesterday)? → Past Simple. Talking about life experience in general? → Present Perfect.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Time words</div>
+    <h2>Signal words</h2>
+    <div class="rule-box">
+      <div class="rule-col rule-pp">
+        <h3>Present Perfect</h3>
+        <p>ever, never, already, yet, so far, in my life</p>
+      </div>
+      <div class="rule-col rule-ps">
+        <h3>Past Simple</h3>
+        <p>yesterday, last year, in 2019, when I was 20, ago</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ VOCAB ══ -->
+<div id="tab-vocab" class="panel">
+  <div class="timer-box">⏱ 8 min</div>
+
+  <div class="card">
+    <div class="card-label">Recommendation language</div>
+    <h2>Giving advice naturally</h2>
+    <p style="margin-bottom:14px">Tap to reveal an example. Tap again to mark as learned.</p>
+    <div class="vocab-grid">
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">I'd suggest…</div>
+        <div class="vocab-example">I'd suggest going to Brazil in September — it's less crowded than Carnival season.</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">You should definitely…</div>
+        <div class="vocab-example">You should definitely try a caipirinha while you're there.</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">It's worth…</div>
+        <div class="vocab-example">It's worth watching the sunset from Sugarloaf Mountain.</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">I wouldn't bother with…</div>
+        <div class="vocab-example">I wouldn't bother with the restaurants right on the beach — they're overpriced.</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">If I were you, I'd…</div>
+        <div class="vocab-example">If I were you, I'd learn a few words of Portuguese before you go.</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">Make sure you…</div>
+        <div class="vocab-example">Make sure you bring cash — some smaller places in Brazil don't take cards.</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">Have you ever tried…?</div>
+        <div class="vocab-example">Have you ever tried feijoada? It's the national dish.</div>
+      </div>
+      <div class="vocab-card" onclick="cycleVocab(this)">
+        <div class="vocab-phrase">It's a bit of a tourist trap.</div>
+        <div class="vocab-example">Careful — that beach bar near the hotel is a bit of a tourist trap.</div>
+      </div>
+    </div>
+    <p class="tap-hint">Tap once → example · Tap again → learned ✓</p>
+
+    <div class="photo-grid" style="margin-top:16px">
+      <figure>
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Caipirinha.jpg?width=400" alt="Caipirinha cocktail" onerror="this.parentElement.style.display='none'">
+        <figcaption>Caipirinha</figcaption>
+      </figure>
+      <figure>
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Feijoada.JPG?width=400" alt="Feijoada, Brazil's national dish" onerror="this.parentElement.style.display='none'">
+        <figcaption>Feijoada</figcaption>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PRACTICE ══ -->
+<div id="tab-practice" class="panel">
+  <div class="timer-box">⏱ 10 min</div>
+
+  <div class="card">
+    <div class="card-label">Controlled Practice</div>
+    <h2>Choose the right form</h2>
+    <p style="margin-bottom:14px">Fill in the gaps using Present Perfect or Past Simple.</p>
+
+    <div class="gap-sentence">
+      I <input type="text" placeholder="e.g. have been"> to Italy three times.
+    </div>
+    <div class="gap-sentence">
+      Last year, I <input type="text" placeholder="e.g. went"> to Croatia with my family.
+    </div>
+    <div class="gap-sentence">
+      <input type="text" placeholder="Have you ever…"> ever tried sushi?
+    </div>
+    <div class="gap-sentence">
+      When I <input type="text" placeholder="e.g. was"> 25, I moved to Lyon.
+    </div>
+    <div class="gap-sentence">
+      I <input type="text" placeholder="e.g. haven't been"> to Asia yet, but I'd love to go.
+    </div>
+    <div class="gap-sentence">
+      We <input type="text" placeholder="e.g. stayed"> in a small hotel near the beach in 2021.
+    </div>
+
+    <div class="tip" style="margin-top:14px">
+      <strong>Next step:</strong> Read your answers out loud. Explain why you chose that form each time.
+    </div>
+  </div>
+</div>
+
+<!-- ══ SPEAKING ══ -->
+<div id="tab-speaking" class="panel">
+  <div class="timer-box">⏱ 15 min</div>
+
+  <div class="card">
+    <div class="card-label">Free Production</div>
+    <h2>Your turn to talk</h2>
+    <p style="margin-bottom:14px">Tap each prompt. Speak freely — mix Present Perfect and Past Simple naturally, and remember to ask questions back.</p>
+
+    <div class="speaking-card">
+      <div class="speaking-header" onclick="toggleSpeaking(this)">
+        <span class="speaking-tag tag-warmup">Warm-up</span>
+        Which countries have you been to? List them.
+      </div>
+      <div class="speaking-body">
+        <em>"I've been to… I've never been to…"</em><br><br>
+        Then ask your teacher the same question back.
+      </div>
+    </div>
+
+    <div class="speaking-card">
+      <div class="speaking-header" onclick="toggleSpeaking(this)">
+        <span class="speaking-tag tag-core">Core</span>
+        Tell me about one specific trip — where, when, what happened.
+      </div>
+      <div class="speaking-body">
+        Use Past Simple here since it's a specific story. Include: where you went, when, who with, and one memorable moment.<br><br>
+        <strong>Challenge:</strong> use at least 3 past simple verbs.
+      </div>
+    </div>
+
+    <div class="speaking-card">
+      <div class="speaking-header" onclick="toggleSpeaking(this)">
+        <span class="speaking-tag tag-challenge">Challenge</span>
+        You're planning your own trip to Brazil. Your teacher has been there — interview them for tips.
+      </div>
+      <div class="speaking-body">
+        This is a roleplay. Your teacher plays someone who's travelled to Brazil.<br><br>
+        Ask questions using Present Perfect (<em>Have you ever been to…? Have you tried…?</em>) and listen for recommendation language in the answers. Then say what you'd like to do there, using <em>I'd like to… / I'm hoping to…</em><br><br>
+        <em>Goal: keep it a real conversation — react to what you hear, don't just move to the next question.</em>
+      </div>
+    </div>
+
+    <button class="teacher-note-toggle" onclick="toggleNote(this)">👁 Teacher note</button>
+    <div class="teacher-note">
+      <strong>Teacher:</strong> Watch for Present Perfect / Past Simple mixing errors specifically. Note 2–3 examples for the cool-down. Don't correct mid-task.
+    </div>
+  </div>
+</div>
+
+<!-- ══ COOL-DOWN ══ -->
+<div id="tab-cooldown" class="panel">
+  <div class="timer-box">⏱ 5 min</div>
+
+  <div class="card">
+    <div class="card-label">Feedback</div>
+    <h2>What we noticed</h2>
+    <p style="margin-bottom:14px">Look at these examples together. Can you fix them?</p>
+
+    <div class="diff-box diff-wrong">
+      ❌ "I go to Portugal last summer."
+    </div>
+    <div class="diff-box diff-right">
+      ✓ "I went to Portugal last summer."
+    </div>
+
+    <div class="diff-box diff-wrong">
+      ❌ "I have been there last year."
+    </div>
+    <div class="diff-box diff-right">
+      ✓ "I went there last year." <span style="font-size:0.8rem;color:var(--muted)">(specific time → Past Simple)</span>
+    </div>
+
+    <button class="teacher-note-toggle" onclick="toggleNote(this)">👁 Teacher note</button>
+    <div class="teacher-note" style="margin-top:14px">
+      <strong>Teacher:</strong> Replace these examples with the actual errors Greg made during free production. Keep it to 2–3 max — don't overwhelm.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Review flag</div>
+    <h2>Come back to this</h2>
+    <p>Flag Present Perfect vs Past Simple for review in 2–3 sessions, then again in about a week.</p>
+  </div>
+</div>
+
+<!-- FLOATING WRITE BUBBLE -->
+<button class="write-fab" onclick="toggleWriteDrawer()" title="Notes">✏️</button>
+<div class="write-overlay" id="writeOverlay" onclick="toggleWriteDrawer()"></div>
+<div class="write-drawer" id="writeDrawer">
+  <div class="write-drawer-handle"></div>
+  <div class="write-drawer-header">
+    <span class="write-drawer-title">📝 My Notes</span>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span class="write-saved-indicator" id="writeSaved"></span>
+      <button class="write-clear-btn" onclick="clearWriteDrawer()">Clear</button>
+      <button class="write-close-btn" onclick="toggleWriteDrawer()">✕</button>
+    </div>
+  </div>
+  <textarea class="write-drawer-area" id="writeDrawerArea" placeholder="Write freely — travel stories, new words, questions…"></textarea>
+  <button class="write-save-btn" onclick="saveNote()">Save note</button>
+  <div class="saved-notes-list" id="savedNotesList"></div>
+</div>
+
+<!-- TIMER BUBBLE -->
+<div class="timer-bubble" id="timerBubble" onclick="toggleTimer()"><span id="timerDisplay">50:00</span></div>
+
+<script>
+  function showTab(name) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function cycleVocab(card) {
+    if (!card.classList.contains('revealed')) card.classList.add('revealed');
+    else if (!card.classList.contains('mastered')) card.classList.add('mastered');
+    else card.classList.remove('revealed', 'mastered');
+  }
+
+  function toggleSpeaking(header) {
+    header.nextElementSibling.classList.toggle('open');
+  }
+
+  function toggleNote(btn) {
+    const note = btn.nextElementSibling;
+    note.classList.toggle('open');
+    btn.textContent = note.classList.contains('open') ? '🙈 Hide teacher note' : '👁 Teacher note';
+  }
+
+  const STORAGE_KEY = 'travel-rec-draft';
+  const SAVED_KEY = 'travel-rec-saved-notes';
+
+  function toggleWriteDrawer() {
+    const drawer = document.getElementById('writeDrawer');
+    const overlay = document.getElementById('writeOverlay');
+    const isOpen = drawer.classList.contains('open');
+    drawer.classList.toggle('open', !isOpen);
+    overlay.classList.toggle('open', !isOpen);
+    if (!isOpen) { renderSavedNotes(); setTimeout(() => document.getElementById('writeDrawerArea').focus(), 320); }
+  }
+
+  function clearWriteDrawer() {
+    if (confirm('Clear the current note?')) {
+      document.getElementById('writeDrawerArea').value = '';
+      localStorage.removeItem(STORAGE_KEY);
+      showSaved('Cleared');
+    }
+  }
+
+  function showSaved(msg) {
+    const el = document.getElementById('writeSaved');
+    el.textContent = msg || 'Saved ✓';
+    setTimeout(() => el.textContent = '', 2000);
+  }
+
+  function saveNote() {
+    const text = document.getElementById('writeDrawerArea').value.trim();
+    if (!text) return;
+    const notes = JSON.parse(localStorage.getItem(SAVED_KEY) || '[]');
+    notes.unshift({ text, time: new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' }) });
+    localStorage.setItem(SAVED_KEY, JSON.stringify(notes));
+    document.getElementById('writeDrawerArea').value = '';
+    localStorage.removeItem(STORAGE_KEY);
+    showSaved('Note saved ✓');
+    renderSavedNotes();
+  }
+
+  function deleteNote(index) {
+    const notes = JSON.parse(localStorage.getItem(SAVED_KEY) || '[]');
+    notes.splice(index, 1);
+    localStorage.setItem(SAVED_KEY, JSON.stringify(notes));
+    renderSavedNotes();
+  }
+
+  function renderSavedNotes() {
+    const container = document.getElementById('savedNotesList');
+    const notes = JSON.parse(localStorage.getItem(SAVED_KEY) || '[]');
+    if (!notes.length) { container.innerHTML = '<p class="saved-notes-empty">No saved notes yet.</p>'; return; }
+    container.innerHTML = notes.map((n,i) => `
+      <div class="saved-note-item">
+        <div><div class="saved-note-text">${n.text.replace(/</g,'&lt;')}</div><div class="saved-note-time">${n.time}</div></div>
+        <button class="saved-note-delete" onclick="deleteNote(${i})">✕</button>
+      </div>`).join('');
+  }
+
+  const drawerArea = document.getElementById('writeDrawerArea');
+  const savedDraft = localStorage.getItem(STORAGE_KEY);
+  if (savedDraft) drawerArea.value = savedDraft;
+  let saveTimer;
+  drawerArea.addEventListener('input', () => {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => localStorage.setItem(STORAGE_KEY, drawerArea.value), 800);
+  });
+
+  let timerSeconds = 50 * 60;
+  let timerInterval = null;
+  let timerRunning = false;
+
+  function toggleTimer() {
+    if (timerRunning) {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      document.getElementById('timerBubble').classList.remove('running','warning');
+    } else {
+      timerRunning = true;
+      document.getElementById('timerBubble').classList.add('running');
+      timerInterval = setInterval(() => {
+        timerSeconds--;
+        if (timerSeconds < 0) timerSeconds = 0;
+        updateTimerDisplay();
+        const bubble = document.getElementById('timerBubble');
+        if (timerSeconds <= 30) { bubble.classList.remove('running'); bubble.classList.add('warning'); }
+        if (timerSeconds === 0) { clearInterval(timerInterval); timerRunning = false; }
+      }, 1000);
+    }
+  }
+
+  function updateTimerDisplay() {
+    const m = Math.floor(timerSeconds/60), s = timerSeconds%60;
+    document.getElementById('timerDisplay').textContent = String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  }
+</script>
+</body>
+</html>
