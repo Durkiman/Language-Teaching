@@ -1368,5 +1368,168 @@ document.addEventListener('keydown', e=>{
   }
 });
 </script>
+  <script>
+(function upgradeRoom1ToMiniGame() {
+  // 1. Automatically inject the Game CSS
+  const style = document.createElement('style');
+  style.innerHTML = `
+    .game-world { position: relative; width: 100%; height: 280px; background: #E3F2F2; border: 2px solid var(--border); border-radius: 16px; overflow: hidden; touch-action: none; margin-bottom: 14px; box-shadow: inset 0 2px 8px rgba(0,0,0,0.05); }
+    .player-sprite { position: absolute; width: 32px; height: 32px; background: var(--teal); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; z-index: 20; box-shadow: 0 4px 8px rgba(42, 138, 138, 0.4); }
+    .game-object { position: absolute; width: 50px; height: 50px; background: #fff; border: 2px solid var(--border); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 22px; z-index: 10; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    .game-object .lbl { font-size: 9px; font-weight: 800; color: var(--muted); margin-top: 2px; text-transform: uppercase; }
+    .game-object.found { background: var(--teal-light); border-color: var(--teal); }
+    .game-object.found-clue { background: #fff3d6; border-color: #e0b23c; }
+    .interact-prompt { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 10px 20px; border-radius: 24px; font-weight: 800; font-size: 13px; z-index: 30; display: none; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); pointer-events: auto; }
+    .interact-prompt.show { display: block; animation: snapPop 0.3s ease; }
+    .joystick-zone { position: absolute; bottom: 10px; right: 10px; width: 100px; height: 100px; background: rgba(255,255,255,0.4); border: 2px solid rgba(42, 138, 138, 0.2); border-radius: 50%; z-index: 25; display: none; }
+    .joystick-knob { position: absolute; top: 25px; left: 25px; width: 50px; height: 50px; background: var(--teal); border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
+    @media (hover: none) and (pointer: coarse) { .joystick-zone { display: block; } }
+  `;
+  document.head.appendChild(style);
+
+  // 2. Automatically replace the Hotspot Grid with the Game World in Room 1
+  const room1 = document.getElementById('room1');
+  if (!room1) return;
+  const exploreCard = room1.querySelector('.explore-card');
+  const hotspotGrid = exploreCard.querySelector('.hotspot-grid');
+  if (exploreCard.querySelector('.sub')) {
+    exploreCard.querySelector('.sub').textContent = "Walk up to the objects (Use WASD / Arrows or the Joystick on mobile).";
+  }
+  if (hotspotGrid) {
+    hotspotGrid.outerHTML = `
+      <div class="game-world" id="gameWorldR1">
+        <div class="player-sprite" id="playerR1">👦🏼</div>
+        <div class="joystick-zone" id="joystickZone"><div class="joystick-knob" id="joystickKnob"></div></div>
+        <div class="interact-prompt" id="interactPrompt">Tap to Interact (E)</div>
+      </div>
+    `;
+  }
+
+  // 3. Initialize the Engine
+  setTimeout(() => {
+    const world = document.getElementById('gameWorldR1');
+    const playerEl = document.getElementById('playerR1');
+    const promptEl = document.getElementById('interactPrompt');
+    if(!world) return;
+
+    const engine = {
+      keys: { w:false, a:false, s:false, d:false, ArrowUp:false, ArrowLeft:false, ArrowDown:false, ArrowRight:false },
+      player: { x: 20, y: 110, width: 32, height: 32, speed: 4, vx: 0, vy: 0 },
+      objects: [
+        { id: 'r1panel-clock1', emoji: '🕰️', lbl: 'Clock 1', x: 20, y: 20, w: 50, h: 50, isClue: false },
+        { id: 'r1panel-clock2', emoji: '🕰️', lbl: 'Clock 2', x: 200, y: 30, w: 50, h: 50, isClue: false },
+        { id: 'r1panel-paper', emoji: '📜', lbl: 'Old Paper', x: 140, y: 180, w: 50, h: 50, isClue: true },
+        { id: 'r1panel-chair', emoji: '🪑', lbl: 'Chair', x: 240, y: 210, w: 50, h: 50, isClue: false }
+      ],
+      nearbyObj: null, joystickActive: false
+    };
+
+    // Inject objects into the DOM mapping to existing room elements
+    engine.objects.forEach(obj => {
+      let el = document.createElement('div');
+      el.className = 'game-object';
+      el.style.left = obj.x + 'px'; el.style.top = obj.y + 'px';
+      el.innerHTML = `${obj.emoji}<span class="lbl">${obj.lbl}</span>`;
+      world.appendChild(el);
+      obj.el = el;
+    });
+
+    // Handle Interaction
+    function handleInteraction() {
+      if (!engine.nearbyObj) return;
+      const obj = engine.nearbyObj;
+      document.querySelectorAll('#room1 .reveal-panel').forEach(p => p.classList.remove('show'));
+      const panel = document.getElementById(obj.id);
+      if(panel) panel.classList.add('show');
+      
+      if (obj.isClue) {
+        obj.el.classList.add('found-clue');
+        const puzzleWrap = document.getElementById('puzzleWrap1');
+        if (puzzleWrap) puzzleWrap.classList.remove('locked');
+      } else {
+        obj.el.classList.add('found');
+      }
+    }
+
+    // Controls Setup
+    document.addEventListener('keydown', e => {
+      if (engine.keys.hasOwnProperty(e.key)) engine.keys[e.key] = true;
+      if ((e.key === 'e' || e.key === 'E') && engine.nearbyObj) handleInteraction();
+    });
+    document.addEventListener('keyup', e => { if (engine.keys.hasOwnProperty(e.key)) engine.keys[e.key] = false; });
+    promptEl.addEventListener('click', handleInteraction);
+
+    // Joystick Setup
+    const jZone = document.getElementById('joystickZone'), jKnob = document.getElementById('joystickKnob');
+    let jCenter = { x: 0, y: 0 };
+    jZone.addEventListener('touchstart', e => {
+      engine.joystickActive = true;
+      const rect = jZone.getBoundingClientRect();
+      jCenter = { x: rect.left + rect.width/2, y: rect.top + rect.height/2 };
+      updateJoystick(e.touches[0]);
+    }, { passive: false });
+    jZone.addEventListener('touchmove', e => {
+      if (!engine.joystickActive) return;
+      e.preventDefault(); updateJoystick(e.touches[0]);
+    }, { passive: false });
+    jZone.addEventListener('touchend', e => {
+      engine.joystickActive = false;
+      jKnob.style.transform = `translate(0px, 0px)`;
+      engine.player.vx = 0; engine.player.vy = 0;
+    });
+    function updateJoystick(touch) {
+      let dx = touch.clientX - jCenter.x, dy = touch.clientY - jCenter.y;
+      let dist = Math.sqrt(dx*dx + dy*dy);
+      let maxDist = 25;
+      if (dist > maxDist) { dx = (dx/dist) * maxDist; dy = (dy/dist) * maxDist; }
+      jKnob.style.transform = `translate(${dx}px, ${dy}px)`;
+      engine.player.vx = (dx / maxDist) * engine.player.speed;
+      engine.player.vy = (dy / maxDist) * engine.player.speed;
+    }
+
+    // Game Loop
+    function gameLoop() {
+      if (document.getElementById('room1').classList.contains('active')) {
+        if (!engine.joystickActive) {
+          engine.player.vx = 0; engine.player.vy = 0;
+          if (engine.keys.w || engine.keys.ArrowUp) engine.player.vy = -engine.player.speed;
+          if (engine.keys.s || engine.keys.ArrowDown) engine.player.vy = engine.player.speed;
+          if (engine.keys.a || engine.keys.ArrowLeft) engine.player.vx = -engine.player.speed;
+          if (engine.keys.d || engine.keys.ArrowRight) engine.player.vx = engine.player.speed;
+        }
+
+        let newX = engine.player.x + engine.player.vx;
+        let newY = engine.player.y + engine.player.vy;
+        const maxW = world.clientWidth - engine.player.width;
+        const maxH = world.clientHeight - engine.player.height;
+        if (newX < 0) newX = 0; if (newY < 0) newY = 0;
+        if (newX > maxW) newX = maxW; if (newY > maxH) newY = maxH;
+
+        let collision = false, closestObj = null, minDist = Infinity;
+        for (let obj of engine.objects) {
+          if (newX < obj.x + obj.w && newX + engine.player.width > obj.x && newY < obj.y + obj.h && newY + engine.player.height > obj.y) collision = true;
+          let dist = Math.hypot((obj.x + obj.w/2) - (newX + engine.player.width/2), (obj.y + obj.h/2) - (newY + engine.player.height/2));
+          if (dist < 60 && dist < minDist) { minDist = dist; closestObj = obj; }
+        }
+
+        if (!collision) { engine.player.x = newX; engine.player.y = newY; }
+        playerEl.style.transform = `translate(${engine.player.x}px, ${engine.player.y}px)`;
+
+        if (closestObj) {
+          if (engine.nearbyObj !== closestObj) {
+            engine.nearbyObj = closestObj;
+            promptEl.textContent = `Inspect ${closestObj.lbl} (E / Tap)`;
+            promptEl.classList.add('show');
+          }
+        } else if (engine.nearbyObj) {
+          engine.nearbyObj = null; promptEl.classList.remove('show');
+        }
+      }
+      requestAnimationFrame(gameLoop);
+    }
+    gameLoop();
+  }, 500); // Small delay to ensure the document is completely loaded
+})();
+</script>
 </body>
 </html>
