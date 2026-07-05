@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Progress Dashboard – Durim's Language Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --cream: #f5f0e8;
+    --warm: #e8ddd0;
+    --gold: #c9a84c;
+    --sky: #5b8fa8;
+    --sage: #7a9e87;
+    --soft: #a89bce;
+    --terra: #c4714a;
+    --rose: #c0392b;
+    --gray: #8a9099;
+    --amber: #c49a3c;
+    --teal: #2a8a8a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 60px 32px 80px;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #999;
+    text-decoration: none;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+  }
+
+  .back-link:hover { color: var(--terra); }
+
+  header {
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.05s forwards;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+
+  h1 em { font-style: italic; color: var(--terra); }
+
+  .tagline {
+    margin-top: 16px;
+    font-size: 15px;
+    font-weight: 300;
+    color: #666;
+    max-width: 560px;
+    line-height: 1.7;
+  }
+
+  .divider {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    margin: 24px 0;
+  }
+
+  .methodology {
+    font-size: 12px;
+    color: #999;
+    line-height: 1.7;
+    max-width: 640px;
+    margin-bottom: 48px;
+    padding: 14px 18px;
+    background: var(--warm);
+    border-radius: 10px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.15s forwards;
+  }
+
+  .methodology strong { color: #777; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 56px;
+  }
+
+  .student-card {
+    background: white;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .student-card:nth-child(1) { animation-delay: 0.3s; }
+  .student-card:nth-child(2) { animation-delay: 0.42s; }
+  .student-card:nth-child(3) { animation-delay: 0.54s; }
+  .student-card:nth-child(4) { animation-delay: 0.66s; }
+  .student-card:nth-child(5) { animation-delay: 0.78s; }
+  .student-card:nth-child(6) { animation-delay: 0.90s; }
+  .student-card:nth-child(7) { animation-delay: 1.02s; }
+
+  .student-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .student-card.micha::before    { background: var(--sky); }
+  .student-card.mehdi::before    { background: var(--sage); }
+  .student-card.mel::before      { background: var(--soft); }
+  .student-card.emma::before     { background: var(--rose); }
+  .student-card.thomas::before   { background: var(--gray); }
+  .student-card.angelique::before { background: var(--amber); }
+  .student-card.greg::before     { background: var(--teal); }
+
+  .card-top { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .card-emoji { font-size: 26px; flex-shrink: 0; }
+
+  .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  .card-level {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .student-card.micha    .card-level { color: var(--sky); }
+  .student-card.mehdi    .card-level { color: var(--sage); }
+  .student-card.mel      .card-level { color: var(--soft); }
+  .student-card.emma     .card-level { color: var(--rose); }
+  .student-card.thomas   .card-level { color: var(--gray); }
+  .student-card.angelique .card-level { color: var(--amber); }
+  .student-card.greg     .card-level { color: var(--teal); }
+
+  .stat-block {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--cream);
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+  }
+
+  .student-card.micha    .stat-number { color: var(--sky); }
+  .student-card.mehdi    .stat-number { color: var(--sage); }
+  .student-card.mel      .stat-number { color: var(--soft); }
+  .student-card.emma     .stat-number { color: var(--rose); }
+  .student-card.thomas   .stat-number { color: var(--gray); }
+  .student-card.angelique .stat-number { color: var(--amber); }
+  .student-card.greg     .stat-number { color: var(--teal); }
+
+  .stat-label {
+    font-size: 12px;
+    color: #999;
+  }
+
+  .tabs-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-bottom: 12px;
+  }
+
+  .tab-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+
+  .tab-row .tab-name {
+    width: 68px;
+    flex-shrink: 0;
+    color: #777;
+  }
+
+  .tab-row.is-top .tab-name {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .tab-bar-track {
+    flex: 1;
+    height: 6px;
+    background: var(--warm);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .tab-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: #999;
+  }
+
+  .student-card.micha    .tab-row.is-top .tab-bar-fill { background: var(--sky); }
+  .student-card.mehdi    .tab-row.is-top .tab-bar-fill { background: var(--sage); }
+  .student-card.mel      .tab-row.is-top .tab-bar-fill { background: var(--soft); }
+  .student-card.emma     .tab-row.is-top .tab-bar-fill { background: var(--rose); }
+  .student-card.thomas   .tab-row.is-top .tab-bar-fill { background: var(--gray); }
+  .student-card.angelique .tab-row.is-top .tab-bar-fill { background: var(--amber); }
+  .student-card.greg     .tab-row.is-top .tab-bar-fill { background: var(--teal); }
+
+  .tab-count {
+    width: 16px;
+    text-align: right;
+    color: #bbb;
+    font-size: 11px;
+  }
+
+  .top-chip {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: var(--cream);
+    color: #888;
+  }
+
+  .empty-state {
+    font-size: 13px;
+    color: #bbb;
+    font-style: italic;
+    padding: 8px 0;
+  }
+
+  .loading-state {
+    font-size: 13px;
+    color: #ccc;
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .spinner {
+    width: 12px; height: 12px;
+    border: 2px solid #ddd;
+    border-top-color: #aaa;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    flex-shrink: 0;
+  }
+
+  .footer-note {
+    border-top: 1px solid var(--warm);
+    padding-top: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.7s forwards;
+  }
+
+  .footer-note p { font-size: 12px; color: #aaa; line-height: 1.6; }
+  .footer-note strong { color: #888; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 600px) {
+    .page { padding: 40px 20px 60px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <a class="back-link" href="index.html">← Back to studio</a>
+
+  <header>
+    <p class="eyebrow">Language Studio</p>
+    <h1>Progress <em>dashboard</em>.</h1>
+    <div class="divider"></div>
+    <p class="tagline">How many lessons each student has, and which parts of their lessons come up most.</p>
+  </header>
+
+  <p class="methodology">
+    <strong>How this is calculated:</strong> "Completed" is simply the number of lessons listed in each
+    student's <code>lessons.json</code>. The tab breakdown scans each lesson page for its navigation tabs
+    (Warm-Up, Grammar, Content, Reading, Writing) and counts how many lessons include each one — it reflects
+    lesson <em>structure</em>, not actual click activity, since no usage tracking exists yet.
+  </p>
+
+  <div class="grid">
+
+    <div class="student-card micha">
+      <div class="card-top">
+        <span class="card-emoji">🎮</span>
+        <div>
+          <div class="card-name">Micha</div>
+          <div class="card-level">Elementary · English</div>
+        </div>
+      </div>
+      <div class="stat-block" id="stat-micha"></div>
+      <p class="tabs-label">Tab breakdown</p>
+      <div id="tabs-micha"></div>
+    </div>
+
+    <div class="student-card mehdi">
+      <div class="card-top">
+        <span class="card-emoji">💼</span>
+        <div>
+          <div class="card-name">Mehdi</div>
+          <div class="card-level">Pre-Intermediate · English</div>
+        </div>
+      </div>
+      <div class="stat-block" id="stat-mehdi"></div>
+      <p class="tabs-label">Tab breakdown</p>
+      <div id="tabs-mehdi"></div>
+    </div>
+
+    <div class="student-card mel">
+      <div class="card-top">
+        <span class="card-emoji">🌿</span>
+        <div>
+          <div class="card-name">Mel</div>
+          <div class="card-level">Beginner · Albanian</div>
+        </div>
+      </div>
+      <div class="stat-block" id="stat-mel"></div>
+      <p class="tabs-label">Tab breakdown</p>
+      <div id="tabs-mel"></div>
+    </div>
+
+    <div class="student-card emma">
+      <div class="card-top">
+        <span class="card-emoji">🇪🇸</span>
+        <div>
+          <div class="card-name">Emma</div>
+          <div class="card-level">Beginner · Spanish</div>
+        </div>
+      </div>
+      <div class="stat-block" id="stat-emma"></div>
+      <p class="tabs-label">Tab breakdown</p>
+      <div id="tabs-emma"></div>
+    </div>
+
+    <div class="student-card thomas">
+      <div class="card-top">
+        <span class="card-emoji">📖</span>
+        <div>
+          <div class="card-name">Thomas</div>
+          <div class="card-level">Intermediate · English</div>
+        </div>
+      </div>
+      <div class="stat-block" id="stat-thomas"></div>
+      <p class="tabs-label">Tab breakdown</p>
+      <div id="tabs-thomas"></div>
+    </div>
+
+    <div class="student-card angelique">
+      <div class="card-top">
+        <span class="card-emoji">🌸</span>
+        <div>
+          <div class="card-name">Angelique</div>
+          <div class="card-level">Beginner · English</div>
+        </div>
+      </div>
+      <div class="stat-block" id="stat-angelique"></div>
+      <p class="tabs-label">Tab breakdown</p>
+      <div id="tabs-angelique"></div>
+    </div>
+
+    <div class="student-card greg">
+      <div class="card-top">
+        <span class="card-emoji">💬</span>
+        <div>
+          <div class="card-name">Greg</div>
+          <div class="card-level">Pre-Intermediate · English</div>
+        </div>
+      </div>
+      <div class="stat-block" id="stat-greg"></div>
+      <p class="tabs-label">Tab breakdown</p>
+      <div id="tabs-greg"></div>
+    </div>
+
+  </div>
+
+  <div class="footer-note">
+    <p>Made with care by <strong>Durim</strong> · Reads <code>lessons.json</code> and lesson pages directly from GitHub · No account needed</p>
+  </div>
+
+</div>
+
+<script>
+  const REPO_RAW = 'https://raw.githubusercontent.com/Durkiman/Language-Teaching/main';
+
+  const students = [
+    { id: 'micha',     folder: 'Micha'     },
+    { id: 'mehdi',     folder: 'Mehdi'     },
+    { id: 'mel',       folder: 'Mel'       },
+    { id: 'emma',      folder: 'Emma'      },
+    { id: 'thomas',    folder: 'Thomas'    },
+    { id: 'angelique', folder: 'Angelique' },
+    { id: 'greg',      folder: 'Greg'      },
+  ];
+
+  // Tabs are detected by matching visible tab-label text against these patterns.
+  const TAB_TYPES = [
+    { key: 'warmup',  label: 'Warm-Up',  match: /warm[\s-]?up/i },
+    { key: 'grammar', label: 'Grammar',  match: /grammar/i },
+    { key: 'content', label: 'Content',  match: /content/i },
+    { key: 'reading', label: 'Reading',  match: /read/i },
+    { key: 'writing', label: 'Writing',  match: /writ/i },
+  ];
+
+  // Elements that hold tab/nav labels across the various lesson templates in this repo.
+  const TAB_SELECTOR = '.tab-btn, .nav-btn, .tab, .ptab, .nav-item, [data-tab]';
+
+  function emptyTabCounts() {
+    const counts = {};
+    TAB_TYPES.forEach(t => counts[t.key] = 0);
+    return counts;
+  }
+
+  async function detectTabsInLesson(folder, file) {
+    const url = `${REPO_RAW}/${folder}/${encodeURIComponent(file)}?nocache=${Date.now()}`;
+    const found = new Set();
+    try {
+      const res = await fetch(url);
+      if (!res.ok) return found;
+      const html = await res.text();
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      doc.querySelectorAll(TAB_SELECTOR).forEach(el => {
+        const text = el.textContent || '';
+        TAB_TYPES.forEach(t => { if (t.match.test(text)) found.add(t.key); });
+      });
+    } catch (err) {
+      // Skip lessons that fail to fetch/parse — they just won't count toward the breakdown.
+    }
+    return found;
+  }
+
+  async function analyzeStudent(student) {
+    const statEl = document.getElementById('stat-' + student.id);
+    const tabsEl = document.getElementById('tabs-' + student.id);
+
+    statEl.innerHTML = '<div class="loading-state"><div class="spinner"></div> Loading…</div>';
+    tabsEl.innerHTML = '';
+
+    let lessons = [];
+    try {
+      const res = await fetch(`${REPO_RAW}/${student.folder}/lessons.json?nocache=${Date.now()}`);
+      if (res.ok) lessons = await res.json();
+    } catch (err) {
+      lessons = [];
+    }
+
+    if (!lessons.length) {
+      statEl.innerHTML = '<span class="empty-state">No lessons yet.</span>';
+      tabsEl.innerHTML = '<span class="empty-state">Nothing to show.</span>';
+      return;
+    }
+
+    statEl.innerHTML = `
+      <span class="stat-number">${lessons.length}</span>
+      <span class="stat-label">lesson${lessons.length > 1 ? 's' : ''} completed</span>
+    `;
+
+    const tabCounts = emptyTabCounts();
+    const perLessonTabs = await Promise.all(
+      lessons.map(lesson => detectTabsInLesson(student.folder, lesson.file))
+    );
+    perLessonTabs.forEach(found => found.forEach(key => tabCounts[key]++));
+
+    const maxCount = Math.max(...TAB_TYPES.map(t => tabCounts[t.key]));
+
+    if (maxCount === 0) {
+      tabsEl.innerHTML = '<span class="empty-state">No matching tab structure detected.</span>';
+      return;
+    }
+
+    const rows = TAB_TYPES
+      .slice()
+      .sort((a, b) => tabCounts[b.key] - tabCounts[a.key])
+      .map(t => {
+        const count = tabCounts[t.key];
+        const pct = maxCount ? Math.round((count / maxCount) * 100) : 0;
+        const isTop = count === maxCount && count > 0;
+        return `
+          <div class="tab-row ${isTop ? 'is-top' : ''}">
+            <span class="tab-name">${t.label}</span>
+            <span class="tab-bar-track"><span class="tab-bar-fill" style="width:${pct}%"></span></span>
+            <span class="tab-count">${count}</span>
+          </div>
+        `;
+      }).join('');
+
+    const topType = TAB_TYPES.find(t => tabCounts[t.key] === maxCount);
+
+    tabsEl.innerHTML = rows + `<span class="top-chip">Most present: ${topType.label} (${maxCount}/${lessons.length})</span>`;
+  }
+
+  students.forEach(s => analyzeStudent(s));
+</script>
+</body>
+</html>
