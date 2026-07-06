@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telling Stories — Past Simple</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --surface2: #1c1c27;
+    --border: #2a2a3a;
+    --accent: #7c3aed;
+    --accent2: #a855f7;
+    --pulse: #e879f9;
+    --text: #e8e8f0;
+    --muted: #8888aa;
+    --green: #22c55e;
+    --red: #ef4444;
+    --amber: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Space Grotesk', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* HEADER */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; gap: 0;
+  }
+  .eq-bars { display: flex; align-items: flex-end; gap: 3px; height: 24px; margin-right: 12px; }
+  .eq-bar { width: 4px; background: var(--accent2); border-radius: 2px; animation: eq 0.8s ease-in-out infinite alternate; }
+  .eq-bar:nth-child(1){height:40%;animation-delay:0s}
+  .eq-bar:nth-child(2){height:80%;animation-delay:.15s}
+  .eq-bar:nth-child(3){height:55%;animation-delay:.3s}
+  .eq-bar:nth-child(4){height:95%;animation-delay:.1s}
+  .eq-bar:nth-child(5){height:65%;animation-delay:.25s}
+  @keyframes eq { from{transform:scaleY(0.3)} to{transform:scaleY(1)} }
+  header h1 { font-family:'Space Mono',monospace; font-size:14px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; flex:1; padding:16px 0; }
+  header h1 span { color:var(--accent2); }
+  .tabs { display:flex; gap:2px; overflow-x:auto; scrollbar-width:none; padding:0 2px; }
+  .tabs::-webkit-scrollbar{display:none}
+  .tab { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; padding:18px 12px; cursor:pointer; color:var(--muted); border-bottom:2px solid transparent; white-space:nowrap; transition:all 0.2s; background:none; border-top:none; border-left:none; border-right:none; font-weight:700; }
+  .tab:hover{color:var(--text)}
+  .tab.active{color:var(--accent2);border-bottom-color:var(--accent2)}
+
+  /* PANELS */
+  .panel{display:none;padding:24px 20px 120px;max-width:700px;margin:0 auto}
+  .panel.active{display:block}
+  .label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent2);margin-bottom:8px}
+  h2{font-size:24px;font-weight:700;line-height:1.2;margin-bottom:14px}
+  p{font-size:16px;line-height:1.7;color:var(--muted);margin-bottom:14px}
+
+  /* WARM-UP */
+  .warmup-prompt{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--accent2);border-radius:8px;padding:18px;margin-bottom:12px}
+  .warmup-prompt .question{font-size:17px;font-weight:600;color:var(--text);margin-bottom:6px}
+  .warmup-prompt .hint{font-size:13px;color:var(--muted)}
+
+  /* READING */
+  .reading-text{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px;font-size:16px;line-height:1.9;color:#c8c8e0}
+  .reading-text p{color:#c8c8e0;margin-bottom:14px}
+  .reading-text p:last-child{margin-bottom:0}
+  .v-reg{color:var(--green);font-weight:700}
+  .v-irr{color:var(--accent2);font-weight:700}
+  .v-neg{color:var(--red);font-weight:700}
+  .t-mark{color:var(--amber);font-weight:700}
+
+  .reading-text.no-colour .v-reg,
+  .reading-text.no-colour .v-irr,
+  .reading-text.no-colour .v-neg,
+  .reading-text.no-colour .t-mark{color:#c8c8e0;font-weight:400}
+
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+  .legend-item{display:flex;align-items:center;gap:6px;font-size:13px}
+  .legend-dot{width:10px;height:10px;border-radius:50%}
+
+  /* EXERCISE CARDS */
+  .exercise-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:14px}
+  .q-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--accent2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px}
+  .question-text{font-size:16px;color:var(--text);margin-bottom:14px;line-height:1.65}
+  .gap-input{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:9px 12px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:15px;width:100%;margin-bottom:10px;transition:border-color 0.2s}
+  .gap-input:focus{outline:none;border-color:var(--accent2)}
+  .gap-input.correct{border-color:var(--green);background:rgba(34,197,94,0.08)}
+  .gap-input.wrong{border-color:var(--red);background:rgba(239,68,68,0.08)}
+  .btn-row{display:flex;gap:8px;flex-wrap:wrap}
+  .check-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:9px 18px;border-radius:7px;font-family:'Space Grotesk',sans-serif;font-size:14px;cursor:pointer;transition:all 0.2s}
+  .check-btn:hover{border-color:var(--accent2);color:var(--accent2)}
+  .tr-btn{border-color:rgba(168,85,247,0.3);color:var(--muted)}
+  .tr-btn:hover{border-color:var(--accent2);color:var(--accent2)}
+  .feedback-text{font-size:14px;margin-top:10px;display:none}
+  .feedback-text.show{display:block}
+  .feedback-text.correct{color:var(--green)}
+  .feedback-text.wrong{color:var(--red)}
+  .tr-text{display:none;margin-top:10px;font-size:14px;color:var(--muted);background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.2);border-radius:6px;padding:10px 12px;font-style:italic;line-height:1.6}
+  .tr-text.show{display:block}
+
+  /* MATCH */
+  .match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+  .match-item{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;font-size:14px;cursor:pointer;transition:all 0.2s;text-align:center}
+  .match-item:hover{border-color:var(--accent2)}
+  .match-item.selected{border-color:var(--accent2);background:rgba(168,85,247,0.15);color:var(--accent2)}
+  .match-item.matched{border-color:var(--green);background:rgba(34,197,94,0.1);color:var(--green);pointer-events:none}
+  .match-item.wrong-flash{border-color:var(--red);background:rgba(239,68,68,0.1)}
+
+  /* NEGATIVE TASK */
+  .neg-pair{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px}
+  .neg-pair .given{font-size:15px;color:var(--muted);margin-bottom:8px}
+  .neg-pair .given span{color:var(--text);font-weight:600}
+
+  /* ORDER TASK */
+  .order-container{margin-bottom:16px}
+  .order-item{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:8px;cursor:grab;user-select:none;font-size:15px;color:var(--text);display:flex;align-items:center;gap:10px;transition:border-color 0.2s}
+  .order-item:hover{border-color:var(--accent2)}
+  .order-item.dragging{opacity:0.4;border-color:var(--accent2)}
+  .order-item .drag-handle{color:var(--muted);font-size:18px;flex-shrink:0}
+  .order-item .item-num{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);min-width:20px}
+  .order-check-btn{background:var(--accent);color:white;border:none;border-radius:8px;padding:11px 22px;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px}
+  .order-feedback{font-size:14px;margin-top:10px;display:none}
+  .order-feedback.show{display:block}
+
+  /* SPEAKING */
+  .speaking-prompt{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:14px}
+  .sp-label{font-size:10px;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px}
+  .sp-label.warmup{color:var(--green)}
+  .sp-label.core{color:var(--accent2)}
+  .sp-label.challenge{color:var(--pulse)}
+  .sp-text{font-size:17px;color:var(--text);font-weight:500;line-height:1.5}
+  .sp-hint{font-size:13px;color:var(--muted);margin-top:8px;font-style:italic}
+
+  /* TAKE-HOME */
+  .takehome{background:linear-gradient(135deg,rgba(124,58,237,0.15),rgba(232,121,249,0.1));border:1px solid rgba(168,85,247,0.3);border-radius:12px;padding:22px;margin-top:24px}
+  .th-label{font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.15em;color:var(--accent2);margin-bottom:8px}
+  .th-phrase{font-size:20px;font-weight:700;color:var(--text);margin-bottom:6px}
+  .th-explain{font-size:14px;color:var(--muted)}
+
+  /* DIVIDER */
+  .divider{height:1px;background:var(--border);margin:22px 0}
+
+  /* NAV */
+  .nav-row{display:flex;justify-content:space-between;margin-top:32px}
+  .nav-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:11px 22px;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s}
+  .nav-btn:hover{border-color:var(--accent2);color:var(--accent2)}
+  .nav-btn:disabled{opacity:0.3;cursor:default}
+
+  /* GRAMMAR FAB */
+  #grammar-fab{position:fixed;bottom:90px;right:24px;background:rgba(124,58,237,0.9);color:white;border:none;border-radius:28px;padding:12px 18px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;z-index:200;box-shadow:0 4px 20px rgba(124,58,237,0.4);display:flex;align-items:center;gap:8px;transition:all 0.2s}
+  #grammar-fab:hover{background:var(--accent2);transform:translateY(-2px)}
+  #grammar-fab .open-tab-icon{font-size:14px}
+
+  /* GRAMMAR DRAWER */
+  #grammar-drawer{position:fixed;bottom:0;right:0;width:100%;max-width:440px;background:var(--surface);border-top:1px solid var(--border);border-left:1px solid var(--border);border-radius:16px 16px 0 0;padding:20px;z-index:300;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);max-height:72vh;overflow-y:auto}
+  #grammar-drawer.open{transform:translateY(0)}
+  .drawer-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+  .drawer-title{font-family:'Space Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent2)}
+  .drawer-close{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer}
+  .drawer-open-full{background:var(--accent);color:white;border:none;border-radius:7px;padding:9px 16px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:18px;width:100%}
+
+  .mini-rule{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px}
+  .mini-rule-title{font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent2);margin-bottom:8px}
+  .mini-formula{font-family:'Space Mono',monospace;font-size:13px;color:var(--text);background:rgba(0,0,0,0.3);padding:8px 10px;border-radius:5px;margin-bottom:8px}
+  .mini-ex{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:3px}
+  .mini-ex .hl{color:var(--accent2);font-weight:600}
+  .mini-ex .hl-red{color:var(--red);font-weight:600}
+  .mini-ex .hl-amber{color:var(--amber);font-weight:600}
+
+  /* LOG FAB */
+  #log-fab{position:fixed;bottom:24px;right:24px;width:54px;height:54px;background:var(--surface);border:1px solid var(--border);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;z-index:200;transition:all 0.2s}
+  #log-fab:hover{border-color:var(--accent2)}
+  #log-drawer{position:fixed;bottom:0;left:0;width:100%;max-width:420px;background:var(--surface);border-top:1px solid var(--border);border-right:1px solid var(--border);border-radius:16px 16px 0 0;padding:20px;z-index:300;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);max-height:70vh;overflow-y:auto}
+  #log-drawer.open{transform:translateY(0)}
+  #log-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;resize:vertical;min-height:70px;margin-bottom:8px}
+  #log-input:focus{outline:none;border-color:var(--accent2)}
+  .log-add-btn{background:var(--accent);color:white;border:none;border-radius:7px;padding:9px 18px;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:16px}
+  .log-entry{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;font-size:14px;color:var(--text);line-height:1.5;position:relative}
+  .log-entry .log-time{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:4px}
+  .log-entry .del-btn{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px}
+
+  /* TIMER */
+  #timer-fab{position:fixed;bottom:24px;left:24px;background:var(--surface);border:1px solid var(--border);border-radius:30px;padding:10px 16px;font-family:'Space Mono',monospace;font-size:14px;color:var(--muted);cursor:pointer;z-index:200;transition:all 0.2s;display:flex;align-items:center;gap:8px}
+  #timer-fab:hover{border-color:var(--accent2);color:var(--text)}
+  #timer-fab.running{color:var(--accent2);border-color:var(--accent2)}
+  #timer-fab.urgent{color:var(--red);border-color:var(--red)}
+
+  /* OVERLAY */
+  #overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:250}
+  #overlay.show{display:block}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eq-bars">
+    <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+    <div class="eq-bar"></div><div class="eq-bar"></div>
+  </div>
+  <h1>Telling <span>Stories</span></h1>
+  <nav class="tabs">
+    <button class="tab active" onclick="switchTab(0)">Warm-Up</button>
+    <button class="tab" onclick="switchTab(1)">Reading</button>
+    <button class="tab" onclick="switchTab(2)">Exercises</button>
+    <button class="tab" onclick="switchTab(3)">Speaking</button>
+    <button class="tab" onclick="switchTab(4)">Cool-Down</button>
+    <button class="tab" onclick="switchTab(5)">Grammar</button>
+  </nav>
+</header>
+
+<!-- PANEL 0: WARM-UP -->
+<div class="panel active" id="panel-0">
+  <div class="label">Warm-Up · 5 min</div>
+  <h2>What do you remember?</h2>
+  <p>No notes. Just talk — what stayed with you from last time?</p>
+
+  <div class="warmup-prompt">
+    <div class="question">Can you remember 3 words from the last lesson? Use each one in a sentence.</div>
+    <div class="hint">hypnotic, relentless, evolved, stripped back, iconic, roots…</div>
+  </div>
+  <div class="warmup-prompt">
+    <div class="question">Tell me something that happened to you this week — in one sentence.</div>
+    <div class="hint">Don't worry about the grammar yet. Just say it.</div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" disabled>← Back</button>
+    <button class="nav-btn" onclick="switchTab(1)">Reading →</button>
+  </div>
+</div>
+
+<!-- PANEL 1: READING -->
+<div class="panel" id="panel-1">
+  <div class="label">Reading · 10 min</div>
+  <h2>What I did last week.</h2>
+  <p>Read the text. Notice the coloured verbs — they're all in the past simple.</p>
+
+  <button class="check-btn" id="colour-toggle-btn" onclick="toggleColours()" style="margin-bottom:14px;">🎨 Turn colours off</button>
+
+  <div class="legend" id="reading-legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div><span style="font-size:13px;color:var(--muted)">Regular verb</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent2)"></div><span style="font-size:13px;color:var(--muted)">Irregular verb</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div><span style="font-size:13px;color:var(--muted)">Negative</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div><span style="font-size:13px;color:var(--muted)">Time marker</span></div>
+  </div>
+
+  <div class="reading-text" id="reading-text-block">
+    <p><span class="t-mark">Last week</span> I <span class="v-irr">had</span> one of the most intense weeks of my year. On Monday, I <span class="v-irr">got</span> a call from a client — he <span class="v-irr">told</span> me there was a big problem with the sound system at a venue. I <span class="v-neg">didn't know</span> exactly what the problem was, so I <span class="v-irr">took</span> all my equipment and <span class="v-irr">went</span> there straight away.</p>
+
+    <p><span class="t-mark">At first</span>, nothing <span class="v-reg">worked</span>. I <span class="v-reg">checked</span> everything — the cables, the mixers, the monitors. I <span class="v-irr">spent</span> almost two hours on it. The client <span class="v-neg">didn't say</span> much, but I <span class="v-irr">could</span> feel the pressure.</p>
+
+    <p><span class="t-mark">Then</span>, I <span class="v-irr">found</span> the issue. One small cable <span class="v-reg">caused</span> the whole problem. I <span class="v-reg">fixed</span> it in five minutes. <span class="t-mark">After that</span>, the sound <span class="v-irr">came</span> back perfectly. The client <span class="v-reg">smiled</span> — he <span class="v-reg">looked</span> so relieved.</p>
+
+    <p><span class="t-mark">In the end</span>, it <span class="v-irr">was</span> a great day. I <span class="v-neg">didn't sleep</span> much that night, but I <span class="v-irr">felt</span> really good about the work. Sometimes the small things <span class="v-irr">make</span> the biggest difference.</p>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="switchTab(0)">← Back</button>
+    <button class="nav-btn" onclick="switchTab(2)">Exercises →</button>
+  </div>
+</div>
+
+<!-- PANEL 2: EXERCISES -->
+<div class="panel" id="panel-2">
+  <div class="label">Exercises · 15 min</div>
+  <h2>Put it into practice.</h2>
+
+  <!-- PART A: VERB TRANSFORMATION -->
+  <div class="q-label" style="margin-bottom:12px">Part A — Regular Verbs: write the past simple</div>
+
+  <div class="exercise-card">
+    <div class="q-label">01 · Regular</div>
+    <div class="question-text">We ______ (arrive) at the venue just before midnight.</div>
+    <input class="gap-input" id="g1" placeholder="past simple..." autocomplete="off">
+    <div class="btn-row">
+      <button class="check-btn" onclick="checkGap('g1','arrived','f1')">Check</button>
+      <button class="check-btn tr-btn" onclick="toggleTr('tr1')">🇫🇷 Traduction</button>
+    </div>
+    <div class="feedback-text" id="f1"></div>
+    <div class="tr-text" id="tr1">Nous ______ (arriver) au lieu juste avant minuit.</div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="q-label">02 · Regular</div>
+    <div class="question-text">He ______ (check) all the cables but ______ (not / find) the problem.</div>
+    <input class="gap-input" id="g2" placeholder="both verbs, comma-separated..." autocomplete="off">
+    <div class="btn-row">
+      <button class="check-btn" onclick="checkGap('g2', &quot;checked, didn't find&quot;, 'f2')">Check</button>
+      <button class="check-btn tr-btn" onclick="toggleTr('tr2')">🇫🇷 Traduction</button>
+    </div>
+    <div class="feedback-text" id="f2"></div>
+    <div class="tr-text" id="tr2">Il ______ (vérifier) tous les câbles mais n'______ pas ______ (trouver) le problème.</div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="q-label">03 · Regular</div>
+    <div class="question-text">The crowd ______ (love) the set — they ______ (stay) until the very end.</div>
+    <input class="gap-input" id="g3" placeholder="both verbs, comma-separated..." autocomplete="off">
+    <div class="btn-row">
+      <button class="check-btn" onclick="checkGap('g3','loved, stayed','f3')">Check</button>
+      <button class="check-btn tr-btn" onclick="toggleTr('tr3')">🇫🇷 Traduction</button>
+    </div>
+    <div class="feedback-text" id="f3"></div>
+    <div class="tr-text" id="tr3">La foule ______ (adorer) le set — ils ______ (rester) jusqu'à la toute fin.</div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="q-label" style="margin-bottom:12px">Part B — Irregular Verbs</div>
+
+  <div class="exercise-card">
+    <div class="q-label">04 · Irregular</div>
+    <div class="question-text">Last weekend I ______ (go) to a festival and ______ (meet) some interesting people.</div>
+    <input class="gap-input" id="g4" placeholder="both verbs, comma-separated..." autocomplete="off">
+    <div class="btn-row">
+      <button class="check-btn" onclick="checkGap('g4','went, met','f4')">Check</button>
+      <button class="check-btn tr-btn" onclick="toggleTr('tr4')">🇫🇷 Traduction</button>
+    </div>
+    <div class="feedback-text" id="f4"></div>
+    <div class="tr-text" id="tr4">Le week-end dernier, je ______ (aller) à un festival et j'______ (rencontrer) des personnes intéressantes.</div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="q-label">05 · Irregular</div>
+    <div class="question-text">He ______ (tell) me what happened, but I ______ (not / understand) at first.</div>
+    <input class="gap-input" id="g5" placeholder="both verbs, comma-separated..." autocomplete="off">
+    <div class="btn-row">
+      <button class="check-btn" onclick="checkGap('g5', &quot;told, didn't understand&quot;, 'f5')">Check</button>
+      <button class="check-btn tr-btn" onclick="toggleTr('tr5')">🇫🇷 Traduction</button>
+    </div>
+    <div class="feedback-text" id="f5"></div>
+    <div class="tr-text" id="tr5">Il m'______ (dire) ce qui s'était passé, mais je n'______ pas ______ (comprendre) au début.</div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="q-label">06 · Irregular</div>
+    <div class="question-text">I ______ (feel) exhausted after the show, but I ______ (know) it ______ (be) worth it.</div>
+    <input class="gap-input" id="g6" placeholder="three verbs, comma-separated..." autocomplete="off">
+    <div class="btn-row">
+      <button class="check-btn" onclick="checkGap('g6','felt, knew, was','f6')">Check</button>
+      <button class="check-btn tr-btn" onclick="toggleTr('tr6')">🇫🇷 Traduction</button>
+    </div>
+    <div class="feedback-text" id="f6"></div>
+    <div class="tr-text" id="tr6">Je me ______ (sentir) épuisé après le show, mais je ______ (savoir) que ça en ______ (valoir) la peine.</div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="q-label">07 · Irregular — Quick Transform</div>
+    <div class="question-text">Write the past simple form of each verb. Say it out loud before you type it.</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px 16px; margin-bottom:12px;">
+      <div style="display:flex; align-items:center; gap:8px;"><span style="font-family:'Space Mono',monospace; color:var(--muted); min-width:56px;">come</span><input class="gap-input" id="qt1" style="margin-bottom:0;" placeholder="past..." autocomplete="off"></div>
+      <div style="display:flex; align-items:center; gap:8px;"><span style="font-family:'Space Mono',monospace; color:var(--muted); min-width:56px;">think</span><input class="gap-input" id="qt2" style="margin-bottom:0;" placeholder="past..." autocomplete="off"></div>
+      <div style="display:flex; align-items:center; gap:8px;"><span style="font-family:'Space Mono',monospace; color:var(--muted); min-width:56px;">leave</span><input class="gap-input" id="qt3" style="margin-bottom:0;" placeholder="past..." autocomplete="off"></div>
+      <div style="display:flex; align-items:center; gap:8px;"><span style="font-family:'Space Mono',monospace; color:var(--muted); min-width:56px;">hear</span><input class="gap-input" id="qt4" style="margin-bottom:0;" placeholder="past..." autocomplete="off"></div>
+      <div style="display:flex; align-items:center; gap:8px;"><span style="font-family:'Space Mono',monospace; color:var(--muted); min-width:56px;">find</span><input class="gap-input" id="qt5" style="margin-bottom:0;" placeholder="past..." autocomplete="off"></div>
+      <div style="display:flex; align-items:center; gap:8px;"><span style="font-family:'Space Mono',monospace; color:var(--muted); min-width:56px;">bring</span><input class="gap-input" id="qt6" style="margin-bottom:0;" placeholder="past..." autocomplete="off"></div>
+    </div>
+    <button class="check-btn" onclick="checkQuickTransform()">Check all</button>
+    <div class="feedback-text" id="qt-feedback"></div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="q-label">08 · Irregular — Match Base to Past</div>
+    <div class="question-text">Tap a base verb, then tap its past form.</div>
+    <div class="match-grid" id="irr-match-grid">
+      <div class="match-item" data-type="base" data-id="1" onclick="matchClick(this)">speak</div>
+      <div class="match-item" data-type="past" data-id="1" onclick="matchClick(this)">spoke</div>
+      <div class="match-item" data-type="base" data-id="2" onclick="matchClick(this)">begin</div>
+      <div class="match-item" data-type="past" data-id="2" onclick="matchClick(this)">began</div>
+      <div class="match-item" data-type="base" data-id="3" onclick="matchClick(this)">keep</div>
+      <div class="match-item" data-type="past" data-id="3" onclick="matchClick(this)">kept</div>
+      <div class="match-item" data-type="base" data-id="4" onclick="matchClick(this)">put</div>
+      <div class="match-item" data-type="past" data-id="4" onclick="matchClick(this)">put</div>
+      <div class="match-item" data-type="base" data-id="5" onclick="matchClick(this)">run</div>
+      <div class="match-item" data-type="past" data-id="5" onclick="matchClick(this)">ran</div>
+    </div>
+    <div id="irr-match-feedback" style="font-size:14px; color:var(--green); display:none; margin-top:10px;">✓ All matched! Great work.</div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="q-label" style="margin-bottom:12px">Part C — Negative sentences</div>
+
+  <div class="exercise-card">
+    <div class="q-label">09 · Negative</div>
+    <div class="question-text">Make this sentence negative:<br><em>"I slept well that night."</em></div>
+    <input class="gap-input" id="g7" placeholder="negative version..." autocomplete="off">
+    <div class="btn-row">
+      <button class="check-btn" onclick="checkGap('g7', &quot;I didn't sleep well that night.&quot;, 'f7')">Check</button>
+      <button class="check-btn tr-btn" onclick="toggleTr('tr7')">🇫🇷 Traduction</button>
+    </div>
+    <div class="feedback-text" id="f7"></div>
+    <div class="tr-text" id="tr7">Je n'ai pas bien dormi cette nuit-là.</div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="q-label">10 · Negative</div>
+    <div class="question-text">Make this sentence negative:<br><em>"He went to the main stage."</em></div>
+    <input class="gap-input" id="g8" placeholder="negative version..." autocomplete="off">
+    <div class="btn-row">
+      <button class="check-btn" onclick="checkGap('g8', &quot;He didn't go to the main stage.&quot;, 'f8')">Check</button>
+      <button class="check-btn tr-btn" onclick="toggleTr('tr8')">🇫🇷 Traduction</button>
+    </div>
+    <div class="feedback-text" id="f8"></div>
+    <div class="tr-text" id="tr8">Il n'est pas allé à la scène principale.</div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="q-label" style="margin-bottom:12px">Part D — Put the story in order</div>
+
+  <div class="exercise-card">
+    <div class="q-label">11 · Story order</div>
+    <div class="question-text">Drag the sentences into the correct order to tell the story.</div>
+    <div class="order-container" id="order-list">
+      <div class="order-item" draggable="true" data-correct="3"><span class="drag-handle">⠿</span><span class="item-num"></span>After that, the sound came back perfectly and the client smiled.</div>
+      <div class="order-item" draggable="true" data-correct="1"><span class="drag-handle">⠿</span><span class="item-num"></span>Last week, I got a call about a problem with the sound system.</div>
+      <div class="order-item" draggable="true" data-correct="4"><span class="drag-handle">⠿</span><span class="item-num"></span>In the end, I felt really good about the work.</div>
+      <div class="order-item" draggable="true" data-correct="2"><span class="drag-handle">⠿</span><span class="item-num"></span>At first nothing worked, so I checked everything for two hours.</div>
+      <div class="order-item" draggable="true" data-correct="5"><span class="drag-handle">⠿</span><span class="item-num"></span>Then I found a small cable that caused the whole problem and fixed it.</div>
+    </div>
+    <button class="order-check-btn" onclick="checkOrder()">Check order</button>
+    <div class="order-feedback" id="order-feedback"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="switchTab(1)">← Back</button>
+    <button class="nav-btn" onclick="switchTab(3)">Speaking →</button>
+  </div>
+</div>
+
+<!-- PANEL 3: SPEAKING -->
+<div class="panel" id="panel-3">
+  <div class="label">Speaking · 15 min</div>
+  <h2>Tell your story.</h2>
+  <p>Use past simple throughout. Your teacher will note any slips — you'll get feedback at the end.</p>
+
+  <div class="speaking-prompt">
+    <div class="sp-label warmup">Warm-up</div>
+    <div class="sp-text">Tell me what you did last weekend — in 5 sentences. Use: first, then, after that.</div>
+    <div class="sp-hint">Don't plan it. Just start with "Last weekend I…"</div>
+  </div>
+
+  <div class="speaking-prompt">
+    <div class="sp-label core">Core</div>
+    <div class="sp-text">Tell me the full story of something that happened to you at work recently. I'll listen — no interruptions.</div>
+    <div class="sp-hint">Use time markers to connect the events. Aim for 1–2 minutes.</div>
+  </div>
+
+  <div class="speaking-prompt">
+    <div class="sp-label challenge">Challenge</div>
+    <div class="sp-text">Now tell the same story again — but include at least two negative sentences. What didn't happen? What didn't you expect?</div>
+    <div class="sp-hint">"I didn't know… / It didn't work… / He didn't say…"</div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="switchTab(2)">← Back</button>
+    <button class="nav-btn" onclick="switchTab(4)">Cool-Down →</button>
+  </div>
+</div>
+
+<!-- PANEL 4: COOL-DOWN -->
+<div class="panel" id="panel-4">
+  <div class="label">Cool-Down · 5 min</div>
+  <h2>Let's look back.</h2>
+  <p>Your teacher will share the top reformulations from today. Listen, repeat, feel the difference.</p>
+
+  <div class="warmup-prompt">
+    <div class="question">What was the hardest part today — regular verbs, irregulars, or negatives?</div>
+    <div class="hint">Being honest about this helps you improve faster.</div>
+  </div>
+
+  <div class="warmup-prompt">
+    <div class="question">Can you tell your work story one more time — in 3 sentences?</div>
+    <div class="hint">Short, clean, past simple all the way through.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="exercise-card">
+    <div class="q-label">Teacher only</div>
+    <div class="question-text" style="margin-bottom:12px;">See which category needs more practice, based on today's exercises — use this to decide homework.</div>
+    <button class="check-btn" onclick="generateSummary()">📊 Generate summary</button>
+    <div id="summary-box" style="display:none; margin-top:14px;"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="switchTab(3)">← Back</button>
+    <button class="nav-btn" disabled>Done ✓</button>
+  </div>
+</div>
+
+<!-- PANEL 5: GRAMMAR -->
+<div class="panel" id="panel-5">
+  <div class="label">Reference</div>
+  <h2>Past Simple — Full Grammar Reference</h2>
+  <p>Everything on regular verbs, irregular verbs, negatives, and time markers — with French translations throughout.</p>
+
+  <!-- RULE 1: REGULAR -->
+  <div class="q-label" style="margin-bottom:10px; font-size:11px;">Rule 01 — Affirmative: Regular Verbs</div>
+  <p style="margin-bottom:12px;">Regular verbs follow a simple rule: add <strong style="color:var(--text)">-ed</strong> to the base form. Always. No exceptions.</p>
+
+  <div class="exercise-card">
+    <div class="q-label">Formula</div>
+    <div style="font-family:'Space Mono',monospace; font-size:14px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px 16px; margin-bottom:14px;">Subject + <span style="color:var(--accent2)">verb + -ed</span></div>
+    <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:12px;">
+      <div style="font-size:15px;">I <strong style="color:var(--green)">played</strong> a set at the festival.<br><span style="color:var(--muted); font-style:italic; font-size:14px;">J'ai joué un set au festival.</span></div>
+      <div style="font-size:15px;">He <strong style="color:var(--green)">worked</strong> all night.<br><span style="color:var(--muted); font-style:italic; font-size:14px;">Il a travaillé toute la nuit.</span></div>
+      <div style="font-size:15px;">We <strong style="color:var(--green)">arrived</strong> late.<br><span style="color:var(--muted); font-style:italic; font-size:14px;">Nous sommes arrivés tard.</span></div>
+      <div style="font-size:15px;">The crowd <strong style="color:var(--green)">loved</strong> the music.<br><span style="color:var(--muted); font-style:italic; font-size:14px;">La foule a adoré la musique.</span></div>
+    </div>
+    <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:8px; padding:12px 14px; font-size:14px; color:var(--muted); line-height:1.6;">
+      ⚠️ Common mistake: <strong style="color:var(--red)">"I play a set yesterday"</strong> → The verb stays in present simple. Always change to past: <strong style="color:var(--text)">"I played"</strong>.
+    </div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="q-label">Spelling rules for -ed</div>
+    <div style="display:flex; flex-direction:column; gap:6px; font-size:14px; color:var(--muted);">
+      <div>Most verbs → add <strong style="color:var(--green)">-ed</strong> &nbsp; <em>work → worked, play → played</em></div>
+      <div>Ends in -e → add <strong style="color:var(--green)">-d</strong> &nbsp; <em>arrive → arrived, love → loved</em></div>
+      <div>Consonant + y → <strong style="color:var(--green)">-ied</strong> &nbsp; <em>try → tried, carry → carried</em></div>
+      <div>Short vowel + consonant → double + <strong style="color:var(--green)">-ed</strong> &nbsp; <em>stop → stopped, drop → dropped</em></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RULE 2: IRREGULAR -->
+  <div class="q-label" style="margin-bottom:10px; font-size:11px;">Rule 02 — Affirmative: Irregular Verbs</div>
+  <p style="margin-bottom:12px;">Irregular verbs don't follow the -ed rule. Each has its own past form — the most common ones come naturally with practice.</p>
+
+  <div class="exercise-card">
+    <div class="q-label">Formula</div>
+    <div style="font-family:'Space Mono',monospace; font-size:14px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px 16px; margin-bottom:14px;">Subject + <span style="color:var(--accent2)">irregular past form</span></div>
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <div style="font-size:15px;">I <strong style="color:var(--accent2)">went</strong> to a festival last weekend.<br><span style="color:var(--muted); font-style:italic; font-size:14px;">Je suis allé à un festival le week-end dernier.</span></div>
+      <div style="font-size:15px;">He <strong style="color:var(--accent2)">told</strong> me about the show.<br><span style="color:var(--muted); font-style:italic; font-size:14px;">Il m'a parlé du spectacle.</span></div>
+      <div style="font-size:15px;">We <strong style="color:var(--accent2)">heard</strong> an incredible set.<br><span style="color:var(--muted); font-style:italic; font-size:14px;">Nous avons entendu un set incroyable.</span></div>
+    </div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="q-label">Key Irregular Verbs</div>
+    <div class="btn-row" style="margin-bottom:14px;">
+      <button class="check-btn" id="vtab-everyday" onclick="switchVerbTab('everyday')" style="border-color:var(--accent2); color:var(--accent2);">Everyday</button>
+      <button class="check-btn" id="vtab-music" onclick="switchVerbTab('music')">Music &amp; Work</button>
+    </div>
+    <div id="vp-everyday">
+      <table style="width:100%; border-collapse:collapse; font-size:14px;">
+        <tr><th style="text-align:left; padding:8px 10px; font-family:'Space Mono',monospace; font-size:10px; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--border);">Base</th><th style="text-align:left; padding:8px 10px; font-family:'Space Mono',monospace; font-size:10px; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--border);">Past</th><th style="text-align:left; padding:8px 10px; font-family:'Space Mono',monospace; font-size:10px; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--border);">French</th></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">go</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">went</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">aller → allé</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">come</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">came</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">venir → venu</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">see</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">saw</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">voir → vu</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">say</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">said</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">dire → dit</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">tell</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">told</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">dire / raconter → dit / raconté</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">get</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">got</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">obtenir / arriver → eu / arrivé</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">think</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">thought</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">penser → pensé</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">know</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">knew</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">savoir → su</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">feel</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">felt</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">sentir / ressentir → senti</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">leave</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">left</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">partir → parti</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">meet</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">met</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">rencontrer → rencontré</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">take</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">took</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">prendre → pris</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted);">have</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace;">had</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px;">avoir → eu</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-top:1px solid rgba(42,42,58,0.5);">be</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-top:1px solid rgba(42,42,58,0.5);">was / were</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-top:1px solid rgba(42,42,58,0.5);">être → était / étaient</td></tr>
+      </table>
+    </div>
+    <div id="vp-music" style="display:none;">
+      <table style="width:100%; border-collapse:collapse; font-size:14px;">
+        <tr><th style="text-align:left; padding:8px 10px; font-family:'Space Mono',monospace; font-size:10px; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--border);">Base</th><th style="text-align:left; padding:8px 10px; font-family:'Space Mono',monospace; font-size:10px; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--border);">Past</th><th style="text-align:left; padding:8px 10px; font-family:'Space Mono',monospace; font-size:10px; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--border);">French</th></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">hear</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">heard</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">entendre → entendu</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">put</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">put</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">mettre → mis</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">set up</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">set up</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">installer → installé</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">build</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">built</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">construire → construit</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">run</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">ran</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">gérer / courir → géré / couru</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">bring</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">brought</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">apporter → apporté</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">send</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">sent</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">envoyer → envoyé</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">speak</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">spoke</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">parler → parlé</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">begin</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">began</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">commencer → commencé</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">keep</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">kept</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">garder / continuer → gardé</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted); border-bottom:1px solid rgba(42,42,58,0.5);">find</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace; border-bottom:1px solid rgba(42,42,58,0.5);">found</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px; border-bottom:1px solid rgba(42,42,58,0.5);">trouver → trouvé</td></tr>
+        <tr><td style="padding:8px 10px; color:var(--muted);">make</td><td style="padding:8px 10px; color:var(--accent2); font-weight:600; font-family:'Space Mono',monospace;">made</td><td style="padding:8px 10px; color:var(--muted); font-style:italic; font-size:13px;">faire → fait</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RULE 3: NEGATIVE -->
+  <div class="q-label" style="margin-bottom:10px; font-size:11px;">Rule 03 — Negative</div>
+  <p style="margin-bottom:12px;">For all verbs — regular and irregular — use <strong style="color:var(--text)">didn't</strong> + base form. The main verb goes back to base form. Never add -ed after didn't.</p>
+
+  <div class="exercise-card">
+    <div class="q-label">Formula</div>
+    <div style="font-family:'Space Mono',monospace; font-size:14px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px 16px; margin-bottom:14px;">Subject + <span style="color:var(--red)">didn't</span> + <span style="color:var(--accent2)">verb (base form)</span></div>
+    <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:12px;">
+      <div style="font-size:15px;">I <strong style="color:var(--red)">didn't go</strong> to the main stage.<br><span style="color:var(--muted); font-style:italic; font-size:14px;">Je ne suis pas allé à la scène principale.</span></div>
+      <div style="font-size:15px;">He <strong style="color:var(--red)">didn't play</strong> until midnight.<br><span style="color:var(--muted); font-style:italic; font-size:14px;">Il n'a pas joué avant minuit.</span></div>
+      <div style="font-size:15px;">We <strong style="color:var(--red)">didn't sleep</strong> at all.<br><span style="color:var(--muted); font-style:italic; font-size:14px;">Nous n'avons pas du tout dormi.</span></div>
+      <div style="font-size:15px;">It <strong style="color:var(--red)">didn't sound</strong> right at first.<br><span style="color:var(--muted); font-style:italic; font-size:14px;">Ça ne sonnait pas bien au début.</span></div>
+    </div>
+    <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:8px; padding:12px 14px; font-size:14px; color:var(--muted); line-height:1.6;">
+      ⚠️ Common mistake: <strong style="color:var(--red)">"I didn't went"</strong> or <strong style="color:var(--red)">"I didn't played"</strong> → After didn't, always use base form: <strong style="color:var(--text)">"I didn't go"</strong>, <strong style="color:var(--text)">"I didn't play"</strong>.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RULE 4: TIME MARKERS -->
+  <div class="q-label" style="margin-bottom:10px; font-size:11px;">Rule 04 — Time Markers</div>
+  <p style="margin-bottom:12px;">These words signal you're talking about the past, and help your story flow — use them to connect events.</p>
+
+  <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:10px; margin-bottom:20px;">
+    <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:14px;">
+      <div style="font-family:'Space Mono',monospace; font-size:14px; color:var(--amber); font-weight:700; margin-bottom:4px;">first</div>
+      <div style="font-size:12px; color:var(--muted); font-style:italic; margin-bottom:6px;">d'abord</div>
+      <div style="font-size:13px; color:var(--muted); line-height:1.5;">"First, I set up the sound system."</div>
+    </div>
+    <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:14px;">
+      <div style="font-family:'Space Mono',monospace; font-size:14px; color:var(--amber); font-weight:700; margin-bottom:4px;">then</div>
+      <div style="font-size:12px; color:var(--muted); font-style:italic; margin-bottom:6px;">ensuite / puis</div>
+      <div style="font-size:13px; color:var(--muted); line-height:1.5;">"Then we went to the stage."</div>
+    </div>
+    <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:14px;">
+      <div style="font-family:'Space Mono',monospace; font-size:14px; color:var(--amber); font-weight:700; margin-bottom:4px;">after that</div>
+      <div style="font-size:12px; color:var(--muted); font-style:italic; margin-bottom:6px;">après ça</div>
+      <div style="font-size:13px; color:var(--muted); line-height:1.5;">"After that, everything changed."</div>
+    </div>
+    <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:14px;">
+      <div style="font-family:'Space Mono',monospace; font-size:14px; color:var(--amber); font-weight:700; margin-bottom:4px;">suddenly</div>
+      <div style="font-size:12px; color:var(--muted); font-style:italic; margin-bottom:6px;">soudain / tout à coup</div>
+      <div style="font-size:13px; color:var(--muted); line-height:1.5;">"Suddenly, the music stopped."</div>
+    </div>
+    <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:14px;">
+      <div style="font-family:'Space Mono',monospace; font-size:14px; color:var(--amber); font-weight:700; margin-bottom:4px;">in the end</div>
+      <div style="font-size:12px; color:var(--muted); font-style:italic; margin-bottom:6px;">finalement / au final</div>
+      <div style="font-size:13px; color:var(--muted); line-height:1.5;">"In the end, it was amazing."</div>
+    </div>
+    <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:14px;">
+      <div style="font-family:'Space Mono',monospace; font-size:14px; color:var(--amber); font-weight:700; margin-bottom:4px;">last week</div>
+      <div style="font-size:12px; color:var(--muted); font-style:italic; margin-bottom:6px;">la semaine dernière</div>
+      <div style="font-size:13px; color:var(--muted); line-height:1.5;">"Last week I worked at a festival."</div>
+    </div>
+    <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:14px;">
+      <div style="font-family:'Space Mono',monospace; font-size:14px; color:var(--amber); font-weight:700; margin-bottom:4px;">yesterday</div>
+      <div style="font-size:12px; color:var(--muted); font-style:italic; margin-bottom:6px;">hier</div>
+      <div style="font-size:13px; color:var(--muted); line-height:1.5;">"Yesterday I didn't sleep much."</div>
+    </div>
+    <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:14px;">
+      <div style="font-family:'Space Mono',monospace; font-size:14px; color:var(--amber); font-weight:700; margin-bottom:4px;">at first</div>
+      <div style="font-size:12px; color:var(--muted); font-style:italic; margin-bottom:6px;">au début</div>
+      <div style="font-size:13px; color:var(--muted); line-height:1.5;">"At first I didn't understand the problem."</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SELF-TEST -->
+  <div class="q-label" style="margin-bottom:10px; font-size:11px;">Self-Test</div>
+  <p style="margin-bottom:12px;">Write the correct past simple form of the verb in brackets.</p>
+
+  <div class="exercise-card">
+    <div class="question-text">Last weekend I ______ (go) to a festival with some friends.</div>
+    <input class="gap-input" id="st1" placeholder="past form..." autocomplete="off">
+    <button class="check-btn" onclick="checkGap('st1','went','stf1')">Check</button>
+    <div class="feedback-text" id="stf1"></div>
+  </div>
+  <div class="exercise-card">
+    <div class="question-text">We ______ (not / arrive) until late in the evening.</div>
+    <input class="gap-input" id="st2" placeholder="past form..." autocomplete="off">
+    <button class="check-btn" onclick="checkGap('st2',&quot;didn't arrive&quot;,'stf2')">Check</button>
+    <div class="feedback-text" id="stf2"></div>
+  </div>
+  <div class="exercise-card">
+    <div class="question-text">First, I ______ (set up) all the equipment. Then the show ______ (begin).</div>
+    <input class="gap-input" id="st3" placeholder="both verbs, comma-separated..." autocomplete="off">
+    <button class="check-btn" onclick="checkGap('st3','set up, began','stf3')">Check</button>
+    <div class="feedback-text" id="stf3"></div>
+  </div>
+  <div class="exercise-card">
+    <div class="question-text">He ______ (tell) me about the problem but I ______ (not / know) how to fix it.</div>
+    <input class="gap-input" id="st4" placeholder="both verbs, comma-separated..." autocomplete="off">
+    <button class="check-btn" onclick="checkGap('st4',&quot;told, didn't know&quot;,'stf4')">Check</button>
+    <div class="feedback-text" id="stf4"></div>
+  </div>
+  <div class="exercise-card">
+    <div class="question-text">In the end, everything ______ (work) out fine — the crowd ______ (love) it.</div>
+    <input class="gap-input" id="st5" placeholder="both verbs, comma-separated..." autocomplete="off">
+    <button class="check-btn" onclick="checkGap('st5','worked, loved','stf5')">Check</button>
+    <div class="feedback-text" id="stf5"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="switchTab(4)">← Back</button>
+    <button class="nav-btn" disabled>End of reference</button>
+  </div>
+</div>
+
+<!-- GRAMMAR FAB -->
+<button id="grammar-fab" onclick="switchTab(5)">
+  📖 Grammar
+</button>
+
+<!-- LOG FAB -->
+<button id="log-fab" onclick="toggleLog()">✏️</button>
+
+<!-- TIMER FAB -->
+<button id="timer-fab" onclick="toggleTimer()">
+  <span>⏱</span><span id="timer-display">50:00</span>
+</button>
+
+<!-- OVERLAY -->
+<div id="overlay" onclick="closeAll()"></div>
+
+<!-- LOG DRAWER -->
+<div id="log-drawer">
+  <div class="drawer-header">
+    <div class="drawer-title">Reformulation Log</div>
+    <button class="drawer-close" onclick="closeAll()">✕</button>
+  </div>
+  <textarea id="log-input" placeholder="What Thomas said → better version…"></textarea>
+  <button class="log-add-btn" onclick="addLogEntry()">Add note</button>
+  <div id="log-entries"></div>
+</div>
+
+<script>
+// TABS
+const tabs = document.querySelectorAll('.tab');
+const panels = document.querySelectorAll('.panel');
+function switchTab(i) {
+  tabs.forEach((t,idx) => t.classList.toggle('active', idx===i));
+  panels.forEach((p,idx) => p.classList.toggle('active', idx===i));
+  window.scrollTo(0,0);
+}
+
+// EXERCISE TRACKING (for Cool-Down summary)
+function toggleColours() {
+  const block = document.getElementById('reading-text-block');
+  const btn = document.getElementById('colour-toggle-btn');
+  const isOff = block.classList.toggle('no-colour');
+  btn.textContent = isOff ? '🎨 Turn colours on' : '🎨 Turn colours off';
+}
+
+const exerciseResults = { regular: {}, irregular: {}, negative: {} };
+const categoryMap = {
+  g1: 'regular', g2: 'regular', g3: 'regular',
+  g4: 'irregular', g5: 'irregular', g6: 'irregular',
+  g7: 'negative', g8: 'negative'
+};
+
+function toggleTr(id) { document.getElementById(id).classList.toggle('show'); }
+function checkGap(inputId, answer, feedbackId) {
+  const input = document.getElementById(inputId);
+  const fb = document.getElementById(feedbackId);
+  const val = input.value.trim().toLowerCase();
+  const isCorrect = val === answer.toLowerCase();
+  if (isCorrect) {
+    input.classList.add('correct'); input.classList.remove('wrong');
+    fb.className = 'feedback-text show correct'; fb.textContent = '✓ Correct!';
+  } else {
+    input.classList.add('wrong'); input.classList.remove('correct');
+    fb.className = 'feedback-text show wrong'; fb.textContent = `Answer: "${answer}"`;
+  }
+  const cat = categoryMap[inputId];
+  if (cat) exerciseResults[cat][inputId] = isCorrect;
+}
+
+// QUICK TRANSFORM (irregular verbs)
+const quickTransformAnswers = { qt1: 'came', qt2: 'thought', qt3: 'left', qt4: 'heard', qt5: 'found', qt6: 'brought' };
+function checkQuickTransform() {
+  let correctCount = 0;
+  const total = Object.keys(quickTransformAnswers).length;
+  Object.entries(quickTransformAnswers).forEach(([id, answer]) => {
+    const input = document.getElementById(id);
+    const val = input.value.trim().toLowerCase();
+    const isCorrect = val === answer;
+    if (isCorrect) { input.classList.add('correct'); input.classList.remove('wrong'); correctCount++; }
+    else { input.classList.add('wrong'); input.classList.remove('correct'); }
+    exerciseResults.irregular[id] = isCorrect;
+  });
+  const fb = document.getElementById('qt-feedback');
+  fb.className = 'feedback-text show ' + (correctCount === total ? 'correct' : 'wrong');
+  fb.textContent = correctCount === total ? '✓ All correct!' : `${correctCount}/${total} correct. Check the red ones.`;
+}
+
+// MATCH (irregular base → past)
+let selectedMatch = null;
+let matchMistakes = 0;
+function matchClick(el) {
+  if (el.classList.contains('matched')) return;
+  if (!selectedMatch) {
+    selectedMatch = el;
+    el.classList.add('selected');
+    return;
+  }
+  if (selectedMatch === el) {
+    el.classList.remove('selected');
+    selectedMatch = null;
+    return;
+  }
+  const sameType = selectedMatch.dataset.type === el.dataset.type;
+  if (sameType) {
+    selectedMatch.classList.remove('selected');
+    selectedMatch = el;
+    el.classList.add('selected');
+    return;
+  }
+  if (selectedMatch.dataset.id === el.dataset.id) {
+    selectedMatch.classList.remove('selected');
+    selectedMatch.classList.add('matched');
+    el.classList.add('matched');
+    selectedMatch = null;
+    const items = document.querySelectorAll('#irr-match-grid .match-item');
+    if ([...items].every(i => i.classList.contains('matched'))) {
+      document.getElementById('irr-match-feedback').style.display = 'block';
+      exerciseResults.irregular['match'] = matchMistakes === 0;
+    }
+  } else {
+    matchMistakes++;
+    exerciseResults.irregular['match'] = false;
+    el.classList.add('wrong-flash');
+    selectedMatch.classList.add('wrong-flash');
+    const prevSelected = selectedMatch;
+    selectedMatch = null;
+    setTimeout(() => {
+      el.classList.remove('wrong-flash');
+      prevSelected.classList.remove('wrong-flash', 'selected');
+    }, 600);
+  }
+}
+
+// COOL-DOWN SUMMARY
+function generateSummary() {
+  const labels = { regular: 'Regular verbs', irregular: 'Irregular verbs', negative: 'Negatives' };
+  const box = document.getElementById('summary-box');
+  let html = '';
+  let anyAttempted = false;
+
+  Object.entries(exerciseResults).forEach(([cat, results]) => {
+    const entries = Object.entries(results);
+    if (entries.length === 0) return;
+    anyAttempted = true;
+    const correct = entries.filter(([,v]) => v).length;
+    const total = entries.length;
+    const pct = Math.round((correct / total) * 100);
+    const color = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--amber)' : 'var(--red)';
+    html += `
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border);">
+        <span style="font-size:15px; color:var(--text);">${labels[cat]}</span>
+        <span style="font-family:'Space Mono',monospace; font-size:14px; color:${color}; font-weight:700;">${correct}/${total} correct</span>
+      </div>`;
+  });
+
+  if (!anyAttempted) {
+    box.innerHTML = '<p style="color:var(--muted); font-size:14px;">No exercises checked yet — go to the Exercises tab and check some answers first.</p>';
+  } else {
+    box.innerHTML = html + `<p style="margin-top:14px; font-size:13px; color:var(--muted);">Use the lowest-scoring category to decide what to send as homework.</p>`;
+  }
+  box.style.display = 'block';
+}
+
+// DRAG TO ORDER
+let dragSrc = null;
+document.querySelectorAll('.order-item').forEach(item => {
+  item.addEventListener('dragstart', e => { dragSrc = item; item.classList.add('dragging'); });
+  item.addEventListener('dragend', () => item.classList.remove('dragging'));
+  item.addEventListener('dragover', e => { e.preventDefault(); });
+  item.addEventListener('drop', e => {
+    e.preventDefault();
+    if (dragSrc !== item) {
+      const list = document.getElementById('order-list');
+      const items = [...list.querySelectorAll('.order-item')];
+      const srcIdx = items.indexOf(dragSrc);
+      const tgtIdx = items.indexOf(item);
+      if (srcIdx < tgtIdx) list.insertBefore(dragSrc, item.nextSibling);
+      else list.insertBefore(dragSrc, item);
+    }
+  });
+  // Touch support
+  item.addEventListener('touchstart', e => { dragSrc = item; }, {passive:true});
+  item.addEventListener('touchend', e => {
+    const touch = e.changedTouches[0];
+    const target = document.elementFromPoint(touch.clientX, touch.clientY)?.closest('.order-item');
+    if (target && target !== dragSrc) {
+      const list = document.getElementById('order-list');
+      const items = [...list.querySelectorAll('.order-item')];
+      const srcIdx = items.indexOf(dragSrc);
+      const tgtIdx = items.indexOf(target);
+      if (srcIdx < tgtIdx) list.insertBefore(dragSrc, target.nextSibling);
+      else list.insertBefore(dragSrc, target);
+    }
+  }, {passive:true});
+});
+
+function checkOrder() {
+  const items = [...document.querySelectorAll('.order-item')];
+  const fb = document.getElementById('order-feedback');
+  let correct = 0;
+  items.forEach((item, idx) => {
+    const num = idx + 1;
+    item.querySelector('.item-num').textContent = num + '.';
+    if (parseInt(item.dataset.correct) === num) { correct++; item.style.borderColor = 'var(--green)'; }
+    else item.style.borderColor = 'var(--red)';
+  });
+  fb.className = 'order-feedback show';
+  if (correct === items.length) { fb.style.color = 'var(--green)'; fb.textContent = '✓ Perfect order!'; }
+  else { fb.style.color = 'var(--red)'; fb.textContent = `${correct}/${items.length} correct. Try again!`; }
+}
+
+// GRAMMAR VERB TABS (inside Grammar panel)
+function switchVerbTab(which) {
+  document.getElementById('vp-everyday').style.display = which === 'everyday' ? 'block' : 'none';
+  document.getElementById('vp-music').style.display = which === 'music' ? 'block' : 'none';
+  document.getElementById('vtab-everyday').style.borderColor = which === 'everyday' ? 'var(--accent2)' : 'var(--border)';
+  document.getElementById('vtab-everyday').style.color = which === 'everyday' ? 'var(--accent2)' : 'var(--text)';
+  document.getElementById('vtab-music').style.borderColor = which === 'music' ? 'var(--accent2)' : 'var(--border)';
+  document.getElementById('vtab-music').style.color = which === 'music' ? 'var(--accent2)' : 'var(--text)';
+}
+
+function closeAll() {
+  document.getElementById('log-drawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+  logOpen = false;
+}
+
+// LOG
+let logOpen = false;
+let logEntries = [];
+function toggleLog() {
+  logOpen = !logOpen;
+  document.getElementById('log-drawer').classList.toggle('open', logOpen);
+  document.getElementById('overlay').classList.toggle('show', logOpen);
+}
+function addLogEntry() {
+  const text = document.getElementById('log-input').value.trim();
+  if (!text) return;
+  const time = new Date().toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+  logEntries.unshift({ text, time, id: Date.now() });
+  renderLog();
+  document.getElementById('log-input').value = '';
+}
+function renderLog() {
+  document.getElementById('log-entries').innerHTML = logEntries.map(e => `
+    <div class="log-entry" id="entry-${e.id}">
+      <div class="log-time">${e.time}</div>${e.text}
+      <button class="del-btn" onclick="deleteEntry(${e.id})">✕</button>
+    </div>`).join('');
+}
+function deleteEntry(id) { logEntries = logEntries.filter(e => e.id !== id); renderLog(); }
+
+// TIMER
+let timerSeconds = 50 * 60, timerInterval = null, timerRunning = false;
+function formatTime(s) { return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`; }
+function toggleTimer() {
+  const fab = document.getElementById('timer-fab');
+  if (!timerRunning) {
+    timerRunning = true; fab.classList.add('running');
+    timerInterval = setInterval(() => {
+      timerSeconds--;
+      document.getElementById('timer-display').textContent = formatTime(timerSeconds);
+      if (timerSeconds <= 30) { fab.classList.remove('running'); fab.classList.add('urgent'); }
+      if (timerSeconds <= 0) { clearInterval(timerInterval); timerRunning = false; }
+    }, 1000);
+  } else {
+    clearInterval(timerInterval); timerRunning = false;
+    fab.classList.remove('running','urgent');
+  }
+}
+</script>
+</body>
+</html>
