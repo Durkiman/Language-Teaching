@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print { #answerToggleBtn { display: none !important; } }
+  </style>
+</helmet>
+<style id="__om-edit-overrides"></style>
+
+<x-import component-from-global-scope="doc-page" from="./doc-page.js" size="letter" margin="0.7in" hint-size="100%,100%">
+
+  <div slot="header" style="display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px;border-bottom:3px solid #0E7C86;"></div>
+  <div slot="footer" style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #DDD8CC;font-size:10.5px;color:#9A9483;font-family:'Nunito',sans-serif;">
+    <span>© Asking Better Questions</span>
+    <span>ESL Communication Workbook</span>
+  </div>
+
+  <div style="text-align:center;padding:8px 0 22px;">
+    <div style="display:inline-block;background:#0E7C86;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Durim's ESL Communication Workbook: A1–C2</div>
+    <h1 style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:40px;color:#1B4B4F;margin:16px 0 4px;line-height:1.1;">Asking Better Questions</h1>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:600;font-size:22px;color:#F2994A;margin-bottom:10px;">Open vs. Closed Questions &amp; CCQs</div>
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:6px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;">📘 1. Understanding the Skill</h2>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
+    <div style="background:#EAF2FF;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>🔒 Closed questions</strong><br/>Get a yes/no or one-word answer: "Do you like tea?"</div>
+    <div style="background:#F0EAFE;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>🔓 Open questions</strong><br/>Invite explanation: "What do you enjoy about your job?"</div>
+  </div>
+
+  <p style="font-size:15px;line-height:1.65;color:#2B2B2B;margin:0 0 12px;">A good conversation mixes both. Too many closed questions can feel like an interrogation; open questions keep the conversation flowing.</p>
+
+  <div style="background:#EAF2FF;border:2px solid #C7DBFF;border-radius:12px;padding:14px 16px;margin:0 0 18px;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;color:#1B4B4F;margin-bottom:8px;">🔎 What is a CCQ?</div>
+    <p style="font-size:13.5px;line-height:1.6;color:#2B2B2B;margin:0;">A <strong>Concept Checking Question</strong> is a specific, simple question used to confirm someone has really understood an idea — instead of the almost-useless "Do you understand?" (which nearly always gets an automatic "yes"). Good CCQs use simpler language than the idea being checked, and test it from different angles. <em>Teaching "used to": "Do I do this now?" (No) "Did I do it regularly in the past?" (Yes)</em></p>
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:30px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">📊 2. Reference Tables</h2>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Question starters</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#8B5FE0;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Closed</th><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Open</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Do/Does/Did...?</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">What...? Why...? How...?</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Is/Are/Was...?</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">Tell me about... Describe...</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Can/Could/Have...?</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">What do you think about...?</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Weak checks vs. good CCQs</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 20px;font-size:13.5px;">
+    <thead><tr style="background:#4C7BF5;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Weak check</th><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Good CCQ</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">"Do you understand?"</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">A specific yes/no question testing the concept</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">"Is that clear?"</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">"Can you give me an example?"</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">"OK?"</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">"Can you explain it in your own words?"</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:24px 0 6px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">✏️ 3. Practice Exercises</h2>
+  <p style="font-size:13.5px;color:#9A9483;margin:0 0 16px;">18 exercises across all six CEFR levels — three per level, increasing in difficulty. Answers on the last page.</p>
+
+  <div style="display:inline-block;background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:10px 0 10px;">LEVEL A1 · Beginner</div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: is this open or closed?</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"Do you like tea?" a) open&nbsp; b) closed</li>
+      <li>"What do you do on weekends?" a) open&nbsp; b) closed</li>
+      <li>"Are you from Spain?" a) open&nbsp; b) closed</li>
+      <li>"Why did you choose this job?" a) open&nbsp; b) closed</li>
+      <li>"Can you swim?" a) open&nbsp; b) closed</li>
+      <li>"How was your weekend?" a) open&nbsp; b) closed</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each question type (1–4) to its example (a–d).</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
+      <div>1. Open question</div><div>a. "Tell me about your trip."</div>
+      <div>2. Closed question</div><div>b. "Did you enjoy your trip?"</div>
+      <div>3. Open question</div><div>c. "How do you feel about the change?"</div>
+      <div>4. Closed question</div><div>d. "Have you seen the report?"</div>
+    </div>
+  </div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Rewrite each closed question as an open question.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"Do you like your job?" → ______________________</li>
+      <li>"Is the movie good?" → ______________________</li>
+      <li>"Did you have a good weekend?" → ______________________</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">A good conversation usually mixes both closed and open questions. Closed questions like "Are you a teacher?" get quick facts. Open questions like "What do you enjoy most about teaching?" invite longer answers and keep the conversation going. If you only ask closed questions, the conversation can feel like an interview.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Closed questions get quick facts. ___</li>
+      <li>Open questions usually get one-word answers. ___</li>
+      <li>Mixing both types is common in good conversation. ___</li>
+      <li>Only asking closed questions can feel like an interview. ___</li>
+      <li>Open questions never invite long answers. ___</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Complete each open question with a question word.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"Do you like coffee?" → "______ do you like about coffee?"</li>
+      <li>"Is your job stressful?" → "______ is your job stressful?"</li>
+      <li>"Did you enjoy the film?" → "______ did you think of the film?"</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct questions.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>weekend / your / was / how</li>
+      <li>think / you / do / what</li>
+      <li>today / feeling / are / you / how</li>
+      <li>that / why / choose / did / you</li>
+      <li>happened / what</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each question.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"What you think about this?"</li>
+      <li>"Is clear for you?"</li>
+      <li>"You like it, don't you like it?"</li>
+      <li>"Why you chose this?"</li>
+      <li>"How feel you about it?"</li>
+      <li>"Do you understand?" <em>(as a comprehension check)</em></li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Turn each vague comprehension check into a specific CCQ.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Teaching "since 2010" — vague check: "Do you understand 'since'?"</li>
+      <li>Teaching "mustn't" — vague check: "Understand?"</li>
+      <li>Teaching "a few" vs "a little" — vague check: "Clear?"</li>
+      <li>Teaching "used to" — vague check: "OK?"</li>
+      <li>Teaching "if I were you" — vague check: "Got it?"</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: which is the better CCQ?</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Target: "I've lived here for 10 years." a) "Do you understand the present perfect?"&nbsp; b) "Did I move here 10 years ago? Do I still live here?"</li>
+      <li>Target: "He might come." a) "Are you sure?"&nbsp; b) "Is it certain he will come?"</li>
+      <li>Target: "She was cooking when I arrived." a) "Understand?"&nbsp; b) "Which action started first?"</li>
+      <li>Target: "You should see a doctor." a) "Clear?"&nbsp; b) "Is this an order or advice?"</li>
+      <li>Target: "I wish I had more time." a) "Do I have more time now?"&nbsp; b) "Understood?"</li>
+      <li>Target: "It's been raining all day." a) "Has it stopped now?"&nbsp; b) "OK?"</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B2 · Upper-Intermediate</div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Effective questioning is a core communication skill, not just a classroom technique. In a job interview, for example, a candidate who asks only closed questions ("Is the salary negotiable?") may come across as passive, whereas open questions ("What does success look like in this role after the first year?") signal genuine curiosity. Concept Checking Questions, though originally developed for language teaching, apply the same principle to any explanation: rather than asking "Does that make sense?" — which almost always gets an automatic "yes" — a good communicator checks understanding by asking the listener to restate or apply the idea.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Effective questioning is only useful in classrooms. ___</li>
+      <li>Asking only closed questions in an interview can seem passive. ___</li>
+      <li>Open questions can signal curiosity. ___</li>
+      <li>"Does that make sense?" reliably reveals understanding. ___</li>
+      <li>Asking someone to restate an idea is a better way to check understanding. ___</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) problem in each question.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"You wouldn't disagree, would you?" <em>(as a neutral check)</em></li>
+      <li>"This is right, isn't it?" <em>(fishing for agreement)</em></li>
+      <li>"So you get it now, right?"</li>
+      <li>"Isn't this obviously true?"</li>
+      <li>"You're not confused, are you?"</li>
+      <li>"That's clear, yes?"</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Choose a grammar point or concept you know well. Write <strong>3 specific CCQs</strong> for it (not "Do you understand?"), plus <strong>2 open questions</strong> you could ask to extend a related conversation.</p>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+  </div>
+
+  <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each casual check-in in a more formal, facilitating register.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"Get it?"</li>
+      <li>"Any questions? No? OK moving on."</li>
+      <li>"You cool with this plan?"</li>
+      <li>"Make sense?"</li>
+      <li>"You sure?"</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: identify the concept.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"You don't really think that's a good idea, do you?" a) a leading question&nbsp; b) a neutral open question</li>
+      <li>A question checking HOW to do a task (not meaning) is called: a) an ICQ&nbsp; b) a CCQ</li>
+      <li>"So we're all clear then?" said without pausing is often: a) rhetorical, not a genuine check&nbsp; b) a strong CCQ</li>
+      <li>The best CCQ for "barely" (as in "I barely passed") tests: a) whether the result was close to failing&nbsp; b) whether the listener is tired</li>
+      <li>An open question in a formal interview is preferred over a closed one because it: a) invites a detailed, evaluative response&nbsp; b) is quicker to answer</li>
+      <li>A tag question used purely for social agreement ("...isn't it?") functions like: a) a closed confirmation-seeking device&nbsp; b) a true open question</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Improve each flawed check by writing a targeted CCQ or ICQ.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>To check "although" is understood: "Do you understand the conjunction?"</li>
+      <li>To check students know to work in pairs: "Is everyone clear?"</li>
+      <li>To check "hardly any": "Clear?"</li>
+      <li>To check the time given for a task: "Enough time?"</li>
+      <li>To check "as long as": "You get it?"</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, design a mini explanation script for a concept of your choice (grammar, workplace policy, or technical process). Include <strong>at least 3 well-formed CCQs</strong> (not "Do you understand?") and <strong>2 open follow-up questions</strong>.</p>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+  </div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex questions.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>clarify / like / part / would / any / you / me / to / of / this</li>
+      <li>proceeding / plan / comfortable / this / with / you / are</li>
+      <li>understanding / align / this / does / far / so / with / your</li>
+      <li>reasoning / walk / through / could / me / your / you</li>
+      <li>clarification / further / anyone / need / questions / or / have / does</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Replace each weak check with a strong, specific question.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"You get what I mean, yeah?"</li>
+      <li>"Everyone good?" <em>(checking task instructions)</em></li>
+      <li>"Understand the difference between 'few' and 'a few'?"</li>
+      <li>"This makes sense, right?"</li>
+      <li>"No confusion?"</li>
+    </ol>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
+    <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:0;white-space:nowrap;">🔑 Answer Key</h2>
+    <button id="answerToggleBtn" onClick="{{ toggleAnswers }}" style="flex:0 0 auto;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#fff;background:#8B5FE0;border:none;border-radius:999px;padding:8px 18px;cursor:pointer;white-space:nowrap;">{{ toggleLabel }}</button>
+  </div>
+  <p style="font-size:12.5px;color:#9A9483;margin:0 0 14px;">Tip: click "Hide Answer Key" above before printing a copy for students — the button itself never prints.</p>
+
+  <div style="display:{{ answerKeyDisplay }};">
+    <div style="background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.1</strong> 1. closed 2. open 3. closed 4. open 5. closed 6. open<br/>
+      <strong>Ex.2</strong> 1–a, 2–b, 3–c, 4–d<br/>
+      <strong>Ex.3</strong> Sample: 1. What do you like about your job? 2. What do you think of the movie? 3. What did you do this weekend?
+    </div>
+    <div style="background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.4</strong> 1. T 2. F 3. T 4. T 5. F<br/>
+      <strong>Ex.5</strong> 1. What 2. Why/How 3. What<br/>
+      <strong>Ex.6</strong> 1. How was your weekend? 2. What do you think? 3. How are you feeling today? 4. Why did you choose that? 5. What happened?
+    </div>
+    <div style="background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.7</strong> 1. What do you think about this? 2. Is this clear to you? 3. Do you like it? 4. Why did you choose this? 5. How do you feel about it? 6. Replace with a specific CCQ testing the concept.<br/>
+      <strong>Ex.8</strong> Sample: 1. "Did the action start in 2010? Is it still happening now?" 2. "Is this an order? Can I choose not to do it?" 3. "Do we use this with countable or uncountable nouns?" 4. "Do I do this now? Did I do it regularly in the past?" 5. "Am I really you? Is this advice?"<br/>
+      <strong>Ex.9</strong> 1–b 2–b 3–b 4–b 5–a 6–a
+    </div>
+    <div style="background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.10</strong> 1. F 2. T 3. T 4. F 5. T<br/>
+      <strong>Ex.11</strong> Sample fixes: 1. "What do you think?" 2. "What do you think is correct here?" 3. "Can you give me an example?" 4. "What's your view on this?" 5. "What part would you like explained again?" 6. "Can you explain it back to me in your own words?"<br/>
+      <strong>Ex.12</strong> Open answer — check for 3 specific CCQs (not "Do you understand?") and 2 genuine open questions.
+    </div>
+    <div style="background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">C1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.13</strong> Sample answers: 1. Would you like me to clarify any part of this? 2. Before we proceed, does anyone have questions or need further clarification? 3. Are you comfortable proceeding with this plan? 4. Does this align with your understanding so far? 5. Could you walk me through your reasoning?<br/>
+      <strong>Ex.14</strong> 1–a 2–a 3–a 4–a 5–a 6–a<br/>
+      <strong>Ex.15</strong> Sample: 1. "Do the two ideas agree, or contrast?" 2. "Are you working alone, in pairs, or in groups?" 3. "Is the amount large or very small?" 4. "How many minutes do you have?" 5. "Is this a condition for something to happen?"
+    </div>
+    <div style="background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 4px;">C2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 4px;">
+      <strong>Ex.16</strong> Open answer — check for 3 targeted CCQs and 2 open follow-ups.<br/>
+      <strong>Ex.17</strong> 1. Would you like me to clarify any part of this? 2. Are you comfortable proceeding with this plan? 3. Does this align with your understanding so far? 4. Could you walk me through your reasoning? 5. Does anyone have questions or need further clarification?<br/>
+      <strong>Ex.18</strong> Sample: 1. "Could you summarize what I just explained?" 2. "Can someone tell me what we're doing first?" 3. "Does 'few' sound positive or negative? Does 'a few'?" 4. "How would you explain this to a friend?" 5. "What questions do you still have?"
+    </div>
+  </div>
+
+</x-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { showAnswers: true };
+  renderVals() {
+    const showAnswers = this.state.showAnswers;
+    return {
+      answerKeyDisplay: showAnswers ? 'block' : 'none',
+      toggleLabel: showAnswers ? '🙈 Hide Answer Key' : '👁️ Show Answer Key',
+      toggleAnswers: () => this.setState(s => ({ showAnswers: !s.showAnswers })),
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print { #answerToggleBtn { display: none !important; } }
+  </style>
+</helmet>
+<style id="__om-edit-overrides"></style>
+
+<x-import component-from-global-scope="doc-page" from="./doc-page.js" size="letter" margin="0.7in" hint-size="100%,100%">
+
+  <div slot="header" style="display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px;border-bottom:3px solid #0E7C86;"></div>
+  <div slot="footer" style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #DDD8CC;font-size:10.5px;color:#9A9483;font-family:'Nunito',sans-serif;">
+    <span>© Question Formation</span>
+    <span>ESL Grammar Workbook</span>
+  </div>
+
+  <div style="text-align:center;padding:8px 0 22px;">
+    <div style="display:inline-block;background:#0E7C86;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Durim's ESL Grammar Workbook: A1–C2</div>
+    <h1 style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:44px;color:#1B4B4F;margin:16px 0 4px;line-height:1.05;">Question Formation</h1>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:600;font-size:22px;color:#F2994A;margin-bottom:10px;">Word Order &amp; Question Words</div>
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:6px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;">📘 1. Understanding the Rule</h2>
+
+  <table style="width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:14px;">
+    <thead><tr style="background:#0E7C86;color:#fff;font-family:'Baloo 2',sans-serif;"><th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Question type</th><th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Word order</th><th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Example</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">Yes/No</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">auxiliary + subject + verb</td><td style="padding:8px 10px;border:1px solid #E4E4E4;"><strong>Do</strong> you <strong>like</strong> coffee?</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">Wh-question</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Wh-word + auxiliary + subject + verb</td><td style="padding:8px 10px;border:1px solid #E4E4E4;"><strong>Where do</strong> you <strong>live</strong>?</td></tr>
+      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">Subject question</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Wh-word + verb (no auxiliary)</td><td style="padding:8px 10px;border:1px solid #E4E4E4;"><strong>Who called</strong> you?</td></tr>
+    </tbody>
+  </table>
+
+  <div style="background:#FFF6D8;border:2px dashed #F2C94C;border-radius:12px;padding:14px 16px;margin:0 0 18px;font-size:14px;color:#5C4A00;">
+    <strong>Indirect questions</strong> keep statement word order, with no auxiliary inversion: "Do you know <strong>where she lives</strong>?" (not "where does she live").
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:30px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">📊 2. Reference Tables</h2>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Question words</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#8B5FE0;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Word</th><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Asks about</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">who / whom</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">person</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">what / which</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">thing / choice</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">where / when</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">place / time</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">why / how</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">reason / manner</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">whose / how many/much</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">ownership / quantity</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Auxiliary by tense</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 20px;font-size:13.5px;">
+    <thead><tr style="background:#4C7BF5;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Tense</th><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Auxiliary</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">present simple</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">do / does</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">past simple</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">did</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">continuous tenses</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">is/are/was/were</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">perfect tenses</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">have/has/had</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:24px 0 6px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">✏️ 3. Practice Exercises</h2>
+  <p style="font-size:13.5px;color:#9A9483;margin:0 0 16px;">18 exercises across all six CEFR levels — three per level, increasing in difficulty. Answers on the last page.</p>
+
+  <div style="display:inline-block;background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:10px 0 10px;">LEVEL A1 · Beginner</div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct question.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li><strong>(Do you like / You like)</strong> coffee?</li>
+      <li><strong>(What is / What's)</strong> your name?</li>
+      <li><strong>(Where you live / Where do you live)</strong>?</li>
+      <li><strong>(Is she / She is)</strong> a teacher?</li>
+      <li><strong>(How old you are / How old are you)</strong>?</li>
+      <li><strong>(Does he plays / Does he play)</strong> football?</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each question word (1–5) to what it asks about (a–e).</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
+      <div>1. Who</div><div>a. place</div>
+      <div>2. What</div><div>b. person</div>
+      <div>3. Where</div><div>c. thing</div>
+      <div>4. When</div><div>d. time</div>
+      <div>5. Why</div><div>e. reason</div>
+    </div>
+  </div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank with the correct question word.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>______ is your name?</li>
+      <li>______ do you live?</li>
+      <li>______ old are you?</li>
+      <li>______ is your birthday?</li>
+      <li>______ do you like pizza?</li>
+      <li>______ is your favourite colour?</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Interviewer: Where were you born? Anna: I was born in Madrid. Interviewer: What do you do for work? Anna: I'm a translator. Interviewer: Do you enjoy your job? Anna: Yes, I love it. Interviewer: How long have you been doing this? Anna: For about six years.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Anna was born in Madrid. ___</li>
+      <li>Anna is a teacher. ___</li>
+      <li>Anna doesn't enjoy her job. ___</li>
+      <li>Anna has worked as a translator for six years. ___</li>
+      <li>The interviewer asked five questions. ___</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write negative questions (1–2) and questions for the given answers (3–4).</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>______ you ______ (not/like) coffee?</li>
+      <li>______ she ______ (not/coming) to the party?</li>
+      <li>Answer: "I live in Paris." → Question: ______________________</li>
+      <li>Answer: "She is 25 years old." → Question: ______________________</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct questions.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>name / your / what / is</li>
+      <li>from / where / you / are</li>
+      <li>you / do / like / coffee</li>
+      <li>old / how / you / are</li>
+      <li>she / a / teacher / is</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>What you are doing?</li>
+      <li>Where you live?</li>
+      <li>Who did call you?</li>
+      <li>How much money you have?</li>
+      <li>She is a teacher, isn't it?</li>
+      <li>What time is starts the movie?</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Turn each statement into a question as instructed.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>She works at a hospital. <em>(yes/no question)</em></li>
+      <li>They arrived yesterday. <em>(wh-question about time)</em></li>
+      <li>Tom called Lisa. <em>(subject question)</em></li>
+      <li>He is reading a book. <em>(wh-question about the object)</em></li>
+      <li>The train leaves at 6. <em>(tag question)</em></li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: subject vs object questions.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"___ broke the window?" a) Who&nbsp; b) Whom</li>
+      <li>"___ did you call?" a) Who&nbsp; b) Whom</li>
+      <li>Which needs "did"? a) "Who called you?"&nbsp; b) "Who did you call?"</li>
+      <li>Subject question about "Someone ate the cake": a) Who ate the cake?&nbsp; b) Who did eat the cake?</li>
+      <li>"How many students ___ in the class?" a) are there&nbsp; b) there are</li>
+      <li>Indirect question: "Do you know ___ she lives?" a) where&nbsp; b) where does</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B2 · Upper-Intermediate</div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">During the panel discussion, the moderator asked several probing questions, including why the policy had taken so long to implement and who, ultimately, would be held accountable if it failed. One panelist, visibly uncomfortable, asked whether the moderator could clarify what exactly "accountability" meant in this context. Another audience member wanted to know how the new measures would differ from previous attempts, and whether any independent body would be monitoring compliance.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The moderator asked why the policy took so long to implement. ___</li>
+      <li>Nobody asked about accountability. ___</li>
+      <li>A panelist requested clarification on a term used. ___</li>
+      <li>An audience member asked about independent monitoring. ___</li>
+      <li>The audience member's question was about differences from previous attempts. ___</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Do you know where does she live?</li>
+      <li>I wonder what is the time.</li>
+      <li>Can you tell me how much does it cost?</li>
+      <li>She asked me where did I go.</li>
+      <li>I'm not sure who is he.</li>
+      <li>Do you know what time does the shop close?</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write an interview (5–7 questions with plausible answers) about someone's career. Mix <strong>yes/no, wh-, subject,</strong> and <strong>indirect</strong> questions.</p>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+  </div>
+
+  <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each question in a more formal register.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>So, what's the deal with the new policy?</li>
+      <li>Why'd they scrap the whole plan?</li>
+      <li>Who's gonna be in charge of this?</li>
+      <li>What's up with the delay?</li>
+      <li>D'you reckon it'll work?</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: what does this question type express?</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"Isn't that exactly what we predicted?" a) surprise/a rhetorical point, not real doubt&nbsp; b) genuine uncertainty</li>
+      <li>"You do realize the risks, don't you?" a) seeks confirmation of something believed true&nbsp; b) a genuine yes/no question</li>
+      <li>"Why on earth would anyone agree to that?" a) rhetorical disbelief&nbsp; b) a literal request for a reason</li>
+      <li>"Could I possibly trouble you for a moment?" a) formal and deferential&nbsp; b) blunt</li>
+      <li>"Isn't it wonderful?" a) invites agreement&nbsp; b) expresses doubt</li>
+      <li>"Who would have thought?" a) rhetorical surprise&nbsp; b) a real request for an answer</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>She asked me did I want to come.</li>
+      <li>I wonder why does he always arrive late.</li>
+      <li>Could you tell me what time does the train leave?</li>
+      <li>He asked her where was she going.</li>
+      <li>Do you know how much does the ticket costs?</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write 5–6 formal interview questions for a professional context (e.g. a journalist interviewing an executive). Mix <strong>direct, indirect,</strong> and <strong>rhetorical</strong> questions, in a formal register.</p>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+  </div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex questions.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>rationale / clarify / policy / new / could / behind / the / you</li>
+      <li>overseeing / responsible / this / who / be / will / for</li>
+      <li>delay / explain / could / cause / the / of / the / you</li>
+      <li>effective / believe / approach / you / this / do / be / will</li>
+      <li>discontinued / reason / plan / what / the / was / for</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>I wonder could you help me with this.</li>
+      <li>She asked whether does he agree.</li>
+      <li>Isn't obvious that we need change?</li>
+      <li>Who would have think that?</li>
+      <li>Could you tell me is the store still open?</li>
+    </ol>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
+    <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:0;white-space:nowrap;">🔑 Answer Key</h2>
+    <button id="answerToggleBtn" onClick="{{ toggleAnswers }}" style="flex:0 0 auto;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#fff;background:#8B5FE0;border:none;border-radius:999px;padding:8px 18px;cursor:pointer;white-space:nowrap;">{{ toggleLabel }}</button>
+  </div>
+  <p style="font-size:12.5px;color:#9A9483;margin:0 0 14px;">Tip: click "Hide Answer Key" above before printing a copy for students — the button itself never prints.</p>
+
+  <div style="display:{{ answerKeyDisplay }};">
+    <div style="background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.1</strong> 1. Do you like 2. What's 3. Where do you live 4. Is she 5. How old are you 6. Does he play<br/>
+      <strong>Ex.2</strong> 1–b, 2–c, 3–a, 4–d, 5–e<br/>
+      <strong>Ex.3</strong> 1. What 2. Where 3. How 4. When 5. Why 6. What
+    </div>
+    <div style="background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.4</strong> 1. T 2. F 3. F 4. T 5. F<br/>
+      <strong>Ex.5</strong> 1. Don't you like coffee? 2. Isn't she coming to the party? 3. Where do you live? 4. How old is she?<br/>
+      <strong>Ex.6</strong> 1. What is your name? 2. Where are you from? 3. Do you like coffee? 4. How old are you? 5. Is she a teacher?
+    </div>
+    <div style="background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.7</strong> 1. What are you doing? 2. Where do you live? 3. Who called you? 4. How much money do you have? 5. …isn't she? 6. What time does the movie start?<br/>
+      <strong>Ex.8</strong> 1. Does she work at a hospital? 2. When did they arrive? 3. Who called Lisa? 4. What is he reading? 5. The train leaves at 6, doesn't it?<br/>
+      <strong>Ex.9</strong> 1–a 2–b 3–b 4–a 5–a 6–a
+    </div>
+    <div style="background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.10</strong> 1. T 2. F 3. T 4. T 5. T<br/>
+      <strong>Ex.11</strong> 1. …where she lives. 2. …what the time is. 3. …how much it costs. 4. …where I went. 5. …who he is. 6. …what time the shop closes.<br/>
+      <strong>Ex.12</strong> Open answer — check a good mix of yes/no, wh-, subject, and indirect questions.
+    </div>
+    <div style="background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">C1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.13</strong> Sample answers (accept close equivalents): 1. Could you clarify the rationale behind the new policy? 2. For what reason was the plan discontinued? 3. Who will be responsible for overseeing this? 4. Could you explain the cause of the delay? 5. Do you believe this approach will be effective?<br/>
+      <strong>Ex.14</strong> 1–a 2–a 3–a 4–a 5–a 6–a<br/>
+      <strong>Ex.15</strong> 1. …whether/if I wanted to come. 2. …why he always arrives late. 3. …what time the train leaves? 4. …where she was going. 5. …how much the ticket costs?
+    </div>
+    <div style="background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 4px;">C2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 4px;">
+      <strong>Ex.16</strong> Open answer — check formal register and a good mix of direct/indirect/rhetorical questions.<br/>
+      <strong>Ex.17</strong> 1. Could you clarify the rationale behind the new policy? 2. Who will be responsible for overseeing this? 3. Could you explain the cause of the delay? 4. Do you believe this approach will be effective? 5. For what reason was the plan discontinued?<br/>
+      <strong>Ex.18</strong> 1. …whether you could help me with this. 2. …whether he agreed. 3. Isn't it obvious… 4. …would have thought that? 5. …whether the store is still open.
+    </div>
+  </div>
+
+</x-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { showAnswers: true };
+  renderVals() {
+    const showAnswers = this.state.showAnswers;
+    return {
+      answerKeyDisplay: showAnswers ? 'block' : 'none',
+      toggleLabel: showAnswers ? '🙈 Hide Answer Key' : '👁️ Show Answer Key',
+      toggleAnswers: () => this.setState(s => ({ showAnswers: !s.showAnswers })),
+    };
+  }
+}
+</script>
+</body>
+</html>

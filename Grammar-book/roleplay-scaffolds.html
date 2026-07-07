@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print { #answerToggleBtn { display: none !important; } }
+  </style>
+</helmet>
+<style id="__om-edit-overrides"></style>
+
+<x-import component-from-global-scope="doc-page" from="./doc-page.js" size="letter" margin="0.7in" hint-size="100%,100%">
+
+  <div slot="header" style="display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px;border-bottom:3px solid #0E7C86;"></div>
+  <div slot="footer" style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #DDD8CC;font-size:10.5px;color:#9A9483;font-family:'Nunito',sans-serif;">
+    <span>© Roleplay Scaffolds</span>
+    <span>ESL Communication Workbook</span>
+  </div>
+
+  <div style="text-align:center;padding:8px 0 22px;">
+    <div style="display:inline-block;background:#0E7C86;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Durim's ESL Communication Workbook: A1–C2</div>
+    <h1 style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:40px;color:#1B4B4F;margin:16px 0 4px;line-height:1.1;">Roleplay Scaffolds</h1>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:600;font-size:22px;color:#F2994A;margin-bottom:10px;">Café · Business · Travel</div>
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:6px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;">📘 1. Understanding the Skill</h2>
+
+  <p style="font-size:15px;line-height:1.65;color:#2B2B2B;margin:0 0 12px;">A <strong>scaffold</strong> is a set of ready-made phrases for a real-world situation, so you don't have to build sentences from scratch under pressure. Three common scenario families:</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px;">
+    <div style="background:#EAF2FF;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>☕ Café / ordering</strong><br/>"Could I get...", "For here or to go?"</div>
+    <div style="background:#F0EAFE;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>💼 Business</strong><br/>"I wanted to follow up on...", "Could we schedule a call?"</div>
+    <div style="background:#FFE9E4;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>✈️ Travel</strong><br/>"Where's the nearest...?", "Could I see your boarding pass?"</div>
+  </div>
+
+  <div style="background:#FFF6D8;border:2px dashed #F2C94C;border-radius:12px;padding:14px 16px;margin:0 0 18px;font-size:14px;color:#5C4A00;">
+    <strong>Politeness matters:</strong> "Could I..." and "Would it be possible to..." sound more natural than direct commands ("Give me...") in almost every real-world scenario.
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:30px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">📊 2. Reference Tables</h2>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Café phrase bank</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#8B5FE0;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Customer</th><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Server</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Could I get a latte, please?</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">What can I get you?</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">I'll have the same, thanks.</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">For here or to go?</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">That's all, thanks.</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">Anything else? / That'll be $4.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Business phrase bank</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#4C7BF5;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Function</th><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Phrase</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Follow up</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">"I wanted to follow up on..."</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Schedule</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">"Could we schedule a call for Tuesday?"</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Close politely</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">"I'll circle back on that by Friday."</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Travel phrase bank</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 20px;font-size:13.5px;">
+    <thead><tr style="background:#F2994A;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #F2994A;">Situation</th><th style="padding:7px 10px;text-align:left;border:1px solid #F2994A;">Phrase</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Check-in</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">"Could I see your boarding pass, please?"</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Directions</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">"Excuse me, where's the nearest...?"</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Reservations</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">"Do you have a reservation?"</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:24px 0 6px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">✏️ 3. Practice Exercises</h2>
+  <p style="font-size:13.5px;color:#9A9483;margin:0 0 16px;">18 exercises across all six CEFR levels — three per level, increasing in difficulty. Answers on the last page.</p>
+
+  <div style="display:inline-block;background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:10px 0 10px;">LEVEL A1 · Beginner</div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: choose the correct café phrase.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Customer: "___ a coffee, please." a) I'll have&nbsp; b) I having</li>
+      <li>Server: "___ else?" a) Anything&nbsp; b) Something</li>
+      <li>Customer: "Is that ___ here or to go?" a) for&nbsp; b) at</li>
+      <li>Server: "That'll be $4, ___." a) please&nbsp; b) thanks</li>
+      <li>Customer: "Could I ___ a receipt?" a) get&nbsp; b) getting</li>
+      <li>Server: "Here you ___." a) are&nbsp; b) is</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each phrase (1–4) to its scenario (a–d).</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
+      <div>1. "Table for two, please."</div><div>a. café</div>
+      <div>2. "Could I get a large latte?"</div><div>b. café</div>
+      <div>3. "Where's the check-in desk?"</div><div>c. travel</div>
+      <div>4. "I'd like to follow up on our meeting."</div><div>d. business</div>
+    </div>
+  </div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Complete the café dialogue.</div>
+    <p style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;">Customer: "Hi, could I ______ a cappuccino, please?"<br/>Server: "Sure, ______ else?"<br/>Customer: "No, that's ______."<br/>Server: "That'll be $3.50."</p>
+  </div>
+
+  <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Server: Hi, welcome! What can I get you? Customer: Could I get a medium latte and a croissant, please? Server: Sure, for here or to go? Customer: To go, please. Server: That'll be $6.50. Customer: Here you go. Server: Thanks, have a great day!</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The customer ordered a large latte. ___</li>
+      <li>The customer wanted the order to go. ___</li>
+      <li>The order cost $6.50. ___</li>
+      <li>The customer only ordered a drink. ___</li>
+      <li>The server said goodbye at the end. ___</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Complete the travel dialogue.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Traveler: "Excuse me, ______ is the nearest ATM?"</li>
+      <li>Agent: "Could I see your ______, please?"</li>
+      <li>Traveler: "Do you ______ Wi-Fi here?"</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to build correct phrases.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>get / could / I / a / coffee</li>
+      <li>here / to / or / go / for</li>
+      <li>nearest / where's / the / station</li>
+      <li>please / boarding / your / pass</li>
+      <li>else / anything</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Make each sentence sound natural.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"I want that I have a coffee."</li>
+      <li>"Give me information about the flight."</li>
+      <li>"I am wanting to book a table."</li>
+      <li>"Where is situated the bathroom?"</li>
+      <li>"I follow up about our meeting."</li>
+      <li>"Can you telling me the price?"</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Make each request more polite and natural.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"Give me a coffee."</li>
+      <li>"Tell me the Wi-Fi password."</li>
+      <li>"I want a table for two."</li>
+      <li>"Send me the report."</li>
+      <li>"I need to change my seat."</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: choose the appropriate phrase for the scenario.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Ordering at a café: a) "I'll have a cappuccino, please."&nbsp; b) "I demand a cappuccino."</li>
+      <li>Starting a business follow-up: a) "I wanted to follow up on our conversation."&nbsp; b) "Why haven't you replied?"</li>
+      <li>At airport check-in: a) "Could I see your boarding pass, please?"&nbsp; b) "Give pass now."</li>
+      <li>Ending a café order: a) "That's all, thanks."&nbsp; b) "Finish now."</li>
+      <li>Scheduling a call: a) "Could we schedule a call for Tuesday?"&nbsp; b) "You call me Tuesday, ok?"</li>
+      <li>Asking for directions: a) "Excuse me, how do I get to the museum?"&nbsp; b) "Museum, where, tell."</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B2 · Upper-Intermediate</div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Client: Hi Sam, I wanted to follow up on the proposal we discussed last week. Sam: Of course — I've reviewed it with the team, and we have a couple of questions before we can move forward. Client: Sure, go ahead. Sam: Would it be possible to extend the timeline by two weeks? Client: I'll need to check with my manager, but that shouldn't be an issue. Sam: Great, I'll send over a revised schedule by Friday. Client: Perfect, looking forward to it.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The client is following up on a proposal from the previous week. ___</li>
+      <li>Sam's team had no questions about the proposal. ___</li>
+      <li>Sam asked to extend the timeline. ___</li>
+      <li>The client immediately refused the extension. ___</li>
+      <li>Sam agreed to send a revised schedule by Friday. ___</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Fix the register mismatch in each context.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"Hey, what's up with the invoice?" <em>(formal email)</em></li>
+      <li>"Gimme a window seat." <em>(airline check-in)</em></li>
+      <li>"Yo, is my flight delayed?" <em>(gate agent)</em></li>
+      <li>"We gotta talk about the budget ASAP." <em>(business meeting)</em></li>
+      <li>"Can't make the meeting, sorry not sorry." <em>(client email)</em></li>
+      <li>"Table, two, now." <em>(restaurant host)</em></li>
+    </ol>
+  </div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write a short roleplay dialogue (6–8 lines) for one of the three scenarios (café, business, or travel), using <strong>at least 4 phrases</strong> from the reference tables.</p>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+  </div>
+
+  <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each casual business message in a formal register.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"Just checking in on this, lemme know."</li>
+      <li>"Can we push the deadline?"</li>
+      <li>"Sorry, my bad, I'll fix it."</li>
+      <li>"Let's hop on a call."</li>
+      <li>"Thanks, ttyl."</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: what does this hedged phrase signal?</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"I was wondering whether you might be able to..." a) more polite and less direct&nbsp; b) more urgent</li>
+      <li>"Would you mind terribly if I asked you to...?" a) a very polite, possibly high-stakes request&nbsp; b) an informal request</li>
+      <li>"I'm afraid this flight is fully booked" — "I'm afraid" is used to: a) soften unwelcome news&nbsp; b) express fear</li>
+      <li>"We'd appreciate it if you could confirm by Friday" is: a) a polite, indirect deadline request&nbsp; b) a direct command</li>
+      <li>"Just to circle back on..." in business means: a) returning to an earlier topic&nbsp; b) starting a new topic</li>
+      <li>"Could I possibly trouble you for...?" in a service context signals: a) high formality/deference&nbsp; b) rudeness</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these formal business/travel phrases.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"I would appreciate if you could confirm."</li>
+      <li>"We are looking forward to hear from you."</li>
+      <li>"Please to find attached the report."</li>
+      <li>"I am writing for inform you about a delay."</li>
+      <li>"Kindly revert on this on the earliest."</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write a formal business email (80–120 words) following up on a delayed project. Use <strong>at least 3 hedged/polite request structures</strong> from the reference material.</p>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+  </div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>matter / regarding / check / wanted / this / in / I</li>
+      <li>deadline / extend / possible / the / would / be / to / it</li>
+      <li>oversight / apologies / the / for</li>
+      <li>discuss / call / arrange / shall / a / this / we / further / to</li>
+      <li>conversation / next / forward / our / look / I / to</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"We would appreciate if you could revert soonest."</li>
+      <li>"Please find attach the invoice."</li>
+      <li>"I am writing to inform about the delay."</li>
+      <li>"Kindly to confirm your availability."</li>
+      <li>"We are looking forward for your reply."</li>
+    </ol>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
+    <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:0;white-space:nowrap;">🔑 Answer Key</h2>
+    <button id="answerToggleBtn" onClick="{{ toggleAnswers }}" style="flex:0 0 auto;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#fff;background:#8B5FE0;border:none;border-radius:999px;padding:8px 18px;cursor:pointer;white-space:nowrap;">{{ toggleLabel }}</button>
+  </div>
+  <p style="font-size:12.5px;color:#9A9483;margin:0 0 14px;">Tip: click "Hide Answer Key" above before printing a copy for students — the button itself never prints.</p>
+
+  <div style="display:{{ answerKeyDisplay }};">
+    <div style="background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.1</strong> 1–a 2–a 3–a 4–b 5–a 6–a<br/>
+      <strong>Ex.2</strong> 1–a, 2–b, 3–c, 4–d<br/>
+      <strong>Ex.3</strong> get; anything; all; (server confirms price)
+    </div>
+    <div style="background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.4</strong> 1. F 2. T 3. T 4. F 5. T<br/>
+      <strong>Ex.5</strong> 1. where 2. passport / boarding pass 3. have<br/>
+      <strong>Ex.6</strong> 1. Could I get a coffee? 2. For here or to go? 3. Where's the nearest station? 4. Your boarding pass, please. 5. Anything else?
+    </div>
+    <div style="background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.7</strong> 1. I'd like a coffee, please. 2. Could you give me some information about the flight? 3. I'd like to book a table. 4. Where's the bathroom? 5. I'm following up on our meeting. 6. Can you tell me the price?<br/>
+      <strong>Ex.8</strong> Sample: 1. Could I get a coffee, please? 2. Could you tell me the Wi-Fi password, please? 3. I'd like a table for two, please. 4. Could you send me the report, please? 5. Would it be possible to change my seat?<br/>
+      <strong>Ex.9</strong> 1–a 2–a 3–a 4–a 5–a 6–a
+    </div>
+    <div style="background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.10</strong> 1. T 2. F 3. T 4. F 5. T<br/>
+      <strong>Ex.11</strong> Sample: 1. "I'm writing to follow up on the outstanding invoice." 2. "Could I have a window seat, please?" 3. "Excuse me, could you tell me if my flight is delayed?" 4. "We need to discuss the budget as soon as possible." 5. "I'm unable to attend the meeting; my apologies for the inconvenience." 6. "A table for two, please."<br/>
+      <strong>Ex.12</strong> Open answer — check for 4+ correctly-used reference phrases in a natural dialogue.
+    </div>
+    <div style="background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">C1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.13</strong> Sample answers: 1. I wanted to check in regarding this matter; please let me know your thoughts at your convenience. 2. Would it be possible to extend the deadline? 3. Apologies for the oversight; I will rectify it promptly. 4. Shall we arrange a call to discuss this further? 5. Thank you; I look forward to our next conversation.<br/>
+      <strong>Ex.14</strong> 1–a 2–a 3–a 4–a 5–a 6–a<br/>
+      <strong>Ex.15</strong> 1. …appreciate it if you could confirm. 2. …looking forward to hearing from you. 3. Please find attached the report. 4. …writing to inform you about a delay. 5. Kindly respond to this at your earliest convenience.
+    </div>
+    <div style="background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 4px;">C2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 4px;">
+      <strong>Ex.16</strong> Open answer — check formal register and 3+ hedged/polite request structures.<br/>
+      <strong>Ex.17</strong> 1. I wanted to check in regarding this matter. 2. Would it be possible to extend the deadline? 3. Apologies for the oversight. 4. Shall we arrange a call to discuss this further? 5. I look forward to our next conversation.<br/>
+      <strong>Ex.18</strong> 1. …appreciate it if you could respond as soon as possible. 2. Please find attached the invoice. 3. …writing to inform you about the delay. 4. Kindly confirm your availability. 5. …looking forward to your reply.
+    </div>
+  </div>
+
+</x-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { showAnswers: true };
+  renderVals() {
+    const showAnswers = this.state.showAnswers;
+    return {
+      answerKeyDisplay: showAnswers ? 'block' : 'none',
+      toggleLabel: showAnswers ? '🙈 Hide Answer Key' : '👁️ Show Answer Key',
+      toggleAnswers: () => this.setState(s => ({ showAnswers: !s.showAnswers })),
+    };
+  }
+}
+</script>
+</body>
+</html>

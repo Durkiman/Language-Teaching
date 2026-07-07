@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print { #answerToggleBtn { display: none !important; } }
+  </style>
+</helmet>
+<style id="__om-edit-overrides"></style>
+
+<x-import component-from-global-scope="doc-page" from="./doc-page.js" size="letter" margin="0.7in" hint-size="100%,100%">
+
+  <div slot="header" style="display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px;border-bottom:3px solid #0E7C86;"></div>
+  <div slot="footer" style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #DDD8CC;font-size:10.5px;color:#9A9483;font-family:'Nunito',sans-serif;">
+    <span>© Passive Voice</span>
+    <span>ESL Grammar Workbook</span>
+  </div>
+
+  <div style="text-align:center;padding:8px 0 22px;">
+    <div style="display:inline-block;background:#0E7C86;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Durim's ESL Grammar Workbook: A1–C2</div>
+    <h1 style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:44px;color:#1B4B4F;margin:16px 0 4px;line-height:1.05;">The Passive Voice</h1>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:600;font-size:22px;color:#F2994A;margin-bottom:10px;">Shifting the Focus to the Action</div>
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:6px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;">📘 1. Understanding the Rule</h2>
+
+  <p style="font-size:15px;line-height:1.65;color:#2B2B2B;margin:0 0 12px;">The passive voice is formed with <strong>be + past participle</strong>. The object of the active sentence becomes the subject; the original subject can be added with "by", or dropped entirely.</p>
+
+  <table style="width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:14px;">
+    <thead><tr style="background:#0E7C86;color:#fff;font-family:'Baloo 2',sans-serif;"><th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Tense</th><th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Active</th><th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Passive</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;">Present simple</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">They make cars here.</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Cars <strong>are made</strong> here.</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;">Past simple</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">They built this in 1990.</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">This <strong>was built</strong> in 1990.</td></tr>
+      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;">Present perfect</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">They have cancelled it.</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">It <strong>has been cancelled</strong>.</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;">Future / modal</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">They will announce it.</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">It <strong>will be announced</strong>.</td></tr>
+    </tbody>
+  </table>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
+    <div style="background:#EAF2FF;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>👤 Doer unknown/unimportant</strong><br/>My bike was stolen.</div>
+    <div style="background:#F0EAFE;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>🎓 Formal/scientific writing</strong><br/>The data was analysed.</div>
+    <div style="background:#FFE9E4;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>🔎 Focus on the action, not the agent</strong><br/>The building is being renovated.</div>
+    <div style="background:#E4F8ED;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>🖊️ Mentioning the agent when relevant</strong><br/>The novel was written by her.</div>
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:30px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">📊 2. Reference Tables</h2>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Active → passive transformation</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#8B5FE0;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Active sentence part</th><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Becomes in the passive</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">object</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">new subject</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">verb</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">be + past participle</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">subject</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">"by + agent" (optional) or omitted</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Modal &amp; reporting passives</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 20px;font-size:13.5px;">
+    <thead><tr style="background:#4C7BF5;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Structure</th><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Example</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">modal + be + PP</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">Mistakes should be avoided.</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">it is + PP + that</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">It is believed that he left.</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">subject + is + PP + to-infinitive</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">He is said to be wealthy.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:24px 0 6px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">✏️ 3. Practice Exercises</h2>
+  <p style="font-size:13.5px;color:#9A9483;margin:0 0 16px;">18 exercises across all six CEFR levels — three per level, increasing in difficulty. Answers on the last page.</p>
+
+  <div style="display:inline-block;background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:10px 0 10px;">LEVEL A1 · Beginner</div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct passive form.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The cake <strong>(is made / make)</strong> by my mother.</li>
+      <li>The letters <strong>(were sent / sent)</strong> yesterday.</li>
+      <li>English <strong>(is spoken / speaks)</strong> all over the world.</li>
+      <li>The window <strong>(was broken / broke)</strong> by the storm.</li>
+      <li>This book <strong>(was written / wrote)</strong> by a famous author.</li>
+      <li>The car <strong>(is being repaired / repairs)</strong> now.</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each active sentence (1–4) to its passive equivalent (a–d).</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
+      <div>1. Someone cleans the office every day.</div><div>a. The office is cleaned every day.</div>
+      <div>2. They built this house in 1990.</div><div>b. This house was built in 1990.</div>
+      <div>3. She will finish the project tomorrow.</div><div>c. The project will be finished tomorrow.</div>
+      <div>4. They have cancelled the flight.</div><div>d. The flight has been cancelled.</div>
+    </div>
+  </div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Convert each active sentence to the passive.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"They make cars in this factory." → Cars ______ (make) in this factory.</li>
+      <li>"Someone stole my bike." → My bike ______ (steal).</li>
+      <li>"They will announce the results tomorrow." → The results ______ (announce) tomorrow.</li>
+      <li>"She has finished the report." → The report ______ (finish).</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">This bridge was built in 1932. It is maintained by the city council and is inspected every year. Last year, several repairs were made after a storm damaged part of the structure. New safety measures have been introduced, and the bridge is now considered one of the safest in the region.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The bridge was built in 1932. ___</li>
+      <li>The bridge is maintained by a private company. ___</li>
+      <li>Repairs were made last year. ___</li>
+      <li>No new safety measures have been introduced. ___</li>
+      <li>The bridge is now considered unsafe. ___</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write negatives (1, 3) and questions (2, 4) in the passive.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The report ______ (not/finish) yet.</li>
+      <li>___ the window ___ (break) last night?</li>
+      <li>This song ______ (not/write) by her.</li>
+      <li>___ the letters ___ (send) already?</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct passive sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>built / was / 1990 / house / in / this</li>
+      <li>council / by / maintained / the / bridge / is / the</li>
+      <li>cancelled / flight / been / has / the</li>
+      <li>tomorrow / results / announced / the / will / be</li>
+      <li>stolen / bike / my / was</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The cake was make by my mother.</li>
+      <li>English is speak all over the world.</li>
+      <li>This book was write by a famous author.</li>
+      <li>The car is repair now.</li>
+      <li>The letters were send yesterday.</li>
+      <li>My bike has stole.</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Convert each active sentence to the passive.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Someone cleans this room every day.</li>
+      <li>The chef prepared the meal.</li>
+      <li>They will publish the book next year.</li>
+      <li>Workers have repaired the road.</li>
+      <li>The company is developing a new app.</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: choose the correctly formed passive.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The document ___. a) was signed&nbsp; b) was sign</li>
+      <li>New employees ___ for two weeks. a) are trained&nbsp; b) are train</li>
+      <li>The results ___ soon. a) will announce&nbsp; b) will be announced</li>
+      <li>The house ___. a) is being renovate&nbsp; b) is being renovated</li>
+      <li>The project ___. a) has completed&nbsp; b) has been completed</li>
+      <li>Mistakes ___. a) should avoid&nbsp; b) should be avoided</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B2 · Upper-Intermediate</div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">The vaccine was developed over several years by an international team of researchers, although the final approval process was significantly accelerated due to the pandemic. Clinical trials were conducted across multiple countries, and the data was reviewed independently before authorisation was granted. Millions of doses have since been distributed, and ongoing safety monitoring is being carried out by health authorities worldwide.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The vaccine was developed by a single researcher. ___</li>
+      <li>The approval process was slowed down because of the pandemic. ___</li>
+      <li>Clinical trials were conducted in multiple countries. ___</li>
+      <li>The data was reviewed before authorisation was granted. ___</li>
+      <li>Safety monitoring has stopped since distribution began. ___</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The decision must making by the board.</li>
+      <li>New rules should introduce next year.</li>
+      <li>My car got stole last week.</li>
+      <li>The report can finding online.</li>
+      <li>The window was broken for the storm.</li>
+      <li>Mistakes shouldn't making in this job.</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Describe a process (how a product is made, or how an event is organised) in 6–8 sentences, using <strong>passive voice throughout</strong>, including <strong>at least one modal passive</strong> (must be, should be, can be).</p>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+  </div>
+
+  <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal, objective register using the passive.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Someone made a huge mistake here.</li>
+      <li>They messed up the schedule big time.</li>
+      <li>People say the CEO is stepping down soon.</li>
+      <li>They're gonna announce the results next week, I heard.</li>
+      <li>Nobody has fixed this problem yet.</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: what does this structure express?</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"It is widely believed that the policy will fail." a) reports a general opinion impersonally&nbsp; b) states a fact directly</li>
+      <li>"She had her car repaired." a) she arranged for someone else to repair it&nbsp; b) she repaired it herself</li>
+      <li>"The proposal is expected to be approved." a) common in formal reporting&nbsp; b) grammatically incorrect</li>
+      <li>"The building is said to date back to the 1800s." a) people say it dates back to the 1800s&nbsp; b) it definitely does</li>
+      <li>"Measures are being taken to address the issue." a) an action currently in progress&nbsp; b) a completed action</li>
+      <li>"The matter is to be discussed at the next meeting." a) a formal, scheduled future action&nbsp; b) a request</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>It is believe that the economy will recover soon.</li>
+      <li>She had her hair to cut yesterday.</li>
+      <li>The building is say to date back centuries.</li>
+      <li>Measures are taking to resolve the crisis.</li>
+      <li>The matter is discuss at the next meeting.</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal news-style report using <strong>passive voice throughout</strong>, including <strong>at least one reporting structure</strong> ("it is said/believed/reported that...") and <strong>one causative construction</strong> ("had something done").</p>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+  </div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex passive sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>fail / believed / policy / widely / will / that / it / is / the</li>
+      <li>approved / expected / be / proposal / to / is / the</li>
+      <li>issue / taken / address / measures / are / to / being / the</li>
+      <li>meeting / discussed / next / be / matter / to / at / the / is / the</li>
+      <li>1800s / said / building / to / back / the / date / is / the / to</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>It is reported that the merger has completing.</li>
+      <li>She has her house to renovate at the moment.</li>
+      <li>The results are think to be accurate.</li>
+      <li>New evidence is expect to emerge soon.</li>
+      <li>The award is give annually to outstanding researchers.</li>
+    </ol>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
+    <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:0;white-space:nowrap;">🔑 Answer Key</h2>
+    <button id="answerToggleBtn" onClick="{{ toggleAnswers }}" style="flex:0 0 auto;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#fff;background:#8B5FE0;border:none;border-radius:999px;padding:8px 18px;cursor:pointer;white-space:nowrap;">{{ toggleLabel }}</button>
+  </div>
+  <p style="font-size:12.5px;color:#9A9483;margin:0 0 14px;">Tip: click "Hide Answer Key" above before printing a copy for students — the button itself never prints.</p>
+
+  <div style="display:{{ answerKeyDisplay }};">
+    <div style="background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.1</strong> 1. is made 2. were sent 3. is spoken 4. was broken 5. was written 6. is being repaired<br/>
+      <strong>Ex.2</strong> 1–a, 2–b, 3–c, 4–d<br/>
+      <strong>Ex.3</strong> 1. are made 2. was stolen 3. will be announced 4. has been finished
+    </div>
+    <div style="background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.4</strong> 1. T 2. F 3. T 4. F 5. F<br/>
+      <strong>Ex.5</strong> 1. hasn't been finished 2. Was…broken 3. wasn't written 4. Have…been sent<br/>
+      <strong>Ex.6</strong> 1. This house was built in 1990. 2. The bridge is maintained by the council. 3. The flight has been cancelled. 4. The results will be announced tomorrow. 5. My bike was stolen.
+    </div>
+    <div style="background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.7</strong> 1. …was made… 2. …is spoken… 3. …was written… 4. …is being repaired. 5. …were sent… 6. …has been stolen.<br/>
+      <strong>Ex.8</strong> 1. This room is cleaned every day. 2. The meal was prepared by the chef. 3. The book will be published next year. 4. The road has been repaired. 5. A new app is being developed by the company.<br/>
+      <strong>Ex.9</strong> 1–a 2–a 3–b 4–b 5–b 6–b
+    </div>
+    <div style="background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.10</strong> 1. F 2. F 3. T 4. T 5. F<br/>
+      <strong>Ex.11</strong> 1. …must be made… 2. …should be introduced… 3. …got stolen. 4. …can be found. 5. …by the storm. 6. …shouldn't be made…<br/>
+      <strong>Ex.12</strong> Open answer — check consistent passive voice and at least one correctly-formed modal passive.
+    </div>
+    <div style="background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">C1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.13</strong> Sample answers (accept close equivalents): 1. A significant error was made here. 2. The schedule was significantly disrupted. 3. It is said that the CEO will be stepping down soon. 4. The results are expected to be announced next week. 5. This problem has not yet been resolved.<br/>
+      <strong>Ex.14</strong> 1–a 2–a 3–a 4–a 5–a 6–a<br/>
+      <strong>Ex.15</strong> 1. …believed… 2. …had her hair cut… 3. …said to date back… 4. …being taken… 5. …to be discussed…
+    </div>
+    <div style="background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 4px;">C2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 4px;">
+      <strong>Ex.16</strong> Open answer — check consistent passive voice, a reporting structure, and a causative construction.<br/>
+      <strong>Ex.17</strong> 1. It is widely believed that the policy will fail. 2. The proposal is expected to be approved. 3. Measures are being taken to address the issue. 4. The matter is to be discussed at the next meeting. 5. The building is said to date back to the 1800s.<br/>
+      <strong>Ex.18</strong> 1. …has been completed / is being completed. 2. …is having her house renovated. 3. …thought to be accurate. 4. …expected to emerge soon. 5. …is given annually…
+    </div>
+  </div>
+
+</x-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { showAnswers: true };
+  renderVals() {
+    const showAnswers = this.state.showAnswers;
+    return {
+      answerKeyDisplay: showAnswers ? 'block' : 'none',
+      toggleLabel: showAnswers ? '🙈 Hide Answer Key' : '👁️ Show Answer Key',
+      toggleAnswers: () => this.setState(s => ({ showAnswers: !s.showAnswers })),
+    };
+  }
+}
+</script>
+</body>
+</html>

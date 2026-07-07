@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print {
+      #answerToggleBtn { display: none !important; }
+    }
+  </style>
+</helmet>
+<style id="__om-edit-overrides"></style>
+
+<x-import component-from-global-scope="doc-page" from="./doc-page.js" size="letter" margin="0.7in" hint-size="100%,100%">
+
+  <div slot="header" style="display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px;border-bottom:3px solid #0E7C86;">
+  </div>
+
+  <div slot="footer" style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #DDD8CC;font-size:10.5px;color:#9A9483;font-family:'Nunito',sans-serif;">
+    <span>© Relative Clauses</span>
+    <span>ESL Grammar Workbook</span>
+  </div>
+
+  <!-- ============ TITLE BLOCK ============ -->
+  <div style="text-align:center;padding:8px 0 22px;">
+    <div style="display:inline-block;background:#0E7C86;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Durim's ESL Grammar Workbook: A1–C2</div>
+    <h1 style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:44px;color:#1B4B4F;margin:16px 0 4px;line-height:1.05;">Relative Clauses</h1>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:600;font-size:22px;color:#F2994A;margin-bottom:10px;">Defining &amp; Non-Defining</div>
+  </div>
+
+  <!-- ============ SECTION 1: EXPLANATION ============ -->
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:6px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;">📘 1. Understanding the Rule</h2>
+
+  <p style="font-size:15px;line-height:1.65;color:#2B2B2B;margin:0 0 10px;">A relative clause adds information about a noun using a relative pronoun (who, which, that, whose, where, when). <strong>Defining</strong> clauses identify which noun we mean; <strong>non-defining</strong> clauses add extra, non-essential information.</p>
+
+  <table style="width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:14px;">
+    <thead>
+      <tr style="background:#0E7C86;color:#fff;font-family:'Baloo 2',sans-serif;">
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Type</th>
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Feature</th>
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#fff;">
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">Defining</td>
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;">no commas; can use "that"; pronoun sometimes omittable</td>
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;">The man <strong>who called</strong> is my uncle.</td>
+      </tr>
+      <tr style="background:#FBF9F3;">
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">Non-defining</td>
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;">set off by commas; never "that"; never omitted</td>
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;">My uncle, <strong>who lives in Peru</strong>, called.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="background:#FFF6D8;border:2px dashed #F2C94C;border-radius:12px;padding:14px 16px;margin:0 0 18px;font-size:14px;color:#5C4A00;">
+    <strong>Omitting the pronoun:</strong> in a defining clause, you can drop who/which/that only when it is the <em>object</em> of the clause — "The book (that) I read" — never when it is the subject: "The man who called" (cannot drop "who").
+  </div>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:18px;color:#1B4B4F;margin:18px 0 8px;">Relative pronouns at a glance</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
+    <div style="background:#EAF2FF;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>👤 who / that</strong><br/>for people: the woman who/that teaches us.</div>
+    <div style="background:#F0EAFE;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>📦 which / that</strong><br/>for things: the book which/that I bought.</div>
+    <div style="background:#FFE9E4;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>🏷️ whose</strong><br/>possession: the man whose car was stolen.</div>
+    <div style="background:#E4F8ED;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>📍 where</strong><br/>place: the café where we met.</div>
+    <div style="background:#FFF3D6;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>🕐 when</strong><br/>time: the year when I was born.</div>
+    <div style="background:#E4F2FE;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>💭 which (whole clause)</strong><br/>commenting on a whole idea: He passed, which pleased everyone.</div>
+  </div>
+
+  <div style="background:#EAF2FF;border:2px solid #C7DBFF;border-radius:12px;padding:14px 16px;margin:0 0 18px;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;color:#1B4B4F;margin-bottom:10px;">⚡ Defining or non-defining?</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;">
+        <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#4C7BF5;margin-bottom:4px;">Defining</div>
+        <p style="font-size:13.5px;line-height:1.6;color:#2B2B2B;margin:0;font-style:italic;">Students who study hard pass the exam. (only those students)</p>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;">
+        <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#F2994A;margin-bottom:4px;">Non-defining</div>
+        <p style="font-size:13.5px;line-height:1.6;color:#2B2B2B;margin:0;font-style:italic;">My students, who study hard, passed the exam. (all of them, extra info)</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:#FFF6D8;border:2px dashed #F2C94C;border-radius:12px;padding:14px 16px;margin:0 0 20px;font-size:14px;color:#5C4A00;">
+    <strong>Prepositions:</strong> in formal style the preposition moves before the pronoun ("the person to whom I spoke"); in everyday speech it moves to the end ("the person who I spoke to").
+  </div>
+
+  <!-- ============ SECTION 2: REFERENCE TABLES ============ -->
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:30px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">📊 2. Reference Tables</h2>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Relative pronouns by function</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#F2994A;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #F2994A;">Pronoun</th><th style="padding:7px 10px;text-align:left;border:1px solid #F2994A;">Refers to</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">who</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">people (subject)</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">whom</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">people (object, formal)</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">which</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">things, animals, whole clauses</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">that</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">people or things, defining clauses only</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">whose</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">possession, people or things</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Commas at a glance</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#8B5FE0;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Clause type</th><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Commas?</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Defining</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">no commas</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Non-defining</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">always commas (or dashes)</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Reduced relative clauses</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 20px;font-size:13.5px;">
+    <thead><tr style="background:#4C7BF5;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Full clause</th><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Reduced form</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">the man who is standing there</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">the man standing there</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">the rules which are written here</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">the rules written here</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ============ SECTION 3: EXERCISES ============ -->
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:24px 0 6px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">✏️ 3. Practice Exercises</h2>
+  <p style="font-size:13.5px;color:#9A9483;margin:0 0 16px;">18 exercises across all six CEFR levels — three per level, increasing in difficulty. Answers on the last page.</p>
+
+  <!-- ===== A1 ===== -->
+  <div style="display:inline-block;background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:10px 0 10px;">LEVEL A1 · Beginner</div>
+
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle who or which.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The man <strong>(who / which)</strong> lives next door is nice.</li>
+      <li>The book <strong>(who / which)</strong> is on the table is mine.</li>
+      <li>The dog <strong>(who / which)</strong> barks a lot is ours.</li>
+      <li>The teacher <strong>(who / which)</strong> helped me is kind.</li>
+      <li>The car <strong>(who / which)</strong> is red is fast.</li>
+      <li>The girl <strong>(who / which)</strong> sings well is my sister.</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each sentence half (1–5) to its ending (a–e).</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
+      <div>1. The house</div><div>a. who teaches maths.</div>
+      <div>2. The woman</div><div>b. where we met.</div>
+      <div>3. The café</div><div>c. which is blue is mine.</div>
+      <div>4. The man</div><div>d. whose dog barked.</div>
+      <div>5. The pen</div><div>e. that I lost.</div>
+    </div>
+  </div>
+
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank with who, which, or where.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The boy ______ lives here is my friend.</li>
+      <li>The bag ______ is on the chair is mine.</li>
+      <li>The park ______ we play is near my house.</li>
+      <li>The woman ______ called is my mother.</li>
+      <li>The book ______ I bought is interesting.</li>
+      <li>The school ______ I study is big.</li>
+    </ol>
+  </div>
+
+  <!-- ===== A2 ===== -->
+  <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
+
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">The restaurant where we had dinner last night was excellent. The chef, who trained in Paris, prepared a dish that everyone loved. The waiter, whose name I forget, recommended a dessert which was delicious. We're planning to go back next month, on the date when my sister visits.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The restaurant was excellent. ___</li>
+      <li>The chef trained in London. ___</li>
+      <li>The waiter recommended a dessert. ___</li>
+      <li>Everyone loved the dish. ___</li>
+      <li>They're returning when the sister visits. ___</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Combine each pair into one sentence with a relative pronoun.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>I have a friend. She lives in Madrid. → ______________________</li>
+      <li>This is the book. I told you about it. → ______________________</li>
+      <li>That's the house. My grandparents lived there. → ______________________</li>
+      <li>She's the woman. Her car was stolen. → ______________________</li>
+      <li>I remember the day. We first met that day. → ______________________</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>man / lives / who / next / the / door / is / kind</li>
+      <li>bought / the / I / book / which / is / interesting</li>
+      <li>where / met / café / the / we / closed</li>
+      <li>dog / whose / barked / the / owner / left</li>
+      <li>year / born / the / when / was / I</li>
+    </ol>
+  </div>
+
+  <!-- ===== B1 ===== -->
+  <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
+
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The man which called is my uncle.</li>
+      <li>My sister, that lives in Rome, is visiting.</li>
+      <li>This is the house, which I grew up.</li>
+      <li>The girl who's bag was stolen is upset.</li>
+      <li>The book that I'm read is great.</li>
+      <li>The place where I born is small.</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Decide if each clause is defining (D) or non-defining (N) and punctuate.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>My brother _____ who lives in Canada _____ is a doctor.</li>
+      <li>The students _____ who studied hard _____ passed.</li>
+      <li>Paris _____ which is the capital of France _____ is beautiful.</li>
+      <li>The phone _____ which I bought last week _____ is already broken.</li>
+      <li>My mother _____ who taught me to cook _____ is retiring.</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: choose the correct pronoun/punctuation.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The house ___ I grew up in was sold. a) where&nbsp; b) which</li>
+      <li>My father, ___ works in finance, travels often. a) that&nbsp; b) who</li>
+      <li>This is the reason ___ I called. a) why&nbsp; b) which</li>
+      <li>The film ___ we watched was boring. a) whom&nbsp; b) that</li>
+      <li>She got the job, ___ surprised everyone. a) which&nbsp; b) that</li>
+      <li>The man ___ car was stolen reported it. a) who's&nbsp; b) whose</li>
+    </ol>
+  </div>
+
+  <!-- ===== B2 ===== -->
+  <div style="display:inline-block;background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B2 · Upper-Intermediate</div>
+
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">The professor, whose research focuses on climate policy, published a paper which challenged the assumptions that most economists had accepted for decades. The journal in which it appeared is highly regarded, and several colleagues who reviewed the paper praised its rigour. However, a few critics, whose objections were largely methodological, argued that the sample size, which was relatively small, undermined the conclusions.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The professor's research focuses on trade policy. ___</li>
+      <li>The paper challenged widely accepted assumptions. ___</li>
+      <li>The journal is poorly regarded. ___</li>
+      <li>Some colleagues praised the paper's rigour. ___</li>
+      <li>Critics objected mainly on methodological grounds. ___</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The report, that was published yesterday, is controversial.</li>
+      <li>The colleague to who I spoke was helpful.</li>
+      <li>This is the reason of which I resigned.</li>
+      <li>The building, who was constructed in 1990, is being renovated.</li>
+      <li>The data which was collected is unreliable, that concerns the board.</li>
+      <li>My manager, that I respect, is retiring.</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Describe a place or person important to you in 5–7 sentences. Use at least one <strong>defining</strong> and one <strong>non-defining</strong> relative clause, correctly punctuated.</p>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+  </div>
+
+  <!-- ===== C1 ===== -->
+  <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
+
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal register, moving the preposition before the pronoun.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The client who I dealt with was satisfied.</li>
+      <li>The issue which we're worried about is unresolved.</li>
+      <li>The team who I worked with achieved great results.</li>
+      <li>The project which she's responsible for is delayed.</li>
+      <li>The colleague who I reported to has resigned.</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: what does the relative clause add here?</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"The proposal, which was rejected, cost months of work." → a) essential identification&nbsp; b) extra commentary on the whole proposal</li>
+      <li>"Employees who arrive late will be warned." → a) refers only to those employees&nbsp; b) refers to all employees</li>
+      <li>"The CEO, whose decision surprised everyone, resigned." → a) defining&nbsp; b) non-defining</li>
+      <li>"The findings, which contradicted expectations, were published." → a) identifies which findings&nbsp; b) comments on all the findings</li>
+      <li>"The one strategy that worked was outsourcing." → a) defining, singles it out&nbsp; b) non-defining, extra detail</li>
+      <li>"He lost the case, which was unexpected." → a) refers to the whole preceding clause&nbsp; b) refers only to "the case"</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The strategy, that was proposed last year, failed to deliver results.</li>
+      <li>The board members, who's votes were decisive, remained silent.</li>
+      <li>The market, which conditions had deteriorated, forced a policy change.</li>
+      <li>The candidate whom was hired lacked the necessary experience.</li>
+      <li>The findings which the report was based were later disputed.</li>
+    </ol>
+  </div>
+
+  <!-- ===== C2 ===== -->
+  <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
+
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal profile of a person or organisation, using a range of relative clauses (defining, non-defining, reduced) to embed detail elegantly.</p>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+  </div>
+
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>whom / spoke / the / executive / to / I / resigned</li>
+      <li>proposal / which / rejected / the / board / by / was / stalled / progress</li>
+      <li>report / findings / the / whose / disputed / were / widely</li>
+      <li>firm / for / worked / which / I / the / closed</li>
+      <li>decision / surprised / everyone / whose / director / the / resigned</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The executive to whom I spoke to has resigned.</li>
+      <li>The proposal, which the board rejected it, stalled progress.</li>
+      <li>The report who's findings were disputed was withdrawn.</li>
+      <li>The firm which I worked for it has closed.</li>
+      <li>The director, which decision surprised everyone, resigned.</li>
+    </ol>
+  </div>
+
+  <!-- ============ ANSWER KEY ============ -->
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
+    <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:0;white-space:nowrap;">🔑 Answer Key</h2>
+    <button id="answerToggleBtn" onClick="{{ toggleAnswers }}" style="flex:0 0 auto;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#fff;background:#8B5FE0;border:none;border-radius:999px;padding:8px 18px;cursor:pointer;white-space:nowrap;">{{ toggleLabel }}</button>
+  </div>
+  <p style="font-size:12.5px;color:#9A9483;margin:0 0 14px;">Tip: click "Hide Answer Key" above before printing a copy for students — the button itself never prints.</p>
+
+  <div style="display:{{ answerKeyDisplay }};">
+
+    <div style="background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.1</strong> 1. who 2. which 3. which 4. who 5. which 6. who<br/>
+      <strong>Ex.2</strong> 1–c, 2–a, 3–b, 4–d, 5–e<br/>
+      <strong>Ex.3</strong> 1. who 2. which 3. where 4. who 5. which 6. where
+    </div>
+
+    <div style="background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.4</strong> 1. T 2. F 3. T 4. T 5. T<br/>
+      <strong>Ex.5</strong> 1. I have a friend who lives in Madrid. 2. This is the book (that) I told you about. 3. That's the house where my grandparents lived. 4. She's the woman whose car was stolen. 5. I remember the day when we first met.<br/>
+      <strong>Ex.6</strong> 1. The man who lives next door is kind. 2. The book which I bought is interesting. 3. The café where we met closed. 4. The dog whose owner left barked. 5. The year when I was born.
+    </div>
+
+    <div style="background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.7</strong> 1. The man who called is my uncle. 2. My sister, who lives in Rome, is visiting. 3. This is the house where I grew up. 4. The girl whose bag was stolen is upset. 5. The book that I'm reading is great. 6. The place where I was born is small.<br/>
+      <strong>Ex.8</strong> 1. N (commas) 2. D (no commas) 3. N (commas) 4. N (commas) 5. N (commas)<br/>
+      <strong>Ex.9</strong> 1–a 2–b 3–a 4–b 5–a 6–b
+    </div>
+
+    <div style="background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.10</strong> 1. F 2. T 3. F 4. T 5. T<br/>
+      <strong>Ex.11</strong> 1. The report, which was published yesterday… 2. …to whom I spoke… 3. …the reason why I resigned. 4. The building, which was constructed in 1990… 5. …is unreliable, which concerns the board. 6. My manager, whom I respect, is retiring.<br/>
+      <strong>Ex.12</strong> Open answer — check one correctly punctuated defining and one non-defining relative clause.
+    </div>
+
+    <div style="background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">C1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.13</strong> 1. The client with whom I dealt was satisfied. 2. The issue about which we're worried is unresolved. 3. The team with whom I worked achieved great results. 4. The project for which she's responsible is delayed. 5. The colleague to whom I reported has resigned.<br/>
+      <strong>Ex.14</strong> 1–b 2–a 3–b 4–b 5–a 6–a<br/>
+      <strong>Ex.15</strong> 1. The strategy, which was proposed last year… 2. …whose votes were decisive… 3. …whose conditions had deteriorated… 4. The candidate who was hired… 5. …on which the report was based…
+    </div>
+
+    <div style="background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 4px;">C2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 4px;">
+      <strong>Ex.16</strong> Open answer — check varied, correctly punctuated relative clauses that embed detail smoothly.<br/>
+      <strong>Ex.17</strong> 1. The executive to whom I spoke resigned. 2. The proposal, which was rejected by the board, stalled progress. 3. The report, whose findings were widely disputed. 4. The firm for which I worked closed. 5. The director, whose decision surprised everyone, resigned.<br/>
+      <strong>Ex.18</strong> 1. …to whom I spoke has resigned. 2. …which the board rejected, stalled progress. 3. …whose findings were disputed… 4. …which I worked for has closed. 5. …whose decision surprised everyone, resigned.
+    </div>
+
+  </div>
+
+</x-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { showAnswers: true };
+
+  renderVals() {
+    const showAnswers = this.state.showAnswers;
+    return {
+      answerKeyDisplay: showAnswers ? 'block' : 'none',
+      toggleLabel: showAnswers ? '🙈 Hide Answer Key' : '👁️ Show Answer Key',
+      toggleAnswers: () => this.setState(s => ({ showAnswers: !s.showAnswers })),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

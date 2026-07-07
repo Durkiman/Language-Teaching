@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print {
+      #answerToggleBtn { display: none !important; }
+    }
+  </style>
+</helmet>
+<style id="__om-edit-overrides"></style>
+
+<x-import component-from-global-scope="doc-page" from="./doc-page.js" size="letter" margin="0.7in" hint-size="100%,100%">
+
+  <div slot="header" style="display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px;border-bottom:3px solid #0E7C86;">
+  </div>
+
+  <div slot="footer" style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #DDD8CC;font-size:10.5px;color:#9A9483;font-family:'Nunito',sans-serif;">
+    <span>© Future Perfect &amp; Future Continuous</span>
+    <span>ESL Grammar Workbook</span>
+  </div>
+
+  <!-- ============ TITLE BLOCK ============ -->
+  <div style="text-align:center;padding:8px 0 22px;">
+    <div style="display:inline-block;background:#0E7C86;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Durim's ESL Grammar Workbook: A1–C2</div>
+    <h1 style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:40px;color:#1B4B4F;margin:16px 0 4px;line-height:1.1;">Future Perfect &amp; Future Continuous</h1>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:600;font-size:22px;color:#F2994A;margin-bottom:10px;">Advanced Future Forms</div>
+  </div>
+
+  <!-- ============ SECTION 1: EXPLANATION ============ -->
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:6px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;">📘 1. Understanding the Rule</h2>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:18px;color:#1B4B4F;margin:18px 0 8px;">Formation</h3>
+  <p style="font-size:15px;line-height:1.65;color:#2B2B2B;margin:0 0 10px;">Both tenses look forward from now to a point in the future, then describe what will be true at that point.</p>
+
+  <table style="width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:14px;">
+    <thead>
+      <tr style="background:#0E7C86;color:#fff;font-family:'Baloo 2',sans-serif;">
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Tense</th>
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Structure</th>
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#fff;">
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">Future Continuous</td>
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;">will be + verb-ing</td>
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;">This time tomorrow, I <strong>will be flying</strong> to Rome.</td>
+      </tr>
+      <tr style="background:#FBF9F3;">
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">Future Perfect</td>
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;">will have + past participle</td>
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;">By 2030, I <strong>will have finished</strong> my degree.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:18px;color:#1B4B4F;margin:18px 0 8px;">When do we use each one?</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
+    <div style="background:#EAF2FF;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>⏳ Future Continuous — in progress at a future moment</strong><br/>At 8 p.m. tomorrow, I'll be cooking dinner.</div>
+    <div style="background:#F0EAFE;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>✅ Future Perfect — completed before a future deadline</strong><br/>By Friday, she'll have finished the report.</div>
+    <div style="background:#FFE9E4;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>🙏 Future Continuous — polite question about plans</strong><br/>Will you be using the car later?</div>
+    <div style="background:#E4F8ED;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>📏 Future Perfect — duration up to a future point (+ for)</strong><br/>By next year, we'll have lived here for a decade.</div>
+  </div>
+
+  <div style="background:#EAF2FF;border:2px solid #C7DBFF;border-radius:12px;padding:14px 16px;margin:0 0 18px;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;color:#1B4B4F;margin-bottom:10px;">⚡ In progress, or already done?</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;">
+        <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#4C7BF5;margin-bottom:4px;">Future Continuous</div>
+        <p style="font-size:13.5px;line-height:1.6;color:#2B2B2B;margin:0;">Signal: <strong>at this time tomorrow / this time next week</strong> — the action is happening right then.</p>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;">
+        <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#F2994A;margin-bottom:4px;">Future Perfect</div>
+        <p style="font-size:13.5px;line-height:1.6;color:#2B2B2B;margin:0;">Signal: <strong>by [time] / by the time / before</strong> — the action is finished before then.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:#FFF6D8;border:2px dashed #F2C94C;border-radius:12px;padding:14px 16px;margin:0 0 18px;font-size:14px;color:#5C4A00;">
+    <strong>Bonus (advanced):</strong> the <strong>future perfect continuous</strong> (will have been + -ing) emphasises duration up to a future point: <em>By June, I will have been working here for five years.</em>
+  </div>
+
+  <!-- ============ SECTION 2: REFERENCE TABLES ============ -->
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:30px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">📊 2. Reference Tables</h2>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Full formation summary</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#8B5FE0;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Form</th><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Future Continuous</th><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Future Perfect</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Affirmative</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">will be working</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">will have worked</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Negative</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">won't be working</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">won't have worked</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Question</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">Will you be working?</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">Will you have worked?</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Signal words</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 20px;font-size:13.5px;">
+    <thead><tr style="background:#4C7BF5;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Future Continuous</th><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Future Perfect</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">at this time tomorrow</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">by tomorrow / by Friday</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">this time next week/year</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">by the time + clause</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">at [a specific future hour]</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">by then / by 2030</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ============ SECTION 3: EXERCISES ============ -->
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:24px 0 6px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">✏️ 3. Practice Exercises</h2>
+  <p style="font-size:13.5px;color:#9A9483;margin:0 0 16px;">18 exercises across all six CEFR levels — three per level, increasing in difficulty. Answers on the last page.</p>
+
+  <!-- ===== A1 ===== -->
+  <div style="display:inline-block;background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:10px 0 10px;">LEVEL A1 · Beginner</div>
+
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct form.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>At 8 p.m. tomorrow, I <strong>(will be watching / will watched)</strong> a movie.</li>
+      <li>By next year, she <strong>(will have graduated / will graduating)</strong>.</li>
+      <li>This time next week, we <strong>(will be lying / will lie)</strong> on a beach.</li>
+      <li>By Friday, he <strong>(will have finished / will finishing)</strong> the report.</li>
+      <li>They <strong>(will be traveling / will traveled)</strong> at midnight.</li>
+      <li>By 2030, scientists <strong>(will have discovered / will discover)</strong> new cures.</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each sentence starter (1–4) to its ending (a–d).</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
+      <div>1. At midnight tonight, I ___</div><div>a. will have bought a new house.</div>
+      <div>2. By this time next month, she ___</div><div>b. will be flying to Paris.</div>
+      <div>3. This time tomorrow, we ___</div><div>c. will be sleeping.</div>
+      <div>4. By 2025, they ___</div><div>d. will have finished building the bridge.</div>
+    </div>
+  </div>
+
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank: choose future continuous or future perfect.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>At 9 a.m. tomorrow, I ______ (drive) to work.</li>
+      <li>By the time you arrive, I ______ (cook) dinner.</li>
+      <li>This time next week, we ______ (relax) on the beach.</li>
+      <li>By 2030, he ______ (retire).</li>
+      <li>______ you ______ (use) the car this afternoon?</li>
+      <li>By next year, they ______ (save) enough money.</li>
+    </ol>
+  </div>
+
+  <!-- ===== A2 ===== -->
+  <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
+
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">By this time next month, Elena will have moved into her new apartment. Right now, she is packing boxes, but next Saturday at 10 a.m. she will be loading the truck with her furniture. By the end of the week, she will have said goodbye to all her old neighbours. She isn't worried about the move because by then she will have organized everything carefully.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Elena will have moved by next month. ___</li>
+      <li>Next Saturday at 10 a.m., she will be loading the truck. ___</li>
+      <li>She will have said goodbye to her neighbours by the end of the week. ___</li>
+      <li>She is worried about the move. ___</li>
+      <li>She will not have organized anything. ___</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write negatives (1–2, 5) and questions (3–4, 6).</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>I (not/finish) the project by Friday. → ______________________</li>
+      <li>She (not/sleep) at midnight — she'll be working. → ______________________</li>
+      <li>___ you ___ (complete) the course by June?</li>
+      <li>___ they ___ (travel) this time next week?</li>
+      <li>We (not/arrive) by 6 p.m. → ______________________</li>
+      <li>___ he ___ (work) at 9 tonight?</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>tomorrow / be / I / working / will / at / 9 a.m.</li>
+      <li>Friday / finished / will / by / project / the / have / we</li>
+      <li>next / relaxing / week / be / will / this / time / she</li>
+      <li>2030 / retired / will / by / have / he</li>
+      <li>this / doing / afternoon / you / be / will / what?</li>
+    </ol>
+  </div>
+
+  <!-- ===== B1 ===== -->
+  <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
+
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>By next year, I will finished my studies.</li>
+      <li>This time tomorrow, we will traveling to Rome.</li>
+      <li>She will have arrive by 6 p.m.</li>
+      <li>By Friday, they will has completed the audit.</li>
+      <li>At 8 p.m., I will be cook dinner.</li>
+      <li>He will have been finish the report by noon.</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Combine each pair into one future perfect or future continuous sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The meeting starts at 3 p.m. tomorrow. I will still be traveling then.</li>
+      <li>The deadline is Friday. We will complete the report before then.</li>
+      <li>Next year at this time, we will still be living abroad.</li>
+      <li>The project will be done before the client arrives.</li>
+      <li>At midnight, she will still be working.</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: future perfect or future continuous?</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>By the time you get home, I ___ dinner. a) will cook&nbsp; b) will have cooked</li>
+      <li>At 7 p.m. tonight, I ___ the game. a) will watch&nbsp; b) will be watching</li>
+      <li>By 2040, temperatures ___ significantly. a) will rise&nbsp; b) will have risen</li>
+      <li>This time next week, we ___ on a beach. a) will be lying&nbsp; b) will have lain</li>
+      <li>By the end of the course, students ___ 12 modules. a) will complete&nbsp; b) will have completed</li>
+      <li>___ you ___ the printer around 3 p.m.? a) Will…be using&nbsp; b) Will…have used</li>
+    </ol>
+  </div>
+
+  <!-- ===== B2 ===== -->
+  <div style="display:inline-block;background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B2 · Upper-Intermediate</div>
+
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">By the time this report reaches the board, the committee will have reviewed over two hundred submissions, although several members will still be analysing the most controversial proposals well into next month. Assuming current progress continues, the final recommendations will have been drafted by the fifteenth, but the chairperson has warned that, at this time next week, negotiators will still be debating the budget allocations. Whatever the outcome, by the close of the fiscal year, the organisation will have implemented at least half of the proposed reforms.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The committee will have reviewed over two hundred submissions by the time the report reaches the board. ___</li>
+      <li>All members will have finished analysing proposals by next month. ___</li>
+      <li>The final recommendations will have been drafted by the fifteenth, according to current progress. ___</li>
+      <li>Negotiators will have finished debating the budget by next week. ___</li>
+      <li>The organisation will have implemented all proposed reforms by year's end. ___</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>By the time she retires, she will have work here for 40 years.</li>
+      <li>At this time next year, I will graduate already.</li>
+      <li>This time tomorrow, they will have arriving in Tokyo.</li>
+      <li>By 2050, sea levels will risen considerably.</li>
+      <li>We will be finished the report by the time you call.</li>
+      <li>He will has retired by then.</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Describe where you think you and the world will be in 10 years, in 6–8 sentences. Use <strong>future perfect</strong> for milestones you'll have achieved, and <strong>future continuous</strong> for ongoing situations.</p>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+  </div>
+
+  <!-- ===== C1 ===== -->
+  <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
+
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal register, keeping the same tense.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>By the time we're done, we'll have totally nailed this project.</li>
+      <li>This time next year, I'll probably still be grinding away at the same job.</li>
+      <li>We'll have wrapped up the deal by Friday, no doubt.</li>
+      <li>By then, they'll have totally changed the whole system.</li>
+      <li>I'll be chilling on a beach this time next month.</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: what is expressed here?</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"He'll have left already, I imagine." a) a confident assumption of completion&nbsp; b) a scheduled event</li>
+      <li>"Will you be needing anything else, sir?" a) a polite inquiry&nbsp; b) a prediction</li>
+      <li>"By the time help arrives, the situation will have deteriorated." a) completion before a future point&nbsp; b) an ongoing action</li>
+      <li>"The delegates will be arriving throughout the morning." a) a scheduled sequence&nbsp; b) a polite request</li>
+      <li>"I'll have finished by six, all being well." a) a projected completion, with slight uncertainty&nbsp; b) a firm promise</li>
+      <li>"This time next year, the merger will have gone through." a) completion before a specified point&nbsp; b) an action in progress</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>By the time the inquiry concludes, several witnesses will testified.</li>
+      <li>Once the vaccine will have been approved, distribution will begin.</li>
+      <li>This time next month, the committee will deciding the final allocation.</li>
+      <li>By the time she will have finished her thesis, she will have spent five years on it.</li>
+      <li>At the point when negotiations will conclude, both sides will have made concessions.</li>
+    </ol>
+  </div>
+
+  <!-- ===== C2 ===== -->
+  <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
+
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal forecast about a long-term societal or technological development. Use <strong>future perfect</strong> for milestones and <strong>future continuous</strong> for ongoing processes, with <strong>at least one correctly-formed time clause</strong>.</p>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+  </div>
+
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>concluded / negotiations / will / by / have / spring / the</li>
+      <li>debating / still / will / be / stakeholders / the / issue</li>
+      <li>implemented / reforms / will / far-reaching / have / the / government</li>
+      <li>unfolding / events / be / will / rapidly / still</li>
+      <li>concessions / made / sides / have / will / both</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the errors (passive future perfect &amp; time clauses).</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The findings will publishing by then.</li>
+      <li>New legislation will introducing within the decade.</li>
+      <li>When the deadline will arrive, the funds will have been distributing.</li>
+      <li>The report will have compiling by next week.</li>
+      <li>By the time the summit will conclude, an agreement will have reach.</li>
+    </ol>
+  </div>
+
+  <!-- ============ ANSWER KEY ============ -->
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
+    <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:0;white-space:nowrap;">🔑 Answer Key</h2>
+    <button id="answerToggleBtn" onClick="{{ toggleAnswers }}" style="flex:0 0 auto;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#fff;background:#8B5FE0;border:none;border-radius:999px;padding:8px 18px;cursor:pointer;white-space:nowrap;">{{ toggleLabel }}</button>
+  </div>
+  <p style="font-size:12.5px;color:#9A9483;margin:0 0 14px;">Tip: click "Hide Answer Key" above before printing a copy for students — the button itself never prints.</p>
+
+  <div style="display:{{ answerKeyDisplay }};">
+
+    <div style="background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.1</strong> 1. will be watching 2. will have graduated 3. will be lying 4. will have finished 5. will be traveling 6. will have discovered<br/>
+      <strong>Ex.2</strong> 1–c, 2–a, 3–b, 4–d<br/>
+      <strong>Ex.3</strong> 1. will be driving 2. will have cooked 3. will be relaxing 4. will have retired 5. Will…be using 6. will have saved
+    </div>
+
+    <div style="background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.4</strong> 1. T 2. T 3. T 4. F 5. F<br/>
+      <strong>Ex.5</strong> 1. I won't have finished the project by Friday. 2. She won't be sleeping at midnight. 3. Will you have completed the course by June? 4. Will they be traveling this time next week? 5. We won't have arrived by 6 p.m. 6. Will he be working at 9 tonight?<br/>
+      <strong>Ex.6</strong> 1. I will be working at 9 a.m. tomorrow. 2. We will have finished the project by Friday. 3. She will be relaxing this time next week. 4. He will have retired by 2030. 5. What will you be doing this afternoon?
+    </div>
+
+    <div style="background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.7</strong> 1. By next year, I will have finished my studies. 2. This time tomorrow, we will be traveling to Rome. 3. She will have arrived by 6 p.m. 4. By Friday, they will have completed the audit. 5. At 8 p.m., I will be cooking dinner. 6. He will have finished the report by noon.<br/>
+      <strong>Ex.8</strong> 1. At 3 p.m. tomorrow, I will be traveling. 2. We will have completed the report by Friday. 3. This time next year, we will be living abroad. 4. By the time the client arrives, we will have finished the project. 5. At midnight, she will be working.<br/>
+      <strong>Ex.9</strong> 1–b 2–b 3–b 4–a 5–b 6–a
+    </div>
+
+    <div style="background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.10</strong> 1. T 2. F 3. T 4. F 5. F<br/>
+      <strong>Ex.11</strong> 1. …she will have worked here for 40 years. 2. …I will have already graduated. 3. …they will be arriving in Tokyo. 4. …sea levels will have risen considerably. 5. We will have finished the report by the time you call. 6. He will have retired by then.<br/>
+      <strong>Ex.12</strong> Open answer — check correct use of future perfect for completed milestones and future continuous for ongoing situations.
+    </div>
+
+    <div style="background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">C1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.13</strong> Sample answers (accept close equivalents): 1. By the time we finish, we will have executed this project successfully. 2. This time next year, I will likely still be engaged in the same role. 3. We will undoubtedly have finalised the deal by Friday. 4. By then, they will have significantly transformed the entire system. 5. I will be relaxing on a beach this time next month.<br/>
+      <strong>Ex.14</strong> 1–a 2–a 3–a 4–a 5–a 6–a<br/>
+      <strong>Ex.15</strong> 1. …several witnesses will have testified. 2. Once the vaccine has been approved, distribution will begin. 3. …the committee will be deciding the final allocation. 4. By the time she finishes her thesis, she will have spent five years on it. 5. At the point when negotiations conclude, both sides will have made concessions.
+    </div>
+
+    <div style="background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 4px;">C2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 4px;">
+      <strong>Ex.16</strong> Open answer — check correct future perfect (milestones) and future continuous (ongoing processes), plus one time clause.<br/>
+      <strong>Ex.17</strong> 1. The negotiations will have concluded by spring. 2. Stakeholders will still be debating the issue. 3. The government will have implemented far-reaching reforms. 4. Events will still be unfolding rapidly. 5. Both sides will have made concessions.<br/>
+      <strong>Ex.18</strong> 1. The findings will have been published by then. 2. New legislation will have been introduced within the decade. 3. When the deadline arrives, the funds will have been distributed. 4. The report will have been compiled by next week. 5. By the time the summit concludes, an agreement will have been reached.
+    </div>
+
+  </div>
+
+</x-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { showAnswers: true };
+
+  renderVals() {
+    const showAnswers = this.state.showAnswers;
+    return {
+      answerKeyDisplay: showAnswers ? 'block' : 'none',
+      toggleLabel: showAnswers ? '🙈 Hide Answer Key' : '👁️ Show Answer Key',
+      toggleAnswers: () => this.setState(s => ({ showAnswers: !s.showAnswers })),
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print { #answerToggleBtn { display: none !important; } }
+  </style>
+</helmet>
+<style id="__om-edit-overrides"></style>
+
+<x-import component-from-global-scope="doc-page" from="./doc-page.js" size="letter" margin="0.7in" hint-size="100%,100%">
+
+  <div slot="header" style="display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px;border-bottom:3px solid #0E7C86;"></div>
+  <div slot="footer" style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #DDD8CC;font-size:10.5px;color:#9A9483;font-family:'Nunito',sans-serif;">
+    <span>© Reformulation Practice</span>
+    <span>ESL Fluency Workbook</span>
+  </div>
+
+  <div style="text-align:center;padding:8px 0 22px;">
+    <div style="display:inline-block;background:#0E7C86;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Durim's ESL Fluency Workbook: A1–C2</div>
+    <h1 style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:40px;color:#1B4B4F;margin:16px 0 4px;line-height:1.1;">Reformulation Practice</h1>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:600;font-size:22px;color:#F2994A;margin-bottom:10px;">Building Speaking Fluency</div>
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:6px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;">📘 1. Understanding the Skill</h2>
+
+  <p style="font-size:15px;line-height:1.65;color:#2B2B2B;margin:0 0 12px;"><strong>Reformulation</strong> means restating an idea in different words while keeping the same meaning. It builds fluency in two ways:</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
+    <div style="background:#EAF2FF;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>🔁 Corrective reformulation (recast)</strong><br/>A listener repeats what was said, fixing errors naturally, without breaking the flow: "I go to the doctor yesterday." → "Oh, you went to the doctor yesterday? What happened?"</div>
+    <div style="background:#F0EAFE;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>💪 Self-reformulation (fluency drill)</strong><br/>The speaker restates their own idea 2–3 different ways, building flexibility under time pressure.</div>
+  </div>
+
+  <div style="background:#FFF6D8;border:2px dashed #F2C94C;border-radius:12px;padding:14px 16px;margin:0 0 18px;font-size:14px;color:#5C4A00;">
+    <strong>Key idea:</strong> reformulation is not the same as explicit error correction. It models the correct form inside a natural reply, so the conversation keeps moving and the speaker doesn't feel embarrassed.
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:30px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">📊 2. Reference Tables</h2>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Reformulation patterns</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#8B5FE0;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Pattern</th><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Example</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Synonym substitution</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">good → solid, effective, sound</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Structural change (active/passive, clauses)</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">"I like it." → "It's something I really enjoy."</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Register shift</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">"I think..." → "In my opinion..."</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Combining clauses</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">Two short sentences → one linked sentence</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Recast vs. explicit correction</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 20px;font-size:13.5px;">
+    <thead><tr style="background:#4C7BF5;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Recast (natural)</th><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Explicit correction (direct)</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">"Oh, you went there yesterday?"</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">"No, it's 'went,' not 'go.'"</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Keeps conversation flowing</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">Can interrupt and feel discouraging</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:24px 0 6px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">✏️ 3. Practice Exercises</h2>
+  <p style="font-size:13.5px;color:#9A9483;margin:0 0 16px;">18 exercises across all six CEFR levels — three per level, increasing in difficulty. Answers on the last page.</p>
+
+  <div style="display:inline-block;background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:10px 0 10px;">LEVEL A1 · Beginner</div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correctly reformulated sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"She go to school every day." a) She go to school every day.&nbsp; b) She goes to school every day.</li>
+      <li>"I have 20 years." a) I have 20 years.&nbsp; b) I am 20 years old.</li>
+      <li>"He don't like it." a) He don't like it.&nbsp; b) He doesn't like it.</li>
+      <li>"I very like it." a) I very like it.&nbsp; b) I like it very much.</li>
+      <li>"She is agree." a) She is agree.&nbsp; b) She agrees.</li>
+      <li>"I am boring." a) I am boring.&nbsp; b) I am bored.</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each original (1–4) to its reformulation (a–d).</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
+      <div>1. "I have 20 years."</div><div>a. "I am 20 years old."</div>
+      <div>2. "She is agree."</div><div>b. "She agrees."</div>
+      <div>3. "I very like it."</div><div>c. "I like it very much."</div>
+      <div>4. "He don't like it."</div><div>d. "He doesn't like it."</div>
+    </div>
+  </div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank to reformulate correctly.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"I am boring in class." → I am ______ in class.</li>
+      <li>"She has 3 cats, isn't it?" → correct tag: "______ she?"</li>
+      <li>"I am agree with you." → "I ______ with you."</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">When Maria said, "I am living in this city since five years," her teacher didn't say "That's wrong." Instead, she reformulated: "Oh, you've been living here for five years — what do you like about it?" Maria heard the correct form naturally, without feeling embarrassed, and the conversation continued smoothly.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The teacher told Maria her sentence was wrong. ___</li>
+      <li>The teacher repeated the idea using the correct grammar. ___</li>
+      <li>Maria felt embarrassed and stopped talking. ___</li>
+      <li>The conversation continued after the reformulation. ___</li>
+      <li>Reformulation always stops the conversation to explain the rule. ___</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write a natural reformulation reply to each learner sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Learner: "I very like this song." Reply: "You ______ like this song?"</li>
+      <li>Learner: "Yesterday I go to the park." Reply: "Oh, you ______ to the park yesterday?"</li>
+      <li>Learner: "She don't have time." Reply: "She ______ have time?"</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to build a natural reformulation reply.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>that / interesting / you / oh / think / so / do</li>
+      <li>yesterday / went / you / really / there</li>
+      <li>mean / you / do / you / enjoyed / it</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Correct each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"I very enjoy this movie."</li>
+      <li>"She is more nicer than him."</li>
+      <li>"I have 25 years old."</li>
+      <li>"He said me that he was busy."</li>
+      <li>"I am boring of this topic."</li>
+      <li>"We were three friends discussing."</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Reformulate each sentence in two different ways (same meaning).</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"This is a good idea."</li>
+      <li>"I don't like it."</li>
+      <li>"That's difficult."</li>
+      <li>"I agree."</li>
+      <li>"It was fun."</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: identify the reformulation technique.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Restating with different vocabulary. a) synonym substitution&nbsp; b) grammar correction</li>
+      <li>Turning two short sentences into one. a) combining clauses&nbsp; b) simplifying</li>
+      <li>Changing "I think..." to "In my opinion..." a) register shift&nbsp; b) tense shift</li>
+      <li>Turning active into passive for variety. a) structural reformulation&nbsp; b) vocabulary reformulation</li>
+      <li>Practicing an idea 3 different ways builds: a) fluency and flexibility&nbsp; b) only accuracy</li>
+      <li>A "recast" is best described as: a) a natural correction inside a reply&nbsp; b) an explicit grammar lecture</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B2 · Upper-Intermediate</div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Reformulation is widely used in fluency-focused speaking practice, distinct from accuracy-focused error correction. Rather than stopping a speaker mid-sentence to fix a mistake, a listener reformulates the idea naturally in their response, modelling correct or more sophisticated language without breaking the flow of communication. Some speaking coaches also use self-reformulation drills, in which learners repeat a single idea two or three times, each time with different vocabulary or sentence structure, to build mental flexibility under time pressure — a skill particularly valuable in unscripted, spontaneous speech such as interviews or debates.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Reformulation typically interrupts the speaker to correct them directly. ___</li>
+      <li>Reformulation models correct language within a natural response. ___</li>
+      <li>Self-reformulation drills involve repeating an idea with different wording. ___</li>
+      <li>This skill is especially useful for spontaneous speech like interviews. ___</li>
+      <li>Reformulation is the same as accuracy-focused error correction. ___</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Improve each awkward reformulation.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Original: "I very tired today." Reformulation: "You very tired today?"</li>
+      <li>Original: "She work in hospital." Reformulation: "She work at the hospital?"</li>
+      <li>Original: "I have made this yesterday." Reformulation: "You have made this yesterday?"</li>
+      <li>Original: "He always late." Reformulation: "He is always late, isn't it?"</li>
+      <li>Original: "This is more better." Reformulation: "This is more better, right?"</li>
+      <li>Original: "We discuss about it." Reformulation: "You discuss about it?"</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write 5 short learner sentences with typical errors, then write a <strong>natural reformulation reply</strong> to each, as a conversation partner would.</p>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+  </div>
+
+  <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Reformulate each casual sentence in a formal register.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"This plan's pretty solid, I reckon."</li>
+      <li>"Yeah, that's basically what happened."</li>
+      <li>"Kinda feels rushed, if you ask me."</li>
+      <li>"It's not great, but it'll do."</li>
+      <li>"Honestly, I don't buy it."</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: identify the technique.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Silently correcting within a reply, without pointing out the error. a) a recast&nbsp; b) explicit correction</li>
+      <li>Saying "Actually, it's 'went,' not 'go'" is: a) explicit correction&nbsp; b) a recast</li>
+      <li>Restating a complex idea more simply to check your own understanding is: a) comprehension paraphrase&nbsp; b) a recast</li>
+      <li>Shifting "gonna" to "going to" is primarily a: a) register reformulation&nbsp; b) tense reformulation</li>
+      <li>Reformulating an idea 3 different ways under time pressure builds: a) fluency and flexibility&nbsp; b) vocabulary memorization only</li>
+      <li>A reformulation that changes meaning, not just form, is: a) not a true reformulation&nbsp; b) still acceptable</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Fix each flawed reformulation attempt.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Original: "Since I have arrived, everything have changed." Reformulation: "Since you arrived, everything have changed?"</li>
+      <li>Original: "If I would have more time, I visit more places." Reformulation: "If you would have more time, you would visit more places?"</li>
+      <li>Original: "The report was wrote by the team." Reformulation: "The report was wrote by the team, right?"</li>
+      <li>Original: "She don't has experience for this." Reformulation: "She doesn't has experience for this?"</li>
+      <li>Original: "We are discussing since two hours." Reformulation: "You are discussing since two hours?"</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write a short dialogue (6–8 lines) between a learner and a fluent speaker, in which the fluent speaker <strong>naturally reformulates 3 of the learner's errors</strong> within the flow of conversation, without ever saying "that's wrong."</p>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+  </div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, reformulated sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>sound / fundamentally / plan / this / believe / is / I</li>
+      <li>account / an / that / essence / accurate / is / in / events / of</li>
+      <li>compressed / appears / timeline / somewhat / the / my / in / assessment</li>
+      <li>adequate / ideal / while / solution / not / this / is</li>
+      <li>unconvincing / find / explanation / frankly / this / I</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"You've been discussing since two hours?"</li>
+      <li>"If you would have known, you would have told me?"</li>
+      <li>"She doesn't has experience?"</li>
+      <li>"The report was wrote by them, no?"</li>
+      <li>"Everything have changed since then?"</li>
+    </ol>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
+    <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:0;white-space:nowrap;">🔑 Answer Key</h2>
+    <button id="answerToggleBtn" onClick="{{ toggleAnswers }}" style="flex:0 0 auto;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#fff;background:#8B5FE0;border:none;border-radius:999px;padding:8px 18px;cursor:pointer;white-space:nowrap;">{{ toggleLabel }}</button>
+  </div>
+  <p style="font-size:12.5px;color:#9A9483;margin:0 0 14px;">Tip: click "Hide Answer Key" above before printing a copy for students — the button itself never prints.</p>
+
+  <div style="display:{{ answerKeyDisplay }};">
+    <div style="background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.1</strong> 1–b 2–b 3–b 4–b 5–b 6–b<br/>
+      <strong>Ex.2</strong> 1–a, 2–b, 3–c, 4–d<br/>
+      <strong>Ex.3</strong> 1. bored 2. doesn't 3. agree
+    </div>
+    <div style="background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.4</strong> 1. F 2. T 3. F 4. T 5. F<br/>
+      <strong>Ex.5</strong> 1. really 2. went 3. doesn't<br/>
+      <strong>Ex.6</strong> 1. Oh, so you think that's interesting? 2. You really went there yesterday? 3. Do you mean you enjoyed it?
+    </div>
+    <div style="background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.7</strong> 1. I really enjoy this movie. 2. She is nicer than him. 3. I am 25 years old. 4. He told me that he was busy. 5. I am bored of/with this topic. 6. The three of us were discussing.<br/>
+      <strong>Ex.8</strong> Sample: 1. "I think this idea works well." / "This seems like a solid plan." 2. "It's not really my thing." / "I'm not a big fan of it." 3. "That's quite challenging." / "That's not easy at all." 4. "That's exactly how I see it." / "I'm on the same page." 5. "I really enjoyed it." / "It was a great time."<br/>
+      <strong>Ex.9</strong> 1–a 2–a 3–a 4–a 5–a 6–a
+    </div>
+    <div style="background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.10</strong> 1. F 2. T 3. T 4. T 5. F<br/>
+      <strong>Ex.11</strong> 1. "You're very tired today?" 2. "She works at the hospital?" 3. "You made this yesterday?" 4. "…isn't he?" 5. "This is better, right?" 6. "You discussed it?"<br/>
+      <strong>Ex.12</strong> Open answer — check each reply reformulates the error naturally, without explicit correction.
+    </div>
+    <div style="background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">C1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.13</strong> Sample answers: 1. I believe this plan is fundamentally sound. 2. That is, in essence, an accurate account of events. 3. In my assessment, the timeline appears somewhat compressed. 4. While not ideal, this solution is adequate. 5. Frankly, I find this explanation unconvincing.<br/>
+      <strong>Ex.14</strong> 1–a 2–a 3–a 4–a 5–a 6–a<br/>
+      <strong>Ex.15</strong> 1. "Since you arrived, everything has changed?" 2. "If you had more time, you would visit more places?" 3. "The report was written by the team, right?" 4. "She doesn't have experience for this?" 5. "You've been discussing for two hours?"
+    </div>
+    <div style="background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 4px;">C2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 4px;">
+      <strong>Ex.16</strong> Open answer — check 3 natural, unspoken-as-"wrong" reformulations embedded in the dialogue.<br/>
+      <strong>Ex.17</strong> 1. I believe this plan is fundamentally sound. 2. That is, in essence, an accurate account of events. 3. In my assessment, the timeline appears somewhat compressed. 4. While not ideal, this solution is adequate. 5. Frankly, I find this explanation unconvincing.<br/>
+      <strong>Ex.18</strong> 1. …for two hours? 2. If you had known, you would have told me? 3. …doesn't have experience? 4. …wasn't it? 5. …has changed since then?
+    </div>
+  </div>
+
+</x-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { showAnswers: true };
+  renderVals() {
+    const showAnswers = this.state.showAnswers;
+    return {
+      answerKeyDisplay: showAnswers ? 'block' : 'none',
+      toggleLabel: showAnswers ? '🙈 Hide Answer Key' : '👁️ Show Answer Key',
+      toggleAnswers: () => this.setState(s => ({ showAnswers: !s.showAnswers })),
+    };
+  }
+}
+</script>
+</body>
+</html>

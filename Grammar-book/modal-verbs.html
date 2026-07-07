@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print { #answerToggleBtn { display: none !important; } }
+  </style>
+</helmet>
+<style id="__om-edit-overrides"></style>
+
+<x-import component-from-global-scope="doc-page" from="./doc-page.js" size="letter" margin="0.7in" hint-size="100%,100%">
+
+  <div slot="header" style="display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px;border-bottom:3px solid #0E7C86;"></div>
+  <div slot="footer" style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #DDD8CC;font-size:10.5px;color:#9A9483;font-family:'Nunito',sans-serif;">
+    <span>© Modal Verbs</span>
+    <span>ESL Grammar Workbook</span>
+  </div>
+
+  <div style="text-align:center;padding:8px 0 22px;">
+    <div style="display:inline-block;background:#0E7C86;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Durim's ESL Grammar Workbook: A1–C2</div>
+    <h1 style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:44px;color:#1B4B4F;margin:16px 0 4px;line-height:1.05;">Modal Verbs</h1>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:600;font-size:22px;color:#F2994A;margin-bottom:10px;">Can, Must, Have to, Should</div>
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:6px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;">📘 1. Understanding the Rule</h2>
+
+  <p style="font-size:15px;line-height:1.65;color:#2B2B2B;margin:0 0 12px;">Modal verbs are followed by the <strong>base verb</strong> (no "to", no -s) and never change form.</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
+    <div style="background:#EAF2FF;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>can / could</strong><br/>Ability, permission, polite requests.</div>
+    <div style="background:#F0EAFE;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>must</strong><br/>Strong obligation (the speaker's own view), deduction/certainty.</div>
+    <div style="background:#FFE9E4;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>have to</strong><br/>Obligation from an outside rule or situation.</div>
+    <div style="background:#E4F8ED;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>should</strong><br/>Advice, recommendation, mild obligation, expectation.</div>
+  </div>
+
+  <div style="background:#FFF6D8;border:2px dashed #F2C94C;border-radius:12px;padding:14px 16px;margin:0 0 18px;font-size:14px;color:#5C4A00;">
+    <strong>Careful: mustn't ≠ don't have to.</strong> <em>Mustn't</em> = it's forbidden. <em>Don't have to</em> = it's not necessary, but it's allowed.
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:30px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">📊 2. Reference Tables</h2>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Modal meanings at a glance</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#8B5FE0;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Modal</th><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Meaning</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">can</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">ability, permission</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">could</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">past ability, polite request, possibility</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">must</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">strong obligation, deduction</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">have to</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">external necessity</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">should</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">advice, expectation</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Strength of obligation</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 20px;font-size:13.5px;">
+    <thead><tr style="background:#4C7BF5;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Form</th><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Strength</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">must / have to</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">obligatory</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">should / ought to</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">recommended</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">don't have to</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">optional</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">mustn't</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">forbidden</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:24px 0 6px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">✏️ 3. Practice Exercises</h2>
+  <p style="font-size:13.5px;color:#9A9483;margin:0 0 16px;">18 exercises across all six CEFR levels — three per level, increasing in difficulty. Answers on the last page.</p>
+
+  <div style="display:inline-block;background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:10px 0 10px;">LEVEL A1 · Beginner</div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct form.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>I <strong>(can / cans)</strong> swim.</li>
+      <li>She <strong>(must / musts)</strong> finish her homework.</li>
+      <li>You <strong>(should / shoulds)</strong> drink more water.</li>
+      <li>We <strong>(have to / has to)</strong> leave now.</li>
+      <li>He <strong>(can / could)</strong> speak three languages.</li>
+      <li>They <strong>(must / musts)</strong> wear seatbelts.</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each modal (1–4) to its meaning (a–d).</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
+      <div>1. can</div><div>a. ability</div>
+      <div>2. must</div><div>b. strong obligation</div>
+      <div>3. should</div><div>c. advice</div>
+      <div>4. have to</div><div>d. necessity</div>
+    </div>
+  </div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank with the correct modal.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>I ______ (can) ride a bike.</li>
+      <li>You ______ (must) wear a helmet.</li>
+      <li>She ______ (should) see a doctor.</li>
+      <li>We ______ (have to) pay the bill today.</li>
+      <li>He ______ (can/not) come to the party.</li>
+      <li>They ______ (must/not) be late.</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">At this school, students must wear a uniform every day. They don't have to bring their own lunch because the cafeteria provides meals. Students should arrive by 8 a.m., although they can arrive a little earlier if they want. They mustn't use their phones during class, but they can use them during breaks.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Students must wear a uniform. ___</li>
+      <li>Students have to bring their own lunch. ___</li>
+      <li>Students should arrive by 8 a.m. ___</li>
+      <li>Students can use phones during class. ___</li>
+      <li>Students can use phones during breaks. ___</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write negatives (1, 3) and questions (2, 4).</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>You ______ (must/not) smoke here.</li>
+      <li>___ I ___ (can) borrow your pen?</li>
+      <li>We ______ (have to/not) work on Saturdays.</li>
+      <li>___ she ___ (should) apologize?</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>swim / can / I</li>
+      <li>helmet / must / wear / a / you</li>
+      <li>doctor / see / should / a / she</li>
+      <li>today / pay / have / we / to / the bill</li>
+      <li>borrow / I / your / can / pen?</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>She can to swim very well.</li>
+      <li>You must to wear a helmet.</li>
+      <li>He musts finish his work.</li>
+      <li>We haves to leave now.</li>
+      <li>I should to see a doctor.</li>
+      <li>They can swims fast.</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Rewrite each situation using must, mustn't, don't have to, or should.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>It's necessary for you to submit the form by Friday.</li>
+      <li>It's not necessary for you to attend, but you can if you want.</li>
+      <li>It's forbidden to park here.</li>
+      <li>It's a good idea for you to rest more.</li>
+      <li>It's not allowed to smoke indoors.</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: which modal fits the situation?</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Company policy requires all employees to wear ID badges. a) must/have to&nbsp; b) should</li>
+      <li>"I think it's a good idea to call her, but it's your choice." a) should&nbsp; b) must</li>
+      <li>A strong personal sense of obligation. a) must&nbsp; b) have to</li>
+      <li>An external rule set by law, not the speaker's opinion. a) have to&nbsp; b) should</li>
+      <li>It's forbidden. a) mustn't&nbsp; b) don't have to</li>
+      <li>It's simply not necessary or required. a) don't have to&nbsp; b) mustn't</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B2 · Upper-Intermediate</div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Employees must complete mandatory safety training within their first month, according to company policy, although those who have already completed equivalent training elsewhere don't have to repeat it. Managers should encourage staff to ask questions during the sessions, since misunderstanding safety procedures could have serious consequences. Staff mustn't operate heavy machinery without certification, regardless of prior experience. It's also recommended, though not required, that employees review the safety manual annually.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>All employees must complete safety training within their first month. ___</li>
+      <li>Employees who completed equivalent training elsewhere must still repeat it. ___</li>
+      <li>Staff can operate heavy machinery without certification if experienced. ___</li>
+      <li>Reviewing the safety manual annually is mandatory. ___</li>
+      <li>Managers are encouraged to invite questions during training. ___</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>I must go to the dentist tomorrow because my boss scheduled it.</li>
+      <li>You should have call her yesterday.</li>
+      <li>She musts have finished by now.</li>
+      <li>We don't must work on weekends.</li>
+      <li>He must have going through a hard time.</li>
+      <li>They should to apologize.</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Describe the rules and recommendations of a place you know well (school, workplace, gym) in 6–8 sentences. Use <strong>must, mustn't, have to, don't have to,</strong> and <strong>should</strong>.</p>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+  </div>
+
+  <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal register.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>You gotta finish this by Friday, no excuses.</li>
+      <li>You don't need to come if you don't want to.</li>
+      <li>It'd probably be smart to double-check the numbers.</li>
+      <li>You can't smoke in here, it's against the rules.</li>
+      <li>He probably should've told them sooner.</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: what does this modal express?</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"She must be exhausted after that trip." a) logical deduction&nbsp; b) obligation</li>
+      <li>"The results should arrive by Friday." a) expectation/likelihood&nbsp; b) advice</li>
+      <li>"You needn't have brought a gift." a) you brought one, but it wasn't necessary&nbsp; b) you didn't bring one</li>
+      <li>"I didn't need to bring an umbrella." a) it wasn't necessary, and I probably didn't&nbsp; b) same as needn't have</li>
+      <li>"He can't have finished already." a) deduction that something is impossible&nbsp; b) obligation</li>
+      <li>"You might have told me!" a) mild reproach for something not done&nbsp; b) a polite request</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>She must has been exhausted after the trip.</li>
+      <li>He can't have finish it already.</li>
+      <li>You needn't to have brought a gift.</li>
+      <li>The results should has arrived by now.</li>
+      <li>He might has told me about the change.</li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal policy memo. Use <strong>must</strong>, <strong>should</strong>, and a deductive <strong>must have/can't have</strong> construction, in a formal register.</p>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+  </div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>exception / completed / must / without / be / this</li>
+      <li>obligatory / not / attendance / your / is</li>
+      <li>figures / advisable / verify / would / it / the / be / to</li>
+      <li>prohibited / premises / smoking / strictly / these / is / on</li>
+      <li>sooner / informed / ought / have / them / he / to</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>She should have arrived by now, isn't it?</li>
+      <li>They can't have leave already.</li>
+      <li>You needn't have to worry about it.</li>
+      <li>He ought to apologized sooner.</li>
+      <li>It must being difficult for her.</li>
+    </ol>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
+    <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:0;white-space:nowrap;">🔑 Answer Key</h2>
+    <button id="answerToggleBtn" onClick="{{ toggleAnswers }}" style="flex:0 0 auto;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#fff;background:#8B5FE0;border:none;border-radius:999px;padding:8px 18px;cursor:pointer;white-space:nowrap;">{{ toggleLabel }}</button>
+  </div>
+  <p style="font-size:12.5px;color:#9A9483;margin:0 0 14px;">Tip: click "Hide Answer Key" above before printing a copy for students — the button itself never prints.</p>
+
+  <div style="display:{{ answerKeyDisplay }};">
+    <div style="background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.1</strong> 1. can 2. must 3. should 4. have to 5. can 6. must<br/>
+      <strong>Ex.2</strong> 1–a, 2–b, 3–c, 4–d<br/>
+      <strong>Ex.3</strong> 1. can 2. must 3. should 4. have to 5. can't 6. mustn't
+    </div>
+    <div style="background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.4</strong> 1. T 2. F 3. T 4. F 5. T<br/>
+      <strong>Ex.5</strong> 1. mustn't 2. Can…borrow 3. don't have to 4. Should…apologize<br/>
+      <strong>Ex.6</strong> 1. I can swim. 2. You must wear a helmet. 3. She should see a doctor. 4. We have to pay the bill today. 5. Can I borrow your pen?
+    </div>
+    <div style="background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.7</strong> 1. can swim 2. must wear 3. must finish 4. have to 5. should see 6. can swim<br/>
+      <strong>Ex.8</strong> 1. You must submit the form by Friday. 2. You don't have to attend. 3. You mustn't park here. 4. You should rest more. 5. You mustn't smoke indoors.<br/>
+      <strong>Ex.9</strong> 1–a 2–a 3–a 4–a 5–a 6–a
+    </div>
+    <div style="background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.10</strong> 1. T 2. F 3. F 4. F 5. T<br/>
+      <strong>Ex.11</strong> 1. …have to go to the dentist… 2. …should have called her yesterday. 3. She must have finished by now. 4. We don't have to work on weekends. 5. He must have been going through a hard time. 6. They should apologize.<br/>
+      <strong>Ex.12</strong> Open answer — check correct must/mustn't/have to/don't have to/should usage matching real rules and recommendations.
+    </div>
+    <div style="background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">C1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.13</strong> Sample answers (accept close equivalents): 1. This must be completed by Friday without exception. 2. Your attendance is not obligatory. 3. It would be advisable to verify the figures. 4. Smoking on these premises is strictly prohibited. 5. He ought to have informed them sooner.<br/>
+      <strong>Ex.14</strong> 1–a 2–a 3–a 4–a 5–a 6–a<br/>
+      <strong>Ex.15</strong> 1. …must have been exhausted… 2. …can't have finished it already. 3. You needn't have brought a gift. 4. …should have arrived by now. 5. …might have told me…
+    </div>
+    <div style="background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 4px;">C2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 4px;">
+      <strong>Ex.16</strong> Open answer — check correct must, should, and must have/can't have deduction.<br/>
+      <strong>Ex.17</strong> 1. This must be completed without exception. 2. Your attendance is not obligatory. 3. It would be advisable to verify the figures. 4. Smoking on these premises is strictly prohibited. 5. He ought to have informed them sooner.<br/>
+      <strong>Ex.18</strong> 1. …shouldn't she? 2. …can't have left already. 3. You needn't have worried about it. 4. …ought to have apologized sooner. 5. It must be difficult for her.
+    </div>
+  </div>
+
+</x-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { showAnswers: true };
+  renderVals() {
+    const showAnswers = this.state.showAnswers;
+    return {
+      answerKeyDisplay: showAnswers ? 'block' : 'none',
+      toggleLabel: showAnswers ? '🙈 Hide Answer Key' : '👁️ Show Answer Key',
+      toggleAnswers: () => this.setState(s => ({ showAnswers: !s.showAnswers })),
+    };
+  }
+}
+</script>
+</body>
+</html>

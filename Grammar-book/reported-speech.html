@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print {
+      #answerToggleBtn { display: none !important; }
+    }
+  </style>
+</helmet>
+<style id="__om-edit-overrides"></style>
+
+<x-import component-from-global-scope="doc-page" from="./doc-page.js" size="letter" margin="0.7in" hint-size="100%,100%">
+
+  <div slot="header" style="display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px;border-bottom:3px solid #0E7C86;">
+  </div>
+
+  <div slot="footer" style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #DDD8CC;font-size:10.5px;color:#9A9483;font-family:'Nunito',sans-serif;">
+    <span>© Reported Speech</span>
+    <span>ESL Grammar Workbook</span>
+  </div>
+
+  <!-- ============ TITLE BLOCK ============ -->
+  <div style="text-align:center;padding:8px 0 22px;">
+    <div style="display:inline-block;background:#0E7C86;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Durim's ESL Grammar Workbook: A1–C2</div>
+    <h1 style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:44px;color:#1B4B4F;margin:16px 0 4px;line-height:1.05;">Reported Speech</h1>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:600;font-size:22px;color:#F2994A;margin-bottom:10px;">Statements, Questions &amp; Commands</div>
+  </div>
+
+  <!-- ============ SECTION 1: EXPLANATION ============ -->
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:6px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;">📘 1. Understanding the Rule</h2>
+
+  <p style="font-size:15px;line-height:1.65;color:#2B2B2B;margin:0 0 10px;">Reported (indirect) speech tells us what someone said without quoting their exact words. When the reporting verb is in the past, tenses usually shift "one step back" — this is called <strong>backshifting</strong>.</p>
+
+  <table style="width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:14px;">
+    <thead>
+      <tr style="background:#0E7C86;color:#fff;font-family:'Baloo 2',sans-serif;">
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Direct speech</th>
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Reported speech</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#fff;">
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;">"I <strong>am</strong> tired," she said.</td>
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;">She said (that) she <strong>was</strong> tired.</td>
+      </tr>
+      <tr style="background:#FBF9F3;">
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;">"I <strong>have finished</strong>," he said.</td>
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;">He said (that) he <strong>had finished</strong>.</td>
+      </tr>
+      <tr style="background:#fff;">
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;">"<strong>Do</strong> you like coffee?" she asked.</td>
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;">She asked if I <strong>liked</strong> coffee.</td>
+      </tr>
+      <tr style="background:#FBF9F3;">
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;">"<strong>Close</strong> the door," he said.</td>
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;">He told me <strong>to close</strong> the door.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="background:#FFF6D8;border:2px dashed #F2C94C;border-radius:12px;padding:14px 16px;margin:0 0 18px;font-size:14px;color:#5C4A00;">
+    <strong>No backshift needed</strong> when the reporting verb is present ("She says she's tired") or the fact is still true / a general truth ("He said the earth is round").
+  </div>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:18px;color:#1B4B4F;margin:18px 0 8px;">Three sentence types</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px;">
+    <div style="background:#EAF2FF;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>💬 Statements</strong><br/>said (that) + clause</div>
+    <div style="background:#F0EAFE;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>❓ Questions</strong><br/>asked if/whether (yes/no); asked + wh-word (statement order)</div>
+    <div style="background:#FFE9E4;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>📢 Commands/requests</strong><br/>told/asked + object + to-infinitive</div>
+  </div>
+
+  <div style="background:#EAF2FF;border:2px solid #C7DBFF;border-radius:12px;padding:14px 16px;margin:0 0 18px;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;color:#1B4B4F;margin-bottom:10px;">⚡ Questions keep statement word order</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;">
+        <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#4C7BF5;margin-bottom:4px;">Direct question</div>
+        <p style="font-size:13.5px;line-height:1.6;color:#2B2B2B;margin:0;font-style:italic;">"Where <strong>do</strong> you <strong>live</strong>?"</p>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;">
+        <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#F2994A;margin-bottom:4px;">Reported question</div>
+        <p style="font-size:13.5px;line-height:1.6;color:#2B2B2B;margin:0;font-style:italic;">She asked where <strong>I lived</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:#FFF6D8;border:2px dashed #F2C94C;border-radius:12px;padding:14px 16px;margin:0 0 20px;font-size:14px;color:#5C4A00;">
+    <strong>Pronouns and time/place words change too:</strong> "I'll see you <strong>tomorrow</strong>" → he said he'd see me <strong>the next day</strong>. "<strong>Here</strong>" → there; "<strong>this</strong>" → that; "<strong>now</strong>" → then.
+  </div>
+
+  <!-- ============ SECTION 2: REFERENCE TABLES ============ -->
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:30px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">📊 2. Reference Tables</h2>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Tense backshift</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#F2994A;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #F2994A;">Direct</th><th style="padding:7px 10px;text-align:left;border:1px solid #F2994A;">Reported</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">present simple</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">past simple</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">present continuous</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">past continuous</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">present perfect</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">past perfect</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">past simple</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">past perfect</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">will</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">would</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">can / must</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">could / had to</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Time &amp; place word changes</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#8B5FE0;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Direct</th><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Reported</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">now / today</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">then / that day</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">tomorrow</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">the next/following day</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">yesterday</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">the day before</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">here / this</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">there / that</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Reporting verbs</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 20px;font-size:13.5px;">
+    <thead><tr style="background:#4C7BF5;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Type</th><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Verbs</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Statements</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">say, tell (+object), explain, mention</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Questions</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">ask, wonder, want to know</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Commands/requests</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">tell, ask, order, warn (+ to-infinitive)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ============ SECTION 3: EXERCISES ============ -->
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:24px 0 6px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">✏️ 3. Practice Exercises</h2>
+  <p style="font-size:13.5px;color:#9A9483;margin:0 0 16px;">18 exercises across all six CEFR levels — three per level, increasing in difficulty. Answers on the last page.</p>
+
+  <!-- ===== A1 ===== -->
+  <div style="display:inline-block;background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:10px 0 10px;">LEVEL A1 · Beginner</div>
+
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct reported form.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"I am happy," she said. → She said she <strong>(is / was)</strong> happy.</li>
+      <li>"I like pizza," he said. → He said he <strong>(likes / liked)</strong> pizza.</li>
+      <li>"I live in Rome," she said. → She said she <strong>(lives / lived)</strong> in Rome.</li>
+      <li>"I have a car," he said. → He said he <strong>(has / had)</strong> a car.</li>
+      <li>"I want tea," she said. → She said she <strong>(wants / wanted)</strong> tea.</li>
+      <li>"I can swim," he said. → He said he <strong>(can / could)</strong> swim.</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each direct sentence (1–5) to its reported version (a–e).</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
+      <div>1. "I am tired."</div><div>a. He said he was leaving.</div>
+      <div>2. "I don't know."</div><div>b. She said she was tired.</div>
+      <div>3. "I'm leaving."</div><div>c. He said he liked tea.</div>
+      <div>4. "I like tea."</div><div>d. She said she didn't know.</div>
+      <div>5. "I will help."</div><div>e. He said he would help.</div>
+    </div>
+  </div>
+
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank with the correct reported verb form.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"I am busy," he said. He said he ______ busy.</li>
+      <li>"I love music," she said. She said she ______ music.</li>
+      <li>"I work here," he said. He said he ______ there.</li>
+      <li>"I don't like it," she said. She said she ______ like it.</li>
+      <li>"I can help," he said. He said he ______ help.</li>
+      <li>"I will come," she said. She said she ______ come.</li>
+    </ol>
+  </div>
+
+  <!-- ===== A2 ===== -->
+  <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
+
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Tom told me he was moving to Berlin the next month. He said he had found a job there and was excited about the change. He asked if I wanted to visit him once he was settled. He also mentioned that he would miss his friends back home, but he said it was the right decision for his career.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Tom said he was moving to Berlin. ___</li>
+      <li>He said he hadn't found a job yet. ___</li>
+      <li>He asked if I wanted to visit him. ___</li>
+      <li>He said he wouldn't miss his friends. ___</li>
+      <li>He believed it was the right decision. ___</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Turn these questions into reported speech.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"Do you like coffee?" she asked. → She asked ______________________</li>
+      <li>"Where do you live?" he asked. → He asked ______________________</li>
+      <li>"Can you help me?" she asked. → She asked ______________________</li>
+      <li>"What time is it?" he asked. → He asked ______________________</li>
+      <li>"Are you coming?" she asked. → She asked ______________________</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Turn these commands into reported speech.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"Close the door," he said (to me). → ______________________</li>
+      <li>"Don't be late," she said (to us). → ______________________</li>
+      <li>"Sit down," the teacher said (to the students). → ______________________</li>
+      <li>"Wait here," he said (to her). → ______________________</li>
+      <li>"Don't touch that," she said (to him). → ______________________</li>
+    </ol>
+  </div>
+
+  <!-- ===== B1 ===== -->
+  <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
+
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>She said that she is tired.</li>
+      <li>He asked did I like tea.</li>
+      <li>She told to me to wait outside.</li>
+      <li>He said me he was busy.</li>
+      <li>She asked where did I live.</li>
+      <li>He said he will call me tomorrow.</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Report these sentences, changing time and place words too.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"I'll see you tomorrow," she said. → ______________________</li>
+      <li>"I was here yesterday," he said. → ______________________</li>
+      <li>"I'll finish this today," she said. → ______________________</li>
+      <li>"I bought this here last week," he said. → ______________________</li>
+      <li>"I'll call you tonight," she said. → ______________________</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: choose the correct reported form.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"I have finished," he said. → He said he ___ finished. a) has&nbsp; b) had</li>
+      <li>"Can you drive?" she asked. → She asked if I ___ drive. a) can&nbsp; b) could</li>
+      <li>"I must leave," he said. → He said he ___ leave. a) must&nbsp; b) had to</li>
+      <li>"Where is the station?" she asked. → She asked where the station ___. a) is&nbsp; b) was</li>
+      <li>"Don't shout," he said. → He told them ___ shout. a) not to&nbsp; b) to not</li>
+      <li>"I'm coming," she said. → She said she ___ coming. a) is&nbsp; b) was</li>
+    </ol>
+  </div>
+
+  <!-- ===== B2 ===== -->
+  <div style="display:inline-block;background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B2 · Upper-Intermediate</div>
+
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">During the press conference, the spokesperson said that the company had not yet decided on layoffs, though she admitted that some restructuring was likely. When asked whether jobs in the manufacturing division were at risk, she replied that no final decisions had been made. She also warned reporters not to speculate further, insisting that an official statement would follow within the week.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The spokesperson said layoffs had been decided already. ___</li>
+      <li>She admitted restructuring was likely. ___</li>
+      <li>She said no final decisions had been made. ___</li>
+      <li>She encouraged reporters to speculate. ___</li>
+      <li>She promised a statement within the week. ___</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>She said that she has lived there for ten years.</li>
+      <li>He asked me that if I was ready.</li>
+      <li>They warned us to don't be late.</li>
+      <li>She wondered did he know the answer.</li>
+      <li>He said that the meeting is postponed the day before.</li>
+      <li>She told that she would call later.</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write a short report (5–7 sentences) of a conversation you had recently, using a mix of reported <strong>statements, questions,</strong> and <strong>commands/requests</strong>.</p>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+  </div>
+
+  <!-- ===== C1 ===== -->
+  <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
+
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each direct quote as reported speech in a formal register.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"We're gonna sort this out ASAP," the manager said.</li>
+      <li>"I dunno what happened," the witness said.</li>
+      <li>"You gotta be kidding me," the CEO said.</li>
+      <li>"We'll figure it out somehow," the director said.</li>
+      <li>"I ain't signing that," the employee said.</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: which reporting verb best fits?</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"You really should see a doctor." → He ___ her to see a doctor. a) advised&nbsp; b) said</li>
+      <li>"I'm so sorry, it was my fault." → He ___ that it was his fault. a) admitted&nbsp; b) asked</li>
+      <li>"You must not tell anyone." → She ___ them not to tell anyone. a) warned&nbsp; b) wondered</li>
+      <li>"Why don't we try the new approach?" → He ___ trying the new approach. a) suggested&nbsp; b) ordered</li>
+      <li>"I refuse to sign it." → He ___ to sign it. a) refused&nbsp; b) promised</li>
+      <li>"I'll definitely be there." → She ___ to be there. a) promised&nbsp; b) denied</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>He admitted that he has made a mistake earlier.</li>
+      <li>She asked whether does he agree with the proposal.</li>
+      <li>They claimed that the funds was misused.</li>
+      <li>He denied that he had ever said such thing.</li>
+      <li>She warned us don't to sign anything without reading it.</li>
+    </ol>
+  </div>
+
+  <!-- ===== C2 ===== -->
+  <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
+
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal summary of a meeting or interview, reporting what was said using varied reporting verbs (e.g. acknowledged, insisted, disclosed, urged).</p>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+  </div>
+
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex reported sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>disclosed / spokesperson / had / the / merger / that / stalled / the</li>
+      <li>urged / minister / calm / the / remain / to / public / the</li>
+      <li>acknowledged / delay / been / had / there / he / a</li>
+      <li>insisted / innocent / lawyer / was / client / her / the</li>
+      <li>denied / any / involvement / firm / the / wrongdoing / in</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>She disclosed that the figures was inaccurate.</li>
+      <li>He insisted that he is telling the truth.</li>
+      <li>They acknowledged that mistakes was made.</li>
+      <li>The witness recalled that she seen the incident.</li>
+      <li>He urged that the committee acts swiftly.</li>
+    </ol>
+  </div>
+
+  <!-- ============ ANSWER KEY ============ -->
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
+    <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:0;white-space:nowrap;">🔑 Answer Key</h2>
+    <button id="answerToggleBtn" onClick="{{ toggleAnswers }}" style="flex:0 0 auto;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#fff;background:#8B5FE0;border:none;border-radius:999px;padding:8px 18px;cursor:pointer;white-space:nowrap;">{{ toggleLabel }}</button>
+  </div>
+  <p style="font-size:12.5px;color:#9A9483;margin:0 0 14px;">Tip: click "Hide Answer Key" above before printing a copy for students — the button itself never prints.</p>
+
+  <div style="display:{{ answerKeyDisplay }};">
+
+    <div style="background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.1</strong> 1. was 2. liked 3. lived 4. had 5. wanted 6. could<br/>
+      <strong>Ex.2</strong> 1–b, 2–d, 3–a, 4–c, 5–e<br/>
+      <strong>Ex.3</strong> 1. was 2. loved 3. worked 4. didn't 5. could 6. would
+    </div>
+
+    <div style="background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.4</strong> 1. T 2. F 3. T 4. F 5. T<br/>
+      <strong>Ex.5</strong> 1. …if/whether I liked coffee. 2. …where I lived. 3. …if/whether I could help her. 4. …what time it was. 5. …if/whether I was coming.<br/>
+      <strong>Ex.6</strong> 1. He told me to close the door. 2. She told us not to be late. 3. The teacher told the students to sit down. 4. He told her to wait there. 5. She told him not to touch that.
+    </div>
+
+    <div style="background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.7</strong> 1. She said that she was tired. 2. He asked if I liked tea. 3. She told me to wait outside. 4. He told me he was busy. 5. She asked where I lived. 6. He said he would call me tomorrow/the next day.<br/>
+      <strong>Ex.8</strong> 1. She said she'd see me the next day. 2. He said he had been there the day before. 3. She said she'd finish that that day. 4. He said he'd bought that there the week before. 5. She said she'd call me that night.<br/>
+      <strong>Ex.9</strong> 1–b 2–b 3–b 4–b 5–a 6–b
+    </div>
+
+    <div style="background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.10</strong> 1. F 2. T 3. T 4. F 5. T<br/>
+      <strong>Ex.11</strong> 1. …she had lived there for ten years. 2. He asked me if I was ready. 3. They warned us not to be late. 4. She wondered whether he knew the answer. 5. …the meeting had been postponed the day before. 6. She said that she would call later.<br/>
+      <strong>Ex.12</strong> Open answer — check varied use of reported statements, questions, and commands/requests.
+    </div>
+
+    <div style="background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">C1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.13</strong> Sample answers (accept close equivalents): 1. The manager said they would resolve it as soon as possible. 2. The witness said they did not know what had happened. 3. The CEO said he could not believe it. 4. The director said they would find a way to manage it. 5. The employee said they were not willing to sign that.<br/>
+      <strong>Ex.14</strong> 1–a 2–a 3–a 4–a 5–a 6–a<br/>
+      <strong>Ex.15</strong> 1. …he had made a mistake earlier. 2. …whether he agreed with the proposal. 3. …the funds had been misused. 4. …that he had never said such a thing. 5. …not to sign anything without reading it.
+    </div>
+
+    <div style="background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 4px;">C2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 4px;">
+      <strong>Ex.16</strong> Open answer — check a range of formal reporting verbs used accurately with correct backshift.<br/>
+      <strong>Ex.17</strong> 1. The spokesperson disclosed that the merger had stalled. 2. The minister urged the public to remain calm. 3. He acknowledged that there had been a delay. 4. Her lawyer insisted that her client was innocent. 5. The firm denied any involvement in wrongdoing.<br/>
+      <strong>Ex.18</strong> 1. …the figures were inaccurate. 2. …that he was telling the truth. 3. …mistakes had been made. 4. …that she had seen the incident. 5. …the committee act swiftly.
+    </div>
+
+  </div>
+
+</x-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { showAnswers: true };
+
+  renderVals() {
+    const showAnswers = this.state.showAnswers;
+    return {
+      answerKeyDisplay: showAnswers ? 'block' : 'none',
+      toggleLabel: showAnswers ? '🙈 Hide Answer Key' : '👁️ Show Answer Key',
+      toggleAnswers: () => this.setState(s => ({ showAnswers: !s.showAnswers })),
+    };
+  }
+}
+
+</script>
+</body>
+</html>
