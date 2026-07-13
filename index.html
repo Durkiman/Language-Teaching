@@ -668,11 +668,11 @@
   ];
 
   // Students with a progress.json — add ids here as new levels get assigned.
-  const CURRICULUM_STUDENT_IDS = ['micha', 'thomas', 'greg', 'angelique'];
+  const CURRICULUM_STUDENT_IDS = ['micha', 'thomas', 'greg', 'angelique', 'mel'];
 
   async function loadCurriculum() {
     try {
-      const levels = ['a1', 'a2', 'b1'];
+      const levels = ['a1', 'a2', 'b1', 'sq-a1', 'sq-a2'];
       for (const level of levels) {
         const res = await fetch(`${CURRICULUM_URL}/${level}.json`);
         if (res.ok) {

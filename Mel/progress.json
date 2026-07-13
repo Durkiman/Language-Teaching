@@ -1,0 +1,7 @@
+{
+  "student": "mel",
+  "levels": ["SQ-A1", "SQ-A2"],
+  "cards": {
+    "SQ-A1-08": { "status": "introduced", "introduced": null, "reviews": [], "notes": "du-structure established in prior lessons; run full evidence task to confirm scope (me pëlqen, duhet likely new)" }
+  }
+}

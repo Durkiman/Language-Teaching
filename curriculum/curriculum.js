@@ -16,6 +16,7 @@
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap;">
           <span style="background:#0E7C86;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:12px;padding:3px 10px;border-radius:999px;">${esc(card.id)}</span>
           <span style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:17px;color:#1B4B4F;">${esc(card.title)}</span>
+          ${card.dialect_check ? '<span title="Verify family forms before teaching" style="font-size:15px;">🗣️</span>' : ''}
         </div>
         <div style="font-size:14.5px;color:#2B2B2B;margin-bottom:8px;line-height:1.5;">${esc(card.goal)}</div>
         ${tagRow('Functions', card.functions)}
