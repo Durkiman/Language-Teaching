@@ -1,0 +1,12 @@
+{
+  "student": "micha",
+  "levels": ["A2", "B1"],
+  "cards": {
+    "A2-01": { "status": "introduced", "introduced": null, "reviews": [], "notes": "Weather lesson (present simple) + wildlife lesson" },
+    "A2-04": { "status": "reviewed", "introduced": null, "reviews": [null], "notes": "Samoa, Kauai, Azores, Saint-Barths — heavily recycled" },
+    "A2-06": { "status": "reviewed", "introduced": null, "reviews": [null], "notes": "Past simple across many lessons; 28 irregular verbs" },
+    "A2-10": { "status": "introduced", "introduced": null, "reviews": [], "notes": "Artemis II going-to lesson" },
+    "A2-11": { "status": "introduced", "introduced": null, "reviews": [], "notes": "Going-to predictions done; will vs going to not yet contrasted" },
+    "A2-20": { "status": "introduced", "introduced": null, "reviews": [], "notes": "Comparatives + superlatives covered" }
+  }
+}

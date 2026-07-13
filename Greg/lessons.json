@@ -1,5 +1,5 @@
 [
-   { "file": "brazil-trip-planning.html", "title": "#2 Planning a trip" },
-   { "file": "travel-recommendations.html", "title": "#2 Travel recommendation" },
+   { "file": "brazil-trip-planning.html", "title": "#2 Planning a trip", "goals": { "primary": ["A2-10", "A2-11"], "incidental": ["A2-01", "B1-21"] } },
+   { "file": "travel-recommendations.html", "title": "#2 Travel recommendation", "goals": { "primary": ["B1-04"] } },
    { "file": "introducing-yourself.html", "title": "#1 introducing yourself" }
 ]
