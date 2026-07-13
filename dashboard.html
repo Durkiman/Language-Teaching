@@ -486,7 +486,7 @@
   }
 
   async function detectTabsInLesson(folder, file) {
-    const url = `${REPO_RAW}/${folder}/${encodeURIComponent(file)}?nocache=${Date.now()}`;
+    const url = `${REPO_RAW}/${folder}/${encodeURIComponent(file)}`;
     const found = new Set();
     try {
       const res = await fetch(url);
@@ -512,7 +512,7 @@
 
     let lessons = [];
     try {
-      const res = await fetch(`${REPO_RAW}/${student.folder}/lessons.json?nocache=${Date.now()}`);
+      const res = await fetch(`${REPO_RAW}/${student.folder}/lessons.json`);
       if (res.ok) lessons = await res.json();
     } catch (err) {
       lessons = [];

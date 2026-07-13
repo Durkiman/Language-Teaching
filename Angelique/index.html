@@ -237,7 +237,7 @@
 
   async function loadLessons() {
     try {
-      const res = await fetch(`${REPO_RAW}/${FOLDER}/lessons.json?nocache=${Date.now()}`);
+      const res = await fetch(`${REPO_RAW}/${FOLDER}/lessons.json`);
       if (!res.ok) throw new Error();
       const lessons = await res.json();
 

@@ -534,7 +534,7 @@
     listEl.innerHTML = '<li><div class="loading-state"><div class="spinner"></div> Loading…</div></li>';
 
     try {
-      const res = await fetch(`${REPO_RAW}/${student.folder}/lessons.json?nocache=${Date.now()}`);
+      const res = await fetch(`${REPO_RAW}/${student.folder}/lessons.json`);
 
       if (!res.ok) {
         listEl.innerHTML = '<li><span class="empty-state">No lessons yet.</span></li>';
