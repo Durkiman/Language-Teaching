@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linkin Park — A Band's Story</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --surface2: #1c1c27;
+    --border: #2a2a3a;
+    --accent: #7c3aed;
+    --accent2: #a855f7;
+    --pulse: #e879f9;
+    --text: #e8e8f0;
+    --muted: #8888aa;
+    --green: #22c55e;
+    --red: #ef4444;
+    --amber: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Space Grotesk', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 0; }
+  .eq-bars { display: flex; align-items: flex-end; gap: 3px; height: 24px; margin-right: 12px; }
+  .eq-bar { width: 4px; background: var(--accent2); border-radius: 2px; animation: eq 0.8s ease-in-out infinite alternate; }
+  .eq-bar:nth-child(1){height:40%;animation-delay:0s} .eq-bar:nth-child(2){height:80%;animation-delay:.15s}
+  .eq-bar:nth-child(3){height:55%;animation-delay:.3s} .eq-bar:nth-child(4){height:95%;animation-delay:.1s}
+  .eq-bar:nth-child(5){height:65%;animation-delay:.25s}
+  @keyframes eq { from{transform:scaleY(0.3)} to{transform:scaleY(1)} }
+  header h1 { font-family:'Space Mono',monospace; font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; flex:1; padding:16px 0; }
+  header h1 span { color:var(--accent2); }
+  .tabs { display:flex; gap:2px; overflow-x:auto; scrollbar-width:none; padding:0 2px; }
+  .tabs::-webkit-scrollbar{display:none}
+  .tab { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; padding:18px 11px; cursor:pointer; color:var(--muted); border-bottom:2px solid transparent; white-space:nowrap; transition:all 0.2s; background:none; border-top:none; border-left:none; border-right:none; font-weight:700; }
+  .tab:hover{color:var(--text)} .tab.active{color:var(--accent2);border-bottom-color:var(--accent2)}
+
+  .panel{display:none;padding:24px 20px 120px;max-width:700px;margin:0 auto}
+  .panel.active{display:block}
+  .label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent2);margin-bottom:8px}
+  h2{font-size:24px;font-weight:700;line-height:1.2;margin-bottom:14px}
+  p{font-size:16px;line-height:1.7;color:var(--muted);margin-bottom:14px}
+
+  .warmup-prompt{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--accent2);border-radius:8px;padding:18px;margin-bottom:12px}
+  .warmup-prompt .question{font-size:17px;font-weight:600;color:var(--text);margin-bottom:6px}
+  .warmup-prompt .hint{font-size:13px;color:var(--muted)}
+
+  .reading-text{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px;font-size:16px;line-height:1.9;color:#c8c8e0}
+  .reading-text p{color:#c8c8e0;margin-bottom:14px}
+  .reading-text p:last-child{margin-bottom:0}
+  .v-reg{color:var(--green);font-weight:700} .v-irr{color:var(--accent2);font-weight:700}
+  .v-neg{color:var(--red);font-weight:700} .t-mark{color:var(--amber);font-weight:700}
+  .reading-text.no-colour .v-reg, .reading-text.no-colour .v-irr, .reading-text.no-colour .v-neg, .reading-text.no-colour .t-mark{color:#c8c8e0;font-weight:400}
+
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+  .legend-item{display:flex;align-items:center;gap:6px;font-size:13px}
+  .legend-dot{width:10px;height:10px;border-radius:50%}
+
+  .exercise-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:14px}
+  .q-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--accent2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px}
+  .question-text{font-size:16px;color:var(--text);margin-bottom:14px;line-height:1.65}
+  .gap-input{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:9px 12px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:15px;width:100%;margin-bottom:10px;transition:border-color 0.2s}
+  .gap-input:focus{outline:none;border-color:var(--accent2)}
+  .gap-input.correct{border-color:var(--green);background:rgba(34,197,94,0.08)}
+  .gap-input.wrong{border-color:var(--red);background:rgba(239,68,68,0.08)}
+  .btn-row{display:flex;gap:8px;flex-wrap:wrap}
+  .check-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:9px 18px;border-radius:7px;font-family:'Space Grotesk',sans-serif;font-size:14px;cursor:pointer;transition:all 0.2s}
+  .check-btn:hover{border-color:var(--accent2);color:var(--accent2)}
+  .tr-btn{border-color:rgba(168,85,247,0.3);color:var(--muted)} .tr-btn:hover{border-color:var(--accent2);color:var(--accent2)}
+  .feedback-text{font-size:14px;margin-top:10px;display:none} .feedback-text.show{display:block}
+  .feedback-text.correct{color:var(--green)} .feedback-text.wrong{color:var(--red)}
+  .tr-text{display:none;margin-top:10px;font-size:14px;color:var(--muted);background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.2);border-radius:6px;padding:10px 12px;font-style:italic;line-height:1.6}
+  .tr-text.show{display:block}
+
+  .match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+  .match-item{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;font-size:14px;cursor:pointer;transition:all 0.2s;text-align:center}
+  .match-item:hover{border-color:var(--accent2)}
+  .match-item.selected{border-color:var(--accent2);background:rgba(168,85,247,0.15);color:var(--accent2)}
+  .match-item.matched{border-color:var(--green);background:rgba(34,197,94,0.1);color:var(--green);pointer-events:none}
+  .match-item.wrong-flash{border-color:var(--red);background:rgba(239,68,68,0.1)}
+
+  .order-container{margin-bottom:16px}
+  .order-item{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:8px;cursor:grab;user-select:none;font-size:15px;color:var(--text);display:flex;align-items:center;gap:10px;transition:border-color 0.2s}
+  .order-item:hover{border-color:var(--accent2)} .order-item.dragging{opacity:0.4;border-color:var(--accent2)}
+  .order-item .drag-handle{color:var(--muted);font-size:18px;flex-shrink:0}
+  .order-item .item-num{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);min-width:20px}
+  .order-check-btn{background:var(--accent);color:white;border:none;border-radius:8px;padding:11px 22px;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px}
+  .order-feedback{font-size:14px;margin-top:10px;display:none} .order-feedback.show{display:block}
+
+  /* FLASHCARD REFLEX */
+  .flash-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;text-align:center;margin-bottom:16px;min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .flash-word{font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:var(--text);margin-bottom:8px}
+  .flash-hint{font-size:13px;color:var(--muted);margin-bottom:16px}
+  .flash-answer{font-family:'Space Mono',monospace;font-size:24px;font-weight:700;color:var(--accent2);display:none}
+  .flash-controls{display:flex;gap:10px;justify-content:center;margin-top:14px}
+  .flash-timer{font-family:'Space Mono',monospace;font-size:32px;color:var(--amber);margin-bottom:10px}
+  .flash-timer.urgent{color:var(--red)}
+  .flash-progress{font-size:13px;color:var(--muted);margin-bottom:16px}
+  .flash-btn{background:var(--accent);color:white;border:none;border-radius:8px;padding:11px 24px;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;cursor:pointer}
+  .flash-btn.secondary{background:var(--surface2);border:1px solid var(--border);color:var(--text)}
+  .flash-score{display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+  .flash-score-item{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;background:var(--surface2);border:1px solid var(--border);color:var(--muted)}
+  .flash-score-item.correct{background:rgba(34,197,94,0.2);border-color:var(--green);color:var(--green)}
+  .flash-score-item.wrong{background:rgba(239,68,68,0.2);border-color:var(--red);color:var(--red)}
+
+  .speaking-prompt{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:14px}
+  .sp-label{font-size:10px;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px}
+  .sp-label.warmup{color:var(--green)} .sp-label.core{color:var(--accent2)} .sp-label.challenge{color:var(--pulse)}
+  .sp-text{font-size:17px;color:var(--text);font-weight:500;line-height:1.5}
+  .sp-hint{font-size:13px;color:var(--muted);margin-top:8px;font-style:italic}
+
+  .divider{height:1px;background:var(--border);margin:22px 0}
+
+  .nav-row{display:flex;justify-content:space-between;margin-top:32px}
+  .nav-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:11px 22px;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s}
+  .nav-btn:hover{border-color:var(--accent2);color:var(--accent2)} .nav-btn:disabled{opacity:0.3;cursor:default}
+
+  /* LISTENING / GENIUS LINK */
+  .genius-card{background:linear-gradient(135deg, rgba(255,240,3,0.08), rgba(124,58,237,0.1));border:1px solid rgba(255,240,3,0.25);border-radius:12px;padding:22px;margin-bottom:20px;text-align:center}
+  .genius-card .gc-title{font-size:19px;font-weight:700;color:var(--text);margin-bottom:6px}
+  .genius-card .gc-artist{font-size:14px;color:var(--muted);margin-bottom:16px}
+  .genius-link-btn{display:inline-flex;align-items:center;gap:8px;background:#FFF003;color:#0a0a0f;border:none;border-radius:8px;padding:12px 22px;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;cursor:pointer;text-decoration:none}
+  .genius-link-btn:hover{filter:brightness(0.92)}
+  .genius-note{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.5}
+
+  .log-fab-btn{position:fixed;bottom:24px;right:24px;width:54px;height:54px;background:var(--surface);border:1px solid var(--border);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;z-index:200;transition:all 0.2s}
+  .log-fab-btn:hover{border-color:var(--accent2)}
+  #log-drawer{position:fixed;bottom:0;left:0;width:100%;max-width:420px;background:var(--surface);border-top:1px solid var(--border);border-right:1px solid var(--border);border-radius:16px 16px 0 0;padding:20px;z-index:300;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);max-height:70vh;overflow-y:auto}
+  #log-drawer.open{transform:translateY(0)}
+  .drawer-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+  .drawer-title{font-family:'Space Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent2)}
+  .drawer-close{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer}
+  #log-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;resize:vertical;min-height:70px;margin-bottom:8px}
+  #log-input:focus{outline:none;border-color:var(--accent2)}
+  .log-add-btn{background:var(--accent);color:white;border:none;border-radius:7px;padding:9px 18px;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:16px}
+  .log-entry{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;font-size:14px;color:var(--text);line-height:1.5;position:relative}
+  .log-entry .log-time{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:4px}
+  .log-entry .del-btn{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px}
+
+  #timer-fab{position:fixed;bottom:24px;left:24px;background:var(--surface);border:1px solid var(--border);border-radius:30px;padding:10px 16px;font-family:'Space Mono',monospace;font-size:14px;color:var(--muted);cursor:pointer;z-index:200;transition:all 0.2s;display:flex;align-items:center;gap:8px}
+  #timer-fab:hover{border-color:var(--accent2);color:var(--text)}
+  #timer-fab.running{color:var(--accent2);border-color:var(--accent2)} #timer-fab.urgent{color:var(--red);border-color:var(--red)}
+
+  #overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:250} #overlay.show{display:block}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eq-bars"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>
+  <h1>Linkin Park — <span>A Band's Story</span></h1>
+  <nav class="tabs">
+    <button class="tab active" onclick="switchTab(0)">Warm-Up</button>
+    <button class="tab" onclick="switchTab(1)">Reading</button>
+    <button class="tab" onclick="switchTab(2)">Exercises</button>
+    <button class="tab" onclick="switchTab(3)">Speaking</button>
+    <button class="tab" onclick="switchTab(4)">Listening</button>
+    <button class="tab" onclick="switchTab(5)">Cool-Down</button>
+  </nav>
+</header>
+
+<!-- PANEL 0: WARM-UP -->
+<div class="panel active" id="panel-0">
+  <div class="label">Warm-Up · 5 min</div>
+  <h2>Before we start.</h2>
+  <p>No notes — just talk.</p>
+
+  <div class="warmup-prompt">
+    <div class="question">How was your week?</div>
+    <div class="hint">Just talk — past simple, whatever comes to mind.</div>
+  </div>
+  <div class="warmup-prompt">
+    <div class="question">Quick fire: what's the past simple of go, see, feel, tell, and think?</div>
+    <div class="hint">Answer as fast as you can, out loud.</div>
+  </div>
+  <div class="warmup-prompt">
+    <div class="question">Do you know Linkin Park? What do you already know about them?</div>
+    <div class="hint">Anything — a song, the singer's name, a memory of hearing them.</div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" disabled>← Back</button>
+    <button class="nav-btn" onclick="switchTab(1)">Reading →</button>
+  </div>
+</div>
+
+<!-- PANEL 1: READING -->
+<div class="panel" id="panel-1">
+  <div class="label">Reading · 10 min</div>
+  <h2>The story of Linkin Park.</h2>
+  <p>Read the text. Notice the coloured verbs.</p>
+
+  <button class="check-btn" id="colour-toggle-btn" onclick="toggleColours()" style="margin-bottom:14px;">🎨 Turn colours off</button>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div><span style="font-size:13px;color:var(--muted)">Regular verb</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent2)"></div><span style="font-size:13px;color:var(--muted)">Irregular verb</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div><span style="font-size:13px;color:var(--muted)">Negative</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div><span style="font-size:13px;color:var(--muted)">Time marker</span></div>
+  </div>
+
+  <div class="reading-text" id="reading-text-block">
+    <p><span class="t-mark">In 1996</span>, a group of friends in California <span class="v-irr">began</span> a band called Xero. They <span class="v-reg">practised</span> in a garage and <span class="v-reg">wrote</span> their own songs, mixing rock, rap, and electronic sounds. At first, they <span class="v-neg">didn't find</span> success right away. Several singers <span class="v-irr">came</span> and <span class="v-irr">went</span> before they <span class="v-irr">met</span> Chester Bennington, a singer from Arizona with a powerful voice.</p>
+
+    <p><span class="t-mark">In 2000</span>, the band, now called Linkin Park, <span class="v-irr">released</span> their first album, Hybrid Theory. It <span class="v-irr">became</span> one of the best-selling debut albums in history. Millions of young people <span class="v-reg">connected</span> with the emotional lyrics and the mix of heavy guitars and electronic beats. The band <span class="v-irr">toured</span> the world and <span class="v-irr">grew</span> into one of the biggest rock bands of the decade.</p>
+
+    <p>Over the <span class="t-mark">next</span> years, Linkin Park <span class="v-irr">continued</span> to change their sound. They <span class="v-irr">experimented</span> with electronic music, hip-hop, and pop influences. Some fans <span class="v-neg">didn't like</span> every new direction, but the band always <span class="v-irr">chose</span> to follow their own creative instincts rather than repeat the same formula.</p>
+
+    <p><span class="t-mark">In July 2017</span>, Chester Bennington <span class="v-irr">died</span>. It <span class="v-irr">was</span> a huge shock for fans around the world. For a long time, the remaining members <span class="v-neg">didn't perform</span> together, and many people <span class="v-neg">didn't know</span> if the band would continue at all.</p>
+
+    <p><span class="t-mark">In 2024</span>, Linkin Park <span class="v-irr">returned</span> with a new singer, Emily Armstrong. It <span class="v-irr">was</span> a difficult and emotional decision for the band, but they <span class="v-irr">felt</span> ready to create music again. Fans <span class="v-reg">reacted</span> with a mix of excitement and complicated emotions — the band's story <span class="v-irr">had</span> changed forever, but the music <span class="v-irr">meant</span> as much as ever.</p>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="switchTab(0)">← Back</button>
+    <button class="nav-btn" onclick="switchTab(2)">Exercises →</button>
+  </div>
+</div>
+
+<!-- PANEL 2: EXERCISES -->
+<div class="panel" id="panel-2">
+  <div class="label">Exercises · 20 min</div>
+  <h2>Practise the story.</h2>
+
+  <div class="q-label" style="margin-bottom:12px">Part A — Band History (mixed verbs)</div>
+
+  <div class="exercise-card">
+    <div class="q-label">01 · Mixed</div>
+    <div class="question-text">The band ______ (release) their first album in 2000, and it ______ (become) a huge success.</div>
+    <input class="gap-input" id="g1" placeholder="both verbs, comma-separated..." autocomplete="off">
+    <div class="btn-row">
+      <button class="check-btn" onclick="checkGap('g1','released, became','f1')">Check</button>
+      <button class="check-btn tr-btn" onclick="toggleTr('tr1')">🇫🇷 Traduction</button>
+    </div>
+    <div class="feedback-text" id="f1"></div>
+    <div class="tr-text" id="tr1">Le groupe ______ (sortir) leur premier album en 2000, et il ______ (devenir) un énorme succès.</div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="q-label">02 · Mixed</div>
+    <div class="question-text">Millions of fans ______ (connect) with the lyrics, and the band ______ (tour) the whole world.</div>
+    <input class="gap-input" id="g2" placeholder="both verbs, comma-separated..." autocomplete="off">
+    <div class="btn-row">
+      <button class="check-btn" onclick="checkGap('g2','connected, toured','f2')">Check</button>
+      <button class="check-btn tr-btn" onclick="toggleTr('tr2')">🇫🇷 Traduction</button>
+    </div>
+    <div class="feedback-text" id="f2"></div>
+    <div class="tr-text" id="tr2">Des millions de fans se ______ (connecter) aux paroles, et le groupe ______ (faire une tournée) dans le monde entier.</div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="q-label" style="margin-bottom:12px">Part B — Irregular Verb Drill (extra practice)</div>
+
+  <div class="exercise-card">
+    <div class="q-label">03 · Irregular</div>
+    <div class="question-text">The band ______ (choose) to experiment with new sounds, even when some fans ______ (not / like) it.</div>
+    <input class="gap-input" id="g3" placeholder="both verbs, comma-separated..." autocomplete="off">
+    <div class="btn-row">
+      <button class="check-btn" onclick="checkGap('g3',&quot;chose, didn't like&quot;,'f3')">Check</button>
+      <button class="check-btn tr-btn" onclick="toggleTr('tr3')">🇫🇷 Traduction</button>
+    </div>
+    <div class="feedback-text" id="f3"></div>
+    <div class="tr-text" id="tr3">Le groupe ______ (choisir) d'expérimenter de nouveaux sons, même quand certains fans ne ______ pas ______ (aimer) ça.</div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="q-label">04 · Irregular</div>
+    <div class="question-text">Chester ______ (come) from Arizona and ______ (bring) a powerful new voice to the band.</div>
+    <input class="gap-input" id="g4" placeholder="both verbs, comma-separated..." autocomplete="off">
+    <div class="btn-row">
+      <button class="check-btn" onclick="checkGap('g4','came, brought','f4')">Check</button>
+      <button class="check-btn tr-btn" onclick="toggleTr('tr4')">🇫🇷 Traduction</button>
+    </div>
+    <div class="feedback-text" id="f4"></div>
+    <div class="tr-text" id="tr4">Chester ______ (venir) de l'Arizona et ______ (apporter) une nouvelle voix puissante au groupe.</div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="q-label">05 · Irregular — Quick Transform</div>
+    <div class="question-text">Write the past simple form of each verb. Say it out loud before you type it.</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px 16px; margin-bottom:12px;">
+      <div style="display:flex; align-items:center; gap:8px;"><span style="font-family:'Space Mono',monospace; color:var(--muted); min-width:56px;">grow</span><input class="gap-input" id="qt1" style="margin-bottom:0;" placeholder="past..." autocomplete="off"></div>
+      <div style="display:flex; align-items:center; gap:8px;"><span style="font-family:'Space Mono',monospace; color:var(--muted); min-width:56px;">meet</span><input class="gap-input" id="qt2" style="margin-bottom:0;" placeholder="past..." autocomplete="off"></div>
+      <div style="display:flex; align-items:center; gap:8px;"><span style="font-family:'Space Mono',monospace; color:var(--muted); min-width:56px;">become</span><input class="gap-input" id="qt3" style="margin-bottom:0;" placeholder="past..." autocomplete="off"></div>
+      <div style="display:flex; align-items:center; gap:8px;"><span style="font-family:'Space Mono',monospace; color:var(--muted); min-width:56px;">feel</span><input class="gap-input" id="qt4" style="margin-bottom:0;" placeholder="past..." autocomplete="off"></div>
+      <div style="display:flex; align-items:center; gap:8px;"><span style="font-family:'Space Mono',monospace; color:var(--muted); min-width:56px;">have</span><input class="gap-input" id="qt5" style="margin-bottom:0;" placeholder="past..." autocomplete="off"></div>
+      <div style="display:flex; align-items:center; gap:8px;"><span style="font-family:'Space Mono',monospace; color:var(--muted); min-width:56px;">mean</span><input class="gap-input" id="qt6" style="margin-bottom:0;" placeholder="past..." autocomplete="off"></div>
+    </div>
+    <button class="check-btn" onclick="checkQuickTransform()">Check all</button>
+    <div class="feedback-text" id="qt-feedback"></div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="q-label">06 · Irregular — Match Base to Past</div>
+    <div class="question-text">Tap a base verb, then tap its past form.</div>
+    <div class="match-grid" id="irr-match-grid">
+      <div class="match-item" data-type="base" data-id="1" onclick="matchClick(this)">begin</div>
+      <div class="match-item" data-type="past" data-id="1" onclick="matchClick(this)">began</div>
+      <div class="match-item" data-type="base" data-id="2" onclick="matchClick(this)">write</div>
+      <div class="match-item" data-type="past" data-id="2" onclick="matchClick(this)">wrote</div>
+      <div class="match-item" data-type="base" data-id="3" onclick="matchClick(this)">die</div>
+      <div class="match-item" data-type="past" data-id="3" onclick="matchClick(this)">died</div>
+      <div class="match-item" data-type="base" data-id="4" onclick="matchClick(this)">choose</div>
+      <div class="match-item" data-type="past" data-id="4" onclick="matchClick(this)">chose</div>
+      <div class="match-item" data-type="base" data-id="5" onclick="matchClick(this)">return</div>
+      <div class="match-item" data-type="past" data-id="5" onclick="matchClick(this)">returned</div>
+    </div>
+    <div id="irr-match-feedback" style="font-size:14px; color:var(--green); display:none; margin-top:10px;">✓ All matched! Great work.</div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="q-label">07 · Irregular — Reflex Flashcards</div>
+    <div class="question-text">10 verbs, one at a time. Say the past form out loud before you reveal it. This is about speed, not perfection.</div>
+    <div id="flash-container">
+      <div class="flash-progress" id="flash-progress">Card 1 of 10</div>
+      <div class="flash-card">
+        <div class="flash-word" id="flash-word">go</div>
+        <div class="flash-hint">Say the past simple form</div>
+        <div class="flash-answer" id="flash-answer">went</div>
+      </div>
+      <div class="flash-controls">
+        <button class="flash-btn secondary" onclick="revealFlash()">Reveal</button>
+        <button class="flash-btn secondary" onclick="markFlash(false)">✗ Got it wrong</button>
+        <button class="flash-btn" onclick="markFlash(true)">✓ Got it right</button>
+      </div>
+      <div class="flash-score" id="flash-score"></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="q-label" style="margin-bottom:12px">Part C — Negative sentences</div>
+
+  <div class="exercise-card">
+    <div class="q-label">08 · Negative</div>
+    <div class="question-text">Make this sentence negative:<br><em>"The band performed together for a long time after 2017."</em></div>
+    <input class="gap-input" id="g8" placeholder="negative version..." autocomplete="off">
+    <div class="btn-row">
+      <button class="check-btn" onclick="checkGap('g8', &quot;The band didn't perform together for a long time after 2017.&quot;, 'f8')">Check</button>
+      <button class="check-btn tr-btn" onclick="toggleTr('tr8')">🇫🇷 Traduction</button>
+    </div>
+    <div class="feedback-text" id="f8"></div>
+    <div class="tr-text" id="tr8">Le groupe ne s'est pas produit ensemble pendant longtemps après 2017.</div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="q-label">09 · Negative</div>
+    <div class="question-text">Make this sentence negative:<br><em>"All the fans liked the band's new direction."</em></div>
+    <input class="gap-input" id="g9" placeholder="negative version..." autocomplete="off">
+    <div class="btn-row">
+      <button class="check-btn" onclick="checkGap('g9', &quot;Not all the fans liked the band's new direction.&quot;, 'f9')">Check</button>
+      <button class="check-btn tr-btn" onclick="toggleTr('tr9')">🇫🇷 Traduction</button>
+    </div>
+    <div class="feedback-text" id="f9"></div>
+    <div class="tr-text" id="tr9">Tous les fans n'ont pas aimé la nouvelle direction du groupe.</div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="q-label" style="margin-bottom:12px">Part D — Put the story in order</div>
+
+  <div class="exercise-card">
+    <div class="q-label">10 · Story order</div>
+    <div class="question-text">Drag the sentences into the correct order.</div>
+    <div class="order-container" id="order-list">
+      <div class="order-item" draggable="true" data-correct="3"><span class="drag-handle">⠿</span><span class="item-num"></span>Chester Bennington died in July 2017, and it shocked fans worldwide.</div>
+      <div class="order-item" draggable="true" data-correct="1"><span class="drag-handle">⠿</span><span class="item-num"></span>A group of friends started a band called Xero in 1996.</div>
+      <div class="order-item" draggable="true" data-correct="4"><span class="drag-handle">⠿</span><span class="item-num"></span>For years, the remaining members didn't know if the band would continue.</div>
+      <div class="order-item" draggable="true" data-correct="2"><span class="drag-handle">⠿</span><span class="item-num"></span>They met Chester, released Hybrid Theory, and became one of the biggest bands in the world.</div>
+      <div class="order-item" draggable="true" data-correct="5"><span class="drag-handle">⠿</span><span class="item-num"></span>In 2024, the band returned with a new singer, Emily Armstrong.</div>
+    </div>
+    <button class="order-check-btn" onclick="checkOrder()">Check order</button>
+    <div class="order-feedback" id="order-feedback"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="switchTab(1)">← Back</button>
+    <button class="nav-btn" onclick="switchTab(3)">Speaking →</button>
+  </div>
+</div>
+
+<!-- PANEL 3: SPEAKING -->
+<div class="panel" id="panel-3">
+  <div class="label">Speaking · 15–20 min</div>
+  <h2>Now you talk.</h2>
+  <p>Use past simple throughout. Your teacher will note any slips for feedback at the end.</p>
+
+  <div class="speaking-prompt">
+    <div class="sp-label warmup">Warm-up</div>
+    <div class="sp-text">Retell the story of Linkin Park in your own words — from Xero to today. Aim for 1 minute.</div>
+    <div class="sp-hint">Use time markers: first, then, after that, in the end.</div>
+  </div>
+
+  <div class="speaking-prompt">
+    <div class="sp-label core">Core</div>
+    <div class="sp-text">Have you ever felt connected to an artist's story the way fans connected to Linkin Park's? Tell me about it.</div>
+    <div class="sp-hint">Could be any artist, any genre — what happened, and how did it affect you?</div>
+  </div>
+
+  <div class="speaking-prompt">
+    <div class="sp-label challenge">Challenge</div>
+    <div class="sp-text">Imagine you're explaining to someone why the band's comeback in 2024 was such a difficult decision. Use at least two negative sentences.</div>
+    <div class="sp-hint">"They didn't want to... / Fans didn't expect... / It wasn't an easy choice because..."</div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="switchTab(2)">← Back</button>
+    <button class="nav-btn" onclick="switchTab(4)">Listening →</button>
+  </div>
+</div>
+
+<!-- PANEL 4: LISTENING -->
+<div class="panel" id="panel-4">
+  <div class="label">Listening · 10 min</div>
+  <h2>Breaking the Habit</h2>
+  <p>Listen to the song, then read the lyrics and translation on Genius. Come back here for the questions.</p>
+
+  <div class="genius-card">
+    <div class="gc-title">Breaking the Habit</div>
+    <div class="gc-artist">Linkin Park</div>
+    <a class="genius-link-btn" href="https://genius.com/Linkin-park-breaking-the-habit-lyrics" target="_blank" rel="noopener">
+      🔗 Open on Genius
+    </a>
+    <div class="genius-note">Genius shows the full lyrics plus fan translations. Tap a line for annotations and context.</div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="q-label">Listening Questions</div>
+    <div class="question-text" style="margin-bottom:18px;">Answer after listening once, then check the lyrics if you're unsure.</div>
+
+    <div style="margin-bottom:16px;">
+      <div style="font-size:15px; color:var(--text); margin-bottom:8px;">1. What is the general mood of the song — calm, angry, desperate, hopeful? Why?</div>
+      <input class="gap-input" id="lq1" placeholder="Your answer..." autocomplete="off">
+    </div>
+    <div style="margin-bottom:16px;">
+      <div style="font-size:15px; color:var(--text); margin-bottom:8px;">2. The title says "breaking the habit." What do you think the "habit" could be?</div>
+      <input class="gap-input" id="lq2" placeholder="Your answer..." autocomplete="off">
+    </div>
+    <div style="margin-bottom:16px;">
+      <div style="font-size:15px; color:var(--text); margin-bottom:8px;">3. Find one past simple verb in the lyrics on Genius. Write it here, and its base form.</div>
+      <input class="gap-input" id="lq3" placeholder="e.g. 'felt' — base form: feel" autocomplete="off">
+    </div>
+    <div>
+      <div style="font-size:15px; color:var(--text); margin-bottom:8px;">4. Does the sound of the song match the emotion of the words? Explain your opinion.</div>
+      <input class="gap-input" id="lq4" placeholder="Your answer..." autocomplete="off">
+    </div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="switchTab(3)">← Back</button>
+    <button class="nav-btn" onclick="switchTab(5)">Cool-Down →</button>
+  </div>
+</div>
+
+<!-- PANEL 5: COOL-DOWN -->
+<div class="panel" id="panel-5">
+  <div class="label">Cool-Down · 5 min</div>
+  <h2>Let's look back.</h2>
+  <p>Your teacher will share the top reformulations from today.</p>
+
+  <div class="warmup-prompt">
+    <div class="question">Were the irregular verbs easier this time than last week?</div>
+    <div class="hint">Be honest — this helps decide what to practise next.</div>
+  </div>
+
+  <div class="warmup-prompt">
+    <div class="question">Retell one part of the Linkin Park story in 2–3 sentences.</div>
+    <div class="hint">Pick the part you remember best.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="exercise-card">
+    <div class="q-label">Teacher only</div>
+    <div class="question-text" style="margin-bottom:12px;">See which category needs more practice, based on today's exercises — use this to decide homework.</div>
+    <button class="check-btn" onclick="generateSummary()">📊 Generate summary</button>
+    <div id="summary-box" style="display:none; margin-top:14px;"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="switchTab(4)">← Back</button>
+    <button class="nav-btn" disabled>Done ✓</button>
+  </div>
+</div>
+
+<!-- LOG FAB -->
+<button class="log-fab-btn" onclick="toggleLog()">✏️</button>
+
+<!-- TIMER FAB -->
+<button id="timer-fab" onclick="toggleTimer()"><span>⏱</span><span id="timer-display">50:00</span></button>
+
+<!-- OVERLAY -->
+<div id="overlay" onclick="closeAll()"></div>
+
+<!-- LOG DRAWER -->
+<div id="log-drawer">
+  <div class="drawer-header">
+    <div class="drawer-title">Reformulation Log</div>
+    <button class="drawer-close" onclick="closeAll()">✕</button>
+  </div>
+  <textarea id="log-input" placeholder="What Thomas said → better version…"></textarea>
+  <button class="log-add-btn" onclick="addLogEntry()">Add note</button>
+  <div id="log-entries"></div>
+</div>
+
+<script>
+// TABS
+const tabs = document.querySelectorAll('.tab');
+const panels = document.querySelectorAll('.panel');
+function switchTab(i) {
+  tabs.forEach((t,idx) => t.classList.toggle('active', idx===i));
+  panels.forEach((p,idx) => p.classList.toggle('active', idx===i));
+  window.scrollTo(0,0);
+}
+
+function toggleColours() {
+  const block = document.getElementById('reading-text-block');
+  const btn = document.getElementById('colour-toggle-btn');
+  const isOff = block.classList.toggle('no-colour');
+  btn.textContent = isOff ? '🎨 Turn colours on' : '🎨 Turn colours off';
+}
+
+// EXERCISE TRACKING
+const exerciseResults = { regular: {}, irregular: {}, negative: {} };
+const categoryMap = {
+  g1: 'irregular', g2: 'regular',
+  g3: 'irregular', g4: 'irregular',
+  g8: 'negative', g9: 'negative'
+};
+
+function toggleTr(id) { document.getElementById(id).classList.toggle('show'); }
+function checkGap(inputId, answer, feedbackId) {
+  const input = document.getElementById(inputId);
+  const fb = document.getElementById(feedbackId);
+  const val = input.value.trim().toLowerCase();
+  const isCorrect = val === answer.toLowerCase();
+  if (isCorrect) {
+    input.classList.add('correct'); input.classList.remove('wrong');
+    fb.className = 'feedback-text show correct'; fb.textContent = '✓ Correct!';
+  } else {
+    input.classList.add('wrong'); input.classList.remove('correct');
+    fb.className = 'feedback-text show wrong'; fb.textContent = `Answer: "${answer}"`;
+  }
+  const cat = categoryMap[inputId];
+  if (cat) exerciseResults[cat][inputId] = isCorrect;
+}
+
+// QUICK TRANSFORM
+const quickTransformAnswers = { qt1: 'grew', qt2: 'met', qt3: 'became', qt4: 'felt', qt5: 'had', qt6: 'meant' };
+function checkQuickTransform() {
+  let correctCount = 0;
+  const total = Object.keys(quickTransformAnswers).length;
+  Object.entries(quickTransformAnswers).forEach(([id, answer]) => {
+    const input = document.getElementById(id);
+    const val = input.value.trim().toLowerCase();
+    const isCorrect = val === answer;
+    if (isCorrect) { input.classList.add('correct'); input.classList.remove('wrong'); correctCount++; }
+    else { input.classList.add('wrong'); input.classList.remove('correct'); }
+    exerciseResults.irregular[id] = isCorrect;
+  });
+  const fb = document.getElementById('qt-feedback');
+  fb.className = 'feedback-text show ' + (correctCount === total ? 'correct' : 'wrong');
+  fb.textContent = correctCount === total ? '✓ All correct!' : `${correctCount}/${total} correct. Check the red ones.`;
+}
+
+// MATCH
+let selectedMatch = null;
+let matchMistakes = 0;
+function matchClick(el) {
+  if (el.classList.contains('matched')) return;
+  if (!selectedMatch) { selectedMatch = el; el.classList.add('selected'); return; }
+  if (selectedMatch === el) { el.classList.remove('selected'); selectedMatch = null; return; }
+  const sameType = selectedMatch.dataset.type === el.dataset.type;
+  if (sameType) { selectedMatch.classList.remove('selected'); selectedMatch = el; el.classList.add('selected'); return; }
+  if (selectedMatch.dataset.id === el.dataset.id) {
+    selectedMatch.classList.remove('selected'); selectedMatch.classList.add('matched'); el.classList.add('matched');
+    selectedMatch = null;
+    const items = document.querySelectorAll('#irr-match-grid .match-item');
+    if ([...items].every(i => i.classList.contains('matched'))) {
+      document.getElementById('irr-match-feedback').style.display = 'block';
+      exerciseResults.irregular['match'] = matchMistakes === 0;
+    }
+  } else {
+    matchMistakes++;
+    exerciseResults.irregular['match'] = false;
+    el.classList.add('wrong-flash'); selectedMatch.classList.add('wrong-flash');
+    const prevSelected = selectedMatch; selectedMatch = null;
+    setTimeout(() => { el.classList.remove('wrong-flash'); prevSelected.classList.remove('wrong-flash', 'selected'); }, 600);
+  }
+}
+
+// FLASHCARD REFLEX
+const flashDeck = [
+  { word: 'go', answer: 'went' }, { word: 'see', answer: 'saw' }, { word: 'write', answer: 'wrote' },
+  { word: 'die', answer: 'died' }, { word: 'become', answer: 'became' }, { word: 'grow', answer: 'grew' },
+  { word: 'meet', answer: 'met' }, { word: 'choose', answer: 'chose' }, { word: 'bring', answer: 'brought' },
+  { word: 'feel', answer: 'felt' }
+];
+let flashIndex = 0;
+let flashResults = [];
+
+function loadFlashCard() {
+  if (flashIndex >= flashDeck.length) {
+    document.getElementById('flash-container').innerHTML = '<p style="color:var(--green); font-size:16px;">✓ Deck complete! Check your score above.</p>';
+    exerciseResults.irregular['flashcards'] = flashResults.filter(r => r).length === flashResults.length;
+    return;
+  }
+  document.getElementById('flash-progress').textContent = `Card ${flashIndex + 1} of ${flashDeck.length}`;
+  document.getElementById('flash-word').textContent = flashDeck[flashIndex].word;
+  document.getElementById('flash-answer').textContent = flashDeck[flashIndex].answer;
+  document.getElementById('flash-answer').style.display = 'none';
+}
+
+function revealFlash() {
+  document.getElementById('flash-answer').style.display = 'block';
+}
+
+function markFlash(correct) {
+  flashResults.push(correct);
+  renderFlashScore();
+  flashIndex++;
+  loadFlashCard();
+}
+
+function renderFlashScore() {
+  const container = document.getElementById('flash-score');
+  container.innerHTML = flashResults.map((r, i) =>
+    `<div class="flash-score-item ${r ? 'correct' : 'wrong'}">${i + 1}</div>`
+  ).join('');
+}
+
+loadFlashCard();
+
+// DRAG TO ORDER
+let dragSrc = null;
+document.querySelectorAll('.order-item').forEach(item => {
+  item.addEventListener('dragstart', e => { dragSrc = item; item.classList.add('dragging'); });
+  item.addEventListener('dragend', () => item.classList.remove('dragging'));
+  item.addEventListener('dragover', e => { e.preventDefault(); });
+  item.addEventListener('drop', e => {
+    e.preventDefault();
+    if (dragSrc !== item) {
+      const list = document.getElementById('order-list');
+      const items = [...list.querySelectorAll('.order-item')];
+      const srcIdx = items.indexOf(dragSrc);
+      const tgtIdx = items.indexOf(item);
+      if (srcIdx < tgtIdx) list.insertBefore(dragSrc, item.nextSibling);
+      else list.insertBefore(dragSrc, item);
+    }
+  });
+  item.addEventListener('touchstart', e => { dragSrc = item; }, {passive:true});
+  item.addEventListener('touchend', e => {
+    const touch = e.changedTouches[0];
+    const target = document.elementFromPoint(touch.clientX, touch.clientY)?.closest('.order-item');
+    if (target && target !== dragSrc) {
+      const list = document.getElementById('order-list');
+      const items = [...list.querySelectorAll('.order-item')];
+      const srcIdx = items.indexOf(dragSrc);
+      const tgtIdx = items.indexOf(target);
+      if (srcIdx < tgtIdx) list.insertBefore(dragSrc, target.nextSibling);
+      else list.insertBefore(dragSrc, target);
+    }
+  }, {passive:true});
+});
+
+function checkOrder() {
+  const items = [...document.querySelectorAll('.order-item')];
+  const fb = document.getElementById('order-feedback');
+  let correct = 0;
+  items.forEach((item, idx) => {
+    const num = idx + 1;
+    item.querySelector('.item-num').textContent = num + '.';
+    if (parseInt(item.dataset.correct) === num) { correct++; item.style.borderColor = 'var(--green)'; }
+    else item.style.borderColor = 'var(--red)';
+  });
+  fb.className = 'order-feedback show';
+  if (correct === items.length) { fb.style.color = 'var(--green)'; fb.textContent = '✓ Perfect order!'; }
+  else { fb.style.color = 'var(--red)'; fb.textContent = `${correct}/${items.length} correct. Try again!`; }
+}
+
+// COOL-DOWN SUMMARY
+function generateSummary() {
+  const labels = { regular: 'Regular verbs', irregular: 'Irregular verbs', negative: 'Negatives' };
+  const box = document.getElementById('summary-box');
+  let html = '';
+  let anyAttempted = false;
+
+  Object.entries(exerciseResults).forEach(([cat, results]) => {
+    const entries = Object.entries(results);
+    if (entries.length === 0) return;
+    anyAttempted = true;
+    const correct = entries.filter(([,v]) => v).length;
+    const total = entries.length;
+    const pct = Math.round((correct / total) * 100);
+    const color = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--amber)' : 'var(--red)';
+    html += `
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border);">
+        <span style="font-size:15px; color:var(--text);">${labels[cat]}</span>
+        <span style="font-family:'Space Mono',monospace; font-size:14px; color:${color}; font-weight:700;">${correct}/${total} correct</span>
+      </div>`;
+  });
+
+  if (!anyAttempted) {
+    box.innerHTML = '<p style="color:var(--muted); font-size:14px;">No exercises checked yet — go to the Exercises tab and check some answers first.</p>';
+  } else {
+    box.innerHTML = html + `<p style="margin-top:14px; font-size:13px; color:var(--muted);">Use the lowest-scoring category to decide what to send as homework.</p>`;
+  }
+  box.style.display = 'block';
+}
+
+// LOG
+let logOpen = false;
+let logEntries = [];
+function toggleLog() {
+  logOpen = !logOpen;
+  document.getElementById('log-drawer').classList.toggle('open', logOpen);
+  document.getElementById('overlay').classList.toggle('show', logOpen);
+}
+function closeAll() {
+  document.getElementById('log-drawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+  logOpen = false;
+}
+function addLogEntry() {
+  const text = document.getElementById('log-input').value.trim();
+  if (!text) return;
+  const time = new Date().toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+  logEntries.unshift({ text, time, id: Date.now() });
+  renderLog();
+  document.getElementById('log-input').value = '';
+}
+function renderLog() {
+  document.getElementById('log-entries').innerHTML = logEntries.map(e => `
+    <div class="log-entry" id="entry-${e.id}">
+      <div class="log-time">${e.time}</div>${e.text}
+      <button class="del-btn" onclick="deleteEntry(${e.id})">✕</button>
+    </div>`).join('');
+}
+function deleteEntry(id) { logEntries = logEntries.filter(e => e.id !== id); renderLog(); }
+
+// TIMER
+let timerSeconds = 50 * 60, timerInterval = null, timerRunning = false;
+function formatTime(s) { return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`; }
+function toggleTimer() {
+  const fab = document.getElementById('timer-fab');
+  if (!timerRunning) {
+    timerRunning = true; fab.classList.add('running');
+    timerInterval = setInterval(() => {
+      timerSeconds--;
+      document.getElementById('timer-display').textContent = formatTime(timerSeconds);
+      if (timerSeconds <= 30) { fab.classList.remove('running'); fab.classList.add('urgent'); }
+      if (timerSeconds <= 0) { clearInterval(timerInterval); timerRunning = false; }
+    }, 1000);
+  } else {
+    clearInterval(timerInterval); timerRunning = false;
+    fab.classList.remove('running','urgent');
+  }
+}
+</script>
+</body>
+</html>
