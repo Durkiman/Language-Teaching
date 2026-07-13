@@ -1,0 +1,8 @@
+{
+  "student": "thomas",
+  "levels": ["B1"],
+  "cards": {
+    "B1-01": { "status": "introduced", "introduced": null, "reviews": [], "notes": "Lesson 2: Past Simple for storytelling" },
+    "B1-08": { "status": "introduced", "introduced": null, "reviews": [], "notes": "Incidental via Lesson 1 sub-genre discussion — verify with evidence task before trusting" }
+  }
+}
