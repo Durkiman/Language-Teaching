@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Watching the Wild — Right Now vs Always</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F6F8; --surface:#FFFFFF; --teal:#2A8A8A; --teal-light:#E3F2F2;
+  --ink:#1F2B33; --muted:#6B7A82; --border:#E3E8EB;
+  --orange:#E08A3C; --orange-light:#FFF3E6; --blue:#3E6FB0;
+  --yellow:#D9A22C; --yellow-light:#FCF1DD;
+  --green:#3FA66A; --green-light:#E5F6EC; --red:#D9534F;
+  --shadow:0 2px 8px rgba(31,43,51,.06),0 1px 2px rgba(31,43,51,.04);
+  --shadow-lg:0 8px 24px rgba(31,43,51,.10);
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);padding-bottom:90px;}
+.app-header{background:var(--surface);padding:20px 20px 16px;border-bottom:1px solid var(--border);}
+.app-header h1{margin:0 0 4px;font-size:22px;font-weight:800;}
+.app-header p{margin:0;font-size:13px;color:var(--muted);font-weight:600;}
+.tabbar{position:sticky;top:0;z-index:50;display:flex;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:var(--shadow);-webkit-overflow-scrolling:touch;}
+.tabbar::-webkit-scrollbar{display:none;}
+.tab-btn{flex:0 0 auto;padding:14px 16px;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;}
+.tab-btn.active{color:var(--teal);border-bottom-color:var(--teal);}
+.panel{display:none;padding:18px 16px 30px;max-width:680px;margin:0 auto;}
+.panel.active{display:block;}
+.card{background:var(--surface);border-radius:16px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow);border:1px solid var(--border);}
+.card h2{margin:0 0 10px;font-size:17px;font-weight:800;}
+.card h3{margin:0 0 8px;font-size:14px;font-weight:800;color:var(--teal);}
+.fr{color:var(--blue);font-size:13px;font-style:italic;font-weight:600;margin-top:4px;}
+.tag{display:inline-block;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;}
+.tag.easy{background:var(--green-light);color:var(--green);}
+.tag.medium{background:var(--yellow-light);color:var(--yellow);}
+.tag.hard{background:#FBE5E4;color:var(--red);}
+.nav-buttons{display:flex;justify-content:space-between;margin-top:18px;gap:10px;}
+.btn{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;padding:12px 22px;border-radius:12px;border:none;cursor:pointer;}
+.btn-primary{background:var(--teal);color:#fff;}
+.btn-secondary{background:var(--surface);color:var(--teal);border:2px solid var(--teal);}
+.btn:active{transform:scale(.97);}
+
+.hero-banner{background:linear-gradient(135deg,#2A8A8A 0%,#1f6b6b 100%);border-radius:18px;padding:22px;color:#fff;margin-bottom:14px;position:relative;overflow:hidden;}
+.hero-banner h2{color:#fff;margin:0 0 6px;}
+.hero-banner p{margin:0;font-size:14px;opacity:.95;line-height:1.5;}
+
+.facts-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.fact-box{background:var(--teal-light);border-radius:12px;padding:12px;text-align:center;}
+.fact-box .num{font-size:20px;font-weight:900;color:var(--teal);}
+.fact-box .lbl{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;}
+
+.vocab-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.vocab-card{background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .2s;min-height:64px;display:flex;align-items:center;justify-content:center;}
+.vocab-card .en{font-weight:800;font-size:15px;}
+.vocab-card .fr-word{font-size:13px;color:var(--blue);font-style:italic;display:none;font-weight:700;}
+.vocab-card.revealed .fr-word{display:block;}
+.vocab-card.revealed .en{font-size:13px;color:var(--muted);}
+.vocab-card.mastered{background:var(--green);border-color:var(--green);}
+.vocab-card.mastered .en,.vocab-card.mastered .fr-word{color:#fff;}
+
+.now-vs-always{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+.nva-box{border-radius:12px;padding:12px;font-size:13px;}
+.nva-box.now{background:var(--teal-light);}
+.nva-box.always{background:var(--yellow-light);}
+.nva-box b{display:block;margin-bottom:4px;}
+.nva-box.now b{color:var(--teal);}
+.nva-box.always b{color:var(--yellow);}
+
+.formula-box{background:var(--teal-light);border-radius:12px;padding:14px;text-align:center;font-weight:800;font-size:15px;color:var(--teal);margin-bottom:12px;}
+table.conj{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:10px;}
+table.conj th,table.conj td{border:1px solid var(--border);padding:8px 6px;text-align:left;}
+table.conj th{background:var(--teal-light);font-weight:800;color:var(--teal);}
+.mistake-box{background:#FBE5E4;border-radius:12px;padding:12px;font-size:13px;}
+.mistake-box b{color:var(--red);}
+.tip-box{background:var(--orange-light);border-radius:12px;padding:12px;font-size:13px;margin-bottom:10px;}
+
+.ex-card{margin-bottom:16px;}
+.hint-row{display:flex;gap:8px;margin:8px 0;flex-wrap:wrap;}
+.hint-chip{font-size:12px;background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:5px 10px;cursor:pointer;font-weight:700;}
+.hint-text{display:none;font-size:13px;background:#FFF8E8;border-radius:8px;padding:8px 10px;margin-top:6px;}
+.hint-text.shown{display:block;}
+input.blank{border:none;border-bottom:2px solid var(--teal);background:var(--teal-light);font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;padding:4px 8px;width:150px;border-radius:4px;}
+.mc-options{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+.mc-opt{padding:10px 14px;border:2px solid var(--border);border-radius:10px;font-weight:700;cursor:pointer;font-size:14px;}
+.mc-opt.correct{background:var(--green-light);border-color:var(--green);}
+.mc-opt.wrong{background:#FBE5E4;border-color:var(--red);}
+
+.retrieval-q{background:var(--teal-light);border-radius:12px;padding:14px;margin-bottom:10px;}
+.retrieval-q p{margin:0 0 8px;font-weight:700;font-size:14px;}
+.reveal-btn{background:none;border:2px dashed var(--teal);color:var(--teal);font-weight:800;font-size:12px;padding:6px 12px;border-radius:8px;cursor:pointer;}
+.reveal-answer{display:none;margin-top:8px;font-size:13px;background:#fff;padding:8px 10px;border-radius:8px;}
+.reveal-answer.shown{display:block;}
+
+.cam-link-btn{display:block;text-align:center;background:#2A8A8A;color:#fff;font-weight:800;font-size:15px;padding:14px 20px;border-radius:12px;text-decoration:none;box-shadow:var(--shadow);margin-bottom:10px;}
+.live-dot{display:inline-block;width:8px;height:8px;background:#e04444;border-radius:50%;margin-right:6px;animation:livePulse 1.4s ease-in-out infinite;}
+@keyframes livePulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+.starter-chip{display:block;width:100%;text-align:left;background:var(--teal-light);border:none;border-radius:10px;padding:10px 12px;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:var(--teal);margin-bottom:8px;cursor:pointer;}
+textarea.write-box{width:100%;min-height:120px;border:2px solid var(--border);border-radius:12px;padding:12px;font-family:'Nunito',sans-serif;font-size:14px;resize:vertical;}
+
+.speak-card{border-radius:14px;padding:14px;margin-bottom:10px;color:#fff;}
+.speak-card.warmup{background:#7AAFC2;}
+.speak-card.core{background:var(--teal);}
+.speak-card.challenge{background:#B0586B;}
+.speak-card .lvl{font-size:11px;font-weight:800;text-transform:uppercase;opacity:.85;letter-spacing:.5px;}
+.speak-card p{margin:6px 0 0;font-weight:700;font-size:14px;}
+.speak-card .fr{color:#fff;opacity:.85;}
+
+.focus-input-area textarea{width:100%;min-height:90px;border:2px solid var(--border);border-radius:12px;padding:12px;font-family:'Nunito',sans-serif;font-size:15px;resize:vertical;}
+.focus-toolbar{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.focus-toolbar button{flex:1;min-width:90px;padding:11px;border-radius:10px;border:2px solid var(--teal);background:#fff;color:var(--teal);font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;font-size:13px;}
+.focus-toolbar button.go{background:var(--teal);color:#fff;}
+.focus-legend{display:flex;gap:12px;justify-content:center;margin:14px 0;font-size:11px;font-weight:700;flex-wrap:wrap;}
+.legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;}
+#focusStage{display:none;background:#10222B;border-radius:20px;padding:40px 20px;min-height:220px;align-items:center;justify-content:center;text-align:center;flex-wrap:wrap;gap:10px;}
+#focusStage.show{display:flex;}
+#focusStage .word{font-size:26px;font-weight:800;color:#E8EEF0;line-height:1.5;}
+#focusStage .word.gw-subject{color:#6FB3FF;}
+#focusStage .word.gw-continuous{color:#5DDCC8;}
+#focusStage .word.gw-simple{color:#F9D066;}
+#focusStage .word.gw-time{color:#F2A65A;}
+#focusStage.wordmode .word{font-size:54px;display:none;}
+#focusStage.wordmode .word.active{display:inline-block;}
+.focus-progress{text-align:center;font-size:12px;color:var(--muted);font-weight:700;margin-top:10px;}
+.focus-hint{font-size:12px;color:var(--muted);text-align:center;margin-top:6px;}
+
+#timerBubble{position:fixed;bottom:18px;left:18px;width:60px;height:60px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;box-shadow:var(--shadow-lg);cursor:pointer;z-index:200;user-select:none;}
+#timerBubble.danger{background:var(--red);}
+#emojiOverlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:500;font-size:120px;}
+#emojiOverlay.show{display:flex;animation:zoomIn .5s ease-out;}
+@keyframes zoomIn{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
+#wbOverlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;z-index:400;}
+#wbOverlay.show{display:flex;}
+#wbPanel{background:var(--surface);width:100%;border-radius:24px 24px 0 0;padding:20px 18px 28px;max-height:85vh;overflow-y:auto;}
+#wbPanel h3{margin:0 0 12px;font-size:16px;font-weight:800;}
+.wb-close{float:right;background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;}
+.timer-controls{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.timer-controls button{flex:1;min-width:60px;padding:10px;border-radius:10px;border:2px solid var(--border);background:var(--bg);font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;}
+.stamp-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.stamp-btn{font-size:20px;background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:8px 10px;cursor:pointer;}
+#correctionLog{background:var(--bg);border-radius:10px;padding:10px;min-height:60px;font-size:13px;margin-bottom:10px;white-space:pre-wrap;}
+#wbNotes{width:100%;min-height:80px;border:2px solid var(--border);border-radius:10px;padding:10px;font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:10px;resize:vertical;}
+.wb-actions{display:flex;gap:8px;}
+.wb-actions button{flex:1;padding:10px;border-radius:10px;border:none;font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;}
+.wb-copy{background:var(--teal);color:#fff;}
+.wb-clear{background:#FBE5E4;color:var(--red);}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <h1>Watching the Wild</h1>
+  <p>Present Continuous vs Present Simple — Live Wildlife</p>
+</div>
+
+<div class="tabbar" id="tabbar">
+  <button class="tab-btn active" data-tab="warmup">Warm-Up</button>
+  <button class="tab-btn" data-tab="content">Content</button>
+  <button class="tab-btn" data-tab="grammar">Grammar</button>
+  <button class="tab-btn" data-tab="exercises">Exercises</button>
+  <button class="tab-btn" data-tab="watch">Watch Live</button>
+  <button class="tab-btn" data-tab="speaking">Writing &amp; Speaking</button>
+  <button class="tab-btn" data-tab="focus">Focus</button>
+</div>
+
+<!-- WARM-UP -->
+<div class="panel active" id="warmup">
+  <div class="card">
+    <h2>Quick Recall</h2>
+    <p class="fr">Réchauffement — pas de choix multiple, juste ta mémoire !</p>
+  </div>
+  <div class="retrieval-q">
+    <p>1. What's one weather word you remember? Make a sentence with "it".</p>
+    <p class="fr">Donne un mot de météo. Fais une phrase avec "it".</p>
+    <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('shown')">Show example</button>
+    <div class="reveal-answer">e.g. "It is sunny." / "It rains a lot in Belgium."</div>
+  </div>
+  <div class="retrieval-q">
+    <p>2. What are you doing at this exact moment?</p>
+    <p class="fr">Que fais-tu en ce moment précis ?</p>
+    <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('shown')">Show example</button>
+    <div class="reveal-answer">e.g. "I am sitting on a chair." / "I am talking to my teacher."</div>
+  </div>
+  <div class="retrieval-q">
+    <p>3. Now say one thing that is always true about you — not just right now.</p>
+    <p class="fr">Maintenant dis une chose qui est toujours vraie chez toi — pas juste maintenant.</p>
+  </div>
+  <div class="nav-buttons">
+    <span></span>
+    <button class="btn btn-primary" onclick="goTab('content')">Next →</button>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="panel" id="content">
+  <div class="hero-banner">
+    <h2>No Script. No Actors. Real Predators.</h2>
+    <p>Somewhere in Africa, a camera is filming a waterhole right now, live, with no editing. Nobody controls what happens next — a herd could arrive, or a lion could be hunting nearby.</p>
+    <p class="fr" style="opacity:.9;">Quelque part en Afrique, une caméra filme un point d'eau en ce moment, en direct, sans montage. Personne ne contrôle ce qui va se passer — un troupeau pourrait arriver, ou un lion pourrait être en train de chasser à proximité.</p>
+  </div>
+
+  <div class="card">
+    <h3>Fast Facts</h3>
+    <div class="facts-grid">
+      <div class="fact-box"><div class="num">24/7</div><div class="lbl">Camera Running</div></div>
+      <div class="fact-box"><div class="num">0</div><div class="lbl">Editing — It's Live</div></div>
+      <div class="fact-box"><div class="num">100%</div><div class="lbl">Unscripted</div></div>
+      <div class="fact-box"><div class="num">?</div><div class="lbl">Nobody Knows What's Next</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Two Ways to Talk About Animals</h3>
+    <p>We can talk about what an animal <b>always does</b> (a fact) — or what it <b>is doing right now</b> (happening this second). English uses two different grammar forms for this.</p>
+    <p class="fr">On peut parler de ce qu'un animal fait toujours (un fait) — ou de ce qu'il est en train de faire maintenant. L'anglais utilise deux formes grammaticales différentes pour ça.</p>
+    <div class="now-vs-always">
+      <div class="nva-box now"><b>Right Now</b>"The elephant is drinking water."</div>
+      <div class="nva-box always"><b>Always True</b>"Elephants drink a lot of water every day."</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Vocabulary — tap to reveal</h3>
+    <p class="fr" style="margin-bottom:10px;">Tape une fois → traduction · Tape deux fois → vert (maîtrisé) · Tape trois fois → réinitialise</p>
+    <div class="vocab-grid" id="vocabGrid">
+      <div class="vocab-card"><span class="en">elephant</span><span class="fr-word">l'éléphant</span></div>
+      <div class="vocab-card"><span class="en">lion</span><span class="fr-word">le lion</span></div>
+      <div class="vocab-card"><span class="en">zebra</span><span class="fr-word">le zèbre</span></div>
+      <div class="vocab-card"><span class="en">to drink</span><span class="fr-word">boire</span></div>
+      <div class="vocab-card"><span class="en">to run</span><span class="fr-word">courir</span></div>
+      <div class="vocab-card"><span class="en">to sleep</span><span class="fr-word">dormir</span></div>
+      <div class="vocab-card"><span class="en">to graze</span><span class="fr-word">brouter</span></div>
+      <div class="vocab-card"><span class="en">herd</span><span class="fr-word">le troupeau</span></div>
+      <div class="vocab-card"><span class="en">waterhole</span><span class="fr-word">le point d'eau</span></div>
+      <div class="vocab-card"><span class="en">to hunt</span><span class="fr-word">chasser</span></div>
+      <div class="vocab-card"><span class="en">to watch</span><span class="fr-word">observer</span></div>
+      <div class="vocab-card"><span class="en">wild</span><span class="fr-word">sauvage</span></div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('warmup')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('grammar')">Next →</button>
+  </div>
+</div>
+
+<!-- GRAMMAR -->
+<div class="panel" id="grammar">
+  <div class="card">
+    <h2>📐 Present Continuous — Happening Right Now</h2>
+    <p class="fr">Le présent continu — ce qui se passe maintenant</p>
+    <div class="formula-box">subject + am/is/are + verb-ing</div>
+    <table class="conj">
+      <tr><th>Subject</th><th>Form</th><th>Example</th></tr>
+      <tr><td>I</td><td>am + -ing</td><td>I am watching the lions.</td></tr>
+      <tr><td>He / She / It</td><td>is + -ing</td><td>The elephant is drinking water.</td></tr>
+      <tr><td>You / We / They</td><td>are + -ing</td><td>The zebras are running.</td></tr>
+    </table>
+    <p class="fr" style="margin-bottom:10px;">Je regarde... / L'éléphant boit... (en ce moment) / Les zèbres courent...</p>
+  </div>
+
+  <div class="card">
+    <h2>📐 Present Simple — Always True</h2>
+    <p class="fr">Le présent simple — toujours vrai</p>
+    <div class="formula-box">subject + verb &nbsp;|&nbsp; He/She/It + verb + -s</div>
+    <table class="conj">
+      <tr><th>Subject</th><th>Form</th><th>Example</th></tr>
+      <tr><td>I / You / We / They</td><td>verb</td><td>Lions <b>live</b> in groups.</td></tr>
+      <tr><td>He / She / It</td><td>verb + s</td><td>An elephant <b>eat</b>s plants all day.</td></tr>
+    </table>
+    <div class="tip-box">
+      <b>💡 Tip:</b> Present Simple = a fact that's always true. Present Continuous = happening right now, in this moment.
+      <p class="fr" style="margin-top:4px;">Présent simple = un fait toujours vrai. Présent continu = qui se passe maintenant, à cet instant.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="mistake-box">
+      <b>⚠️ Common mistakes:</b>
+      <p style="margin:8px 0 4px;">❌ "The lion sleeping." → ✅ "The lion <b>is</b> sleeping." (never forget am/is/are!)</p>
+      <p style="margin:4px 0 4px;">❌ "Elephants is drinking water every day." → ✅ "Elephants <b>drink</b> water every day." (general fact = Present Simple)</p>
+      <p style="margin:4px 0 0;">❌ "The zebra runs right now." → ✅ "The zebra <b>is running</b> right now." (happening now = Present Continuous)</p>
+      <p class="fr" style="margin-top:8px;">N'oublie jamais am/is/are · Fait général → présent simple · En ce moment → présent continu</p>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('content')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('exercises')">Next →</button>
+  </div>
+</div>
+
+<!-- EXERCISES -->
+<div class="panel" id="exercises">
+  <div class="card">
+    <h2>📝 Reading — At the Waterhole</h2>
+    <p class="fr">Lecture — Au point d'eau</p>
+    <p style="margin-top:8px;line-height:1.6;">Right now, three elephants <b>are drinking</b> water at the waterhole. Elephants <b>drink</b> a huge amount of water every day — up to 200 liters! A zebra <b>is standing</b> near the elephants, watching them carefully. Zebras <b>live</b> in large herds and they <b>always stay</b> close together for safety. Suddenly, a bird <b>lands</b> on the elephant's back — birds often <b>do</b> this to eat insects.</p>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag easy">Easy</span>
+    <p style="font-weight:700;">1. Fill in the blank: The elephant ___ ___ (drink) water right now.</p>
+    <input type="text" class="blank" placeholder="...">
+    <div class="hint-row"><span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">💡 Grammar tip</span></div>
+    <div class="hint-text">"Right now" = Present Continuous → is drinking</div>
+    <div class="hint-row"><span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">🇫🇷 French hint</span></div>
+    <div class="hint-text">"en ce moment" → is drinking</div>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag easy">Easy</span>
+    <p style="font-weight:700;">2. Choose the correct form: Lions ___ in groups called prides.</p>
+    <div class="mc-options">
+      <div class="mc-opt" onclick="checkMC(this,true)">live</div>
+      <div class="mc-opt" onclick="checkMC(this,false)">are living</div>
+      <div class="mc-opt" onclick="checkMC(this,false)">is living</div>
+    </div>
+    <div class="hint-row"><span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">🇫🇷 French hint</span></div>
+    <div class="hint-text">Fait général et toujours vrai → présent simple</div>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag medium">Medium</span>
+    <p style="font-weight:700;">3. Fill in: The zebras ___ ___ (run) across the field right now!</p>
+    <input type="text" class="blank" placeholder="...">
+    <div class="hint-row"><span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">💡 Grammar tip</span></div>
+    <div class="hint-text">Subject = they → are + verb-ing → are running</div>
+    <div class="hint-row"><span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">🇫🇷 French hint</span></div>
+    <div class="hint-text">Les zèbres courent en ce moment ! → are running</div>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag medium">Medium</span>
+    <p style="font-weight:700;">4. Present Simple or Continuous? "Elephants usually sleep only 2 hours a night."</p>
+    <div class="mc-options">
+      <div class="mc-opt" onclick="checkMC(this,true)">Present Simple</div>
+      <div class="mc-opt" onclick="checkMC(this,false)">Present Continuous</div>
+    </div>
+    <div class="hint-row"><span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">🇫🇷 French hint</span></div>
+    <div class="hint-text">"usually" = habitude générale → présent simple</div>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag hard">Hard</span>
+    <p style="font-weight:700;">5. Fill in both blanks: A lion ___ (sleep) about 20 hours a day, but this lion ___ ___ (hunt) right now.</p>
+    <input type="text" class="blank" placeholder="sleep..."> &nbsp; <input type="text" class="blank" placeholder="hunt...">
+    <div class="hint-row"><span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">💡 Grammar tip</span></div>
+    <div class="hint-text">First blank = general fact (sleeps). Second blank = happening now (is hunting).</div>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag hard">Hard</span>
+    <p style="font-weight:700;">6. Predict! Watch the live cam later and write one Present Continuous sentence about what an animal is doing.</p>
+    <input type="text" class="blank" style="width:100%;" placeholder="The ... is ...">
+    <div class="hint-row"><span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">🇫🇷 French hint</span></div>
+    <div class="hint-text">e.g. "The giraffe is eating leaves." → La girafe mange des feuilles (en ce moment).</div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('grammar')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('watch')">Next →</button>
+  </div>
+</div>
+
+<!-- WATCH LIVE -->
+<div class="panel" id="watch">
+  <div class="card">
+    <h2><span class="live-dot"></span>A Real Camera, Right Now</h2>
+    <p class="fr">Une vraie caméra, en ce moment</p>
+    <p style="margin-top:8px;">This camera points at a real waterhole in Africa. Nothing is staged. You might see elephants, zebras, or giraffes — or nothing at all for a while. That's what makes it real.</p>
+    <p class="fr">Cette caméra filme un vrai point d'eau en Afrique. Rien n'est mis en scène. Tu pourrais voir des éléphants, des zèbres, des girafes — ou rien du tout pendant un moment. C'est ce qui rend ça réel.</p>
+  </div>
+
+  <div class="card">
+    <h3>📺 Watch now</h3>
+    <a href="https://explore.org/livecams/african-wildlife/african-animal-lookout-camera" target="_blank" class="cam-link-btn"><span class="live-dot" style="background:#fff;"></span>Open the Live Africa Cam</a>
+    <p style="font-size:12px;color:var(--muted);">This is a real, unscripted live camera. Silence is normal — wild animals don't perform on schedule.</p>
+    <p class="fr" style="font-size:12px;">C'est une vraie caméra en direct, sans scénario. Le silence est normal — les animaux sauvages ne se produisent pas sur commande.</p>
+  </div>
+
+  <div class="card">
+    <h3>While You Watch</h3>
+    <p class="fr" style="margin-bottom:10px;">Pendant que tu regardes</p>
+    <div class="retrieval-q">
+      <p>1. What animal(s) can you see? What is happening right now?</p>
+      <p class="fr">Quel(s) animal(aux) vois-tu ? Que se passe-t-il en ce moment ?</p>
+    </div>
+    <div class="retrieval-q">
+      <p>2. Say one Present Continuous sentence about what you see.</p>
+      <p class="fr">Dis une phrase au présent continu sur ce que tu vois.</p>
+    </div>
+    <div class="retrieval-q">
+      <p>3. Now say one Present Simple fact you know about that animal (not from the camera — from your own knowledge!).</p>
+      <p class="fr">Maintenant dis un fait au présent simple que tu connais sur cet animal (pas de la caméra — de tes propres connaissances !).</p>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('exercises')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('speaking')">Next →</button>
+  </div>
+</div>
+
+<!-- WRITING & SPEAKING -->
+<div class="panel" id="speaking">
+  <div class="card">
+    <h2>✍️ Writing — Nature Reporter</h2>
+    <p class="fr">Rédige un reportage nature — choisis un début de phrase</p>
+    <button class="starter-chip" onclick="setStarter('Right now, the ')">Right now, the...</button>
+    <button class="starter-chip" onclick="setStarter('Elephants usually ')">Elephants usually...</button>
+    <button class="starter-chip" onclick="setStarter('Right now, the animal is ')">Right now, the animal is...</button>
+    <button class="starter-chip" onclick="setStarter('Lions always ')">Lions always...</button>
+    <textarea class="write-box" id="writeBox" placeholder="Write here — try to use both Present Simple AND Present Continuous!"></textarea>
+  </div>
+
+  <div class="card">
+    <h2>🎤 Speaking</h2>
+    <p class="fr">À l'oral — pas de correction pendant, on note les erreurs pour la fin</p>
+    <div class="speak-card warmup">
+      <span class="lvl">Warm-up</span>
+      <p>What are you doing right now, in this exact moment?</p>
+      <p class="fr">Que fais-tu en ce moment, à cet instant précis ?</p>
+    </div>
+    <div class="speak-card core">
+      <span class="lvl">Core</span>
+      <p>Tell me 3 general facts about an animal you like — then tell me what you think that animal is doing right now, wherever it is.</p>
+      <p class="fr">Dis-moi 3 faits généraux sur un animal que tu aimes — puis dis-moi ce que tu penses qu'il fait en ce moment, où qu'il soit.</p>
+    </div>
+    <div class="speak-card challenge">
+      <span class="lvl">Challenge</span>
+      <p>Compare two animals: what do they always do differently, and what might each one be doing right now?</p>
+      <p class="fr">Compare deux animaux : que font-ils toujours différemment, et que pourrait faire chacun en ce moment ?</p>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('watch')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('focus')">Next →</button>
+  </div>
+</div>
+
+<!-- FOCUS -->
+<div class="panel" id="focus">
+  <div class="card">
+    <h2>🔍 Focus — Read Aloud</h2>
+    <p class="fr">Pour le tuteur : tape une phrase — la structure s'illumine</p>
+    <div class="focus-input-area">
+      <textarea id="focusInput" placeholder="Type a sentence here... e.g. The elephant is drinking water, but lions usually sleep during the day."></textarea>
+    </div>
+    <div class="focus-toolbar">
+      <button class="go" onclick="renderFocusSentence()">Show sentence</button>
+      <button onclick="renderFocusWords()">Word by word</button>
+      <button onclick="clearFocus()">Clear</button>
+    </div>
+    <div class="focus-legend">
+      <span><span class="legend-dot" style="background:#6FB3FF"></span>Subject</span>
+      <span><span class="legend-dot" style="background:#5DDCC8"></span>Present Continuous</span>
+      <span><span class="legend-dot" style="background:#F9D066"></span>Present Simple</span>
+      <span><span class="legend-dot" style="background:#F2A65A"></span>Time / Frequency</span>
+    </div>
+    <div id="focusStage"></div>
+    <div class="focus-progress" id="focusProgress"></div>
+    <div class="focus-hint" id="focusHintText"></div>
+  </div>
+</div>
+
+<div id="timerBubble" onclick="openWb()">50:00</div>
+<div id="emojiOverlay" onclick="this.classList.remove('show')"></div>
+
+<div id="wbOverlay" onclick="if(event.target===this)closeWb()">
+  <div id="wbPanel">
+    <button class="wb-close" onclick="closeWb()">✕</button>
+    <h3>⏱ Whiteboard</h3>
+    <div class="timer-controls">
+      <button onclick="setTimerMin(5)">5m</button>
+      <button onclick="setTimerMin(10)">10m</button>
+      <button onclick="setTimerMin(15)">15m</button>
+      <button onclick="toggleRun()" id="runBtn">▶ Start</button>
+      <button onclick="resetTimer()">↺ Reset</button>
+    </div>
+    <h3 style="font-size:14px;">Correction Stamps</h3>
+    <div class="stamp-row">
+      <button class="stamp-btn" onclick="addStamp('✅')">✅</button>
+      <button class="stamp-btn" onclick="addStamp('⭐')">⭐</button>
+      <button class="stamp-btn" onclick="addStamp('🔁 Try again')">🔁</button>
+      <button class="stamp-btn" onclick="addStamp('🗣 Pronunciation')">🗣</button>
+      <button class="stamp-btn" onclick="addStamp('📐 Grammar')">📐</button>
+    </div>
+    <div id="correctionLog"></div>
+    <h3 style="font-size:14px;">Notes</h3>
+    <textarea id="wbNotes" placeholder="Notes for this lesson..."></textarea>
+    <div class="wb-actions">
+      <button class="wb-copy" onclick="copyWb()">Copy</button>
+      <button class="wb-clear" onclick="clearWb()">Clear</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function goTab(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector(`.tab-btn[data-tab="${id}"]`).classList.add('active');
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('.tab-btn').forEach(btn=>btn.addEventListener('click',()=>goTab(btn.dataset.tab)));
+
+document.querySelectorAll('.vocab-card').forEach(card=>{
+  let state=0;
+  card.addEventListener('click',()=>{
+    state=(state+1)%3;
+    if(state===1){card.classList.add('revealed');card.classList.remove('mastered');}
+    else if(state===2){card.classList.add('mastered');}
+    else{card.classList.remove('revealed','mastered');}
+  });
+});
+
+function checkMC(el,correct){
+  el.parentElement.querySelectorAll('.mc-opt').forEach(s=>s.classList.remove('correct','wrong'));
+  el.classList.add(correct?'correct':'wrong');
+}
+
+function setStarter(text){
+  const box=document.getElementById('writeBox');
+  box.value=text; box.focus();
+}
+
+let totalSeconds=50*60,timerInterval=null,isRunning=false;
+function updateTimerDisplay(){
+  const m=Math.floor(totalSeconds/60).toString().padStart(2,'0');
+  const s=(totalSeconds%60).toString().padStart(2,'0');
+  const b=document.getElementById('timerBubble');
+  b.textContent=`${m}:${s}`;
+  b.classList.toggle('danger',isRunning&&totalSeconds<=30);
+}
+function toggleRun(){
+  isRunning=!isRunning;
+  document.getElementById('runBtn').textContent=isRunning?'⏸ Pause':'▶ Start';
+  if(isRunning){
+    timerInterval=setInterval(()=>{
+      totalSeconds--;updateTimerDisplay();
+      if(totalSeconds<=0){clearInterval(timerInterval);isRunning=false;document.getElementById('runBtn').textContent='▶ Start';fireEmoji();}
+    },1000);
+  } else { clearInterval(timerInterval); }
+}
+function setTimerMin(min){totalSeconds=min*60;updateTimerDisplay();}
+function resetTimer(){clearInterval(timerInterval);isRunning=false;document.getElementById('runBtn').textContent='▶ Start';totalSeconds=50*60;updateTimerDisplay();}
+const faces=['😀','😎','🤩','😜','🥳','😯','🤓','😼','🙃','😺'];
+function fireEmoji(){
+  const o=document.getElementById('emojiOverlay');
+  o.textContent=faces[Math.floor(Math.random()*faces.length)];
+  o.classList.add('show');
+}
+updateTimerDisplay();
+
+function openWb(){document.getElementById('wbOverlay').classList.add('show');}
+function closeWb(){document.getElementById('wbOverlay').classList.remove('show');}
+function addStamp(label){
+  const log=document.getElementById('correctionLog');
+  log.textContent+=(log.textContent?'\n':'')+label;
+}
+function copyWb(){
+  const text=document.getElementById('correctionLog').textContent+'\n\n'+document.getElementById('wbNotes').value;
+  navigator.clipboard.writeText(text).catch(()=>{});
+}
+function clearWb(){document.getElementById('correctionLog').textContent='';document.getElementById('wbNotes').value='';}
+
+const PRESENT_SIMPLE_VERBS=['live','lives','drink','drinks','sleep','sleeps','eat','eats','graze','grazes','hunt','hunts','run','runs','stay','stays','watch','watches','do','does','land','lands','like','likes','love','loves','need','needs'];
+const CONTINUOUS_TIME=['right now','this second','at this moment','while you watch'];
+const SIMPLE_TIME=['usually','always','every day','every night','often','sometimes','never','generally'];
+const SUBJECTS_LIST=['I','you','he','she','it','we','they','elephants','lions','zebras','the elephant','the lion','the zebra','birds','a lion','an elephant'];
+
+const PHRASE_PATTERNS=[
+  {re:/\b(am|is|are)\s+not\s+\w+ing\b/gi,cls:'gw-continuous'},
+  {re:/\b(am|is|are)\s+\w+ing\b/gi,cls:'gw-continuous'},
+  {re:new RegExp('\\b('+CONTINUOUS_TIME.join('|')+')\\b','gi'),cls:'gw-time'},
+  {re:new RegExp('\\b('+SIMPLE_TIME.join('|')+')\\b','gi'),cls:'gw-time'},
+  {re:new RegExp('\\b('+PRESENT_SIMPLE_VERBS.join('|')+')\\b','gi'),cls:'gw-simple'},
+  {re:new RegExp('\\b('+SUBJECTS_LIST.join('|')+')\\b','gi'),cls:'gw-subject'},
+];
+
+function buildSegments(text){
+  const claimed=new Array(text.length).fill(false);
+  const matches=[];
+  PHRASE_PATTERNS.forEach(p=>{
+    const re=new RegExp(p.re.source,p.re.flags.replace(/g/g,'')+'g');
+    let m;
+    while((m=re.exec(text))!==null){
+      matches.push({start:m.index,end:m.index+m[0].length,cls:p.cls});
+      if(m[0].length===0) re.lastIndex++;
+    }
+  });
+  matches.sort((a,b)=>a.start-b.start||(b.end-b.start)-(a.end-a.start));
+  const accepted=[];
+  for(const m of matches){
+    let overlap=false;
+    for(let i=m.start;i<m.end;i++){if(claimed[i]){overlap=true;break;}}
+    if(overlap) continue;
+    for(let i=m.start;i<m.end;i++) claimed[i]=true;
+    accepted.push(m);
+  }
+  accepted.sort((a,b)=>a.start-b.start);
+  const out=[];
+  let cursor=0;
+  accepted.forEach(m=>{
+    if(m.start>cursor) out.push({text:text.slice(cursor,m.start),cls:''});
+    out.push({text:text.slice(m.start,m.end),cls:m.cls});
+    cursor=m.end;
+  });
+  if(cursor<text.length) out.push({text:text.slice(cursor),cls:''});
+  return out;
+}
+
+function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function buildSentenceHtml(text){
+  return buildSegments(text).map(seg=>{
+    if(!seg.text) return '';
+    const safe=escapeHtml(seg.text);
+    return seg.cls?`<span class="word ${seg.cls}">${safe}</span>`:`<span class="word">${safe}</span>`;
+  }).join('');
+}
+
+function buildWordTokens(text){
+  const tokens=[];
+  buildSegments(text).forEach(seg=>{
+    if(!seg.text) return;
+    if(seg.cls){tokens.push({text:seg.text.trim(),cls:seg.cls});}
+    else{seg.text.split(/\s+/).filter(w=>w.length>0).forEach(w=>tokens.push({text:w,cls:''}));}
+  });
+  return tokens;
+}
+
+let focusTokens=[],focusIndex=0;
+
+function renderFocusSentence(){
+  const text=document.getElementById('focusInput').value;
+  if(!text.trim()) return;
+  const stage=document.getElementById('focusStage');
+  stage.classList.remove('wordmode');
+  stage.classList.add('show');
+  stage.innerHTML=buildSentenceHtml(text);
+  document.getElementById('focusProgress').textContent='';
+  document.getElementById('focusHintText').textContent='';
+}
+
+function renderFocusWords(){
+  const text=document.getElementById('focusInput').value;
+  if(!text.trim()) return;
+  const stage=document.getElementById('focusStage');
+  stage.classList.add('show','wordmode');
+  const tokens=buildWordTokens(text);
+  stage.innerHTML=tokens.map(t=>`<span class="word ${t.cls}">${escapeHtml(t.text)}</span>`).join(' ');
+  focusTokens=Array.from(stage.querySelectorAll('.word'));
+  focusIndex=0;
+  focusTokens.forEach(w=>w.classList.remove('active'));
+  if(focusTokens.length) focusTokens[0].classList.add('active');
+  updateFocusProgress();
+  document.getElementById('focusHintText').textContent='Tap the box or press → to advance';
+  stage.onclick=advanceFocusWord;
+}
+
+function advanceFocusWord(){
+  if(!focusTokens.length) return;
+  focusTokens[focusIndex].classList.remove('active');
+  focusIndex=(focusIndex+1)%focusTokens.length;
+  focusTokens[focusIndex].classList.add('active');
+  updateFocusProgress();
+}
+function rewindFocusWord(){
+  if(!focusTokens.length) return;
+  focusTokens[focusIndex].classList.remove('active');
+  focusIndex=(focusIndex-1+focusTokens.length)%focusTokens.length;
+  focusTokens[focusIndex].classList.add('active');
+  updateFocusProgress();
+}
+function updateFocusProgress(){
+  document.getElementById('focusProgress').textContent=focusTokens.length?`${focusIndex+1} / ${focusTokens.length}`:'';
+}
+function clearFocus(){
+  document.getElementById('focusInput').value='';
+  const stage=document.getElementById('focusStage');
+  stage.classList.remove('show','wordmode');
+  stage.innerHTML='';
+  focusTokens=[];focusIndex=0;
+  document.getElementById('focusProgress').textContent='';
+  document.getElementById('focusHintText').textContent='';
+}
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('focus').classList.contains('active')){
+    if(e.key==='ArrowRight') advanceFocusWord();
+    if(e.key==='ArrowLeft') rewindFocusWord();
+  }
+});
+</script>
+</body>
+</html>
