@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Durim's Language Studio</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script>
+  if (localStorage.getItem('lt_unlocked') === '1') document.documentElement.classList.add('unlocked');
+</script>
 <style>
   :root {
     --ink: #1a1a2e;
@@ -321,9 +324,104 @@
     .page { padding: 40px 20px 60px; }
     .grid { grid-template-columns: 1fr; }
   }
+
+  html:not(.unlocked) .page { display: none; }
+  html.unlocked #lock-screen { display: none; }
+
+  #lock-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .lock-card {
+    background: white;
+    border-radius: 16px;
+    padding: 40px 36px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    max-width: 320px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .lock-card .card-emoji { font-size: 32px; margin-bottom: 10px; }
+
+  .lock-card h1 {
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+  }
+
+  .lock-card p {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  #lock-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  #lock-password {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--warm);
+    outline: none;
+    text-align: center;
+  }
+
+  #lock-password:focus { border-color: var(--gold); }
+
+  #lock-submit {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: none;
+    background: var(--ink);
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  #lock-submit:hover { opacity: 0.85; }
+
+  #lock-error {
+    font-size: 12px;
+    color: var(--rose);
+    display: none;
+  }
+
+  #lock-form.shake { animation: shake 0.3s ease; }
+
+  @keyframes shake {
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
 </style>
 </head>
 <body>
+
+<div id="lock-screen">
+  <div class="lock-card">
+    <span class="card-emoji">🔒</span>
+    <h1>Durim's Language Studio</h1>
+    <p>This page is private. Enter the password to continue.</p>
+    <form id="lock-form">
+      <input id="lock-password" type="password" placeholder="Password" autocomplete="current-password" autofocus>
+      <button id="lock-submit" type="submit">Unlock</button>
+      <span id="lock-error">Wrong password, try again.</span>
+    </form>
+  </div>
+</div>
+
 <div class="page">
 
   <header>
@@ -477,6 +575,34 @@
   }
 
   students.forEach(s => loadLessons(s));
+</script>
+
+<script>
+  const LOCK_HASH = '6ddda594594f6dc84189628a1ae5d504e5de56f722f3c1dc3963c7f7bc13ed0f';
+
+  async function sha256(text) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+    return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  document.getElementById('lock-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const input = document.getElementById('lock-password');
+    const hash = await sha256(input.value);
+
+    if (hash === LOCK_HASH) {
+      localStorage.setItem('lt_unlocked', '1');
+      document.documentElement.classList.add('unlocked');
+    } else {
+      document.getElementById('lock-error').style.display = 'block';
+      form.classList.remove('shake');
+      void form.offsetWidth;
+      form.classList.add('shake');
+      input.value = '';
+      input.focus();
+    }
+  });
 </script>
 </body>
 </html>
