@@ -71,7 +71,8 @@ function renderDigestEmail({ studentId, studentName, hookLine, challengeText, fo
             <a href="${hubUrl}" style="display:inline-block;padding:11px 22px;font-family:'DM Sans',Verdana,sans-serif;font-size:13px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:8px;">Open your lessons →</a>
           </td></tr>
         </table>
-        <p style="margin:26px 0 0;padding-top:18px;border-top:1px solid #e8ddd0;font-size:11px;color:#bbb;">Made with care by Durim</p>
+        <p class="email-text" style="margin:24px 0 0;font-size:14px;color:#1a1a2e;">See you soon,<br>Durim</p>
+        <p style="margin:20px 0 0;padding-top:18px;border-top:1px solid #e8ddd0;font-size:11px;color:#bbb;">Language Studio · durkiman.github.io/Language-Teaching</p>
       </td>
     </tr>
   </table>
