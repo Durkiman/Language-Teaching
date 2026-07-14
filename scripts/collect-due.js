@@ -28,7 +28,7 @@ const STUDENTS = [
   { id: 'angelique', folder: 'Angelique', name: 'Angelique' },
   { id: 'mel', folder: 'Mel', name: 'Mel' },
   { id: 'emma', folder: 'Emma', name: 'Emma' },
-  // Mehdi excluded: no progress.json (business track isn't card-tracked — see curriculum/SCHEMA.md)
+  { id: 'mehdi', folder: 'Mehdi', name: 'Mehdi' },
 ];
 
 function loadJSON(filePath) {

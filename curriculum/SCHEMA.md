@@ -110,6 +110,6 @@ Day-count thresholds (14/7) approximate the 2–3-sessions-then-1-week rule for 
 
 ## Scope notes
 
-- Mehdi's business track keeps its five-pillar structure; if you want him tracked, borrow individual B1 cards (B1-08, B1-09, B1-11, B1-19, B1-20 map cleanly onto coaching/business English) rather than assigning him the whole level.
+- Mehdi's business track keeps its five-pillar structure; he's now tracked against a borrowed subset of B1 cards (B1-08, B1-09, B1-11, B1-19, B1-20 map cleanly onto coaching/business English) rather than the whole level — only mark a card `introduced` once his lesson content actually evidences it, don't backfill the set from the pillar structure alone.
 - Mel (Albanian) and Emma (Spanish) need their own card sets — the schema is language-agnostic, only `curriculum/*.json` contents are English-specific.
 - A1 set (Angelique) not yet drafted; same process from the Core Inventory A1 section when needed.
