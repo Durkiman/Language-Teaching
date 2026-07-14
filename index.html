@@ -668,33 +668,37 @@
   ];
 
   // Students with a progress.json — add ids here as new levels get assigned.
-  const CURRICULUM_STUDENT_IDS = ['micha', 'thomas', 'greg', 'angelique', 'mel'];
+  const CURRICULUM_STUDENT_IDS = ['micha', 'thomas', 'greg', 'angelique', 'mel', 'emma'];
 
+  // Each level and each student's progress.json are fetched independently and
+  // in parallel — one bad fetch must not block the rest (a level 404 or a
+  // transient network error used to abort the whole function, silently
+  // blanking every student's Curriculum Tracking section).
   async function loadCurriculum() {
-    try {
-      const levels = ['a1', 'a2', 'b1', 'sq-a1', 'sq-a2'];
-      for (const level of levels) {
+    const levels = ['a1', 'a2', 'b1', 'sq-a1', 'sq-a2', 'es-a1', 'es-a2'];
+    await Promise.all(levels.map(async (level) => {
+      try {
         const res = await fetch(`${CURRICULUM_URL}/${level}.json`);
         if (res.ok) {
           const data = await res.json();
           studentCurricula[level] = { cards: data.cards, strands: data.strands };
         }
+      } catch (err) {
+        console.error(`Failed to load curriculum level ${level}:`, err);
       }
+    }));
 
-      for (const id of CURRICULUM_STUDENT_IDS) {
-        const student = students.find(s => s.id === id);
-        if (!student) continue;
-        try {
-          const res = await fetch(`${REPO_RAW}/${student.folder}/progress.json`);
-          if (res.ok) studentProgress[id] = await res.json();
-        } catch (err) {
-          // Missing/unreachable progress.json for this student — leave unset,
-          // renderCurriculumFor() shows "No curriculum data" for it.
-        }
+    await Promise.all(CURRICULUM_STUDENT_IDS.map(async (id) => {
+      const student = students.find(s => s.id === id);
+      if (!student) return;
+      try {
+        const res = await fetch(`${REPO_RAW}/${student.folder}/progress.json`);
+        if (res.ok) studentProgress[id] = await res.json();
+      } catch (err) {
+        // Missing/unreachable progress.json for this student — leave unset,
+        // renderCurriculumFor() shows "No curriculum data" for it.
       }
-    } catch (err) {
-      console.error('Failed to load curriculum:', err);
-    }
+    }));
   }
 
   /** A card is due once its most recent activity (last review, or the
