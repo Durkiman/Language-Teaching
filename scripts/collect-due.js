@@ -1,10 +1,20 @@
 #!/usr/bin/env node
-// Weekly retrieval-practice digest generator.
-// Reuses the same dueForReview() rule as index.html's hub, but reads local
-// files instead of fetching over REPO_RAW, so it can run outside a browser.
+// Weekly retrieval-practice data collector.
 //
-// Usage: node scripts/generate-digest.js
-// Writes one text file per student to scripts/output/<student>.txt
+// This script deliberately does NOT write the student-facing message.
+// Templating produced correct-but-lifeless copy (CEFR can-do statements
+// read like an assessment report, not something a student on their phone
+// wants to act on). Instead this collects, per student, exactly the
+// context a writer needs to make it engaging: due cards with their
+// skin_examples (interest-based re-skin hints already authored into the
+// curriculum), plus the student's most recent lesson for continuity.
+// The message copy gets written per run from this data — see scripts/README.md.
+//
+// Reuses the same dueForReview() rule as index.html's hub, reading local
+// files instead of fetching over REPO_RAW so it can run outside a browser.
+//
+// Usage: node scripts/collect-due.js
+// Writes scripts/output/due.json
 
 const fs = require('fs');
 const path = require('path');
@@ -56,59 +66,57 @@ function cleanTitle(title) {
   return (title || '').replace(/^#?\d+(\.\d+)?\s*/, '').replace(/^-|-$/g, '').trim();
 }
 
-function buildDigest(student) {
+function collectForStudent(student) {
   const progress = loadJSON(path.join(ROOT, student.folder, 'progress.json'));
-  if (!progress) return { student, skipped: 'no progress.json' };
+  if (!progress) return { student: student.name, id: student.id, skipped: 'no progress.json' };
 
   const trackedIds = Object.keys(progress.cards || {});
-  if (trackedIds.length === 0) return { student, skipped: 'no cards tracked yet' };
+  if (trackedIds.length === 0) return { student: student.name, id: student.id, skipped: 'no cards tracked yet' };
 
   const dueIds = trackedIds.filter((id) => dueForReview(progress.cards[id]));
-  if (dueIds.length === 0) return { student, skipped: 'nothing due' };
+  if (dueIds.length === 0) return { student: student.name, id: student.id, skipped: 'nothing due' };
 
   const curriculumCache = {};
   const dueCards = dueIds
     .map((id) => findCardDef(id, progress.levels || [], curriculumCache))
     .filter(Boolean)
-    .slice(0, 4); // cap so the message stays skimmable
+    .map((c) => ({
+      id: c.id,
+      title: c.title,
+      goal: c.goal,
+      evidence: c.evidence,
+      skin_examples: c.skin_examples || [],
+    }));
 
-  if (dueCards.length === 0) return { student, skipped: 'due cards not found in curriculum files' };
+  if (dueCards.length === 0) return { student: student.name, id: student.id, skipped: 'due cards not found in curriculum files' };
 
   const lessons = loadJSON(path.join(ROOT, student.folder, 'lessons.json')) || [];
-  const lastLesson = lessons[0];
-  const context = lastLesson ? ` (following on from "${cleanTitle(lastLesson.title)}")` : '';
+  const lastLesson = lessons[0] ? cleanTitle(lessons[0].title) : null;
 
-  const lines = [];
-  lines.push(`Subject: A few things to keep fresh before our next lesson`);
-  lines.push('');
-  lines.push(`Hey ${student.name},`);
-  lines.push('');
-  lines.push(`Quick refresh${context} — no prep, just think these through or send me a voice note:`);
-  lines.push('');
-  dueCards.forEach((card, i) => {
-    lines.push(`${i + 1}. ${card.goal}`);
-    lines.push(`   ${card.evidence}`);
-    lines.push('');
-  });
-  lines.push('See you soon!');
-
-  return { student, text: lines.join('\n'), cardIds: dueCards.map((c) => c.id) };
+  return {
+    student: student.name,
+    id: student.id,
+    lastLesson,
+    dueCards,
+  };
 }
 
 function main() {
   const outDir = path.join(ROOT, 'scripts', 'output');
   fs.mkdirSync(outDir, { recursive: true });
 
-  for (const student of STUDENTS) {
-    const result = buildDigest(student);
-    if (result.skipped) {
-      console.log(`[${result.student.name}] skipped: ${result.skipped}`);
-      continue;
+  const results = STUDENTS.map(collectForStudent);
+  const outPath = path.join(outDir, 'due.json');
+  fs.writeFileSync(outPath, JSON.stringify(results, null, 2), 'utf8');
+
+  for (const r of results) {
+    if (r.skipped) {
+      console.log(`[${r.student}] skipped: ${r.skipped}`);
+    } else {
+      console.log(`[${r.student}] due: ${r.dueCards.map((c) => c.id).join(', ')}`);
     }
-    const outPath = path.join(outDir, `${result.student.id}.txt`);
-    fs.writeFileSync(outPath, result.text, 'utf8');
-    console.log(`[${result.student.name}] due: ${result.cardIds.join(', ')} -> ${path.relative(ROOT, outPath)}`);
   }
+  console.log(`\nWrote ${path.relative(ROOT, outPath)}`);
 }
 
 main();
