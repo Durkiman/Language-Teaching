@@ -1,21 +1,156 @@
 [
-  {"file": "watching-the-wild.html",      "title": "#15 Present Continuous", "goals": { "primary": ["A2-01"] } },
-  {"file": "grammar-escape-room.html",      "title": "-escape room", "goals": { "incidental": ["A2-06", "A2-20", "A2-04", "A2-10"] } },
-  {"file": "micha-vocab.html",      "title": "-Vocabulary builder-" },
-  { "file": "micha-weather-lesson.html",      "title": "#13 The Weather", "goals": { "primary": ["A2-01"] } },
-  { "file": "artemis-ii-lesson.html",      "title": "#12 Artemis II", "goals": { "primary": ["A2-10", "A2-11"] } },
-  { "file": "worldcup-lesson.html",      "title": "#11 World Cup 2026" },
-  { "file": "micha_lesson_goingto.html",      "title": "#10 Going to", "goals": { "primary": ["A2-10"] } },
-  { "file": "azores-lesson.html",      "title": "#9 Azores (Comparative)", "goals": { "primary": ["A2-20", "A2-04"] } },
-  { "file": "ucl-match-report.html",      "title": "#8 UCL Match Report", "goals": { "primary": ["A2-06"] } },
-  { "file": "ucl-final-lesson(1).html",   "title": "#7 UCL Final" },
-  { "file": "micha-nyc-food.html",        "title": "#6 NYC Food", "goals": { "primary": ["A2-06"] } },
-  { "file": "micha-saint-martin.html",    "title": "#5 Saint Martin", "goals": { "primary": ["A2-06"] } },
-  { "file": "saint-barth-lesson.html",    "title": "#4 Saint Barth", "goals": { "primary": ["A2-06", "A2-04"] } },
-  { "file": "theme-parks-lesson(1).html", "title": "#3.1 Theme Parks" },
-  { "file": "kauai-lesson.html",          "title": "#3 Kauai Explorer", "goals": { "primary": ["A2-06", "A2-04"] } },
-  { "file": "samoa-level2-2.html",        "title": "#2 Samoa Level 2", "goals": { "primary": ["A2-06", "A2-04"] } },
-  { "file": "saba-possessives(1).html",   "title": "#1.1 Possessives" },
-  { "file": "onepiece-lesson.html",       "title": "#1 One Piece", "goals": { "incidental": ["A2-04"] } },
-  { "file": "micha-verb-test.html",       "title": "#0 Verb Test", "goals": { "primary": ["A2-06"] } }
+  {
+    "file": "micha-present-simple-continuous-wildlife.html",
+    "title": "#15 Present Continuous",
+    "goals": {
+      "primary": [
+        "A2-01"
+      ]
+    }
+  },
+  {
+    "file": "micha-grammar-review-escape-room.html",
+    "title": "-escape room",
+    "goals": {
+      "incidental": [
+        "A2-06",
+        "A2-20",
+        "A2-04",
+        "A2-10"
+      ]
+    }
+  },
+  {
+    "file": "micha-vocabulary-reference.html",
+    "title": "-Vocabulary builder-"
+  },
+  {
+    "file": "micha-present-simple-weather.html",
+    "title": "#13 The Weather",
+    "goals": {
+      "primary": [
+        "A2-01"
+      ]
+    }
+  },
+  {
+    "file": "micha-will-vs-going-to-moon-mission.html",
+    "title": "#12 Artemis II",
+    "goals": {
+      "primary": [
+        "A2-10",
+        "A2-11"
+      ]
+    }
+  },
+  {
+    "file": "worldcup-lesson.html",
+    "title": "#11 World Cup 2026"
+  },
+  {
+    "file": "micha-going-to-plans.html",
+    "title": "#10 Going to",
+    "goals": {
+      "primary": [
+        "A2-10"
+      ]
+    }
+  },
+  {
+    "file": "micha-comparatives-azores.html",
+    "title": "#9 Azores (Comparative)",
+    "goals": {
+      "primary": [
+        "A2-20",
+        "A2-04"
+      ]
+    }
+  },
+  {
+    "file": "micha-past-simple-football-report.html",
+    "title": "#8 UCL Match Report",
+    "goals": {
+      "primary": [
+        "A2-06"
+      ]
+    }
+  },
+  {
+    "file": "micha-past-simple-champions-final.html",
+    "title": "#7 UCL Final"
+  },
+  {
+    "file": "micha-past-simple-nyc-food.html",
+    "title": "#6 NYC Food",
+    "goals": {
+      "primary": [
+        "A2-06"
+      ]
+    }
+  },
+  {
+    "file": "micha-past-simple-saint-martin.html",
+    "title": "#5 Saint Martin",
+    "goals": {
+      "primary": [
+        "A2-06"
+      ]
+    }
+  },
+  {
+    "file": "micha-past-simple-saint-barth.html",
+    "title": "#4 Saint Barth",
+    "goals": {
+      "primary": [
+        "A2-06",
+        "A2-04"
+      ]
+    }
+  },
+  {
+    "file": "micha-superlatives-theme-parks.html",
+    "title": "#3.1 Theme Parks"
+  },
+  {
+    "file": "micha-past-simple-kauai.html",
+    "title": "#3 Kauai Explorer",
+    "goals": {
+      "primary": [
+        "A2-06",
+        "A2-04"
+      ]
+    }
+  },
+  {
+    "file": "micha-past-simple-samoa.html",
+    "title": "#2 Samoa Level 2",
+    "goals": {
+      "primary": [
+        "A2-06",
+        "A2-04"
+      ]
+    }
+  },
+  {
+    "file": "micha-possessives-saba.html",
+    "title": "#1.1 Possessives"
+  },
+  {
+    "file": "micha-prepositions-one-piece.html",
+    "title": "#1 One Piece",
+    "goals": {
+      "incidental": [
+        "A2-04"
+      ]
+    }
+  },
+  {
+    "file": "micha-past-simple-verb-test.html",
+    "title": "#0 Verb Test",
+    "goals": {
+      "primary": [
+        "A2-06"
+      ]
+    }
+  }
 ]

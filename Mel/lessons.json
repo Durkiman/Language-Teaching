@@ -1,8 +1,26 @@
 [
-{ "file": "mel-lesson6.html", "title": "#5 Kujto & trego" },
-{ "file": "mel-lesson5.html", "title": "#4 Fol si ti" },
-{ "file": "mel-vocab.html", "title": "# Vocabulary builder" },
-{ "file": "mel-lesson4.html", "title": "#3 Ndihem & mendoj" },
-{ "file": "albanian-lesson2.html", "title": "#2 Çka don?" },
-{ "file": "albanian-lesson1.html", "title": "#1 restart" }
+  {
+    "file": "mel-past-tense-storytelling.html",
+    "title": "#5 Kujto & trego"
+  },
+  {
+    "file": "mel-question-marker-self-expression.html",
+    "title": "#4 Fol si ti"
+  },
+  {
+    "file": "mel-vocabulary-reference.html",
+    "title": "# Vocabulary builder"
+  },
+  {
+    "file": "mel-adjective-agreement-feelings.html",
+    "title": "#3 Ndihem & mendoj"
+  },
+  {
+    "file": "mel-verb-conjugation-preferences.html",
+    "title": "#2 Çka don?"
+  },
+  {
+    "file": "mel-definite-nouns-welcome.html",
+    "title": "#1 restart"
+  }
 ]
