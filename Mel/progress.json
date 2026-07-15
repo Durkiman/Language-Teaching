@@ -2,6 +2,9 @@
   "student": "mel",
   "levels": ["SQ-A1", "SQ-A2"],
   "cards": {
+    "SQ-A1-01": { "status": "introduced", "introduced": "2026-07-15", "reviews": [], "notes": "Lesson 7 — full greetings set + jam-in-greetings; ran the three-exchange evidence task (morning, video call, leaving) live" },
+    "SQ-A1-02": { "status": "introduced", "introduced": "2026-07-15", "reviews": [], "notes": "Lesson 7 — jam full paradigm, pronouns, countries/nationalities, basic jobs; ran 30-second self-intro + 2 follow-up questions live" },
+    "SQ-A1-03": { "status": "introduced", "introduced": "2026-07-15", "reviews": [], "notes": "Lesson 7 — kam full paradigm, im/ime yt/jote, Kosovo kinship terms with paternal/maternal distinction; ran family-photo evidence task live" },
     "SQ-A1-08": { "status": "introduced", "introduced": null, "reviews": [], "notes": "du-structure established in prior lessons; run full evidence task to confirm scope (me pëlqen, duhet likely new)" }
   }
 }
