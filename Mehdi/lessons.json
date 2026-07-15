@@ -1,11 +1,43 @@
 [
-  { "file": "pillar3-session2-objections.html", "title": "#9 Pillar 3.2 – Handling Objections" },
-  { "file": "pillar3-selling.html", "title": "#8 Pillar 3 - selling" },
-  { "file": "mehdi-grammar-present-tenses.html", "title": "#7 Start with Why (Present Simple)" }, 
-  { "file": "pillar2-session2-marketing.html", "title": "#6 Pillar 2.2 – Marketing Message" }, 
-  { "file": "mehdi-pillar2-marketing.html", "title": "#5 Pillar 2.1 – Marketing" },
-  { "file": "mehdi-pillar1-session2-value-summary (1).html", "title": "#4 Pillar 1.2 – Value Summary" },
-  { "file": "mehdi-pillar1-value-creation (1).html", "title": "#3 Pillar 1.1 – Value Creation" },
-  { "file": "mehdi-lesson2-client-interview.html", "title": "#2 Client Interview" },
-  { "file": "mehdi-lesson1-about-yourself.html", "title": "#1 About Yourself" }
+  {
+    "file": "mehdi-modal-verbs-objections.html",
+    "title": "#9 Pillar 3.2 – Handling Objections",
+    "goals": {
+      "primary": [
+        "B1-19"
+      ]
+    }
+  },
+  {
+    "file": "mehdi-reformulation-selling.html",
+    "title": "#8 Pillar 3 - selling"
+  },
+  {
+    "file": "mehdi-present-tenses-purpose.html",
+    "title": "#7 Start with Why (Present Simple)"
+  },
+  {
+    "file": "mehdi-comparatives-marketing-message.html",
+    "title": "#6 Pillar 2.2 – Marketing Message"
+  },
+  {
+    "file": "mehdi-comparatives-marketing-overview.html",
+    "title": "#5 Pillar 2.1 – Marketing"
+  },
+  {
+    "file": "mehdi-connectors-value-summary.html",
+    "title": "#4 Pillar 1.2 – Value Summary"
+  },
+  {
+    "file": "mehdi-business-vocabulary-value-creation.html",
+    "title": "#3 Pillar 1.1 – Value Creation"
+  },
+  {
+    "file": "mehdi-question-forms-client-interview.html",
+    "title": "#2 Client Interview"
+  },
+  {
+    "file": "mehdi-present-simple-self-introduction.html",
+    "title": "#1 About Yourself"
+  }
 ]

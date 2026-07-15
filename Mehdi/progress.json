@@ -1,0 +1,7 @@
+{
+  "student": "mehdi",
+  "levels": ["B1"],
+  "cards": {
+    "B1-19": { "status": "introduced", "introduced": "2026-07-15", "reviews": [], "notes": "Pillar 3.2 — price/timing objection roleplays; must/have to, need to/needn't, ought to" }
+  }
+}

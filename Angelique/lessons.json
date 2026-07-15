@@ -1,5 +1,18 @@
 [
-   { "file": "feelings.html", "title": "#2 Feelings" },
-   { "file": "chakras.html", "title": "#1 chakras" },
-   { "file": "lesson1-discovery.html", "title": "#0 discovery" }
+  {
+    "file": "angelique-question-formation-personal-info.html",
+    "title": "#3 Personal Information"
+  },
+  {
+    "file": "angelique-emotions-vocabulary-mindfulness.html",
+    "title": "#2 Feelings"
+  },
+  {
+    "file": "angelique-energy-vocabulary-chakras.html",
+    "title": "#1 chakras"
+  },
+  {
+    "file": "angelique-needs-assessment-onboarding.html",
+    "title": "#0 discovery"
+  }
 ]

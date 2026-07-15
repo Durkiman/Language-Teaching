@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World Cup MVPs — Describing People</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #F4F6F8;
+  --surface: #FFFFFF;
+  --surface2:#F0F2F5;
+  --ink:     #1E2433;
+  --ink2:    #3A4155;
+  --muted:   #7A8299;
+  --border:  rgba(30,36,51,0.1);
+  --teal:    #2A8A8A;
+  --teal2:   #1D6B6B;
+  --teal-bg: rgba(42,138,138,0.08);
+  --green:   #2D7A3A;
+  --lava:    #B83A1A;
+  --gold:    #A06A10;
+  --fr:      #7A5A10;
+  --got:     #7A3FA0;
+  --correct: rgba(45,122,58,0.1);
+  --wrong:   rgba(184,58,26,0.1);
+  --shadow:  0 1px 4px rgba(0,0,0,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; display: flex; flex-direction: column; padding-bottom: 60px; }
+
+/* NAV */
+.tab-nav { position: sticky; top: 0; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; overflow-x: auto; scrollbar-width: none; flex-shrink: 0; box-shadow: var(--shadow); }
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 11px 22px; background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--muted); font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: all .18s; }
+.tab-btn:hover { color: var(--ink2); }
+.tab-btn.active { color: var(--teal); border-bottom-color: var(--teal); }
+.tab-icon { font-size: 16px; }
+
+/* PAGES */
+.page { display: none; flex: 1; padding-bottom: 40px; }
+.page.active { display: block; }
+
+.page-header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 20px 24px 16px; }
+.page-eyebrow { font-size: 10px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--teal); margin-bottom: 5px; }
+.page-header h2 { font-size: clamp(18px, 3.5vw, 26px); font-weight: 900; color: var(--ink); line-height: 1.2; }
+.page-header p { font-size: 13px; font-weight: 600; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+.fr-pill { display: inline-flex; align-items: center; gap: 5px; background: rgba(122,90,16,0.07); border: 1px solid rgba(122,90,16,0.15); border-radius: 4px; padding: 4px 10px; font-size: 11px; font-weight: 700; color: var(--fr); margin-top: 8px; line-height: 1.5; }
+.fr-pill::before { content: '🇫🇷'; flex-shrink: 0; }
+
+.wrap { padding: 20px 24px 0; }
+.sec-label { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin: 20px 0 10px; display: flex; align-items: center; gap: 8px; }
+.sec-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; margin-bottom: 8px; box-shadow: var(--shadow); }
+
+/* RETRIEVAL (Warm-up) */
+.ret-q { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 14px; font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.6; }
+.ret-q:last-child { margin-bottom: 0; }
+.ret-num { font-size: 18px; font-weight: 900; color: var(--teal); flex-shrink: 0; width: 20px; }
+.ret-fr { font-size: 11px; color: var(--fr); margin-top: 2px; font-weight: 700; line-height: 1.5; }
+.ret-reveal { background: var(--teal-bg); border: 1px solid rgba(42,138,138,0.2); border-radius: 6px; padding: 8px 12px; font-size: 13px; font-weight: 700; color: var(--teal2); margin-top: 6px; display: none; line-height: 1.6; }
+.ret-reveal.show { display: block; }
+.reveal-btn { background: transparent; border: 1px solid var(--border); color: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: 1px; padding: 4px 11px; cursor: pointer; transition: all .15s; margin-top: 6px; display: inline-block; border-radius: 4px; }
+.reveal-btn:hover { background: var(--teal); color: white; border-color: var(--teal); }
+
+/* GRAMMAR */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.g-col { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; box-shadow: var(--shadow); }
+.g-col-head { font-size: 11px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+.g-col-head.ps  { color: var(--teal); }
+.g-col-head.got { color: var(--got); }
+.g-col-fr { font-size: 10px; color: var(--fr); font-weight: 700; margin-bottom: 10px; line-height: 1.5; }
+.g-col-rule { background: var(--surface2); border-radius: 6px; padding: 8px 10px; font-size: 11px; font-weight: 700; margin-bottom: 8px; line-height: 1.6; color: var(--ink2); }
+.g-col-rule .kw { color: var(--teal); font-weight: 900; }
+.g-col-rule .kw.got { color: var(--got); }
+.g-col-ex { font-size: 12px; font-weight: 600; color: var(--muted); font-style: italic; }
+.g-col-ex .hl { color: var(--ink); font-weight: 800; font-style: normal; }
+
+.gram-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 12px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+.gram-table thead tr { background: var(--surface2); }
+.gram-table thead th { padding: 9px 11px; font-size: 9px; letter-spacing: 2px; color: var(--muted); text-align: left; text-transform: uppercase; font-weight: 800; border-bottom: 1px solid var(--border); }
+.gram-table tbody tr { background: var(--surface); border-bottom: 1px solid var(--border); transition: background .12s; }
+.gram-table tbody tr:last-child { border-bottom: none; }
+.gram-table tbody tr:hover { background: var(--surface2); }
+.gram-table td { padding: 9px 11px; vertical-align: middle; }
+.gram-table td:first-child { font-weight: 800; color: var(--ink2); }
+.t-got { color: var(--got); font-weight: 800; }
+.t-fr { font-size: 10px; color: var(--fr); font-weight: 700; }
+
+.mistakes-box { background: rgba(184,58,26,0.05); border: 1px solid rgba(184,58,26,0.15); border-radius: 8px; padding: 14px 16px; }
+.mistakes-title { font-size: 11px; font-weight: 900; color: var(--lava); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+.m-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; font-size: 13px; font-weight: 700; line-height: 1.5; }
+.m-row:last-child { margin-bottom: 0; }
+.m-bad  { color: var(--lava); text-decoration: line-through; }
+.m-good { color: var(--green); }
+.m-fr   { font-size: 10px; color: var(--fr); margin-top: 2px; font-weight: 700; display: block; }
+
+/* PLAYER FACT CARDS */
+.player-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-bottom: 14px; }
+.player-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; box-shadow: var(--shadow); }
+.player-name { font-size: 14px; font-weight: 900; color: var(--ink); margin-bottom: 2px; }
+.player-role { font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; }
+.player-line { font-size: 13px; font-weight: 600; color: var(--ink2); line-height: 1.7; margin-bottom: 3px; }
+.player-line .got { color: var(--got); font-weight: 800; }
+.player-line .ps { color: var(--teal2); font-weight: 800; }
+
+/* VOCAB */
+.vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 6px; margin-bottom: 8px; }
+.vocab-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 11px 8px; cursor: pointer; text-align: center; transition: all .18s; position: relative; overflow: hidden; box-shadow: var(--shadow); }
+.vocab-card::before { content: ''; position: absolute; inset: 0; background: var(--teal); opacity: 0; transition: opacity .18s; border-radius: 8px; }
+.vocab-card:hover { border-color: var(--teal); }
+.vocab-card.flipped::before { opacity: 1; }
+.vocab-card.flipped .vc-en { color: white; position: relative; z-index: 1; }
+.vocab-card.flipped .vc-fr { opacity: 1; color: rgba(255,255,255,0.85); position: relative; z-index: 1; }
+.vocab-card.flipped .vc-hint { opacity: 0; }
+.vocab-card.done { border-color: var(--green) !important; background: rgba(45,122,58,0.05); }
+.vocab-card.done::after { content: '✓'; position: absolute; top: 4px; right: 6px; font-size: 9px; color: var(--green); font-weight: 800; z-index: 2; }
+.vc-en   { font-size: 12px; font-weight: 800; color: var(--ink); display: block; position: relative; z-index: 1; }
+.vc-fr   { font-size: 10px; font-weight: 700; color: var(--muted); opacity: 0; transition: opacity .18s; display: block; margin-top: 3px; }
+.vc-hint { font-size: 8px; color: var(--teal); font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; position: relative; z-index: 1; }
+
+/* EXERCISES */
+.ex-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 15px 17px; margin-bottom: 8px; box-shadow: var(--shadow); }
+.ex-label { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.ex-q    { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 6px; line-height: 1.6; }
+.ex-fr   { font-size: 11px; color: var(--fr); font-weight: 700; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 5px; line-height: 1.5; }
+.ex-fr::before { content: '🇫🇷'; flex-shrink: 0; }
+.fill-input { background: var(--surface2); border: 1px solid var(--border); border-radius: 5px; padding: 7px 12px; font-size: 14px; font-weight: 800; color: var(--ink); outline: none; transition: border-color .15s; caret-color: var(--teal); font-family: 'Nunito', sans-serif; max-width: 220px; width: 100%; }
+.fill-input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(42,138,138,0.1); }
+.fill-input.correct { border-color: var(--green); background: var(--correct); color: var(--green); }
+.fill-input.wrong   { border-color: var(--lava);  background: var(--wrong);   color: var(--lava); }
+.mc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
+.mc-btn { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 9px 12px; font-size: 13px; font-weight: 700; color: var(--ink2); cursor: pointer; text-align: left; transition: all .15s; font-family: 'Nunito', sans-serif; }
+.mc-btn:hover:not(:disabled) { border-color: var(--teal); color: var(--teal); background: var(--teal-bg); }
+.mc-btn.correct { border-color: var(--green); background: var(--correct); color: var(--green); }
+.mc-btn.wrong   { border-color: var(--lava);  background: var(--wrong);   color: var(--lava); }
+.mc-btn:disabled { pointer-events: none; }
+.ex-reveal { font-size: 11px; color: var(--muted); margin-top: 5px; display: none; font-weight: 700; }
+.ex-reveal.show { display: block; }
+.ex-reveal strong { color: var(--green); }
+
+.check-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--teal); color: white; border: none; border-radius: 8px; padding: 12px 26px; font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 900; cursor: pointer; box-shadow: 0 3px 14px rgba(42,138,138,0.3); transition: all .18s; margin: 12px 0; }
+.check-btn:hover { background: var(--teal2); transform: translateY(-1px); }
+.score-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 26px 22px; text-align: center; margin-top: 8px; margin-bottom: 16px; display: none; animation: popIn .4s cubic-bezier(.34,1.56,.64,1) both; box-shadow: var(--shadow); }
+.score-panel.show { display: block; }
+@keyframes popIn { from{opacity:0;transform:scale(.85)} to{opacity:1;transform:scale(1)} }
+.score-big { font-size: 56px; font-weight: 900; color: var(--teal); line-height: 1; }
+.score-sub { font-size: 9px; letter-spacing: 4px; color: var(--muted); text-transform: uppercase; margin-top: 3px; }
+.score-msg { font-size: 15px; font-weight: 800; margin: 10px 0 4px; color: var(--ink); }
+.retry-btn { background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 6px 18px; font-family: 'Nunito', sans-serif; font-size: 10px; font-weight: 800; letter-spacing: 2px; cursor: pointer; margin-top: 8px; transition: all .18s; border-radius: 5px; }
+.retry-btn:hover { border-color: var(--teal); color: var(--teal); }
+
+/* SPEAK */
+.starter { background: var(--surface); border: 1px solid var(--border); border-radius: 7px; padding: 10px 13px; cursor: pointer; margin-bottom: 6px; display: block; transition: all .15s; box-shadow: var(--shadow); width: 100%; text-align: left; }
+.starter:hover { border-color: var(--teal); background: var(--teal-bg); }
+.starter-en { font-size: 13px; font-weight: 700; color: var(--ink2); line-height: 1.5; }
+.starter-en .got { color: var(--got); font-weight: 900; }
+.starter-fr { font-size: 10px; color: var(--fr); font-weight: 700; margin-top: 3px; display: flex; gap: 5px; }
+.starter-fr::before { content: '🇫🇷'; flex-shrink: 0; }
+.desc-slot { margin-bottom: 22px; }
+.desc-slot-label { font-size: 11px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; }
+.writing-area { width: 100%; min-height: 90px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 700; color: var(--ink); resize: vertical; outline: none; line-height: 1.7; caret-color: var(--teal); transition: border-color .15s; margin-top: 8px; box-shadow: var(--shadow); }
+.writing-area:focus { border-color: var(--teal); }
+.writing-area::placeholder { color: var(--muted); font-style: italic; font-size: 13px; }
+
+.evidence-box { background: var(--teal-bg); border: 1px solid rgba(42,138,138,0.2); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; font-size: 13px; font-weight: 700; color: var(--teal2); line-height: 1.6; }
+.evidence-box .tag { font-size: 9px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: var(--teal); display: block; margin-bottom: 4px; }
+
+@media (max-width: 600px) {
+  .two-col { grid-template-columns: 1fr; }
+  .mc-opts { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div style="background:#0E7C86;">
+  <a href="../Grammar-book/present-simple.html" style="display:block;color:#FFF6D8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;text-decoration:none;text-align:center;padding:10px 16px;letter-spacing:.01em;">📘 Related grammar: Present Simple — open the workbook page &amp; exercises →</a>
+  <a href="../Grammar-book/have-got.html" style="display:block;color:#FFF6D8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;text-decoration:none;text-align:center;padding:10px 16px;letter-spacing:.01em;border-top:1px solid rgba(255,255,255,.25);">📘 Related grammar: Have Got — open the workbook page &amp; exercises →</a>
+</div>
+
+<!-- TAB NAV -->
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="goTo('warmup',this)"><span class="tab-icon">⚡</span>Warm-Up</button>
+  <button class="tab-btn"        onclick="goTo('grammar',this)"><span class="tab-icon">📐</span>Grammar</button>
+  <button class="tab-btn"        onclick="goTo('vocab',this)"><span class="tab-icon">🗂️</span>Vocabulary</button>
+  <button class="tab-btn"        onclick="goTo('practice',this)"><span class="tab-icon">✏️</span>Practice</button>
+  <button class="tab-btn"        onclick="goTo('speak',this)"><span class="tab-icon">🎤</span>Your World Cup XI</button>
+</nav>
+
+<!-- ══ WARM-UP ══ -->
+<div class="page active" id="page-warmup">
+  <div class="page-header">
+    <div class="page-eyebrow">Chapter 1</div>
+    <h2>Warm-Up — Right Now vs Always True</h2>
+    <p>Quick recall from last lesson, then straight into today's topic: the World Cup semi-finalists.</p>
+    <div class="fr-pill">Petit rappel de la dernière leçon, puis on attaque le sujet du jour : les demi-finalistes de la Coupe du Monde.</div>
+  </div>
+  <div class="wrap">
+    <div class="card">
+      <div class="ret-q">
+        <span class="ret-num">1</span>
+        <div>
+          What's happening in the World Cup right now — live, this week? Use <strong>present continuous</strong>.
+          <div class="ret-fr">Qu'est-ce qui se passe dans la Coupe du Monde en ce moment ? Utilise le présent continu.</div>
+          <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Example ▾</button>
+          <div class="ret-reveal">"The semi-finals are happening this week." / "Everyone is talking about the final."</div>
+        </div>
+      </div>
+      <div class="ret-q">
+        <span class="ret-num">2</span>
+        <div>
+          Now the opposite: a fact that's <strong>always true</strong> about a player, tournament or not. Use <strong>present simple</strong>.
+          <div class="ret-fr">Maintenant l'inverse : un fait toujours vrai sur un joueur. Utilise le présent simple.</div>
+          <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Example ▾</button>
+          <div class="ret-reveal">"He plays for Real Madrid." / "He always takes the penalties."</div>
+        </div>
+      </div>
+      <div class="ret-q">
+        <span class="ret-num">3</span>
+        <div>
+          Today: we're near the final — who has impressed you most this tournament? Keep that name in your head, you'll describe him later without saying it.
+          <div class="ret-fr">Aujourd'hui : on approche de la finale — quel joueur t'a le plus impressionné ? Garde ce nom en tête, tu vas le décrire plus tard sans le dire.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ GRAMMAR ══ -->
+<div class="page" id="page-grammar">
+  <div class="page-header">
+    <div class="page-eyebrow">Chapter 2</div>
+    <h2>Present Simple + Have Got</h2>
+    <p>Two structures, one job: describing a person's permanent traits and what they've got.</p>
+    <div class="fr-pill">Deux structures, un seul travail : décrire les traits permanents d'une personne et ce qu'elle possède.</div>
+  </div>
+  <div class="wrap">
+    <div class="sec-label">The two structures side by side</div>
+    <div class="two-col">
+      <div class="g-col">
+        <div class="g-col-head ps">Present Simple</div>
+        <div class="g-col-fr">Pour des faits, des habitudes, des caractéristiques</div>
+        <div class="g-col-rule">Subject + verb <span class="kw">(+s for he/she/it)</span></div>
+        <div class="g-col-ex">He <span class="hl">plays</span> as a striker. He <span class="hl">is</span> very fast. He <span class="hl">doesn't dive</span>.</div>
+      </div>
+      <div class="g-col">
+        <div class="g-col-head got">Have Got</div>
+        <div class="g-col-fr">Pour ce qu'une personne possède — physiquement ou comme qualité</div>
+        <div class="g-col-rule">Subject + <span class="kw got">have/has got</span> + noun</div>
+        <div class="g-col-ex">He <span class="hl">has got</span> a powerful shot. They <span class="hl">have got</span> great chemistry.</div>
+      </div>
+    </div>
+
+    <div class="sec-label">Have got — full conjugation</div>
+    <table class="gram-table">
+      <thead><tr><th>Subject</th><th>Positive</th><th>Negative</th><th>Question</th></tr></thead>
+      <tbody>
+        <tr><td>I / You / We / They</td><td class="t-got">have got ('ve got)</td><td class="t-got">haven't got</td><td class="t-got">Have you got…?</td></tr>
+        <tr><td>He / She / It</td><td class="t-got">has got ('s got)</td><td class="t-got">hasn't got</td><td class="t-got">Has he got…?</td></tr>
+      </tbody>
+    </table>
+    <div class="card" style="margin-bottom:14px;">
+      <div class="player-line"><span class="ps">Present simple:</span> Mbappé <strong>plays</strong> for France. He <strong>doesn't</strong> waste chances.</div>
+      <div class="player-line"><span class="got">Have got:</span> He <strong>has got</strong> incredible acceleration. He <strong>hasn't got</strong> a weak foot — both feet are dangerous.</div>
+      <div class="player-line"><span class="got">Question:</span> "<strong>Has</strong> he <strong>got</strong> good vision too?" — "Yes, he has."</div>
+    </div>
+
+    <div class="sec-label">Common mistakes</div>
+    <div class="mistakes-box">
+      <div class="mistakes-title">⚠️ Watch out for these</div>
+      <div class="m-row">
+        <div>
+          <span class="m-bad">He have got a strong shot.</span><br>
+          <span class="m-good">✓ He <strong>has</strong> got a strong shot.</span>
+          <span class="m-fr">"Has", pas "have", pour he/she/it.</span>
+        </div>
+      </div>
+      <div class="m-row">
+        <div>
+          <span class="m-bad">He is got quick feet.</span><br>
+          <span class="m-good">✓ He <strong>has</strong> got quick feet. / He <strong>is</strong> quick.</span>
+          <span class="m-fr">Pas de "is" avec "got" — choisis une des deux structures.</span>
+        </div>
+      </div>
+      <div class="m-row">
+        <div>
+          <span class="m-bad">He don't play for Barcelona anymore.</span><br>
+          <span class="m-good">✓ He <strong>doesn't</strong> play for Barcelona anymore.</span>
+          <span class="m-fr">"Doesn't", pas "don't", pour he/she/it.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ VOCABULARY ══ -->
+<div class="page" id="page-vocab">
+  <div class="page-header">
+    <div class="page-eyebrow">Chapter 3</div>
+    <h2>Describing a Player</h2>
+    <p>Tap a card to see the French, tap again to mark it learned.</p>
+    <div class="fr-pill">Tape une carte pour voir le français, retape pour marquer comme appris.</div>
+  </div>
+  <div class="wrap">
+    <div class="sec-label">Personality &amp; playing style — present simple</div>
+    <div class="vocab-grid" id="vocabGridPS"></div>
+
+    <div class="sec-label">What he's got — have got</div>
+    <div class="vocab-grid" id="vocabGridGot"></div>
+
+    <div class="sec-label">Model players — read aloud together</div>
+    <div class="player-grid">
+      <div class="player-card">
+        <div class="player-name">Kylian Mbappé</div>
+        <div class="player-role">Forward · France</div>
+        <div class="player-line">He <span class="ps">is</span> extremely fast and confident.</div>
+        <div class="player-line">He <span class="got">has got</span> incredible acceleration and two strong feet.</div>
+      </div>
+      <div class="player-card">
+        <div class="player-name">Erling Haaland</div>
+        <div class="player-role">Striker · Norway</div>
+        <div class="player-line">He <span class="ps">is</span> tall, strong and calm in front of goal.</div>
+        <div class="player-line">He <span class="got">has got</span> a powerful shot and great positioning.</div>
+      </div>
+      <div class="player-card">
+        <div class="player-name">Jude Bellingham</div>
+        <div class="player-role">Midfielder · England</div>
+        <div class="player-line">He <span class="ps">is</span> hard-working, creative and a natural leader.</div>
+        <div class="player-line">He <span class="got">has got</span> great vision and a big heart for the big moments.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PRACTICE ══ -->
+<div class="page" id="page-practice">
+  <div class="page-header">
+    <div class="page-eyebrow">Chapter 4</div>
+    <h2>Practice</h2>
+    <p>Fill the gaps using the model players from the Vocabulary tab.</p>
+    <div class="fr-pill">Complète les blancs en t'aidant des joueurs modèles de l'onglet Vocabulaire.</div>
+  </div>
+  <div class="wrap" id="exerciseSection"></div>
+</div>
+
+<!-- ══ SPEAK ══ -->
+<div class="page" id="page-speak">
+  <div class="page-header">
+    <div class="page-eyebrow">Chapter 5</div>
+    <h2>Your World Cup 2026 XI</h2>
+    <p>The final is coming — time to talk about the players who impressed you.</p>
+    <div class="fr-pill">La finale approche — parlons des joueurs qui t'ont le plus impressionné.</div>
+  </div>
+  <div class="wrap">
+    <div class="evidence-box">
+      <span class="tag">Today's speaking task</span>
+      Describe two players your teacher doesn't know you're thinking of — one focused on <strong>appearance/style</strong>, one on <strong>personality/what he's got</strong>. Don't say the name! Your teacher will try to guess, then summarise your description back to you.
+    </div>
+
+    <div class="sec-label">Sentence starters — tap to copy into your notes</div>
+    <button class="starter" onclick="insertStarter(this)">
+      <div class="starter-en">He <span class="got">has got</span> a powerful shot / great vision / a big heart.</div>
+      <div class="starter-fr">Il a un tir puissant / une grande vision du jeu / un grand cœur.</div>
+    </button>
+    <button class="starter" onclick="insertStarter(this)">
+      <div class="starter-en">He is tall / fast / calm under pressure.</div>
+      <div class="starter-fr">Il est grand / rapide / calme sous pression.</div>
+    </button>
+    <button class="starter" onclick="insertStarter(this)">
+      <div class="starter-en">He plays as a striker / midfielder / defender for his country.</div>
+      <div class="starter-fr">Il joue attaquant / milieu / défenseur pour son pays.</div>
+    </button>
+    <button class="starter" onclick="insertStarter(this)">
+      <div class="starter-en">He doesn't give up, even when the team is losing.</div>
+      <div class="starter-fr">Il n'abandonne pas, même quand l'équipe perd.</div>
+    </button>
+
+    <div class="desc-slot">
+      <div class="desc-slot-label">Player 1 — appearance &amp; style</div>
+      <textarea class="writing-area" id="descOne" placeholder="He is... He plays as... He has got..."></textarea>
+    </div>
+    <div class="desc-slot">
+      <div class="desc-slot-label">Player 2 — personality &amp; what he's got</div>
+      <textarea class="writing-area" id="descTwo" placeholder="He is... He has got... He doesn't..."></textarea>
+    </div>
+
+    <div class="sec-label">Swap roles</div>
+    <div class="card">
+      <div class="player-line">Now your teacher describes a player to <strong>you</strong> — listen and guess who it is, then summarise the description back in your own words.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function goTo(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+const vocabPS = [
+  { en: 'fast / quick',    fr: 'rapide' },
+  { en: 'strong',          fr: 'fort' },
+  { en: 'tall',            fr: 'grand' },
+  { en: 'confident',       fr: 'confiant' },
+  { en: 'calm',            fr: 'calme' },
+  { en: 'hard-working',    fr: 'travailleur' },
+  { en: 'creative',        fr: 'créatif' },
+  { en: 'experienced',     fr: 'expérimenté' },
+];
+const vocabGot = [
+  { en: 'a powerful shot', fr: 'un tir puissant' },
+  { en: 'great vision',    fr: 'une grande vision du jeu' },
+  { en: 'quick feet',      fr: 'des pieds rapides' },
+  { en: 'a big heart',     fr: 'un grand cœur (esprit combatif)' },
+  { en: 'leadership skills', fr: 'des qualités de leader' },
+  { en: 'great chemistry (with the team)', fr: 'une bonne alchimie (avec l\'équipe)' },
+];
+
+function buildVocab(list, containerId) {
+  const g = document.getElementById(containerId);
+  g.innerHTML = list.map((v, i) => `
+    <div class="vocab-card" onclick="flipVocab(this)">
+      <span class="vc-en">${v.en}</span>
+      <span class="vc-fr">${v.fr}</span>
+      <span class="vc-hint">tap</span>
+    </div>`).join('');
+}
+function flipVocab(card) {
+  if (!card.classList.contains('flipped')) { card.classList.add('flipped'); return; }
+  card.classList.add('done');
+  card.classList.remove('flipped');
+}
+buildVocab(vocabPS, 'vocabGridPS');
+buildVocab(vocabGot, 'vocabGridGot');
+
+const exercises = [
+  { type: 'fill', q: "Mbappé ___ (has got / have got) incredible acceleration.", fr: "Complète avec la bonne forme.", blank: 'has got' },
+  { type: 'fill', q: "Haaland ___ (is / are) tall and calm in front of goal.", fr: "Complète avec la bonne forme.", blank: 'is' },
+  { type: 'fill', q: "Bellingham ___ (has got / have got) great vision.", fr: "Complète avec la bonne forme.", blank: 'has got' },
+  { type: 'mc', q: "Which is correct?", options: ["He have got a strong shot.", "He has got a strong shot."], correct: 1 },
+  { type: 'mc', q: "Which is correct?", options: ["He doesn't play for that club anymore.", "He don't play for that club anymore."], correct: 0 },
+  { type: 'fill', q: "\"___ he got good vision too?\" — \"Yes, he has.\"", fr: "Complète la question.", blank: 'Has' },
+];
+
+function buildExercises() {
+  const sec = document.getElementById('exerciseSection');
+  sec.innerHTML = exercises.map((ex, i) => {
+    if (ex.type === 'fill') {
+      return `<div class="ex-card">
+        <div class="ex-label">Fill the gap · #${i+1}</div>
+        <div class="ex-q">${ex.q}</div>
+        <div class="ex-fr">${ex.fr}</div>
+        <input class="fill-input" id="fi_${i}" placeholder="answer">
+        <div class="ex-reveal" id="fr_${i}">Correct answer: <strong>${ex.blank}</strong></div>
+      </div>`;
+    }
+    return `<div class="ex-card">
+      <div class="ex-label">Choose · #${i+1}</div>
+      <div class="ex-q">${ex.q}</div>
+      <div class="mc-opts" id="mc_${i}">
+        ${ex.options.map((o, j) => `<button class="mc-btn" onclick="pickMC(this,${i},${j})">${o}</button>`).join('')}
+      </div>
+      <div class="ex-reveal" id="fr_${i}"></div>
+    </div>`;
+  }).join('') + `<button class="check-btn" onclick="checkAll()">✓ Check my answers</button>
+  <div class="score-panel" id="scorePanel">
+    <div class="score-big" id="scoreBig">0/0</div>
+    <div class="score-sub">Score</div>
+    <div class="score-msg" id="scoreMsg"></div>
+    <button class="retry-btn" onclick="resetAll()">TRY AGAIN</button>
+  </div>`;
+}
+
+const mcPicked = {};
+function pickMC(btn, i, j) {
+  mcPicked[i] = j;
+  document.querySelectorAll(`#mc_${i} .mc-btn`).forEach(b => b.disabled = true);
+}
+
+function checkAll() {
+  let s = 0, t = exercises.length;
+  exercises.forEach((ex, i) => {
+    if (ex.type === 'fill') {
+      const inp = document.getElementById('fi_' + i);
+      if (inp.value.trim().toLowerCase() === ex.blank.toLowerCase()) { inp.classList.add('correct'); s++; }
+      else { inp.classList.add('wrong'); document.getElementById('fr_' + i).classList.add('show'); }
+    } else {
+      const btns = document.querySelectorAll(`#mc_${i} .mc-btn`);
+      const picked = mcPicked[i];
+      btns.forEach((b, j) => { if (j === ex.correct) b.classList.add('correct'); else if (j === picked) b.classList.add('wrong'); });
+      if (picked === ex.correct) s++;
+      else document.getElementById('fr_' + i).classList.add('show');
+    }
+  });
+  const msg = s === t ? "Perfect! You've got this. ⚽" : s >= t / 2 ? "Good — check the ones marked wrong." : "Have another look at the Grammar tab.";
+  document.getElementById('scoreBig').textContent = s + '/' + t;
+  document.getElementById('scoreMsg').textContent = msg;
+  document.getElementById('scorePanel').classList.add('show');
+}
+function resetAll() { document.getElementById('scorePanel').classList.remove('show'); Object.keys(mcPicked).forEach(k => delete mcPicked[k]); buildExercises(); }
+buildExercises();
+
+function insertStarter(btn) {
+  const text = btn.querySelector('.starter-en').textContent;
+  const target = document.getElementById('descOne').value ? document.getElementById('descTwo') : document.getElementById('descOne');
+  target.value += (target.value ? ' ' : '') + text;
+  target.focus();
+}
+</script>
+</body>
+</html>

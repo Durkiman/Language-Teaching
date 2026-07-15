@@ -1,5 +1,29 @@
 [
-   { "file": "thomas-lesson3.html", "title": "#3 Linkin Park", "goals": { "primary": ["B1-01"] } },
-   { "file": "past-simple.html", "title": "#2 Past simple", "goals": { "primary": ["B1-01"] } },
-   { "file": "thomas-techno-lesson1.html", "title": "#1 The world of techno", "goals": { "incidental": ["B1-08"] } }
+  {
+    "file": "thomas-past-simple-linkin-park.html",
+    "title": "#3 Linkin Park",
+    "goals": {
+      "primary": [
+        "B1-01"
+      ]
+    }
+  },
+  {
+    "file": "thomas-past-simple-continuous-storytelling.html",
+    "title": "#2 Past simple",
+    "goals": {
+      "primary": [
+        "B1-01"
+      ]
+    }
+  },
+  {
+    "file": "thomas-opinions-techno-music.html",
+    "title": "#1 The world of techno",
+    "goals": {
+      "incidental": [
+        "B1-08"
+      ]
+    }
+  }
 ]

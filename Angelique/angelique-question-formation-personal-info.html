@@ -1,0 +1,1779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Information — Angelique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Lora:ital,wght@0,600;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF7F2;
+  --surface:#FFFFFF;
+  --surface-soft:#F3EEE4;
+  --sage:#6B8C7A;
+  --sage-dark:#46604F;
+  --sand:#8F4F22;
+  --ink:#2E3934;
+  --ink-soft:#54605A;
+  --line:#CFC2A8;
+  --radius:18px;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{font-size:19px;}
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  line-height:1.6;
+  padding-bottom:120px;
+}
+
+/* ── SECTIONS ── */
+.section{
+  max-width:680px;
+  margin:0 auto;
+  padding:40px 20px 0;
+}
+.eyebrow{
+  font-size:0.78rem;
+  font-weight:800;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--sage-dark);
+  margin-bottom:10px;
+}
+.section-title{
+  font-family:'Lora',serif;
+  font-size:1.9rem;
+  font-weight:600;
+  color:var(--ink);
+  margin-bottom:6px;
+  line-height:1.25;
+}
+.section-sub{
+  color:var(--ink-soft);
+  font-size:1rem;
+  margin-bottom:24px;
+  line-height:1.55;
+}
+.fr{
+  display:block;
+  font-style:italic;
+  color:var(--ink-soft);
+  font-size:0.93rem;
+  margin-top:4px;
+  line-height:1.5;
+}
+.fr-hidden{display:none !important;}
+.fr-toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  margin-top:6px;
+  padding:6px 12px;
+  border-radius:14px;
+  border:1.5px solid var(--line);
+  background:var(--surface-soft);
+  color:var(--ink-soft);
+  font-family:'Nunito',sans-serif;
+  font-size:0.82rem;
+  font-weight:800;
+  cursor:pointer;
+  min-height:32px;
+}
+.fr-toggle:active{transform:scale(0.96);}
+.fr-toggle.shown{
+  background:var(--surface-soft);
+  border-color:var(--sage);
+  color:var(--sage-dark);
+}
+
+/* ── CARDS ── */
+.card{
+  background:var(--surface);
+  border-radius:var(--radius);
+  padding:26px 24px;
+  margin-bottom:16px;
+  border:2px solid var(--line);
+  box-shadow:0 4px 20px rgba(46,57,52,0.06);
+}
+
+/* ── BREATHE SECTION ── */
+.breathe-card{
+  background:linear-gradient(135deg,#EDF2EE,#E8EFE9);
+  border-color:#C2D4C6;
+}
+.breathe-card p{
+  font-size:1.05rem;
+  line-height:1.65;
+  color:var(--ink);
+}
+
+/* ── RECAP CARD ── */
+.recap-card{
+  margin-top:16px;
+}
+.recap-label{
+  font-size:0.78rem;
+  font-weight:800;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--sage-dark);
+  margin-bottom:14px;
+  display:block;
+}
+.recap-chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:20px;
+}
+.recap-chip{
+  background:var(--surface-soft);
+  border:2px solid var(--line);
+  border-radius:20px;
+  padding:10px 16px;
+  cursor:pointer;
+  min-height:44px;
+  display:flex;
+  align-items:center;
+  font-family:'Nunito',sans-serif;
+}
+.recap-chip:active{transform:scale(0.97);}
+.recap-chip .rc-en{
+  font-size:1rem;
+  font-weight:800;
+  color:var(--ink);
+}
+.recap-chip .rc-fr{
+  font-size:0.92rem;
+  font-style:italic;
+  color:var(--sage-dark);
+  margin-left:8px;
+  display:none;
+}
+.recap-chip.shown{border-color:var(--sage);}
+.recap-chip.shown .rc-fr{display:inline;}
+.recap-sentences{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.recap-sentence{
+  font-size:1.02rem;
+  font-weight:600;
+  line-height:1.5;
+}
+
+/* ── VIDEO SECTION ── */
+.video-btn{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  background:var(--ink);
+  color:#fff;
+  border:none;
+  border-radius:16px;
+  padding:20px 22px;
+  width:100%;
+  cursor:pointer;
+  text-decoration:none;
+  margin-bottom:14px;
+}
+.yt-badge{
+  flex:0 0 auto;
+  width:52px;height:52px;
+  background:#FF0000;
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;
+  color:#fff;
+}
+.vtext strong{display:block;font-size:1.05rem;font-weight:800;}
+.vtext span{font-size:0.88rem;opacity:0.7;display:block;margin-top:2px;}
+.video-tip{
+  font-size:0.95rem;
+  color:var(--ink-soft);
+  line-height:1.55;
+  padding:12px 16px;
+  background:var(--surface-soft);
+  border-radius:12px;
+  border-left:4px solid var(--sage);
+}
+
+/* ── LISTEN SCRIPT ── */
+.script-card{
+  background:linear-gradient(135deg,#FBF6EE,#F6EDDD);
+  border-color:#E3D2B0;
+  text-align:center;
+  padding:30px 26px;
+}
+.script-tag{
+  display:inline-block;
+  font-size:0.82rem;
+  font-weight:800;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  color:var(--sand);
+  background:#FBF1E3;
+  border:1.5px solid #E3D2B0;
+  border-radius:20px;
+  padding:6px 16px;
+  margin-bottom:18px;
+}
+.script-line{
+  font-size:1.15rem;
+  line-height:1.7;
+  color:var(--ink);
+  margin-bottom:6px;
+}
+.script-pause{
+  font-size:0.85rem;
+  opacity:0.5;
+  margin:10px 0;
+  letter-spacing:0.2em;
+}
+
+/* ── VOCAB SECTION ── */
+.vocab-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(150px,1fr));
+  gap:12px;
+}
+.vcard{
+  background:var(--surface);
+  border:2.5px solid var(--line);
+  border-radius:16px;
+  padding:18px 16px;
+  text-align:center;
+  cursor:pointer;
+  user-select:none;
+  transition:background .2s, border-color .2s;
+  min-height:44px;
+}
+.vcard:active{transform:scale(0.97);}
+.vcard .vc-en{
+  font-size:1.15rem;
+  font-weight:800;
+  color:var(--ink);
+}
+.vcard .vc-fr{
+  font-size:0.95rem;
+  color:var(--sage-dark);
+  font-style:italic;
+  margin-top:6px;
+  display:none;
+  font-weight:700;
+}
+.vcard.shown .vc-fr{display:block;}
+.vcard.mastered{background:var(--sage-dark);border-color:var(--sage-dark);}
+.vcard.mastered .vc-en{color:#fff;}
+.vcard.mastered .vc-fr{display:block;color:#fff;}
+.vcard .vc-hint{font-size:0.82rem;color:var(--ink-soft);margin-top:8px;opacity:0.7;}
+.vcard.mastered .vc-hint{color:#fff;opacity:0.8;}
+
+/* ── PHRASE CARDS ── */
+.phrase-group{margin-bottom:28px;}
+.phrase-group-label{
+  font-size:0.78rem;
+  font-weight:800;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--sand);
+  margin-bottom:12px;
+  display:block;
+}
+.phrase-card{
+  background:var(--surface);
+  border:2px solid var(--line);
+  border-radius:var(--radius);
+  padding:18px 20px;
+  margin-bottom:10px;
+}
+.phrase-en{
+  font-size:1.12rem;
+  font-weight:700;
+  line-height:1.45;
+}
+.phrase-note{
+  font-size:0.9rem;
+  color:var(--ink-soft);
+  margin-top:4px;
+  font-style:italic;
+}
+
+/* ── DIALOGUE ── */
+.dialogue{display:flex;flex-direction:column;gap:12px;}
+.dl-line{
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+}
+.dl-line.customer{flex-direction:row-reverse;}
+.dl-avatar{
+  flex:0 0 auto;
+  width:40px;height:40px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;
+  background:var(--surface-soft);
+  border:2px solid var(--line);
+}
+.dl-line.customer .dl-avatar{background:#EEF3EF;border-color:#C2D4C6;}
+.dl-bubble{
+  background:var(--surface);
+  border:2px solid var(--line);
+  border-radius:16px;
+  padding:14px 16px;
+  max-width:82%;
+  cursor:pointer;
+}
+.dl-line.customer .dl-bubble{
+  background:#EEF3EF;
+  border-color:#C2D4C6;
+}
+.dl-bubble:active{transform:scale(0.98);}
+.dl-speaker{
+  font-size:0.78rem;
+  font-weight:800;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  margin-bottom:4px;
+  display:block;
+}
+.dl-line.customer .dl-speaker{color:var(--sage-dark);}
+.dl-text{
+  font-size:1.05rem;
+  font-weight:600;
+  line-height:1.5;
+}
+.dl-tip{
+  font-size:0.9rem;
+  color:var(--ink-soft);
+  font-style:italic;
+  margin-top:4px;
+  display:block;
+}
+
+/* ── QUESTION CARDS ── */
+.q-card{
+  background:var(--surface);
+  border:2px solid var(--line);
+  border-radius:var(--radius);
+  padding:18px 20px;
+  margin-bottom:12px;
+}
+.q-card-q{
+  font-size:1.1rem;
+  font-weight:700;
+  color:var(--sage-dark);
+  line-height:1.4;
+}
+.q-card-a{
+  font-size:1.05rem;
+  font-weight:600;
+  margin-top:8px;
+  line-height:1.4;
+}
+
+/* ── NATIONALITY GRID ── */
+.nat-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(150px,1fr));
+  gap:12px;
+}
+.nat-card{
+  background:var(--surface);
+  border:2.5px solid var(--line);
+  border-radius:16px;
+  padding:16px;
+  cursor:pointer;
+  text-align:center;
+  min-height:44px;
+}
+.nat-card:active{transform:scale(0.97);}
+.nat-flag{font-size:1.8rem;line-height:1;margin-bottom:6px;}
+.nat-country{font-size:0.98rem;font-weight:800;color:var(--ink);}
+.nat-adj{
+  font-size:0.92rem;
+  color:var(--sage-dark);
+  font-weight:700;
+  margin-top:4px;
+  display:none;
+}
+.nat-card.shown .nat-adj{display:block;}
+.nat-card.shown{border-color:var(--sage);}
+
+/* ── GAP-FILL EXERCISE ── */
+.gap-item{
+  background:var(--surface);
+  border:2px solid var(--line);
+  border-radius:var(--radius);
+  padding:20px 22px;
+  margin-bottom:14px;
+}
+.gap-sentence{
+  font-size:1.15rem;
+  font-weight:700;
+  line-height:1.5;
+  margin-bottom:6px;
+}
+.gap-sentence .blank{
+  display:inline-block;
+  min-width:64px;
+  border-bottom:3px solid var(--sand);
+  text-align:center;
+}
+.gap-answer-hint{
+  font-size:0.9rem;
+  color:var(--ink-soft);
+  margin-bottom:14px;
+}
+.gap-options{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.gap-opt{
+  padding:12px 20px;
+  border-radius:24px;
+  border:2px solid var(--line);
+  background:var(--surface-soft);
+  font-size:1rem;
+  font-weight:700;
+  cursor:pointer;
+  min-height:44px;
+  transition:opacity 0.2s;
+}
+.gap-opt:disabled{cursor:default;}
+.gap-opt.correct{background:#DCEADF;border-color:var(--sage-dark);color:var(--sage-dark);}
+.gap-opt.wrong{background:#FAE0D4;border-color:#A03A18;color:#7A2A10;}
+.gap-opt.dim{opacity:0.45;}
+.gap-feedback{
+  margin-top:10px;
+  font-size:0.98rem;
+  font-weight:700;
+  min-height:1.2em;
+}
+
+/* ── CHECK-IN FORM ── */
+.form-card{
+  background:var(--surface);
+  border:2px solid var(--line);
+  border-radius:var(--radius);
+  padding:26px 24px;
+}
+.form-field{margin-bottom:20px;}
+.form-field label{
+  display:block;
+  font-size:0.9rem;
+  font-weight:800;
+  letter-spacing:0.03em;
+  text-transform:uppercase;
+  color:var(--sage-dark);
+  margin-bottom:8px;
+}
+.form-field .field-fr{
+  font-size:0.88rem;
+  color:var(--ink-soft);
+  font-style:italic;
+  font-weight:400;
+  text-transform:none;
+  letter-spacing:0;
+  margin-top:2px;
+  display:block;
+}
+.form-field input, .form-field select{
+  width:100%;
+  font-family:'Nunito',sans-serif;
+  font-size:1.1rem;
+  padding:14px 16px;
+  border-radius:12px;
+  border:2px solid var(--line);
+  background:var(--surface-soft);
+  color:var(--ink);
+  min-height:44px;
+}
+.form-field input:focus, .form-field select:focus{
+  outline:3px solid var(--sage);
+  outline-offset:1px;
+  border-color:var(--sage);
+}
+.form-actions{display:flex;justify-content:center;margin-top:10px;}
+.form-submit-btn{
+  padding:16px 36px;
+  border-radius:28px;
+  background:var(--sage-dark);
+  color:#fff;
+  border:none;
+  font-size:1.1rem;
+  font-weight:800;
+  cursor:pointer;
+  min-height:44px;
+}
+.form-submit-btn:active{transform:scale(0.97);}
+.form-confirm{
+  display:none;
+  text-align:center;
+  padding:20px;
+}
+.form-confirm.shown{display:block;}
+.form-confirm .fc-check{font-size:2.6rem;margin-bottom:10px;}
+.form-confirm h3{
+  font-family:'Lora',serif;
+  font-size:1.4rem;
+  color:var(--sage-dark);
+  margin-bottom:14px;
+}
+.form-summary{
+  text-align:left;
+  background:var(--surface-soft);
+  border-radius:12px;
+  padding:16px 18px;
+  font-size:1.02rem;
+  line-height:1.9;
+}
+.form-summary strong{color:var(--sage-dark);}
+
+/* ── PRACTICE / ROLEPLAY ── */
+.roleplay-card{
+  background:linear-gradient(135deg,#EDF2EE,#E8EFE9);
+  border-color:#C2D4C6;
+  margin-bottom:16px;
+}
+.roleplay-scenario{
+  font-size:1.05rem;
+  line-height:1.65;
+  margin-bottom:14px;
+}
+.roleplay-cue{
+  background:rgba(255,255,255,0.6);
+  border-radius:12px;
+  padding:14px 16px;
+  margin-bottom:8px;
+  border-left:4px solid var(--sage-dark);
+}
+.roleplay-cue-label{
+  font-size:0.78rem;
+  font-weight:800;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  color:var(--sage-dark);
+  margin-bottom:4px;
+  display:block;
+}
+.roleplay-cue-text{
+  font-size:1.05rem;
+  font-weight:600;
+}
+
+/* ── SPEAK SECTION ── */
+.speak-section{
+  max-width:680px;
+  margin:0 auto;
+  padding:40px 20px 0;
+}
+.speak-prompts{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.speak-prompt{
+  background:var(--surface);
+  border:2px solid var(--line);
+  border-radius:var(--radius);
+  padding:20px 22px;
+}
+.sp-label{
+  font-size:0.78rem;
+  font-weight:800;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--sand);
+  margin-bottom:6px;
+  display:block;
+}
+.sp-text{
+  font-size:1.15rem;
+  font-weight:700;
+  line-height:1.45;
+}
+.sp-fr{font-size:0.95rem;color:var(--ink-soft);font-style:italic;margin-top:6px;}
+
+/* ── FLOATING BUTTONS ── */
+.calm-fab{
+  position:fixed;bottom:24px;right:20px;z-index:200;
+  width:84px;height:84px;border-radius:50%;
+  background:linear-gradient(145deg,#46604F,#344A3C);
+  color:#fff;border:3px solid #fff;
+  box-shadow:0 6px 20px rgba(46,57,52,0.5);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;animation:breathe-pulse 4s ease-in-out infinite;
+}
+.calm-fab svg{width:36px;height:36px;}
+.calm-fab .fab-label{font-size:0.78rem;font-weight:800;margin-top:2px;}
+@keyframes breathe-pulse{
+  0%,100%{box-shadow:0 6px 20px rgba(46,57,52,0.5);}
+  50%{box-shadow:0 6px 30px rgba(46,57,52,0.8);}
+}
+.journal-fab{
+  position:fixed;bottom:24px;left:20px;z-index:200;
+  width:84px;height:84px;border-radius:50%;
+  background:linear-gradient(145deg,#8F4F22,#6B3A18);
+  color:#fff;border:3px solid #fff;
+  box-shadow:0 6px 20px rgba(143,79,34,0.5);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;
+}
+.journal-fab svg{width:34px;height:34px;}
+.journal-fab .fab-label{font-size:0.78rem;font-weight:800;margin-top:2px;}
+
+/* ── CALM OVERLAY ── */
+.calm-overlay{
+  position:fixed;inset:0;
+  background:linear-gradient(160deg,#F4F7F2,#EAF0E6);
+  z-index:500;display:none;flex-direction:column;overflow-y:auto;
+}
+.calm-overlay.open{display:flex;}
+.overlay-header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:20px 20px 0;
+}
+.overlay-close{
+  background:none;border:none;font-size:2.2rem;
+  color:var(--sage-dark);cursor:pointer;
+  padding:8px 14px;line-height:1;min-width:44px;min-height:44px;
+}
+.overlay-title{text-align:center;padding:6px 20px 20px;}
+.overlay-title h2{
+  font-family:'Lora',serif;font-size:1.7rem;
+  color:var(--sage-dark);margin:0;
+}
+.overlay-title p{margin:6px 0 0;color:var(--ink-soft);font-size:1rem;}
+.ex-grid{padding:0 20px 20px;display:flex;flex-direction:column;gap:10px;}
+.ex-card{
+  background:rgba(255,255,255,0.85);border:2px solid rgba(70,96,79,0.4);
+  border-radius:16px;padding:20px 22px;cursor:pointer;
+  transition:background 0.2s;text-align:left;min-height:44px;
+}
+.ex-card.selected{background:var(--sage-dark);border-color:var(--sage-dark);}
+.ex-card.selected .ex-name,.ex-card.selected .ex-desc,.ex-card.selected .ex-pattern{color:#fff;}
+.ex-name{font-family:'Lora',serif;font-size:1.25rem;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.ex-desc{font-size:1rem;color:var(--ink-soft);margin-bottom:4px;}
+.ex-pattern{font-size:0.95rem;color:var(--sand);font-weight:800;}
+.dur-row{display:flex;justify-content:center;gap:10px;padding:0 20px 16px;}
+.dur-btn{
+  padding:12px 24px;border-radius:24px;
+  border:2px solid rgba(70,96,79,0.45);
+  background:rgba(255,255,255,0.7);color:var(--sage-dark);
+  font-weight:800;font-size:1.05rem;cursor:pointer;min-height:44px;
+}
+.dur-btn.active{background:var(--sage-dark);color:#fff;border-color:var(--sage-dark);}
+.start-row{padding:0 20px 30px;display:flex;justify-content:center;}
+.start-btn{
+  padding:18px 44px;border-radius:30px;
+  background:var(--sage-dark);color:#fff;border:none;
+  font-size:1.15rem;font-weight:800;cursor:pointer;
+  box-shadow:0 6px 18px rgba(46,57,52,0.4);min-height:44px;
+}
+.start-btn:disabled{background:#A9B3AC;box-shadow:none;cursor:not-allowed;}
+.session-view{
+  flex:1;display:none;flex-direction:column;
+  align-items:center;justify-content:center;padding:20px;text-align:center;
+}
+.session-view.active{display:flex;}
+.breath-stage{
+  position:relative;width:300px;height:300px;
+  display:flex;align-items:center;justify-content:center;margin-bottom:32px;
+}
+.shape-bubble{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.ring{position:absolute;border-radius:50%;border:2px solid rgba(70,96,79,0.3);}
+.ring1{width:300px;height:300px;}
+.ring2{width:240px;height:240px;}
+.bubble{
+  width:140px;height:140px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#8FB39E,#46604F 70%,#344A3C);
+  box-shadow:0 0 40px rgba(70,96,79,0.55);
+  transition:transform 1s linear,box-shadow 1s linear;
+}
+.shape-box,.shape-triangle{width:260px;height:260px;}
+#boxDot,#triDot{transition:cx 1s linear,cy 1s linear;}
+.shape-vertical{position:relative;width:90px;height:260px;display:flex;align-items:center;justify-content:center;}
+.v-track{
+  position:absolute;top:10px;bottom:10px;left:50%;
+  width:10px;margin-left:-5px;border-radius:8px;
+  background:rgba(70,96,79,0.22);
+}
+.v-dot{
+  position:absolute;width:54px;height:54px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#8FB39E,#46604F 70%,#344A3C);
+  box-shadow:0 0 30px rgba(70,96,79,0.55);
+  left:50%;margin-left:-27px;top:10px;transition:top 1s linear;
+}
+.phase-label{font-family:'Lora',serif;font-size:1.8rem;color:var(--sage-dark);font-weight:700;min-height:36px;}
+.phase-fr{font-size:1.05rem;color:var(--ink-soft);font-style:italic;margin-top:4px;min-height:22px;}
+.phase-count{font-size:3.2rem;font-weight:800;color:var(--ink);margin-top:12px;font-family:'Lora',serif;}
+.session-meta{margin-top:26px;font-size:1rem;color:var(--ink-soft);font-weight:700;}
+.session-controls{margin-top:32px;display:flex;gap:14px;}
+.sbtn{
+  padding:14px 26px;border-radius:24px;
+  border:2px solid rgba(70,96,79,0.45);
+  background:rgba(255,255,255,0.7);color:var(--sage-dark);
+  font-weight:800;font-size:1.05rem;cursor:pointer;min-height:44px;
+}
+.sbtn.stop{background:var(--sage-dark);color:#fff;border-color:var(--sage-dark);}
+.done-view{
+  flex:1;display:none;flex-direction:column;
+  align-items:center;justify-content:center;padding:30px;text-align:center;
+}
+.done-view.active{display:flex;}
+.done-check{font-size:3.2rem;margin-bottom:14px;}
+.done-view h3{font-family:'Lora',serif;font-size:1.6rem;color:var(--sage-dark);margin:0 0 10px;}
+.done-view p{color:var(--ink-soft);font-size:1.05rem;line-height:1.6;margin:0 0 28px;}
+
+/* ── JOURNAL OVERLAY ── */
+.journal-overlay{
+  position:fixed;inset:0;
+  background:linear-gradient(160deg,#FBF6EE,#F3E6D3);
+  z-index:500;display:none;flex-direction:column;overflow-y:auto;
+}
+.journal-overlay.open{display:flex;}
+.journal-title h2{font-family:'Lora',serif;font-size:1.7rem;color:var(--sand);margin:0;}
+.journal-title p{margin:8px 0 0;color:var(--ink-soft);font-size:1rem;line-height:1.55;}
+.journal-title .fr-block{display:block;font-style:italic;margin-top:4px;}
+.journal-body{flex:1;display:flex;flex-direction:column;padding:0 20px 30px;max-width:680px;width:100%;margin:0 auto;}
+.journal-toolbar{
+  display:flex;
+  gap:8px;
+  margin-bottom:10px;
+}
+.journal-fmt-btn{
+  width:46px;
+  height:46px;
+  border-radius:10px;
+  border:2px solid rgba(143,79,34,0.3);
+  background:rgba(255,255,255,0.85);
+  color:var(--ink);
+  font-family:'Lora',serif;
+  font-size:1.15rem;
+  font-weight:700;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.journal-fmt-btn:active{transform:scale(0.94);}
+.journal-fmt-btn.active{
+  background:var(--sand);
+  border-color:var(--sand);
+  color:#fff;
+}
+.journal-fmt-btn .bf{font-weight:800;}
+.journal-fmt-btn .if{font-style:italic;}
+.journal-textarea{
+  flex:1;min-height:320px;
+  background:rgba(255,255,255,0.85);
+  border:2px solid rgba(143,79,34,0.3);border-radius:16px;
+  padding:22px;font-family:'Nunito',sans-serif;
+  font-size:1.15rem;line-height:1.7;color:var(--ink);resize:vertical;
+  overflow-y:auto;
+}
+.journal-textarea:empty:before{
+  content:attr(data-placeholder);
+  color:var(--ink-soft);
+  opacity:0.6;
+}
+.journal-textarea:focus{outline:3px solid var(--sand);outline-offset:2px;}
+.journal-status{text-align:center;margin-top:10px;font-size:0.95rem;color:var(--ink-soft);min-height:20px;}
+.journal-actions{display:flex;justify-content:center;gap:14px;margin-top:16px;}
+.journal-actions .sbtn{border-color:rgba(143,79,34,0.45);color:var(--sand);}
+.journal-actions .sbtn.stop{background:var(--sand);color:#fff;border-color:var(--sand);}
+
+.journal-entries-wrap{margin-top:30px;}
+.journal-entries-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:14px;
+}
+.copy-all-btn{
+  padding:10px 18px;
+  border-radius:20px;
+  border:2px solid var(--sand);
+  background:#FBF1E3;
+  color:var(--sand);
+  font-family:'Nunito',sans-serif;
+  font-weight:800;
+  font-size:0.92rem;
+  cursor:pointer;
+  min-height:44px;
+}
+.copy-all-btn:active{transform:scale(0.97);}
+.copy-all-btn.copied{background:var(--sand);color:#fff;}
+.journal-entries{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.journal-entry{
+  background:rgba(255,255,255,0.8);
+  border:2px solid rgba(143,79,34,0.25);
+  border-radius:14px;
+  padding:16px 18px;
+}
+.journal-entry-time{
+  font-size:0.82rem;
+  color:var(--sand);
+  font-weight:800;
+  margin-bottom:6px;
+  display:block;
+}
+.journal-entry-text{
+  font-size:1.05rem;
+  line-height:1.6;
+  color:var(--ink);
+  white-space:pre-wrap;
+}
+
+/* ── PAGE HEADER ── */
+.page-header{
+  text-align:center;
+  padding:32px 24px 0;
+  max-width:680px;
+  margin:0 auto;
+}
+.page-header h1{
+  font-family:'Lora',serif;
+  font-size:2rem;font-weight:600;
+  color:var(--ink);line-height:1.2;
+}
+
+/* ── LEARNING GOAL (teacher-facing, hidden by default) ── */
+.goal-wrap{
+  max-width:680px;
+  margin:18px auto 0;
+  padding:0 20px;
+}
+.goal-toggle{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:0 auto;
+  padding:8px 16px;
+  border-radius:20px;
+  border:1.5px solid var(--line);
+  background:var(--surface-soft);
+  color:var(--ink-soft);
+  font-family:'Nunito',sans-serif;
+  font-size:0.82rem;
+  font-weight:800;
+  cursor:pointer;
+  min-height:36px;
+}
+.goal-toggle:active{transform:scale(0.97);}
+.goal-panel{
+  display:none;
+  margin-top:10px;
+  background:var(--surface-soft);
+  border:1.5px solid var(--line);
+  border-radius:14px;
+  padding:18px 20px;
+  font-size:0.92rem;
+  line-height:1.6;
+  color:var(--ink-soft);
+}
+.goal-panel.open{display:block;}
+.goal-code{
+  font-family:'Nunito',sans-serif;
+  font-weight:800;
+  color:var(--sage-dark);
+  font-size:0.82rem;
+  letter-spacing:0.03em;
+  margin-bottom:4px;
+}
+.goal-title{
+  font-family:'Lora',serif;
+  font-size:1.1rem;
+  font-weight:700;
+  color:var(--ink);
+  margin-bottom:10px;
+}
+.goal-row{margin-bottom:8px;}
+.goal-row strong{color:var(--ink);}
+
+/* ── TAB BAR ── */
+.tabbar{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(250,247,242,0.95);
+  backdrop-filter:blur(8px);
+  border-bottom:2px solid var(--line);
+  display:flex;
+  overflow-x:auto;
+  padding:14px 12px 0;
+  gap:4px;
+  margin-top:22px;
+}
+.tabbar::-webkit-scrollbar{display:none;}
+.tab{
+  flex:0 0 auto;
+  padding:14px 16px;
+  font-size:0.98rem;
+  font-weight:800;
+  color:var(--ink-soft);
+  background:none;
+  border:none;
+  border-bottom:4px solid transparent;
+  cursor:pointer;
+  white-space:nowrap;
+  font-family:'Nunito',sans-serif;
+}
+.tab.active{
+  color:var(--sage-dark);
+  border-bottom-color:var(--sage-dark);
+}
+.panel{display:none;}
+.panel.active{display:block;}
+
+.section{
+  max-width:680px;
+  margin:0 auto;
+  padding:32px 20px 0;
+}
+
+@media (prefers-reduced-motion:reduce){
+  .calm-fab{animation:none;}
+  .bubble,.v-dot{transition:none;}
+}
+</style>
+
+<body>
+<div style="background:#0E7C86;">
+  <a href="../Grammar-book/question-formation.html" style="display:block;color:#FFF6D8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;text-decoration:none;text-align:center;padding:10px 16px;letter-spacing:.01em;">📘 Related grammar: Question Formation — open the workbook page &amp; exercises →</a>
+</div>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <h1>Personal Information 🧳</h1>
+</div>
+
+<!-- LEARNING GOAL (teacher-facing) -->
+<div class="goal-wrap">
+  <button class="goal-toggle" onclick="toggleGoal()">📋 Learning goal (teacher)</button>
+  <div class="goal-panel" id="goalPanel">
+    <div class="goal-code">A1-02</div>
+    <div class="goal-title">Exchanging personal information</div>
+    <div class="goal-row"><strong>Can-do:</strong> Can ask for and give personal information: address, nationality, age, family, job, hobbies.</div>
+    <div class="goal-row"><strong>Functions:</strong> giving personal information</div>
+    <div class="goal-row"><strong>Grammar:</strong> questions · present simple, 1st/2nd person</div>
+    <div class="goal-row"><strong>Lexis:</strong> nationalities and countries · personal information</div>
+    <div class="goal-row"><strong>Evidence:</strong> Ask five personal questions and answer five, including one about family and one about work/hobbies; complete a hotel check-in or landing-card form.</div>
+  </div>
+</div>
+
+<!-- TAB BAR -->
+<div class="tabbar">
+  <button class="tab active" data-tab="breathe">Breathe</button>
+  <button class="tab" data-tab="vocab">Vocabulary</button>
+  <button class="tab" data-tab="questions">Questions</button>
+  <button class="tab" data-tab="listen">Listen</button>
+  <button class="tab" data-tab="practice">Practice</button>
+  <button class="tab" data-tab="speak">Speak</button>
+</div>
+
+<!-- ① BREATHE -->
+<div class="panel active" id="panel-breathe">
+  <div class="section">
+    <div class="card breathe-card">
+      <p>One round of breathing together. The green circle in the bottom corner is your calm space.</p>
+      <p class="fr">Une respiration ensemble. Le cercle vert en bas de l'écran est votre espace calme.</p>
+    </div>
+
+    <div class="card recap-card">
+      <span class="recap-label">Last time — at the café</span>
+      <div class="recap-chips">
+        <button class="recap-chip" onclick="this.classList.toggle('shown')"><span class="rc-en">Menu</span><span class="rc-fr">carte</span></button>
+        <button class="recap-chip" onclick="this.classList.toggle('shown')"><span class="rc-en">Bill</span><span class="rc-fr">l'addition</span></button>
+        <button class="recap-chip" onclick="this.classList.toggle('shown')"><span class="rc-en">Please</span><span class="rc-fr">s'il vous plaît</span></button>
+        <button class="recap-chip" onclick="this.classList.toggle('shown')"><span class="rc-en">Thank you</span><span class="rc-fr">merci</span></button>
+      </div>
+      <div class="recap-sentences">
+        <div class="recap-sentence">I'd like a coffee, please.<span class="fr">Je voudrais un café, s'il vous plaît.</span></div>
+        <div class="recap-sentence">Could I have the bill, please?<span class="fr">Pourrais-je avoir l'addition, s'il vous plaît ?</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ② VOCABULARY -->
+<div class="panel" id="panel-vocab">
+  <div class="section">
+    <p style="font-size:1rem;color:var(--ink-soft);margin-bottom:20px;">Personal information words. Tap once for French, tap again to mark as learned.
+    <span class="fr">Mots pour les informations personnelles. Tapez une fois pour le français, encore une fois pour marquer comme appris.</span></p>
+
+    <div class="vocab-grid">
+      <div class="vcard"><div class="vc-en">Address</div><div class="vc-fr">adresse</div><div class="vc-hint">tap</div></div>
+      <div class="vcard"><div class="vc-en">Nationality</div><div class="vc-fr">nationalité</div><div class="vc-hint">tap</div></div>
+      <div class="vcard"><div class="vc-en">Age</div><div class="vc-fr">âge</div><div class="vc-hint">tap</div></div>
+      <div class="vcard"><div class="vc-en">Family</div><div class="vc-fr">famille</div><div class="vc-hint">tap</div></div>
+      <div class="vcard"><div class="vc-en">Job</div><div class="vc-fr">métier</div><div class="vc-hint">tap</div></div>
+      <div class="vcard"><div class="vc-en">Hobby</div><div class="vc-fr">passe-temps</div><div class="vc-hint">tap</div></div>
+      <div class="vcard"><div class="vc-en">Married</div><div class="vc-fr">mariée</div><div class="vc-hint">tap</div></div>
+      <div class="vcard"><div class="vc-en">Children</div><div class="vc-fr">enfants</div><div class="vc-hint">tap</div></div>
+    </div>
+
+    <p style="font-size:1rem;color:var(--ink-soft);margin:28px 0 16px;">Nationalities. <span class="fr">Nationalités.</span></p>
+    <div class="nat-grid">
+      <div class="nat-card"><div class="nat-flag">🇧🇪</div><div class="nat-country">Belgium</div><div class="nat-adj">Belgian</div></div>
+      <div class="nat-card"><div class="nat-flag">🇫🇷</div><div class="nat-country">France</div><div class="nat-adj">French</div></div>
+      <div class="nat-card"><div class="nat-flag">🇬🇧</div><div class="nat-country">England</div><div class="nat-adj">British</div></div>
+      <div class="nat-card"><div class="nat-flag">🇩🇪</div><div class="nat-country">Germany</div><div class="nat-adj">German</div></div>
+      <div class="nat-card"><div class="nat-flag">🇮🇹</div><div class="nat-country">Italy</div><div class="nat-adj">Italian</div></div>
+      <div class="nat-card"><div class="nat-flag">🇪🇸</div><div class="nat-country">Spain</div><div class="nat-adj">Spanish</div></div>
+      <div class="nat-card"><div class="nat-flag">🇵🇹</div><div class="nat-country">Portugal</div><div class="nat-adj">Portuguese</div></div>
+      <div class="nat-card"><div class="nat-flag">🇳🇱</div><div class="nat-country">Netherlands</div><div class="nat-adj">Dutch</div></div>
+      <div class="nat-card"><div class="nat-flag">🇺🇸</div><div class="nat-country">USA</div><div class="nat-adj">American</div></div>
+      <div class="nat-card"><div class="nat-flag">🇲🇦</div><div class="nat-country">Morocco</div><div class="nat-adj">Moroccan</div></div>
+      <div class="nat-card"><div class="nat-flag">🇹🇷</div><div class="nat-country">Turkey</div><div class="nat-adj">Turkish</div></div>
+      <div class="nat-card"><div class="nat-flag">🇯🇵</div><div class="nat-country">Japan</div><div class="nat-adj">Japanese</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ③ QUESTIONS -->
+<div class="panel" id="panel-questions">
+  <div class="section">
+    <p style="font-size:1rem;color:var(--ink-soft);margin-bottom:20px;">Question and answer, side by side.
+    <span class="fr">Question et réponse, côte à côte.</span></p>
+
+    <div class="q-card">
+      <div class="q-card-q">"What's your name?"</div>
+      <div class="q-card-a">"My name is Angelique."</div>
+      <span class="fr">Comment vous appelez-vous ? — Je m'appelle Angelique.</span>
+    </div>
+    <div class="q-card">
+      <div class="q-card-q">"Where are you from?"</div>
+      <div class="q-card-a">"I'm from Belgium."</div>
+      <span class="fr">D'où venez-vous ? — Je viens de Belgique.</span>
+    </div>
+    <div class="q-card">
+      <div class="q-card-q">"What's your nationality?"</div>
+      <div class="q-card-a">"I'm Belgian."</div>
+      <span class="fr">Quelle est votre nationalité ? — Je suis belge.</span>
+    </div>
+    <div class="q-card">
+      <div class="q-card-q">"How old are you?"</div>
+      <div class="q-card-a">"I'm fifty-three years old."</div>
+      <span class="fr">Quel âge avez-vous ? — J'ai cinquante-trois ans.</span>
+    </div>
+    <div class="q-card">
+      <div class="q-card-q">"Where do you live?"</div>
+      <div class="q-card-a">"I live in Wallonia."</div>
+      <span class="fr">Où habitez-vous ? — J'habite en Wallonie.</span>
+    </div>
+    <div class="q-card">
+      <div class="q-card-q">"What's your job?"</div>
+      <div class="q-card-a">"I'm a teacher." / "I teach yoga."</div>
+      <span class="fr">Quel est votre métier ? — Je suis professeure. / J'enseigne le yoga.</span>
+    </div>
+    <div class="q-card">
+      <div class="q-card-q">"Do you have children?"</div>
+      <div class="q-card-a">"Yes, I have two children." / "No, I don't."</div>
+      <span class="fr">Avez-vous des enfants ? — Oui, j'ai deux enfants. / Non, je n'en ai pas.</span>
+    </div>
+    <div class="q-card">
+      <div class="q-card-q">"What are your hobbies?"</div>
+      <div class="q-card-a">"I like nature and art."</div>
+      <span class="fr">Quels sont vos passe-temps ? — J'aime la nature et l'art.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ④ LISTEN -->
+<div class="panel" id="panel-listen">
+  <div class="section">
+    <div class="card script-card">
+      <span class="script-tag">🎙️ Teacher reads aloud</span>
+      <p class="script-line">Sofia is at the hotel reception.</p>
+      <p class="script-line">She arrives after a long flight.</p>
+      <p class="script-pause">🤍</p>
+      <p class="script-line">The receptionist says: <em>"Good evening! Welcome. Can I have your name, please?"</em></p>
+      <p class="script-line">Sofia says: <em>"Yes, of course. My name is Sofia Ricci."</em></p>
+      <p class="script-pause">🤍</p>
+      <p class="script-line"><em>"And what's your nationality, Sofia?"</em></p>
+      <p class="script-line"><em>"I'm Italian. I'm from Rome."</em></p>
+      <p class="script-pause">🤍</p>
+      <p class="script-line"><em>"Perfect. And what's the purpose of your visit — business or holiday?"</em></p>
+      <p class="script-line"><em>"Holiday. I'm here with my family."</em></p>
+      <p class="script-pause">🤍</p>
+      <p class="script-line">The receptionist smiles and says: <em>"Wonderful. Enjoy your stay!"</em></p>
+      <p class="script-line">Sofia feels <strong>tired</strong>, but <strong>happy</strong> to be here.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ⑤ PRACTICE — CHECK-IN FORM -->
+<div class="panel" id="panel-practice">
+  <div class="section">
+    <p style="font-size:1rem;color:var(--ink-soft);margin-bottom:20px;">Complete the questions. Choose the right word.</p>
+
+    <div class="gap-item">
+      <div class="gap-sentence"><span class="blank" id="g1-blank">___</span> is your name?</div>
+      <div class="gap-options" id="g1">
+        <button class="gap-opt" onclick="gapAnswer(this,'g1',true,'What')">What</button>
+        <button class="gap-opt" onclick="gapAnswer(this,'g1',false)">Where</button>
+        <button class="gap-opt" onclick="gapAnswer(this,'g1',false)">How</button>
+      </div>
+      <div class="gap-feedback" id="g1-fb"></div>
+    </div>
+
+    <div class="gap-item">
+      <div class="gap-sentence"><span class="blank" id="g2-blank">___</span> are you from?</div>
+      <div class="gap-options" id="g2">
+        <button class="gap-opt" onclick="gapAnswer(this,'g2',false)">What</button>
+        <button class="gap-opt" onclick="gapAnswer(this,'g2',true,'Where')">Where</button>
+        <button class="gap-opt" onclick="gapAnswer(this,'g2',false)">Do</button>
+      </div>
+      <div class="gap-feedback" id="g2-fb"></div>
+    </div>
+
+    <div class="gap-item">
+      <div class="gap-sentence"><span class="blank" id="g3-blank">___</span> old are you?</div>
+      <div class="gap-options" id="g3">
+        <button class="gap-opt" onclick="gapAnswer(this,'g3',false)">What</button>
+        <button class="gap-opt" onclick="gapAnswer(this,'g3',false)">Where</button>
+        <button class="gap-opt" onclick="gapAnswer(this,'g3',true,'How')">How</button>
+      </div>
+      <div class="gap-feedback" id="g3-fb"></div>
+    </div>
+
+    <div class="gap-item">
+      <div class="gap-sentence"><span class="blank" id="g4-blank">___</span> do you live?</div>
+      <div class="gap-options" id="g4">
+        <button class="gap-opt" onclick="gapAnswer(this,'g4',true,'Where')">Where</button>
+        <button class="gap-opt" onclick="gapAnswer(this,'g4',false)">What</button>
+        <button class="gap-opt" onclick="gapAnswer(this,'g4',false)">Do</button>
+      </div>
+      <div class="gap-feedback" id="g4-fb"></div>
+    </div>
+
+    <div class="gap-item">
+      <div class="gap-sentence"><span class="blank" id="g5-blank">___</span> is your job?</div>
+      <div class="gap-options" id="g5">
+        <button class="gap-opt" onclick="gapAnswer(this,'g5',true,'What')">What</button>
+        <button class="gap-opt" onclick="gapAnswer(this,'g5',false)">How</button>
+        <button class="gap-opt" onclick="gapAnswer(this,'g5',false)">Where</button>
+      </div>
+      <div class="gap-feedback" id="g5-fb"></div>
+    </div>
+
+    <div class="gap-item">
+      <div class="gap-sentence"><span class="blank" id="g6-blank">___</span> you have children?</div>
+      <div class="gap-options" id="g6">
+        <button class="gap-opt" onclick="gapAnswer(this,'g6',false)">What</button>
+        <button class="gap-opt" onclick="gapAnswer(this,'g6',false)">Where</button>
+        <button class="gap-opt" onclick="gapAnswer(this,'g6',true,'Do')">Do</button>
+      </div>
+      <div class="gap-feedback" id="g6-fb"></div>
+    </div>
+
+    <div class="gap-item">
+      <div class="gap-sentence"><span class="blank" id="g7-blank">___</span> are your hobbies?</div>
+      <div class="gap-options" id="g7">
+        <button class="gap-opt" onclick="gapAnswer(this,'g7',true,'What')">What</button>
+        <button class="gap-opt" onclick="gapAnswer(this,'g7',false)">How</button>
+        <button class="gap-opt" onclick="gapAnswer(this,'g7',false)">Do</button>
+      </div>
+      <div class="gap-feedback" id="g7-fb"></div>
+    </div>
+
+    <div class="gap-item">
+      <div class="gap-sentence"><span class="blank" id="g8-blank">___</span> is your nationality?</div>
+      <div class="gap-options" id="g8">
+        <button class="gap-opt" onclick="gapAnswer(this,'g8',true,'What')">What</button>
+        <button class="gap-opt" onclick="gapAnswer(this,'g8',false)">Where</button>
+        <button class="gap-opt" onclick="gapAnswer(this,'g8',false)">Do</button>
+      </div>
+      <div class="gap-feedback" id="g8-fb"></div>
+    </div>
+
+    <p style="font-size:1rem;color:var(--ink-soft);margin:32px 0 20px;">Now fill in the hotel check-in form, as if you are arriving at a hotel.
+    <span class="fr">Maintenant, remplissez le formulaire d'enregistrement, comme si vous arriviez à l'hôtel.</span></p>
+
+    <div class="form-card">
+      <div id="checkinForm">
+        <div class="form-field">
+          <label>Full name<span class="field-fr">Nom complet</span></label>
+          <input type="text" id="ci-name" placeholder="e.g. Angelique...">
+        </div>
+        <div class="form-field">
+          <label>Nationality<span class="field-fr">Nationalité</span></label>
+          <select id="ci-nat">
+            <option value="">— Select —</option>
+            <option>Belgian</option>
+            <option>French</option>
+            <option>British</option>
+            <option>German</option>
+            <option>Italian</option>
+            <option>Spanish</option>
+            <option>Portuguese</option>
+            <option>Dutch</option>
+            <option>American</option>
+            <option>Moroccan</option>
+            <option>Turkish</option>
+            <option>Japanese</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Home address<span class="field-fr">Adresse</span></label>
+          <input type="text" id="ci-address" placeholder="e.g. Rue... Wallonia, Belgium">
+        </div>
+        <div class="form-field">
+          <label>Purpose of visit<span class="field-fr">Motif de la visite</span></label>
+          <select id="ci-purpose">
+            <option value="">— Select —</option>
+            <option>Holiday</option>
+            <option>Business</option>
+            <option>Visiting family</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button class="form-submit-btn" onclick="submitCheckIn()">Check in · Enregistrer</button>
+        </div>
+        <p id="ci-status" style="text-align:center;color:#A03A18;font-size:0.95rem;margin-top:12px;"></p>
+      </div>
+
+      <div class="form-confirm" id="checkinConfirm">
+        <div class="fc-check">🧳</div>
+        <h3>You're checked in!</h3>
+        <div class="form-summary" id="cf-summary"></div>
+        <div class="form-actions" style="margin-top:20px;">
+          <button class="sbtn" onclick="resetCheckIn()">Do it again · Recommencer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ⑥ SPEAK -->
+<div class="panel" id="panel-speak">
+  <div class="speak-section">
+    <div class="card roleplay-card">
+      <div class="roleplay-scenario">Ask your teacher five personal questions. Then answer five questions yourself — including one about family and one about your job or hobbies.
+      <span class="fr" style="display:block;margin-top:6px;">Posez cinq questions personnelles à votre professeur. Puis répondez à cinq questions vous-même — y compris une sur la famille et une sur votre métier ou vos passe-temps.</span></div>
+      <div class="roleplay-cue">
+        <span class="roleplay-cue-label">You ask</span>
+        <div class="roleplay-cue-text">Choose 5 questions from the Questions tab.</div>
+      </div>
+      <div class="roleplay-cue">
+        <span class="roleplay-cue-label">You answer</span>
+        <div class="roleplay-cue-text">Your teacher asks you 5 questions back.</div>
+      </div>
+    </div>
+
+    <div class="speak-prompts">
+      <div class="speak-prompt">
+        <span class="sp-label">Warm-up</span>
+        <div class="sp-text">Say: "My name is ___. I'm from ___."</div>
+        <span class="fr">Je m'appelle ___. Je viens de ___.</span>
+      </div>
+      <div class="speak-prompt">
+        <span class="sp-label">Go further</span>
+        <div class="sp-text">Add your age, job, and one hobby, all in one turn.</div>
+        <span class="fr">Ajoutez votre âge, votre métier, et un passe-temps.</span>
+      </div>
+      <div class="speak-prompt">
+        <span class="sp-label">Full exchange</span>
+        <div class="sp-text">Ask and answer 5 questions each — no script.</div>
+        <span class="fr">Posez et répondez à 5 questions chacune — sans aide.</span>
+      </div>
+    </div>
+    <p style="font-size:0.95rem;color:var(--ink-soft);margin-top:20px;line-height:1.5;text-align:center;">📌 <em>Review: next session — nationalities, question forms, "Do you have...?"</em></p>
+  </div>
+</div>
+
+<!-- FLOATING CALM -->
+<button class="calm-fab" onclick="openCalm()" aria-label="Breathing space">
+  <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white" stroke-width="1.5" opacity="0.6"/><circle cx="12" cy="12" r="4.5" fill="white" opacity="0.95"/></svg>
+  <span class="fab-label">Calm</span>
+</button>
+
+<!-- FLOATING JOURNAL -->
+<button class="journal-fab" onclick="openJournal()" aria-label="Writing space">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3h7.5l5 5v11.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19.5v-15z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/><path d="M14 3v5h5" stroke="white" stroke-width="1.5" stroke-linejoin="round"/><line x1="8" y1="12" x2="16" y2="12" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="15.5" x2="14" y2="15.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+  <span class="fab-label">Write</span>
+</button>
+
+<!-- CALM OVERLAY -->
+<div class="calm-overlay" id="calmOverlay">
+  <div class="overlay-header">
+    <div></div>
+    <button class="overlay-close" onclick="closeCalm()">×</button>
+  </div>
+  <div id="pickerView">
+    <div class="overlay-title">
+      <h2>A moment to breathe</h2>
+      <p>Choose what feels right — Choisissez ce qui vous convient</p>
+    </div>
+    <div class="ex-grid">
+      <button class="ex-card" data-ex="box"><div class="ex-name">Box Breathing</div><div class="ex-desc">Steady and grounding · Stable et ancré</div><div class="ex-pattern">IN 4 · HOLD 4 · OUT 4 · HOLD 4</div></button>
+      <button class="ex-card" data-ex="478"><div class="ex-name">4-7-8 Calm Down</div><div class="ex-desc">For fast relief · Pour un soulagement rapide</div><div class="ex-pattern">IN 4 · HOLD 7 · OUT 8</div></button>
+      <button class="ex-card" data-ex="coherent"><div class="ex-name">Coherent Breathing</div><div class="ex-desc">Gentle, no holding · Doux, sans rétention</div><div class="ex-pattern">IN 5 · OUT 5</div></button>
+      <button class="ex-card" data-ex="triangle"><div class="ex-name">Triangle Breath</div><div class="ex-desc">Quick reset · Réinitialisation rapide</div><div class="ex-pattern">IN 3 · HOLD 3 · OUT 3</div></button>
+      <button class="ex-card" data-ex="extended"><div class="ex-name">Extended Exhale</div><div class="ex-desc">Simple and easy · Simple et facile</div><div class="ex-pattern">IN 4 · OUT 6</div></button>
+    </div>
+    <div class="dur-row">
+      <button class="dur-btn" data-dur="1">1 min</button>
+      <button class="dur-btn active" data-dur="2">2 min</button>
+      <button class="dur-btn" data-dur="3">3 min</button>
+    </div>
+    <div class="start-row">
+      <button class="start-btn" id="startBtn" disabled onclick="startSession()">Choose an exercise above</button>
+    </div>
+  </div>
+  <div class="session-view" id="sessionView">
+    <div class="breath-stage">
+      <div class="shape-bubble" id="shapeBubble"><div class="ring ring1"></div><div class="ring ring2"></div><div class="bubble" id="bubble"></div></div>
+      <svg class="shape-box" id="shapeBox" viewBox="0 0 220 220" style="display:none;"><rect x="20" y="20" width="180" height="180" rx="14" fill="none" stroke="rgba(70,96,79,0.45)" stroke-width="5"/><circle id="boxDot" cx="200" cy="200" r="16" fill="#46604F"/></svg>
+      <svg class="shape-triangle" id="shapeTriangle" viewBox="0 0 220 220" style="display:none;"><polygon points="110,18 198,192 22,192" fill="none" stroke="rgba(70,96,79,0.45)" stroke-width="5" stroke-linejoin="round"/><circle id="triDot" cx="22" cy="192" r="16" fill="#46604F"/></svg>
+      <div class="shape-vertical" id="shapeVertical" style="display:none;"><div class="v-track"></div><div class="v-dot" id="vDot"></div></div>
+    </div>
+    <div class="phase-label" id="phaseLabel">Get ready</div>
+    <div class="phase-fr" id="phaseFr">Préparez-vous</div>
+    <div class="phase-count" id="phaseCount">&nbsp;</div>
+    <div class="session-meta" id="sessionMeta"></div>
+    <div class="session-controls"><button class="sbtn stop" onclick="stopSession()">Stop · Arrêter</button></div>
+  </div>
+  <div class="done-view" id="doneView">
+    <div class="done-check">🌿</div>
+    <h3>Well done</h3>
+    <p>Return to the lesson whenever you're ready.<span class="fr" style="display:block;margin-top:4px;">Retournez à la leçon quand vous serez prête.</span></p>
+    <button class="start-btn" onclick="resetCalm()" style="width:100%;max-width:340px;">Breathe again · Respirer encore</button>
+    <button class="sbtn" style="margin-top:14px;width:100%;max-width:340px;" onclick="closeCalm()">Back to lesson · Retour</button>
+  </div>
+</div>
+
+<!-- JOURNAL OVERLAY -->
+<div class="journal-overlay" id="journalOverlay">
+  <div class="overlay-header" style="justify-content:flex-end;">
+    <button class="overlay-close" style="color:var(--sand);" onclick="closeJournal()">×</button>
+  </div>
+  <div class="overlay-title" style="text-align:center;padding:4px 20px 20px;">
+    <h2 style="font-family:'Lora',serif;font-size:1.7rem;color:var(--sand);margin:0;">Your writing space</h2>
+    <p style="margin:8px 0 0;color:var(--ink-soft);font-size:1rem;">Write anything in English — no rules here.<span style="display:block;font-style:italic;margin-top:4px;" class="fr">Écrivez ce que vous voulez, en anglais — pas de règles ici.</span></p>
+  </div>
+  <div class="journal-body">
+    <div class="journal-toolbar">
+      <button type="button" class="journal-fmt-btn" id="boldBtn" onclick="formatText('bold')" aria-label="Bold"><span class="bf">B</span></button>
+      <button type="button" class="journal-fmt-btn" id="italicBtn" onclick="formatText('italic')" aria-label="Italic"><span class="if">I</span></button>
+    </div>
+    <div id="journalText" class="journal-textarea" contenteditable="true" data-placeholder="Start writing here... / Commencez à écrire ici..."></div>
+    <div class="journal-status" id="journalStatus">&nbsp;</div>
+    <div class="journal-actions">
+      <button class="sbtn" onclick="clearDraft()">Clear draft · Effacer</button>
+      <button class="sbtn stop" onclick="submitEntry()">Submit entry · Valider</button>
+    </div>
+
+    <div class="journal-entries-wrap" id="journalEntriesWrap" style="display:none;">
+      <div class="journal-entries-header">
+        <span class="recap-label" style="color:var(--sand);">Your entries today</span>
+        <button class="copy-all-btn" onclick="copyAllEntries(this)">📋 Copy all · Tout copier</button>
+      </div>
+      <div class="journal-entries" id="journalEntries"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── TABS ──
+function goTab(name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===name));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id==='panel-'+name));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click', ()=>goTab(t.dataset.tab));
+});
+
+// ── VOCAB CARDS (tap: show FR → mastered → reset) ──
+document.querySelectorAll('.vcard').forEach(card=>{
+  let state=0;
+  card.addEventListener('click',()=>{
+    state=(state+1)%3;
+    card.classList.remove('shown','mastered');
+    if(state===1) card.classList.add('shown');
+    if(state===2) card.classList.add('mastered');
+  });
+});
+
+// ── DIALOGUE TTS (tap a bubble to hear it) ──
+function speakLine(text){
+  if(!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang='en-US'; u.rate=0.82;
+  window.speechSynthesis.speak(u);
+}
+
+// ── LEARNING GOAL TOGGLE (teacher-facing) ──
+function toggleGoal(){
+  document.getElementById('goalPanel').classList.toggle('open');
+}
+
+// ── NATIONALITY CARDS (tap to reveal adjective) ──
+document.querySelectorAll('.nat-card').forEach(card=>{
+  card.addEventListener('click', ()=> card.classList.toggle('shown'));
+});
+
+// ── GAP-FILL EXERCISE ──
+function gapAnswer(btn, groupId, isCorrect, correctWord){
+  const group = document.getElementById(groupId);
+  const opts = group.querySelectorAll('.gap-opt');
+  const fb = document.getElementById(groupId+'-fb');
+  const blank = document.getElementById(groupId+'-blank');
+
+  opts.forEach(o => o.disabled = true);
+
+  if(isCorrect){
+    btn.classList.add('correct');
+    opts.forEach(o => { if(o!==btn) o.classList.add('dim'); });
+    blank.textContent = btn.textContent;
+    fb.textContent = '✓ Correct';
+    fb.style.color = 'var(--sage-dark)';
+  } else {
+    btn.classList.add('wrong');
+    let correctBtn = null;
+    opts.forEach(o => {
+      if(o.textContent === correctWordFor(groupId)) { o.classList.add('correct'); correctBtn = o; }
+      else if(o!==btn) o.classList.add('dim');
+    });
+    if(correctBtn) blank.textContent = correctBtn.textContent;
+    fb.textContent = '✗ Not quite — the green word is correct.';
+    fb.style.color = '#7A2A10';
+  }
+}
+// map of correct words per group, used to highlight the right answer on a wrong attempt
+const gapAnswers = {g1:'What',g2:'Where',g3:'How',g4:'Where',g5:'What',g6:'Do',g7:'What',g8:'What'};
+function correctWordFor(groupId){ return gapAnswers[groupId]; }
+
+// ── CHECK-IN FORM ──
+function submitCheckIn(){
+  const name = document.getElementById('ci-name').value.trim();
+  const nat = document.getElementById('ci-nat').value;
+  const addr = document.getElementById('ci-address').value.trim();
+  const purpose = document.getElementById('ci-purpose').value;
+
+  if(!name || !nat || !addr || !purpose){
+    const status = document.getElementById('ci-status');
+    status.textContent = 'Please complete every field. · Veuillez remplir chaque champ.';
+    return;
+  }
+
+  document.getElementById('ci-status').textContent = '';
+  document.getElementById('checkinForm').style.display = 'none';
+  const confirm = document.getElementById('checkinConfirm');
+  confirm.classList.add('shown');
+  document.getElementById('cf-summary').innerHTML =
+    `<strong>Name:</strong> ${escapeHtml(name)}<br>` +
+    `<strong>Nationality:</strong> ${escapeHtml(nat)}<br>` +
+    `<strong>Address:</strong> ${escapeHtml(addr)}<br>` +
+    `<strong>Purpose of visit:</strong> ${escapeHtml(purpose)}`;
+}
+function resetCheckIn(){
+  document.getElementById('ci-name').value='';
+  document.getElementById('ci-nat').value='';
+  document.getElementById('ci-address').value='';
+  document.getElementById('ci-purpose').value='';
+  document.getElementById('checkinForm').style.display='block';
+  document.getElementById('checkinConfirm').classList.remove('shown');
+}
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+// ── BREATHING ──
+const patterns = {
+  box:      {name:'Box Breathing',      shape:'box',      phases:[['Breathe in','Inspirez',4],['Hold','Retenez',4],['Breathe out','Expirez',4],['Hold','Retenez',4]]},
+  '478':    {name:'4-7-8 Calm Down',    shape:'bubble',   phases:[['Breathe in','Inspirez',4],['Hold','Retenez',7],['Breathe out','Expirez',8]]},
+  coherent: {name:'Coherent Breathing', shape:'vertical', phases:[['Breathe in','Inspirez',5],['Breathe out','Expirez',5]]},
+  triangle: {name:'Triangle Breath',    shape:'triangle', phases:[['Breathe in','Inspirez',3],['Hold','Retenez',3],['Breathe out','Expirez',3]]},
+  extended: {name:'Extended Exhale',    shape:'bubble',   phases:[['Breathe in','Inspirez',4],['Breathe out','Expirez',6]]}
+};
+const boxCorners=[[200,200],[200,20],[20,20],[20,200],[200,200]];
+const triCorners=[[22,192],[110,18],[198,192],[22,192]];
+let selectedEx=null,selectedDur=2,sessionTimer=null,phaseTimer=null,totalSecondsLeft=0;
+const calmOverlay=document.getElementById('calmOverlay');
+const pickerView=document.getElementById('pickerView');
+const sessionView=document.getElementById('sessionView');
+const doneView=document.getElementById('doneView');
+const startBtn=document.getElementById('startBtn');
+
+function openCalm(){calmOverlay.classList.add('open');resetCalm();}
+function closeCalm(){calmOverlay.classList.remove('open');clearTimeout(phaseTimer);clearInterval(sessionTimer);}
+function resetCalm(){
+  pickerView.style.display='block';
+  sessionView.classList.remove('active');
+  doneView.classList.remove('active');
+  clearTimeout(phaseTimer);clearInterval(sessionTimer);
+}
+document.querySelectorAll('.ex-card').forEach(card=>{
+  card.addEventListener('click',()=>{
+    document.querySelectorAll('.ex-card').forEach(c=>c.classList.remove('selected'));
+    card.classList.add('selected');
+    selectedEx=card.dataset.ex;
+    startBtn.disabled=false;
+    startBtn.textContent='Begin · Commencer';
+  });
+});
+document.querySelectorAll('.dur-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.dur-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedDur=parseInt(btn.dataset.dur,10);
+  });
+});
+function showShape(shape){
+  document.getElementById('shapeBubble').style.display=shape==='bubble'?'flex':'none';
+  document.getElementById('shapeBox').style.display=shape==='box'?'block':'none';
+  document.getElementById('shapeTriangle').style.display=shape==='triangle'?'block':'none';
+  document.getElementById('shapeVertical').style.display=shape==='vertical'?'flex':'none';
+}
+function setBoxDot(i,dur){
+  const d=document.getElementById('boxDot');
+  d.style.transition=dur?`cx ${dur}s linear,cy ${dur}s linear`:'none';
+  d.setAttribute('cx',boxCorners[i][0]);d.setAttribute('cy',boxCorners[i][1]);
+}
+function setTriDot(i,dur){
+  const d=document.getElementById('triDot');
+  d.style.transition=dur?`cx ${dur}s linear,cy ${dur}s linear`:'none';
+  d.setAttribute('cx',triCorners[i][0]);d.setAttribute('cy',triCorners[i][1]);
+}
+function setVDot(toTop,dur){
+  const d=document.getElementById('vDot');
+  d.style.transition=dur?`top ${dur}s linear`:'none';
+  d.style.top=toTop?'10px':'calc(100% - 64px)';
+}
+function startSession(){
+  if(!selectedEx)return;
+  pickerView.style.display='none';
+  sessionView.classList.add('active');
+  totalSecondsLeft=selectedDur*60;
+  const p=patterns[selectedEx];
+  document.getElementById('sessionMeta').textContent=p.name;
+  showShape(p.shape);
+  if(p.shape==='box')setBoxDot(0,0);
+  if(p.shape==='triangle')setTriDot(0,0);
+  if(p.shape==='vertical')setVDot(false,0);
+  if(p.shape==='bubble'){const b=document.getElementById('bubble');b.style.transition='none';b.style.transform='scale(1)';}
+  setTimeout(()=>runPhaseLoop(0),50);
+  sessionTimer=setInterval(()=>{totalSecondsLeft--;if(totalSecondsLeft<=0)finishSession();},1000);
+}
+function runPhaseLoop(phaseIndex){
+  if(totalSecondsLeft<=0)return;
+  const p=patterns[selectedEx];
+  const [label,labelFr,duration]=p.phases[phaseIndex];
+  const isIn=label.toLowerCase().includes('in');
+  const isOut=label.toLowerCase().includes('out');
+  document.getElementById('phaseLabel').textContent=label;
+  document.getElementById('phaseFr').textContent=labelFr;
+  if(p.shape==='bubble'){
+    const b=document.getElementById('bubble');
+    b.style.transition=`transform ${duration}s linear,box-shadow ${duration}s linear`;
+    if(isIn){b.style.transform='scale(1.7)';b.style.boxShadow='0 0 60px rgba(70,96,79,0.75)';}
+    else if(isOut){b.style.transform='scale(0.75)';b.style.boxShadow='0 0 25px rgba(70,96,79,0.35)';}
+  }else if(p.shape==='box'){setBoxDot(phaseIndex+1,duration);}
+  else if(p.shape==='triangle'){setTriDot(phaseIndex+1,duration);}
+  else if(p.shape==='vertical'){if(isIn)setVDot(true,duration);else if(isOut)setVDot(false,duration);}
+  let count=duration;
+  document.getElementById('phaseCount').textContent=count;
+  clearTimeout(phaseTimer);
+  const tick=()=>{count--;if(count>0){document.getElementById('phaseCount').textContent=count;phaseTimer=setTimeout(tick,1000);}else{const next=(phaseIndex+1)%p.phases.length;phaseTimer=setTimeout(()=>runPhaseLoop(next),200);}};
+  phaseTimer=setTimeout(tick,1000);
+}
+function finishSession(){clearTimeout(phaseTimer);clearInterval(sessionTimer);sessionView.classList.remove('active');doneView.classList.add('active');}
+function stopSession(){clearTimeout(phaseTimer);clearInterval(sessionTimer);resetCalm();}
+
+// ── JOURNAL ──
+const journalOverlay=document.getElementById('journalOverlay');
+const journalText=document.getElementById('journalText');
+const journalStatus=document.getElementById('journalStatus');
+const journalEntriesWrap=document.getElementById('journalEntriesWrap');
+const journalEntriesEl=document.getElementById('journalEntries');
+const boldBtn=document.getElementById('boldBtn');
+const italicBtn=document.getElementById('italicBtn');
+const JDRAFT_KEY='angelique_pi_draft';
+const JENTRIES_KEY='angelique_pi_entries';
+let jTimer=null;
+
+// only allow a small safe set of formatting tags when storing/restoring HTML
+function sanitizeHtml(html){
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  const allowed = ['B','STRONG','I','EM','BR','DIV'];
+  (function clean(node){
+    [...node.childNodes].forEach(child=>{
+      if(child.nodeType===1){
+        if(!allowed.includes(child.tagName)){
+          // unwrap disallowed tags, keep their text/children
+          while(child.firstChild) node.insertBefore(child.firstChild, child);
+          node.removeChild(child);
+        } else {
+          child.removeAttribute('style');
+          child.removeAttribute('class');
+          clean(child);
+        }
+      }
+    });
+  })(tmp);
+  return tmp.innerHTML;
+}
+
+function formatText(command){
+  document.execCommand(command, false, null);
+  journalText.focus();
+  updateToolbarState();
+  triggerAutosave();
+}
+function updateToolbarState(){
+  try{
+    boldBtn.classList.toggle('active', document.queryCommandState('bold'));
+    italicBtn.classList.toggle('active', document.queryCommandState('italic'));
+  }catch(e){}
+}
+document.addEventListener('selectionchange', ()=>{
+  if(document.activeElement===journalText) updateToolbarState();
+});
+
+function loadEntries(){
+  try{
+    const raw=localStorage.getItem(JENTRIES_KEY);
+    return raw ? JSON.parse(raw) : [];
+  }catch(e){ return []; }
+}
+function saveEntries(entries){
+  try{ localStorage.setItem(JENTRIES_KEY, JSON.stringify(entries)); }catch(e){}
+}
+function renderEntries(){
+  const entries = loadEntries();
+  if(entries.length===0){
+    journalEntriesWrap.style.display='none';
+    return;
+  }
+  journalEntriesWrap.style.display='block';
+  journalEntriesEl.innerHTML = entries.map(e => `
+    <div class="journal-entry">
+      <span class="journal-entry-time">${e.time}</span>
+      <div class="journal-entry-text">${sanitizeHtml(e.html || e.text || '')}</div>
+    </div>
+  `).join('');
+}
+
+function openJournal(){
+  try{
+    const d=localStorage.getItem(JDRAFT_KEY);
+    journalText.innerHTML = d ? sanitizeHtml(d) : '';
+  }catch(e){}
+  renderEntries();
+  journalOverlay.classList.add('open');
+  journalStatus.textContent='';
+  setTimeout(()=>journalText.focus(),200);
+}
+function closeJournal(){journalOverlay.classList.remove('open');}
+
+function clearDraft(){
+  journalText.innerHTML='';
+  try{ localStorage.removeItem(JDRAFT_KEY); }catch(e){}
+  journalStatus.textContent='Draft cleared · Brouillon effacé';
+  clearTimeout(jTimer);
+}
+
+function submitEntry(){
+  const plain = journalText.textContent.trim();
+  if(!plain) return;
+  const entries = loadEntries();
+  const time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  entries.push({html: sanitizeHtml(journalText.innerHTML), text: plain, time});
+  saveEntries(entries);
+  journalText.innerHTML='';
+  try{ localStorage.removeItem(JDRAFT_KEY); }catch(e){}
+  journalStatus.textContent='Entry saved · Entrée enregistrée';
+  renderEntries();
+}
+
+function copyAllEntries(btn){
+  const entries = loadEntries();
+  if(entries.length===0) return;
+  // plain text only — formatting doesn't survive paste into WhatsApp/email anyway
+  const text = entries.map(e => `[${e.time}] ${e.text}`).join('\n\n');
+  const finish = (ok) => {
+    btn.classList.toggle('copied', ok);
+    btn.textContent = ok ? '✓ Copied · Copié' : '📋 Copy all · Tout copier';
+    setTimeout(()=>{
+      btn.classList.remove('copied');
+      btn.textContent = '📋 Copy all · Tout copier';
+    }, 2000);
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>finish(true)).catch(()=>finish(false));
+  } else {
+    // fallback for older browsers
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta);
+    ta.select();
+    try{ document.execCommand('copy'); finish(true); }catch(e){ finish(false); }
+    document.body.removeChild(ta);
+  }
+}
+
+// autosave the current draft (not yet submitted) so nothing is lost if she closes the tab
+function triggerAutosave(){
+  clearTimeout(jTimer);journalStatus.textContent='';
+  jTimer=setTimeout(()=>{try{localStorage.setItem(JDRAFT_KEY, sanitizeHtml(journalText.innerHTML));}catch(e){}},600);
+}
+journalText.addEventListener('input', triggerAutosave);
+journalText.addEventListener('keyup', updateToolbarState);
+journalText.addEventListener('mouseup', updateToolbarState);
+
+// ── FRENCH TRANSLATION TOGGLES ──
+// Every French translation is hidden by default; a small button reveals it on tap.
+(function setupFrToggles(){
+  const frSelectors = ['.fr', '.speak-fr', '.sp-fr', '.match-situation-fr'];
+  const frEls = document.querySelectorAll(frSelectors.join(','));
+  frEls.forEach((el, i) => {
+    el.classList.add('fr-hidden');
+    el.dataset.frId = 'fr-' + i;
+
+    const btn = document.createElement('button');
+    btn.className = 'fr-toggle';
+    btn.type = 'button';
+    btn.textContent = '🇫🇷 FR';
+    btn.setAttribute('aria-label', 'Show French translation');
+    btn.addEventListener('click', () => {
+      const isHidden = el.classList.contains('fr-hidden');
+      if(isHidden){
+        el.classList.remove('fr-hidden');
+        btn.classList.add('shown');
+        btn.textContent = '🇫🇷 FR ✓';
+      } else {
+        el.classList.add('fr-hidden');
+        btn.classList.remove('shown');
+        btn.textContent = '🇫🇷 FR';
+      }
+    });
+    el.parentNode.insertBefore(btn, el);
+  });
+})();
+</script>
+</body>
+</html>
