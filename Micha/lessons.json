@@ -4,6 +4,7 @@
     "title": "#15 Present Continuous",
     "goals": {
       "primary": [
+        "A1-06",
         "A2-01"
       ]
     }
@@ -133,7 +134,12 @@
   },
   {
     "file": "micha-possessives-saba.html",
-    "title": "#1.1 Possessives"
+    "title": "#1.1 Possessives",
+    "goals": {
+      "primary": [
+        "A1-03"
+      ]
+    }
   },
   {
     "file": "micha-prepositions-one-piece.html",

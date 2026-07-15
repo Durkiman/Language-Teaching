@@ -1,7 +1,9 @@
 {
   "student": "micha",
-  "levels": ["A2", "B1"],
+  "levels": ["A1", "A2"],
   "cards": {
+    "A1-03": { "status": "introduced", "introduced": null, "reviews": [], "notes": "Saba lesson (#1.1) — possessive adjectives & pronouns; retro-tagged, was untagged" },
+    "A1-06": { "status": "introduced", "introduced": null, "reviews": [], "notes": "Wildlife lesson (#15) — present continuous vs present simple contrast; retro-tagged, was mistagged as A2-01 only" },
     "A2-01": { "status": "introduced", "introduced": null, "reviews": [], "notes": "Weather lesson (present simple) + wildlife lesson" },
     "A2-04": { "status": "reviewed", "introduced": null, "reviews": [null], "notes": "Samoa, Kauai, Azores, Saint-Barths — heavily recycled" },
     "A2-06": { "status": "reviewed", "introduced": null, "reviews": [null], "notes": "Past simple across many lessons; 28 irregular verbs" },
