@@ -675,7 +675,7 @@
   // transient network error used to abort the whole function, silently
   // blanking every student's Curriculum Tracking section).
   async function loadCurriculum() {
-    const levels = ['a1', 'a2', 'b1', 'sq-a1', 'sq-a2', 'es-a1', 'es-a2'];
+    const levels = ['a1', 'a2', 'b1', 'b2', 'c1', 'c2', 'sq-a1', 'sq-a2', 'es-a1', 'es-a2'];
     await Promise.all(levels.map(async (level) => {
       try {
         const res = await fetch(`${CURRICULUM_URL}/${level}.json`);
