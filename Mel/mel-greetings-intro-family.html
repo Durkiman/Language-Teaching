@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Tung, jam & kam — Mel's Lesson 7</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#F7F5F0; --surface:#FFFFFF; --surface2:#F0EDE6; --card:#FAFAF7;
+  --border:rgba(0,0,0,0.09); --text:#1C1814; --muted:#8A7E6E;
+  --gold:#B8860B; --gold-dim:rgba(184,134,11,0.10);
+  --teal:#2A7A68; --teal-dim:rgba(42,122,104,0.10);
+  --rose:#B04060; --rose-dim:rgba(176,64,96,0.10);
+  --violet:#5848A0; --violet-dim:rgba(88,72,160,0.10);
+  --blue:#2C5F9E; --radius:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.screen{display:none}.screen.active{display:block}
+
+/* NAV */
+.nav{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:50}
+.nav-back{width:34px;height:34px;background:var(--surface);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:0.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif}
+.nav-label{flex:1;font-size:0.78rem;font-weight:600;color:var(--muted)}
+.nav-timer{font-size:0.78rem;font-weight:600;color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:4px 10px;min-width:40px;text-align:center;font-variant-numeric:tabular-nums}
+.nav-timer.running{color:var(--gold);border-color:rgba(212,168,75,0.3)}
+
+/* HOME */
+#home{padding-bottom:48px}
+.home-hero{background:linear-gradient(160deg,#EDE8DC 0%,var(--bg) 100%);padding:48px 24px 40px}
+.hero-kicker{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,8vw,3.4rem);font-weight:700;line-height:1.05;margin-bottom:10px}
+.hero-title em{color:var(--gold);font-style:italic}
+.hero-desc{font-size:0.88rem;color:rgba(28,24,20,0.55);line-height:1.7;font-weight:300}
+.home-plan{padding:24px 20px 0}
+.plan-label{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.plan-items{display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
+.plan-item{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:14px;cursor:pointer;-webkit-user-select:none;user-select:none}
+.plan-item:active{opacity:.75}
+.plan-item.done{border-color:rgba(61,158,140,0.3);background:rgba(61,158,140,0.05)}
+.plan-num{width:28px;height:28px;border-radius:50%;background:var(--surface2);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:var(--muted);flex-shrink:0;transition:all .2s}
+.plan-item.done .plan-num{background:var(--teal);border-color:var(--teal);color:white}
+.plan-info{flex:1}.plan-name{font-size:.9rem;font-weight:600;color:var(--text)}.plan-time{font-size:.72rem;color:var(--muted);margin-top:2px}
+.plan-arrow{font-size:.8rem;color:var(--muted)}
+
+/* SECTION BODY */
+.section-body{padding:20px;display:flex;flex-direction:column;gap:16px;padding-bottom:80px}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.card-label{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+
+/* DIFFICULTY BADGE */
+.diff-badge{display:inline-flex;align-items:center;gap:5px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-bottom:10px}
+.diff-easy{background:var(--teal-dim);color:var(--teal)}
+.diff-medium{background:var(--gold-dim);color:var(--gold)}
+.diff-hard{background:var(--rose-dim);color:var(--rose)}
+
+/* VOCAB TABLE */
+.vocab-table{display:flex;flex-direction:column}
+.vocab-row{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.vocab-row:last-child{border-bottom:none}
+.v-left{min-width:155px;flex-shrink:0}
+.v-alb{font-size:.9rem;font-weight:600;color:var(--gold)}
+.v-pres{font-size:.7rem;color:var(--muted);margin-top:2px}
+.v-ex{font-size:.7rem;color:rgba(28,24,20,0.35);margin-top:3px;font-style:italic}
+.v-right{flex:1}
+.v-en{font-size:.82rem;color:var(--muted)}
+.v-fr{font-size:.73rem;color:var(--blue);font-style:italic;margin-top:2px}
+
+/* GRAMMAR BOX */
+.grammar-box{background:var(--surface2);border-radius:12px;padding:14px 16px;margin-bottom:12px;border-left:3px solid var(--gold)}
+.grammar-title{font-size:.78rem;font-weight:700;color:var(--gold);margin-bottom:8px}
+.grammar-body{font-size:.84rem;line-height:1.8;color:rgba(28,24,20,0.75)}
+.grammar-body strong{color:var(--gold)}
+.grammar-body em{color:var(--blue);font-style:italic}
+.conj-table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:10px}
+.conj-table th{text-align:left;font-weight:700;color:var(--muted);font-size:.68rem;letter-spacing:1px;text-transform:uppercase;padding:4px 8px;border-bottom:1px solid var(--border)}
+.conj-table td{padding:7px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+.conj-table td:first-child{color:var(--muted);font-size:.8rem}
+.conj-table td:nth-child(2){color:var(--gold);font-weight:600}
+.conj-table td:nth-child(3){color:var(--text)}
+.conj-table td:nth-child(4){color:var(--muted);font-size:.75rem;font-style:italic}
+.conj-table tr:last-child td{border-bottom:none}
+
+/* MCQ */
+.mcq-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:10px}
+.mcq-q{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--text);line-height:1.4;margin-bottom:16px}
+.mcq-fr{font-size:.78rem;color:var(--blue);font-style:italic;margin-top:-10px;margin-bottom:14px}
+.mcq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mcq-opt{background:var(--surface2);border:2px solid var(--border);border-radius:12px;padding:12px 10px;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:600;color:var(--text);cursor:pointer;text-align:center;transition:all .15s;line-height:1.3;-webkit-user-select:none;user-select:none}
+.mcq-opt:active:not(:disabled){opacity:.7}
+.mcq-opt.correct{background:var(--teal-dim);border-color:var(--teal);color:var(--teal)}
+.mcq-opt.wrong{background:var(--rose-dim);border-color:var(--rose);color:var(--rose)}
+.mcq-opt:disabled{cursor:default}
+.mcq-feedback{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:.84rem;line-height:1.6;display:none}
+.mcq-feedback.show{display:block}
+.mcq-feedback.correct{background:var(--teal-dim);border-left:3px solid var(--teal);color:var(--teal)}
+.mcq-feedback.wrong{background:var(--rose-dim);border-left:3px solid var(--rose);color:var(--text)}
+.mcq-next{display:none;width:100%;margin-top:10px;padding:12px;background:var(--gold);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;border:none;border-radius:12px;cursor:pointer}
+.mcq-next.show{display:block}
+.mcq-next:active{opacity:.8}
+
+/* GAP FILL */
+.gap-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:10px}
+.gap-sentence{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--text);line-height:1.7;margin-bottom:8px}
+.gap-input{background:transparent;border:none;border-bottom:2px solid var(--gold);color:var(--gold);font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;width:110px;text-align:center;outline:none;padding:2px 4px;margin:0 4px}
+.gap-input.correct-input{border-color:var(--teal);color:var(--teal)}
+.gap-input.wrong-input{border-color:var(--rose);color:var(--rose)}
+.gap-fr{font-size:.78rem;color:var(--blue);font-style:italic;margin-bottom:12px}
+.gap-check-btn{background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:600;padding:7px 14px;cursor:pointer;-webkit-user-select:none;user-select:none}
+.gap-check-btn:active{opacity:.7}
+.gap-check-btn:disabled{opacity:.35;cursor:default}
+.gap-result{margin-top:10px;font-size:.82rem;line-height:1.6;display:none}
+.gap-result.show{display:block}
+.gap-result.correct{color:var(--teal)}
+.gap-result.wrong{color:var(--rose)}
+
+/* ORDERING */
+.order-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:10px}
+.order-instruction{font-size:.84rem;color:rgba(28,24,20,0.65);margin-bottom:12px;line-height:1.6}
+.order-words{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;min-height:44px;padding:10px;background:var(--surface2);border-radius:10px;border:1px dashed var(--border)}
+.order-bank{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.order-word{background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:7px 12px;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:600;color:var(--text);cursor:pointer;-webkit-user-select:none;user-select:none;transition:all .15s}
+.order-word:active{opacity:.7}
+.order-word.placed{background:var(--violet-dim);border-color:rgba(112,96,168,.4);color:var(--text)}
+.order-word.in-zone{background:var(--card);border-color:var(--violet);cursor:pointer}
+.order-check{background:var(--gold);border:none;border-radius:10px;color:var(--bg);font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:700;padding:10px 18px;cursor:pointer;-webkit-user-select:none;user-select:none}
+.order-check:active{opacity:.8}
+.order-feedback{margin-top:10px;font-size:.82rem;line-height:1.6;display:none}
+.order-feedback.show{display:block}
+.order-feedback.correct{color:var(--teal)}
+.order-feedback.wrong{color:var(--rose)}
+
+/* SPEAK CARD */
+.speak-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:10px}
+.speak-prompt{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--text);line-height:1.4;margin-bottom:6px}
+.speak-fr{font-size:.78rem;color:var(--blue);font-style:italic;margin-bottom:10px}
+.speak-targets{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.speak-target{background:var(--gold-dim);border:1px solid rgba(212,168,75,.3);border-radius:20px;padding:4px 10px;font-size:.72rem;font-weight:600;color:var(--gold)}
+.hint-box{background:var(--gold-dim);border-left:2px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 12px;font-size:.82rem;color:var(--gold);margin-top:10px;display:none;line-height:1.6}
+.hint-box.show{display:block}
+.answer-box{background:var(--teal-dim);border-left:2px solid var(--teal);border-radius:0 8px 8px 0;padding:12px 14px;margin-top:10px;display:none}
+.answer-box.show{display:block}
+.chunks{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.hint-btn{background:transparent;border:1.5px solid var(--border);border-radius:8px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:600;padding:7px 12px;cursor:pointer;margin-right:8px;-webkit-user-select:none;user-select:none}
+.hint-btn:active{opacity:.7}
+.tried-btn{background:var(--rose);border:none;border-radius:8px;color:white;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:700;padding:7px 14px;cursor:pointer;-webkit-user-select:none;user-select:none}
+.tried-btn:active{opacity:.8}
+.tried-btn:disabled{opacity:.35;cursor:default}
+
+/* RECAP CHIPS (used for warm-up self-check) */
+.recap-block{background:var(--card);border-radius:12px;padding:14px 16px;margin-bottom:10px;border-left:3px solid var(--violet)}
+.recap-block-title{font-size:.78rem;font-weight:700;color:var(--violet);margin-bottom:10px}
+.recap-chips{display:flex;flex-wrap:wrap;gap:6px}
+.recap-chip{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:6px 12px;font-size:.8rem;color:var(--text);cursor:pointer;-webkit-user-select:none;user-select:none}
+.recap-chip:active{opacity:.7}
+.recap-chip.lit{background:var(--violet-dim);border-color:rgba(112,96,168,.4)}
+.recap-chip .en{display:none;font-size:.7rem;color:var(--muted);margin-top:3px}
+.recap-chip.lit .en{display:block}
+
+/* RECALL */
+.recall-area{width:100%;min-height:100px;border:2px solid var(--border);border-radius:12px;padding:14px;font-family:'DM Sans',sans-serif;font-size:1rem;resize:vertical;background:var(--surface);color:var(--text)}
+.recall-area:focus{outline:none;border-color:var(--gold)}
+.recall-bubbles{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;min-height:30px}
+.bubble{background:var(--gold-dim);border:1px solid rgba(184,134,11,.3);color:var(--gold);padding:6px 14px;border-radius:20px;font-size:.85rem}
+
+/* SELF-INTRO BUILDER */
+.builder-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.builder-chip{background:var(--surface);border:1.5px solid var(--border);border-radius:20px;padding:8px 14px;font-size:.82rem;font-weight:600;color:var(--text);cursor:pointer;-webkit-user-select:none;user-select:none}
+.builder-chip.picked{background:var(--teal-dim);border-color:var(--teal);color:var(--teal)}
+.builder-output{background:var(--surface2);border-radius:10px;padding:14px 16px;margin-top:8px;font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--gold);min-height:28px;line-height:1.6}
+
+/* COUNTDOWN */
+.countdown-wrap{display:flex;align-items:center;gap:14px;margin:12px 0}
+.countdown-num{font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--gold);min-width:56px;text-align:center;font-variant-numeric:tabular-nums}
+.countdown-btn{background:var(--gold);color:var(--bg);border:none;border-radius:50px;padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer}
+.countdown-btn:active{opacity:.8}
+.countdown-btn:disabled{opacity:.4;cursor:default}
+
+/* TAKEHOME */
+.takehome-card{background:linear-gradient(145deg,#F5F0E8,#EDE8DC);border:1px solid rgba(184,134,11,.25);border-radius:var(--radius);padding:24px 20px;text-align:center}
+.th-phrase{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,5vw,1.7rem);color:var(--gold);line-height:1.35;margin:16px 0 6px}
+.th-sub{font-size:.85rem;color:var(--muted);margin-bottom:20px}
+.th-pips{display:flex;justify-content:center;gap:10px;margin-bottom:14px}
+.th-pip{width:30px;height:30px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--muted);transition:all .3s}
+.th-pip.done{background:var(--gold);border-color:var(--gold);color:var(--bg)}
+.say-btn{display:block;width:100%;max-width:260px;margin:0 auto 10px;padding:14px;background:var(--gold);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:700;border:none;border-radius:50px;cursor:pointer}
+.say-btn:active{opacity:.8}
+.say-btn:disabled{opacity:.4;cursor:default}
+.th-tip{display:none;font-size:.78rem;color:var(--muted);text-align:center;padding:8px 12px;background:var(--surface2);border-radius:8px;margin-top:6px;line-height:1.6}
+.done-banner{background:linear-gradient(145deg,#EBF5F0,#E8F0EB);border:1px solid rgba(42,122,104,.3);border-radius:var(--radius);padding:28px 20px;text-align:center;display:none}
+.done-emoji{font-size:3rem;display:block;margin-bottom:12px}
+.done-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;margin-bottom:8px}
+.done-sub{font-size:.88rem;color:rgba(28,24,20,0.50);line-height:1.7}
+
+/* BUTTONS */
+.section-done-btn{display:block;width:100%;padding:15px;background:var(--gold);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:700;border:none;border-radius:var(--radius);cursor:pointer}
+.section-done-btn:active{opacity:.8}
+.back-home-btn{display:block;width:100%;padding:13px;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;margin-top:8px}
+
+/* CORRECTION DRAWER */
+.corr-fab{position:fixed;bottom:24px;right:20px;z-index:200;background:var(--gold);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:700;padding:10px 16px;border:none;border-radius:50px;cursor:pointer;display:flex;align-items:center;gap:7px;box-shadow:0 4px 20px rgba(212,168,75,.3);-webkit-user-select:none;user-select:none}
+.corr-fab:active{opacity:.85}
+.corr-fab-badge{background:var(--bg);color:var(--gold);font-size:.68rem;font-weight:800;padding:1px 7px;border-radius:10px;min-width:20px;text-align:center}
+.corr-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300}
+.corr-backdrop.open{display:block}
+.corr-drawer{position:fixed;bottom:0;left:0;right:0;z-index:400;background:var(--surface);border-radius:22px 22px 0 0;border-top:2px solid var(--gold);transform:translateY(100%);transition:transform .32s cubic-bezier(.32,.72,0,1);max-height:70vh;display:flex;flex-direction:column}
+.corr-drawer.open{transform:translateY(0)}
+.corr-handle{width:36px;height:4px;background:rgba(255,255,255,.12);border-radius:2px;margin:12px auto 0;cursor:pointer;flex-shrink:0}
+.corr-drawer-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 12px;flex-shrink:0;border-bottom:1px solid var(--border)}
+.corr-drawer-title{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold)}
+.corr-close{background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:1rem;width:30px;height:30px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif}
+.corr-drawer-body{flex:1;overflow-y:auto;padding:14px 20px 32px;-webkit-overflow-scrolling:touch}
+.corr-form{display:flex;gap:8px;margin-bottom:14px}
+.corr-input{flex:1;font-family:'DM Sans',sans-serif;font-size:.85rem;padding:10px 12px;background:var(--card);border:1.5px solid var(--border);border-radius:10px;color:var(--text);outline:none}
+.corr-input:focus{border-color:var(--gold)}
+.corr-add{font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:700;padding:10px 16px;background:var(--gold);color:var(--bg);border:none;border-radius:10px;cursor:pointer;white-space:nowrap}
+.corr-hint{font-size:.7rem;color:var(--muted);font-style:italic;margin-bottom:10px}
+.corr-empty{font-size:.82rem;color:var(--muted);font-style:italic;text-align:center;padding:12px 0}
+.corr-item{background:var(--card);border-radius:10px;padding:11px 14px;margin-bottom:8px;display:flex;align-items:flex-start;gap:10px;border-left:2px solid var(--gold)}
+.corr-text{flex:1;font-size:.85rem;line-height:1.55;color:var(--text)}
+.corr-dismiss{background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer;padding:0 2px;line-height:1;flex-shrink:0}
+.corr-dismiss:active{color:var(--rose)}
+
+.confetti-piece{position:fixed;pointer-events:none;z-index:9999;border-radius:2px;animation:cfall 2.8s ease-in forwards}
+@keyframes cfall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(540deg);opacity:0}}
+</style>
+</head>
+<body>
+
+<!-- ══ HOME ══ -->
+<div class="screen active" id="home">
+  <div class="home-hero">
+    <div class="hero-kicker">🇽🇰 Mel · Lesson 7 · ~55 minutes</div>
+    <div class="hero-title">Tung,<br><em>jam Mel.</em></div>
+    <div class="hero-desc">You've already learned to talk about feelings and the past — but let's go back and make sure the true foundation is rock solid: how you greet people, how you introduce yourself, and how you talk about your — now her — family. These are the phrases you'll use in literally every single visit.</div>
+  </div>
+  <div class="home-plan">
+    <div class="plan-label">Today's plan — tap to begin any section</div>
+    <div class="plan-items">
+      <div class="plan-item" id="plan-1" onclick="goSection('s1')"><div class="plan-num" id="pn-1">1</div><div class="plan-info"><div class="plan-name">🔁 Warm-up — What already feels familiar?</div><div class="plan-time">5 min · Quick self-check</div></div><div class="plan-arrow">→</div></div>
+      <div class="plan-item" id="plan-2" onclick="goSection('s2')"><div class="plan-num" id="pn-2">2</div><div class="plan-info"><div class="plan-name">👋 Greetings & courtesy</div><div class="plan-time">10 min · Tung, si je, mirupafshim</div></div><div class="plan-arrow">→</div></div>
+      <div class="plan-item" id="plan-3" onclick="goSection('s3')"><div class="plan-num" id="pn-3">3</div><div class="plan-info"><div class="plan-name">🙋 Introducing yourself</div><div class="plan-time">10 min · Jam, quhem, jam nga, jetoj në</div></div><div class="plan-arrow">→</div></div>
+      <div class="plan-item" id="plan-4" onclick="goSection('s4')"><div class="plan-num" id="pn-4">4</div><div class="plan-info"><div class="plan-name">👪 Family & kam</div><div class="plan-time">10 min · Nana, baba, and what you have</div></div><div class="plan-arrow">→</div></div>
+      <div class="plan-item" id="plan-5" onclick="goSection('s5')"><div class="plan-num" id="pn-5">5</div><div class="plan-info"><div class="plan-name">✏️ Exercises — from easy to complex</div><div class="plan-time">10 min · Recognition → gap fill → ordering</div></div><div class="plan-arrow">→</div></div>
+      <div class="plan-item" id="plan-6" onclick="goSection('s6')"><div class="plan-num" id="pn-6">6</div><div class="plan-info"><div class="plan-name">🎤 Evidence — three real challenges</div><div class="plan-time">15 min · Greetings, self-intro, family photo</div></div><div class="plan-arrow">→</div></div>
+      <div class="plan-item" id="plan-7" onclick="goSection('s7')"><div class="plan-num" id="pn-7">7</div><div class="plan-info"><div class="plan-name">✅ Take-home phrase</div><div class="plan-time">2 min · One sentence to carry with you</div></div><div class="plan-arrow">→</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ S1: WARM-UP ══ -->
+<div class="screen" id="s1">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">🔁 Warm-up</div><div class="nav-timer" id="t1">0:00</div></div>
+  <div class="section-body">
+
+    <div class="card">
+      <div class="card-label">Before we start — free recall</div>
+      <p style="font-size:.84rem;line-height:1.7;color:rgba(28,24,20,0.65);margin-bottom:6px">You've heard Durim's family greet each other, introduce people, and talk about relatives dozens of times. Without looking anything up, type any Albanian words or phrases connected to greetings, introducing yourself, or family that come to mind.</p>
+    </div>
+
+    <div class="card" style="padding:16px">
+      <textarea class="recall-area" id="recall-input" placeholder="Tung... nana... si je..." oninput="updateBubbles()"></textarea>
+      <div class="recall-bubbles" id="bubbles"></div>
+    </div>
+
+    <div class="card" style="border-color:rgba(212,168,75,.2)">
+      <div class="card-label">Quick self-check — tap each chip and guess before you reveal</div>
+      <div class="recap-block">
+        <div class="recap-block-title">👋 Have you heard these?</div>
+        <div class="recap-chips">
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Tung</div><div class="en">Hi</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Si je?</div><div class="en">How are you?</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Faleminderit</div><div class="en">Thank you</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Mirupafshim</div><div class="en">Goodbye</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Nana</div><div class="en">Mom</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Baba</div><div class="en">Dad</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Motra</div><div class="en">Sister</div></div>
+          <div class="recap-chip" onclick="this.classList.toggle('lit')"><div>Vëllau</div><div class="en">Brother</div></div>
+        </div>
+      </div>
+      <p style="font-size:.8rem;color:var(--muted);margin-top:4px">Even if most of these were guesses — that's exactly the point of today. By the end, none of them will be.</p>
+    </div>
+
+    <button class="section-done-btn" onclick="completeSection(1,'s2')">Done — next section →</button>
+  </div>
+</div>
+
+<!-- ══ S2: GREETINGS & COURTESY ══ -->
+<div class="screen" id="s2">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">👋 Greetings</div><div class="nav-timer" id="t2">0:00</div></div>
+  <div class="section-body">
+
+    <div class="card">
+      <div class="card-label">Why this matters to you</div>
+      <p style="font-size:.84rem;line-height:1.7;color:rgba(28,24,20,0.65)">This is the very first thing anyone hears from you — at the door, on a video call, passing someone on the street. Getting it natural, not textbook, is what makes people relax around you immediately.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Core phrases</div>
+      <div class="vocab-table">
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Tung / Tungjatjeta</div><div class="v-pres">casual / a bit warmer</div></div><div class="v-right"><div class="v-en">Hi / Hello</div><div class="v-fr">Salut / Bonjour</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Mirëmëngjes</div></div><div class="v-right"><div class="v-en">Good morning</div><div class="v-fr">Bonjour (le matin)</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Mirëdita</div></div><div class="v-right"><div class="v-en">Good day / afternoon</div><div class="v-fr">Bonjour (la journée)</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Mirëmbrëma</div></div><div class="v-right"><div class="v-en">Good evening</div><div class="v-fr">Bonsoir</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Si je? / Qysh je?</div><div class="v-pres">standard / Gheg (what the family says)</div></div><div class="v-right"><div class="v-en">How are you?</div><div class="v-fr">Comment vas-tu ?</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Mirë, faleminderit, po ti?</div></div><div class="v-right"><div class="v-en">Good, thanks, and you?</div><div class="v-fr">Bien, merci, et toi ?</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Ju lutem</div><div class="v-pres">formal "please"</div></div><div class="v-right"><div class="v-en">Please</div><div class="v-fr">S'il vous plaît</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Faleminderit</div></div><div class="v-right"><div class="v-en">Thank you</div><div class="v-fr">Merci</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">S'ka përse</div></div><div class="v-right"><div class="v-en">You're welcome</div><div class="v-fr">De rien</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Mirupafshim</div><div class="v-pres">a bit more formal exit</div></div><div class="v-right"><div class="v-en">Goodbye</div><div class="v-fr">Au revoir</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Shihemi</div><div class="v-pres">casual, "see you"</div></div><div class="v-right"><div class="v-en">See you</div><div class="v-fr">À bientôt</div></div></div>
+      </div>
+    </div>
+
+    <div class="grammar-box">
+      <div class="grammar-title">Grammar moment — jam hiding inside greetings</div>
+      <div class="grammar-body">"Si je?" and "Mirë, ..." both come from the verb <strong>jam</strong> (to be). "Je" = you are. You'll meet the full verb properly in the next section, but notice it's already working for you right here.<br><br>
+      Family note: they'll often say <em>asht</em> instead of the standard <em>është</em> — same meaning, Gheg dialect.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Quick check</div>
+      <div id="greet-mcq-area"></div>
+    </div>
+
+    <button class="section-done-btn" onclick="completeSection(2,'s3')">Done — next section →</button>
+  </div>
+</div>
+
+<!-- ══ S3: INTRODUCING YOURSELF ══ -->
+<div class="screen" id="s3">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">🙋 Introducing yourself</div><div class="nav-timer" id="t3">0:00</div></div>
+  <div class="section-body">
+
+    <div class="card">
+      <div class="card-label">Why this matters to you</div>
+      <p style="font-size:.84rem;line-height:1.7;color:rgba(28,24,20,0.65)">Every new relative, every neighbour, every friend of the family will ask the same three things: who are you, where are you from, where do you live. Have this ready and it stops feeling like an interrogation.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Key phrases</div>
+      <div class="vocab-table">
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Unë jam Mel.</div></div><div class="v-right"><div class="v-en">I am Mel.</div><div class="v-fr">Je suis Mel.</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Quhem Mel.</div></div><div class="v-right"><div class="v-en">I'm called Mel.</div><div class="v-fr">Je m'appelle Mel.</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Jam nga...</div></div><div class="v-right"><div class="v-en">I'm from...</div><div class="v-fr">Je viens de...</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Jetoj në...</div></div><div class="v-right"><div class="v-en">I live in...</div><div class="v-fr">J'habite à...</div></div></div>
+      </div>
+    </div>
+
+    <div class="grammar-box">
+      <div class="grammar-title">Full paradigm — jam (to be)</div>
+      <table class="conj-table">
+        <tr><th>Who</th><th>Albanian</th><th>English</th><th>French</th></tr>
+        <tr><td>Unë (I)</td><td>jam</td><td>I am</td><td>je suis</td></tr>
+        <tr><td>Ti (you)</td><td>je</td><td>you are</td><td>tu es</td></tr>
+        <tr><td>Ai/Ajo (he/she)</td><td>është <span style="color:var(--muted)">(asht)</span></td><td>he/she is</td><td>il/elle est</td></tr>
+        <tr><td>Ne (we)</td><td>jemi <span style="color:var(--muted)">(jena)</span></td><td>we are</td><td>nous sommes</td></tr>
+        <tr><td>Ju (you pl.)</td><td>jeni</td><td>you all are</td><td>vous êtes</td></tr>
+        <tr><td>Ata/Ato (they)</td><td>janë</td><td>they are</td><td>ils/elles sont</td></tr>
+      </table>
+      <div class="grammar-body" style="margin-top:12px">The bracketed forms are what the family will actually say at home — Gheg dialect. Learn both: standard for reading/understanding wider Albanian, Gheg for sounding like family.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Personal pronouns</div>
+      <div class="vocab-table">
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Unë</div></div><div class="v-right"><div class="v-en">I</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Ti</div></div><div class="v-right"><div class="v-en">You</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Ai / Ajo</div></div><div class="v-right"><div class="v-en">He / She</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Ne</div></div><div class="v-right"><div class="v-en">We</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Ju</div></div><div class="v-right"><div class="v-en">You (plural / formal)</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Ata / Ato</div></div><div class="v-right"><div class="v-en">They (m. / f.)</div></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Countries & nationalities</div>
+      <div class="vocab-table">
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Francë</div></div><div class="v-right"><div class="v-en">France → francez / franceze</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">SHBA (Amerikë)</div></div><div class="v-right"><div class="v-en">USA → amerikan / amerikane</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Angli</div></div><div class="v-right"><div class="v-en">England → anglez / angleze</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Kosovë</div></div><div class="v-right"><div class="v-en">Kosovo → kosovar / kosovare</div></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Basic jobs</div>
+      <div class="vocab-table">
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Mësimdhënës / e</div></div><div class="v-right"><div class="v-en">Teacher</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Mjek / e</div></div><div class="v-right"><div class="v-en">Doctor</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Inxhinier / e</div></div><div class="v-right"><div class="v-en">Engineer</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Student / e</div></div><div class="v-right"><div class="v-en">Student</div></div></div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:rgba(212,168,75,.2)">
+      <div class="card-label">Build your own intro — tap to pick, then read it back</div>
+      <p style="font-size:.8rem;color:var(--muted);margin-bottom:6px">Tap one option from each row. Watch your sentence build below.</p>
+      <div class="builder-row" id="builder-row-1"></div>
+      <div class="builder-row" id="builder-row-2"></div>
+      <div class="builder-row" id="builder-row-3"></div>
+      <div class="builder-output" id="builder-output">Unë jam... jam nga... dhe jetoj në...</div>
+    </div>
+
+    <button class="section-done-btn" onclick="completeSection(3,'s4')">Done — next section →</button>
+  </div>
+</div>
+
+<!-- ══ S4: FAMILY & KAM ══ -->
+<div class="screen" id="s4">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">👪 Family & kam</div><div class="nav-timer" id="t4">0:00</div></div>
+  <div class="section-body">
+
+    <div class="card">
+      <div class="card-label">Why this matters to you</div>
+      <p style="font-size:.84rem;line-height:1.7;color:rgba(28,24,20,0.65)">This is no longer an abstract vocabulary list — these are Durim's actual nana, baba, motra, vëllau. Naming them correctly, and being able to say what you have (kam), is how you start to feel like part of the family instead of a guest.</p>
+    </div>
+
+    <div class="grammar-box">
+      <div class="grammar-title">Full paradigm — kam (to have)</div>
+      <table class="conj-table">
+        <tr><th>Who</th><th>Albanian</th><th>English</th><th>French</th></tr>
+        <tr><td>Unë (I)</td><td>kam</td><td>I have</td><td>j'ai</td></tr>
+        <tr><td>Ti (you)</td><td>ke</td><td>you have</td><td>tu as</td></tr>
+        <tr><td>Ai/Ajo (he/she)</td><td>ka</td><td>he/she has</td><td>il/elle a</td></tr>
+        <tr><td>Ne (we)</td><td>kemi <span style="color:var(--muted)">(kena)</span></td><td>we have</td><td>nous avons</td></tr>
+        <tr><td>Ju (you pl.)</td><td>keni</td><td>you all have</td><td>vous avez</td></tr>
+        <tr><td>Ata/Ato (they)</td><td>kanë</td><td>they have</td><td>ils/elles ont</td></tr>
+      </table>
+      <div class="grammar-body" style="margin-top:12px">Examples: <strong>Kam një motër.</strong> (I have a sister.) · <strong>Ai ka dy vëllezër.</strong> (He has two brothers.)</div>
+    </div>
+
+    <div class="grammar-box" style="border-color:var(--rose)">
+      <div class="grammar-title" style="color:var(--rose)">Possessives — first contact: im/ime, yt/jote</div>
+      <div class="grammar-body">The ending changes with the <strong>noun's</strong> gender, not the owner's:<br><br>
+      <strong>im</strong> (my, masc. noun) — <em>babai im</em> (my dad)<br>
+      <strong>ime</strong> (my, fem. noun) — <em>nana ime</em> (my mom)<br>
+      <strong>yt</strong> (your, masc. noun) — <em>vëllau yt</em> (your brother)<br>
+      <strong>jote</strong> (your, fem. noun) — <em>motra jote</em> (your sister)</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Kosovo kinship terms — as the family uses them</div>
+      <div class="vocab-table">
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Nana</div></div><div class="v-right"><div class="v-en">Mom</div><div class="v-fr">Maman</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Baba</div></div><div class="v-right"><div class="v-en">Dad</div><div class="v-fr">Papa</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Motra</div></div><div class="v-right"><div class="v-en">Sister</div><div class="v-fr">Sœur</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Vëllau</div></div><div class="v-right"><div class="v-en">Brother</div><div class="v-fr">Frère</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Axha</div><div class="v-pres">father's brother</div></div><div class="v-right"><div class="v-en">Uncle (paternal)</div><div class="v-fr">Oncle paternel</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Daja</div><div class="v-pres">mother's brother</div></div><div class="v-right"><div class="v-en">Uncle (maternal)</div><div class="v-fr">Oncle maternel</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Halla</div><div class="v-pres">father's sister</div></div><div class="v-right"><div class="v-en">Aunt (paternal)</div><div class="v-fr">Tante paternelle</div></div></div>
+        <div class="vocab-row"><div class="v-left"><div class="v-alb">Tezja</div><div class="v-pres">mother's sister</div></div><div class="v-right"><div class="v-en">Aunt (maternal)</div><div class="v-fr">Tante maternelle</div></div></div>
+      </div>
+      <div class="grammar-body" style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">🇫🇷 Unlike French (oncle/tante for everyone), Albanian marks <em>which side of the family</em> — a father's brother and a mother's brother get completely different words.</div>
+    </div>
+
+    <button class="section-done-btn" onclick="completeSection(4,'s5')">Done — on to exercises →</button>
+  </div>
+</div>
+
+<!-- ══ S5: EXERCISES ══ -->
+<div class="screen" id="s5">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">✏️ Exercises</div><div class="nav-timer" id="t5">0:00</div></div>
+  <div class="section-body">
+
+    <div class="card">
+      <div class="card-label">How these work</div>
+      <p style="font-size:.84rem;line-height:1.7;color:rgba(28,24,20,0.60)">Mixed practice across greetings, introducing yourself, and family. Recognition first, then gap fill, then sentence ordering.</p>
+    </div>
+
+    <div class="diff-badge diff-easy">⬤ Easy — Recognition</div>
+    <div id="mcq-area"></div>
+
+    <div class="diff-badge diff-medium" style="margin-top:8px">⬤ Medium — Gap fill</div>
+    <div id="gap-area"></div>
+
+    <div class="diff-badge diff-hard" style="margin-top:8px">⬤ Hard — Put the sentence in order</div>
+    <div id="order-area"></div>
+
+    <button class="section-done-btn" onclick="completeSection(5,'s6')">Done — on to the evidence tasks →</button>
+  </div>
+</div>
+
+<!-- ══ S6: EVIDENCE ══ -->
+<div class="screen" id="s6">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">🎤 Evidence</div><div class="nav-timer" id="t6">0:00</div></div>
+  <div class="section-body">
+
+    <div class="card">
+      <div class="card-label">Your challenge for this section</div>
+      <p style="font-size:.84rem;line-height:1.7;color:rgba(28,24,20,0.65)">Three real tasks, out loud, no multiple choice. This is where we find out what's actually solid. Your teacher is listening and will note anything to correct at the end.</p>
+    </div>
+
+    <div class="card" style="border-color:rgba(184,134,11,.2)">
+      <div class="card-label">Task 1 · Three greeting exchanges</div>
+      <p style="font-size:.82rem;color:rgba(28,24,20,0.55);margin-bottom:4px">Respond naturally to all three — greet, respond to "how are you," and say goodbye where it fits.</p>
+    </div>
+    <div id="greet-speak-area"></div>
+
+    <div class="card" style="border-color:rgba(184,134,11,.2);margin-top:4px">
+      <div class="card-label">Task 2 · 30-second self-introduction</div>
+      <p style="font-size:.82rem;color:rgba(28,24,20,0.55)">Speak for 30 seconds: your name, where you're from, where you live, and one extra fact about yourself. Use the timer, then answer the two follow-up questions.</p>
+      <div class="countdown-wrap">
+        <div class="countdown-num" id="countdown-num">0:30</div>
+        <button class="countdown-btn" id="countdown-btn" onclick="startCountdown()">▶ Start 30s</button>
+      </div>
+      <div id="countdown-msg" style="font-size:.82rem;color:var(--teal);display:none">⏱ Time's up — great job! Now the follow-ups:</div>
+      <div style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
+        <div style="background:var(--surface);border-radius:10px;padding:12px 14px">
+          <div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--text)">Sa vjeç je?</div>
+          <div style="font-size:.75rem;color:var(--muted);font-style:italic">How old are you?</div>
+        </div>
+        <div style="background:var(--surface);border-radius:10px;padding:12px 14px">
+          <div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--text)">Çfarë pune bën?</div>
+          <div style="font-size:.75rem;color:var(--muted);font-style:italic">What's your job?</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:rgba(184,134,11,.2);margin-top:4px">
+      <div class="card-label">Task 3 · The family photo</div>
+      <p style="font-size:.82rem;color:rgba(28,24,20,0.55)">Grab a real photo of Durim's family. Point to six people, name each with the correct kinship term, and say one true kam-sentence about each one.</p>
+    </div>
+    <div class="speak-card">
+      <div class="speak-prompt">Për secilin person: "Kjo është ... (kinship term). Ai/Ajo ka ..."</div>
+      <div class="speak-fr">For each person: "This is ... (kinship term). He/She has ..."</div>
+      <div class="hint-box show">💡 Example: "Kjo është halla. Ajo ka dy fëmijë." (This is my aunt. She has two children.)</div>
+      <div style="margin-top:12px">
+        <button class="tried-btn" id="family-photo-btn" onclick="markFamilyPhoto()">I did all six →</button>
+      </div>
+    </div>
+
+    <button class="section-done-btn" onclick="completeSection(6,'s7')">Done — take-home phrase →</button>
+  </div>
+</div>
+
+<!-- ══ S7: TAKE HOME ══ -->
+<div class="screen" id="s7">
+  <div class="nav"><button class="nav-back" onclick="goHome()">←</button><div class="nav-label">✅ Take-home</div><div class="nav-timer" id="t7">0:00</div></div>
+  <div class="section-body">
+
+    <div class="card">
+      <div class="card-label">Your phrase to carry out of today</div>
+      <p style="font-size:.84rem;line-height:1.7;color:rgba(28,24,20,0.65)">Say it out loud three times. Each time, a little louder and more confident. Own it.</p>
+    </div>
+
+    <div class="takehome-card">
+      <div class="card-label" style="color:var(--muted)">Today's take-home phrase</div>
+      <div class="th-phrase">Tungjatjeta, jam Mel, dhe tash kam edhe një familje shqiptare.</div>
+      <div class="th-sub">Hi, I'm Mel, and now I also have an Albanian family.</div>
+      <div class="th-pips"><div class="th-pip" id="tp1">1</div><div class="th-pip" id="tp2">2</div><div class="th-pip" id="tp3">3</div></div>
+      <button class="say-btn" id="say-btn" onclick="doTakeHome()">▶ I said it!</button>
+      <div class="th-tip" id="th-tip">💡 <strong style="color:var(--gold)">Tungjatjeta</strong> = hi/hello &nbsp;·&nbsp; <strong style="color:var(--gold)">jam</strong> = I am &nbsp;·&nbsp; <strong style="color:var(--gold)">tash</strong> = now &nbsp;·&nbsp; <strong style="color:var(--gold)">kam</strong> = I have &nbsp;·&nbsp; <strong style="color:var(--gold)">familje</strong> = family</div>
+    </div>
+
+    <div class="done-banner" id="done-banner">
+      <span class="done-emoji">✨</span>
+      <div class="done-title">Shumë mirë!</div>
+      <div class="done-sub">Greeting, introducing yourself, naming family — the true foundation is in place now. Everything else you've learned builds on top of this.</div>
+    </div>
+
+    <button class="back-home-btn" onclick="goHome()">← Back to lesson plan</button>
+  </div>
+</div>
+
+<!-- ══ CORRECTION DRAWER ══ -->
+<div class="corr-backdrop" id="corr-backdrop" onclick="closeCorr()"></div>
+<button class="corr-fab" onclick="openCorr()">📝 Notes <span class="corr-fab-badge" id="corr-badge">0</span></button>
+<div class="corr-drawer" id="corr-drawer">
+  <div class="corr-handle" onclick="closeCorr()"></div>
+  <div class="corr-drawer-header"><div class="corr-drawer-title">Teacher corrections</div><button class="corr-close" onclick="closeCorr()">×</button></div>
+  <div class="corr-drawer-body">
+    <div class="corr-form"><input class="corr-input" id="corr-input" placeholder="Note a correction…" onkeydown="if(event.key==='Enter')addCorr()"/><button class="corr-add" onclick="addCorr()">+ Add</button></div>
+    <div class="corr-hint">Tap × to dismiss each one when reviewed</div>
+    <div id="corr-list"><div class="corr-empty" id="corr-empty">No corrections yet.</div></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════ DATA
+
+var GREET_MCQ = [
+  { q:'Someone says "Si je?" How do you reply?', opts:['Mirë, faleminderit, po ti?','Mirupafshim!','Jam nga Franca.','Kam një motër.'], correct:'Mirë, faleminderit, po ti?', fb:'✓ Mirë, faleminderit, po ti? — Good, thanks, and you? The natural bounce-back.' },
+  { q:'You\'re leaving. What do you say?', opts:['Tungjatjeta','Mirupafshim / Shihemi','Ju lutem','S\'ka përse'], correct:'Mirupafshim / Shihemi', fb:'✓ Mirupafshim (a bit formal) or Shihemi (casual, "see you").' },
+  { q:'Someone says "Faleminderit!" You reply:', opts:['S\'ka përse','Faleminderit','Mirëdita','Qysh je?'], correct:'S\'ka përse', fb:'✓ S\'ka përse — you\'re welcome / no problem.' },
+];
+
+var MCQ = [
+  { q:'Which phrase means "I\'m from..."?', opts:['Jam nga','Jetoj në','Quhem','Kam'], correct:'Jam nga', fb:'✓ Jam nga = I\'m from. Jetoj në = I live in — a different piece of information.' },
+  { q:'"Ka" comes from which verb?', opts:['jam','kam','quhem','jetoj'], correct:'kam', fb:'✓ Kam (I have) → ka (he/she has).' },
+  { q:'"Axha" means…?', opts:['Uncle — father\'s brother','Uncle — mother\'s brother','Aunt — father\'s sister','Aunt — mother\'s sister'], correct:'Uncle — father\'s brother', fb:'✓ Axha is specifically the paternal uncle. Daja is the maternal one.' },
+  { q:'Which is correct for "my sister"?', opts:['motra ime','motra im','motra yt','motra jote'], correct:'motra ime', fb:'✓ Motra is feminine, so it takes "ime" — my.' },
+  { q:'Which is correct for "your brother"?', opts:['vëllau im','vëllau yt','vëllau jote','vëllau ime'], correct:'vëllau yt', fb:'✓ Vëllau is masculine, so it takes "yt" — your.' },
+  { q:'"Jetoj në Prishtinë" means…?', opts:['I live in Pristina','I\'m from Pristina','I visited Pristina','I have a house in Pristina'], correct:'I live in Pristina', fb:'✓ Jetoj = I live. Jam nga would mean "I\'m from."' },
+];
+
+var GAPS = [
+  { before:'', input:'Tungjatjeta', after:', unë jam Mel.', full:'Tungjatjeta, unë jam Mel.', en:'Hi, I\'m Mel.', fr:'Salut, je suis Mel.', hint:'Tungjatjeta' },
+  { before:'Unë', input:'jam', after:'nga Amerika dhe jetoj në Kosovë.', full:'Unë jam nga Amerika dhe jetoj në Kosovë.', en:'I\'m from America and I live in Kosovo.', fr:'Je viens d\'Amérique et j\'habite au Kosovo.', hint:'jam' },
+  { before:'Ai', input:'ka', after:'dy vëllezër dhe një motër.', full:'Ai ka dy vëllezër dhe një motër.', en:'He has two brothers and one sister.', fr:'Il a deux frères et une sœur.', hint:'ka' },
+  { before:'Nana', input:'ime', after:'quhet Elira.', full:'Nana ime quhet Elira.', en:'My mom is called Elira.', fr:'Ma mère s\'appelle Elira.', hint:'ime' },
+];
+
+var ORDERING = [
+  { words:['Jam','nga','Franca','dhe','jetoj','në','Prishtinë'], answer:'Jam nga Franca dhe jetoj në Prishtinë.', en:'I\'m from France and I live in Pristina.', fr:'Je viens de France et j\'habite à Pristina.' },
+  { words:['Kam','një','motër','dhe','dy','vëllezër'], answer:'Kam një motër dhe dy vëllezër.', en:'I have one sister and two brothers.', fr:'J\'ai une sœur et deux frères.' },
+  { words:['Mirë,','faleminderit,','po','ti'], answer:'Mirë, faleminderit, po ti?', en:'Good, thanks, and you?', fr:'Bien, merci, et toi ?' },
+];
+
+var GREET_SPEAK = [
+  { situation:'Morning — you come down and see Durim\'s mother in the kitchen for the first time today.', hint:'<strong style="color:var(--gold)">Mirëmëngjes!</strong> ... then answer <strong style="color:var(--gold)">Si je?</strong> with <strong style="color:var(--gold)">Mirë, faleminderit, po ti?</strong>', targets:['mirëmëngjes','si je? / mirë faleminderit po ti?'] },
+  { situation:'A video call with Durim\'s cousin you\'ve never spoken to before — the call just connected.', hint:'<strong style="color:var(--gold)">Tung! Unë jam Mel.</strong> Then ask how they are.', targets:['tung','unë jam...','si je?'] },
+  { situation:'You\'re leaving the house to catch a flight. Say goodbye to everyone.', hint:'<strong style="color:var(--gold)">Faleminderit për krejt! Mirupafshim / Shihemi!</strong>', targets:['faleminderit','mirupafshim / shihemi'] },
+];
+
+var BUILDER = [
+  { label:'Name', opts:['Unë jam Mel.','Quhem Mel.'] },
+  { label:'Origin', opts:['Jam nga Franca.','Jam nga Amerika.','Jam nga Anglia.'] },
+  { label:'Residence', opts:['Jetoj në Paris.','Jetoj në Londër.','Jetoj në Nju Jork.'] },
+];
+var builderPicked = [null,null,null];
+
+// ══════════════════════ STATE
+var corrections = [], corrOpen = false;
+var sectionTimers = {}, sectionSeconds = {}, completedSections = [];
+var takeHomeDone = 0;
+var countdownInterval = null, countdownLeft = 30;
+var mcqScore = 0;
+var orderStates = [];
+
+(function init(){
+  renderGreetMCQ(0);
+  renderMCQ(0);
+  renderGaps();
+  renderOrdering();
+  renderGreetSpeak();
+  renderBuilder();
+})();
+
+// ══════════════════════ RECALL
+function updateBubbles(){
+  var raw = document.getElementById('recall-input').value;
+  var words = raw.split(/[\s,;.!?]+/).filter(function(w){return w.trim().length>1});
+  var c = document.getElementById('bubbles');
+  c.innerHTML = words.map(function(w){return '<span class="bubble">'+w+'</span>'}).join('');
+}
+
+// ══════════════════════ GREETINGS MCQ (section 2 quick check)
+function renderGreetMCQ(idx){
+  var area = document.getElementById('greet-mcq-area');
+  if(idx===0) area.innerHTML='';
+  if(idx >= GREET_MCQ.length){
+    area.innerHTML += '<div class="card" style="border-color:rgba(61,158,140,.3);text-align:center;padding:16px"><div style="font-family:\'Playfair Display\',serif;font-size:1.05rem;color:var(--teal)">✓ Nice — you\'ve got the shape of it.</div></div>';
+    return;
+  }
+  var q = GREET_MCQ[idx];
+  var shuffled = q.opts.slice().sort(function(){return Math.random()-.5});
+  var html = '<div class="mcq-card" id="gmcq-'+idx+'">'
+    +'<div class="card-label">Question '+(idx+1)+' of '+GREET_MCQ.length+'</div>'
+    +'<div class="mcq-q">'+q.q+'</div>'
+    +'<div class="mcq-opts">'
+    +shuffled.map(function(o){return '<button class="mcq-opt" onclick="answerGreetMCQ(this,\''+o.replace(/'/g,"\\'")+"','"+q.correct.replace(/'/g,"\\'")+'\','+idx+')">'+o+'</button>'}).join('')
+    +'</div>'
+    +'<div class="mcq-feedback" id="gmf-'+idx+'"></div>'
+    +'<button class="mcq-next" id="gmn-'+idx+'" onclick="renderGreetMCQ('+(idx+1)+')">Next →</button>'
+    +'</div>';
+  area.innerHTML += html;
+}
+function answerGreetMCQ(btn,chosen,correct,idx){
+  document.querySelectorAll('#gmcq-'+idx+' .mcq-opt').forEach(function(b){b.disabled=true});
+  var fb = document.getElementById('gmf-'+idx);
+  var nxt = document.getElementById('gmn-'+idx);
+  fb.classList.add('show'); nxt.classList.add('show');
+  if(chosen===correct){
+    btn.classList.add('correct');
+    fb.className='mcq-feedback show correct'; fb.textContent=GREET_MCQ[idx].fb;
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('#gmcq-'+idx+' .mcq-opt').forEach(function(b){if(b.textContent===correct)b.classList.add('correct')});
+    fb.className='mcq-feedback show wrong'; fb.innerHTML='The answer is <strong>'+correct+'</strong>. '+GREET_MCQ[idx].fb;
+  }
+}
+
+// ══════════════════════ MAIN MCQ (section 5)
+function renderMCQ(idx){
+  var area = document.getElementById('mcq-area');
+  if(idx>=MCQ.length){
+    area.innerHTML += '<div class="card" style="border-color:rgba(61,158,140,.3);text-align:center;padding:16px"><div style="font-family:\'Playfair Display\',serif;font-size:1.1rem;color:var(--teal)">✓ All done! Score: '+mcqScore+'/'+MCQ.length+'</div><div style="font-size:.82rem;color:var(--muted);margin-top:6px">'+( mcqScore>=5?'Excellent — the foundation is solid.':'Review the ones you missed above before moving on.')+'</div></div>';
+    return;
+  }
+  var q = MCQ[idx];
+  var shuffled = q.opts.slice().sort(function(){return Math.random()-.5});
+  var html = '<div class="mcq-card" id="mcq-'+idx+'">'
+    +'<div class="card-label">Question '+(idx+1)+' of '+MCQ.length+'</div>'
+    +'<div class="mcq-q">'+q.q+'</div>'
+    +'<div class="mcq-opts">'
+    +shuffled.map(function(o){return '<button class="mcq-opt" onclick="answerMCQ(this,\''+o.replace(/'/g,"\\'")+"','"+q.correct.replace(/'/g,"\\'")+'\','+idx+')">'+o+'</button>'}).join('')
+    +'</div>'
+    +'<div class="mcq-feedback" id="mf-'+idx+'"></div>'
+    +'<button class="mcq-next" id="mn-'+idx+'" onclick="renderMCQ('+(idx+1)+')">Next →</button>'
+    +'</div>';
+  area.innerHTML += html;
+}
+function answerMCQ(btn,chosen,correct,idx){
+  document.querySelectorAll('#mcq-'+idx+' .mcq-opt').forEach(function(b){b.disabled=true});
+  var fb = document.getElementById('mf-'+idx);
+  var nxt = document.getElementById('mn-'+idx);
+  fb.classList.add('show'); nxt.classList.add('show');
+  if(chosen===correct){
+    btn.classList.add('correct'); mcqScore++;
+    fb.className='mcq-feedback show correct'; fb.textContent=MCQ[idx].fb;
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('#mcq-'+idx+' .mcq-opt').forEach(function(b){if(b.textContent===correct)b.classList.add('correct')});
+    fb.className='mcq-feedback show wrong'; fb.innerHTML='The answer is <strong>'+correct+'</strong>. '+MCQ[idx].fb;
+  }
+}
+
+// ══════════════════════ GAP FILL
+function renderGaps(){
+  var area = document.getElementById('gap-area');
+  area.innerHTML = GAPS.map(function(g,i){
+    var mid = g.before ? g.before+' <input class="gap-input" id="gi-'+i+'-0" placeholder="___"> '+g.after
+                        : '<input class="gap-input" id="gi-'+i+'-0" placeholder="___">'+g.after;
+    return '<div class="gap-card">'
+      +'<div class="gap-sentence">'+mid+'</div>'
+      +'<div class="gap-fr">🇫🇷 '+g.fr+'</div>'
+      +'<button class="gap-check-btn" id="gc-'+i+'" onclick="checkGap('+i+')">Check →</button>'
+      +'<div class="gap-result" id="gr-'+i+'"></div>'
+    +'</div>';
+  }).join('');
+}
+function checkGap(i){
+  var g = GAPS[i];
+  var v0 = document.getElementById('gi-'+i+'-0');
+  var correct0 = v0.value.trim().toLowerCase() === g.input.toLowerCase();
+  v0.className = 'gap-input '+(correct0?'correct-input':'wrong-input');
+  document.getElementById('gc-'+i).disabled = true;
+  var res = document.getElementById('gr-'+i);
+  res.classList.add('show');
+  if(correct0){
+    res.className='gap-result show correct';
+    res.innerHTML='✓ Saktë! &nbsp;<em style="color:var(--muted);font-size:.78rem">'+g.en+'</em>';
+  } else {
+    res.className='gap-result show wrong';
+    res.innerHTML='The correct answer: <strong style="color:var(--gold)">'+g.input+'</strong><br><em style="font-size:.78rem;color:var(--muted)">'+g.en+'</em>';
+    v0.value=g.input; v0.className='gap-input correct-input';
+  }
+}
+
+// ══════════════════════ ORDERING
+function renderOrdering(){
+  var area = document.getElementById('order-area');
+  orderStates = ORDERING.map(function(){return{placed:[]}});
+  area.innerHTML = ORDERING.map(function(o,i){
+    var shuffled = o.words.slice().sort(function(){return Math.random()-.5});
+    return '<div class="order-card">'
+      +'<div class="order-instruction">Put the words in the correct order.<br><span style="font-size:.74rem;color:var(--blue);font-style:italic">🇫🇷 '+o.fr+'</span></div>'
+      +'<div class="order-words" id="oz-'+i+'"></div>'
+      +'<div class="order-bank" id="ob-'+i+'">'+shuffled.map(function(w,wi){return '<div class="order-word" id="ow-'+i+'-'+wi+'" onclick="clickWord('+i+',\''+w.replace(/'/g,"\\'")+'\',this)">'+w+'</div>'}).join('')+'</div>'
+      +'<div style="display:flex;gap:8px">'
+      +'<button class="order-check" onclick="checkOrder('+i+')">Check →</button>'
+      +'<button class="order-check" style="background:var(--surface2);color:var(--muted)" onclick="resetOrder('+i+')">Reset</button>'
+      +'</div>'
+      +'<div class="order-feedback" id="of-'+i+'"></div>'
+    +'</div>';
+  }).join('');
+}
+function clickWord(i, word, el){
+  var zone = document.getElementById('oz-'+i);
+  var state = orderStates[i];
+  if(el.classList.contains('in-zone')) return;
+  el.classList.add('in-zone');
+  state.placed.push(word);
+  var chip = document.createElement('div');
+  chip.className='order-word in-zone';
+  chip.textContent=word;
+  chip.onclick=function(){
+    chip.remove();
+    var idx2=state.placed.lastIndexOf(word);
+    if(idx2>-1)state.placed.splice(idx2,1);
+    el.classList.remove('in-zone');
+  };
+  zone.appendChild(chip);
+}
+function checkOrder(i){
+  var o = ORDERING[i];
+  var placed = orderStates[i].placed.join(' ');
+  var fb = document.getElementById('of-'+i);
+  fb.classList.add('show');
+  if(placed===o.answer||placed.replace('.','')===o.answer.replace('.','')||placed+'?'===o.answer||placed+'.'===o.answer){
+    fb.className='order-feedback show correct';
+    fb.innerHTML='✓ Saktë! <em style="color:var(--muted);font-size:.78rem">'+o.en+'</em>';
+  } else {
+    fb.className='order-feedback show wrong';
+    fb.innerHTML='The correct order: <strong style="color:var(--gold)">'+o.answer+'</strong>';
+  }
+}
+function resetOrder(i){
+  document.getElementById('oz-'+i).innerHTML='';
+  orderStates[i].placed=[];
+  document.querySelectorAll('#ob-'+i+' .order-word').forEach(function(el){el.classList.remove('in-zone')});
+  document.getElementById('of-'+i).classList.remove('show');
+}
+
+// ══════════════════════ GREETING EVIDENCE SPEAK
+function renderGreetSpeak(){
+  var area = document.getElementById('greet-speak-area');
+  area.innerHTML = GREET_SPEAK.map(function(s,i){
+    var targetHtml = s.targets.map(function(t){return '<span class="speak-target">'+t+'</span>'}).join('');
+    return '<div class="speak-card">'
+      +'<div style="font-size:.78rem;color:var(--muted);font-style:italic;margin-bottom:8px">'+s.situation+'</div>'
+      +'<div class="speak-targets">'+targetHtml+'</div>'
+      +'<div class="hint-box" id="gsh-'+i+'">'+s.hint+'</div>'
+      +'<div style="margin-top:12px">'
+      +'<button class="hint-btn" id="gshb-'+i+'" onclick="showGSHint('+i+')">💡 Hint</button>'
+      +'<button class="tried-btn" id="gstb-'+i+'" onclick="markGSpoken('+i+')">I said it →</button>'
+      +'</div>'
+    +'</div>';
+  }).join('');
+}
+function showGSHint(i){document.getElementById('gsh-'+i).classList.add('show');document.getElementById('gshb-'+i).disabled=true}
+function markGSpoken(i){
+  document.getElementById('gstb-'+i).textContent='✓ Done';
+  document.getElementById('gstb-'+i).disabled=true;
+  document.getElementById('gstb-'+i).style.background='var(--teal)';
+}
+
+// ══════════════════════ SELF-INTRO BUILDER
+function renderBuilder(){
+  BUILDER.forEach(function(row,ri){
+    var el = document.getElementById('builder-row-'+(ri+1));
+    el.innerHTML = row.opts.map(function(o,oi){
+      return '<div class="builder-chip" id="bc-'+ri+'-'+oi+'" onclick="pickBuilder('+ri+','+oi+')">'+o+'</div>';
+    }).join('');
+  });
+  updateBuilderOutput();
+}
+function pickBuilder(ri,oi){
+  builderPicked[ri]=oi;
+  BUILDER[ri].opts.forEach(function(_,oi2){
+    document.getElementById('bc-'+ri+'-'+oi2).classList.toggle('picked', oi2===oi);
+  });
+  updateBuilderOutput();
+}
+function updateBuilderOutput(){
+  var out = document.getElementById('builder-output');
+  var parts = builderPicked.map(function(p,ri){return p===null?null:BUILDER[ri].opts[p]});
+  if(parts.every(function(p){return p===null})){
+    out.textContent = 'Unë jam... jam nga... dhe jetoj në...';
+    return;
+  }
+  out.textContent = parts.filter(function(p){return p!==null}).join(' ');
+}
+
+// ══════════════════════ COUNTDOWN
+function startCountdown(){
+  var btn = document.getElementById('countdown-btn');
+  btn.disabled = true;
+  countdownLeft = 30;
+  var numEl = document.getElementById('countdown-num');
+  countdownInterval = setInterval(function(){
+    countdownLeft--;
+    var m = Math.floor(countdownLeft/60), s = countdownLeft%60;
+    numEl.textContent = m+':'+(s<10?'0':'')+s;
+    if(countdownLeft<=0){
+      clearInterval(countdownInterval);
+      document.getElementById('countdown-msg').style.display='block';
+      btn.textContent='✓ Done';
+    }
+  },1000);
+}
+
+// ══════════════════════ FAMILY PHOTO
+function markFamilyPhoto(){
+  var btn = document.getElementById('family-photo-btn');
+  btn.textContent='✓ Done';
+  btn.disabled=true;
+  btn.style.background='var(--teal)';
+}
+
+// ══════════════════════ TAKE HOME
+function doTakeHome(){
+  if(takeHomeDone>=3)return;
+  takeHomeDone++;
+  var pips=['tp1','tp2','tp3'];
+  var el=document.getElementById(pips[takeHomeDone-1]);
+  el.style.background='var(--gold)';el.style.borderColor='var(--gold)';el.style.color='var(--bg)';el.textContent='✓';
+  document.getElementById('th-tip').style.display='block';
+  var btn=document.getElementById('say-btn');
+  if(takeHomeDone===1)btn.textContent='▶ Louder!';
+  else if(takeHomeDone===2)btn.textContent='▶ Own it!';
+  else{btn.textContent='✓ Done!';btn.disabled=true;document.getElementById('done-banner').style.display='block';completeSection(7,null);launchConfetti()}
+}
+
+// ══════════════════════ TIMERS
+function startTimer(id){
+  stopAllTimers();
+  sectionSeconds[id]=sectionSeconds[id]||0;
+  var el=document.getElementById('t'+id);
+  if(el)el.className='nav-timer running';
+  sectionTimers[id]=setInterval(function(){
+    sectionSeconds[id]++;
+    var m=Math.floor(sectionSeconds[id]/60),s=sectionSeconds[id]%60;
+    if(el)el.textContent=m+':'+(s<10?'0':'')+s;
+  },1000);
+}
+
+// ══════════════════════ NAV
+function goSection(id){
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  startTimer(parseInt(id.replace('s','')));
+}
+function goHome(){
+  stopAllTimers();
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});
+  document.getElementById('home').classList.add('active');
+  window.scrollTo(0,0);
+}
+function completeSection(num,nextId){
+  if(completedSections.indexOf(num)===-1)completedSections.push(num);
+  var p=document.getElementById('plan-'+num),n=document.getElementById('pn-'+num);
+  if(p)p.classList.add('done');if(n)n.textContent='✓';
+  if(nextId)setTimeout(function(){goSection(nextId)},300);
+}
+function stopAllTimers(){Object.keys(sectionTimers).forEach(function(k){clearInterval(sectionTimers[k])})}
+
+// ══════════════════════ CORRECTIONS
+function openCorr(){corrOpen=true;document.getElementById('corr-drawer').classList.add('open');document.getElementById('corr-backdrop').classList.add('open');setTimeout(function(){var i=document.getElementById('corr-input');if(i)i.focus()},350)}
+function closeCorr(){corrOpen=false;document.getElementById('corr-drawer').classList.remove('open');document.getElementById('corr-backdrop').classList.remove('open')}
+function addCorr(){var input=document.getElementById('corr-input'),text=input.value.trim();if(!text)return;corrections.push({id:Date.now(),text:text});input.value='';renderCorr();if(!corrOpen)openCorr()}
+function dismissCorr(id){corrections=corrections.filter(function(c){return c.id!==id});renderCorr()}
+function renderCorr(){
+  var list=document.getElementById('corr-list'),empty=document.getElementById('corr-empty');
+  document.getElementById('corr-badge').textContent=corrections.length;
+  if(!corrections.length){list.innerHTML='';list.appendChild(empty);empty.style.display='block';return}
+  empty.style.display='none';
+  list.innerHTML=corrections.map(function(c){return'<div class="corr-item"><div class="corr-text">'+c.text+'</div><button class="corr-dismiss" onclick="dismissCorr('+c.id+')">×</button></div>'}).join('');
+}
+
+// ══════════════════════ CONFETTI
+function launchConfetti(){
+  var colors=['#D4A84B','#C45870','#3D9E8C','#7060A8','#4A7EC4'];
+  for(var i=0;i<60;i++){
+    var el=document.createElement('div');el.className='confetti-piece';
+    el.style.cssText='left:'+(Math.random()*100)+'vw;top:-8px;background:'+colors[Math.floor(Math.random()*colors.length)]+';width:'+(5+Math.random()*7)+'px;height:'+(5+Math.random()*7)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation-delay:'+(Math.random()*.5)+'s;animation-duration:'+(2+Math.random()*1.5)+'s';
+    document.body.appendChild(el);
+    setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el)},4000);
+  }
+}
+</script>
+</body>
+</html>

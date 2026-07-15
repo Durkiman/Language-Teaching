@@ -1,5 +1,10 @@
 [
   {
+    "file": "mel-greetings-intro-family.html",
+    "title": "#6 Tung, jam & kam",
+    "goals": { "primary": ["SQ-A1-01", "SQ-A1-02", "SQ-A1-03"], "incidental": [] }
+  },
+  {
     "file": "mel-past-tense-storytelling.html",
     "title": "#5 Kujto & trego"
   },
