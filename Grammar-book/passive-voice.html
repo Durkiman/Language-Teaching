@@ -9,6 +9,33 @@
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
     @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
   </style>
 </head>
 <body>
@@ -76,31 +103,32 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct passive form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The cake <strong>(is made / make)</strong> by my mother.</li>
-      <li>The letters <strong>(were sent / sent)</strong> yesterday.</li>
-      <li>English <strong>(is spoken / speaks)</strong> all over the world.</li>
-      <li>The window <strong>(was broken / broke)</strong> by the storm.</li>
-      <li>This book <strong>(was written / wrote)</strong> by a famous author.</li>
-      <li>The car <strong>(is being repaired / repairs)</strong> now.</li>
+      <li>The cake <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">is made</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">make</button></span> by my mother.</li>
+      <li>The letters <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">were sent</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">sent</button></span> yesterday.</li>
+      <li>English <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">is spoken</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">speaks</button></span> all over the world.</li>
+      <li>The window <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">was broken</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">broke</button></span> by the storm.</li>
+      <li>This book <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">was written</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">wrote</button></span> by a famous author.</li>
+      <li>The car <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">is being repaired</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">repairs</button></span> now.</li>
     </ol>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each active sentence (1–4) to its passive equivalent (a–d).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. Someone cleans the office every day.</div><div>a. The office is cleaned every day.</div>
-      <div>2. They built this house in 1990.</div><div>b. This house was built in 1990.</div>
-      <div>3. She will finish the project tomorrow.</div><div>c. The project will be finished tomorrow.</div>
-      <div>4. They have cancelled the flight.</div><div>d. The flight has been cancelled.</div>
+      <div>1. Someone cleans the office every day. <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>a. The office is cleaned every day.</div>
+      <div>2. They built this house in 1990. <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>b. This house was built in 1990.</div>
+      <div>3. She will finish the project tomorrow. <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>c. The project will be finished tomorrow.</div>
+      <div>4. They have cancelled the flight. <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>d. The flight has been cancelled.</div>
     </div>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Convert each active sentence to the passive.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"They make cars in this factory." → Cars ______ (make) in this factory.</li>
-      <li>"Someone stole my bike." → My bike ______ (steal).</li>
-      <li>"They will announce the results tomorrow." → The results ______ (announce) tomorrow.</li>
-      <li>"She has finished the report." → The report ______ (finish).</li>
+      <li>"They make cars in this factory." → Cars <input class="iq-input" id="ex3-1"> (make) in this factory.</li>
+      <li>"Someone stole my bike." → My bike <input class="iq-input" id="ex3-2"> (steal).</li>
+      <li>"They will announce the results tomorrow." → The results <input class="iq-input" id="ex3-3"> (announce) tomorrow.</li>
+      <li>"She has finished the report." → The report <input class="iq-input" id="ex3-4"> (finish).</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
@@ -108,64 +136,68 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">This bridge was built in 1932. It is maintained by the city council and is inspected every year. Last year, several repairs were made after a storm damaged part of the structure. New safety measures have been introduced, and the bridge is now considered one of the safest in the region.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The bridge was built in 1932. ___</li>
-      <li>The bridge is maintained by a private company. ___</li>
-      <li>Repairs were made last year. ___</li>
-      <li>No new safety measures have been introduced. ___</li>
-      <li>The bridge is now considered unsafe. ___</li>
+      <li>The bridge was built in 1932. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The bridge is maintained by a private company. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Repairs were made last year. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>No new safety measures have been introduced. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The bridge is now considered unsafe. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write negatives (1, 3) and questions (2, 4) in the passive.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The report ______ (not/finish) yet.</li>
-      <li>___ the window ___ (break) last night?</li>
-      <li>This song ______ (not/write) by her.</li>
-      <li>___ the letters ___ (send) already?</li>
+      <li>The report <input class="iq-input" id="ex5-1"> (not/finish) yet.</li>
+      <li><input class="iq-input" id="ex5-2" style="min-width:70px;"> the window <input class="iq-input" id="ex5-3" style="min-width:70px;"> (break) last night?</li>
+      <li>This song <input class="iq-input" id="ex5-4"> (not/write) by her.</li>
+      <li><input class="iq-input" id="ex5-5" style="min-width:70px;"> the letters <input class="iq-input" id="ex5-6" style="min-width:70px;"> (send) already?</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct passive sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>built / was / 1990 / house / in / this</li>
-      <li>council / by / maintained / the / bridge / is / the</li>
-      <li>cancelled / flight / been / has / the</li>
-      <li>tomorrow / results / announced / the / will / be</li>
-      <li>stolen / bike / my / was</li>
+      <li>built / was / 1990 / house / in / this <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>council / by / maintained / the / bridge / is / the <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>cancelled / flight / been / has / the <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>tomorrow / results / announced / the / will / be <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>stolen / bike / my / was <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The cake was make by my mother.</li>
-      <li>English is speak all over the world.</li>
-      <li>This book was write by a famous author.</li>
-      <li>The car is repair now.</li>
-      <li>The letters were send yesterday.</li>
-      <li>My bike has stole.</li>
+      <li>The cake was make by my mother. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>English is speak all over the world. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>This book was write by a famous author. <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>The car is repair now. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>The letters were send yesterday. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>My bike has stole. <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Convert each active sentence to the passive.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Someone cleans this room every day.</li>
-      <li>The chef prepared the meal.</li>
-      <li>They will publish the book next year.</li>
-      <li>Workers have repaired the road.</li>
-      <li>The company is developing a new app.</li>
+      <li>Someone cleans this room every day. <input class="iq-input iq-input-wide" id="ex8-1" placeholder="rewrite…"></li>
+      <li>The chef prepared the meal. <input class="iq-input iq-input-wide" id="ex8-2" placeholder="rewrite…"></li>
+      <li>They will publish the book next year. <input class="iq-input iq-input-wide" id="ex8-3" placeholder="rewrite…"></li>
+      <li>Workers have repaired the road. <input class="iq-input iq-input-wide" id="ex8-4" placeholder="rewrite…"></li>
+      <li>The company is developing a new app. <input class="iq-input iq-input-wide" id="ex8-5" placeholder="rewrite…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: choose the correctly formed passive.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The document ___. a) was signed&nbsp; b) was sign</li>
-      <li>New employees ___ for two weeks. a) are trained&nbsp; b) are train</li>
-      <li>The results ___ soon. a) will announce&nbsp; b) will be announced</li>
-      <li>The house ___. a) is being renovate&nbsp; b) is being renovated</li>
-      <li>The project ___. a) has completed&nbsp; b) has been completed</li>
-      <li>Mistakes ___. a) should avoid&nbsp; b) should be avoided</li>
+      <li>The document ___. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) was signed</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) was sign</button></span></li>
+      <li>New employees ___ for two weeks. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) are trained</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) are train</button></span></li>
+      <li>The results ___ soon. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) will announce</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) will be announced</button></span></li>
+      <li>The house ___. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) is being renovate</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) is being renovated</button></span></li>
+      <li>The project ___. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) has completed</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) has been completed</button></span></li>
+      <li>Mistakes ___. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) should avoid</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) should be avoided</button></span></li>
     </ol>
   </div>
 
@@ -174,95 +206,93 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">The vaccine was developed over several years by an international team of researchers, although the final approval process was significantly accelerated due to the pandemic. Clinical trials were conducted across multiple countries, and the data was reviewed independently before authorisation was granted. Millions of doses have since been distributed, and ongoing safety monitoring is being carried out by health authorities worldwide.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The vaccine was developed by a single researcher. ___</li>
-      <li>The approval process was slowed down because of the pandemic. ___</li>
-      <li>Clinical trials were conducted in multiple countries. ___</li>
-      <li>The data was reviewed before authorisation was granted. ___</li>
-      <li>Safety monitoring has stopped since distribution began. ___</li>
+      <li>The vaccine was developed by a single researcher. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The approval process was slowed down because of the pandemic. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Clinical trials were conducted in multiple countries. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The data was reviewed before authorisation was granted. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Safety monitoring has stopped since distribution began. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The decision must making by the board.</li>
-      <li>New rules should introduce next year.</li>
-      <li>My car got stole last week.</li>
-      <li>The report can finding online.</li>
-      <li>The window was broken for the storm.</li>
-      <li>Mistakes shouldn't making in this job.</li>
+      <li>The decision must making by the board. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>New rules should introduce next year. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>My car got stole last week. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>The report can finding online. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>The window was broken for the storm. <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>Mistakes shouldn't making in this job. <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Describe a process (how a product is made, or how an event is organised) in 6–8 sentences, using <strong>passive voice throughout</strong>, including <strong>at least one modal passive</strong> (must be, should be, can be).</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal, objective register using the passive.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Someone made a huge mistake here.</li>
-      <li>They messed up the schedule big time.</li>
-      <li>People say the CEO is stepping down soon.</li>
-      <li>They're gonna announce the results next week, I heard.</li>
-      <li>Nobody has fixed this problem yet.</li>
+      <li>Someone made a huge mistake here. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>They messed up the schedule big time. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>People say the CEO is stepping down soon. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>They're gonna announce the results next week, I heard. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>Nobody has fixed this problem yet. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: what does this structure express?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"It is widely believed that the policy will fail." a) reports a general opinion impersonally&nbsp; b) states a fact directly</li>
-      <li>"She had her car repaired." a) she arranged for someone else to repair it&nbsp; b) she repaired it herself</li>
-      <li>"The proposal is expected to be approved." a) common in formal reporting&nbsp; b) grammatically incorrect</li>
-      <li>"The building is said to date back to the 1800s." a) people say it dates back to the 1800s&nbsp; b) it definitely does</li>
-      <li>"Measures are being taken to address the issue." a) an action currently in progress&nbsp; b) a completed action</li>
-      <li>"The matter is to be discussed at the next meeting." a) a formal, scheduled future action&nbsp; b) a request</li>
+      <li>"It is widely believed that the policy will fail." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) reports a general opinion impersonally</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) states a fact directly</button></span></li>
+      <li>"She had her car repaired." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) she arranged for someone else to repair it</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) she repaired it herself</button></span></li>
+      <li>"The proposal is expected to be approved." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) common in formal reporting</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) grammatically incorrect</button></span></li>
+      <li>"The building is said to date back to the 1800s." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) people say it dates back to the 1800s</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) it definitely does</button></span></li>
+      <li>"Measures are being taken to address the issue." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) an action currently in progress</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a completed action</button></span></li>
+      <li>"The matter is to be discussed at the next meeting." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) a formal, scheduled future action</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a request</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>It is believe that the economy will recover soon.</li>
-      <li>She had her hair to cut yesterday.</li>
-      <li>The building is say to date back centuries.</li>
-      <li>Measures are taking to resolve the crisis.</li>
-      <li>The matter is discuss at the next meeting.</li>
+      <li>It is believe that the economy will recover soon. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>She had her hair to cut yesterday. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>The building is say to date back centuries. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>Measures are taking to resolve the crisis. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>The matter is discuss at the next meeting. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal news-style report using <strong>passive voice throughout</strong>, including <strong>at least one reporting structure</strong> ("it is said/believed/reported that...") and <strong>one causative construction</strong> ("had something done").</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex passive sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>fail / believed / policy / widely / will / that / it / is / the</li>
-      <li>approved / expected / be / proposal / to / is / the</li>
-      <li>issue / taken / address / measures / are / to / being / the</li>
-      <li>meeting / discussed / next / be / matter / to / at / the / is / the</li>
-      <li>1800s / said / building / to / back / the / date / is / the / to</li>
+      <li>fail / believed / policy / widely / will / that / it / is / the <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>approved / expected / be / proposal / to / is / the <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>issue / taken / address / measures / are / to / being / the <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>meeting / discussed / next / be / matter / to / at / the / is / the <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>1800s / said / building / to / back / the / date / is / the / to <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>It is reported that the merger has completing.</li>
-      <li>She has her house to renovate at the moment.</li>
-      <li>The results are think to be accurate.</li>
-      <li>New evidence is expect to emerge soon.</li>
-      <li>The award is give annually to outstanding researchers.</li>
+      <li>It is reported that the merger has completing. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>She has her house to renovate at the moment. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>The results are think to be accurate. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>New evidence is expect to emerge soon. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>The award is give annually to outstanding researchers. <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
@@ -322,6 +352,126 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* ── Interactive exercises ── */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['are made'] },
+    { accept: ['was stolen'] },
+    { accept: ['will be announced'] },
+    { accept: ['has been finished'] }
+  ]},
+  ex5: { type: 'exact', items: [
+    { accept: ["hasn't been finished", 'hasnt been finished'] },
+    { accept: ['was'] },
+    { accept: ['broken'] },
+    { accept: ["wasn't written", 'wasnt written'] },
+    { accept: ['have'] },
+    { accept: ['been sent'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['this house was built in 1990'] },
+    { accept: ['the bridge is maintained by the council'] },
+    { accept: ['the flight has been cancelled'] },
+    { accept: ['the results will be announced tomorrow'] },
+    { accept: ['my bike was stolen'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['was made'] },
+    { accept: ['is spoken'] },
+    { accept: ['was written'] },
+    { accept: ['is being repaired'] },
+    { accept: ['were sent'] },
+    { accept: ['has been stolen'] }
+  ]},
+  ex8: { type: 'lenient', items: [
+    { accept: ['this room is cleaned every day'] },
+    { accept: ['the meal was prepared by the chef'] },
+    { accept: ['the book will be published next year'] },
+    { accept: ['the road has been repaired'] },
+    { accept: ['a new app is being developed by the company'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['must be made'] },
+    { accept: ['should be introduced'] },
+    { accept: ['got stolen'] },
+    { accept: ['can be found'] },
+    { accept: ['by the storm'] },
+    { accept: ["shouldn't be made", 'shouldnt be made'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['error was made'] },
+    { accept: ['disrupted'] },
+    { accept: ['is said that'] },
+    { accept: ['expected to be announced'] },
+    { accept: ["hasn't been resolved", "has not yet been resolved", 'has not been resolved'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['believed'] },
+    { accept: ['had her hair cut'] },
+    { accept: ['said to date back'] },
+    { accept: ['being taken'] },
+    { accept: ['to be discussed'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['it is widely believed that the policy will fail'] },
+    { accept: ['the proposal is expected to be approved'] },
+    { accept: ['measures are being taken to address the issue'] },
+    { accept: ['the matter is to be discussed at the next meeting'] },
+    { accept: ['the building is said to date back to the 1800s'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['has been completed', 'is being completed'] },
+    { accept: ['is having her house renovated'] },
+    { accept: ['thought to be accurate'] },
+    { accept: ['expected to emerge soon'] },
+    { accept: ['is given annually'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

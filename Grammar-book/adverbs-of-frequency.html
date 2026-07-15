@@ -11,6 +11,33 @@
     @media print {
       #answerToggleBtn { display: none !important; }
     }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
   </style>
 </head>
 <body>
@@ -127,36 +154,37 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the sentence with correct word order.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li><strong>(She always is / She is always)</strong> happy.</li>
-      <li><strong>(I always eat / I eat always)</strong> breakfast.</li>
-      <li><strong>(He never is / He is never)</strong> late.</li>
-      <li><strong>(They usually watch / They watch usually)</strong> TV.</li>
-      <li><strong>(We sometimes go / We go sometimes)</strong> swimming.</li>
-      <li><strong>(She often calls / She calls often)</strong> me.</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">She always is</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">She is always</button></span> happy.</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">I always eat</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">I eat always</button></span> breakfast.</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">He never is</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">He is never</button></span> late.</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">They usually watch</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">They watch usually</button></span> TV.</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">We sometimes go</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">We go sometimes</button></span> swimming.</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">She often calls</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">She calls often</button></span> me.</li>
     </ol>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each adverb (1–5) to its approximate meaning (a–e).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. always</div><div>a. 0%</div>
-      <div>2. usually</div><div>b. 100%</div>
-      <div>3. sometimes</div><div>c. ~50%</div>
-      <div>4. rarely</div><div>d. ~90%</div>
-      <div>5. never</div><div>e. ~20%</div>
+      <div>1. always <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>a. 0%</div>
+      <div>2. usually <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>b. 100%</div>
+      <div>3. sometimes <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>c. ~50%</div>
+      <div>4. rarely <select class="iq-select" onchange="checkSelect(this,'e')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>d. ~90%</div>
+      <div>5. never <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>e. ~20%</div>
     </div>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank, placing the adverb correctly.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I ______ (always) drink coffee in the morning.</li>
-      <li>She ______ (never) is late for class. → She ______ late for class.</li>
-      <li>They ______ (often) play football on Sundays.</li>
-      <li>He ______ (usually) walks to school.</li>
-      <li>We ______ (sometimes) eat pizza on Fridays.</li>
-      <li>You ______ (rarely) see her at the gym.</li>
+      <li>I <input class="iq-input" id="ex3-1"> (always) drink coffee in the morning.</li>
+      <li>She <input class="iq-input" id="ex3-2"> (never) is late for class. → She <input class="iq-input" id="ex3-3"> late for class.</li>
+      <li>They <input class="iq-input" id="ex3-4"> (often) play football on Sundays.</li>
+      <li>He <input class="iq-input" id="ex3-5"> (usually) walks to school.</li>
+      <li>We <input class="iq-input" id="ex3-6"> (sometimes) eat pizza on Fridays.</li>
+      <li>You <input class="iq-input" id="ex3-7"> (rarely) see her at the gym.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <!-- ===== A2 ===== -->
@@ -166,34 +194,36 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Elena always gets up at 7 a.m. and usually goes for a run before work. She sometimes skips breakfast when she's in a hurry, but she never skips lunch. She rarely works late, and once a week she meets friends for dinner. From time to time, she treats herself to a dessert.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Elena always gets up at 7 a.m. ___</li>
-      <li>She never goes for a run. ___</li>
-      <li>She sometimes skips breakfast. ___</li>
-      <li>She often works late. ___</li>
-      <li>She meets friends once a week. ___</li>
+      <li>Elena always gets up at 7 a.m. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>She never goes for a run. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>She sometimes skips breakfast. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>She often works late. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>She meets friends once a week. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Rewrite each sentence placing the adverb correctly.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>usually / She / coffee / drinks → ______________________</li>
-      <li>never / late / He / is → ______________________</li>
-      <li>often / study / We / together → ______________________</li>
-      <li>always / helpful / They / are → ______________________</li>
-      <li>rarely / TV / I / watch → ______________________</li>
+      <li>usually / She / coffee / drinks → <input class="iq-input iq-input-wide" id="ex5-1" placeholder="type the sentence…"></li>
+      <li>never / late / He / is → <input class="iq-input iq-input-wide" id="ex5-2" placeholder="type the sentence…"></li>
+      <li>often / study / We / together → <input class="iq-input iq-input-wide" id="ex5-3" placeholder="type the sentence…"></li>
+      <li>always / helpful / They / are → <input class="iq-input iq-input-wide" id="ex5-4" placeholder="type the sentence…"></li>
+      <li>rarely / TV / I / watch → <input class="iq-input iq-input-wide" id="ex5-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>gym / week / a / goes / she / to / twice / the</li>
-      <li>always / breakfast / eats / he</li>
-      <li>never / late / is / she</li>
-      <li>a / we / week / meet / once</li>
-      <li>time / from / time / to / travels / he</li>
+      <li>gym / week / a / goes / she / to / twice / the <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>always / breakfast / eats / he <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>never / late / is / she <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>a / we / week / meet / once <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>time / from / time / to / travels / he <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <!-- ===== B1 ===== -->
@@ -202,35 +232,37 @@
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She always is on time.</li>
-      <li>I eat always breakfast at 8.</li>
-      <li>He is late never.</li>
-      <li>They watch often movies together.</li>
-      <li>We go rarely to the cinema.</li>
-      <li>She twice a week goes to the gym.</li>
+      <li>She always is on time. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>I eat always breakfast at 8. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>He is late never. <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>They watch often movies together. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>We go rarely to the cinema. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>She twice a week goes to the gym. <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Complete with an appropriate frequency adverb or phrase (context given).</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I ______ miss the bus — maybe once a year. <em>(very rare)</em></li>
-      <li>She ______ checks her email — constantly. <em>(100%)</em></li>
-      <li>We ______ visit them — about half the time. <em>(50%)</em></li>
-      <li>He goes to the dentist ______. <em>(twice a year)</em></li>
-      <li>They ______ argue, but not often. <em>(sometimes)</em></li>
+      <li>I <input class="iq-input" id="ex8-1"> miss the bus — maybe once a year. <em>(very rare)</em></li>
+      <li>She <input class="iq-input" id="ex8-2"> checks her email — constantly. <em>(100%)</em></li>
+      <li>We <input class="iq-input" id="ex8-3"> visit them — about half the time. <em>(50%)</em></li>
+      <li>He goes to the dentist <input class="iq-input" id="ex8-4">. <em>(twice a year)</em></li>
+      <li>They <input class="iq-input" id="ex8-5"> argue, but not often. <em>(sometimes)</em></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: choose the correctly ordered sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>a) I have never been to Japan. b) I have been never to Japan.</li>
-      <li>a) She usually is home by 6. b) She is usually home by 6.</li>
-      <li>a) They always have breakfast together. b) They have always breakfast together.</li>
-      <li>a) We rarely can go out. b) We can rarely go out.</li>
-      <li>a) He calls every day his mother. b) He calls his mother every day.</li>
-      <li>a) I sometimes am tired. b) I am sometimes tired.</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) I have never been to Japan.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) I have been never to Japan.</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) She usually is home by 6.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) She is usually home by 6.</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) They always have breakfast together.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) They have always breakfast together.</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) We rarely can go out.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) We can rarely go out.</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) He calls every day his mother.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) He calls his mother every day.</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) I sometimes am tired.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) I am sometimes tired.</button></span></li>
     </ol>
   </div>
 
@@ -241,33 +273,31 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">According to the survey, employees rarely take their full lunch break, and nearly half occasionally skip it altogether. Most respondents said they usually check work email outside office hours, though a smaller group claimed they never do so. Interestingly, managers were more likely than junior staff to report that they frequently worked through weekends.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Employees rarely take their full lunch break. ___</li>
-      <li>Nobody skips lunch. ___</li>
-      <li>Most respondents usually check email outside hours. ___</li>
-      <li>All respondents check email outside hours. ___</li>
-      <li>Managers reported working weekends more frequently than junior staff. ___</li>
+      <li>Employees rarely take their full lunch break. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Nobody skips lunch. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Most respondents usually check email outside hours. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>All respondents check email outside hours. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Managers reported working weekends more frequently than junior staff. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Seldom I have seen such dedication.</li>
-      <li>She has rarely never missed a deadline.</li>
-      <li>He always is punctual with clients.</li>
-      <li>We occasionally are late to meetings.</li>
-      <li>They hardly ever are satisfied.</li>
-      <li>Never I would have guessed that.</li>
+      <li>Seldom I have seen such dedication. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>She has rarely never missed a deadline. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>He always is punctual with clients. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>We occasionally are late to meetings. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>They hardly ever are satisfied. <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>Never I would have guessed that. <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Describe your weekly routine in 5–7 sentences, using a range of <strong>frequency adverbs and phrases</strong> (always, usually, rarely, once a week, from time to time) with correct word order.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <!-- ===== C1 ===== -->
@@ -276,35 +306,37 @@
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence for emphasis using front-position inversion.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I have never seen such enthusiasm.</li>
-      <li>She rarely complains about her workload.</li>
-      <li>He seldom arrives on time.</li>
-      <li>We have never encountered this problem before.</li>
-      <li>They hardly ever agree on anything.</li>
+      <li>I have never seen such enthusiasm. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite…"></li>
+      <li>She rarely complains about her workload. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite…"></li>
+      <li>He seldom arrives on time. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite…"></li>
+      <li>We have never encountered this problem before. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite…"></li>
+      <li>They hardly ever agree on anything. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: which sentence uses inversion correctly?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>a) Never I have felt so proud. b) Never have I felt so proud.</li>
-      <li>a) Rarely does she ask for help. b) Rarely she does ask for help.</li>
-      <li>a) Seldom have we seen such results. b) Seldom we have seen such results.</li>
-      <li>a) Hardly ever does he complain. b) Hardly ever he does complain.</li>
-      <li>a) Not once did they apologise. b) Not once they did apologise.</li>
-      <li>a) At no time was the policy violated. b) At no time the policy was violated.</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) Never I have felt so proud.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) Never have I felt so proud.</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) Rarely does she ask for help.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) Rarely she does ask for help.</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) Seldom have we seen such results.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) Seldom we have seen such results.</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) Hardly ever does he complain.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) Hardly ever he does complain.</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) Not once did they apologise.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) Not once they did apologise.</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) At no time was the policy violated.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) At no time the policy was violated.</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Rarely the company has faced such scrutiny.</li>
-      <li>Never before the results have been so promising.</li>
-      <li>Seldom does the board it meets on weekends.</li>
-      <li>Not once has apologised the director.</li>
-      <li>Hardly the team ever misses a deadline.</li>
+      <li>Rarely the company has faced such scrutiny. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>Never before the results have been so promising. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>Seldom does the board it meets on weekends. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>Not once has apologised the director. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>Hardly the team ever misses a deadline. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <!-- ===== C2 ===== -->
@@ -313,33 +345,31 @@
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal reflective paragraph, using at least two examples of front-position inversion for emphasis (Never have I..., Rarely does...).</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, inverted sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>felt / I / never / confident / so / have</li>
-      <li>such / seen / we / have / seldom / results</li>
-      <li>complains / rarely / she / does</li>
-      <li>apologised / once / not / director / the</li>
-      <li>violated / policy / at / was / time / the / no</li>
+      <li>felt / I / never / confident / so / have <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>such / seen / we / have / seldom / results <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>complains / rarely / she / does <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>apologised / once / not / director / the <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>violated / policy / at / was / time / the / no <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Never before we have witnessed such growth.</li>
-      <li>Rarely a decision is made so quickly.</li>
-      <li>Seldom he acknowledges his mistakes.</li>
-      <li>Not once the team has missed a deadline.</li>
-      <li>Hardly ever the results are disputed.</li>
+      <li>Never before we have witnessed such growth. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>Rarely a decision is made so quickly. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>Seldom he acknowledges his mistakes. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>Not once the team has missed a deadline. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>Hardly ever the results are disputed. <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <!-- ============ ANSWER KEY ============ -->
@@ -407,6 +437,128 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* ── Interactive exercises ── */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['always'] },
+    { accept: ['is never'] },
+    { accept: ['is never'] },
+    { accept: ['often'] },
+    { accept: ['usually'] },
+    { accept: ['sometimes'] },
+    { accept: ['rarely'] }
+  ]},
+  ex5: { type: 'lenient', items: [
+    { accept: ['she usually drinks coffee'] },
+    { accept: ['he is never late'] },
+    { accept: ['we often study together'] },
+    { accept: ['they are always helpful'] },
+    { accept: ['i rarely watch tv'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['she goes to the gym twice a week'] },
+    { accept: ['he always eats breakfast'] },
+    { accept: ['she is never late'] },
+    { accept: ['we meet once a week'] },
+    { accept: ['he travels from time to time'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['is always on time'] },
+    { accept: ['i always eat breakfast'] },
+    { accept: ['he is never late'] },
+    { accept: ['often watch movies together'] },
+    { accept: ['we rarely go to the cinema'] },
+    { accept: ['goes to the gym twice a week'] }
+  ]},
+  ex8: { type: 'exact', items: [
+    { accept: ['rarely'] },
+    { accept: ['always'] },
+    { accept: ['sometimes'] },
+    { accept: ['twice a year'] },
+    { accept: ['sometimes'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['i have seldom seen such dedication'] },
+    { accept: ['she has rarely missed a deadline'] },
+    { accept: ['he is always punctual'] },
+    { accept: ['we are occasionally late'] },
+    { accept: ['they are hardly ever satisfied'] },
+    { accept: ['i would never have guessed'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['never have i seen such enthusiasm'] },
+    { accept: ['rarely does she complain'] },
+    { accept: ['seldom does he arrive on time'] },
+    { accept: ['never before have we encountered this problem'] },
+    { accept: ['hardly ever do they agree on anything'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['rarely has the company faced such scrutiny'] },
+    { accept: ['never before have the results been so promising'] },
+    { accept: ['seldom does the board meet on weekends'] },
+    { accept: ['not once has the director apologised', 'not once has the director apologized'] },
+    { accept: ['hardly ever does the team miss a deadline'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['never have i felt so confident'] },
+    { accept: ['seldom have we seen such results'] },
+    { accept: ['rarely does she complain'] },
+    { accept: ['not once has the director apologised', 'not once has the director apologized'] },
+    { accept: ['at no time was the policy violated'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['never before have we witnessed such growth'] },
+    { accept: ['rarely is a decision made so quickly'] },
+    { accept: ['seldom does he acknowledge his mistakes'] },
+    { accept: ['not once has the team missed a deadline'] },
+    { accept: ['hardly ever are the results disputed'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

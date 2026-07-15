@@ -11,6 +11,33 @@
     @media print {
       #answerToggleBtn { display: none !important; }
     }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
   </style>
 </head>
 <body>
@@ -132,36 +159,37 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I enjoy <strong>(swim / swimming)</strong>.</li>
-      <li>She wants <strong>(to go / going)</strong> home.</li>
-      <li>They like <strong>(to play / playing)</strong> football.</li>
-      <li>He hopes <strong>(to pass / passing)</strong> the exam.</li>
-      <li>We finished <strong>(to eat / eating)</strong> dinner.</li>
-      <li>She decided <strong>(to stay / staying)</strong> home.</li>
+      <li>I enjoy <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">swim</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">swimming</button></span>.</li>
+      <li>She wants <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">to go</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">going</button></span> home.</li>
+      <li>They like <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">to play</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">playing</button></span> football.</li>
+      <li>He hopes <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">to pass</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">passing</button></span> the exam.</li>
+      <li>We finished <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">to eat</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">eating</button></span> dinner.</li>
+      <li>She decided <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">to stay</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">staying</button></span> home.</li>
     </ol>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each verb (1–5) to its correct pattern (a–e).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. enjoy</div><div>a. to help</div>
-      <div>2. want</div><div>b. reading</div>
-      <div>3. avoid</div><div>c. to leave</div>
-      <div>4. promise</div><div>d. eating sugar</div>
-      <div>5. offer</div><div>e. to visit</div>
+      <div>1. enjoy <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>a. to help</div>
+      <div>2. want <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>b. reading</div>
+      <div>3. avoid <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>c. to leave</div>
+      <div>4. promise <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>d. eating sugar</div>
+      <div>5. offer <select class="iq-select" onchange="checkSelect(this,'e')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>e. to visit</div>
     </div>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank with the correct form (gerund or infinitive).</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She loves ______ (dance).</li>
-      <li>He needs ______ (study) tonight.</li>
-      <li>I don't mind ______ (wait).</li>
-      <li>They plan ______ (travel) next year.</li>
-      <li>We finished ______ (clean) the house.</li>
-      <li>She agreed ______ (help) us.</li>
+      <li>She loves <input class="iq-input" id="ex3-1"> (dance).</li>
+      <li>He needs <input class="iq-input" id="ex3-2"> (study) tonight.</li>
+      <li>I don't mind <input class="iq-input" id="ex3-3"> (wait).</li>
+      <li>They plan <input class="iq-input" id="ex3-4"> (travel) next year.</li>
+      <li>We finished <input class="iq-input" id="ex3-5"> (clean) the house.</li>
+      <li>She agreed <input class="iq-input" id="ex3-6"> (help) us.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <!-- ===== A2 ===== -->
@@ -171,35 +199,37 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Maria decided to start learning Spanish this year. She enjoys practising with friends and hopes to travel to Mexico soon. She admits that speaking is harder than reading, but she keeps trying and refuses to give up. She's also considering taking an evening course to improve faster.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Maria decided to start learning Spanish. ___</li>
-      <li>She dislikes practising with friends. ___</li>
-      <li>She finds speaking harder than reading. ___</li>
-      <li>She refuses to give up. ___</li>
-      <li>She's considering an evening course. ___</li>
+      <li>Maria decided to start learning Spanish. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>She dislikes practising with friends. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>She finds speaking harder than reading. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>She refuses to give up. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>She's considering an evening course. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Complete each sentence with the correct form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She is good at ______ (paint).</li>
-      <li>I'm interested in ______ (learn) French.</li>
-      <li>He's afraid of ______ (fly).</li>
-      <li>They look forward to ______ (see) you.</li>
-      <li>I'm thinking of ______ (change) jobs.</li>
-      <li>She's tired of ______ (wait).</li>
+      <li>She is good at <input class="iq-input" id="ex5-1"> (paint).</li>
+      <li>I'm interested in <input class="iq-input" id="ex5-2"> (learn) French.</li>
+      <li>He's afraid of <input class="iq-input" id="ex5-3"> (fly).</li>
+      <li>They look forward to <input class="iq-input" id="ex5-4"> (see) you.</li>
+      <li>I'm thinking of <input class="iq-input" id="ex5-5"> (change) jobs.</li>
+      <li>She's tired of <input class="iq-input" id="ex5-6"> (wait).</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>swimming / enjoys / she</li>
-      <li>to / wants / leave / early / he</li>
-      <li>at / good / cooking / is / she</li>
-      <li>to / promised / help / he / us</li>
-      <li>avoid / eating / try / late / to</li>
+      <li>swimming / enjoys / she <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>to / wants / leave / early / he <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>at / good / cooking / is / she <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>to / promised / help / he / us <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>avoid / eating / try / late / to <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <!-- ===== B1 ===== -->
@@ -208,35 +238,37 @@
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I enjoy to read books.</li>
-      <li>She wants going home.</li>
-      <li>He avoids to eat sugar.</li>
-      <li>They finished to work at 6.</li>
-      <li>I'm good in cooking.</li>
-      <li>She's afraid to flying.</li>
+      <li>I enjoy to read books. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>She wants going home. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>He avoids to eat sugar. <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>They finished to work at 6. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>I'm good in cooking. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>She's afraid to flying. <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Choose the correct form for stop/remember/try, with meaning in brackets.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I stopped ______ (smoke) two years ago. <em>(quit the habit)</em></li>
-      <li>We stopped ______ (buy) coffee on the way. <em>(paused to do it)</em></li>
-      <li>Please remember ______ (lock) the door. <em>(future duty)</em></li>
-      <li>I remember ______ (meet) her years ago. <em>(recall the past)</em></li>
-      <li>Try ______ (restart) the computer. <em>(make an effort)</em></li>
+      <li>I stopped <input class="iq-input" id="ex8-1"> (smoke) two years ago. <em>(quit the habit)</em></li>
+      <li>We stopped <input class="iq-input" id="ex8-2"> (buy) coffee on the way. <em>(paused to do it)</em></li>
+      <li>Please remember <input class="iq-input" id="ex8-3"> (lock) the door. <em>(future duty)</em></li>
+      <li>I remember <input class="iq-input" id="ex8-4"> (meet) her years ago. <em>(recall the past)</em></li>
+      <li>Try <input class="iq-input" id="ex8-5"> (restart) the computer. <em>(make an effort)</em></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: choose the correct form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She suggested ___ a different approach. a) to try&nbsp; b) trying</li>
-      <li>I look forward to ___ you soon. a) seeing&nbsp; b) see</li>
-      <li>He admitted ___ the vase. a) breaking&nbsp; b) to break</li>
-      <li>They agreed ___ the contract. a) signing&nbsp; b) to sign</li>
-      <li>She's used to ___ early. a) waking up&nbsp; b) wake up</li>
-      <li>We managed ___ the deadline. a) meeting&nbsp; b) to meet</li>
+      <li>She suggested ___ a different approach. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) to try</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) trying</button></span></li>
+      <li>I look forward to ___ you soon. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) seeing</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) see</button></span></li>
+      <li>He admitted ___ the vase. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) breaking</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) to break</button></span></li>
+      <li>They agreed ___ the contract. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) signing</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) to sign</button></span></li>
+      <li>She's used to ___ early. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) waking up</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) wake up</button></span></li>
+      <li>We managed ___ the deadline. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) meeting</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) to meet</button></span></li>
     </ol>
   </div>
 
@@ -247,33 +279,31 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">The company announced plans to expand into new markets, having spent the past year considering various options. Management admitted delaying the decision longer than necessary, but insisted on proceeding cautiously to avoid repeating previous mistakes. Employees are looking forward to seeing the results, though some remain wary of investing further resources without stronger guarantees.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The company plans to expand into new markets. ___</li>
-      <li>Management denied delaying the decision. ___</li>
-      <li>They want to avoid repeating past mistakes. ___</li>
-      <li>Employees are looking forward to seeing results. ___</li>
-      <li>All employees are fully confident. ___</li>
+      <li>The company plans to expand into new markets. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Management denied delaying the decision. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>They want to avoid repeating past mistakes. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Employees are looking forward to seeing results. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>All employees are fully confident. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She denied to take the money.</li>
-      <li>They risked to lose everything.</li>
-      <li>He's considering to resign.</li>
-      <li>I look forward to hear from you.</li>
-      <li>She's used to working late, but she can't get used to work weekends.</li>
-      <li>He recommended to wait until Monday.</li>
+      <li>She denied to take the money. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>They risked to lose everything. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>He's considering to resign. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>I look forward to hear from you. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>She's used to working late, but she can't get used to work weekends. <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>He recommended to wait until Monday. <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write 5–7 sentences about your goals for this year, using a mix of <strong>verb + gerund</strong> and <strong>verb + infinitive</strong> patterns, plus at least one "look forward to + gerund."</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <!-- ===== C1 ===== -->
@@ -282,35 +312,37 @@
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal register, keeping the pattern.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>We're gonna keep pushing for better results.</li>
-      <li>They're totally into trying new strategies.</li>
-      <li>She's cool with waiting a bit longer.</li>
-      <li>He's not up for signing that deal.</li>
-      <li>We should quit stalling and just decide.</li>
+      <li>We're gonna keep pushing for better results. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>They're totally into trying new strategies. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>She's cool with waiting a bit longer. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>He's not up for signing that deal. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>We should quit stalling and just decide. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: which meaning does the verb pattern express here?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"He stopped to answer the phone." → a) paused another action&nbsp; b) quit answering phones</li>
-      <li>"I regret to inform you..." → a) a formal announcement about to be made&nbsp; b) regret over a past action</li>
-      <li>"I regret telling him the truth." → a) regret over a past action&nbsp; b) an announcement about to be made</li>
-      <li>"She tried restarting the router." → a) experimented with a solution&nbsp; b) made an effort generally</li>
-      <li>"He went on to become CEO." → a) a subsequent achievement&nbsp; b) continuing the same action</li>
-      <li>"He went on talking for hours." → a) continuing the same action&nbsp; b) a subsequent achievement</li>
+      <li>"He stopped to answer the phone." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) paused another action</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) quit answering phones</button></span></li>
+      <li>"I regret to inform you..." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) a formal announcement about to be made</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) regret over a past action</button></span></li>
+      <li>"I regret telling him the truth." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) regret over a past action</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) an announcement about to be made</button></span></li>
+      <li>"She tried restarting the router." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) experimented with a solution</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) made an effort generally</button></span></li>
+      <li>"He went on to become CEO." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) a subsequent achievement</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) continuing the same action</button></span></li>
+      <li>"He went on talking for hours." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) continuing the same action</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a subsequent achievement</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The committee recommended to postpone the vote.</li>
-      <li>She admitted to have made an error in the report.</li>
-      <li>They risked losing the entire investment by to proceed.</li>
-      <li>He denied having stole the documents.</li>
-      <li>The manager suggested to review the policy again.</li>
+      <li>The committee recommended to postpone the vote. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>She admitted to have made an error in the report. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>They risked losing the entire investment by to proceed. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>He denied having stole the documents. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>The manager suggested to review the policy again. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <!-- ===== C2 ===== -->
@@ -319,33 +351,31 @@
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal recommendation memo, using a wide range of verb + gerund/infinitive patterns (recommend, propose, risk, look forward to, regret to inform).</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>recommended / committee / postponing / the / vote</li>
-      <li>inform / regret / delayed / to / we / is / that / the / shipment</li>
-      <li>risk / losing / clients / delaying / by / they / further</li>
-      <li>forward / results / look / to / we / the / seeing</li>
-      <li>proposed / director / restructuring / the / department / the</li>
+      <li>recommended / committee / postponing / the / vote <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>inform / regret / delayed / to / we / is / that / the / shipment <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>risk / losing / clients / delaying / by / they / further <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>forward / results / look / to / we / the / seeing <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>proposed / director / restructuring / the / department / the <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>We regret to inform that the deadline has passed already.</li>
-      <li>The board proposed to postponing the decision.</li>
-      <li>They risk to losing the contract entirely.</li>
-      <li>She looks forward to discuss the matter further.</li>
-      <li>He recommended reconsider the entire strategy.</li>
+      <li>We regret to inform that the deadline has passed already. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>The board proposed to postponing the decision. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>They risk to losing the contract entirely. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>She looks forward to discuss the matter further. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>He recommended reconsider the entire strategy. <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <!-- ============ ANSWER KEY ============ -->
@@ -413,6 +443,128 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* ── Interactive exercises ── */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['dancing'] },
+    { accept: ['to study'] },
+    { accept: ['waiting'] },
+    { accept: ['to travel'] },
+    { accept: ['cleaning'] },
+    { accept: ['to help'] }
+  ]},
+  ex5: { type: 'exact', items: [
+    { accept: ['painting'] },
+    { accept: ['learning'] },
+    { accept: ['flying'] },
+    { accept: ['seeing'] },
+    { accept: ['changing'] },
+    { accept: ['waiting'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['she enjoys swimming'] },
+    { accept: ['he wants to leave early'] },
+    { accept: ['she is good at cooking'] },
+    { accept: ['he promised to help us'] },
+    { accept: ['try to avoid eating late'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['enjoy reading'] },
+    { accept: ['wants to go'] },
+    { accept: ['avoids eating'] },
+    { accept: ['finished working'] },
+    { accept: ['good at cooking'] },
+    { accept: ['afraid of flying'] }
+  ]},
+  ex8: { type: 'exact', items: [
+    { accept: ['smoking'] },
+    { accept: ['to buy'] },
+    { accept: ['to lock'] },
+    { accept: ['meeting'] },
+    { accept: ['restarting'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['denied taking'] },
+    { accept: ['risked losing'] },
+    { accept: ['considering resigning'] },
+    { accept: ['forward to hearing'] },
+    { accept: ['used to working weekends'] },
+    { accept: ['recommended waiting'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['pursuing better results', 'keep pursuing'] },
+    { accept: ['eager to try'] },
+    { accept: ['willing to wait'] },
+    { accept: ['reluctant to sign'] },
+    { accept: ['stop procrastinating'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['recommended postponing'] },
+    { accept: ['admitted to having made', 'having made an error'] },
+    { accept: ['by proceeding'] },
+    { accept: ['having stolen'] },
+    { accept: ['suggested reviewing'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['the committee recommended postponing the vote'] },
+    { accept: ['we regret to inform you that the shipment is delayed'] },
+    { accept: ['they risk losing clients by delaying further'] },
+    { accept: ['we look forward to seeing the results'] },
+    { accept: ['the director proposed restructuring the department'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['regret to inform you'] },
+    { accept: ['proposed postponing'] },
+    { accept: ['risk losing the contract'] },
+    { accept: ['forward to discussing'] },
+    { accept: ['recommended reconsidering'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

@@ -11,6 +11,33 @@
     @media print {
       #answerToggleBtn { display: none !important; }
     }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
   </style>
 </head>
 <body>
@@ -135,36 +162,37 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: countable or uncountable?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>book — <strong>(countable / uncountable)</strong></li>
-      <li>water — <strong>(countable / uncountable)</strong></li>
-      <li>chair — <strong>(countable / uncountable)</strong></li>
-      <li>rice — <strong>(countable / uncountable)</strong></li>
-      <li>apple — <strong>(countable / uncountable)</strong></li>
-      <li>money — <strong>(countable / uncountable)</strong></li>
+      <li>book — <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">countable</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">uncountable</button></span></li>
+      <li>water — <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">countable</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">uncountable</button></span></li>
+      <li>chair — <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">countable</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">uncountable</button></span></li>
+      <li>rice — <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">countable</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">uncountable</button></span></li>
+      <li>apple — <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">countable</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">uncountable</button></span></li>
+      <li>money — <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">countable</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">uncountable</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each noun (1–5) to its correct quantifier (a–e).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. ___ books</div><div>a. much</div>
-      <div>2. ___ water</div><div>b. many</div>
-      <div>3. ___ apples</div><div>c. a</div>
-      <div>4. ___ money</div><div>d. some</div>
-      <div>5. ___ chair</div><div>e. much</div>
+      <div>1. ___ books <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>a. much</div>
+      <div>2. ___ water <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>b. many</div>
+      <div>3. ___ apples <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>c. a</div>
+      <div>4. ___ money <select class="iq-select" onchange="checkSelect(this,'e')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>d. some</div>
+      <div>5. ___ chair <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>e. much</div>
     </div>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank with some or any.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I have ______ apples.</li>
-      <li>Do you have ______ milk?</li>
-      <li>There isn't ______ sugar.</li>
-      <li>She wants ______ water.</li>
-      <li>We don't have ______ money.</li>
-      <li>Is there ______ bread?</li>
+      <li>I have <input class="iq-input" id="ex3-1"> apples.</li>
+      <li>Do you have <input class="iq-input" id="ex3-2"> milk?</li>
+      <li>There isn't <input class="iq-input" id="ex3-3"> sugar.</li>
+      <li>She wants <input class="iq-input" id="ex3-4"> water.</li>
+      <li>We don't have <input class="iq-input" id="ex3-5"> money.</li>
+      <li>Is there <input class="iq-input" id="ex3-6"> bread?</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <!-- ===== A2 ===== -->
@@ -174,35 +202,37 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Before the trip, we bought some bread, a few apples, and a bottle of water. We didn't have much time, so we packed quickly. We took a little money in cash and a few pieces of luggage. There wasn't much space in the car, but we managed to fit everything in.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>They bought some bread. ___</li>
-      <li>They had plenty of time. ___</li>
-      <li>They took a little money in cash. ___</li>
-      <li>There was a lot of space in the car. ___</li>
-      <li>They packed a few apples. ___</li>
+      <li>They bought some bread. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>They had plenty of time. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>They took a little money in cash. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>There was a lot of space in the car. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>They packed a few apples. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Fill in the blank with much or many.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>How ______ books do you have?</li>
-      <li>How ______ time do we have?</li>
-      <li>There aren't ______ chairs.</li>
-      <li>There isn't ______ sugar left.</li>
-      <li>How ______ friends does she have?</li>
-      <li>We don't have ______ information.</li>
+      <li>How <input class="iq-input" id="ex5-1"> books do you have?</li>
+      <li>How <input class="iq-input" id="ex5-2"> time do we have?</li>
+      <li>There aren't <input class="iq-input" id="ex5-3"> chairs.</li>
+      <li>There isn't <input class="iq-input" id="ex5-4"> sugar left.</li>
+      <li>How <input class="iq-input" id="ex5-5"> friends does she have?</li>
+      <li>We don't have <input class="iq-input" id="ex5-6"> information.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>much / how / time / need / you / do</li>
-      <li>bread / a / of / loaf / bought / she</li>
-      <li>friends / few / has / a / he</li>
-      <li>any / there / milk / isn't</li>
-      <li>lot / a / has / money / of / she</li>
+      <li>much / how / time / need / you / do <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>bread / a / of / loaf / bought / she <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>friends / few / has / a / he <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>any / there / milk / isn't <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>lot / a / has / money / of / she <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <!-- ===== B1 ===== -->
@@ -211,35 +241,37 @@
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>How much books do you have?</li>
-      <li>I need an advice.</li>
-      <li>There are much people here.</li>
-      <li>She has few furnitures in her flat.</li>
-      <li>He gave me many informations.</li>
-      <li>We don't have many time.</li>
+      <li>How much books do you have? <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>I need an advice. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>There are much people here. <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>She has few furnitures in her flat. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>He gave me many informations. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>We don't have many time. <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Choose few/a few or little/a little.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I have ______ friends here, so I feel lonely. <em>(negative)</em></li>
-      <li>She has ______ money saved, enough for the trip. <em>(positive)</em></li>
-      <li>There's ______ hope left for the project. <em>(negative)</em></li>
-      <li>We have ______ questions to ask you. <em>(positive)</em></li>
-      <li>He speaks ______ English, but he's learning. <em>(positive)</em></li>
+      <li>I have <input class="iq-input" id="ex8-1"> friends here, so I feel lonely. <em>(negative)</em></li>
+      <li>She has <input class="iq-input" id="ex8-2"> money saved, enough for the trip. <em>(positive)</em></li>
+      <li>There's <input class="iq-input" id="ex8-3"> hope left for the project. <em>(negative)</em></li>
+      <li>We have <input class="iq-input" id="ex8-4"> questions to ask you. <em>(positive)</em></li>
+      <li>He speaks <input class="iq-input" id="ex8-5"> English, but he's learning. <em>(positive)</em></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: choose the correct quantifier or unit.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Can I have a ___ of advice? a) piece&nbsp; b) bit of advices</li>
-      <li>She has ___ furniture in her new flat. a) a few&nbsp; b) a lot of</li>
-      <li>There's ___ traffic today. a) many&nbsp; b) a lot of</li>
-      <li>He drank a ___ of water. a) glass&nbsp; b) piece</li>
-      <li>We received ___ good news. a) a&nbsp; b) some</li>
-      <li>How ___ luggage do you have? a) much&nbsp; b) many</li>
+      <li>Can I have a ___ of advice? <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) piece</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) bit of advices</button></span></li>
+      <li>She has ___ furniture in her new flat. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) a few</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) a lot of</button></span></li>
+      <li>There's ___ traffic today. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) many</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) a lot of</button></span></li>
+      <li>He drank a ___ of water. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) glass</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) piece</button></span></li>
+      <li>We received ___ good news. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) a</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) some</button></span></li>
+      <li>How ___ luggage do you have? <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) much</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) many</button></span></li>
     </ol>
   </div>
 
@@ -250,33 +282,31 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">The charity received a great deal of support this year, including several pieces of equipment donated by local businesses and a considerable amount of money raised through fundraising events. However, organisers admitted there was still little awareness of the cause among younger audiences, and a few volunteers noted that more outreach was needed to reach that demographic.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The charity received a lot of support. ___</li>
-      <li>Businesses donated pieces of equipment. ___</li>
-      <li>There was strong awareness among younger audiences. ___</li>
-      <li>Some volunteers wanted more outreach. ___</li>
-      <li>The organisers raised a considerable amount of money. ___</li>
+      <li>The charity received a lot of support. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Businesses donated pieces of equipment. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>There was strong awareness among younger audiences. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Some volunteers wanted more outreach. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The organisers raised a considerable amount of money. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The company received a numerous feedback from clients.</li>
-      <li>There were a large amount of people at the rally.</li>
-      <li>She has less problems than before.</li>
-      <li>He offered several advices during the meeting.</li>
-      <li>They have fewer money than they expected.</li>
-      <li>A great deal of efforts went into the project.</li>
+      <li>The company received a numerous feedback from clients. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>There were a large amount of people at the rally. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>She has less problems than before. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>He offered several advices during the meeting. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>They have fewer money than they expected. <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>A great deal of efforts went into the project. <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write 5–7 sentences describing what's in your kitchen or fridge, using a mix of <strong>countable and uncountable nouns</strong> with appropriate quantifiers (some, a lot of, a few, a little, a piece of).</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <!-- ===== C1 ===== -->
@@ -285,35 +315,37 @@
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal register, keeping quantifiers correct.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>We got tons of feedback from customers.</li>
-      <li>There's a bunch of stuff we still need to figure out.</li>
-      <li>They put loads of effort into the launch.</li>
-      <li>We don't have a ton of time left.</li>
-      <li>There was hardly any info available.</li>
+      <li>We got tons of feedback from customers. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>There's a bunch of stuff we still need to figure out. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>They put loads of effort into the launch. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>We don't have a ton of time left. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>There was hardly any info available. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: choose the correct formal quantifier.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The proposal received ___ support from the board. a) considerable&nbsp; b) many</li>
-      <li>___ evidence points to the same conclusion. a) A number of&nbsp; b) A great deal of</li>
-      <li>Only ___ candidates met the requirements. a) a handful of&nbsp; b) a little</li>
-      <li>The report offers ___ insight into the issue. a) few&nbsp; b) valuable</li>
-      <li>There has been ___ progress this quarter. a) considerable&nbsp; b) many</li>
-      <li>The team faced ___ challenges during the rollout. a) numerous&nbsp; b) much</li>
+      <li>The proposal received ___ support from the board. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) considerable</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) many</button></span></li>
+      <li>___ evidence points to the same conclusion. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) A number of</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) A great deal of</button></span></li>
+      <li>Only ___ candidates met the requirements. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) a handful of</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a little</button></span></li>
+      <li>The report offers ___ insight into the issue. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) few</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) valuable</button></span></li>
+      <li>There has been ___ progress this quarter. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) considerable</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) many</button></span></li>
+      <li>The team faced ___ challenges during the rollout. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) numerous</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) much</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>A considerable amounts of resources were wasted.</li>
-      <li>There is a fewer opportunities than expected this year.</li>
-      <li>The board received numerous advice from consultants.</li>
-      <li>Much efforts have gone into resolving the issue.</li>
-      <li>A large quantity of feedbacks were collected.</li>
+      <li>A considerable amounts of resources were wasted. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>There is a fewer opportunities than expected this year. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>The board received numerous advice from consultants. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>Much efforts have gone into resolving the issue. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>A large quantity of feedbacks were collected. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <!-- ===== C2 ===== -->
@@ -322,33 +354,31 @@
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal report summary on resource allocation for a project, using precise quantifiers (a considerable amount of, numerous, a handful of, negligible).</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>considerable / raised / concerns / a / amount / of / were</li>
-      <li>candidates / handful / qualified / a / of / applied / only</li>
-      <li>negligible / effect / had / policy / a / the</li>
-      <li>numerous / studies / conclusion / support / the</li>
-      <li>substantial / made / progress / was / this / quarter</li>
+      <li>considerable / raised / concerns / a / amount / of / were <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>candidates / handful / qualified / a / of / applied / only <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>negligible / effect / had / policy / a / the <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>numerous / studies / conclusion / support / the <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>substantial / made / progress / was / this / quarter <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>A negligible amounts of waste was produced.</li>
-      <li>Numerous evidence was presented at the trial.</li>
-      <li>A considerable number of funding was allocated.</li>
-      <li>Fewer information was available than anticipated.</li>
-      <li>A substantial amount of resources was misused, according to few reports.</li>
+      <li>A negligible amounts of waste was produced. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>Numerous evidence was presented at the trial. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>A considerable number of funding was allocated. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>Fewer information was available than anticipated. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>A substantial amount of resources was misused, according to few reports. <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <!-- ============ ANSWER KEY ============ -->
@@ -416,6 +446,128 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* ── Interactive exercises ── */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['some'] },
+    { accept: ['any'] },
+    { accept: ['any'] },
+    { accept: ['some'] },
+    { accept: ['any'] },
+    { accept: ['any'] }
+  ]},
+  ex5: { type: 'exact', items: [
+    { accept: ['many'] },
+    { accept: ['much'] },
+    { accept: ['many'] },
+    { accept: ['much'] },
+    { accept: ['many'] },
+    { accept: ['much'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['how much time do you need'] },
+    { accept: ['she bought a loaf of bread'] },
+    { accept: ['he has a few friends'] },
+    { accept: ["there isn't any milk", 'there is not any milk'] },
+    { accept: ['she has a lot of money'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['how many books do you have'] },
+    { accept: ['i need some advice', 'i need a piece of advice'] },
+    { accept: ['there are many people here', 'there are a lot of people here'] },
+    { accept: ['little furniture'] },
+    { accept: ['a lot of information'] },
+    { accept: ["we don't have much time", 'we do not have much time'] }
+  ]},
+  ex8: { type: 'exact', items: [
+    { accept: ['few'] },
+    { accept: ['a little'] },
+    { accept: ['little'] },
+    { accept: ['a few'] },
+    { accept: ['a little'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['numerous feedback'] },
+    { accept: ['a large number of people'] },
+    { accept: ['fewer problems'] },
+    { accept: ['several pieces of advice'] },
+    { accept: ['less money than they expected'] },
+    { accept: ['a great deal of effort went into the project'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['a great deal of feedback'] },
+    { accept: ['several matters we still need to resolve'] },
+    { accept: ['considerable effort into the launch'] },
+    { accept: ["we don't have a great deal of time left", 'we do not have a great deal of time left'] },
+    { accept: ['very little information available'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['a considerable amount of resources'] },
+    { accept: ['fewer opportunities than expected'] },
+    { accept: ['numerous pieces of advice'] },
+    { accept: ['much effort has gone into resolving the issue'] },
+    { accept: ['a large quantity of feedback was collected'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['a considerable number of concerns were raised'] },
+    { accept: ['only a handful of qualified candidates applied'] },
+    { accept: ['the policy had a negligible effect'] },
+    { accept: ['numerous studies support the conclusion'] },
+    { accept: ['substantial progress was made this quarter'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['a negligible amount of waste was produced'] },
+    { accept: ['substantial evidence was presented at the trial'] },
+    { accept: ['a considerable amount of funding was allocated'] },
+    { accept: ['less information was available than anticipated'] },
+    { accept: ['a few reports'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>
