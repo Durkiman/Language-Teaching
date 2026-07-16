@@ -5,6 +5,10 @@
     "goals": {
       "primary": [
         "A2-13"
+      ],
+      "incidental": [
+        "A2-10",
+        "A2-11"
       ]
     }
   },
