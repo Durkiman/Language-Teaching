@@ -9,6 +9,34 @@
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
     @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
+
   </style>
 </head>
 <body>
@@ -73,34 +101,35 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct question.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li><strong>(Do you like / You like)</strong> coffee?</li>
-      <li><strong>(What is / What's)</strong> your name?</li>
-      <li><strong>(Where you live / Where do you live)</strong>?</li>
-      <li><strong>(Is she / She is)</strong> a teacher?</li>
-      <li><strong>(How old you are / How old are you)</strong>?</li>
-      <li><strong>(Does he plays / Does he play)</strong> football?</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">Do you like</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">You like</button></span> coffee?</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">What is</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">What's</button></span> your name?</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">Where you live</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">Where do you live</button></span>?</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">Is she</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">She is</button></span> a teacher?</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">How old you are</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">How old are you</button></span>?</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">Does he plays</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">Does he play</button></span> football?</li>
     </ol>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each question word (1–5) to what it asks about (a–e).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. Who</div><div>a. place</div>
-      <div>2. What</div><div>b. person</div>
-      <div>3. Where</div><div>c. thing</div>
-      <div>4. When</div><div>d. time</div>
-      <div>5. Why</div><div>e. reason</div>
+      <div>1. Who <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>a. place</div>
+      <div>2. What <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>b. person</div>
+      <div>3. Where <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>c. thing</div>
+      <div>4. When <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>d. time</div>
+      <div>5. Why <select class="iq-select" onchange="checkSelect(this,'e')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>e. reason</div>
     </div>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank with the correct question word.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>______ is your name?</li>
-      <li>______ do you live?</li>
-      <li>______ old are you?</li>
-      <li>______ is your birthday?</li>
-      <li>______ do you like pizza?</li>
-      <li>______ is your favourite colour?</li>
+      <li><input class="iq-input" id="ex3-1"> is your name?</li>
+      <li><input class="iq-input" id="ex3-2"> do you live?</li>
+      <li><input class="iq-input" id="ex3-3"> old are you?</li>
+      <li><input class="iq-input" id="ex3-4"> is your birthday?</li>
+      <li><input class="iq-input" id="ex3-5"> do you like pizza?</li>
+      <li><input class="iq-input" id="ex3-6"> is your favourite colour?</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
@@ -108,64 +137,68 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Interviewer: Where were you born? Anna: I was born in Madrid. Interviewer: What do you do for work? Anna: I'm a translator. Interviewer: Do you enjoy your job? Anna: Yes, I love it. Interviewer: How long have you been doing this? Anna: For about six years.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Anna was born in Madrid. ___</li>
-      <li>Anna is a teacher. ___</li>
-      <li>Anna doesn't enjoy her job. ___</li>
-      <li>Anna has worked as a translator for six years. ___</li>
-      <li>The interviewer asked five questions. ___</li>
+      <li>Anna was born in Madrid. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Anna is a teacher. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Anna doesn't enjoy her job. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Anna has worked as a translator for six years. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The interviewer asked five questions. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write negative questions (1–2) and questions for the given answers (3–4).</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>______ you ______ (not/like) coffee?</li>
-      <li>______ she ______ (not/coming) to the party?</li>
-      <li>Answer: "I live in Paris." → Question: ______________________</li>
-      <li>Answer: "She is 25 years old." → Question: ______________________</li>
+      <li><input class="iq-input" id="ex5-1" style="min-width:70px;"> you <input class="iq-input" id="ex5-2" style="min-width:70px;"> (not/like) coffee?</li>
+      <li><input class="iq-input" id="ex5-3" style="min-width:70px;"> she <input class="iq-input" id="ex5-4" style="min-width:70px;"> (not/coming) to the party?</li>
+      <li>Answer: "I live in Paris." → Question: <input class="iq-input iq-input-wide" id="ex5-5" placeholder="write the question…"></li>
+      <li>Answer: "She is 25 years old." → Question: <input class="iq-input iq-input-wide" id="ex5-6" placeholder="write the question…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct questions.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>name / your / what / is</li>
-      <li>from / where / you / are</li>
-      <li>you / do / like / coffee</li>
-      <li>old / how / you / are</li>
-      <li>she / a / teacher / is</li>
+      <li>name / your / what / is <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>from / where / you / are <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>you / do / like / coffee <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>old / how / you / are <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>she / a / teacher / is <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>What you are doing?</li>
-      <li>Where you live?</li>
-      <li>Who did call you?</li>
-      <li>How much money you have?</li>
-      <li>She is a teacher, isn't it?</li>
-      <li>What time is starts the movie?</li>
+      <li>What you are doing? <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>Where you live? <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>Who did call you? <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>How much money you have? <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>She is a teacher, isn't it? <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>What time is starts the movie? <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Turn each statement into a question as instructed.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She works at a hospital. <em>(yes/no question)</em></li>
-      <li>They arrived yesterday. <em>(wh-question about time)</em></li>
-      <li>Tom called Lisa. <em>(subject question)</em></li>
-      <li>He is reading a book. <em>(wh-question about the object)</em></li>
-      <li>The train leaves at 6. <em>(tag question)</em></li>
+      <li>She works at a hospital. <em>(yes/no question)</em> <input class="iq-input iq-input-wide" id="ex8-1" placeholder="rewrite…"></li>
+      <li>They arrived yesterday. <em>(wh-question about time)</em> <input class="iq-input iq-input-wide" id="ex8-2" placeholder="rewrite…"></li>
+      <li>Tom called Lisa. <em>(subject question)</em> <input class="iq-input iq-input-wide" id="ex8-3" placeholder="rewrite…"></li>
+      <li>He is reading a book. <em>(wh-question about the object)</em> <input class="iq-input iq-input-wide" id="ex8-4" placeholder="rewrite…"></li>
+      <li>The train leaves at 6. <em>(tag question)</em> <input class="iq-input iq-input-wide" id="ex8-5" placeholder="rewrite…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: subject vs object questions.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"___ broke the window?" a) Who&nbsp; b) Whom</li>
-      <li>"___ did you call?" a) Who&nbsp; b) Whom</li>
-      <li>Which needs "did"? a) "Who called you?"&nbsp; b) "Who did you call?"</li>
-      <li>Subject question about "Someone ate the cake": a) Who ate the cake?&nbsp; b) Who did eat the cake?</li>
-      <li>"How many students ___ in the class?" a) are there&nbsp; b) there are</li>
-      <li>Indirect question: "Do you know ___ she lives?" a) where&nbsp; b) where does</li>
+      <li>"___ broke the window?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) Who</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) Whom</button></span></li>
+      <li>"___ did you call?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) Who</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) Whom</button></span></li>
+      <li>Which needs "did"? <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) "Who called you?"</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) "Who did you call?"</button></span></li>
+      <li>Subject question about "Someone ate the cake": <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) Who ate the cake?</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) Who did eat the cake?</button></span></li>
+      <li>"How many students ___ in the class?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) are there</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) there are</button></span></li>
+      <li>Indirect question: "Do you know ___ she lives?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) where</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) where does</button></span></li>
     </ol>
   </div>
 
@@ -174,95 +207,93 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">During the panel discussion, the moderator asked several probing questions, including why the policy had taken so long to implement and who, ultimately, would be held accountable if it failed. One panelist, visibly uncomfortable, asked whether the moderator could clarify what exactly "accountability" meant in this context. Another audience member wanted to know how the new measures would differ from previous attempts, and whether any independent body would be monitoring compliance.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The moderator asked why the policy took so long to implement. ___</li>
-      <li>Nobody asked about accountability. ___</li>
-      <li>A panelist requested clarification on a term used. ___</li>
-      <li>An audience member asked about independent monitoring. ___</li>
-      <li>The audience member's question was about differences from previous attempts. ___</li>
+      <li>The moderator asked why the policy took so long to implement. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Nobody asked about accountability. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>A panelist requested clarification on a term used. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>An audience member asked about independent monitoring. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The audience member's question was about differences from previous attempts. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Do you know where does she live?</li>
-      <li>I wonder what is the time.</li>
-      <li>Can you tell me how much does it cost?</li>
-      <li>She asked me where did I go.</li>
-      <li>I'm not sure who is he.</li>
-      <li>Do you know what time does the shop close?</li>
+      <li>Do you know where does she live? <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>I wonder what is the time. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>Can you tell me how much does it cost? <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>She asked me where did I go. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>I'm not sure who is he. <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>Do you know what time does the shop close? <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write an interview (5–7 questions with plausible answers) about someone's career. Mix <strong>yes/no, wh-, subject,</strong> and <strong>indirect</strong> questions.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each question in a more formal register.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>So, what's the deal with the new policy?</li>
-      <li>Why'd they scrap the whole plan?</li>
-      <li>Who's gonna be in charge of this?</li>
-      <li>What's up with the delay?</li>
-      <li>D'you reckon it'll work?</li>
+      <li>So, what's the deal with the new policy? <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>Why'd they scrap the whole plan? <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>Who's gonna be in charge of this? <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>What's up with the delay? <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>D'you reckon it'll work? <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: what does this question type express?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"Isn't that exactly what we predicted?" a) surprise/a rhetorical point, not real doubt&nbsp; b) genuine uncertainty</li>
-      <li>"You do realize the risks, don't you?" a) seeks confirmation of something believed true&nbsp; b) a genuine yes/no question</li>
-      <li>"Why on earth would anyone agree to that?" a) rhetorical disbelief&nbsp; b) a literal request for a reason</li>
-      <li>"Could I possibly trouble you for a moment?" a) formal and deferential&nbsp; b) blunt</li>
-      <li>"Isn't it wonderful?" a) invites agreement&nbsp; b) expresses doubt</li>
-      <li>"Who would have thought?" a) rhetorical surprise&nbsp; b) a real request for an answer</li>
+      <li>"Isn't that exactly what we predicted?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) surprise/a rhetorical point, not real doubt</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) genuine uncertainty</button></span></li>
+      <li>"You do realize the risks, don't you?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) seeks confirmation of something believed true</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a genuine yes/no question</button></span></li>
+      <li>"Why on earth would anyone agree to that?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) rhetorical disbelief</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a literal request for a reason</button></span></li>
+      <li>"Could I possibly trouble you for a moment?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) formal and deferential</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) blunt</button></span></li>
+      <li>"Isn't it wonderful?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) invites agreement</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) expresses doubt</button></span></li>
+      <li>"Who would have thought?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) rhetorical surprise</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a real request for an answer</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She asked me did I want to come.</li>
-      <li>I wonder why does he always arrive late.</li>
-      <li>Could you tell me what time does the train leave?</li>
-      <li>He asked her where was she going.</li>
-      <li>Do you know how much does the ticket costs?</li>
+      <li>She asked me did I want to come. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>I wonder why does he always arrive late. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>Could you tell me what time does the train leave? <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>He asked her where was she going. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>Do you know how much does the ticket costs? <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write 5–6 formal interview questions for a professional context (e.g. a journalist interviewing an executive). Mix <strong>direct, indirect,</strong> and <strong>rhetorical</strong> questions, in a formal register.</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex questions.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>rationale / clarify / policy / new / could / behind / the / you</li>
-      <li>overseeing / responsible / this / who / be / will / for</li>
-      <li>delay / explain / could / cause / the / of / the / you</li>
-      <li>effective / believe / approach / you / this / do / be / will</li>
-      <li>discontinued / reason / plan / what / the / was / for</li>
+      <li>rationale / clarify / policy / new / could / behind / the / you <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>overseeing / responsible / this / who / be / will / for <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>delay / explain / could / cause / the / of / the / you <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>effective / believe / approach / you / this / do / be / will <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>discontinued / reason / plan / what / the / was / for <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I wonder could you help me with this.</li>
-      <li>She asked whether does he agree.</li>
-      <li>Isn't obvious that we need change?</li>
-      <li>Who would have think that?</li>
-      <li>Could you tell me is the store still open?</li>
+      <li>I wonder could you help me with this. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>She asked whether does he agree. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>Isn't obvious that we need change? <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>Who would have think that? <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>Could you tell me is the store still open? <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
@@ -322,6 +353,128 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* -- Interactive exercises -- */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['what'] },
+    { accept: ['where'] },
+    { accept: ['how'] },
+    { accept: ['when'] },
+    { accept: ['why'] },
+    { accept: ['what'] }
+  ]},
+  ex5: { type: 'lenient', items: [
+    { accept: ["don't", 'do not'] },
+    { accept: ['like'] },
+    { accept: ["isn't", 'is not'] },
+    { accept: ['coming'] },
+    { accept: ['where do you live'] },
+    { accept: ['how old is she'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['what is your name'] },
+    { accept: ['where are you from'] },
+    { accept: ['do you like coffee'] },
+    { accept: ['how old are you'] },
+    { accept: ['is she a teacher'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['what are you doing'] },
+    { accept: ['where do you live'] },
+    { accept: ['who called you'] },
+    { accept: ['how much money do you have'] },
+    { accept: ["isn't she", 'isnt she'] },
+    { accept: ['what time does the movie start'] }
+  ]},
+  ex8: { type: 'lenient', items: [
+    { accept: ['does she work at a hospital'] },
+    { accept: ['when did they arrive'] },
+    { accept: ['who called lisa'] },
+    { accept: ['what is he reading'] },
+    { accept: ["doesn't it", 'doesnt it'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['where she lives'] },
+    { accept: ['what the time is'] },
+    { accept: ['how much it costs'] },
+    { accept: ['where i went'] },
+    { accept: ['who he is'] },
+    { accept: ['what time the shop closes'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['clarify the rationale'] },
+    { accept: ['for what reason was the plan discontinued'] },
+    { accept: ['who will be responsible for overseeing'] },
+    { accept: ['explain the cause of the delay'] },
+    { accept: ['do you believe this approach will be effective'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['whether i wanted to come', 'if i wanted to come'] },
+    { accept: ['why he always arrives late'] },
+    { accept: ['what time the train leaves'] },
+    { accept: ['where she was going'] },
+    { accept: ['how much the ticket costs'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['could you clarify the rationale behind the new policy'] },
+    { accept: ['who will be responsible for overseeing this'] },
+    { accept: ['could you explain the cause of the delay'] },
+    { accept: ['do you believe this approach will be effective'] },
+    { accept: ['for what reason was the plan discontinued'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['whether you could help me with this'] },
+    { accept: ['whether he agreed'] },
+    { accept: ["isn't it obvious", 'isnt it obvious'] },
+    { accept: ['would have thought that'] },
+    { accept: ['whether the store is still open'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

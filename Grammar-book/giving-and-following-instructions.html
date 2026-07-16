@@ -9,6 +9,34 @@
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
     @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
+
   </style>
 </head>
 <body>
@@ -78,31 +106,32 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: which instruction is clearer?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>a) "You should maybe open your books if you want."&nbsp; b) "Open your books."</li>
-      <li>a) "Write your name at the top."&nbsp; b) "Would it be possible to consider writing your name?"</li>
-      <li>a) "Circle the correct answer."&nbsp; b) "Can you try to circle, if possible, the answer that seems correct?"</li>
-      <li>a) "First read, then answer."&nbsp; b) "Read and maybe answer whenever."</li>
-      <li>a) "Work with a partner."&nbsp; b) "You could work with a partner, or not, it's up to you."</li>
-      <li>a) "Listen and repeat."&nbsp; b) "Listen, and, um, try to repeat, if you can."</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) "You should maybe open your books if you want."</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) "Open your books."</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) "Write your name at the top."</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) "Would it be possible to consider writing your name?"</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) "Circle the correct answer."</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) "Can you try to circle, if possible, the answer that seems correct?"</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) "First read, then answer."</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) "Read and maybe answer whenever."</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) "Work with a partner."</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) "You could work with a partner, or not, it's up to you."</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) "Listen and repeat."</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) "Listen, and, um, try to repeat, if you can."</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each verb (1–4) to its typical task (a–d).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. Circle</div><div>a. the missing word</div>
-      <div>2. Underline</div><div>b. the correct answer</div>
-      <div>3. Match</div><div>c. the key words</div>
-      <div>4. Fill in</div><div>d. column A to column B</div>
+      <div>1. Circle <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>a. the missing word</div>
+      <div>2. Underline <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>b. the correct answer</div>
+      <div>3. Match <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>c. the key words</div>
+      <div>4. Fill in <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>d. column A to column B</div>
     </div>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank with the correct sequencing word.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>______, read the text.</li>
-      <li>______, answer the questions.</li>
-      <li>______, check your answers with a partner.</li>
-      <li>______, we'll discuss the answers together.</li>
+      <li><input class="iq-input" id="ex3-1">, read the text.</li>
+      <li><input class="iq-input" id="ex3-2">, answer the questions.</li>
+      <li><input class="iq-input" id="ex3-3">, check your answers with a partner.</li>
+      <li><input class="iq-input" id="ex3-4">, we'll discuss the answers together.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
@@ -110,63 +139,67 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">The teacher gave clear instructions: "First, open your books to page 12. Then, read the short text silently. After that, work with a partner and answer the three questions together. Finally, we will check the answers as a class." Before starting, she asked, "Are you working alone or with a partner?" A student answered, "With a partner!"</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Students opened their books to page 12 first. ___</li>
-      <li>Students read the text aloud together. ___</li>
-      <li>Students worked alone the whole time. ___</li>
-      <li>The teacher checked understanding with an ICQ before starting. ___</li>
-      <li>The class checked the answers together at the end. ___</li>
+      <li>Students opened their books to page 12 first. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Students read the text aloud together. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Students worked alone the whole time. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The teacher checked understanding with an ICQ before starting. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The class checked the answers together at the end. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write the missing ICQ for each situation.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Task: pair work. ICQ: "Are you working ______ or ______?"</li>
-      <li>Task: 10-minute writing task. ICQ: "How ______ minutes do you have?"</li>
-      <li>Task: written answers. ICQ: "Do you write or ______ your answers?"</li>
+      <li>Task: pair work. ICQ: "Are you working <input class="iq-input" id="ex5-1"> or <input class="iq-input" id="ex5-2">?"</li>
+      <li>Task: 10-minute writing task. ICQ: "How <input class="iq-input" id="ex5-3"> minutes do you have?"</li>
+      <li>Task: written answers. ICQ: "Do you write or <input class="iq-input" id="ex5-4"> your answers?"</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct instructions.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>partner / a / with / work</li>
-      <li>page / open / 12 / to / your / book</li>
-      <li>minutes / many / have / how / you / do</li>
-      <li>or / partner / alone / working / a / with / you / are</li>
-      <li>text / silently / read / the</li>
+      <li>partner / a / with / work <input class="iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>page / open / 12 / to / your / book <input class="iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>minutes / many / have / how / you / do <input class="iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>or / partner / alone / working / a / with / you / are <input class="iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>text / silently / read / the <input class="iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Rewrite each vague or overloaded instruction clearly.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"Maybe you could possibly try to open your books if that's OK."</li>
-      <li>"So basically what I want you to do is kind of read the text and then also maybe answer the questions and discuss."</li>
-      <li>"Do you understand what to do?" <em>(as an ICQ)</em></li>
-      <li>"You have some time, not too long, to finish this."</li>
-      <li>"Write, or maybe just think about, your answer."</li>
-      <li>"Everyone got it?"</li>
+      <li>"Maybe you could possibly try to open your books if that's OK." <input class="iq-input-wide" id="ex7-1" placeholder="rewrite clearly…"></li>
+      <li>"So basically what I want you to do is kind of read the text and then also maybe answer the questions and discuss." <input class="iq-input-wide" id="ex7-2" placeholder="rewrite clearly…"></li>
+      <li>"Do you understand what to do?" <em>(as an ICQ)</em> <input class="iq-input-wide" id="ex7-3" placeholder="rewrite clearly…"></li>
+      <li>"You have some time, not too long, to finish this." <input class="iq-input-wide" id="ex7-4" placeholder="rewrite clearly…"></li>
+      <li>"Write, or maybe just think about, your answer." <input class="iq-input-wide" id="ex7-5" placeholder="rewrite clearly…"></li>
+      <li>"Everyone got it?" <input class="iq-input-wide" id="ex7-6" placeholder="rewrite clearly…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Rewrite each vague instruction as a clear, sequenced instruction.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"Do the reading and questions and then talk about it with someone."</li>
-      <li>"Write something about your weekend, not too short."</li>
-      <li>"Look at the pictures and stuff and guess the story."</li>
-      <li>"You can check with someone if you want, or not."</li>
-      <li>"Finish whenever, no rush really."</li>
+      <li>"Do the reading and questions and then talk about it with someone." <input class="iq-input-wide" id="ex8-1" placeholder="rewrite clearly…"></li>
+      <li>"Write something about your weekend, not too short." <input class="iq-input-wide" id="ex8-2" placeholder="rewrite clearly…"></li>
+      <li>"Look at the pictures and stuff and guess the story." <input class="iq-input-wide" id="ex8-3" placeholder="rewrite clearly…"></li>
+      <li>"You can check with someone if you want, or not." <input class="iq-input-wide" id="ex8-4" placeholder="rewrite clearly…"></li>
+      <li>"Finish whenever, no rush really." <input class="iq-input-wide" id="ex8-5" placeholder="rewrite clearly…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: choose the appropriate ICQ for the task.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Task: listen to audio, take notes. a) "Do you write or just listen?"&nbsp; b) "Do you understand?"</li>
-      <li>Task: group work of 4. a) "How many people are in each group?"&nbsp; b) "Is it clear?"</li>
-      <li>Task: 5-minute time limit. a) "How much time do you have?"&nbsp; b) "Enough time?"</li>
-      <li>Task: answers in full sentences. a) "Do you write single words or full sentences?"&nbsp; b) "Got it?"</li>
-      <li>Task: homework due next class. a) "When is this due?"&nbsp; b) "Understand?"</li>
-      <li>Task: individual, silent work. a) "Are you working alone or in pairs?"&nbsp; b) "OK?"</li>
+      <li>Task: listen to audio, take notes. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) "Do you write or just listen?"</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) "Do you understand?"</button></span></li>
+      <li>Task: group work of 4. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) "How many people are in each group?"</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) "Is it clear?"</button></span></li>
+      <li>Task: 5-minute time limit. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) "How much time do you have?"</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) "Enough time?"</button></span></li>
+      <li>Task: answers in full sentences. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) "Do you write single words or full sentences?"</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) "Got it?"</button></span></li>
+      <li>Task: homework due next class. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) "When is this due?"</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) "Understand?"</button></span></li>
+      <li>Task: individual, silent work. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) "Are you working alone or in pairs?"</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) "OK?"</button></span></li>
     </ol>
   </div>
 
@@ -175,95 +208,93 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Poorly given instructions are one of the most common causes of confusion in both classrooms and workplaces. A supervisor who says, "Just sort out the filing system sometime, whenever you get a chance," leaves too much ambiguity: what counts as "sorted," and by when? Clear instructions specify the task, the sequence, the format, and the deadline, and are followed by a specific check — not a vague "Does everyone understand?", which tends to produce silence or automatic nodding regardless of actual comprehension.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Poor instructions are rare in workplaces. ___</li>
-      <li>The filing example leaves the deadline unclear. ___</li>
-      <li>Clear instructions specify task, sequence, format, and deadline. ___</li>
-      <li>"Does everyone understand?" reliably reveals confusion. ___</li>
-      <li>Vague checks often produce automatic nodding. ___</li>
+      <li>Poor instructions are rare in workplaces. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The filing example leaves the deadline unclear. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Clear instructions specify task, sequence, format, and deadline. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>"Does everyone understand?" reliably reveals confusion. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Vague checks often produce automatic nodding. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Rewrite each instruction to remove hidden ambiguity.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"Finish the report soon."</li>
-      <li>"Talk to your partner about it."</li>
-      <li>"Send it to the usual people."</li>
-      <li>"Do the exercise the way we discussed."</li>
-      <li>"Let me know if there's an issue."</li>
-      <li>"We'll do this again later."</li>
+      <li>"Finish the report soon." <input class="iq-input-wide" id="ex11-1" placeholder="rewrite clearly…"></li>
+      <li>"Talk to your partner about it." <input class="iq-input-wide" id="ex11-2" placeholder="rewrite clearly…"></li>
+      <li>"Send it to the usual people." <input class="iq-input-wide" id="ex11-3" placeholder="rewrite clearly…"></li>
+      <li>"Do the exercise the way we discussed." <input class="iq-input-wide" id="ex11-4" placeholder="rewrite clearly…"></li>
+      <li>"Let me know if there's an issue." <input class="iq-input-wide" id="ex11-5" placeholder="rewrite clearly…"></li>
+      <li>"We'll do this again later." <input class="iq-input-wide" id="ex11-6" placeholder="rewrite clearly…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write a full, clear set of instructions (5–7 steps) for a task of your choice (a recipe, a classroom activity, a workplace process), including <strong>at least 2 ICQs</strong> you'd ask before starting.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each casual workplace instruction in a formal register.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"Just get this done whenever, no biggie."</li>
-      <li>"Send it over to whoever needs it."</li>
-      <li>"Basically just wing it if you're not sure."</li>
-      <li>"Loop me in if anything comes up."</li>
-      <li>"Just double check it before it goes out."</li>
+      <li>"Just get this done whenever, no biggie." <input class="iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>"Send it over to whoever needs it." <input class="iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>"Basically just wing it if you're not sure." <input class="iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>"Loop me in if anything comes up." <input class="iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>"Just double check it before it goes out." <input class="iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: identify the concept.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>A question confirming HOW to do a task is a(n): a) ICQ&nbsp; b) CCQ</li>
-      <li>A question confirming understanding of a word or grammar point is a(n): a) CCQ&nbsp; b) ICQ</li>
-      <li>"First..., then..., finally..." is an example of: a) explicit sequencing language&nbsp; b) implicit sequencing</li>
-      <li>Asking "Any questions?" then immediately moving on is often: a) a redundant, low-value check&nbsp; b) a thorough check</li>
-      <li>Instructions with unstated deadlines commonly lead to: a) ambiguity and missed expectations&nbsp; b) greater efficiency</li>
-      <li>Demonstrating a task before students begin helps: a) reduce the need for lengthy verbal instructions&nbsp; b) replace ICQs entirely</li>
+      <li>A question confirming HOW to do a task is a(n): <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) ICQ</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) CCQ</button></span></li>
+      <li>A question confirming understanding of a word or grammar point is a(n): <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) CCQ</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) ICQ</button></span></li>
+      <li>"First..., then..., finally..." is an example of: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) explicit sequencing language</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) implicit sequencing</button></span></li>
+      <li>Asking "Any questions?" then immediately moving on is often: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) a redundant, low-value check</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a thorough check</button></span></li>
+      <li>Instructions with unstated deadlines commonly lead to: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) ambiguity and missed expectations</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) greater efficiency</button></span></li>
+      <li>Demonstrating a task before students begin helps: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) reduce the need for lengthy verbal instructions</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) replace ICQs entirely</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"Once everyone understand, we can begin the task, right?"</li>
-      <li>"Are you working individual or in a group?"</li>
-      <li>"How much time you have for complete this?"</li>
-      <li>"Please to submit the report by Friday."</li>
-      <li>"Make sure everyone understanding the deadline."</li>
+      <li>"Once everyone understand, we can begin the task, right?" <input class="iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>"Are you working individual or in a group?" <input class="iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>"How much time you have for complete this?" <input class="iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>"Please to submit the report by Friday." <input class="iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>"Make sure everyone understanding the deadline." <input class="iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal set of instructions for a multi-step professional process (e.g. onboarding, incident reporting). Include sequencing language and <strong>at least 2 ICQs</strong> appropriate to a formal context.</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex instructions.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>earliest / convenience / this / please / complete / at / your</li>
-      <li>stakeholders / relevant / forward / please / to / the / this</li>
-      <li>judgement / best / please / use / your</li>
-      <li>developments / any / informed / keep / please / of / me</li>
-      <li>distribution / prior / verify / please / the / document / to</li>
+      <li>earliest / convenience / this / please / complete / at / your <input class="iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>stakeholders / relevant / forward / please / to / the / this <input class="iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>judgement / best / please / use / your <input class="iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>developments / any / informed / keep / please / of / me <input class="iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>distribution / prior / verify / please / the / document / to <input class="iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"Please to confirm your attendance by Friday."</li>
-      <li>"Make sure that everyone is understand the process."</li>
-      <li>"Kindly to submit your report on time."</li>
-      <li>"Are you working individual today?"</li>
-      <li>"Let me know if any questions arise, ok?"</li>
+      <li>"Please to confirm your attendance by Friday." <input class="iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>"Make sure that everyone is understand the process." <input class="iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>"Kindly to submit your report on time." <input class="iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>"Are you working individual today?" <input class="iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>"Let me know if any questions arise, ok?" <input class="iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
@@ -323,6 +354,124 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* -- Interactive exercises -- */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['first'] },
+    { accept: ['then'] },
+    { accept: ['after that'] },
+    { accept: ['finally'] }
+  ]},
+  ex5: { type: 'exact', items: [
+    { accept: ['alone'] },
+    { accept: ['with a partner'] },
+    { accept: ['many'] },
+    { accept: ['say'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['work with a partner'] },
+    { accept: ['open your book to page 12'] },
+    { accept: ['how many minutes do you have'] },
+    { accept: ['are you working alone or with a partner'] },
+    { accept: ['read the text silently'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['open your books'] },
+    { accept: ['first read the text', 'then answer the questions', 'finally discuss'] },
+    { accept: ['working in pairs or alone', 'working alone or in pairs'] },
+    { accept: ['10 minutes to finish this', 'ten minutes to finish this'] },
+    { accept: ['write your answer'] },
+    { accept: ['icq'] }
+  ]},
+  ex8: { type: 'lenient', items: [
+    { accept: ['first, read the text', 'then, answer the questions', 'finally discuss your answers with a partner'] },
+    { accept: ['at least five sentences about your weekend', 'write at least five sentences'] },
+    { accept: ['look at the pictures', 'then, guess the story'] },
+    { accept: ['check your answers with a partner'] },
+    { accept: ['15 minutes to finish this task', 'fifteen minutes to finish this task'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['finish the report by thursday at 5', 'finish the report by thursday'] },
+    { accept: ['discuss your answers to questions 1', 'discuss your answers to questions 1-3 with your partner'] },
+    { accept: ['send it to maria and the finance team'] },
+    { accept: ['complete exercise 4 using the passive voice'] },
+    { accept: ['email me by noon if you have any questions'] },
+    { accept: ["we'll repeat this exercise at the start of next class", 'we will repeat this exercise at the start of next class'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['please complete this at your earliest convenience'] },
+    { accept: ['please forward this to the relevant stakeholders'] },
+    { accept: ['please use your best judgement if the process is unclear', 'please use your best judgment if the process is unclear'] },
+    { accept: ['please keep me informed of any developments'] },
+    { accept: ['please double check it before it is sent', 'please verify it before it is sent', 'please double-check'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['everyone understands'] },
+    { accept: ['individually'] },
+    { accept: ['how much time do you have to complete this'] },
+    { accept: ['please submit the report by friday'] },
+    { accept: ['everyone understands the deadline'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['please complete this at your earliest convenience'] },
+    { accept: ['please forward this to the relevant stakeholders'] },
+    { accept: ['please use your best judgement', 'please use your best judgment'] },
+    { accept: ['please keep me informed of any developments'] },
+    { accept: ['please verify the document prior to distribution'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['please confirm your attendance by friday'] },
+    { accept: ['everyone understands the process'] },
+    { accept: ['kindly submit your report on time'] },
+    { accept: ['individually today'] },
+    { accept: ['please let me know if any questions arise'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

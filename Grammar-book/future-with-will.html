@@ -8,8 +8,33 @@
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
     @media print {
-      #answerToggleBtn { display: none !important; }
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
     }
   </style>
 </head>
@@ -110,36 +135,37 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I think it <strong>(will / wills)</strong> rain tomorrow.</li>
-      <li>She <strong>(will / won't)</strong> probably be late.</li>
-      <li>We <strong>(will / wills)</strong> see you soon.</li>
-      <li>They <strong>(won't / wont)</strong> come to the party.</li>
-      <li>He <strong>(will / is)</strong> call you later.</li>
-      <li>I <strong>(will not / will)</strong> not forget.</li>
+      <li>I think it <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">will</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">wills</button></span> rain tomorrow.</li>
+      <li>She <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">will</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">won't</button></span> probably be late.</li>
+      <li>We <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">will</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">wills</button></span> see you soon.</li>
+      <li>They <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">won't</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">wont</button></span> come to the party.</li>
+      <li>He <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">will</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">is</button></span> call you later.</li>
+      <li>I <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">will</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">will not</button></span> not forget.</li>
     </ol>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each sentence starter (1–5) to its ending (a–e).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. If it rains, ___</div><div>a. I'll always love you.</div>
-      <div>2. I promise ___</div><div>b. I'll answer it.</div>
-      <div>3. The phone is ringing, ___</div><div>c. we won't go out.</div>
-      <div>4. I think ___</div><div>d. it will be a great year.</div>
-      <div>5. Don't worry, ___</div><div>e. I'll help you.</div>
+      <div>1. If it rains, <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>a. I'll always love you.</div>
+      <div>2. I promise <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>b. I'll answer it.</div>
+      <div>3. The phone is ringing, <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>c. we won't go out.</div>
+      <div>4. I think <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>d. it will be a great year.</div>
+      <div>5. Don't worry, <select class="iq-select" onchange="checkSelect(this,'e')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>e. I'll help you.</div>
     </div>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank: complete with "will" or "won't".</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I ______ (help) you tomorrow.</li>
-      <li>She ______ (not/be) at the meeting.</li>
-      <li>______ you ______ (come) to my party?</li>
-      <li>We ______ (not/forget) this day.</li>
-      <li>He ______ (call) you when he arrives.</li>
-      <li>I ______ (not/tell) anyone your secret.</li>
+      <li>I <input class="iq-input" id="ex3-1"> (help) you tomorrow.</li>
+      <li>She <input class="iq-input" id="ex3-2"> (not/be) at the meeting.</li>
+      <li><input class="iq-input" id="ex3-3"> you <input class="iq-input" id="ex3-4"> (come) to my party?</li>
+      <li>We <input class="iq-input" id="ex3-5"> (not/forget) this day.</li>
+      <li>He <input class="iq-input" id="ex3-6"> (call) you when he arrives.</li>
+      <li>I <input class="iq-input" id="ex3-7"> (not/tell) anyone your secret.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <!-- ===== A2 ===== -->
@@ -149,35 +175,37 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Tomorrow, the weather forecast says it will be sunny in the morning but it will probably rain in the afternoon. My sister thinks the trip will be cancelled, but I don't think it will rain that hard. We will leave early just in case. I promise I will call you as soon as we arrive.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>It will be sunny all day. ___</li>
-      <li>My sister thinks the trip might be cancelled. ___</li>
-      <li>The speaker is certain it will rain hard. ___</li>
-      <li>They will leave early. ___</li>
-      <li>The speaker won't call when they arrive. ___</li>
+      <li>It will be sunny all day. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>My sister thinks the trip might be cancelled. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The speaker is certain it will rain hard. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>They will leave early. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The speaker won't call when they arrive. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write negatives (1–2, 5) and questions (3–4, 6).</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I (not/be) late tomorrow. → ______________________</li>
-      <li>She (not/forget) your birthday. → ______________________</li>
-      <li>___ you ___ (help) me move?</li>
-      <li>___ it ___ (rain) this weekend?</li>
-      <li>We (not/tell) him the truth yet. → ______________________</li>
-      <li>___ they ___ (arrive) on time?</li>
+      <li>I (not/be) late tomorrow. <input class="iq-input-wide" id="ex5-1" placeholder="rewrite…"></li>
+      <li>She (not/forget) your birthday. <input class="iq-input-wide" id="ex5-2" placeholder="rewrite…"></li>
+      <li>you (help) me move? <input class="iq-input-wide" id="ex5-3" placeholder="type the question…"></li>
+      <li>it (rain) this weekend? <input class="iq-input-wide" id="ex5-4" placeholder="type the question…"></li>
+      <li>We (not/tell) him the truth yet. <input class="iq-input-wide" id="ex5-5" placeholder="rewrite…"></li>
+      <li>they (arrive) on time? <input class="iq-input-wide" id="ex5-6" placeholder="type the question…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>will / help / I / you</li>
-      <li>probably / late / be / will / she</li>
-      <li>rain / think / it / will / I</li>
-      <li>call / will / when / you / I / arrive</li>
-      <li>forget / never / will / I / this</li>
+      <li>will / help / I / you <input class="iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>probably / late / be / will / she <input class="iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>rain / think / it / will / I <input class="iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>call / will / when / you / I / arrive <input class="iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>forget / never / will / I / this <input class="iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <!-- ===== B1 ===== -->
@@ -186,35 +214,37 @@
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I will to help you.</li>
-      <li>She wills call you later.</li>
-      <li>They won't to come.</li>
-      <li>Will you helping me?</li>
-      <li>I think it will rains tomorrow.</li>
-      <li>We willn't be late.</li>
+      <li>I will to help you. <input class="iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>She wills call you later. <input class="iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>They won't to come. <input class="iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>Will you helping me? <input class="iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>I think it will rains tomorrow. <input class="iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>We willn't be late. <input class="iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Complete each time clause with the correct present-tense verb.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>When I ______ (arrive), I will call you.</li>
-      <li>I will let you know as soon as I ______ (hear) the news.</li>
-      <li>We won't leave until she ______ (finish).</li>
-      <li>Please call me before you ______ (leave).</li>
-      <li>I'll be ready once you ______ (be) here.</li>
+      <li>When I <input class="iq-input" id="ex8-1"> (arrive), I will call you.</li>
+      <li>I will let you know as soon as I <input class="iq-input" id="ex8-2"> (hear) the news.</li>
+      <li>We won't leave until she <input class="iq-input" id="ex8-3"> (finish).</li>
+      <li>Please call me before you <input class="iq-input" id="ex8-4"> (leave).</li>
+      <li>I'll be ready once you <input class="iq-input" id="ex8-5"> (be) here.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: what does "will" express here?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"I'll carry that bag for you." a) offer&nbsp; b) prediction</li>
-      <li>"I promise I'll never lie to you." a) promise&nbsp; b) request</li>
-      <li>"Will you marry me?" a) request&nbsp; b) prediction</li>
-      <li>"Scientists believe temperatures will rise." a) prediction (opinion)&nbsp; b) promise</li>
-      <li>"I think she'll say yes." a) prediction based on opinion&nbsp; b) plan</li>
-      <li>"I will not tolerate this behaviour." a) firm decision/threat&nbsp; b) offer</li>
+      <li>"I'll carry that bag for you." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) offer</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) prediction</button></span></li>
+      <li>"I promise I'll never lie to you." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) promise</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) request</button></span></li>
+      <li>"Will you marry me?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) request</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) prediction</button></span></li>
+      <li>"Scientists believe temperatures will rise." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) prediction (opinion)</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) promise</button></span></li>
+      <li>"I think she'll say yes." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) prediction based on opinion</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) plan</button></span></li>
+      <li>"I will not tolerate this behaviour." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) firm decision/threat</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) offer</button></span></li>
     </ol>
   </div>
 
@@ -225,33 +255,31 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Experts predict that renewable energy will account for the majority of global power generation within two decades, although fossil fuels will not disappear entirely soon. Governments will need to invest heavily in infrastructure, and many analysts believe ordinary consumers won't notice much difference in their daily lives until the transition is nearly complete. Nevertheless, some economists warn that certain regions will struggle more than others, since they will lack the resources necessary for a rapid shift.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Renewable energy will make up most global power generation eventually. ___</li>
-      <li>Fossil fuels will vanish completely very soon. ___</li>
-      <li>Consumers will notice a big difference immediately. ___</li>
-      <li>All regions will adapt equally easily. ___</li>
-      <li>Investment in infrastructure will be necessary. ___</li>
+      <li>Renewable energy will make up most global power generation eventually. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Fossil fuels will vanish completely very soon. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Consumers will notice a big difference immediately. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>All regions will adapt equally easily. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Investment in infrastructure will be necessary. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>When she will arrive, we will start the meeting.</li>
-      <li>I'll call you as soon as I will land.</li>
-      <li>He won't agrees to the new terms.</li>
-      <li>She will definitely comes to the party.</li>
-      <li>We willn't know the results until Friday.</li>
-      <li>If it will rain, we will cancel the picnic.</li>
+      <li>When she will arrive, we will start the meeting. <input class="iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>I'll call you as soon as I will land. <input class="iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>He won't agrees to the new terms. <input class="iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>She will definitely comes to the party. <input class="iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>We willn't know the results until Friday. <input class="iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>If it will rain, we will cancel the picnic. <input class="iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write 5–7 predictions about the world in 20 years, using <strong>will/won't</strong>. Include <strong>at least one time clause</strong> with a conjunction like <em>when, as soon as,</em> or <em>once</em>.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <!-- ===== C1 ===== -->
@@ -260,35 +288,37 @@
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal register, keeping "will".</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I'll totally sort this out, don't stress.</li>
-      <li>We'll probably see huge changes soon.</li>
-      <li>I bet the deal will fall through.</li>
-      <li>She'll def get the promotion.</li>
-      <li>Things will get better, trust me.</li>
+      <li>I'll totally sort this out, don't stress. <input class="iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>We'll probably see huge changes soon. <input class="iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>I bet the deal will fall through. <input class="iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>She'll def get the promotion. <input class="iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>Things will get better, trust me. <input class="iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: what does "will" express here?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"Boys will be boys." a) a characteristic tendency&nbsp; b) a promise</li>
-      <li>"He said he would call later." — "would" here is: a) future-in-the-past&nbsp; b) a conditional</li>
-      <li>"The results will be announced at noon, as scheduled." a) formal certainty/schedule&nbsp; b) spontaneous decision</li>
-      <li>"This medication will cause drowsiness in some patients." a) a typical tendency&nbsp; b) a one-time promise</li>
-      <li>"Ice will melt at room temperature." a) a scientific/general truth&nbsp; b) an offer</li>
-      <li>"I will have this finished by Friday, I assure you." a) firm commitment&nbsp; b) polite request</li>
+      <li>"Boys will be boys." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) a characteristic tendency</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a promise</button></span></li>
+      <li>"He said he would call later." — "would" here is: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) future-in-the-past</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a conditional</button></span></li>
+      <li>"The results will be announced at noon, as scheduled." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) formal certainty/schedule</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) spontaneous decision</button></span></li>
+      <li>"This medication will cause drowsiness in some patients." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) a typical tendency</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a one-time promise</button></span></li>
+      <li>"Ice will melt at room temperature." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) a scientific/general truth</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) an offer</button></span></li>
+      <li>"I will have this finished by Friday, I assure you." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) firm commitment</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) polite request</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Once the contract will be signed, both parties will be legally bound.</li>
-      <li>Unless the board will approve the budget, the project won't proceed.</li>
-      <li>She will call you the moment she will land.</li>
-      <li>As soon as the results will come in, we'll notify everyone.</li>
-      <li>Before the ceremony will begin, guests will be seated.</li>
+      <li>Once the contract will be signed, both parties will be legally bound. <input class="iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>Unless the board will approve the budget, the project won't proceed. <input class="iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>She will call you the moment she will land. <input class="iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>As soon as the results will come in, we'll notify everyone. <input class="iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>Before the ceremony will begin, guests will be seated. <input class="iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <!-- ===== C2 ===== -->
@@ -297,33 +327,31 @@
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal forecast paragraph about a long-term social or economic trend. Use <strong>will/won't</strong> throughout, and include <strong>at least one correctly-formed time clause</strong> (when/once/as soon as + present tense).</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>resolved / dispute / eventually / will / the / be</li>
-      <li>proceed / will / project / scheduled / the / as</li>
-      <li>change / policy / significantly / will / this</li>
-      <li>is / signed / agreement / negotiations / will / begin / the / once</li>
-      <li>exceed / demand / expectations / will / likely</li>
+      <li>resolved / dispute / eventually / will / the / be <input class="iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>proceed / will / project / scheduled / the / as <input class="iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>change / policy / significantly / will / this <input class="iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>is / signed / agreement / negotiations / will / begin / the / once <input class="iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>exceed / demand / expectations / will / likely <input class="iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the errors (passive "will" &amp; reported speech).</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The report will submitting by the deadline.</li>
-      <li>New measures will implementing next year.</li>
-      <li>He said he will attend, but he didn't come.</li>
-      <li>The committee will deciding the matter next week.</li>
-      <li>It was announced that the policy will change.</li>
+      <li>The report will submitting by the deadline. <input class="iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>New measures will implementing next year. <input class="iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>He said he will attend, but he didn't come. <input class="iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>The committee will deciding the matter next week. <input class="iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>It was announced that the policy will change. <input class="iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <!-- ============ ANSWER KEY ============ -->
@@ -391,6 +419,129 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* -- Interactive exercises -- */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['will help'] },
+    { accept: ["won't be", 'will not be'] },
+    { accept: ['will'] },
+    { accept: ['come'] },
+    { accept: ["won't forget", 'will not forget'] },
+    { accept: ['will call'] },
+    { accept: ["won't tell", 'will not tell'] }
+  ]},
+  ex5: { type: 'lenient', items: [
+    { accept: ["i won't be late tomorrow", 'i will not be late tomorrow'] },
+    { accept: ["she won't forget your birthday", 'she will not forget your birthday'] },
+    { accept: ['will you help me move'] },
+    { accept: ['will it rain this weekend'] },
+    { accept: ["we won't tell him the truth yet", 'we will not tell him the truth yet'] },
+    { accept: ['will they arrive on time'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['i will help you'] },
+    { accept: ['she will probably be late'] },
+    { accept: ['i think it will rain'] },
+    { accept: ['i will call you when i arrive'] },
+    { accept: ['i will never forget this'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['i will help you'] },
+    { accept: ['she will call you later'] },
+    { accept: ["they won't come", 'they will not come'] },
+    { accept: ['will you help me'] },
+    { accept: ['i think it will rain tomorrow'] },
+    { accept: ["we won't be late", 'we will not be late'] }
+  ]},
+  ex8: { type: 'exact', items: [
+    { accept: ['arrive'] },
+    { accept: ['hear'] },
+    { accept: ['finishes'] },
+    { accept: ['leave'] },
+    { accept: ['are'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['when she arrives, we will start the meeting', 'when she arrives'] },
+    { accept: ["i'll call you as soon as i land", 'as soon as i land'] },
+    { accept: ["he won't agree to the new terms", 'he will not agree to the new terms'] },
+    { accept: ['she will definitely come to the party'] },
+    { accept: ["we won't know the results until friday", 'we will not know the results until friday'] },
+    { accept: ['if it rains, we will cancel the picnic', 'if it rains'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['i will resolve this matter'] },
+    { accept: ['significant changes will likely occur'] },
+    { accept: ['the agreement will not be finalised', 'the agreement will not be finalized'] },
+    { accept: ['she will undoubtedly receive the promotion'] },
+    { accept: ['circumstances will improve'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['once the contract is signed, both parties will be legally bound', 'once the contract is signed'] },
+    { accept: ["unless the board approves the budget, the project won't proceed", 'unless the board approves the budget'] },
+    { accept: ['she will call you the moment she lands'] },
+    { accept: ["as soon as the results come in, we'll notify everyone", 'as soon as the results come in'] },
+    { accept: ['before the ceremony begins, guests will be seated', 'before the ceremony begins'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['the dispute will eventually be resolved'] },
+    { accept: ['the project will proceed as scheduled'] },
+    { accept: ['this policy will change significantly'] },
+    { accept: ['once the agreement is signed, negotiations will begin', 'once the agreement is signed'] },
+    { accept: ['demand will likely exceed expectations'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['the report will be submitted by the deadline'] },
+    { accept: ['new measures will be implemented next year'] },
+    { accept: ["he said he would attend, but he didn't come", 'he said he would attend'] },
+    { accept: ['the committee will decide the matter next week'] },
+    { accept: ['it was announced that the policy would change'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

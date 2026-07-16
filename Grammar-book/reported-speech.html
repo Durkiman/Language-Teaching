@@ -8,8 +8,33 @@
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
     @media print {
-      #answerToggleBtn { display: none !important; }
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
     }
   </style>
 </head>
@@ -139,36 +164,37 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct reported form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"I am happy," she said. → She said she <strong>(is / was)</strong> happy.</li>
-      <li>"I like pizza," he said. → He said he <strong>(likes / liked)</strong> pizza.</li>
-      <li>"I live in Rome," she said. → She said she <strong>(lives / lived)</strong> in Rome.</li>
-      <li>"I have a car," he said. → He said he <strong>(has / had)</strong> a car.</li>
-      <li>"I want tea," she said. → She said she <strong>(wants / wanted)</strong> tea.</li>
-      <li>"I can swim," he said. → He said he <strong>(can / could)</strong> swim.</li>
+      <li>"I am happy," she said. → She said she <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">is</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">was</button></span> happy.</li>
+      <li>"I like pizza," he said. → He said he <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">likes</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">liked</button></span> pizza.</li>
+      <li>"I live in Rome," she said. → She said she <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">lives</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">lived</button></span> in Rome.</li>
+      <li>"I have a car," he said. → He said he <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">has</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">had</button></span> a car.</li>
+      <li>"I want tea," she said. → She said she <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">wants</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">wanted</button></span> tea.</li>
+      <li>"I can swim," he said. → He said he <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">can</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">could</button></span> swim.</li>
     </ol>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each direct sentence (1–5) to its reported version (a–e).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. "I am tired."</div><div>a. He said he was leaving.</div>
-      <div>2. "I don't know."</div><div>b. She said she was tired.</div>
-      <div>3. "I'm leaving."</div><div>c. He said he liked tea.</div>
-      <div>4. "I like tea."</div><div>d. She said she didn't know.</div>
-      <div>5. "I will help."</div><div>e. He said he would help.</div>
+      <div>1. "I am tired." <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>a. He said he was leaving.</div>
+      <div>2. "I don't know." <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>b. She said she was tired.</div>
+      <div>3. "I'm leaving." <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>c. He said he liked tea.</div>
+      <div>4. "I like tea." <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>d. She said she didn't know.</div>
+      <div>5. "I will help." <select class="iq-select" onchange="checkSelect(this,'e')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>e. He said he would help.</div>
     </div>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank with the correct reported verb form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"I am busy," he said. He said he ______ busy.</li>
-      <li>"I love music," she said. She said she ______ music.</li>
-      <li>"I work here," he said. He said he ______ there.</li>
-      <li>"I don't like it," she said. She said she ______ like it.</li>
-      <li>"I can help," he said. He said he ______ help.</li>
-      <li>"I will come," she said. She said she ______ come.</li>
+      <li>"I am busy," he said. He said he <input class="iq-input" id="ex3-1"> busy.</li>
+      <li>"I love music," she said. She said she <input class="iq-input" id="ex3-2"> music.</li>
+      <li>"I work here," he said. He said he <input class="iq-input" id="ex3-3"> there.</li>
+      <li>"I don't like it," she said. She said she <input class="iq-input" id="ex3-4"> like it.</li>
+      <li>"I can help," he said. He said he <input class="iq-input" id="ex3-5"> help.</li>
+      <li>"I will come," she said. She said she <input class="iq-input" id="ex3-6"> come.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <!-- ===== A2 ===== -->
@@ -178,34 +204,36 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Tom told me he was moving to Berlin the next month. He said he had found a job there and was excited about the change. He asked if I wanted to visit him once he was settled. He also mentioned that he would miss his friends back home, but he said it was the right decision for his career.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Tom said he was moving to Berlin. ___</li>
-      <li>He said he hadn't found a job yet. ___</li>
-      <li>He asked if I wanted to visit him. ___</li>
-      <li>He said he wouldn't miss his friends. ___</li>
-      <li>He believed it was the right decision. ___</li>
+      <li>Tom said he was moving to Berlin. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>He said he hadn't found a job yet. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>He asked if I wanted to visit him. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>He said he wouldn't miss his friends. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>He believed it was the right decision. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Turn these questions into reported speech.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"Do you like coffee?" she asked. → She asked ______________________</li>
-      <li>"Where do you live?" he asked. → He asked ______________________</li>
-      <li>"Can you help me?" she asked. → She asked ______________________</li>
-      <li>"What time is it?" he asked. → He asked ______________________</li>
-      <li>"Are you coming?" she asked. → She asked ______________________</li>
+      <li>"Do you like coffee?" she asked. → She asked <input class="iq-input iq-input-wide" id="ex5-1" placeholder="rewrite…"></li>
+      <li>"Where do you live?" he asked. → He asked <input class="iq-input iq-input-wide" id="ex5-2" placeholder="rewrite…"></li>
+      <li>"Can you help me?" she asked. → She asked <input class="iq-input iq-input-wide" id="ex5-3" placeholder="rewrite…"></li>
+      <li>"What time is it?" he asked. → He asked <input class="iq-input iq-input-wide" id="ex5-4" placeholder="rewrite…"></li>
+      <li>"Are you coming?" she asked. → She asked <input class="iq-input iq-input-wide" id="ex5-5" placeholder="rewrite…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Turn these commands into reported speech.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"Close the door," he said (to me). → ______________________</li>
-      <li>"Don't be late," she said (to us). → ______________________</li>
-      <li>"Sit down," the teacher said (to the students). → ______________________</li>
-      <li>"Wait here," he said (to her). → ______________________</li>
-      <li>"Don't touch that," she said (to him). → ______________________</li>
+      <li>"Close the door," he said (to me). → <input class="iq-input iq-input-wide" id="ex6-1" placeholder="rewrite…"></li>
+      <li>"Don't be late," she said (to us). → <input class="iq-input iq-input-wide" id="ex6-2" placeholder="rewrite…"></li>
+      <li>"Sit down," the teacher said (to the students). → <input class="iq-input iq-input-wide" id="ex6-3" placeholder="rewrite…"></li>
+      <li>"Wait here," he said (to her). → <input class="iq-input iq-input-wide" id="ex6-4" placeholder="rewrite…"></li>
+      <li>"Don't touch that," she said (to him). → <input class="iq-input iq-input-wide" id="ex6-5" placeholder="rewrite…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <!-- ===== B1 ===== -->
@@ -214,35 +242,37 @@
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She said that she is tired.</li>
-      <li>He asked did I like tea.</li>
-      <li>She told to me to wait outside.</li>
-      <li>He said me he was busy.</li>
-      <li>She asked where did I live.</li>
-      <li>He said he will call me tomorrow.</li>
+      <li>She said that she is tired. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>He asked did I like tea. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>She told to me to wait outside. <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>He said me he was busy. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>She asked where did I live. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>He said he will call me tomorrow. <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Report these sentences, changing time and place words too.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"I'll see you tomorrow," she said. → ______________________</li>
-      <li>"I was here yesterday," he said. → ______________________</li>
-      <li>"I'll finish this today," she said. → ______________________</li>
-      <li>"I bought this here last week," he said. → ______________________</li>
-      <li>"I'll call you tonight," she said. → ______________________</li>
+      <li>"I'll see you tomorrow," she said. → <input class="iq-input iq-input-wide" id="ex8-1" placeholder="rewrite…"></li>
+      <li>"I was here yesterday," he said. → <input class="iq-input iq-input-wide" id="ex8-2" placeholder="rewrite…"></li>
+      <li>"I'll finish this today," she said. → <input class="iq-input iq-input-wide" id="ex8-3" placeholder="rewrite…"></li>
+      <li>"I bought this here last week," he said. → <input class="iq-input iq-input-wide" id="ex8-4" placeholder="rewrite…"></li>
+      <li>"I'll call you tonight," she said. → <input class="iq-input iq-input-wide" id="ex8-5" placeholder="rewrite…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: choose the correct reported form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"I have finished," he said. → He said he ___ finished. a) has&nbsp; b) had</li>
-      <li>"Can you drive?" she asked. → She asked if I ___ drive. a) can&nbsp; b) could</li>
-      <li>"I must leave," he said. → He said he ___ leave. a) must&nbsp; b) had to</li>
-      <li>"Where is the station?" she asked. → She asked where the station ___. a) is&nbsp; b) was</li>
-      <li>"Don't shout," he said. → He told them ___ shout. a) not to&nbsp; b) to not</li>
-      <li>"I'm coming," she said. → She said she ___ coming. a) is&nbsp; b) was</li>
+      <li>"I have finished," he said. → He said he ___ finished. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) has</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) had</button></span></li>
+      <li>"Can you drive?" she asked. → She asked if I ___ drive. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) can</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) could</button></span></li>
+      <li>"I must leave," he said. → He said he ___ leave. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) must</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) had to</button></span></li>
+      <li>"Where is the station?" she asked. → She asked where the station ___. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) is</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) was</button></span></li>
+      <li>"Don't shout," he said. → He told them ___ shout. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) not to</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) to not</button></span></li>
+      <li>"I'm coming," she said. → She said she ___ coming. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) is</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) was</button></span></li>
     </ol>
   </div>
 
@@ -253,33 +283,31 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">During the press conference, the spokesperson said that the company had not yet decided on layoffs, though she admitted that some restructuring was likely. When asked whether jobs in the manufacturing division were at risk, she replied that no final decisions had been made. She also warned reporters not to speculate further, insisting that an official statement would follow within the week.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The spokesperson said layoffs had been decided already. ___</li>
-      <li>She admitted restructuring was likely. ___</li>
-      <li>She said no final decisions had been made. ___</li>
-      <li>She encouraged reporters to speculate. ___</li>
-      <li>She promised a statement within the week. ___</li>
+      <li>The spokesperson said layoffs had been decided already. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>She admitted restructuring was likely. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>She said no final decisions had been made. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>She encouraged reporters to speculate. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>She promised a statement within the week. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She said that she has lived there for ten years.</li>
-      <li>He asked me that if I was ready.</li>
-      <li>They warned us to don't be late.</li>
-      <li>She wondered did he know the answer.</li>
-      <li>He said that the meeting is postponed the day before.</li>
-      <li>She told that she would call later.</li>
+      <li>She said that she has lived there for ten years. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>He asked me that if I was ready. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>They warned us to don't be late. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>She wondered did he know the answer. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>He said that the meeting is postponed the day before. <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>She told that she would call later. <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write a short report (5–7 sentences) of a conversation you had recently, using a mix of reported <strong>statements, questions,</strong> and <strong>commands/requests</strong>.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <!-- ===== C1 ===== -->
@@ -288,35 +316,37 @@
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each direct quote as reported speech in a formal register.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"We're gonna sort this out ASAP," the manager said.</li>
-      <li>"I dunno what happened," the witness said.</li>
-      <li>"You gotta be kidding me," the CEO said.</li>
-      <li>"We'll figure it out somehow," the director said.</li>
-      <li>"I ain't signing that," the employee said.</li>
+      <li>"We're gonna sort this out ASAP," the manager said. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>"I dunno what happened," the witness said. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>"You gotta be kidding me," the CEO said. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>"We'll figure it out somehow," the director said. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>"I ain't signing that," the employee said. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: which reporting verb best fits?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"You really should see a doctor." → He ___ her to see a doctor. a) advised&nbsp; b) said</li>
-      <li>"I'm so sorry, it was my fault." → He ___ that it was his fault. a) admitted&nbsp; b) asked</li>
-      <li>"You must not tell anyone." → She ___ them not to tell anyone. a) warned&nbsp; b) wondered</li>
-      <li>"Why don't we try the new approach?" → He ___ trying the new approach. a) suggested&nbsp; b) ordered</li>
-      <li>"I refuse to sign it." → He ___ to sign it. a) refused&nbsp; b) promised</li>
-      <li>"I'll definitely be there." → She ___ to be there. a) promised&nbsp; b) denied</li>
+      <li>"You really should see a doctor." → He ___ her to see a doctor. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) advised</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) said</button></span></li>
+      <li>"I'm so sorry, it was my fault." → He ___ that it was his fault. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) admitted</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) asked</button></span></li>
+      <li>"You must not tell anyone." → She ___ them not to tell anyone. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) warned</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) wondered</button></span></li>
+      <li>"Why don't we try the new approach?" → He ___ trying the new approach. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) suggested</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) ordered</button></span></li>
+      <li>"I refuse to sign it." → He ___ to sign it. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) refused</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) promised</button></span></li>
+      <li>"I'll definitely be there." → She ___ to be there. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) promised</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) denied</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>He admitted that he has made a mistake earlier.</li>
-      <li>She asked whether does he agree with the proposal.</li>
-      <li>They claimed that the funds was misused.</li>
-      <li>He denied that he had ever said such thing.</li>
-      <li>She warned us don't to sign anything without reading it.</li>
+      <li>He admitted that he has made a mistake earlier. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>She asked whether does he agree with the proposal. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>They claimed that the funds was misused. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>He denied that he had ever said such thing. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>She warned us don't to sign anything without reading it. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <!-- ===== C2 ===== -->
@@ -325,33 +355,31 @@
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal summary of a meeting or interview, reporting what was said using varied reporting verbs (e.g. acknowledged, insisted, disclosed, urged).</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex reported sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>disclosed / spokesperson / had / the / merger / that / stalled / the</li>
-      <li>urged / minister / calm / the / remain / to / public / the</li>
-      <li>acknowledged / delay / been / had / there / he / a</li>
-      <li>insisted / innocent / lawyer / was / client / her / the</li>
-      <li>denied / any / involvement / firm / the / wrongdoing / in</li>
+      <li>disclosed / spokesperson / had / the / merger / that / stalled / the <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>urged / minister / calm / the / remain / to / public / the <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>acknowledged / delay / been / had / there / he / a <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>insisted / innocent / lawyer / was / client / her / the <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>denied / any / involvement / firm / the / wrongdoing / in <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She disclosed that the figures was inaccurate.</li>
-      <li>He insisted that he is telling the truth.</li>
-      <li>They acknowledged that mistakes was made.</li>
-      <li>The witness recalled that she seen the incident.</li>
-      <li>He urged that the committee acts swiftly.</li>
+      <li>She disclosed that the figures was inaccurate. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>He insisted that he is telling the truth. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>They acknowledged that mistakes was made. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>The witness recalled that she seen the incident. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>He urged that the committee acts swiftly. <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <!-- ============ ANSWER KEY ============ -->
@@ -419,6 +447,127 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* -- Interactive exercises -- */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['was'] },
+    { accept: ['loved'] },
+    { accept: ['worked'] },
+    { accept: ["didn't", 'didnt'] },
+    { accept: ['could'] },
+    { accept: ['would'] }
+  ]},
+  ex5: { type: 'lenient', items: [
+    { accept: ['if i liked coffee', 'whether i liked coffee'] },
+    { accept: ['where i lived'] },
+    { accept: ['if i could help her', 'whether i could help her'] },
+    { accept: ['what time it was'] },
+    { accept: ['if i was coming', 'whether i was coming'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['he told me to close the door'] },
+    { accept: ["she told us not to be late"] },
+    { accept: ['the teacher told the students to sit down'] },
+    { accept: ['he told her to wait there'] },
+    { accept: ['she told him not to touch that'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['she said that she was tired', 'she said she was tired'] },
+    { accept: ['he asked if i liked tea', 'he asked whether i liked tea'] },
+    { accept: ['she told me to wait outside'] },
+    { accept: ['he told me he was busy'] },
+    { accept: ['she asked where i lived'] },
+    { accept: ['he said he would call me'] }
+  ]},
+  ex8: { type: 'lenient', items: [
+    { accept: ["she said she'd see me the next day", 'she said she would see me the next day'] },
+    { accept: ['he said he had been there the day before'] },
+    { accept: ["she said she'd finish that that day", 'she said she would finish that that day'] },
+    { accept: ["he said he'd bought that there the week before", 'he said he had bought that there the week before'] },
+    { accept: ["she said she'd call me that night", 'she said she would call me that night'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['she had lived there for ten years'] },
+    { accept: ['he asked me if i was ready', 'he asked me whether i was ready'] },
+    { accept: ['they warned us not to be late'] },
+    { accept: ['she wondered whether he knew the answer', 'she wondered if he knew the answer'] },
+    { accept: ['the meeting had been postponed the day before'] },
+    { accept: ['she said that she would call later', 'she told me that she would call later'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['would resolve it as soon as possible'] },
+    { accept: ['did not know what had happened'] },
+    { accept: ['could not believe it'] },
+    { accept: ['would find a way to manage it'] },
+    { accept: ['not willing to sign that'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['he had made a mistake earlier'] },
+    { accept: ['whether he agreed with the proposal'] },
+    { accept: ['the funds had been misused'] },
+    { accept: ['he had never said such a thing'] },
+    { accept: ['not to sign anything without reading it'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['the spokesperson disclosed that the merger had stalled'] },
+    { accept: ['the minister urged the public to remain calm'] },
+    { accept: ['he acknowledged that there had been a delay'] },
+    { accept: ['her lawyer insisted that her client was innocent'] },
+    { accept: ['the firm denied any involvement in wrongdoing'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['the figures were inaccurate'] },
+    { accept: ['that he was telling the truth'] },
+    { accept: ['mistakes had been made'] },
+    { accept: ['that she had seen the incident'] },
+    { accept: ['the committee act swiftly'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

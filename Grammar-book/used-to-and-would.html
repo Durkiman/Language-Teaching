@@ -8,8 +8,33 @@
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
     @media print {
-      #answerToggleBtn { display: none !important; }
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
     }
   </style>
 </head>
@@ -135,36 +160,37 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I <strong>(used to / use to)</strong> play outside every day.</li>
-      <li>She <strong>(used to live / used to lives)</strong> in Spain.</li>
-      <li>They <strong>(didn't used to / didn't use to)</strong> like fish.</li>
-      <li><strong>(Did you use to / Did you used to)</strong> ride a bike?</li>
-      <li>He <strong>(used to have / used to has)</strong> a dog.</li>
-      <li>We <strong>(used to be / used to being)</strong> neighbours.</li>
+      <li>I <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">used to</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">use to</button></span> play outside every day.</li>
+      <li>She <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">used to live</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">used to lives</button></span> in Spain.</li>
+      <li>They <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">didn't used to</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">didn't use to</button></span> like fish.</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">Did you use to</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">Did you used to</button></span> ride a bike?</li>
+      <li>He <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">used to have</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">used to has</button></span> a dog.</li>
+      <li>We <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">used to be</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">used to being</button></span> neighbours.</li>
     </ol>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each sentence half (1–5) to its ending (a–e).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. I used to</div><div>a. live in Rome.</div>
-      <div>2. She used to</div><div>b. play tennis.</div>
-      <div>3. They didn't use to</div><div>c. have long hair.</div>
-      <div>4. Did you use to</div><div>d. eat vegetables.</div>
-      <div>5. He used to</div><div>e. go to this school?</div>
+      <div>1. I used to <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>a. live in Rome.</div>
+      <div>2. She used to <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>b. play tennis.</div>
+      <div>3. They didn't use to <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>c. have long hair.</div>
+      <div>4. Did you use to <select class="iq-select" onchange="checkSelect(this,'e')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>d. eat vegetables.</div>
+      <div>5. He used to <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>e. go to this school?</div>
     </div>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank with used to and the verb in brackets.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I ______ (walk) to school when I was young.</li>
-      <li>She ______ (not/like) spicy food.</li>
-      <li>______ you ______ (live) in Canada?</li>
-      <li>They ______ (have) a big garden.</li>
-      <li>He ______ (play) the guitar every day.</li>
-      <li>We ______ (not/have) a car.</li>
+      <li>I <input class="iq-input" id="ex3-1"> (walk) to school when I was young.</li>
+      <li>She <input class="iq-input" id="ex3-2"> (not/like) spicy food.</li>
+      <li><input class="iq-input" id="ex3-3"> you <input class="iq-input" id="ex3-4"> (live) in Canada?</li>
+      <li>They <input class="iq-input" id="ex3-5"> (have) a big garden.</li>
+      <li>He <input class="iq-input" id="ex3-6"> (play) the guitar every day.</li>
+      <li>We <input class="iq-input" id="ex3-7"> (not/have) a car.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <!-- ===== A2 ===== -->
@@ -174,34 +200,36 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">When David was a child, he used to live in a small village. He used to walk to school every day with his cousins, and they would stop at the bakery on the way. He used to have a dog called Max, who would follow him everywhere. Life was simpler then, he says, though he doesn't miss the cold winters.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>David used to live in a big city. ___</li>
-      <li>He walked to school with his cousins. ___</li>
-      <li>They stopped at the bakery. ___</li>
-      <li>He had a dog called Max. ___</li>
-      <li>He misses the cold winters. ___</li>
+      <li>David used to live in a big city. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>He walked to school with his cousins. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>They stopped at the bakery. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>He had a dog called Max. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>He misses the cold winters. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Rewrite each sentence using "used to."</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I played football when I was young. → ______________________</li>
-      <li>She had short hair. → ______________________</li>
-      <li>They lived in Berlin. → ______________________</li>
-      <li>He didn't eat meat. → ______________________</li>
-      <li>We visited our grandparents every year. → ______________________</li>
+      <li>I played football when I was young. → <input class="iq-input iq-input-wide" id="ex5-1" placeholder="rewrite…"></li>
+      <li>She had short hair. → <input class="iq-input iq-input-wide" id="ex5-2" placeholder="rewrite…"></li>
+      <li>They lived in Berlin. → <input class="iq-input iq-input-wide" id="ex5-3" placeholder="rewrite…"></li>
+      <li>He didn't eat meat. → <input class="iq-input iq-input-wide" id="ex5-4" placeholder="rewrite…"></li>
+      <li>We visited our grandparents every year. → <input class="iq-input iq-input-wide" id="ex5-5" placeholder="rewrite…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>used / play / to / I / outside</li>
-      <li>use / did / to / you / smoke</li>
-      <li>use / didn't / to / like / she / coffee</li>
-      <li>a / used / have / bike / he / to</li>
-      <li>to / live / used / we / here</li>
+      <li>used / play / to / I / outside <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>use / did / to / you / smoke <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>use / didn't / to / like / she / coffee <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>a / used / have / bike / he / to <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>to / live / used / we / here <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <!-- ===== B1 ===== -->
@@ -210,35 +238,37 @@
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I use to play football every weekend.</li>
-      <li>She didn't used to like tea.</li>
-      <li>Did you used to live abroad?</li>
-      <li>He used to has a motorcycle.</li>
-      <li>They use to visit us often.</li>
-      <li>We didn't use to living here.</li>
+      <li>I use to play football every weekend. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>She didn't used to like tea. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>Did you used to live abroad? <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>He used to has a motorcycle. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>They use to visit us often. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>We didn't use to living here. <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Choose "used to" or "would" (write "both" if either works).</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Every summer, we ______ (visit) our grandparents' farm.</li>
-      <li>I ______ (have) a red bicycle as a child.</li>
-      <li>She ______ (believe) in ghosts when she was small.</li>
-      <li>He ______ (tell) us stories before bed.</li>
-      <li>We ______ (live) near the beach.</li>
+      <li>Every summer, we <input class="iq-input" id="ex8-1"> (visit) our grandparents' farm.</li>
+      <li>I <input class="iq-input" id="ex8-2"> (have) a red bicycle as a child.</li>
+      <li>She <input class="iq-input" id="ex8-3"> (believe) in ghosts when she was small.</li>
+      <li>He <input class="iq-input" id="ex8-4"> (tell) us stories before bed.</li>
+      <li>We <input class="iq-input" id="ex8-5"> (live) near the beach.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: choose the correct form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I'm ___ getting up early now. a) used to&nbsp; b) use to</li>
-      <li>She ___ have long hair. a) would&nbsp; b) used to</li>
-      <li>It took a while to get ___ the new system. a) used to&nbsp; b) use to</li>
-      <li>He ___ visit us every Sunday. a) would&nbsp; b) uses to</li>
-      <li>___ you use to live here? a) Did&nbsp; b) Would</li>
-      <li>They ___ own a shop downtown. a) would&nbsp; b) used to</li>
+      <li>I'm ___ getting up early now. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) used to</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) use to</button></span></li>
+      <li>She ___ have long hair. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) would</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) used to</button></span></li>
+      <li>It took a while to get ___ the new system. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) used to</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) use to</button></span></li>
+      <li>He ___ visit us every Sunday. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) would</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) uses to</button></span></li>
+      <li>___ you use to live here? <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) Did</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) Would</button></span></li>
+      <li>They ___ own a shop downtown. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) would</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) used to</button></span></li>
     </ol>
   </div>
 
@@ -249,33 +279,31 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Before the factory closed, the town used to thrive on manufacturing, and most families would rely on it for income. Workers would gather at the same café every morning before their shifts, a ritual few have forgotten. The town used to have a much younger population, but many moved away once the jobs disappeared. Some residents say they're still not used to the quiet streets.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The town used to thrive on manufacturing. ___</li>
-      <li>Workers would gather at a café before shifts. ___</li>
-      <li>The town used to have an older population. ___</li>
-      <li>Many people moved away after jobs disappeared. ___</li>
-      <li>Some residents are still not used to the quiet. ___</li>
+      <li>The town used to thrive on manufacturing. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Workers would gather at a café before shifts. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The town used to have an older population. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Many people moved away after jobs disappeared. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Some residents are still not used to the quiet. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She would have a small shop in town. (state, not habit)</li>
-      <li>I'm not used to eat spicy food.</li>
-      <li>He would own three houses in the 90s. (state, not habit)</li>
-      <li>They got used to live without electricity.</li>
-      <li>We would be very close friends. (state, not habit)</li>
-      <li>She used to working nights, so it's easy now.</li>
+      <li>She would have a small shop in town. (state, not habit) <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>I'm not used to eat spicy food. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>He would own three houses in the 90s. (state, not habit) <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>They got used to live without electricity. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>We would be very close friends. (state, not habit) <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>She used to working nights, so it's easy now. <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write 5–7 sentences about your childhood, using both <strong>used to</strong> (for states) and <strong>would</strong> (for repeated actions) correctly.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <!-- ===== C1 ===== -->
@@ -284,35 +312,37 @@
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal, literary register using "would."</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Every evening my grandfather used to tell us stories by the fire.</li>
-      <li>Each morning she used to walk along the shore before dawn.</li>
-      <li>He used to write in his journal every night.</li>
-      <li>They used to gather in the square on market days.</li>
-      <li>She used to sing to the children before bed.</li>
+      <li>Every evening my grandfather used to tell us stories by the fire. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite…"></li>
+      <li>Each morning she used to walk along the shore before dawn. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite…"></li>
+      <li>He used to write in his journal every night. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite…"></li>
+      <li>They used to gather in the square on market days. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite…"></li>
+      <li>She used to sing to the children before bed. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: which is correct given the context?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Describing a childhood home (a state): a) I would live in that house.&nbsp; b) I used to live in that house.</li>
-      <li>Describing a repeated ritual: a) We would light candles every evening.&nbsp; b) We would have candles every evening.</li>
-      <li>Describing a former belief: a) She would believe in fairy tales.&nbsp; b) She used to believe in fairy tales.</li>
-      <li>Describing former ownership: a) He would own a farm.&nbsp; b) He used to own a farm.</li>
-      <li>Being accustomed to noise: a) I'm used to loud cities now.&nbsp; b) I would be used to loud cities.</li>
-      <li>Describing a repeated childhood action: a) I would visit my aunt every August.&nbsp; b) I would be visiting my aunt every August.</li>
+      <li>Describing a childhood home (a state): <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) I would live in that house.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) I used to live in that house.</button></span></li>
+      <li>Describing a repeated ritual: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) We would light candles every evening.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) We would have candles every evening.</button></span></li>
+      <li>Describing a former belief: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) She would believe in fairy tales.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) She used to believe in fairy tales.</button></span></li>
+      <li>Describing former ownership: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) He would own a farm.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) He used to own a farm.</button></span></li>
+      <li>Being accustomed to noise: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) I'm used to loud cities now.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) I would be used to loud cities.</button></span></li>
+      <li>Describing a repeated childhood action: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) I would visit my aunt every August.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) I would be visiting my aunt every August.</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She would own a small bookshop before it closed.</li>
-      <li>They didn't used to trust outsiders in that village.</li>
-      <li>He would be a shy child, unlike his brother.</li>
-      <li>We got used to lived without modern conveniences.</li>
-      <li>It was hardly a life she was use to.</li>
+      <li>She would own a small bookshop before it closed. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>They didn't used to trust outsiders in that village. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>He would be a shy child, unlike his brother. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>We got used to lived without modern conveniences. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>It was hardly a life she was use to. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <!-- ===== C2 ===== -->
@@ -321,33 +351,31 @@
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a short nostalgic reflection on a place from your past, using "used to" for states and "would" for a repeated ritual, in a literary register.</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, literary sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>evening / gather / would / every / villagers / the / square / in</li>
-      <li>farmhouse / used / that / to / stand / here</li>
-      <li>light / would / lantern / grandmother / the / my / every / dusk</li>
-      <li>river / to / used / bend / the / here</li>
-      <li>the / would / children / sing / play / and / here</li>
+      <li>evening / gather / would / every / villagers / the / square / in <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>farmhouse / used / that / to / stand / here <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>light / would / lantern / grandmother / the / my / every / dusk <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>river / to / used / bend / the / here <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>the / would / children / sing / play / and / here <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The house would stand where the car park is now.</li>
-      <li>She would own the entire estate before the war.</li>
-      <li>He use to visit every autumn without fail.</li>
-      <li>They would be poor but content, back then.</li>
-      <li>We never got use to the silence of the countryside.</li>
+      <li>The house would stand where the car park is now. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>She would own the entire estate before the war. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>He use to visit every autumn without fail. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>They would be poor but content, back then. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>We never got use to the silence of the countryside. <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <!-- ============ ANSWER KEY ============ -->
@@ -415,6 +443,128 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* -- Interactive exercises -- */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['used to walk'] },
+    { accept: ["didn't use to like", 'did not use to like'] },
+    { accept: ['did'] },
+    { accept: ['use to live'] },
+    { accept: ['used to have'] },
+    { accept: ['used to play'] },
+    { accept: ["didn't use to have", 'did not use to have'] }
+  ]},
+  ex5: { type: 'lenient', items: [
+    { accept: ['i used to play football'] },
+    { accept: ['she used to have short hair'] },
+    { accept: ['they used to live in berlin'] },
+    { accept: ["he didn't use to eat meat", 'he did not use to eat meat'] },
+    { accept: ['we used to visit our grandparents every year'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['i used to play outside'] },
+    { accept: ['did you use to smoke'] },
+    { accept: ["she didn't use to like coffee", 'she did not use to like coffee'] },
+    { accept: ['he used to have a bike'] },
+    { accept: ['we used to live here'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['i used to play football every weekend'] },
+    { accept: ["she didn't use to like tea", 'she did not use to like tea'] },
+    { accept: ['did you use to live abroad'] },
+    { accept: ['he used to have a motorcycle'] },
+    { accept: ['they used to visit us often'] },
+    { accept: ["we didn't use to live here", 'we did not use to live here'] }
+  ]},
+  ex8: { type: 'exact', items: [
+    { accept: ['both', 'used to visit', 'would visit'] },
+    { accept: ['used to', 'used to have'] },
+    { accept: ['used to', 'used to believe'] },
+    { accept: ['both', 'used to tell', 'would tell'] },
+    { accept: ['used to', 'used to live'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['used to have a small shop'] },
+    { accept: ["not used to eating spicy food"] },
+    { accept: ['used to own three houses'] },
+    { accept: ['got used to living without electricity'] },
+    { accept: ['used to be very close friends'] },
+    { accept: ["used to working nights", "'s used to working nights", 'is used to working nights'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['would tell us stories by the fire'] },
+    { accept: ['would walk along the shore before dawn'] },
+    { accept: ['would write in his journal every night'] },
+    { accept: ['would gather in the square on market days'] },
+    { accept: ['would sing to the children before bed'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['used to own a small bookshop'] },
+    { accept: ['used to trust outsiders'] },
+    { accept: ['used to be a shy child'] },
+    { accept: ['got used to living without modern conveniences'] },
+    { accept: ['a life she was used to'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['every evening the villagers would gather in the square'] },
+    { accept: ['a farmhouse used to stand here'] },
+    { accept: ['my grandmother would light the lantern every dusk'] },
+    { accept: ['the river used to bend here'] },
+    { accept: ['the children would play and sing here'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['would stand where the car park'] },
+    { accept: ['used to own the entire estate before the war'] },
+    { accept: ['used to visit every autumn without fail'] },
+    { accept: ['would be poor but content'] },
+    { accept: ['never got used to the silence of the countryside'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

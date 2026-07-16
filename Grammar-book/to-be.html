@@ -9,6 +9,34 @@
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
     @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
+
   </style>
 </head>
 <body>
@@ -69,33 +97,34 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I <strong>(am / is / are)</strong> a student.</li>
-      <li>She <strong>(am / is / are)</strong> a doctor.</li>
-      <li>They <strong>(am / is / are)</strong> from Spain.</li>
-      <li>We <strong>(am / is / are)</strong> happy.</li>
-      <li>It <strong>(am / is / are)</strong> a big house.</li>
-      <li>You <strong>(am / is / are)</strong> very kind.</li>
+      <li>I <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">am</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">is</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">are</button></span> a student.</li>
+      <li>She <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">am</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">is</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">are</button></span> a doctor.</li>
+      <li>They <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">am</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">is</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">are</button></span> from Spain.</li>
+      <li>We <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">am</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">is</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">are</button></span> happy.</li>
+      <li>It <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">am</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">is</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">are</button></span> a big house.</li>
+      <li>You <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">am</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">is</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">are</button></span> very kind.</li>
     </ol>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each subject (1–4) to its form of "be" (a–d).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. I</div><div>a. is</div>
-      <div>2. She</div><div>b. am</div>
-      <div>3. They</div><div>c. are</div>
-      <div>4. We</div><div>d. are</div>
+      <div>1. I <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>a. is</div>
+      <div>2. She <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>b. am</div>
+      <div>3. They <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>c. are</div>
+      <div>4. We <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>d. are</div>
     </div>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank with am, is or are.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>My name ______ Marco.</li>
-      <li>We ______ from Italy.</li>
-      <li>He ______ my brother.</li>
-      <li>The children ______ at school.</li>
-      <li>I ______ twenty years old.</li>
-      <li>This ______ my house.</li>
+      <li>My name <input class="iq-input" id="ex3-1"> Marco.</li>
+      <li>We <input class="iq-input" id="ex3-2"> from Italy.</li>
+      <li>He <input class="iq-input" id="ex3-3"> my brother.</li>
+      <li>The children <input class="iq-input" id="ex3-4"> at school.</li>
+      <li>I <input class="iq-input" id="ex3-5"> twenty years old.</li>
+      <li>This <input class="iq-input" id="ex3-6"> my house.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
@@ -103,63 +132,67 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Hi, I'm Yuki. I'm not from Japan — I'm from Korea, but I live in Japan now. My apartment is small, but it's very close to my office. My best friend Mei is from China. We aren't in the same class, but we're both learning Japanese together on weekends.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Yuki is from Japan. ___</li>
-      <li>Yuki's apartment is small. ___</li>
-      <li>Mei is from China. ___</li>
-      <li>Yuki and Mei are in the same class. ___</li>
-      <li>They are learning Japanese together. ___</li>
+      <li>Yuki is from Japan. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Yuki's apartment is small. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Mei is from China. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Yuki and Mei are in the same class. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>They are learning Japanese together. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write negatives (1, 3) and questions (2, 4).</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I ______ (be/not) ready yet.</li>
-      <li>___ you ___ (be) hungry?</li>
-      <li>She ______ (be/not) at work today.</li>
-      <li>___ they ___ (be) your parents?</li>
+      <li>I <input class="iq-input" id="ex5-1"> (be/not) ready yet.</li>
+      <li><input class="iq-input" id="ex5-2"> you (be) hungry?</li>
+      <li>She <input class="iq-input" id="ex5-3"> (be/not) at work today.</li>
+      <li><input class="iq-input" id="ex5-4"> they (be) your parents?</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>a / I'm / teacher</li>
-      <li>isn't / at / he / home</li>
-      <li>from / are / where / you?</li>
-      <li>tired / we / very / are</li>
-      <li>ready / is / the / dinner?</li>
+      <li>a / I'm / teacher <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>isn't / at / he / home <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>from / are / where / you? <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>tired / we / very / are <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>ready / is / the / dinner? <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She don't is happy about it.</li>
-      <li>Where you are from?</li>
-      <li>The children is playing outside.</li>
-      <li>I amn't sure about this.</li>
-      <li>He are my colleague.</li>
-      <li>Do they are ready?</li>
+      <li>She don't is happy about it. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>Where you are from? <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>The children is playing outside. <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>I amn't sure about this. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>He are my colleague. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>Do they are ready? <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Rewrite each statement as a question, then as a negative.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She is a nurse.</li>
-      <li>They are ready.</li>
-      <li>It is expensive.</li>
-      <li>You are late.</li>
+      <li>She is a nurse. <input class="iq-input iq-input-wide" id="ex8-1" placeholder="write the question…"> <input class="iq-input iq-input-wide" id="ex8-2" placeholder="write the negative…"></li>
+      <li>They are ready. <input class="iq-input iq-input-wide" id="ex8-3" placeholder="write the question…"> <input class="iq-input iq-input-wide" id="ex8-4" placeholder="write the negative…"></li>
+      <li>It is expensive. <input class="iq-input iq-input-wide" id="ex8-5" placeholder="write the question…"> <input class="iq-input iq-input-wide" id="ex8-6" placeholder="write the negative…"></li>
+      <li>You are late. <input class="iq-input iq-input-wide" id="ex8-7" placeholder="write the question…"> <input class="iq-input iq-input-wide" id="ex8-8" placeholder="write the negative…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: identity, description, state, or location?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"She is an engineer." a) identity&nbsp; b) location</li>
-      <li>"I am exhausted." a) state&nbsp; b) description</li>
-      <li>"The keys are on the table." a) location&nbsp; b) identity</li>
-      <li>"He is very generous." a) description&nbsp; b) state</li>
-      <li>"We are in Lisbon." a) location&nbsp; b) identity</li>
-      <li>"They are worried." a) state&nbsp; b) description</li>
+      <li>"She is an engineer." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) identity</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) location</button></span></li>
+      <li>"I am exhausted." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) state</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) description</button></span></li>
+      <li>"The keys are on the table." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) location</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) identity</button></span></li>
+      <li>"He is very generous." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) description</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) state</button></span></li>
+      <li>"We are in Lisbon." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) location</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) identity</button></span></li>
+      <li>"They are worried." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) state</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) description</button></span></li>
     </ol>
   </div>
 
@@ -168,95 +201,93 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">The committee is aware that the current proposal isn't popular with every department, but the deadline is fixed and there isn't room to negotiate it further. Two members are still undecided, though the majority are in favour. If the vote is close, the chair's vote is decisive.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The proposal is popular with everyone. ___</li>
-      <li>The deadline is fixed. ___</li>
-      <li>All members are undecided. ___</li>
-      <li>The majority are in favour. ___</li>
-      <li>The chair's vote could decide a close vote. ___</li>
+      <li>The proposal is popular with everyone. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The deadline is fixed. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>All members are undecided. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The majority are in favour. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The chair's vote could decide a close vote. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The data is show a clear trend, isn't it.</li>
-      <li>Neither of the options are acceptable.</li>
-      <li>There's a lot of reasons why this is happen.</li>
-      <li>Everyone are welcome to attend.</li>
-      <li>The team's performance are improving.</li>
-      <li>It's you who is responsible, not them.</li>
+      <li>The data is show a clear trend, isn't it. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>Neither of the options are acceptable. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>There's a lot of reasons why this is happen. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>Everyone are welcome to attend. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>The team's performance are improving. <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>It's you who is responsible, not them. <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Describe yourself and your current situation (job, mood, where you are in life) in 6–8 sentences using <strong>am/is/are</strong> for identity, description, state and location.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal register (avoid contractions).</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>It's not clear what's causing the delay.</li>
-      <li>We're confident the numbers are accurate.</li>
-      <li>They're not in a position to comment.</li>
-      <li>I'm afraid that's not possible.</li>
-      <li>She's the one who's responsible.</li>
+      <li>It's not clear what's causing the delay. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>We're confident the numbers are accurate. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>They're not in a position to comment. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>I'm afraid that's not possible. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>She's the one who's responsible. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: what does this use of "be" express?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"Here you are." a) idiomatic — handing something over&nbsp; b) literal location</li>
-      <li>"If I were you, I'd wait." a) hypothetical (subjunctive)&nbsp; b) past state</li>
-      <li>"Be that as it may…" a) formal concession&nbsp; b) location</li>
-      <li>"So be it." a) formal acceptance&nbsp; b) command</li>
-      <li>"It is what it is." a) resigned acceptance&nbsp; b) description</li>
-      <li>"Whatever the case may be…" a) formal hedging&nbsp; b) identity</li>
+      <li>"Here you are." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) idiomatic — handing something over</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) literal location</button></span></li>
+      <li>"If I were you, I'd wait." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) hypothetical (subjunctive)</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) past state</button></span></li>
+      <li>"Be that as it may…" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) formal concession</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) location</button></span></li>
+      <li>"So be it." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) formal acceptance</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) command</button></span></li>
+      <li>"It is what it is." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) resigned acceptance</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) description</button></span></li>
+      <li>"Whatever the case may be…" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) formal hedging</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) identity</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>If I was you, I would reconsider.</li>
-      <li>It don't matter who is right.</li>
-      <li>What is important are the results.</li>
-      <li>Neither the manager nor the staff was informed.</li>
-      <li>The reason is because the data was wrong.</li>
+      <li>If I was you, I would reconsider. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>It don't matter who is right. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>What is important are the results. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>Neither the manager nor the staff was informed. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>The reason is because the data was wrong. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal self-introduction for a professional bio, avoiding contractions and using the subjunctive "were" at least once (e.g. "were I to…").</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>concern / is / of / the / primary / accuracy</li>
-      <li>informed / not / were / the / stakeholders</li>
-      <li>reconsider / were / I / you / would / I</li>
-      <li>the / matter / who / is / at / stake / no / right</li>
-      <li>results / important / the / are / what / is</li>
+      <li>concern / is / of / the / primary / accuracy <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>informed / not / were / the / stakeholders <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>reconsider / were / I / you / would / I <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>the / matter / who / is / at / stake / no / right <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>results / important / the / are / what / is <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Were it not for you, we was lost.</li>
-      <li>Far be it for me to interfere.</li>
-      <li>It is I who is to blame.</li>
-      <li>Suffice to say it is what it were.</li>
-      <li>Be as it may, the decision is final.</li>
+      <li>Were it not for you, we was lost. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>Far be it for me to interfere. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>It is I who is to blame. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>Suffice to say it is what it were. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>Be as it may, the decision is final. <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
@@ -316,6 +347,129 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* -- Interactive exercises -- */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['is'] },
+    { accept: ['are'] },
+    { accept: ['is'] },
+    { accept: ['are'] },
+    { accept: ['am'] },
+    { accept: ['is'] }
+  ]},
+  ex5: { type: 'exact', items: [
+    { accept: ['am not'] },
+    { accept: ['are'] },
+    { accept: ["isn't", 'is not'] },
+    { accept: ['are'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ["i'm a teacher", 'i am a teacher'] },
+    { accept: ["he isn't at home", 'he is not at home'] },
+    { accept: ['where are you from'] },
+    { accept: ['we are very tired'] },
+    { accept: ['is the dinner ready'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ["she isn't happy about it", 'she is not happy about it'] },
+    { accept: ['where are you from'] },
+    { accept: ['the children are playing outside'] },
+    { accept: ["i'm not sure about this", 'i am not sure about this'] },
+    { accept: ['he is my colleague'] },
+    { accept: ['are they ready'] }
+  ]},
+  ex8: { type: 'lenient', items: [
+    { accept: ['is she a nurse'] },
+    { accept: ["she isn't a nurse", 'she is not a nurse'] },
+    { accept: ['are they ready'] },
+    { accept: ["they aren't ready", 'they are not ready'] },
+    { accept: ['is it expensive'] },
+    { accept: ["it isn't expensive", 'it is not expensive'] },
+    { accept: ['are you late'] },
+    { accept: ["you aren't late", 'you are not late'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ["don't they", 'do not they'] },
+    { accept: ['is acceptable'] },
+    { accept: ['there are a lot of reasons'] },
+    { accept: ['everyone is welcome'] },
+    { accept: ["performance is improving"] },
+    { accept: ['who are responsible'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['it is not clear what is causing the delay'] },
+    { accept: ['we are confident the numbers are accurate'] },
+    { accept: ['they are not in a position to comment'] },
+    { accept: ['i am afraid that is not possible'] },
+    { accept: ['she is the one who is responsible'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['if i were you'] },
+    { accept: ["doesn't matter who is right", 'does not matter who is right'] },
+    { accept: ['what is important is the results'] },
+    { accept: ['was informed'] },
+    { accept: ['is that the data was wrong'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['accuracy is the primary concern'] },
+    { accept: ['the stakeholders were not informed'] },
+    { accept: ['i were you, i would reconsider', 'i were you i would reconsider'] },
+    { accept: ['no matter who is right is at stake'] },
+    { accept: ['what is important is the results'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['we were lost'] },
+    { accept: ['far be it'] },
+    { accept: ['it is i who am to blame'] },
+    { accept: ['it is what it is'] },
+    { accept: ['be that as it may'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

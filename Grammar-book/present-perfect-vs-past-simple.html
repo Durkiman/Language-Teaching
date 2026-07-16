@@ -11,6 +11,33 @@
     @media print {
       #answerToggleBtn { display: none !important; }
     }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
   </style>
 </head>
 <body>
@@ -150,37 +177,38 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I <strong>(have visited / visited)</strong> Paris last year.</li>
-      <li>She <strong>(has finished / finished)</strong> her homework already.</li>
-      <li>We <strong>(have lived / lived)</strong> here since 2015.</li>
-      <li>They <strong>(saw / have seen)</strong> that movie yesterday.</li>
-      <li>He <strong>(has never eaten / never ate)</strong> sushi.</li>
-      <li>I <strong>(have just arrived / just arrived)</strong> home.</li>
+      <li>I <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">have visited</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">visited</button></span> Paris last year.</li>
+      <li>She <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">has finished</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">finished</button></span> her homework already.</li>
+      <li>We <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">have lived</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">lived</button></span> here since 2015.</li>
+      <li>They <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">saw</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">have seen</button></span> that movie yesterday.</li>
+      <li>He <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">has never eaten</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">never ate</button></span> sushi.</li>
+      <li>I <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">have just arrived</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">just arrived</button></span> home.</li>
     </ol>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each base verb (1–6) to its past participle (a–f).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. go ___</div><div>a. done</div>
-      <div>2. see ___</div><div>b. gone</div>
-      <div>3. eat ___</div><div>c. taken</div>
-      <div>4. do ___</div><div>d. seen</div>
-      <div>5. write ___</div><div>e. eaten</div>
-      <div>6. take ___</div><div>f. written</div>
+      <div>1. go <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>a. done</div>
+      <div>2. see <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>b. gone</div>
+      <div>3. eat <select class="iq-select" onchange="checkSelect(this,'e')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>c. taken</div>
+      <div>4. do <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>d. seen</div>
+      <div>5. write <select class="iq-select" onchange="checkSelect(this,'f')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>e. eaten</div>
+      <div>6. take <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>f. written</div>
     </div>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank: put the verb in brackets into past simple or present perfect.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I ______ (visit) my grandmother last weekend.</li>
-      <li>She ______ (not/finish) her homework yet.</li>
-      <li>We ______ (live) in this house since 2018.</li>
-      <li>He ______ (lose) his keys yesterday.</li>
-      <li>______ you ever ______ (be) to Japan?</li>
-      <li>They ______ (already/leave).</li>
+      <li>I <input class="iq-input" id="ex3-1"> (visit) my grandmother last weekend.</li>
+      <li>She <input class="iq-input" id="ex3-2"> (not/finish) her homework yet.</li>
+      <li>We <input class="iq-input" id="ex3-3"> (live) in this house since 2018.</li>
+      <li>He <input class="iq-input" id="ex3-4"> (lose) his keys yesterday.</li>
+      <li><input class="iq-input" id="ex3-5" style="min-width:70px;"> you ever <input class="iq-input" id="ex3-6" style="min-width:70px;"> (be) to Japan?</li>
+      <li>They <input class="iq-input" id="ex3-7"> (already/leave).</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <!-- ===== A2 ===== -->
@@ -190,35 +218,37 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Tom has worked at the same company for eight years. He started there right after university and has never changed jobs. Last year, he finished a big project that won an award. He hasn't taken a vacation since then because he has been very busy. Yesterday, he finally booked a trip to Italy for next month.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Tom has worked at the company for eight years. ___</li>
-      <li>He changed jobs last year. ___</li>
-      <li>His project won an award last year. ___</li>
-      <li>He has taken several vacations recently. ___</li>
-      <li>He booked a trip yesterday. ___</li>
+      <li>Tom has worked at the company for eight years. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>He changed jobs last year. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>His project won an award last year. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>He has taken several vacations recently. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>He booked a trip yesterday. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write negatives (1–2) and questions (3–4), choosing the correct tense.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I (not/see) that film yet. → ______________________</li>
-      <li>She (not/call) me last night. → ______________________</li>
-      <li>___ you ___ (finish) the report yet?</li>
-      <li>___ they ___ (go) to the party last Friday?</li>
-      <li>He (not/visit) his parents since June. → ______________________</li>
-      <li>We (not/have) time to eat breakfast this morning. → ______________________</li>
+      <li>I (not/see) that film yet. → <input class="iq-input iq-input-wide" id="ex5-1"></li>
+      <li>She (not/call) me last night. → <input class="iq-input iq-input-wide" id="ex5-2"></li>
+      <li><input class="iq-input" id="ex5-3" style="min-width:70px;"> you <input class="iq-input" id="ex5-4" style="min-width:70px;"> (finish) the report yet?</li>
+      <li><input class="iq-input" id="ex5-5" style="min-width:70px;"> they <input class="iq-input" id="ex5-6" style="min-width:70px;"> (go) to the party last Friday?</li>
+      <li>He (not/visit) his parents since June. → <input class="iq-input iq-input-wide" id="ex5-7"></li>
+      <li>We (not/have) time to eat breakfast this morning. → <input class="iq-input iq-input-wide" id="ex5-8"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Rome / never / I / to / have / been</li>
-      <li>yesterday / bought / a / new / car / she</li>
-      <li>since / worked / he / here / has / 2020</li>
-      <li>finished / already / homework / I / my / have</li>
-      <li>did / when / you / arrive / ?</li>
+      <li>Rome / never / I / to / have / been <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>yesterday / bought / a / new / car / she <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>since / worked / he / here / has / 2020 <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>finished / already / homework / I / my / have <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>did / when / you / arrive / ? <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <!-- ===== B1 ===== -->
@@ -227,35 +257,37 @@
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I have seen that movie last night.</li>
-      <li>Did you ever visit London?</li>
-      <li>He has went to the store already.</li>
-      <li>We didn't finished the project yet.</li>
-      <li>I have bought this car in 2019.</li>
-      <li>She has live in Paris for three years.</li>
+      <li>I have seen that movie last night. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>Did you ever visit London? <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>He has went to the store already. <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>We didn't finished the project yet. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>I have bought this car in 2019. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>She has live in Paris for three years. <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Combine each pair into one present perfect sentence with for/since.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I moved to this city in 2015. I still live here.</li>
-      <li>He started this job three years ago. He still works there.</li>
-      <li>She began studying Spanish in January. She is still studying it.</li>
-      <li>They got married in 2010. They are still married.</li>
-      <li>We started waiting at 3 o'clock. We are still waiting.</li>
+      <li>I moved to this city in 2015. I still live here. <input class="iq-input iq-input-wide" id="ex8-1" placeholder="rewrite…"></li>
+      <li>He started this job three years ago. He still works there. <input class="iq-input iq-input-wide" id="ex8-2" placeholder="rewrite…"></li>
+      <li>She began studying Spanish in January. She is still studying it. <input class="iq-input iq-input-wide" id="ex8-3" placeholder="rewrite…"></li>
+      <li>They got married in 2010. They are still married. <input class="iq-input iq-input-wide" id="ex8-4" placeholder="rewrite…"></li>
+      <li>We started waiting at 3 o'clock. We are still waiting. <input class="iq-input iq-input-wide" id="ex8-5" placeholder="rewrite…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: choose the word that completes each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I have finished my work ___. a) yesterday&nbsp; b) already&nbsp; c) last week</li>
-      <li>She went to Canada ___. a) last summer&nbsp; b) since 2019&nbsp; c) yet</li>
-      <li>Have you ___ tried sushi? a) ever&nbsp; b) ago&nbsp; c) yesterday</li>
-      <li>We saw that film ___. a) already&nbsp; b) two days ago&nbsp; c) since Monday</li>
-      <li>He has lived here ___. a) for ten years&nbsp; b) ten years ago&nbsp; c) last year</li>
-      <li>They arrived ___. a) just&nbsp; b) yet&nbsp; c) an hour ago</li>
+      <li>I have finished my work ___. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) yesterday</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) already</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">c) last week</button></span></li>
+      <li>She went to Canada ___. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) last summer</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) since 2019</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">c) yet</button></span></li>
+      <li>Have you ___ tried sushi? <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) ever</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) ago</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">c) yesterday</button></span></li>
+      <li>We saw that film ___. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) already</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) two days ago</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">c) since Monday</button></span></li>
+      <li>He has lived here ___. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) for ten years</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) ten years ago</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">c) last year</button></span></li>
+      <li>They arrived ___. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) just</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) yet</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">c) an hour ago</button></span></li>
     </ol>
   </div>
 
@@ -266,33 +298,31 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Although Sarah has worked as a journalist for over a decade, she still remembers the first article she wrote, which was published when she was only nineteen. Since she joined her current newspaper five years ago, she has covered stories on every continent except Antarctica. Last month, she travelled to a conflict zone for the first time, an experience that has changed the way she thinks about her profession. She hasn't decided yet whether she will accept the promotion she was offered last week, because it would mean giving up fieldwork, which she has always loved.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Sarah has been a journalist for more than ten years. ___</li>
-      <li>She has covered stories on every continent, including Antarctica. ___</li>
-      <li>She travelled to a conflict zone last month for the first time. ___</li>
-      <li>She has already decided to accept the promotion. ___</li>
-      <li>She was offered a promotion last week. ___</li>
+      <li>Sarah has been a journalist for more than ten years. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>She has covered stories on every continent, including Antarctica. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>She travelled to a conflict zone last month for the first time. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>She has already decided to accept the promotion. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>She was offered a promotion last week. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I have seen him yesterday.</li>
-      <li>She has been to Japan when she was a student.</li>
-      <li>He hasn't called since two days.</li>
-      <li>We have finished the report last Friday.</li>
-      <li>Have you ever went to Egypt?</li>
-      <li>They lived here since 2015.</li>
+      <li>I have seen him yesterday. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>She has been to Japan when she was a student. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>He hasn't called since two days. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>We have finished the report last Friday. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>Have you ever went to Egypt? <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>They lived here since 2015. <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write about a personal experience in 6–8 sentences. Use the <strong>present perfect</strong> for life experiences and <strong>past simple</strong> for the specific details, including <strong>at least three time expressions</strong> from the reference table.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <!-- ===== C1 ===== -->
@@ -301,35 +331,37 @@
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal register, keeping the same tense.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I've never seen anything like that before.</li>
-      <li>We already sorted it out.</li>
-      <li>She just told me the news.</li>
-      <li>They didn't finish the project on time.</li>
-      <li>He's worked here for ages.</li>
+      <li>I've never seen anything like that before. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>We already sorted it out. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>She just told me the news. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>They didn't finish the project on time. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>He's worked here for ages. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: choose the correct sentence in each pair.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"Unemployment has risen sharply this quarter." Which continues correctly? a) It rose from 4% to 6% between April and June. b) It has risen from 4% to 6% between April and June.</li>
-      <li>Which describes a period that is now over? a) This week has been extremely busy. b) Last week was extremely busy.</li>
-      <li>Said at 11 a.m., while it is still morning: a) I have finished the report this morning. b) I finished the report this morning.</li>
-      <li>About Shakespeare (deceased): a) Shakespeare has written 37 plays. b) Shakespeare wrote 37 plays.</li>
-      <li>About a living author, mid-career: a) She has written twelve novels so far. b) She wrote twelve novels so far.</li>
-      <li>a) I've never been so embarrassed in my life! b) I never was so embarrassed in my life!</li>
+      <li>"Unemployment has risen sharply this quarter." Which continues correctly? <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) It rose from 4% to 6% between April and June.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) It has risen from 4% to 6% between April and June.</button></span></li>
+      <li>Which describes a period that is now over? <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) This week has been extremely busy.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) Last week was extremely busy.</button></span></li>
+      <li>Said at 11 a.m., while it is still morning: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) I have finished the report this morning.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) I finished the report this morning.</button></span></li>
+      <li>About Shakespeare (deceased): <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) Shakespeare has written 37 plays.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) Shakespeare wrote 37 plays.</button></span></li>
+      <li>About a living author, mid-career: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) She has written twelve novels so far.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) She wrote twelve novels so far.</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) I've never been so embarrassed in my life!</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) I never was so embarrassed in my life!</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Since she has moved to Berlin two years ago, she learned German fluently.</li>
-      <li>Although he has finished the marathon last year, he still hasn't recovered fully.</li>
-      <li>By the time she arrived, the meeting has already started.</li>
-      <li>I have never eaten so much when I was there.</li>
-      <li>He has already left before she has arrived.</li>
+      <li>Since she has moved to Berlin two years ago, she learned German fluently. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>Although he has finished the marathon last year, he still hasn't recovered fully. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>By the time she arrived, the meeting has already started. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>I have never eaten so much when I was there. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>He has already left before she has arrived. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <!-- ===== C2 ===== -->
@@ -338,33 +370,31 @@
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a short professional biography of a public figure's career in a formal register. Alternate correctly between the <strong>present perfect</strong> (career overview, achievements to date) and <strong>past simple</strong> (specific dated events).</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>has / long / for / argued / that / economists / immigration / benefits / economies</li>
-      <li>two / decades / spent / researcher / studying / climate / the / patterns / has</li>
-      <li>rarely / achievement / such / witnessed / has / committee / the</li>
-      <li>already / implemented / reforms / the / government / far-reaching / has</li>
-      <li>concluded / investigation / officially / yesterday / the</li>
+      <li>has / long / for / argued / that / economists / immigration / benefits / economies <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>two / decades / spent / researcher / studying / climate / the / patterns / has <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>rarely / achievement / such / witnessed / has / committee / the <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>already / implemented / reforms / the / government / far-reaching / has <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>concluded / investigation / officially / yesterday / the <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors (idiomatic present perfect uses).</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>This is the first time I have went to an opera.</li>
-      <li>That is the best film I never watched.</li>
-      <li>He is the most talented musician I have ever meet.</li>
-      <li>Nobody has ever climb that mountain solo.</li>
-      <li>It's been years since I haven't seen her.</li>
+      <li>This is the first time I have went to an opera. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>That is the best film I never watched. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>He is the most talented musician I have ever meet. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>Nobody has ever climb that mountain solo. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>It's been years since I haven't seen her. <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <!-- ============ ANSWER KEY ============ -->
@@ -432,6 +462,131 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* -- Interactive exercises -- */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['visited'] },
+    { accept: ["hasn't finished", 'has not finished'] },
+    { accept: ['have lived'] },
+    { accept: ['lost'] },
+    { accept: ['have'] },
+    { accept: ['been'] },
+    { accept: ['have already left'] }
+  ]},
+  ex5: { type: 'lenient', items: [
+    { accept: ["haven't seen that film yet", 'have not seen that film yet'] },
+    { accept: ["didn't call me last night", 'did not call me last night'] },
+    { accept: ['have'] },
+    { accept: ['finished'] },
+    { accept: ['did'] },
+    { accept: ['go'] },
+    { accept: ["hasn't visited his parents since june", 'has not visited his parents since june'] },
+    { accept: ["didn't have time to eat breakfast this morning", 'did not have time to eat breakfast this morning'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['i have never been to rome'] },
+    { accept: ['she bought a new car yesterday'] },
+    { accept: ['he has worked here since 2020'] },
+    { accept: ['i have already finished my homework'] },
+    { accept: ['when did you arrive'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['i saw that movie last night'] },
+    { accept: ['have you ever visited london'] },
+    { accept: ['he has gone to the store already'] },
+    { accept: ["we haven't finished the project yet", 'we have not finished the project yet'] },
+    { accept: ['i bought this car in 2019'] },
+    { accept: ['she has lived in paris for three years'] }
+  ]},
+  ex8: { type: 'lenient', items: [
+    { accept: ['i have lived in this city since 2015'] },
+    { accept: ['he has worked here for three years'] },
+    { accept: ['she has studied spanish since january'] },
+    { accept: ['they have been married since 2010'] },
+    { accept: ['we have waited since 3'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['i saw him yesterday'] },
+    { accept: ['she went to japan when she was a student'] },
+    { accept: ["he hasn't called for two days", 'he has not called for two days'] },
+    { accept: ['we finished the report last friday'] },
+    { accept: ['have you ever gone to egypt'] },
+    { accept: ['they have lived here since 2015'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['never encountered anything comparable'] },
+    { accept: ['has already been resolved'] },
+    { accept: ['has just informed me of the news'] },
+    { accept: ['was not completed on time'] },
+    { accept: ['considerable period'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['she moved to berlin two years ago, she has learned german fluently'] },
+    { accept: ["he finished the marathon last year, he still hasn't recovered fully", 'he finished the marathon last year, he still has not recovered fully'] },
+    { accept: ['the meeting had already started'] },
+    { accept: ['i never ate so much'] },
+    { accept: ['he had already left before she arrived'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['economists have long argued that immigration benefits economies'] },
+    { accept: ['the researcher has spent two decades studying climate patterns'] },
+    { accept: ['the committee has rarely witnessed such an achievement'] },
+    { accept: ['the government has already implemented far-reaching reforms', 'the government has already implemented far reaching reforms'] },
+    { accept: ['the investigation officially concluded yesterday'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['this is the first time i have gone to an opera'] },
+    { accept: ['that is the best film i have ever watched'] },
+    { accept: ['he is the most talented musician i have ever met'] },
+    { accept: ['nobody has ever climbed that mountain solo'] },
+    { accept: ["it's been years since i saw her", 'it has been years since i saw her', "haven't seen her for years", 'have not seen her for years'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

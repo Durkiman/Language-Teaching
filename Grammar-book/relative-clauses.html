@@ -8,8 +8,33 @@
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
     @media print {
-      #answerToggleBtn { display: none !important; }
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
     }
   </style>
 </head>
@@ -133,36 +158,37 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle who or which.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The man <strong>(who / which)</strong> lives next door is nice.</li>
-      <li>The book <strong>(who / which)</strong> is on the table is mine.</li>
-      <li>The dog <strong>(who / which)</strong> barks a lot is ours.</li>
-      <li>The teacher <strong>(who / which)</strong> helped me is kind.</li>
-      <li>The car <strong>(who / which)</strong> is red is fast.</li>
-      <li>The girl <strong>(who / which)</strong> sings well is my sister.</li>
+      <li>The man <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">who</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">which</button></span> lives next door is nice.</li>
+      <li>The book <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">who</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">which</button></span> is on the table is mine.</li>
+      <li>The dog <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">who</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">which</button></span> barks a lot is ours.</li>
+      <li>The teacher <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">who</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">which</button></span> helped me is kind.</li>
+      <li>The car <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">who</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">which</button></span> is red is fast.</li>
+      <li>The girl <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">who</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">which</button></span> sings well is my sister.</li>
     </ol>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each sentence half (1–5) to its ending (a–e).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. The house</div><div>a. who teaches maths.</div>
-      <div>2. The woman</div><div>b. where we met.</div>
-      <div>3. The café</div><div>c. which is blue is mine.</div>
-      <div>4. The man</div><div>d. whose dog barked.</div>
-      <div>5. The pen</div><div>e. that I lost.</div>
+      <div>1. The house <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>a. who teaches maths.</div>
+      <div>2. The woman <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>b. where we met.</div>
+      <div>3. The café <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>c. which is blue is mine.</div>
+      <div>4. The man <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>d. whose dog barked.</div>
+      <div>5. The pen <select class="iq-select" onchange="checkSelect(this,'e')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>e. that I lost.</div>
     </div>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank with who, which, or where.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The boy ______ lives here is my friend.</li>
-      <li>The bag ______ is on the chair is mine.</li>
-      <li>The park ______ we play is near my house.</li>
-      <li>The woman ______ called is my mother.</li>
-      <li>The book ______ I bought is interesting.</li>
-      <li>The school ______ I study is big.</li>
+      <li>The boy <input class="iq-input" id="ex3-1"> lives here is my friend.</li>
+      <li>The bag <input class="iq-input" id="ex3-2"> is on the chair is mine.</li>
+      <li>The park <input class="iq-input" id="ex3-3"> we play is near my house.</li>
+      <li>The woman <input class="iq-input" id="ex3-4"> called is my mother.</li>
+      <li>The book <input class="iq-input" id="ex3-5"> I bought is interesting.</li>
+      <li>The school <input class="iq-input" id="ex3-6"> I study is big.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <!-- ===== A2 ===== -->
@@ -172,34 +198,36 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">The restaurant where we had dinner last night was excellent. The chef, who trained in Paris, prepared a dish that everyone loved. The waiter, whose name I forget, recommended a dessert which was delicious. We're planning to go back next month, on the date when my sister visits.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The restaurant was excellent. ___</li>
-      <li>The chef trained in London. ___</li>
-      <li>The waiter recommended a dessert. ___</li>
-      <li>Everyone loved the dish. ___</li>
-      <li>They're returning when the sister visits. ___</li>
+      <li>The restaurant was excellent. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The chef trained in London. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The waiter recommended a dessert. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Everyone loved the dish. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>They're returning when the sister visits. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Combine each pair into one sentence with a relative pronoun.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I have a friend. She lives in Madrid. → ______________________</li>
-      <li>This is the book. I told you about it. → ______________________</li>
-      <li>That's the house. My grandparents lived there. → ______________________</li>
-      <li>She's the woman. Her car was stolen. → ______________________</li>
-      <li>I remember the day. We first met that day. → ______________________</li>
+      <li>I have a friend. She lives in Madrid. → <input class="iq-input iq-input-wide" id="ex5-1" placeholder="rewrite…"></li>
+      <li>This is the book. I told you about it. → <input class="iq-input iq-input-wide" id="ex5-2" placeholder="rewrite…"></li>
+      <li>That's the house. My grandparents lived there. → <input class="iq-input iq-input-wide" id="ex5-3" placeholder="rewrite…"></li>
+      <li>She's the woman. Her car was stolen. → <input class="iq-input iq-input-wide" id="ex5-4" placeholder="rewrite…"></li>
+      <li>I remember the day. We first met that day. → <input class="iq-input iq-input-wide" id="ex5-5" placeholder="rewrite…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>man / lives / who / next / the / door / is / kind</li>
-      <li>bought / the / I / book / which / is / interesting</li>
-      <li>where / met / café / the / we / closed</li>
-      <li>dog / whose / barked / the / owner / left</li>
-      <li>year / born / the / when / was / I</li>
+      <li>man / lives / who / next / the / door / is / kind <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>bought / the / I / book / which / is / interesting <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>where / met / café / the / we / closed <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>dog / whose / barked / the / owner / left <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>year / born / the / when / was / I <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <!-- ===== B1 ===== -->
@@ -208,35 +236,36 @@
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The man which called is my uncle.</li>
-      <li>My sister, that lives in Rome, is visiting.</li>
-      <li>This is the house, which I grew up.</li>
-      <li>The girl who's bag was stolen is upset.</li>
-      <li>The book that I'm read is great.</li>
-      <li>The place where I born is small.</li>
+      <li>The man which called is my uncle. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>My sister, that lives in Rome, is visiting. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>This is the house, which I grew up. <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>The girl who's bag was stolen is upset. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>The book that I'm read is great. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>The place where I born is small. <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Decide if each clause is defining (D) or non-defining (N) and punctuate.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>My brother _____ who lives in Canada _____ is a doctor.</li>
-      <li>The students _____ who studied hard _____ passed.</li>
-      <li>Paris _____ which is the capital of France _____ is beautiful.</li>
-      <li>The phone _____ which I bought last week _____ is already broken.</li>
-      <li>My mother _____ who taught me to cook _____ is retiring.</li>
+      <li>My brother ___ who lives in Canada ___ is a doctor. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">D — no commas</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">N — commas</button></span></li>
+      <li>The students ___ who studied hard ___ passed. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">D — no commas</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">N — commas</button></span></li>
+      <li>Paris ___ which is the capital of France ___ is beautiful. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">D — no commas</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">N — commas</button></span></li>
+      <li>The phone ___ which I bought last week ___ is already broken. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">D — no commas</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">N — commas</button></span></li>
+      <li>My mother ___ who taught me to cook ___ is retiring. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">D — no commas</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">N — commas</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: choose the correct pronoun/punctuation.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The house ___ I grew up in was sold. a) where&nbsp; b) which</li>
-      <li>My father, ___ works in finance, travels often. a) that&nbsp; b) who</li>
-      <li>This is the reason ___ I called. a) why&nbsp; b) which</li>
-      <li>The film ___ we watched was boring. a) whom&nbsp; b) that</li>
-      <li>She got the job, ___ surprised everyone. a) which&nbsp; b) that</li>
-      <li>The man ___ car was stolen reported it. a) who's&nbsp; b) whose</li>
+      <li>The house ___ I grew up in was sold. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) where</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) which</button></span></li>
+      <li>My father, ___ works in finance, travels often. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) that</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) who</button></span></li>
+      <li>This is the reason ___ I called. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) why</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) which</button></span></li>
+      <li>The film ___ we watched was boring. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) whom</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) that</button></span></li>
+      <li>She got the job, ___ surprised everyone. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) which</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) that</button></span></li>
+      <li>The man ___ car was stolen reported it. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) who's</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) whose</button></span></li>
     </ol>
   </div>
 
@@ -247,33 +276,31 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">The professor, whose research focuses on climate policy, published a paper which challenged the assumptions that most economists had accepted for decades. The journal in which it appeared is highly regarded, and several colleagues who reviewed the paper praised its rigour. However, a few critics, whose objections were largely methodological, argued that the sample size, which was relatively small, undermined the conclusions.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The professor's research focuses on trade policy. ___</li>
-      <li>The paper challenged widely accepted assumptions. ___</li>
-      <li>The journal is poorly regarded. ___</li>
-      <li>Some colleagues praised the paper's rigour. ___</li>
-      <li>Critics objected mainly on methodological grounds. ___</li>
+      <li>The professor's research focuses on trade policy. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The paper challenged widely accepted assumptions. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The journal is poorly regarded. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Some colleagues praised the paper's rigour. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Critics objected mainly on methodological grounds. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The report, that was published yesterday, is controversial.</li>
-      <li>The colleague to who I spoke was helpful.</li>
-      <li>This is the reason of which I resigned.</li>
-      <li>The building, who was constructed in 1990, is being renovated.</li>
-      <li>The data which was collected is unreliable, that concerns the board.</li>
-      <li>My manager, that I respect, is retiring.</li>
+      <li>The report, that was published yesterday, is controversial. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>The colleague to who I spoke was helpful. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>This is the reason of which I resigned. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>The building, who was constructed in 1990, is being renovated. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>The data which was collected is unreliable, that concerns the board. <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>My manager, that I respect, is retiring. <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Describe a place or person important to you in 5–7 sentences. Use at least one <strong>defining</strong> and one <strong>non-defining</strong> relative clause, correctly punctuated.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <!-- ===== C1 ===== -->
@@ -282,35 +309,37 @@
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal register, moving the preposition before the pronoun.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The client who I dealt with was satisfied.</li>
-      <li>The issue which we're worried about is unresolved.</li>
-      <li>The team who I worked with achieved great results.</li>
-      <li>The project which she's responsible for is delayed.</li>
-      <li>The colleague who I reported to has resigned.</li>
+      <li>The client who I dealt with was satisfied. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>The issue which we're worried about is unresolved. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>The team who I worked with achieved great results. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>The project which she's responsible for is delayed. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>The colleague who I reported to has resigned. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: what does the relative clause add here?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"The proposal, which was rejected, cost months of work." → a) essential identification&nbsp; b) extra commentary on the whole proposal</li>
-      <li>"Employees who arrive late will be warned." → a) refers only to those employees&nbsp; b) refers to all employees</li>
-      <li>"The CEO, whose decision surprised everyone, resigned." → a) defining&nbsp; b) non-defining</li>
-      <li>"The findings, which contradicted expectations, were published." → a) identifies which findings&nbsp; b) comments on all the findings</li>
-      <li>"The one strategy that worked was outsourcing." → a) defining, singles it out&nbsp; b) non-defining, extra detail</li>
-      <li>"He lost the case, which was unexpected." → a) refers to the whole preceding clause&nbsp; b) refers only to "the case"</li>
+      <li>"The proposal, which was rejected, cost months of work." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) essential identification</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) extra commentary on the whole proposal</button></span></li>
+      <li>"Employees who arrive late will be warned." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) refers only to those employees</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) refers to all employees</button></span></li>
+      <li>"The CEO, whose decision surprised everyone, resigned." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) defining</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) non-defining</button></span></li>
+      <li>"The findings, which contradicted expectations, were published." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) identifies which findings</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) comments on all the findings</button></span></li>
+      <li>"The one strategy that worked was outsourcing." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) defining, singles it out</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) non-defining, extra detail</button></span></li>
+      <li>"He lost the case, which was unexpected." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) refers to the whole preceding clause</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) refers only to "the case"</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The strategy, that was proposed last year, failed to deliver results.</li>
-      <li>The board members, who's votes were decisive, remained silent.</li>
-      <li>The market, which conditions had deteriorated, forced a policy change.</li>
-      <li>The candidate whom was hired lacked the necessary experience.</li>
-      <li>The findings which the report was based were later disputed.</li>
+      <li>The strategy, that was proposed last year, failed to deliver results. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>The board members, who's votes were decisive, remained silent. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>The market, which conditions had deteriorated, forced a policy change. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>The candidate whom was hired lacked the necessary experience. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>The findings which the report was based were later disputed. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <!-- ===== C2 ===== -->
@@ -319,33 +348,31 @@
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal profile of a person or organisation, using a range of relative clauses (defining, non-defining, reduced) to embed detail elegantly.</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>whom / spoke / the / executive / to / I / resigned</li>
-      <li>proposal / which / rejected / the / board / by / was / stalled / progress</li>
-      <li>report / findings / the / whose / disputed / were / widely</li>
-      <li>firm / for / worked / which / I / the / closed</li>
-      <li>decision / surprised / everyone / whose / director / the / resigned</li>
+      <li>whom / spoke / the / executive / to / I / resigned <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>proposal / which / rejected / the / board / by / was / stalled / progress <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>report / findings / the / whose / disputed / were / widely <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>firm / for / worked / which / I / the / closed <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>decision / surprised / everyone / whose / director / the / resigned <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The executive to whom I spoke to has resigned.</li>
-      <li>The proposal, which the board rejected it, stalled progress.</li>
-      <li>The report who's findings were disputed was withdrawn.</li>
-      <li>The firm which I worked for it has closed.</li>
-      <li>The director, which decision surprised everyone, resigned.</li>
+      <li>The executive to whom I spoke to has resigned. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>The proposal, which the board rejected it, stalled progress. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>The report who's findings were disputed was withdrawn. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>The firm which I worked for it has closed. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>The director, which decision surprised everyone, resigned. <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <!-- ============ ANSWER KEY ============ -->
@@ -413,6 +440,120 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* -- Interactive exercises -- */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['who'] },
+    { accept: ['which'] },
+    { accept: ['where'] },
+    { accept: ['who'] },
+    { accept: ['which'] },
+    { accept: ['where'] }
+  ]},
+  ex5: { type: 'lenient', items: [
+    { accept: ['i have a friend who lives in madrid'] },
+    { accept: ['this is the book i told you about', 'this is the book that i told you about'] },
+    { accept: ["that's the house where my grandparents lived", 'that is the house where my grandparents lived'] },
+    { accept: ["she's the woman whose car was stolen", 'she is the woman whose car was stolen'] },
+    { accept: ['i remember the day when we first met'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['the man who lives next door is kind'] },
+    { accept: ['the book which i bought is interesting'] },
+    { accept: ['the café where we met closed', 'the cafe where we met closed'] },
+    { accept: ['the dog whose owner left barked'] },
+    { accept: ['the year when i was born'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['the man who called is my uncle'] },
+    { accept: ['my sister, who lives in rome, is visiting', 'my sister who lives in rome is visiting'] },
+    { accept: ['this is the house where i grew up'] },
+    { accept: ['the girl whose bag was stolen is upset'] },
+    { accept: ["the book that i'm reading is great", 'the book that i am reading is great'] },
+    { accept: ['the place where i was born is small'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['which was published yesterday'] },
+    { accept: ['to whom i spoke'] },
+    { accept: ['the reason why i resigned'] },
+    { accept: ['which was constructed in 1990'] },
+    { accept: ['which concerns the board'] },
+    { accept: ['whom i respect'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['the client with whom i dealt was satisfied'] },
+    { accept: ["the issue about which we're worried is unresolved", 'the issue about which we are worried is unresolved'] },
+    { accept: ['the team with whom i worked achieved great results'] },
+    { accept: ["the project for which she's responsible is delayed", 'the project for which she is responsible is delayed'] },
+    { accept: ['the colleague to whom i reported has resigned'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['which was proposed last year'] },
+    { accept: ['whose votes were decisive'] },
+    { accept: ['whose conditions had deteriorated'] },
+    { accept: ['the candidate who was hired'] },
+    { accept: ['on which the report was based'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['the executive to whom i spoke resigned'] },
+    { accept: ['the proposal, which was rejected by the board, stalled progress', 'the proposal which was rejected by the board stalled progress'] },
+    { accept: ['the report, whose findings were widely disputed', 'the report whose findings were widely disputed'] },
+    { accept: ['the firm for which i worked closed'] },
+    { accept: ['the director, whose decision surprised everyone, resigned', 'the director whose decision surprised everyone resigned'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['to whom i spoke has resigned'] },
+    { accept: ['which the board rejected, stalled progress', 'which the board rejected stalled progress'] },
+    { accept: ['whose findings were disputed'] },
+    { accept: ['which i worked for has closed'] },
+    { accept: ['whose decision surprised everyone, resigned', 'whose decision surprised everyone resigned'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

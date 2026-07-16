@@ -9,6 +9,34 @@
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
     @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
+
   </style>
 </head>
 <body>
@@ -70,33 +98,34 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li><strong>(There is / There are)</strong> a cat in the garden.</li>
-      <li><strong>(There is / There are)</strong> five chairs.</li>
-      <li><strong>(There is / There are)</strong> some milk in the fridge.</li>
-      <li><strong>(There is / There are)</strong> two windows.</li>
-      <li><strong>(There is / There are)</strong> a lot of people here.</li>
-      <li><strong>(There is / There are)</strong> a park near my house.</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">There is</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">There are</button></span> a cat in the garden.</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">There is</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">There are</button></span> five chairs.</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">There is</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">There are</button></span> some milk in the fridge.</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">There is</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">There are</button></span> two windows.</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">There is</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">There are</button></span> a lot of people here.</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">There is</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">There are</button></span> a park near my house.</li>
     </ol>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each sentence (1–4) to what it describes (a–d).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. There's a spider!</div><div>a. quantity</div>
-      <div>2. There are ten students.</div><div>b. warning/surprise</div>
-      <div>3. Is there any bread?</div><div>c. question about existence</div>
-      <div>4. There isn't a shop nearby.</div><div>d. absence</div>
+      <div>1. There's a spider! <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>a. quantity</div>
+      <div>2. There are ten students. <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>b. warning/surprise</div>
+      <div>3. Is there any bread? <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>c. question about existence</div>
+      <div>4. There isn't a shop nearby. <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>d. absence</div>
     </div>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank with "is" or "are".</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>There ______ a bank on this street.</li>
-      <li>There ______ three bedrooms.</li>
-      <li>There ______ some water in the bottle.</li>
-      <li>There ______ many tourists in summer.</li>
-      <li>There ______ a problem.</li>
-      <li>There ______ two ways to solve this.</li>
+      <li>There <input class="iq-input" id="ex3-1"> a bank on this street.</li>
+      <li>There <input class="iq-input" id="ex3-2"> three bedrooms.</li>
+      <li>There <input class="iq-input" id="ex3-3"> some water in the bottle.</li>
+      <li>There <input class="iq-input" id="ex3-4"> many tourists in summer.</li>
+      <li>There <input class="iq-input" id="ex3-5"> a problem.</li>
+      <li>There <input class="iq-input" id="ex3-6"> two ways to solve this.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
@@ -104,61 +133,65 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">There's a small café near the station. It's very popular in the mornings. There are only six tables, so there isn't always space to sit down. There's no wifi, but there's great coffee. Last year there was a fire in the kitchen, but there wasn't any serious damage.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>There is a café near the station. ___</li>
-      <li>There are ten tables. ___</li>
-      <li>There is always space to sit down. ___</li>
-      <li>There is wifi. ___</li>
-      <li>There was serious damage after the fire. ___</li>
+      <li>There is a café near the station. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>There are ten tables. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>There is always space to sit down. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>There is wifi. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>There was serious damage after the fire. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write negatives (1, 3) and questions (2, 4).</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>There ______ (be/not) any eggs left.</li>
-      <li>___ there ___ (be) a doctor here?</li>
-      <li>There ______ (be/not) enough chairs.</li>
-      <li>___ there ___ (be) any tickets left?</li>
+      <li>There <input class="iq-input" id="ex5-1"> (be/not) any eggs left.</li>
+      <li><input class="iq-input" id="ex5-2"> there (be) a doctor here?</li>
+      <li>There <input class="iq-input" id="ex5-3"> (be/not) enough chairs.</li>
+      <li><input class="iq-input" id="ex5-4"> there (be) any tickets left?</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>garden / a / there's / dog / the / in</li>
-      <li>chairs / aren't / there / enough</li>
-      <li>a / near / there / bank / is / here?</li>
-      <li>rooms / house / are / there / the / in / four</li>
-      <li>traffic / there / lot / was / a / of</li>
+      <li>garden / a / there's / dog / the / in <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>chairs / aren't / there / enough <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>a / near / there / bank / is / here? <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>rooms / house / are / there / the / in / four <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>traffic / there / lot / was / a / of <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>It is a problem with the schedule.</li>
-      <li>There is three people waiting.</li>
-      <li>There has a lot of confusion about this.</li>
-      <li>Is there any news? Yes, there is have.</li>
-      <li>There aren't much time left.</li>
-      <li>They are a solution to this.</li>
+      <li>It is a problem with the schedule. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>There is three people waiting. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>There has a lot of confusion about this. <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>Is there any news? Yes, there is have. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>There aren't much time left. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>They are a solution to this. <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Rewrite each statement as a question, then as a negative.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>There is a solution.</li>
-      <li>There are enough seats.</li>
-      <li>There was a delay.</li>
-      <li>There were problems last year.</li>
+      <li>There is a solution. <input class="iq-input iq-input-wide" id="ex8-1" placeholder="write the question…"> <input class="iq-input iq-input-wide" id="ex8-2" placeholder="write the negative…"></li>
+      <li>There are enough seats. <input class="iq-input iq-input-wide" id="ex8-3" placeholder="write the question…"> <input class="iq-input iq-input-wide" id="ex8-4" placeholder="write the negative…"></li>
+      <li>There was a delay. <input class="iq-input iq-input-wide" id="ex8-5" placeholder="write the question…"> <input class="iq-input iq-input-wide" id="ex8-6" placeholder="write the negative…"></li>
+      <li>There were problems last year. <input class="iq-input iq-input-wide" id="ex8-7" placeholder="write the question…"> <input class="iq-input iq-input-wide" id="ex8-8" placeholder="write the negative…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: "there is/are" (new information) or "it is/they are" (referring back)?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"___ a museum in the old town. ___ free on Sundays." a) There's / It's&nbsp; b) It's / There's</li>
-      <li>"___ two options. ___ both good." a) There are / They're&nbsp; b) They're / There are</li>
-      <li>"___ my keys — I found them!" a) There are&nbsp; b) They are</li>
-      <li>"___ a strange noise. Can you hear it?" a) There's&nbsp; b) It's</li>
+      <li>"___ a museum in the old town. ___ free on Sundays." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) There's / It's</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) It's / There's</button></span></li>
+      <li>"___ two options. ___ both good." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) There are / They're</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) They're / There are</button></span></li>
+      <li>"___ my keys — I found them!" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) There are</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) They are</button></span></li>
+      <li>"___ a strange noise. Can you hear it?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) There's</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) It's</button></span></li>
     </ol>
   </div>
 
@@ -167,93 +200,91 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">There has been a noticeable increase in remote job applications this year. There's little doubt that flexible working is now a priority for candidates, and there are signs that companies are adapting their policies accordingly. Even so, there remain significant gaps between what employees want and what's actually on offer — there's still a long way to go before the two fully align.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Remote job applications have increased this year. ___</li>
-      <li>Flexible working is not a priority for candidates. ___</li>
-      <li>Companies are adapting their policies. ___</li>
-      <li>There are no gaps between expectations and reality. ___</li>
-      <li>The two sides fully align already. ___</li>
+      <li>Remote job applications have increased this year. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Flexible working is not a priority for candidates. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Companies are adapting their policies. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>There are no gaps between expectations and reality. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The two sides fully align already. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>There has been three attempts so far.</li>
-      <li>There remains many questions unanswered.</li>
-      <li>There seem to be a misunderstanding.</li>
-      <li>There is bound to be problems.</li>
-      <li>There used to has a cinema here.</li>
-      <li>There is going to has consequences.</li>
+      <li>There has been three attempts so far. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>There remains many questions unanswered. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>There seem to be a misunderstanding. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>There is bound to be problems. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>There used to has a cinema here. <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>There is going to has consequences. <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Describe your neighbourhood in 6–8 sentences using <strong>there is/are</strong> to introduce places and things, then <strong>it/they</strong> to add detail about them.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal register.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>There's loads of evidence for this.</li>
-      <li>There isn't any real proof.</li>
-      <li>There's a chance it could fail.</li>
-      <li>There were tons of complaints.</li>
-      <li>There's got to be a better way.</li>
+      <li>There's loads of evidence for this. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>There isn't any real proof. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>There's a chance it could fail. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>There were tons of complaints. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>There's got to be a better way. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: what does this use of "there" express?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"There seems to be a discrepancy." a) tentative existence/hedging&nbsp; b) location</li>
-      <li>"There arose a serious concern." a) formal, literary emergence&nbsp; b) casual mention</li>
-      <li>"There having been no objection, the motion passed." a) formal absolute construction&nbsp; b) simple statement</li>
-      <li>"Little did there appear to be any hope." a) formal inversion for emphasis&nbsp; b) neutral</li>
+      <li>"There seems to be a discrepancy." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) tentative existence/hedging</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) location</button></span></li>
+      <li>"There arose a serious concern." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) formal, literary emergence</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) casual mention</button></span></li>
+      <li>"There having been no objection, the motion passed." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) formal absolute construction</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) simple statement</button></span></li>
+      <li>"Little did there appear to be any hope." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) formal inversion for emphasis</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) neutral</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>There is arisen several concerns.</li>
-      <li>There having been no further business, the meeting were closed.</li>
-      <li>There is unlikely there to be a resolution soon.</li>
-      <li>There remains to be seen whether it will work.</li>
-      <li>There seems to have been a mistake, isn't it.</li>
+      <li>There is arisen several concerns. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>There having been no further business, the meeting were closed. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>There is unlikely there to be a resolution soon. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>There remains to be seen whether it will work. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>There seems to have been a mistake, isn't it. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal report excerpt on a workplace issue, using <strong>there is/are/remains/appears to be</strong> to introduce findings in a formal, hedged register.</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>be / concerns / to / continue / there / serious</li>
-      <li>remains / whether / seen / be / to / it / there / will / work</li>
-      <li>having / no / further / objection / been / there</li>
-      <li>appears / discrepancy / a / there / be / to</li>
-      <li>doubt / little / there / is / that</li>
+      <li>be / concerns / to / continue / there / serious <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>remains / whether / seen / be / to / it / there / will / work <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>having / no / further / objection / been / there <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>appears / discrepancy / a / there / be / to <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>doubt / little / there / is / that <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>There continues to remain doubts.</li>
-      <li>There is little there to suggest otherwise.</li>
-      <li>There was arisen a complication.</li>
-      <li>There having no objection been raised, we proceeded.</li>
-      <li>There is bound there to be delays.</li>
+      <li>There continues to remain doubts. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>There is little there to suggest otherwise. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>There was arisen a complication. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>There having no objection been raised, we proceeded. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>There is bound there to be delays. <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
@@ -313,6 +344,129 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* -- Interactive exercises -- */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['is'] },
+    { accept: ['are'] },
+    { accept: ['is'] },
+    { accept: ['are'] },
+    { accept: ['is'] },
+    { accept: ['are'] }
+  ]},
+  ex5: { type: 'exact', items: [
+    { accept: ["isn't", 'is not'] },
+    { accept: ['is'] },
+    { accept: ["isn't", 'is not'] },
+    { accept: ['are'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ["there's a dog in the garden", 'there is a dog in the garden'] },
+    { accept: ["there aren't enough chairs", 'there are not enough chairs'] },
+    { accept: ['is there a bank near here'] },
+    { accept: ['there are four rooms in the house'] },
+    { accept: ['there was a lot of traffic'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['there is a problem with the schedule'] },
+    { accept: ['there are three people waiting'] },
+    { accept: ['there is a lot of confusion about this'] },
+    { accept: ['yes there is'] },
+    { accept: ["there isn't much time left", 'there is not much time left'] },
+    { accept: ['there is a solution to this'] }
+  ]},
+  ex8: { type: 'lenient', items: [
+    { accept: ['is there a solution'] },
+    { accept: ["there isn't a solution", 'there is not a solution'] },
+    { accept: ['are there enough seats'] },
+    { accept: ["there aren't enough seats", 'there are not enough seats'] },
+    { accept: ['was there a delay'] },
+    { accept: ["there wasn't a delay", 'there was not a delay'] },
+    { accept: ['were there problems last year'] },
+    { accept: ["there weren't problems last year", 'there were not problems last year'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['there have been three attempts'] },
+    { accept: ['there remain many questions unanswered'] },
+    { accept: ['there seems to be a misunderstanding'] },
+    { accept: ['there are bound to be problems'] },
+    { accept: ['there used to be a cinema here'] },
+    { accept: ['there are going to be consequences'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['great deal of evidence'] },
+    { accept: ['no real proof'] },
+    { accept: ['possibility it could fail'] },
+    { accept: ['numerous complaints'] },
+    { accept: ['must be a better way'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['several concerns have arisen'] },
+    { accept: ['the meeting was closed'] },
+    { accept: ['it is unlikely that there will be a resolution soon'] },
+    { accept: ['it remains to be seen'] },
+    { accept: ["doesn't it", 'does not it'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['there continue to be serious concerns'] },
+    { accept: ['it remains to be seen whether it will work'] },
+    { accept: ['there having been no further objection'] },
+    { accept: ['there appears to be a discrepancy'] },
+    { accept: ['there is little doubt that'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['doubts continue to remain'] },
+    { accept: ['there is little to suggest otherwise'] },
+    { accept: ['a complication arose'] },
+    { accept: ['no objection having been raised, we proceeded', 'no objection having been raised we proceeded'] },
+    { accept: ['there is bound to be delays'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

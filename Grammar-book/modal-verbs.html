@@ -9,6 +9,34 @@
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
     @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
+
   </style>
 </head>
 <body>
@@ -73,33 +101,34 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I <strong>(can / cans)</strong> swim.</li>
-      <li>She <strong>(must / musts)</strong> finish her homework.</li>
-      <li>You <strong>(should / shoulds)</strong> drink more water.</li>
-      <li>We <strong>(have to / has to)</strong> leave now.</li>
-      <li>He <strong>(can / could)</strong> speak three languages.</li>
-      <li>They <strong>(must / musts)</strong> wear seatbelts.</li>
+      <li>I <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">can</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">cans</button></span> swim.</li>
+      <li>She <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">must</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">musts</button></span> finish her homework.</li>
+      <li>You <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">should</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">shoulds</button></span> drink more water.</li>
+      <li>We <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">have to</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">has to</button></span> leave now.</li>
+      <li>He <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">can</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">could</button></span> speak three languages.</li>
+      <li>They <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">must</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">musts</button></span> wear seatbelts.</li>
     </ol>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each modal (1–4) to its meaning (a–d).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. can</div><div>a. ability</div>
-      <div>2. must</div><div>b. strong obligation</div>
-      <div>3. should</div><div>c. advice</div>
-      <div>4. have to</div><div>d. necessity</div>
+      <div>1. can <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>a. ability</div>
+      <div>2. must <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>b. strong obligation</div>
+      <div>3. should <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>c. advice</div>
+      <div>4. have to <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>d. necessity</div>
     </div>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank with the correct modal.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I ______ (can) ride a bike.</li>
-      <li>You ______ (must) wear a helmet.</li>
-      <li>She ______ (should) see a doctor.</li>
-      <li>We ______ (have to) pay the bill today.</li>
-      <li>He ______ (can/not) come to the party.</li>
-      <li>They ______ (must/not) be late.</li>
+      <li>I <input class="iq-input" id="ex3-1"> (can) ride a bike.</li>
+      <li>You <input class="iq-input" id="ex3-2"> (must) wear a helmet.</li>
+      <li>She <input class="iq-input" id="ex3-3"> (should) see a doctor.</li>
+      <li>We <input class="iq-input" id="ex3-4"> (have to) pay the bill today.</li>
+      <li>He <input class="iq-input" id="ex3-5"> (can/not) come to the party.</li>
+      <li>They <input class="iq-input" id="ex3-6"> (must/not) be late.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
@@ -107,64 +136,68 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">At this school, students must wear a uniform every day. They don't have to bring their own lunch because the cafeteria provides meals. Students should arrive by 8 a.m., although they can arrive a little earlier if they want. They mustn't use their phones during class, but they can use them during breaks.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Students must wear a uniform. ___</li>
-      <li>Students have to bring their own lunch. ___</li>
-      <li>Students should arrive by 8 a.m. ___</li>
-      <li>Students can use phones during class. ___</li>
-      <li>Students can use phones during breaks. ___</li>
+      <li>Students must wear a uniform. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Students have to bring their own lunch. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Students should arrive by 8 a.m. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Students can use phones during class. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Students can use phones during breaks. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write negatives (1, 3) and questions (2, 4).</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>You ______ (must/not) smoke here.</li>
-      <li>___ I ___ (can) borrow your pen?</li>
-      <li>We ______ (have to/not) work on Saturdays.</li>
-      <li>___ she ___ (should) apologize?</li>
+      <li>You <input class="iq-input" id="ex5-1"> (must/not) smoke here.</li>
+      <li><input class="iq-input" id="ex5-2"> I (can) borrow your pen?</li>
+      <li>We <input class="iq-input" id="ex5-3"> (have to/not) work on Saturdays.</li>
+      <li><input class="iq-input" id="ex5-4"> she (should) apologize?</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>swim / can / I</li>
-      <li>helmet / must / wear / a / you</li>
-      <li>doctor / see / should / a / she</li>
-      <li>today / pay / have / we / to / the bill</li>
-      <li>borrow / I / your / can / pen?</li>
+      <li>swim / can / I <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>helmet / must / wear / a / you <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>doctor / see / should / a / she <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>today / pay / have / we / to / the bill <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>borrow / I / your / can / pen? <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She can to swim very well.</li>
-      <li>You must to wear a helmet.</li>
-      <li>He musts finish his work.</li>
-      <li>We haves to leave now.</li>
-      <li>I should to see a doctor.</li>
-      <li>They can swims fast.</li>
+      <li>She can to swim very well. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>You must to wear a helmet. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>He musts finish his work. <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>We haves to leave now. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>I should to see a doctor. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>They can swims fast. <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Rewrite each situation using must, mustn't, don't have to, or should.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>It's necessary for you to submit the form by Friday.</li>
-      <li>It's not necessary for you to attend, but you can if you want.</li>
-      <li>It's forbidden to park here.</li>
-      <li>It's a good idea for you to rest more.</li>
-      <li>It's not allowed to smoke indoors.</li>
+      <li>It's necessary for you to submit the form by Friday. <input class="iq-input iq-input-wide" id="ex8-1" placeholder="rewrite…"></li>
+      <li>It's not necessary for you to attend, but you can if you want. <input class="iq-input iq-input-wide" id="ex8-2" placeholder="rewrite…"></li>
+      <li>It's forbidden to park here. <input class="iq-input iq-input-wide" id="ex8-3" placeholder="rewrite…"></li>
+      <li>It's a good idea for you to rest more. <input class="iq-input iq-input-wide" id="ex8-4" placeholder="rewrite…"></li>
+      <li>It's not allowed to smoke indoors. <input class="iq-input iq-input-wide" id="ex8-5" placeholder="rewrite…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: which modal fits the situation?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Company policy requires all employees to wear ID badges. a) must/have to&nbsp; b) should</li>
-      <li>"I think it's a good idea to call her, but it's your choice." a) should&nbsp; b) must</li>
-      <li>A strong personal sense of obligation. a) must&nbsp; b) have to</li>
-      <li>An external rule set by law, not the speaker's opinion. a) have to&nbsp; b) should</li>
-      <li>It's forbidden. a) mustn't&nbsp; b) don't have to</li>
-      <li>It's simply not necessary or required. a) don't have to&nbsp; b) mustn't</li>
+      <li>Company policy requires all employees to wear ID badges. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) must/have to</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) should</button></span></li>
+      <li>"I think it's a good idea to call her, but it's your choice." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) should</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) must</button></span></li>
+      <li>A strong personal sense of obligation. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) must</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) have to</button></span></li>
+      <li>An external rule set by law, not the speaker's opinion. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) have to</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) should</button></span></li>
+      <li>It's forbidden. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) mustn't</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) don't have to</button></span></li>
+      <li>It's simply not necessary or required. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) don't have to</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) mustn't</button></span></li>
     </ol>
   </div>
 
@@ -173,95 +206,93 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Employees must complete mandatory safety training within their first month, according to company policy, although those who have already completed equivalent training elsewhere don't have to repeat it. Managers should encourage staff to ask questions during the sessions, since misunderstanding safety procedures could have serious consequences. Staff mustn't operate heavy machinery without certification, regardless of prior experience. It's also recommended, though not required, that employees review the safety manual annually.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>All employees must complete safety training within their first month. ___</li>
-      <li>Employees who completed equivalent training elsewhere must still repeat it. ___</li>
-      <li>Staff can operate heavy machinery without certification if experienced. ___</li>
-      <li>Reviewing the safety manual annually is mandatory. ___</li>
-      <li>Managers are encouraged to invite questions during training. ___</li>
+      <li>All employees must complete safety training within their first month. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Employees who completed equivalent training elsewhere must still repeat it. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Staff can operate heavy machinery without certification if experienced. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Reviewing the safety manual annually is mandatory. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Managers are encouraged to invite questions during training. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I must go to the dentist tomorrow because my boss scheduled it.</li>
-      <li>You should have call her yesterday.</li>
-      <li>She musts have finished by now.</li>
-      <li>We don't must work on weekends.</li>
-      <li>He must have going through a hard time.</li>
-      <li>They should to apologize.</li>
+      <li>I must go to the dentist tomorrow because my boss scheduled it. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>You should have call her yesterday. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>She musts have finished by now. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>We don't must work on weekends. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>He must have going through a hard time. <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>They should to apologize. <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Describe the rules and recommendations of a place you know well (school, workplace, gym) in 6–8 sentences. Use <strong>must, mustn't, have to, don't have to,</strong> and <strong>should</strong>.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal register.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>You gotta finish this by Friday, no excuses.</li>
-      <li>You don't need to come if you don't want to.</li>
-      <li>It'd probably be smart to double-check the numbers.</li>
-      <li>You can't smoke in here, it's against the rules.</li>
-      <li>He probably should've told them sooner.</li>
+      <li>You gotta finish this by Friday, no excuses. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>You don't need to come if you don't want to. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>It'd probably be smart to double-check the numbers. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>You can't smoke in here, it's against the rules. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>He probably should've told them sooner. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: what does this modal express?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"She must be exhausted after that trip." a) logical deduction&nbsp; b) obligation</li>
-      <li>"The results should arrive by Friday." a) expectation/likelihood&nbsp; b) advice</li>
-      <li>"You needn't have brought a gift." a) you brought one, but it wasn't necessary&nbsp; b) you didn't bring one</li>
-      <li>"I didn't need to bring an umbrella." a) it wasn't necessary, and I probably didn't&nbsp; b) same as needn't have</li>
-      <li>"He can't have finished already." a) deduction that something is impossible&nbsp; b) obligation</li>
-      <li>"You might have told me!" a) mild reproach for something not done&nbsp; b) a polite request</li>
+      <li>"She must be exhausted after that trip." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) logical deduction</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) obligation</button></span></li>
+      <li>"The results should arrive by Friday." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) expectation/likelihood</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) advice</button></span></li>
+      <li>"You needn't have brought a gift." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) you brought one, but it wasn't necessary</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) you didn't bring one</button></span></li>
+      <li>"I didn't need to bring an umbrella." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) it wasn't necessary, and I probably didn't</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) same as needn't have</button></span></li>
+      <li>"He can't have finished already." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) deduction that something is impossible</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) obligation</button></span></li>
+      <li>"You might have told me!" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) mild reproach for something not done</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a polite request</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She must has been exhausted after the trip.</li>
-      <li>He can't have finish it already.</li>
-      <li>You needn't to have brought a gift.</li>
-      <li>The results should has arrived by now.</li>
-      <li>He might has told me about the change.</li>
+      <li>She must has been exhausted after the trip. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>He can't have finish it already. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>You needn't to have brought a gift. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>The results should has arrived by now. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>He might has told me about the change. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal policy memo. Use <strong>must</strong>, <strong>should</strong>, and a deductive <strong>must have/can't have</strong> construction, in a formal register.</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>exception / completed / must / without / be / this</li>
-      <li>obligatory / not / attendance / your / is</li>
-      <li>figures / advisable / verify / would / it / the / be / to</li>
-      <li>prohibited / premises / smoking / strictly / these / is / on</li>
-      <li>sooner / informed / ought / have / them / he / to</li>
+      <li>exception / completed / must / without / be / this <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>obligatory / not / attendance / your / is <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>figures / advisable / verify / would / it / the / be / to <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>prohibited / premises / smoking / strictly / these / is / on <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>sooner / informed / ought / have / them / he / to <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She should have arrived by now, isn't it?</li>
-      <li>They can't have leave already.</li>
-      <li>You needn't have to worry about it.</li>
-      <li>He ought to apologized sooner.</li>
-      <li>It must being difficult for her.</li>
+      <li>She should have arrived by now, isn't it? <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>They can't have leave already. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>You needn't have to worry about it. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>He ought to apologized sooner. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>It must being difficult for her. <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
@@ -321,6 +352,126 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* -- Interactive exercises -- */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['can'] },
+    { accept: ['must'] },
+    { accept: ['should'] },
+    { accept: ['have to'] },
+    { accept: ["can't", 'cant'] },
+    { accept: ["mustn't", 'mustnt'] }
+  ]},
+  ex5: { type: 'exact', items: [
+    { accept: ["mustn't", 'mustnt'] },
+    { accept: ['can'] },
+    { accept: ["don't have to", 'dont have to'] },
+    { accept: ['should'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['i can swim'] },
+    { accept: ['you must wear a helmet'] },
+    { accept: ['she should see a doctor'] },
+    { accept: ['we have to pay the bill today'] },
+    { accept: ['can i borrow your pen'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['can swim'] },
+    { accept: ['must wear'] },
+    { accept: ['must finish'] },
+    { accept: ['have to'] },
+    { accept: ['should see'] },
+    { accept: ['can swim'] }
+  ]},
+  ex8: { type: 'lenient', items: [
+    { accept: ['must submit the form by friday'] },
+    { accept: ["don't have to attend", 'dont have to attend'] },
+    { accept: ["mustn't park here", 'mustnt park here'] },
+    { accept: ['should rest more'] },
+    { accept: ["mustn't smoke indoors", 'mustnt smoke indoors'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['have to go to the dentist'] },
+    { accept: ['should have called her yesterday'] },
+    { accept: ['must have finished by now'] },
+    { accept: ["don't have to work on weekends", 'dont have to work on weekends'] },
+    { accept: ['must have been going through a hard time'] },
+    { accept: ['should apologize'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['must be completed by friday without exception'] },
+    { accept: ['attendance is not obligatory'] },
+    { accept: ['advisable to verify the figures'] },
+    { accept: ['strictly prohibited'] },
+    { accept: ['ought to have informed them sooner'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['must have been exhausted'] },
+    { accept: ["can't have finished it already", 'cant have finished it already'] },
+    { accept: ['needn\'t have brought a gift', 'neednt have brought a gift'] },
+    { accept: ['should have arrived by now'] },
+    { accept: ['might have told me'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['this must be completed without exception'] },
+    { accept: ['your attendance is not obligatory'] },
+    { accept: ['it would be advisable to verify the figures'] },
+    { accept: ['smoking on these premises is strictly prohibited'] },
+    { accept: ['he ought to have informed them sooner'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ["shouldn't she", 'shouldnt she'] },
+    { accept: ["can't have left already", 'cant have left already'] },
+    { accept: ['needn\'t have worried about it', 'neednt have worried about it'] },
+    { accept: ['ought to have apologized sooner'] },
+    { accept: ['it must be difficult for her'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

@@ -8,8 +8,33 @@
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
     @media print {
-      #answerToggleBtn { display: none !important; }
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
     }
   </style>
 </head>
@@ -123,37 +148,38 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I <strong>(am / is)</strong> going to travel to Spain.</li>
-      <li>She <strong>(is / are)</strong> going to call you later.</li>
-      <li>We <strong>(is / are)</strong> going to watch a movie tonight.</li>
-      <li>They <strong>(is / are)</strong> going to visit their grandparents.</li>
-      <li>He <strong>(am / is)</strong> going to buy a new car.</li>
-      <li>You <strong>(is / are)</strong> going to love this book.</li>
+      <li>I <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">am</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">is</button></span> going to travel to Spain.</li>
+      <li>She <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">is</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">are</button></span> going to call you later.</li>
+      <li>We <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">is</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">are</button></span> going to watch a movie tonight.</li>
+      <li>They <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">is</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">are</button></span> going to visit their grandparents.</li>
+      <li>He <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">am</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">is</button></span> going to buy a new car.</li>
+      <li>You <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">is</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">are</button></span> going to love this book.</li>
     </ol>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each subject (1–6) to its ending (a–f).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. I ___</div><div>a. is going to rain soon.</div>
-      <div>2. It ___</div><div>b. am going to study tonight.</div>
-      <div>3. We ___</div><div>c. are going to travel next month.</div>
-      <div>4. He ___</div><div>d. is going to cook dinner.</div>
-      <div>5. They ___</div><div>e. are going to play football.</div>
-      <div>6. She ___</div><div>f. is going to call her mom.</div>
+      <div>1. I <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>a. is going to rain soon.</div>
+      <div>2. It <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>b. am going to study tonight.</div>
+      <div>3. We <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>c. are going to travel next month.</div>
+      <div>4. He <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>d. is going to cook dinner.</div>
+      <div>5. They <select class="iq-select" onchange="checkSelect(this,'e')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>e. are going to play football.</div>
+      <div>6. She <select class="iq-select" onchange="checkSelect(this,'f')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>f. is going to call her mom.</div>
     </div>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank: put the verb in brackets into the "going to" future.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Look at the sky! It ______ (rain).</li>
-      <li>I ______ (visit) my friend this weekend.</li>
-      <li>We ______ (not/go) to the party.</li>
-      <li>______ you ______ (study) medicine?</li>
-      <li>She ______ (start) a new job next month.</li>
-      <li>They ______ (not/travel) this summer.</li>
+      <li>Look at the sky! It <input class="iq-input" id="ex3-1"> (rain).</li>
+      <li>I <input class="iq-input" id="ex3-2"> (visit) my friend this weekend.</li>
+      <li>We <input class="iq-input" id="ex3-3"> (not/go) to the party.</li>
+      <li><input class="iq-input" id="ex3-4"> you <input class="iq-input" id="ex3-5"> (study) medicine?</li>
+      <li>She <input class="iq-input" id="ex3-6"> (start) a new job next month.</li>
+      <li>They <input class="iq-input" id="ex3-7"> (not/travel) this summer.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <!-- ===== A2 ===== -->
@@ -163,35 +189,37 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Marco has already booked his flight — he is going to visit Japan next spring. He is going to stay with his cousin in Tokyo for two weeks. He isn't going to rent a car because public transport there is excellent. His sister is going to join him for the last few days of the trip. They are going to visit Kyoto together, but they aren't going to have time to see Osaka.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Marco is going to visit Japan next spring. ___</li>
-      <li>He is going to rent a car. ___</li>
-      <li>He is going to stay with his cousin. ___</li>
-      <li>His sister isn't going to join him at all. ___</li>
-      <li>They are going to see Osaka. ___</li>
+      <li>Marco is going to visit Japan next spring. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>He is going to rent a car. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>He is going to stay with his cousin. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>His sister isn't going to join him at all. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>They are going to see Osaka. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write negatives (1–2, 5) and questions (3–4, 6).</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I (not/go) to the gym tomorrow. → ______________________</li>
-      <li>She (not/attend) the meeting. → ______________________</li>
-      <li>___ you ___ (visit) your parents this weekend?</li>
-      <li>___ he ___ (start) his new job soon?</li>
-      <li>We (not/travel) abroad this year. → ______________________</li>
-      <li>___ they ___ (move) to a new house?</li>
+      <li>I (not/go) to the gym tomorrow. <input class="iq-input-wide" id="ex5-1" placeholder="rewrite…"></li>
+      <li>She (not/attend) the meeting. <input class="iq-input-wide" id="ex5-2" placeholder="rewrite…"></li>
+      <li>you (visit) your parents this weekend? <input class="iq-input-wide" id="ex5-3" placeholder="type the question…"></li>
+      <li>he (start) his new job soon? <input class="iq-input-wide" id="ex5-4" placeholder="type the question…"></li>
+      <li>We (not/travel) abroad this year. <input class="iq-input-wide" id="ex5-5" placeholder="rewrite…"></li>
+      <li>they (move) to a new house? <input class="iq-input-wide" id="ex5-6" placeholder="type the question…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>going / is / rain / to / it</li>
-      <li>going / I / study / tonight / to / am</li>
-      <li>next / going / they / week / move / are / to</li>
-      <li>going / she / a / to / buy / car / is / new</li>
-      <li>you / going / are / do / what / to / tomorrow?</li>
+      <li>going / is / rain / to / it <input class="iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>going / I / study / tonight / to / am <input class="iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>next / going / they / week / move / are / to <input class="iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>going / she / a / to / buy / car / is / new <input class="iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>you / going / are / do / what / to / tomorrow? <input class="iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <!-- ===== B1 ===== -->
@@ -200,35 +228,37 @@
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I is going to call you later.</li>
-      <li>She are going to visit her parents.</li>
-      <li>We going to travel next month.</li>
-      <li>Is you going to help me?</li>
-      <li>They isn't going to come to the party.</li>
-      <li>He going to buys a new phone.</li>
+      <li>I is going to call you later. <input class="iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>She are going to visit her parents. <input class="iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>We going to travel next month. <input class="iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>Is you going to help me? <input class="iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>They isn't going to come to the party. <input class="iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>He going to buys a new phone. <input class="iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Rewrite each sentence using "going to".</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I have decided to study abroad next year.</li>
-      <li>Look! The bus is arriving — we'll miss it if we don't hurry.</li>
-      <li>My plan is to open my own restaurant someday.</li>
-      <li>Those dark clouds mean rain soon.</li>
-      <li>Their intention is to renovate the kitchen this summer.</li>
+      <li>I have decided to study abroad next year. <input class="iq-input-wide" id="ex8-1" placeholder="rewrite…"></li>
+      <li>Look! The bus is arriving — we'll miss it if we don't hurry. <input class="iq-input-wide" id="ex8-2" placeholder="rewrite…"></li>
+      <li>My plan is to open my own restaurant someday. <input class="iq-input-wide" id="ex8-3" placeholder="rewrite…"></li>
+      <li>Those dark clouds mean rain soon. <input class="iq-input-wide" id="ex8-4" placeholder="rewrite…"></li>
+      <li>Their intention is to renovate the kitchen this summer. <input class="iq-input-wide" id="ex8-5" placeholder="rewrite…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: "going to" or "will"?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"The phone is ringing." "OK, I ___ answer it." a) will&nbsp; b) am going to</li>
-      <li>"I ___ become a doctor — I've already applied to medical school." a) will&nbsp; b) am going to</li>
-      <li>"Look at the sky! It ___ snow." a) will&nbsp; b) is going to</li>
-      <li>"I promise I ___ call you tomorrow." a) will&nbsp; b) am going to</li>
-      <li>"We ___ get married next June — we've booked the venue." a) will&nbsp; b) are going to</li>
-      <li>"I think it ___ be a close election." a) will&nbsp; b) is going to</li>
+      <li>"The phone is ringing." "OK, I ___ answer it." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) will</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) am going to</button></span></li>
+      <li>"I ___ become a doctor — I've already applied to medical school." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) will</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) am going to</button></span></li>
+      <li>"Look at the sky! It ___ snow." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) will</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) is going to</button></span></li>
+      <li>"I promise I ___ call you tomorrow." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) will</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) am going to</button></span></li>
+      <li>"We ___ get married next June — we've booked the venue." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) will</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) are going to</button></span></li>
+      <li>"I think it ___ be a close election." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) will</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) is going to</button></span></li>
     </ol>
   </div>
 
@@ -239,33 +269,31 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Although the merger hasn't been officially announced yet, insiders say the two companies are going to combine their operations by the end of the year. Employees who have seen the internal memo believe that several departments are going to be restructured, and some positions are going to be eliminated. Management insists that no one is going to lose their job without adequate notice, although unions remain skeptical. The next shareholder meeting, scheduled for next month, is going to clarify most of these uncertainties, according to a company spokesperson.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The merger has already been officially announced. ___</li>
-      <li>Some departments are going to be restructured. ___</li>
-      <li>Management guarantees nobody will ever lose their job. ___</li>
-      <li>Unions fully trust management's assurances. ___</li>
-      <li>The shareholder meeting is going to address these uncertainties. ___</li>
+      <li>The merger has already been officially announced. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Some departments are going to be restructured. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Management guarantees nobody will ever lose their job. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Unions fully trust management's assurances. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The shareholder meeting is going to address these uncertainties. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>It's going to raining later.</li>
-      <li>She's going to visits her aunt this weekend.</li>
-      <li>We was going to travel, but we cancelled.</li>
-      <li>They isn't going to arriving on time.</li>
-      <li>I'm going to be finish the report by Friday.</li>
-      <li>He's not going to changing his mind.</li>
+      <li>It's going to raining later. <input class="iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>She's going to visits her aunt this weekend. <input class="iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>We was going to travel, but we cancelled. <input class="iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>They isn't going to arriving on time. <input class="iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>I'm going to be finish the report by Friday. <input class="iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>He's not going to changing his mind. <input class="iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Describe your plans for next year in 6–8 sentences. Use <strong>"going to"</strong> for decided plans and for evidence-based predictions, including <strong>at least one negative sentence</strong>.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <!-- ===== C1 ===== -->
@@ -274,35 +302,37 @@
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal register, keeping "going to".</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>We're totally going to nail this presentation.</li>
-      <li>I'm gonna quit if things don't change.</li>
-      <li>They're going to shake things up around here.</li>
-      <li>She's going to smash her targets this quarter.</li>
-      <li>It's gonna be a disaster if we don't prepare.</li>
+      <li>We're totally going to nail this presentation. <input class="iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>I'm gonna quit if things don't change. <input class="iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>They're going to shake things up around here. <input class="iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>She's going to smash her targets this quarter. <input class="iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>It's gonna be a disaster if we don't prepare. <input class="iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: "will" or "going to"?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"Based on current trends, unemployment ___ continue rising." a) will&nbsp; b) is going to</li>
-      <li>"I ___ help you carry that — here, let me." a) will&nbsp; b) am going to</li>
-      <li>"The company has already signed the contract; production ___ begin next quarter." a) will&nbsp; b) is going to</li>
-      <li>"I have a feeling this ___ work out fine." a) will&nbsp; b) is going to</li>
-      <li>"According to the forecast, a storm ___ hit the coast tonight." a) will&nbsp; b) is going to</li>
-      <li>"Don't worry, I ___ take care of it." a) will&nbsp; b) am going to</li>
+      <li>"Based on current trends, unemployment ___ continue rising." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) will</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) is going to</button></span></li>
+      <li>"I ___ help you carry that — here, let me." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) will</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) am going to</button></span></li>
+      <li>"The company has already signed the contract; production ___ begin next quarter." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) will</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) is going to</button></span></li>
+      <li>"I have a feeling this ___ work out fine." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) will</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) is going to</button></span></li>
+      <li>"According to the forecast, a storm ___ hit the coast tonight." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) will</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) is going to</button></span></li>
+      <li>"Don't worry, I ___ take care of it." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) will</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) am going to</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Given that sales have declined sharply, the company are going to cutting costs next quarter.</li>
-      <li>Since the deadline is approaching, the team are going to finishing early.</li>
-      <li>Unless the weather improve, the event is going to be cancelling.</li>
-      <li>Because the budget were approved, the project is going to proceeding as planned.</li>
-      <li>Now that the results is confirmed, the board are going to announcing the decision tomorrow.</li>
+      <li>Given that sales have declined sharply, the company are going to cutting costs next quarter. <input class="iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>Since the deadline is approaching, the team are going to finishing early. <input class="iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>Unless the weather improve, the event is going to be cancelling. <input class="iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>Because the budget were approved, the project is going to proceeding as planned. <input class="iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>Now that the results is confirmed, the board are going to announcing the decision tomorrow. <input class="iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <!-- ===== C2 ===== -->
@@ -311,33 +341,31 @@
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a short press-release-style paragraph announcing an organization's upcoming plans. Use <strong>"going to"</strong> for pre-decided actions and evidence-based predictions, in a formal register, with <strong>at least one subordinate clause</strong>.</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>implement / going / reforms / to / government / sweeping / the / is</li>
-      <li>economy / contract / to / going / is / the</li>
-      <li>going / restructure / company / operations / its / to / is / the</li>
-      <li>negotiations / resume / to / going / are / next / week</li>
-      <li>board / announce / going / decision / is / final / the / to / its</li>
+      <li>implement / going / reforms / to / government / sweeping / the / is <input class="iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>economy / contract / to / going / is / the <input class="iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>going / restructure / company / operations / its / to / is / the <input class="iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>negotiations / resume / to / going / are / next / week <input class="iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>board / announce / going / decision / is / final / the / to / its <input class="iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the errors (passive "going to" constructions).</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The proposal is going to reviewing by the committee next week.</li>
-      <li>New regulations is going to introducing next quarter.</li>
-      <li>The results is going to announcing publicly.</li>
-      <li>A decision are going to made by Friday.</li>
-      <li>The findings is going to publishing in the annual report.</li>
+      <li>The proposal is going to reviewing by the committee next week. <input class="iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>New regulations is going to introducing next quarter. <input class="iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>The results is going to announcing publicly. <input class="iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>A decision are going to made by Friday. <input class="iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>The findings is going to publishing in the annual report. <input class="iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <!-- ============ ANSWER KEY ============ -->
@@ -405,6 +433,129 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* -- Interactive exercises -- */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['is going to rain'] },
+    { accept: ['am going to visit'] },
+    { accept: ["aren't going to go", 'are not going to go'] },
+    { accept: ['are'] },
+    { accept: ['going to study'] },
+    { accept: ['is going to start'] },
+    { accept: ["aren't going to travel", 'are not going to travel'] }
+  ]},
+  ex5: { type: 'lenient', items: [
+    { accept: ["i'm not going to go to the gym tomorrow", 'i am not going to go to the gym tomorrow'] },
+    { accept: ["she isn't going to attend the meeting", 'she is not going to attend the meeting'] },
+    { accept: ['are you going to visit your parents this weekend'] },
+    { accept: ['is he going to start his new job soon'] },
+    { accept: ["we aren't going to travel abroad this year", 'we are not going to travel abroad this year'] },
+    { accept: ['are they going to move to a new house'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['it is going to rain'] },
+    { accept: ['i am going to study tonight'] },
+    { accept: ['they are going to move next week'] },
+    { accept: ['she is going to buy a new car'] },
+    { accept: ['what are you going to do tomorrow'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['i am going to call you later'] },
+    { accept: ['she is going to visit her parents'] },
+    { accept: ['we are going to travel next month'] },
+    { accept: ['are you going to help me'] },
+    { accept: ["they aren't going to come to the party", 'they are not going to come to the party'] },
+    { accept: ['he is going to buy a new phone'] }
+  ]},
+  ex8: { type: 'lenient', items: [
+    { accept: ['i am going to study abroad next year'] },
+    { accept: ["we are going to miss the bus if we don't hurry", 'we are going to miss the bus'] },
+    { accept: ['i am going to open my own restaurant someday'] },
+    { accept: ['it is going to rain soon'] },
+    { accept: ['they are going to renovate the kitchen this summer'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ["it's going to rain later", 'it is going to rain later'] },
+    { accept: ["she's going to visit her aunt this weekend", 'she is going to visit her aunt this weekend'] },
+    { accept: ['we were going to travel, but we cancelled', 'we were going to travel'] },
+    { accept: ["they aren't going to arrive on time", 'they are not going to arrive on time'] },
+    { accept: ["i'm going to finish the report by friday", 'i am going to finish the report by friday'] },
+    { accept: ["he's not going to change his mind", 'he is not going to change his mind'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['we are going to deliver this presentation successfully'] },
+    { accept: ['i intend to resign if circumstances do not improve'] },
+    { accept: ['they are going to implement significant changes'] },
+    { accept: ['she is going to exceed her targets this quarter'] },
+    { accept: ['the outcome is going to be unfavourable', 'the outcome is going to be unfavorable'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['the company is going to cut costs next quarter'] },
+    { accept: ['the team is going to finish early'] },
+    { accept: ['unless the weather improves, the event is going to be cancelled', 'unless the weather improves'] },
+    { accept: ['because the budget was approved, the project is going to proceed as planned', 'the budget was approved'] },
+    { accept: ['now that the results are confirmed, the board is going to announce the decision tomorrow', 'the results are confirmed'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['the government is going to implement sweeping reforms'] },
+    { accept: ['the economy is going to contract'] },
+    { accept: ['the company is going to restructure its operations'] },
+    { accept: ['negotiations are going to resume next week'] },
+    { accept: ['the board is going to announce its final decision'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['is going to be reviewed by the committee next week'] },
+    { accept: ['are going to be introduced next quarter'] },
+    { accept: ['are going to be announced publicly'] },
+    { accept: ['a decision is going to be made by friday'] },
+    { accept: ['are going to be published in the annual report'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

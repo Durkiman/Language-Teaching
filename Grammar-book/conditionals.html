@@ -8,8 +8,33 @@
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
     @media print {
-      #answerToggleBtn { display: none !important; }
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
     }
   </style>
 </head>
@@ -118,33 +143,34 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>If you heat water, it <strong>(boil / boils)</strong>.</li>
-      <li>If people don't eat, they <strong>(get / gets)</strong> hungry.</li>
-      <li>If it snows, the ground <strong>(turn / turns)</strong> white.</li>
-      <li>Plants die if they <strong>(not/get)</strong> water.</li>
-      <li>If you touch fire, you <strong>(get / gets)</strong> burned.</li>
-      <li>Metal expands if you <strong>(heat / heats)</strong> it.</li>
+      <li>If you heat water, it <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">boil</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">boils</button></span>.</li>
+      <li>If people don't eat, they <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">get</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">gets</button></span> hungry.</li>
+      <li>If it snows, the ground <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">turn</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">turns</button></span> white.</li>
+      <li>Plants die if they <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">don't get</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">not get</button></span> water.</li>
+      <li>If you touch fire, you <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">get</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">gets</button></span> burned.</li>
+      <li>Metal expands if you <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">heat</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">heats</button></span> it.</li>
     </ol>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each cause (1–4) to its effect (a–d).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. If you mix red and blue, ___</div><div>a. it melts.</div>
-      <div>2. If you don't sleep enough, ___</div><div>b. you get purple.</div>
-      <div>3. If ice gets warm, ___</div><div>c. they die.</div>
-      <div>4. If plants don't get sunlight, ___</div><div>d. you feel tired.</div>
+      <div>1. If you mix red and blue, <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>a. it melts.</div>
+      <div>2. If you don't sleep enough, <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>b. you get purple.</div>
+      <div>3. If ice gets warm, <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>c. they die.</div>
+      <div>4. If plants don't get sunlight, <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>d. you feel tired.</div>
     </div>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank: complete each zero conditional.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>If you ______ (boil) water, it ______ (evaporate).</li>
-      <li>Ice ______ (melt) if it ______ (get) warm.</li>
-      <li>If children ______ (not/eat) vegetables, they ______ (miss) important vitamins.</li>
-      <li>Plants ______ (grow) if they ______ (get) enough light.</li>
+      <li>If you <input class="iq-input" id="ex3-1"> (boil) water, it <input class="iq-input" id="ex3-2"> (evaporate).</li>
+      <li>Ice <input class="iq-input" id="ex3-3"> (melt) if it <input class="iq-input" id="ex3-4"> (get) warm.</li>
+      <li>If children <input class="iq-input" id="ex3-5"> (not/eat) vegetables, they <input class="iq-input" id="ex3-6"> (miss) important vitamins.</li>
+      <li>Plants <input class="iq-input" id="ex3-7"> (grow) if they <input class="iq-input" id="ex3-8"> (get) enough light.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <!-- ===== A2 ===== -->
@@ -154,33 +180,35 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">If it rains tomorrow, we will cancel the picnic. If the weather is nice, we will go to the park instead. If we go to the park, we will bring sandwiches. If everyone comes, we will need more chairs. If we don't have enough chairs, some people will sit on the grass.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>If it rains, the picnic will happen anyway. ___</li>
-      <li>They will go to the park if the weather is nice. ___</li>
-      <li>They won't bring food if they go to the park. ___</li>
-      <li>If everyone comes, they will need more chairs. ___</li>
-      <li>Some people might sit on the grass. ___</li>
+      <li>If it rains, the picnic will happen anyway. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>They will go to the park if the weather is nice. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>They won't bring food if they go to the park. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>If everyone comes, they will need more chairs. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Some people might sit on the grass. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Complete each first conditional sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>If she ______ (not/study), she ______ (not/pass) the exam.</li>
-      <li>___ you ___ (come) if I ___ (invite) you?</li>
-      <li>If it ______ (not/rain), we ______ (go) outside.</li>
-      <li>What ______ you ______ (do) if you ______ (win) the lottery?</li>
+      <li>If she <input class="iq-input" id="ex5-1"> (not/study), she <input class="iq-input" id="ex5-2"> (not/pass) the exam.</li>
+      <li><input class="iq-input" id="ex5-3" style="min-width:70px;"> you <input class="iq-input" id="ex5-4" style="min-width:70px;"> (come) if I <input class="iq-input" id="ex5-5" style="min-width:70px;"> (invite) you?</li>
+      <li>If it <input class="iq-input" id="ex5-6"> (not/rain), we <input class="iq-input" id="ex5-7"> (go) outside.</li>
+      <li>What <input class="iq-input" id="ex5-8" style="min-width:70px;"> you <input class="iq-input" id="ex5-9" style="min-width:70px;"> (do) if you <input class="iq-input" id="ex5-10" style="min-width:70px;"> (win) the lottery?</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct first conditional sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>rains / if / it / stay / we / will / home</li>
-      <li>study / pass / if / you / will / you / the exam</li>
-      <li>will / late / if / miss / the bus / you / you / be</li>
-      <li>hungry / if / you / eat / feel / don't / you / will</li>
-      <li>rain / umbrella / bring / an / if / it / I / will</li>
+      <li>rains / if / it / stay / we / will / home <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>study / pass / if / you / will / you / the exam <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>will / late / if / miss / the bus / you / you / be <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>hungry / if / you / eat / feel / don't / you / will <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>rain / umbrella / bring / an / if / it / I / will <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <!-- ===== B1 ===== -->
@@ -189,35 +217,37 @@
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>If it will rain, we will stay home.</li>
-      <li>If you mix yellow and blue, it will makes green.</li>
-      <li>If she study hard, she will pass.</li>
-      <li>Water boils if you will heat it to 100°C.</li>
-      <li>If I will have time, I will help you.</li>
-      <li>If he don't hurry, he will miss the train.</li>
+      <li>If it will rain, we will stay home. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>If you mix yellow and blue, it will makes green. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>If she study hard, she will pass. <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>Water boils if you will heat it to 100°C. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>If I will have time, I will help you. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>If he don't hurry, he will miss the train. <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Transform each sentence into a second conditional.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I don't have enough money, so I can't buy a car.</li>
-      <li>She doesn't speak French, so she can't get that job.</li>
-      <li>We don't live near the beach, so we don't go swimming often.</li>
-      <li>He isn't confident, so he doesn't apply for promotions.</li>
-      <li>I don't know the answer, so I can't help you.</li>
+      <li>I don't have enough money, so I can't buy a car. <input class="iq-input iq-input-wide" id="ex8-1" placeholder="rewrite…"></li>
+      <li>She doesn't speak French, so she can't get that job. <input class="iq-input iq-input-wide" id="ex8-2" placeholder="rewrite…"></li>
+      <li>We don't live near the beach, so we don't go swimming often. <input class="iq-input iq-input-wide" id="ex8-3" placeholder="rewrite…"></li>
+      <li>He isn't confident, so he doesn't apply for promotions. <input class="iq-input iq-input-wide" id="ex8-4" placeholder="rewrite…"></li>
+      <li>I don't know the answer, so I can't help you. <input class="iq-input iq-input-wide" id="ex8-5" placeholder="rewrite…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: which conditional type is this?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"If you don't water plants, they die." a) zero&nbsp; b) first&nbsp; c) second</li>
-      <li>"If I win the lottery, I will travel the world." a) zero&nbsp; b) first&nbsp; c) second</li>
-      <li>"If I were you, I would apologize." a) zero&nbsp; b) first&nbsp; c) second</li>
-      <li>"If she calls, tell her I'm busy." a) zero&nbsp; b) first&nbsp; c) second</li>
-      <li>"If I had a car, I would drive to work." a) first&nbsp; b) second&nbsp; c) third</li>
-      <li>"Ice melts if you heat it." a) zero&nbsp; b) first&nbsp; c) second</li>
+      <li>"If you don't water plants, they die." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) zero</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) first</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">c) second</button></span></li>
+      <li>"If I win the lottery, I will travel the world." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) zero</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) first</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">c) second</button></span></li>
+      <li>"If I were you, I would apologize." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) zero</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) first</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">c) second</button></span></li>
+      <li>"If she calls, tell her I'm busy." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) zero</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) first</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">c) second</button></span></li>
+      <li>"If I had a car, I would drive to work." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) first</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) second</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">c) third</button></span></li>
+      <li>"Ice melts if you heat it." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) zero</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) first</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">c) second</button></span></li>
     </ol>
   </div>
 
@@ -228,33 +258,31 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">If Maria had accepted the job offer last year, she would be living in London now. She sometimes wonders what her life would look like if she had taken that risk. If she took the job now, she would have to relocate immediately, which isn't realistic with two young children. Her husband believes that if they had more support nearby, she would reconsider. For now, she tells herself that if the right opportunity came along, she would seriously consider it.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Maria accepted the job offer last year. ___</li>
-      <li>She would be living in London now if she had accepted it. ___</li>
-      <li>She could relocate immediately without any difficulty. ___</li>
-      <li>Her husband thinks more support would change her decision. ___</li>
-      <li>She has completely ruled out ever taking a similar job. ___</li>
+      <li>Maria accepted the job offer last year. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>She would be living in London now if she had accepted it. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>She could relocate immediately without any difficulty. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Her husband thinks more support would change her decision. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>She has completely ruled out ever taking a similar job. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>If I would have more time, I would travel more.</li>
-      <li>If she had known about the meeting, she will have come.</li>
-      <li>If it wasn't cold outside, we would went for a walk.</li>
-      <li>If they had left earlier, they would arrive on time.</li>
-      <li>If I was you, I would apply for that job.</li>
-      <li>If he studies harder, he would pass.</li>
+      <li>If I would have more time, I would travel more. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>If she had known about the meeting, she will have come. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>If it wasn't cold outside, we would went for a walk. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>If they had left earlier, they would arrive on time. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>If I was you, I would apply for that job. <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>If he studies harder, he would pass. <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write about a decision you regret, or a hypothetical scenario, in at least 5 sentences. Use the <strong>second conditional</strong> for a present hypothetical and the <strong>third conditional</strong> for a past hypothetical. Include at least one negative.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <!-- ===== C1 ===== -->
@@ -263,35 +291,37 @@
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal register, using inversion where possible.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>If I'd known, I would've said something.</li>
-      <li>If we had more funding, we could expand faster.</li>
-      <li>If they hadn't intervened, the situation would've gotten worse.</li>
-      <li>If she wins the award, she'll be thrilled.</li>
-      <li>If you need anything, just call.</li>
+      <li>If I'd known, I would've said something. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>If we had more funding, we could expand faster. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>If they hadn't intervened, the situation would've gotten worse. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>If she wins the award, she'll be thrilled. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>If you need anything, just call. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: identify the conditional type or its formal equivalent.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"If she had studied medicine, she would be a doctor now." a) a mixed conditional (past condition, present result)&nbsp; b) a standard third conditional</li>
-      <li>"If he weren't so stubborn, he wouldn't have lost the deal." a) a mixed conditional (present condition, past result)&nbsp; b) a standard second conditional</li>
-      <li>"If I had taken that job, I would be earning more now." a) mixed&nbsp; b) standard third</li>
-      <li>"Had I known, I would have called." — this inversion replaces: a) "If I had known"&nbsp; b) "If I know"</li>
-      <li>"Were she to apply, she would surely be accepted." — this replaces: a) "If she applies"&nbsp; b) "If she applied"</li>
-      <li>"Should you have any questions, don't hesitate to ask." — this replaces: a) "If you have any questions"&nbsp; b) "If you had any questions"</li>
+      <li>"If she had studied medicine, she would be a doctor now." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) a mixed conditional (past condition, present result)</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a standard third conditional</button></span></li>
+      <li>"If he weren't so stubborn, he wouldn't have lost the deal." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) a mixed conditional (present condition, past result)</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a standard second conditional</button></span></li>
+      <li>"If I had taken that job, I would be earning more now." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) mixed</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) standard third</button></span></li>
+      <li>"Had I known, I would have called." — this inversion replaces: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) "If I had known"</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) "If I know"</button></span></li>
+      <li>"Were she to apply, she would surely be accepted." — this replaces: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) "If she applies"</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) "If she applied"</button></span></li>
+      <li>"Should you have any questions, don't hesitate to ask." — this replaces: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) "If you have any questions"</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) "If you had any questions"</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex conditional sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Had she not missed the flight, she would arrived on time.</li>
-      <li>If the treaty hadn't been signed, tensions would has escalated further.</li>
-      <li>Were the funding cut, the project will collapse.</li>
-      <li>Should the board rejects the proposal, we will have to reconsider our strategy.</li>
-      <li>If the CEO had listened to advisors, the company wouldn't losing so much money now.</li>
+      <li>Had she not missed the flight, she would arrived on time. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>If the treaty hadn't been signed, tensions would has escalated further. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>Were the funding cut, the project will collapse. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>Should the board rejects the proposal, we will have to reconsider our strategy. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>If the CEO had listened to advisors, the company wouldn't losing so much money now. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <!-- ===== C2 ===== -->
@@ -300,33 +330,31 @@
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a reflective paragraph about a pivotal past decision. Use the <strong>third conditional</strong> and <strong>at least one mixed conditional</strong> (past condition → present result, or vice versa), in a formal/literary register.</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex conditional sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>known / had / I / spoken / would / up / have</li>
-      <li>board / reject / proposal / should / reconsider / the / we / will</li>
-      <li>funding / were / secured / expand / we / could</li>
-      <li>intervened / not / had / they / worsened / situation / would / the / have</li>
-      <li>apply / she / accepted / were / to / be / would / she</li>
+      <li>known / had / I / spoken / would / up / have <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>board / reject / proposal / should / reconsider / the / we / will <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>funding / were / secured / expand / we / could <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>intervened / not / had / they / worsened / situation / would / the / have <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>apply / she / accepted / were / to / be / would / she <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors (formal inversion &amp; mixed conditionals).</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Had the funding been secure, the project would succeeding.</li>
-      <li>Should you require assistance, do not hesitate contacting us.</li>
-      <li>Were the results differ, the outcome would have changed.</li>
-      <li>Had they anticipate the risk, they would have prepared better.</li>
-      <li>If she wasn't so talented, she wouldn't have won so many awards.</li>
+      <li>Had the funding been secure, the project would succeeding. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>Should you require assistance, do not hesitate contacting us. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>Were the results differ, the outcome would have changed. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>Had they anticipate the risk, they would have prepared better. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>If she wasn't so talented, she wouldn't have won so many awards. <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <!-- ============ ANSWER KEY ============ -->
@@ -394,6 +422,134 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* -- Interactive exercises -- */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['boil'] },
+    { accept: ['evaporates'] },
+    { accept: ['melts'] },
+    { accept: ['gets'] },
+    { accept: ["don't eat", 'do not eat'] },
+    { accept: ['miss'] },
+    { accept: ['grow'] },
+    { accept: ['get'] }
+  ]},
+  ex5: { type: 'exact', items: [
+    { accept: ["doesn't study", 'does not study'] },
+    { accept: ["won't pass", 'will not pass'] },
+    { accept: ['will'] },
+    { accept: ['come'] },
+    { accept: ['invite'] },
+    { accept: ["doesn't rain", 'does not rain'] },
+    { accept: ['will go'] },
+    { accept: ['will'] },
+    { accept: ['do'] },
+    { accept: ['win'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['if it rains we will stay home'] },
+    { accept: ['if you study you will pass the exam'] },
+    { accept: ['if you miss the bus you will be late'] },
+    { accept: ["if you don't eat you will feel hungry", 'if you do not eat you will feel hungry'] },
+    { accept: ['if it rains i will bring an umbrella'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['if it rains we will stay home'] },
+    { accept: ['it makes green'] },
+    { accept: ['if she studies hard'] },
+    { accept: ['water boils if you heat it to 100'] },
+    { accept: ['if i have time i will help you'] },
+    { accept: ["if he doesn't hurry he will miss the train", 'if he does not hurry he will miss the train'] }
+  ]},
+  ex8: { type: 'lenient', items: [
+    { accept: ['if i had enough money i would buy a car'] },
+    { accept: ['if she spoke french she would get that job'] },
+    { accept: ['if we lived near the beach we would go swimming often'] },
+    { accept: ['if he were confident he would apply for promotions'] },
+    { accept: ['if i knew the answer i would help you'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['if i had more time i would travel more'] },
+    { accept: ['she would have come'] },
+    { accept: ['we would have gone for a walk'] },
+    { accept: ['they would have arrived on time'] },
+    { accept: ['if i were you'] },
+    { accept: ['if he studied harder he would pass'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['had i known i would have said something'] },
+    { accept: ['were we to have more funding we could expand faster'] },
+    { accept: ['had they not intervened the situation would have deteriorated further'] },
+    { accept: ['should she win the award she will be delighted'] },
+    { accept: ['should you require anything please do not hesitate to call'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['she would have arrived on time'] },
+    { accept: ['tensions would have escalated further'] },
+    { accept: ['the project would collapse'] },
+    { accept: ['should the board reject the proposal'] },
+    { accept: ["the company wouldn't be losing so much money now", 'the company would not be losing so much money now'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['had i known i would have spoken up'] },
+    { accept: ['should the board reject the proposal we will reconsider'] },
+    { accept: ['were funding secured we could expand'] },
+    { accept: ['had they not intervened the situation would have worsened'] },
+    { accept: ['were she to apply she would be accepted'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['the project would have succeeded'] },
+    { accept: ['do not hesitate to contact us'] },
+    { accept: ['were the results different'] },
+    { accept: ['had they anticipated the risk'] },
+    { accept: ["if she weren't so talented she wouldn't have won so many awards", 'if she were not so talented she would not have won so many awards'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

@@ -9,6 +9,34 @@
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
     @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
+
   </style>
 </head>
 <body>
@@ -73,33 +101,34 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I am <strong>(bored / boring)</strong> — there's nothing to do.</li>
-      <li>The film was <strong>(interested / interesting)</strong>.</li>
-      <li>She is <strong>(excited / exciting)</strong> about the trip.</li>
-      <li>The book is <strong>(bored / boring)</strong>.</li>
-      <li>He is <strong>(tired / tiring)</strong> after the match.</li>
-      <li>The news was <strong>(surprised / surprising)</strong>.</li>
+      <li>I am <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">bored</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">boring</button></span> — there's nothing to do.</li>
+      <li>The film was <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">interested</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">interesting</button></span>.</li>
+      <li>She is <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">excited</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">exciting</button></span> about the trip.</li>
+      <li>The book is <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">bored</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">boring</button></span>.</li>
+      <li>He is <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">tired</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">tiring</button></span> after the match.</li>
+      <li>The news was <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">surprised</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">surprising</button></span>.</li>
     </ol>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each object (1–4) to its material (a–d).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. The window</div><div>a. is made of wool.</div>
-      <div>2. The sweater</div><div>b. is made of glass.</div>
-      <div>3. The spoon</div><div>c. is made of paper.</div>
-      <div>4. The book</div><div>d. is made of metal.</div>
+      <div>1. The window <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>a. is made of wool.</div>
+      <div>2. The sweater <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>b. is made of glass.</div>
+      <div>3. The spoon <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>c. is made of paper.</div>
+      <div>4. The book <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>d. is made of metal.</div>
     </div>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank with the -ed or -ing form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I'm ______ (interest) in music.</li>
-      <li>The lesson was ______ (bore).</li>
-      <li>We were ______ (excite) about the party.</li>
-      <li>The movie was really ______ (frighten).</li>
-      <li>She felt ______ (confuse) by the instructions.</li>
-      <li>The story is very ______ (interest).</li>
+      <li>I'm <input class="iq-input" id="ex3-1"> (interest) in music.</li>
+      <li>The lesson was <input class="iq-input" id="ex3-2"> (bore).</li>
+      <li>We were <input class="iq-input" id="ex3-3"> (excite) about the party.</li>
+      <li>The movie was really <input class="iq-input" id="ex3-4"> (frighten).</li>
+      <li>She felt <input class="iq-input" id="ex3-5"> (confuse) by the instructions.</li>
+      <li>The story is very <input class="iq-input" id="ex3-6"> (interest).</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
@@ -107,61 +136,65 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">The museum's new exhibit is fascinating — it's full of surprising objects, like a bracelet made of bone and a bowl made of clay. My little brother found it a bit confusing at first, but after the guide explained things, he got really interested. By the end, even our tired parents said it was one of the most exciting exhibits they'd seen.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The exhibit is described as fascinating. ___</li>
-      <li>The bracelet is made of clay. ___</li>
-      <li>The brother felt confused at first. ___</li>
-      <li>The brother stayed uninterested the whole time. ___</li>
-      <li>The parents were tired but found it exciting. ___</li>
+      <li>The exhibit is described as fascinating. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The bracelet is made of clay. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The brother felt confused at first. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The brother stayed uninterested the whole time. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The parents were tired but found it exciting. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Complete each sentence with "made of" or "used for".</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>This ring is ______ gold.</li>
-      <li>A fridge is ______ keeping food cold.</li>
-      <li>The chair is ______ wood.</li>
-      <li>A key is ______ opening doors.</li>
+      <li>This ring is <input class="iq-input" id="ex5-1"> gold.</li>
+      <li>A fridge is <input class="iq-input" id="ex5-2"> keeping food cold.</li>
+      <li>The chair is <input class="iq-input" id="ex5-3"> wood.</li>
+      <li>A key is <input class="iq-input" id="ex5-4"> opening doors.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>bored / very / I / am</li>
-      <li>boring / the / was / lecture</li>
-      <li>excited / she / about / the / is / news</li>
-      <li>of / made / wood / is / it</li>
-      <li>for / a / used / cutting / knife / is</li>
+      <li>bored / very / I / am <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>boring / the / was / lecture <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>excited / she / about / the / is / news <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>of / made / wood / is / it <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>for / a / used / cutting / knife / is <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I'm boring — there's nothing to do.</li>
-      <li>He's a very interested person.</li>
-      <li>This lesson is really tired.</li>
-      <li>The film was so confused, I couldn't follow it.</li>
-      <li>I am really excited about the news, it's amazed.</li>
-      <li>The table made from wood.</li>
+      <li>I'm boring — there's nothing to do. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>He's a very interested person. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>This lesson is really tired. <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>The film was so confused, I couldn't follow it. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>I am really excited about the news, it's amazed. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>The table made from wood. <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Choose the -ed or -ing form for each blank.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The presentation was ______ (bore), so the audience looked ______ (bore) too.</li>
-      <li>The results were ______ (surprise) — everyone was ______ (surprise).</li>
-      <li>I found the puzzle ______ (confuse) and felt totally ______ (confuse).</li>
-      <li>The roller coaster was ______ (frighten), but also ______ (excite).</li>
+      <li>The presentation was <input class="iq-input" id="ex8-1"> (bore), so the audience looked <input class="iq-input" id="ex8-2"> (bore) too.</li>
+      <li>The results were <input class="iq-input" id="ex8-3"> (surprise) — everyone was <input class="iq-input" id="ex8-4"> (surprise).</li>
+      <li>I found the puzzle <input class="iq-input" id="ex8-5"> (confuse) and felt totally <input class="iq-input" id="ex8-6"> (confuse).</li>
+      <li>The roller coaster was <input class="iq-input" id="ex8-7"> (frighten), but also <input class="iq-input" id="ex8-8"> (excite).</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: who or what feels it, who or what causes it?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"The teacher is boring." a) the teacher causes boredom&nbsp; b) the teacher feels bored</li>
-      <li>"The students are bored." a) the students feel bored&nbsp; b) the students cause boredom</li>
-      <li>"That was terrifying." a) it caused fear&nbsp; b) it felt afraid</li>
-      <li>"I'm amazed." a) I feel amazement&nbsp; b) I cause amazement</li>
+      <li>"The teacher is boring." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) the teacher causes boredom</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) the teacher feels bored</button></span></li>
+      <li>"The students are bored." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) the students feel bored</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) the students cause boredom</button></span></li>
+      <li>"That was terrifying." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) it caused fear</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) it felt afraid</button></span></li>
+      <li>"I'm amazed." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) I feel amazement</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) I cause amazement</button></span></li>
     </ol>
   </div>
 
@@ -170,92 +203,90 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Critics found the film disappointing, calling it a confusing mess of subplots that left audiences frustrated rather than moved. A handful of viewers, though, were captivated by its ambition and found the unconventional structure refreshing rather than alienating. The director, unfazed by the mixed response, said she found the criticism unsurprising given how experimental the project was.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Critics generally enjoyed the film. ___</li>
-      <li>Most audiences felt frustrated. ___</li>
-      <li>Some viewers found the structure refreshing. ___</li>
-      <li>The director was surprised by the criticism. ___</li>
+      <li>Critics generally enjoyed the film. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Most audiences felt frustrated. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Some viewers found the structure refreshing. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The director was surprised by the criticism. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The results left everyone feeling amazing.</li>
-      <li>It was a disappointed outcome for the whole team.</li>
-      <li>I'm interesting to hear your opinion.</li>
-      <li>The report makes for a confused reading experience.</li>
-      <li>She's a very annoyed colleague to work with.</li>
-      <li>The whole situation is embarrassed for everyone involved.</li>
+      <li>The results left everyone feeling amazing. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>It was a disappointed outcome for the whole team. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>I'm interesting to hear your opinion. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>The report makes for a confused reading experience. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>She's a very annoyed colleague to work with. <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>The whole situation is embarrassed for everyone involved. <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Review a film, book, or event you experienced recently, in 6–8 sentences, using at least four -ed/-ing adjective pairs to describe both your reaction and the thing itself.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence using a stronger, more precise -ed/-ing adjective.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The news was very surprising. (use "astonishing/astonished")</li>
-      <li>I was very bored. (use "unengaged" alternatives like "unstimulating/uninterested")</li>
-      <li>The film was very frightening. (use "terrifying/terrified")</li>
-      <li>The results were very interesting. (use "compelling/captivated")</li>
-      <li>He was very tired. (use "exhausting/exhausted")</li>
+      <li>The news was very surprising. (use "astonishing/astonished") <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite…"></li>
+      <li>I was very bored. (use "unengaged" alternatives like "unstimulating/uninterested") <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite…"></li>
+      <li>The film was very frightening. (use "terrifying/terrified") <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite…"></li>
+      <li>The results were very interesting. (use "compelling/captivated") <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite…"></li>
+      <li>He was very tired. (use "exhausting/exhausted") <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: which register does this adjective belong to?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"underwhelming" a) formal/critical register&nbsp; b) casual slang</li>
-      <li>"gobsmacked" a) very informal, British&nbsp; b) formal/academic</li>
-      <li>"disconcerting" a) formal/literary&nbsp; b) casual</li>
-      <li>"mind-blowing" a) very informal&nbsp; b) formal report language</li>
+      <li>"underwhelming" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) formal/critical register</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) casual slang</button></span></li>
+      <li>"gobsmacked" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) very informal, British</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) formal/academic</button></span></li>
+      <li>"disconcerting" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) formal/literary</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) casual</button></span></li>
+      <li>"mind-blowing" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) very informal</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) formal report language</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The findings were disconcerted for the research team.</li>
-      <li>She remained unconvincing by the argument.</li>
-      <li>It was a most underwhelmed performance.</li>
-      <li>The audience left feeling thoroughly disappointing.</li>
-      <li>He found the whole affair mortified.</li>
+      <li>The findings were disconcerted for the research team. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>She remained unconvincing by the argument. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>It was a most underwhelmed performance. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>The audience left feeling thoroughly disappointing. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>He found the whole affair mortified. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal review of a product or performance, using precise -ed/-ing adjective pairs (e.g. underwhelming/underwhelmed, disconcerting/disconcerted) to distinguish your reaction from what caused it.</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>findings / disconcerting / were / the / undeniably</li>
-      <li>performance / left / underwhelmed / audience / the</li>
-      <li>discovery / was / captivating / genuinely / the</li>
-      <li>remained / unconvinced / panel / the / entirely</li>
-      <li>result / disappointing / was / mildly / the</li>
+      <li>findings / disconcerting / were / the / undeniably <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>performance / left / underwhelmed / audience / the <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>discovery / was / captivating / genuinely / the <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>remained / unconvinced / panel / the / entirely <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>result / disappointing / was / mildly / the <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The panel remained unconvincing by the pitch.</li>
-      <li>It was a disconcerted revelation for the board.</li>
-      <li>She left the meeting feeling thoroughly underwhelming.</li>
-      <li>The results proved deeply disappointed.</li>
-      <li>He appeared genuinely captivating by the proposal.</li>
+      <li>The panel remained unconvincing by the pitch. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>It was a disconcerted revelation for the board. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>She left the meeting feeling thoroughly underwhelming. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>The results proved deeply disappointed. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>He appeared genuinely captivating by the proposal. <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
@@ -315,6 +346,129 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* -- Interactive exercises -- */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['interested'] },
+    { accept: ['boring'] },
+    { accept: ['excited'] },
+    { accept: ['frightening'] },
+    { accept: ['confused'] },
+    { accept: ['interesting'] }
+  ]},
+  ex5: { type: 'exact', items: [
+    { accept: ['made of'] },
+    { accept: ['used for'] },
+    { accept: ['made of'] },
+    { accept: ['used for'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['i am very bored'] },
+    { accept: ['the lecture was boring'] },
+    { accept: ['she is excited about the news'] },
+    { accept: ['it is made of wood'] },
+    { accept: ['a knife is used for cutting'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ["i'm bored", 'i am bored'] },
+    { accept: ['an interesting person'] },
+    { accept: ['really tiring'] },
+    { accept: ['so confusing'] },
+    { accept: ["it's amazing", 'it is amazing'] },
+    { accept: ['made of wood'] }
+  ]},
+  ex8: { type: 'exact', items: [
+    { accept: ['boring'] },
+    { accept: ['bored'] },
+    { accept: ['surprising'] },
+    { accept: ['surprised'] },
+    { accept: ['confusing'] },
+    { accept: ['confused'] },
+    { accept: ['frightening'] },
+    { accept: ['exciting'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['feeling amazed'] },
+    { accept: ['disappointing outcome'] },
+    { accept: ["i'm interested to hear", 'i am interested to hear'] },
+    { accept: ['confusing reading experience'] },
+    { accept: ['annoying colleague'] },
+    { accept: ['embarrassing for everyone'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['astonishing'] },
+    { accept: ['unstimulated'] },
+    { accept: ['terrifying'] },
+    { accept: ['compelling'] },
+    { accept: ['exhausted'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['disconcerting for the research team'] },
+    { accept: ['unconvinced by the argument'] },
+    { accept: ['underwhelming performance'] },
+    { accept: ['disappointed'] },
+    { accept: ['mortifying'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['the findings were undeniably disconcerting'] },
+    { accept: ['the performance left the audience underwhelmed'] },
+    { accept: ['the discovery was genuinely captivating'] },
+    { accept: ['the panel remained entirely unconvinced'] },
+    { accept: ['the result was mildly disappointing'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['unconvinced by the pitch'] },
+    { accept: ['disconcerting revelation'] },
+    { accept: ['feeling thoroughly underwhelmed'] },
+    { accept: ['deeply disappointing'] },
+    { accept: ['genuinely captivated by the proposal'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>
