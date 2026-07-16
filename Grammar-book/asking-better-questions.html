@@ -9,6 +9,33 @@
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
     @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
   </style>
 </head>
 <body>
@@ -69,30 +96,31 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: is this open or closed?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"Do you like tea?" a) open&nbsp; b) closed</li>
-      <li>"What do you do on weekends?" a) open&nbsp; b) closed</li>
-      <li>"Are you from Spain?" a) open&nbsp; b) closed</li>
-      <li>"Why did you choose this job?" a) open&nbsp; b) closed</li>
-      <li>"Can you swim?" a) open&nbsp; b) closed</li>
-      <li>"How was your weekend?" a) open&nbsp; b) closed</li>
+      <li>"Do you like tea?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) open</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) closed</button></span></li>
+      <li>"What do you do on weekends?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) open</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) closed</button></span></li>
+      <li>"Are you from Spain?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) open</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) closed</button></span></li>
+      <li>"Why did you choose this job?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) open</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) closed</button></span></li>
+      <li>"Can you swim?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) open</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) closed</button></span></li>
+      <li>"How was your weekend?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) open</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) closed</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each question type (1–4) to its example (a–d).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. Open question</div><div>a. "Tell me about your trip."</div>
-      <div>2. Closed question</div><div>b. "Did you enjoy your trip?"</div>
-      <div>3. Open question</div><div>c. "How do you feel about the change?"</div>
-      <div>4. Closed question</div><div>d. "Have you seen the report?"</div>
+      <div>1. Open question <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>a. "Tell me about your trip."</div>
+      <div>2. Closed question <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>b. "Did you enjoy your trip?"</div>
+      <div>3. Open question <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>c. "How do you feel about the change?"</div>
+      <div>4. Closed question <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>d. "Have you seen the report?"</div>
     </div>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Rewrite each closed question as an open question.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"Do you like your job?" → ______________________</li>
-      <li>"Is the movie good?" → ______________________</li>
-      <li>"Did you have a good weekend?" → ______________________</li>
+      <li>"Do you like your job?" → <input class="iq-input iq-input-wide" id="ex3-1" placeholder="rewrite as an open question…"></li>
+      <li>"Is the movie good?" → <input class="iq-input iq-input-wide" id="ex3-2" placeholder="rewrite as an open question…"></li>
+      <li>"Did you have a good weekend?" → <input class="iq-input iq-input-wide" id="ex3-3" placeholder="rewrite as an open question…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
@@ -100,63 +128,67 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">A good conversation usually mixes both closed and open questions. Closed questions like "Are you a teacher?" get quick facts. Open questions like "What do you enjoy most about teaching?" invite longer answers and keep the conversation going. If you only ask closed questions, the conversation can feel like an interview.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Closed questions get quick facts. ___</li>
-      <li>Open questions usually get one-word answers. ___</li>
-      <li>Mixing both types is common in good conversation. ___</li>
-      <li>Only asking closed questions can feel like an interview. ___</li>
-      <li>Open questions never invite long answers. ___</li>
+      <li>Closed questions get quick facts. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Open questions usually get one-word answers. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Mixing both types is common in good conversation. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Only asking closed questions can feel like an interview. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Open questions never invite long answers. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Complete each open question with a question word.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"Do you like coffee?" → "______ do you like about coffee?"</li>
-      <li>"Is your job stressful?" → "______ is your job stressful?"</li>
-      <li>"Did you enjoy the film?" → "______ did you think of the film?"</li>
+      <li>"Do you like coffee?" → "<input class="iq-input" id="ex5-1"> do you like about coffee?"</li>
+      <li>"Is your job stressful?" → "<input class="iq-input" id="ex5-2"> is your job stressful?"</li>
+      <li>"Did you enjoy the film?" → "<input class="iq-input" id="ex5-3"> did you think of the film?"</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct questions.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>weekend / your / was / how</li>
-      <li>think / you / do / what</li>
-      <li>today / feeling / are / you / how</li>
-      <li>that / why / choose / did / you</li>
-      <li>happened / what</li>
+      <li>weekend / your / was / how <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>think / you / do / what <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>today / feeling / are / you / how <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>that / why / choose / did / you <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>happened / what <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each question.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"What you think about this?"</li>
-      <li>"Is clear for you?"</li>
-      <li>"You like it, don't you like it?"</li>
-      <li>"Why you chose this?"</li>
-      <li>"How feel you about it?"</li>
-      <li>"Do you understand?" <em>(as a comprehension check)</em></li>
+      <li>"What you think about this?" <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>"Is clear for you?" <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>"You like it, don't you like it?" <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>"Why you chose this?" <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>"How feel you about it?" <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>"Do you understand?" <em>(as a comprehension check)</em> <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write a specific CCQ…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Turn each vague comprehension check into a specific CCQ.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Teaching "since 2010" — vague check: "Do you understand 'since'?"</li>
-      <li>Teaching "mustn't" — vague check: "Understand?"</li>
-      <li>Teaching "a few" vs "a little" — vague check: "Clear?"</li>
-      <li>Teaching "used to" — vague check: "OK?"</li>
-      <li>Teaching "if I were you" — vague check: "Got it?"</li>
+      <li>Teaching "since 2010" — vague check: "Do you understand 'since'?" <input class="iq-input iq-input-wide" id="ex8-1" placeholder="write a specific CCQ…"></li>
+      <li>Teaching "mustn't" — vague check: "Understand?" <input class="iq-input iq-input-wide" id="ex8-2" placeholder="write a specific CCQ…"></li>
+      <li>Teaching "a few" vs "a little" — vague check: "Clear?" <input class="iq-input iq-input-wide" id="ex8-3" placeholder="write a specific CCQ…"></li>
+      <li>Teaching "used to" — vague check: "OK?" <input class="iq-input iq-input-wide" id="ex8-4" placeholder="write a specific CCQ…"></li>
+      <li>Teaching "if I were you" — vague check: "Got it?" <input class="iq-input iq-input-wide" id="ex8-5" placeholder="write a specific CCQ…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: which is the better CCQ?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Target: "I've lived here for 10 years." a) "Do you understand the present perfect?"&nbsp; b) "Did I move here 10 years ago? Do I still live here?"</li>
-      <li>Target: "He might come." a) "Are you sure?"&nbsp; b) "Is it certain he will come?"</li>
-      <li>Target: "She was cooking when I arrived." a) "Understand?"&nbsp; b) "Which action started first?"</li>
-      <li>Target: "You should see a doctor." a) "Clear?"&nbsp; b) "Is this an order or advice?"</li>
-      <li>Target: "I wish I had more time." a) "Do I have more time now?"&nbsp; b) "Understood?"</li>
-      <li>Target: "It's been raining all day." a) "Has it stopped now?"&nbsp; b) "OK?"</li>
+      <li>Target: "I've lived here for 10 years." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) "Do you understand the present perfect?"</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) "Did I move here 10 years ago? Do I still live here?"</button></span></li>
+      <li>Target: "He might come." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) "Are you sure?"</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) "Is it certain he will come?"</button></span></li>
+      <li>Target: "She was cooking when I arrived." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) "Understand?"</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) "Which action started first?"</button></span></li>
+      <li>Target: "You should see a doctor." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) "Clear?"</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) "Is this an order or advice?"</button></span></li>
+      <li>Target: "I wish I had more time." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) "Do I have more time now?"</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) "Understood?"</button></span></li>
+      <li>Target: "It's been raining all day." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) "Has it stopped now?"</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) "OK?"</button></span></li>
     </ol>
   </div>
 
@@ -165,95 +197,93 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Effective questioning is a core communication skill, not just a classroom technique. In a job interview, for example, a candidate who asks only closed questions ("Is the salary negotiable?") may come across as passive, whereas open questions ("What does success look like in this role after the first year?") signal genuine curiosity. Concept Checking Questions, though originally developed for language teaching, apply the same principle to any explanation: rather than asking "Does that make sense?" — which almost always gets an automatic "yes" — a good communicator checks understanding by asking the listener to restate or apply the idea.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Effective questioning is only useful in classrooms. ___</li>
-      <li>Asking only closed questions in an interview can seem passive. ___</li>
-      <li>Open questions can signal curiosity. ___</li>
-      <li>"Does that make sense?" reliably reveals understanding. ___</li>
-      <li>Asking someone to restate an idea is a better way to check understanding. ___</li>
+      <li>Effective questioning is only useful in classrooms. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Asking only closed questions in an interview can seem passive. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Open questions can signal curiosity. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>"Does that make sense?" reliably reveals understanding. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Asking someone to restate an idea is a better way to check understanding. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) problem in each question.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"You wouldn't disagree, would you?" <em>(as a neutral check)</em></li>
-      <li>"This is right, isn't it?" <em>(fishing for agreement)</em></li>
-      <li>"So you get it now, right?"</li>
-      <li>"Isn't this obviously true?"</li>
-      <li>"You're not confused, are you?"</li>
-      <li>"That's clear, yes?"</li>
+      <li>"You wouldn't disagree, would you?" <em>(as a neutral check)</em> <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>"This is right, isn't it?" <em>(fishing for agreement)</em> <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>"So you get it now, right?" <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>"Isn't this obviously true?" <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>"You're not confused, are you?" <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>"That's clear, yes?" <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Choose a grammar point or concept you know well. Write <strong>3 specific CCQs</strong> for it (not "Do you understand?"), plus <strong>2 open questions</strong> you could ask to extend a related conversation.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each casual check-in in a more formal, facilitating register.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"Get it?"</li>
-      <li>"Any questions? No? OK moving on."</li>
-      <li>"You cool with this plan?"</li>
-      <li>"Make sense?"</li>
-      <li>"You sure?"</li>
+      <li>"Get it?" <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>"Any questions? No? OK moving on." <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>"You cool with this plan?" <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>"Make sense?" <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>"You sure?" <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: identify the concept.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"You don't really think that's a good idea, do you?" a) a leading question&nbsp; b) a neutral open question</li>
-      <li>A question checking HOW to do a task (not meaning) is called: a) an ICQ&nbsp; b) a CCQ</li>
-      <li>"So we're all clear then?" said without pausing is often: a) rhetorical, not a genuine check&nbsp; b) a strong CCQ</li>
-      <li>The best CCQ for "barely" (as in "I barely passed") tests: a) whether the result was close to failing&nbsp; b) whether the listener is tired</li>
-      <li>An open question in a formal interview is preferred over a closed one because it: a) invites a detailed, evaluative response&nbsp; b) is quicker to answer</li>
-      <li>A tag question used purely for social agreement ("...isn't it?") functions like: a) a closed confirmation-seeking device&nbsp; b) a true open question</li>
+      <li>"You don't really think that's a good idea, do you?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) a leading question</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a neutral open question</button></span></li>
+      <li>A question checking HOW to do a task (not meaning) is called: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) an ICQ</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a CCQ</button></span></li>
+      <li>"So we're all clear then?" said without pausing is often: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) rhetorical, not a genuine check</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a strong CCQ</button></span></li>
+      <li>The best CCQ for "barely" (as in "I barely passed") tests: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) whether the result was close to failing</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) whether the listener is tired</button></span></li>
+      <li>An open question in a formal interview is preferred over a closed one because it: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) invites a detailed, evaluative response</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) is quicker to answer</button></span></li>
+      <li>A tag question used purely for social agreement ("...isn't it?") functions like: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) a closed confirmation-seeking device</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a true open question</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Improve each flawed check by writing a targeted CCQ or ICQ.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>To check "although" is understood: "Do you understand the conjunction?"</li>
-      <li>To check students know to work in pairs: "Is everyone clear?"</li>
-      <li>To check "hardly any": "Clear?"</li>
-      <li>To check the time given for a task: "Enough time?"</li>
-      <li>To check "as long as": "You get it?"</li>
+      <li>To check "although" is understood: "Do you understand the conjunction?" <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write a targeted CCQ…"></li>
+      <li>To check students know to work in pairs: "Is everyone clear?" <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write a targeted CCQ…"></li>
+      <li>To check "hardly any": "Clear?" <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write a targeted CCQ…"></li>
+      <li>To check the time given for a task: "Enough time?" <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write a targeted CCQ…"></li>
+      <li>To check "as long as": "You get it?" <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write a targeted CCQ…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, design a mini explanation script for a concept of your choice (grammar, workplace policy, or technical process). Include <strong>at least 3 well-formed CCQs</strong> (not "Do you understand?") and <strong>2 open follow-up questions</strong>.</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex questions.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>clarify / like / part / would / any / you / me / to / of / this</li>
-      <li>proceeding / plan / comfortable / this / with / you / are</li>
-      <li>understanding / align / this / does / far / so / with / your</li>
-      <li>reasoning / walk / through / could / me / your / you</li>
-      <li>clarification / further / anyone / need / questions / or / have / does</li>
+      <li>clarify / like / part / would / any / you / me / to / of / this <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>proceeding / plan / comfortable / this / with / you / are <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>understanding / align / this / does / far / so / with / your <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>reasoning / walk / through / could / me / your / you <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>clarification / further / anyone / need / questions / or / have / does <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Replace each weak check with a strong, specific question.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"You get what I mean, yeah?"</li>
-      <li>"Everyone good?" <em>(checking task instructions)</em></li>
-      <li>"Understand the difference between 'few' and 'a few'?"</li>
-      <li>"This makes sense, right?"</li>
-      <li>"No confusion?"</li>
+      <li>"You get what I mean, yeah?" <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write a strong, specific question…"></li>
+      <li>"Everyone good?" <em>(checking task instructions)</em> <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write a strong, specific question…"></li>
+      <li>"Understand the difference between 'few' and 'a few'?" <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write a strong, specific question…"></li>
+      <li>"This makes sense, right?" <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write a strong, specific question…"></li>
+      <li>"No confusion?" <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write a strong, specific question…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
@@ -313,6 +343,122 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* ── Interactive exercises ── */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'lenient', items: [
+    { accept: ['what do you like about your job'] },
+    { accept: ['what do you think of the movie'] },
+    { accept: ['what did you do this weekend'] }
+  ]},
+  ex5: { type: 'exact', items: [
+    { accept: ['what'] },
+    { accept: ['why', 'how'] },
+    { accept: ['what'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['how was your weekend'] },
+    { accept: ['what do you think'] },
+    { accept: ['how are you feeling today'] },
+    { accept: ['why did you choose that'] },
+    { accept: ['what happened'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['what do you think about this'] },
+    { accept: ['is this clear to you'] },
+    { accept: ['do you like it'] },
+    { accept: ['why did you choose this'] },
+    { accept: ['how do you feel about it'] },
+    { accept: [''] }
+  ]},
+  ex8: { type: 'lenient', items: [
+    { accept: ['still happening now'] },
+    { accept: ['can i choose not to do it'] },
+    { accept: ['countable or uncountable'] },
+    { accept: ['did i do it regularly'] },
+    { accept: ['is this advice'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['what do you think'] },
+    { accept: ['what do you think is correct here'] },
+    { accept: ['can you give me an example'] },
+    { accept: ["what's your view on this", 'what is your view on this'] },
+    { accept: ['what part would you like explained again'] },
+    { accept: ['can you explain it back to me in your own words'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['would you like me to clarify any part of this'] },
+    { accept: ['does anyone have questions or need further clarification'] },
+    { accept: ['are you comfortable proceeding with this plan'] },
+    { accept: ['does this align with your understanding so far'] },
+    { accept: ['could you walk me through your reasoning'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['do the two ideas agree', 'or contrast'] },
+    { accept: ['are you working alone', 'in pairs', 'or in groups'] },
+    { accept: ['is the amount large or very small'] },
+    { accept: ['how many minutes do you have'] },
+    { accept: ['is this a condition for something to happen'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['would you like me to clarify any part of this'] },
+    { accept: ['are you comfortable proceeding with this plan'] },
+    { accept: ['does this align with your understanding so far'] },
+    { accept: ['could you walk me through your reasoning'] },
+    { accept: ['does anyone have questions or need further clarification'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['could you summarize what i just explained'] },
+    { accept: ["can someone tell me what we're doing first", 'can someone tell me what we are doing first'] },
+    { accept: ["does 'few' sound positive or negative", 'does few sound positive or negative'] },
+    { accept: ['how would you explain this to a friend'] },
+    { accept: ['what questions do you still have'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

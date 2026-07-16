@@ -9,6 +9,33 @@
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
     @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
   </style>
 </head>
 <body>
@@ -68,31 +95,32 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I go to the gym <strong>(to / for)</strong> exercise.</li>
-      <li>She called <strong>(to / for)</strong> ask a question.</li>
-      <li>We save money <strong>(to / for)</strong> a house.</li>
-      <li>He studies <strong>(to / for)</strong> pass the exam.</li>
-      <li>They came <strong>(to / for)</strong> help us.</li>
-      <li>I need a pen <strong>(to / for)</strong> write.</li>
+      <li>I go to the gym <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">to</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">for</button></span> exercise.</li>
+      <li>She called <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">to</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">for</button></span> ask a question.</li>
+      <li>We save money <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">to</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">for</button></span> a house.</li>
+      <li>He studies <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">to</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">for</button></span> pass the exam.</li>
+      <li>They came <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">to</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">for</button></span> help us.</li>
+      <li>I need a pen <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">to</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">for</button></span> write.</li>
     </ol>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each action (1–4) to its purpose (a–d).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. I go to the library</div><div>a. to lose weight.</div>
-      <div>2. She exercises</div><div>b. to see the doctor.</div>
-      <div>3. He went to the clinic</div><div>c. to borrow books.</div>
-      <div>4. We saved money</div><div>d. to buy a car.</div>
+      <div>1. I go to the library <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>a. to lose weight.</div>
+      <div>2. She exercises <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>b. to see the doctor.</div>
+      <div>3. He went to the clinic <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>c. to borrow books.</div>
+      <div>4. We saved money <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>d. to buy a car.</div>
     </div>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Complete the sentence with "to" + a verb from the box: study, buy, call, learn.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I go to school ______.</li>
-      <li>She went to the shop ______ bread.</li>
-      <li>He phoned me ______ about the meeting.</li>
-      <li>They take classes ______ French.</li>
+      <li>I go to school <input class="iq-input" id="ex3-1">.</li>
+      <li>She went to the shop <input class="iq-input" id="ex3-2"> bread.</li>
+      <li>He phoned me <input class="iq-input" id="ex3-3"> about the meeting.</li>
+      <li>They take classes <input class="iq-input" id="ex3-4"> French.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
@@ -100,61 +128,65 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Ana got up early to catch the first train. She left a note for her flatmate so that he wouldn't worry. At the station, she bought a coffee to stay awake, and put on headphones so that she could work without noise. She had planned everything carefully in order to arrive on time for her interview.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Ana got up early to catch the first train. ___</li>
-      <li>She left a note for her flatmate to worry him. ___</li>
-      <li>She bought coffee to stay awake. ___</li>
-      <li>She used headphones so that she could work without noise. ___</li>
-      <li>Her plan was for arriving late on purpose. ___</li>
+      <li>Ana got up early to catch the first train. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>She left a note for her flatmate to worry him. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>She bought coffee to stay awake. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>She used headphones so that she could work without noise. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Her plan was for arriving late on purpose. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Combine each pair of sentences using "to" or "so that".</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I woke up early. I wanted to catch the bus.</li>
-      <li>She whispered. She didn't want to wake the baby.</li>
-      <li>We booked tickets in advance. We wanted our kids to get good seats.</li>
-      <li>He turned off his phone. He wanted to concentrate.</li>
+      <li>I woke up early. I wanted to catch the bus. <input class="iq-input iq-input-wide" id="ex5-1" placeholder="combine into one sentence…"></li>
+      <li>She whispered. She didn't want to wake the baby. <input class="iq-input iq-input-wide" id="ex5-2" placeholder="combine into one sentence…"></li>
+      <li>We booked tickets in advance. We wanted our kids to get good seats. <input class="iq-input iq-input-wide" id="ex5-3" placeholder="combine into one sentence…"></li>
+      <li>He turned off his phone. He wanted to concentrate. <input class="iq-input iq-input-wide" id="ex5-4" placeholder="combine into one sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>bread / to / went / I / buy / the / shop / to</li>
-      <li>early / so / worry / left / that / a / wouldn't / note / he / she</li>
-      <li>pass / studies / exam / the / he / to</li>
-      <li>quietly / so / left / not / wake / to / he / anyone / as</li>
-      <li>help / to / came / us / they</li>
+      <li>bread / to / went / I / buy / the / shop / to <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>early / so / worry / left / that / a / wouldn't / note / he / she <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>pass / studies / exam / the / he / to <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>quietly / so / left / not / wake / to / he / anyone / as <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>help / to / came / us / they <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I went to the shop for buy milk.</li>
-      <li>She studies hard for pass the exam.</li>
-      <li>He left early so don't miss the train.</li>
-      <li>We saved money so that we can travel. (past context)</li>
-      <li>I called for ask about the job.</li>
-      <li>They whispered for not wake the baby.</li>
+      <li>I went to the shop for buy milk. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>She studies hard for pass the exam. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>He left early so don't miss the train. <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>We saved money so that we can travel. (past context) <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>I called for ask about the job. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>They whispered for not wake the baby. <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Choose "to", "so that", or "so as not to" for each blank.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>He whispered ______ wake the baby.</li>
-      <li>She left early ______ she could catch the train.</li>
-      <li>I wore gloves ______ keep my hands warm.</li>
-      <li>They spoke quietly ______ disturb the neighbours.</li>
+      <li>He whispered <input class="iq-input" id="ex8-1"> wake the baby.</li>
+      <li>She left early <input class="iq-input" id="ex8-2"> she could catch the train.</li>
+      <li>I wore gloves <input class="iq-input" id="ex8-3"> keep my hands warm.</li>
+      <li>They spoke quietly <input class="iq-input" id="ex8-4"> disturb the neighbours.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: same subject ("to") or different subject ("so that")?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I lowered my voice ___ my sister could sleep. a) so that&nbsp; b) to</li>
-      <li>She trained hard ___ win the race. a) to&nbsp; b) so that</li>
-      <li>He left the door open ___ the cat could get in. a) so that&nbsp; b) to</li>
-      <li>We arrived early ___ get good seats. a) to&nbsp; b) so that</li>
+      <li>I lowered my voice ___ my sister could sleep. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) so that</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) to</button></span></li>
+      <li>She trained hard ___ win the race. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) to</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) so that</button></span></li>
+      <li>He left the door open ___ the cat could get in. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) so that</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) to</button></span></li>
+      <li>We arrived early ___ get good seats. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) to</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) so that</button></span></li>
     </ol>
   </div>
 
@@ -163,90 +195,88 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">The company introduced flexible hours in order to improve staff retention, and set up an anonymous feedback line so that employees could raise concerns without fear of repercussions. Managers were trained specifically so as not to dismiss complaints too quickly. The changes were rolled out gradually in order to give teams time to adjust.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Flexible hours were introduced to improve retention. ___</li>
-      <li>Employees can raise concerns anonymously. ___</li>
-      <li>Managers were trained to dismiss complaints quickly. ___</li>
-      <li>The rollout was immediate, not gradual. ___</li>
+      <li>Flexible hours were introduced to improve retention. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Employees can raise concerns anonymously. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Managers were trained to dismiss complaints quickly. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The rollout was immediate, not gradual. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The policy exists in order for prevent fraud.</li>
-      <li>She spoke slowly so as for everyone to understand.</li>
-      <li>They restructured the team for improve efficiency.</li>
-      <li>He apologised so that to smooth things over.</li>
-      <li>We double-checked everything in order avoiding mistakes.</li>
+      <li>The policy exists in order for prevent fraud. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>She spoke slowly so as for everyone to understand. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>They restructured the team for improve efficiency. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>He apologised so that to smooth things over. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>We double-checked everything in order avoiding mistakes. <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Describe a decision you made recently and explain your reasons, in 6–8 sentences, using <strong>to, in order to, so that,</strong> and <strong>so as not to</strong> at least once each.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal register using "in order to" or "so as to/not to".</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>We changed the process to save time.</li>
-      <li>They kept quiet to avoid causing alarm.</li>
-      <li>The team met early to prepare properly.</li>
-      <li>She rewrote the report to make it clearer.</li>
-      <li>He avoided the topic to not upset anyone.</li>
+      <li>We changed the process to save time. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>They kept quiet to avoid causing alarm. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>The team met early to prepare properly. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>She rewrote the report to make it clearer. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>He avoided the topic to not upset anyone. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: which purpose clause fits a formal report best?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>a) …to fix it&nbsp; b) …with a view to resolving the issue — Which is more formal?</li>
-      <li>a) …so that costs don't rise&nbsp; b) …with a view to preventing further cost increases — Which is more formal?</li>
-      <li>a) …to avoid delays&nbsp; b) …for the purpose of avoiding delays — Which is more formal?</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) …to fix it</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) …with a view to resolving the issue</button></span> — Which is more formal?</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) …so that costs don't rise</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) …with a view to preventing further cost increases</button></span> — Which is more formal?</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) …to avoid delays</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) …for the purpose of avoiding delays</button></span> — Which is more formal?</li>
     </ol>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The policy was introduced with a view to reducing to waste.</li>
-      <li>It was designed for the purpose to improve safety.</li>
-      <li>They restructured so as for cutting costs.</li>
-      <li>The review took place with the aim of identify weaknesses.</li>
-      <li>The rule exists in order preventing abuse.</li>
+      <li>The policy was introduced with a view to reducing to waste. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>It was designed for the purpose to improve safety. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>They restructured so as for cutting costs. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>The review took place with the aim of identify weaknesses. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>The rule exists in order preventing abuse. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal policy rationale explaining the purpose of a workplace rule, using <strong>in order to, with a view to, for the purpose of,</strong> and <strong>so as not to</strong> across a range of formal purpose structures.</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>view / with / reducing / a / waste / to</li>
-      <li>purpose / improving / for / of / safety / the</li>
-      <li>aim / weaknesses / with / identifying / the / of</li>
-      <li>so / not / disrupt / operations / to / as</li>
-      <li>order / preventing / abuse / in / to</li>
+      <li>view / with / reducing / a / waste / to <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>purpose / improving / for / of / safety / the <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>aim / weaknesses / with / identifying / the / of <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>so / not / disrupt / operations / to / as <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>order / preventing / abuse / in / to <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The policy was introduced with a view to to reducing waste.</li>
-      <li>It was designed for the purpose to improve safety.</li>
-      <li>The review took place with the aim of identify weaknesses.</li>
-      <li>The change was made so as for not disrupt operations.</li>
-      <li>The rule exists in order preventing abuse.</li>
+      <li>The policy was introduced with a view to to reducing waste. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>It was designed for the purpose to improve safety. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>The review took place with the aim of identify weaknesses. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>The change was made so as for not disrupt operations. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>The rule exists in order preventing abuse. <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
@@ -306,6 +336,122 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* ── Interactive exercises ── */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['to study'] },
+    { accept: ['to buy'] },
+    { accept: ['to call'] },
+    { accept: ['to learn'] }
+  ]},
+  ex5: { type: 'lenient', items: [
+    { accept: ['to catch the bus'] },
+    { accept: ['so as not to wake the baby'] },
+    { accept: ['so that our kids could get good seats', 'so that their kids could get good seats'] },
+    { accept: ['to concentrate'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['i went to the shop to buy bread'] },
+    { accept: ["she left a note so that he wouldn't worry"] },
+    { accept: ['he studies to pass the exam'] },
+    { accept: ['he left quietly so as not to wake anyone'] },
+    { accept: ['they came to help us'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['to buy milk'] },
+    { accept: ['to pass the exam'] },
+    { accept: ['so as not to miss the train'] },
+    { accept: ['so that they could travel'] },
+    { accept: ['to ask about the job'] },
+    { accept: ['so as not to wake the baby'] }
+  ]},
+  ex8: { type: 'exact', items: [
+    { accept: ['so as not to'] },
+    { accept: ['so that'] },
+    { accept: ['to'] },
+    { accept: ['so as not to'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['in order to prevent fraud'] },
+    { accept: ['so that everyone could understand'] },
+    { accept: ['to improve efficiency'] },
+    { accept: ['so as to smooth things over'] },
+    { accept: ['in order to avoid mistakes'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['in order to save time'] },
+    { accept: ['so as not to cause alarm'] },
+    { accept: ['in order to prepare properly'] },
+    { accept: ['so as to make it clearer'] },
+    { accept: ['so as not to upset anyone'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['with a view to reducing waste'] },
+    { accept: ['for the purpose of improving safety'] },
+    { accept: ['so as to cut costs'] },
+    { accept: ['with the aim of identifying weaknesses'] },
+    { accept: ['in order to prevent abuse'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['with a view to reducing waste'] },
+    { accept: ['for the purpose of improving safety'] },
+    { accept: ['with the aim of identifying weaknesses'] },
+    { accept: ['so as not to disrupt operations'] },
+    { accept: ['in order to prevent abuse'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['with a view to reducing waste'] },
+    { accept: ['for the purpose of improving safety'] },
+    { accept: ['with the aim of identifying weaknesses'] },
+    { accept: ['so as not to disrupt operations'] },
+    { accept: ['in order to prevent abuse'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

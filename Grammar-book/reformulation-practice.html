@@ -9,6 +9,33 @@
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
     @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
   </style>
 </head>
 <body>
@@ -68,30 +95,31 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correctly reformulated sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"She go to school every day." a) She go to school every day.&nbsp; b) She goes to school every day.</li>
-      <li>"I have 20 years." a) I have 20 years.&nbsp; b) I am 20 years old.</li>
-      <li>"He don't like it." a) He don't like it.&nbsp; b) He doesn't like it.</li>
-      <li>"I very like it." a) I very like it.&nbsp; b) I like it very much.</li>
-      <li>"She is agree." a) She is agree.&nbsp; b) She agrees.</li>
-      <li>"I am boring." a) I am boring.&nbsp; b) I am bored.</li>
+      <li>"She go to school every day." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) She go to school every day.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) She goes to school every day.</button></span></li>
+      <li>"I have 20 years." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) I have 20 years.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) I am 20 years old.</button></span></li>
+      <li>"He don't like it." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) He don't like it.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) He doesn't like it.</button></span></li>
+      <li>"I very like it." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) I very like it.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) I like it very much.</button></span></li>
+      <li>"She is agree." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) She is agree.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) She agrees.</button></span></li>
+      <li>"I am boring." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) I am boring.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) I am bored.</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each original (1–4) to its reformulation (a–d).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. "I have 20 years."</div><div>a. "I am 20 years old."</div>
-      <div>2. "She is agree."</div><div>b. "She agrees."</div>
-      <div>3. "I very like it."</div><div>c. "I like it very much."</div>
-      <div>4. "He don't like it."</div><div>d. "He doesn't like it."</div>
+      <div>1. "I have 20 years." <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>a. "I am 20 years old."</div>
+      <div>2. "She is agree." <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>b. "She agrees."</div>
+      <div>3. "I very like it." <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>c. "I like it very much."</div>
+      <div>4. "He don't like it." <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>d. "He doesn't like it."</div>
     </div>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank to reformulate correctly.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"I am boring in class." → I am ______ in class.</li>
-      <li>"She has 3 cats, isn't it?" → correct tag: "______ she?"</li>
-      <li>"I am agree with you." → "I ______ with you."</li>
+      <li>"I am boring in class." → I am <input class="iq-input" id="ex3-1"> in class.</li>
+      <li>"She has 3 cats, isn't it?" → correct tag: "<input class="iq-input" id="ex3-2"> she?"</li>
+      <li>"I am agree with you." → "I <input class="iq-input" id="ex3-3"> with you."</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
@@ -99,41 +127,44 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">When Maria said, "I am living in this city since five years," her teacher didn't say "That's wrong." Instead, she reformulated: "Oh, you've been living here for five years — what do you like about it?" Maria heard the correct form naturally, without feeling embarrassed, and the conversation continued smoothly.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The teacher told Maria her sentence was wrong. ___</li>
-      <li>The teacher repeated the idea using the correct grammar. ___</li>
-      <li>Maria felt embarrassed and stopped talking. ___</li>
-      <li>The conversation continued after the reformulation. ___</li>
-      <li>Reformulation always stops the conversation to explain the rule. ___</li>
+      <li>The teacher told Maria her sentence was wrong. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The teacher repeated the idea using the correct grammar. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Maria felt embarrassed and stopped talking. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The conversation continued after the reformulation. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Reformulation always stops the conversation to explain the rule. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write a natural reformulation reply to each learner sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Learner: "I very like this song." Reply: "You ______ like this song?"</li>
-      <li>Learner: "Yesterday I go to the park." Reply: "Oh, you ______ to the park yesterday?"</li>
-      <li>Learner: "She don't have time." Reply: "She ______ have time?"</li>
+      <li>Learner: "I very like this song." Reply: "You <input class="iq-input" id="ex5-1"> like this song?"</li>
+      <li>Learner: "Yesterday I go to the park." Reply: "Oh, you <input class="iq-input" id="ex5-2"> to the park yesterday?"</li>
+      <li>Learner: "She don't have time." Reply: "She <input class="iq-input" id="ex5-3"> have time?"</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to build a natural reformulation reply.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>that / interesting / you / oh / think / so / do</li>
-      <li>yesterday / went / you / really / there</li>
-      <li>mean / you / do / you / enjoyed / it</li>
+      <li>that / interesting / you / oh / think / so / do <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>yesterday / went / you / really / there <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>mean / you / do / you / enjoyed / it <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Correct each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"I very enjoy this movie."</li>
-      <li>"She is more nicer than him."</li>
-      <li>"I have 25 years old."</li>
-      <li>"He said me that he was busy."</li>
-      <li>"I am boring of this topic."</li>
-      <li>"We were three friends discussing."</li>
+      <li>"I very enjoy this movie." <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>"She is more nicer than him." <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>"I have 25 years old." <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>"He said me that he was busy." <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>"I am boring of this topic." <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>"We were three friends discussing." <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Reformulate each sentence in two different ways (same meaning).</div>
@@ -144,16 +175,17 @@
       <li>"I agree."</li>
       <li>"It was fun."</li>
     </ol>
+    <textarea class="iq-open-textarea" placeholder="Write your two reformulations for each sentence here — self-check against the answer key below."></textarea>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: identify the reformulation technique.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Restating with different vocabulary. a) synonym substitution&nbsp; b) grammar correction</li>
-      <li>Turning two short sentences into one. a) combining clauses&nbsp; b) simplifying</li>
-      <li>Changing "I think..." to "In my opinion..." a) register shift&nbsp; b) tense shift</li>
-      <li>Turning active into passive for variety. a) structural reformulation&nbsp; b) vocabulary reformulation</li>
-      <li>Practicing an idea 3 different ways builds: a) fluency and flexibility&nbsp; b) only accuracy</li>
-      <li>A "recast" is best described as: a) a natural correction inside a reply&nbsp; b) an explicit grammar lecture</li>
+      <li>Restating with different vocabulary. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) synonym substitution</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) grammar correction</button></span></li>
+      <li>Turning two short sentences into one. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) combining clauses</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) simplifying</button></span></li>
+      <li>Changing "I think..." to "In my opinion..." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) register shift</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) tense shift</button></span></li>
+      <li>Turning active into passive for variety. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) structural reformulation</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) vocabulary reformulation</button></span></li>
+      <li>Practicing an idea 3 different ways builds: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) fluency and flexibility</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) only accuracy</button></span></li>
+      <li>A "recast" is best described as: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) a natural correction inside a reply</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) an explicit grammar lecture</button></span></li>
     </ol>
   </div>
 
@@ -162,95 +194,93 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Reformulation is widely used in fluency-focused speaking practice, distinct from accuracy-focused error correction. Rather than stopping a speaker mid-sentence to fix a mistake, a listener reformulates the idea naturally in their response, modelling correct or more sophisticated language without breaking the flow of communication. Some speaking coaches also use self-reformulation drills, in which learners repeat a single idea two or three times, each time with different vocabulary or sentence structure, to build mental flexibility under time pressure — a skill particularly valuable in unscripted, spontaneous speech such as interviews or debates.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Reformulation typically interrupts the speaker to correct them directly. ___</li>
-      <li>Reformulation models correct language within a natural response. ___</li>
-      <li>Self-reformulation drills involve repeating an idea with different wording. ___</li>
-      <li>This skill is especially useful for spontaneous speech like interviews. ___</li>
-      <li>Reformulation is the same as accuracy-focused error correction. ___</li>
+      <li>Reformulation typically interrupts the speaker to correct them directly. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Reformulation models correct language within a natural response. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Self-reformulation drills involve repeating an idea with different wording. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>This skill is especially useful for spontaneous speech like interviews. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Reformulation is the same as accuracy-focused error correction. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Improve each awkward reformulation.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Original: "I very tired today." Reformulation: "You very tired today?"</li>
-      <li>Original: "She work in hospital." Reformulation: "She work at the hospital?"</li>
-      <li>Original: "I have made this yesterday." Reformulation: "You have made this yesterday?"</li>
-      <li>Original: "He always late." Reformulation: "He is always late, isn't it?"</li>
-      <li>Original: "This is more better." Reformulation: "This is more better, right?"</li>
-      <li>Original: "We discuss about it." Reformulation: "You discuss about it?"</li>
+      <li>Original: "I very tired today." Reformulation: "You very tired today?" <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the improved reformulation…"></li>
+      <li>Original: "She work in hospital." Reformulation: "She work at the hospital?" <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the improved reformulation…"></li>
+      <li>Original: "I have made this yesterday." Reformulation: "You have made this yesterday?" <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the improved reformulation…"></li>
+      <li>Original: "He always late." Reformulation: "He is always late, isn't it?" <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the improved reformulation…"></li>
+      <li>Original: "This is more better." Reformulation: "This is more better, right?" <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the improved reformulation…"></li>
+      <li>Original: "We discuss about it." Reformulation: "You discuss about it?" <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the improved reformulation…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write 5 short learner sentences with typical errors, then write a <strong>natural reformulation reply</strong> to each, as a conversation partner would.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Reformulate each casual sentence in a formal register.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"This plan's pretty solid, I reckon."</li>
-      <li>"Yeah, that's basically what happened."</li>
-      <li>"Kinda feels rushed, if you ask me."</li>
-      <li>"It's not great, but it'll do."</li>
-      <li>"Honestly, I don't buy it."</li>
+      <li>"This plan's pretty solid, I reckon." <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>"Yeah, that's basically what happened." <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>"Kinda feels rushed, if you ask me." <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>"It's not great, but it'll do." <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>"Honestly, I don't buy it." <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: identify the technique.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Silently correcting within a reply, without pointing out the error. a) a recast&nbsp; b) explicit correction</li>
-      <li>Saying "Actually, it's 'went,' not 'go'" is: a) explicit correction&nbsp; b) a recast</li>
-      <li>Restating a complex idea more simply to check your own understanding is: a) comprehension paraphrase&nbsp; b) a recast</li>
-      <li>Shifting "gonna" to "going to" is primarily a: a) register reformulation&nbsp; b) tense reformulation</li>
-      <li>Reformulating an idea 3 different ways under time pressure builds: a) fluency and flexibility&nbsp; b) vocabulary memorization only</li>
-      <li>A reformulation that changes meaning, not just form, is: a) not a true reformulation&nbsp; b) still acceptable</li>
+      <li>Silently correcting within a reply, without pointing out the error. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) a recast</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) explicit correction</button></span></li>
+      <li>Saying "Actually, it's 'went,' not 'go'" is: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) explicit correction</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a recast</button></span></li>
+      <li>Restating a complex idea more simply to check your own understanding is: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) comprehension paraphrase</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a recast</button></span></li>
+      <li>Shifting "gonna" to "going to" is primarily a: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) register reformulation</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) tense reformulation</button></span></li>
+      <li>Reformulating an idea 3 different ways under time pressure builds: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) fluency and flexibility</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) vocabulary memorization only</button></span></li>
+      <li>A reformulation that changes meaning, not just form, is: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) not a true reformulation</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) still acceptable</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Fix each flawed reformulation attempt.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Original: "Since I have arrived, everything have changed." Reformulation: "Since you arrived, everything have changed?"</li>
-      <li>Original: "If I would have more time, I visit more places." Reformulation: "If you would have more time, you would visit more places?"</li>
-      <li>Original: "The report was wrote by the team." Reformulation: "The report was wrote by the team, right?"</li>
-      <li>Original: "She don't has experience for this." Reformulation: "She doesn't has experience for this?"</li>
-      <li>Original: "We are discussing since two hours." Reformulation: "You are discussing since two hours?"</li>
+      <li>Original: "Since I have arrived, everything have changed." Reformulation: "Since you arrived, everything have changed?" <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>Original: "If I would have more time, I visit more places." Reformulation: "If you would have more time, you would visit more places?" <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>Original: "The report was wrote by the team." Reformulation: "The report was wrote by the team, right?" <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>Original: "She don't has experience for this." Reformulation: "She doesn't has experience for this?" <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>Original: "We are discussing since two hours." Reformulation: "You are discussing since two hours?" <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write a short dialogue (6–8 lines) between a learner and a fluent speaker, in which the fluent speaker <strong>naturally reformulates 3 of the learner's errors</strong> within the flow of conversation, without ever saying "that's wrong."</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, reformulated sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>sound / fundamentally / plan / this / believe / is / I</li>
-      <li>account / an / that / essence / accurate / is / in / events / of</li>
-      <li>compressed / appears / timeline / somewhat / the / my / in / assessment</li>
-      <li>adequate / ideal / while / solution / not / this / is</li>
-      <li>unconvincing / find / explanation / frankly / this / I</li>
+      <li>sound / fundamentally / plan / this / believe / is / I <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>account / an / that / essence / accurate / is / in / events / of <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>compressed / appears / timeline / somewhat / the / my / in / assessment <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>adequate / ideal / while / solution / not / this / is <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>unconvincing / find / explanation / frankly / this / I <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"You've been discussing since two hours?"</li>
-      <li>"If you would have known, you would have told me?"</li>
-      <li>"She doesn't has experience?"</li>
-      <li>"The report was wrote by them, no?"</li>
-      <li>"Everything have changed since then?"</li>
+      <li>"You've been discussing since two hours?" <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>"If you would have known, you would have told me?" <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>"She doesn't has experience?" <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>"The report was wrote by them, no?" <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>"Everything have changed since then?" <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
@@ -310,6 +340,113 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* -- Interactive exercises -- */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['bored'] },
+    { accept: ["doesn't", 'doesnt'] },
+    { accept: ['agree'] }
+  ]},
+  ex5: { type: 'exact', items: [
+    { accept: ['really'] },
+    { accept: ['went'] },
+    { accept: ["doesn't", 'doesnt'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ["oh so you think that's interesting", 'oh so you think thats interesting'] },
+    { accept: ['you really went there yesterday'] },
+    { accept: ['do you mean you enjoyed it'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['i really enjoy this movie'] },
+    { accept: ['she is nicer than him'] },
+    { accept: ['i am 25 years old'] },
+    { accept: ['he told me that he was busy'] },
+    { accept: ['i am bored of this topic', 'i am bored with this topic'] },
+    { accept: ['the three of us were discussing'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ["you're very tired today", 'you are very tired today'] },
+    { accept: ['she works at the hospital'] },
+    { accept: ['you made this yesterday'] },
+    { accept: ["isn't he", 'isnt he'] },
+    { accept: ['this is better, right', 'this is better right'] },
+    { accept: ['you discussed it'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['fundamentally sound'] },
+    { accept: ['accurate account of events'] },
+    { accept: ['timeline appears somewhat compressed'] },
+    { accept: ['while not ideal', 'this solution is adequate'] },
+    { accept: ['find this explanation unconvincing'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['has changed'] },
+    { accept: ['if you had more time'] },
+    { accept: ['written by the team'] },
+    { accept: ["doesn't have experience", 'does not have experience'] },
+    { accept: ["you've been discussing for two hours", 'you have been discussing for two hours'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['i believe this plan is fundamentally sound'] },
+    { accept: ['that is in essence an accurate account of events'] },
+    { accept: ['in my assessment the timeline appears somewhat compressed'] },
+    { accept: ['while not ideal this solution is adequate'] },
+    { accept: ['frankly i find this explanation unconvincing'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['for two hours'] },
+    { accept: ['if you had known'] },
+    { accept: ["doesn't have experience", 'does not have experience'] },
+    { accept: ["wasn't it", 'wasnt it'] },
+    { accept: ['has changed since then'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

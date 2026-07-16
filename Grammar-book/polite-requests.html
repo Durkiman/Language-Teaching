@@ -9,6 +9,33 @@
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
     @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
   </style>
 </head>
 <body>
@@ -72,33 +99,34 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the more polite option.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li><strong>(Give me water. / I'd like some water, please.)</strong></li>
-      <li><strong>(Can I have the menu? / Menu now.)</strong></li>
-      <li><strong>(I want a tea. / I'd like a tea, please.)</strong></li>
-      <li><strong>(Could I have the bill, please? / Bill!)</strong></li>
-      <li><strong>(Open the door. / Could you open the door, please?)</strong></li>
-      <li><strong>(Would you like some cake? / You eat cake.)</strong></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">Give me water.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">I'd like some water, please.</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">Can I have the menu?</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">Menu now.</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">I want a tea.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">I'd like a tea, please.</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">Could I have the bill, please?</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">Bill!</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">Open the door.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">Could you open the door, please?</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">Would you like some cake?</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">You eat cake.</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each situation (1–4) to the polite request (a–d).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. In a café</div><div>a. Could you pass the salt, please?</div>
-      <div>2. At a friend's dinner table</div><div>b. I'd like a coffee, please.</div>
-      <div>3. In a shop, trying on clothes</div><div>c. Could I try this on, please?</div>
-      <div>4. On the phone</div><div>d. Could I speak to Anna, please?</div>
+      <div>1. In a café <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>a. Could you pass the salt, please?</div>
+      <div>2. At a friend's dinner table <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>b. I'd like a coffee, please.</div>
+      <div>3. In a shop, trying on clothes <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>c. Could I try this on, please?</div>
+      <div>4. On the phone <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>d. Could I speak to Anna, please?</div>
     </div>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank with "I'd like" or "Could I have".</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>______ a table for two, please?</li>
-      <li>______ to order the soup, please.</li>
-      <li>______ the bill, please?</li>
-      <li>______ a glass of water, please.</li>
-      <li>______ some more time to decide?</li>
-      <li>______ to book a room for Friday.</li>
+      <li><input class="iq-input" id="ex3-1"> a table for two, please?</li>
+      <li><input class="iq-input" id="ex3-2"> to order the soup, please.</li>
+      <li><input class="iq-input" id="ex3-3"> the bill, please?</li>
+      <li><input class="iq-input" id="ex3-4"> a glass of water, please.</li>
+      <li><input class="iq-input" id="ex3-5"> some more time to decide?</li>
+      <li><input class="iq-input" id="ex3-6"> to book a room for Friday.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
@@ -106,60 +134,64 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">"Good evening. Could I have a table for two, please?" "Of course. Would you like a table by the window?" "Yes, please, that would be lovely." "Great — and can I get you something to drink while you look at the menu?" "I'd like a sparkling water, please. And could you bring some bread as well?" "Certainly, right away."</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The customer asks for a table for two. ___</li>
-      <li>The customer refuses the window table. ___</li>
-      <li>The customer orders sparkling water. ___</li>
-      <li>The customer asks for bread. ___</li>
-      <li>The waiter is rude. ___</li>
+      <li>The customer asks for a table for two. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The customer refuses the window table. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The customer orders sparkling water. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The customer asks for bread. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The waiter is rude. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Rewrite each blunt sentence more politely.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I want a menu.</li>
-      <li>Give me the bill.</li>
-      <li>Open the window.</li>
-      <li>Bring me some water.</li>
+      <li>I want a menu. <input class="iq-input iq-input-wide" id="ex5-1" placeholder="rewrite politely…"></li>
+      <li>Give me the bill. <input class="iq-input iq-input-wide" id="ex5-2" placeholder="rewrite politely…"></li>
+      <li>Open the window. <input class="iq-input iq-input-wide" id="ex5-3" placeholder="rewrite politely…"></li>
+      <li>Bring me some water. <input class="iq-input iq-input-wide" id="ex5-4" placeholder="rewrite politely…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct polite requests.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>have / please / I / could / the / menu?</li>
-      <li>like / a / coffee / I'd / please</li>
-      <li>you / open / could / door / the?</li>
-      <li>like / would / some / you / cake?</li>
-      <li>speak / could / to / I / manager / the?</li>
+      <li>have / please / I / could / the / menu? <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>like / a / coffee / I'd / please <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>you / open / could / door / the? <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>like / would / some / you / cake? <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>speak / could / to / I / manager / the? <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I'd to like a coffee, please.</li>
-      <li>Could I to have the bill?</li>
-      <li>Could you passing the salt, please?</li>
-      <li>I like a table for two, please.</li>
-      <li>Would you to like some tea?</li>
-      <li>Can I has the menu, please?</li>
+      <li>I'd to like a coffee, please. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>Could I to have the bill? <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>Could you passing the salt, please? <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>I like a table for two, please. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>Would you to like some tea? <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>Can I has the menu, please? <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
-    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Rank each pair from less to more polite, and explain the difference in one sentence.</div>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Rank each pair from less to more polite, and explain the difference in one sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
       <li>"Can I have the salt?" vs "Could I possibly have the salt?"</li>
       <li>"Pass me the remote." vs "Could you pass me the remote, please?"</li>
       <li>"I want to check out." vs "I'd like to check out, please."</li>
     </ol>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: request for an object, request for an action, or offer?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"Could I have the menu?" a) object&nbsp; b) action</li>
-      <li>"Could you turn down the music?" a) action&nbsp; b) object</li>
-      <li>"Would you like some help?" a) offer&nbsp; b) request</li>
-      <li>"I'd like the chicken, please." a) object&nbsp; b) offer</li>
+      <li>"Could I have the menu?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) object</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) action</button></span></li>
+      <li>"Could you turn down the music?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) action</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) object</button></span></li>
+      <li>"Would you like some help?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) offer</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) request</button></span></li>
+      <li>"I'd like the chicken, please." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) object</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) offer</button></span></li>
     </ol>
   </div>
 
@@ -168,91 +200,89 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">"I was wondering if it would be possible to move our meeting to Thursday — would that work for you? I know it's short notice, so I'd completely understand if you couldn't. If Thursday's difficult, would you mind letting me know a time that suits you better? I'd really appreciate it."</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The speaker is asking to reschedule a meeting. ___</li>
-      <li>The speaker insists on Thursday no matter what. ___</li>
-      <li>The speaker offers an alternative if Thursday doesn't work. ___</li>
-      <li>This is a very formal, hedged request. ___</li>
+      <li>The speaker is asking to reschedule a meeting. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The speaker insists on Thursday no matter what. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The speaker offers an alternative if Thursday doesn't work. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>This is a very formal, hedged request. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Would you mind to close the window?</li>
-      <li>I was wondering could you help me.</li>
-      <li>Do you think it would be possible you help me?</li>
-      <li>I'd appreciate if you could reply soon.</li>
-      <li>Would it be alright I leave early?</li>
+      <li>Would you mind to close the window? <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>I was wondering could you help me. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>Do you think it would be possible you help me? <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>I'd appreciate if you could reply soon. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>Would it be alright I leave early? <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write a short polite email (6–8 sentences) asking a colleague for a favour, using at least three different politeness patterns from this page (I'd like, Would you mind, I was wondering if…).</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each request in the most formal, hedged register possible.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Can I have an extension?</li>
-      <li>Could you send me the file?</li>
-      <li>I want a refund.</li>
-      <li>Can you call me back?</li>
-      <li>Give me some feedback on this.</li>
+      <li>Can I have an extension? <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>Could you send me the file? <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>I want a refund. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>Can you call me back? <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>Give me some feedback on this. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: what does the extra hedging achieve here?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"I don't suppose you could help me, could you?" a) very indirect, minimising imposition&nbsp; b) rude</li>
-      <li>"If it's not too much trouble, could you…?" a) softening the request&nbsp; b) making it more urgent</li>
-      <li>"I hate to ask, but…" a) acknowledging the imposition&nbsp; b) demanding</li>
-      <li>"Might I trouble you for…?" a) very formal, old-fashioned politeness&nbsp; b) casual</li>
+      <li>"I don't suppose you could help me, could you?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) very indirect, minimising imposition</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) rude</button></span></li>
+      <li>"If it's not too much trouble, could you…?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) softening the request</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) making it more urgent</button></span></li>
+      <li>"I hate to ask, but…" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) acknowledging the imposition</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) demanding</button></span></li>
+      <li>"Might I trouble you for…?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) very formal, old-fashioned politeness</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) casual</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex, hedged requests.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I don't suppose you could to help me?</li>
-      <li>Would it be possible for you sending the file?</li>
-      <li>I was hoping if you could join us.</li>
-      <li>Might I to trouble you for a moment?</li>
-      <li>If it wouldn't be too much trouble, could you to call me?</li>
+      <li>I don't suppose you could to help me? <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>Would it be possible for you sending the file? <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>I was hoping if you could join us. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>Might I to trouble you for a moment? <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>If it wouldn't be too much trouble, could you to call me? <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal email to a senior client asking for a delayed payment to be resolved, using layered hedging (I was wondering whether, might it be possible, I'd be most grateful if) to stay polite while being clear.</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex requests.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>grateful / would / I / be / most / if / you / could / respond</li>
-      <li>wondering / I / possible / it / whether / would / was / be / to / reschedule</li>
-      <li>trouble / might / for / I / a / moment / you</li>
-      <li>too / not / trouble / it / much / were / if</li>
-      <li>appreciate / I / would / greatly / assistance / your</li>
+      <li>grateful / would / I / be / most / if / you / could / respond <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>wondering / I / possible / it / whether / would / was / be / to / reschedule <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>trouble / might / for / I / a / moment / you <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>too / not / trouble / it / much / were / if <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>appreciate / I / would / greatly / assistance / your <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I would be most grateful if you would to respond.</li>
-      <li>I was wondering would it be possible to reschedule.</li>
-      <li>Might I to trouble you for your assistance?</li>
-      <li>I would greatly appreciate for your help.</li>
-      <li>If it were not too much trouble, would you to call me?</li>
+      <li>I would be most grateful if you would to respond. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>I was wondering would it be possible to reschedule. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>Might I to trouble you for your assistance? <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>I would greatly appreciate for your help. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>If it were not too much trouble, would you to call me? <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
@@ -312,6 +342,118 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* ── Interactive exercises ── */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['could i have', 'can i have'] },
+    { accept: ["i'd like", 'i would like'] },
+    { accept: ['could i have', 'can i have'] },
+    { accept: ["i'd like", 'i would like'] },
+    { accept: ['could i have', 'can i have'] },
+    { accept: ["i'd like", 'i would like'] }
+  ]},
+  ex5: { type: 'lenient', items: [
+    { accept: ['could i have a menu', 'can i have a menu'] },
+    { accept: ['could i have the bill', 'can i have the bill'] },
+    { accept: ['could you open the window', 'can you open the window'] },
+    { accept: ['could you bring me some water', 'can you bring me some water'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['could i have the menu'] },
+    { accept: ["i'd like a coffee", 'i would like a coffee'] },
+    { accept: ['could you open the door'] },
+    { accept: ['would you like some cake'] },
+    { accept: ['could i speak to the manager'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ["i'd like a coffee"] },
+    { accept: ['could i have the bill'] },
+    { accept: ['could you pass the salt'] },
+    { accept: ["i'd like a table for two"] },
+    { accept: ['would you like some tea'] },
+    { accept: ['can i have the menu'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['mind closing the window'] },
+    { accept: ['wondering if you could help me'] },
+    { accept: ['possible for you to help me'] },
+    { accept: ['appreciate it if you could reply soon'] },
+    { accept: ['alright if i leave early'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['possible to have an extension', 'wondering if it might be possible to have an extension'] },
+    { accept: ['mind sending me the file', 'would you mind sending me the file'] },
+    { accept: ['like to request a refund', 'would like to request a refund'] },
+    { accept: ['possible for you to call me back', 'would it be possible for you to call me back'] },
+    { accept: ['grateful for some feedback', "i'd be grateful for some feedback"] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['you could help me'] },
+    { accept: ['for you to send the file'] },
+    { accept: ['was hoping you could join us'] },
+    { accept: ['might i trouble you'] },
+    { accept: ['could you call me'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['i would be most grateful if you could respond'] },
+    { accept: ['wondering whether it would be possible to reschedule'] },
+    { accept: ['might i trouble you for a moment'] },
+    { accept: ['if it were not too much trouble'] },
+    { accept: ['i would greatly appreciate your assistance'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['if you would respond'] },
+    { accept: ['wondering whether it would be possible'] },
+    { accept: ['might i trouble you'] },
+    { accept: ['appreciate your help'] },
+    { accept: ['would you call me'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

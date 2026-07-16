@@ -11,6 +11,33 @@
     @media print {
       #answerToggleBtn { display: none !important; }
     }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
   </style>
 </head>
 <body>
@@ -151,37 +178,38 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I <strong>(was / were)</strong> sleeping at midnight.</li>
-      <li>They <strong>(was / were)</strong> playing football.</li>
-      <li>She <strong>(was / were)</strong> watching TV.</li>
-      <li>We <strong>(was / were)</strong> walking in the park.</li>
-      <li>He <strong>(was / were)</strong> not listening.</li>
-      <li>You <strong>(was / were)</strong> waiting for me.</li>
+      <li>I <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">was</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">were</button></span> sleeping at midnight.</li>
+      <li>They <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">was</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">were</button></span> playing football.</li>
+      <li>She <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">was</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">were</button></span> watching TV.</li>
+      <li>We <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">was</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">were</button></span> walking in the park.</li>
+      <li>He <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">was</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">were</button></span> not listening.</li>
+      <li>You <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">was</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">were</button></span> waiting for me.</li>
     </ol>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each subject (1–6) to its ending (a–f).</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. I ___</div><div>a. was washing the car.</div>
-      <div>2. She ___</div><div>b. were waiting outside.</div>
-      <div>3. We ___</div><div>c. was reading a book.</div>
-      <div>4. You ___</div><div>d. were watching a film.</div>
-      <div>5. They ___</div><div>e. was cooking dinner.</div>
-      <div>6. He ___</div><div>f. were playing cards.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;align-items:center;">
+      <div>1. I ___ <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>a. was washing the car.</div>
+      <div>2. She ___ <select class="iq-select" onchange="checkSelect(this,'e')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>b. were waiting outside.</div>
+      <div>3. We ___ <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>c. was reading a book.</div>
+      <div>4. You ___ <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>d. were watching a film.</div>
+      <div>5. They ___ <select class="iq-select" onchange="checkSelect(this,'f')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>e. was cooking dinner.</div>
+      <div>6. He ___ <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>f. were playing cards.</div>
     </div>
   </div>
 
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank: put the verb in brackets into the past continuous.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>At 7 p.m., I ______ (have) dinner.</li>
-      <li>They ______ (not/sleep) when I called.</li>
-      <li>She ______ (write) a letter all morning.</li>
-      <li>We ______ (dance) at the party.</li>
-      <li>______ you ______ (study) at 9 last night?</li>
-      <li>He ______ (drive) to work when it started to rain.</li>
+      <li>At 7 p.m., I <input class="iq-input" id="ex3-1"> (have) dinner.</li>
+      <li>They <input class="iq-input" id="ex3-2"> (not/sleep) when I called.</li>
+      <li>She <input class="iq-input" id="ex3-3"> (write) a letter all morning.</li>
+      <li>We <input class="iq-input" id="ex3-4"> (dance) at the party.</li>
+      <li><input class="iq-input" id="ex3-5" style="min-width:70px;"> you <input class="iq-input" id="ex3-6" style="min-width:70px;"> (study) at 9 last night?</li>
+      <li>He <input class="iq-input" id="ex3-7"> (drive) to work when it started to rain.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <!-- ===== A2 ===== -->
@@ -191,35 +219,37 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Yesterday at 6 p.m., Anna was cooking dinner in the kitchen while her husband was reading the newspaper in the living room. Their children were doing homework upstairs. Suddenly, the phone rang and Anna answered it. It wasn't raining outside, but the wind was blowing hard. While Anna was talking on the phone, the doorbell rang.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Anna was cooking dinner at 6 p.m. ___</li>
-      <li>Her husband was watching TV. ___</li>
-      <li>The children were doing homework. ___</li>
-      <li>It was raining outside. ___</li>
-      <li>The doorbell rang while Anna was on the phone. ___</li>
+      <li>Anna was cooking dinner at 6 p.m. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Her husband was watching TV. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The children were doing homework. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>It was raining outside. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The doorbell rang while Anna was on the phone. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write negatives (1–2) and questions (3–4, 6).</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I (not/watch) TV when you called. → ______________________</li>
-      <li>She (not/work) at 5 p.m. → ______________________</li>
-      <li>___ they ___ (play) outside?</li>
-      <li>___ he ___ (sleep) at midnight?</li>
-      <li>We (not/listen) to music. → ______________________</li>
-      <li>___ you ___ (wait) for the bus?</li>
+      <li>I (not/watch) TV when you called. → <input class="iq-input iq-input-wide" id="ex5-1"></li>
+      <li>She (not/work) at 5 p.m. → <input class="iq-input iq-input-wide" id="ex5-2"></li>
+      <li><input class="iq-input" id="ex5-3" style="min-width:70px;"> they <input class="iq-input" id="ex5-4" style="min-width:70px;"> (play) outside?</li>
+      <li><input class="iq-input" id="ex5-5" style="min-width:70px;"> he <input class="iq-input" id="ex5-6" style="min-width:70px;"> (sleep) at midnight?</li>
+      <li>We (not/listen) to music. → <input class="iq-input iq-input-wide" id="ex5-7"></li>
+      <li><input class="iq-input" id="ex5-8" style="min-width:70px;"> you <input class="iq-input" id="ex5-9" style="min-width:70px;"> (wait) for the bus?</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
 
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>was / raining / it / heavily / last / night</li>
-      <li>homework / doing / were / their / children / the</li>
-      <li>when / arrived / cooking / she / I / was</li>
-      <li>were / you / doing / what / yesterday / at / 5 p.m.?</li>
-      <li>wasn't / working / he / that / day</li>
+      <li>was / raining / it / heavily / last / night <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>homework / doing / were / their / children / the <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>when / arrived / cooking / she / I / was <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>were / you / doing / what / yesterday / at / 5 p.m.? <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>wasn't / working / he / that / day <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <!-- ===== B1 ===== -->
@@ -228,35 +258,37 @@
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I were watching TV last night.</li>
-      <li>She was write a letter when I arrived.</li>
-      <li>They wasn't listening to the teacher.</li>
-      <li>Was you sleeping at midnight?</li>
-      <li>We was walking to school when it started to rain.</li>
-      <li>He was runing very fast.</li>
+      <li>I were watching TV last night. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>She was write a letter when I arrived. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>They wasn't listening to the teacher. <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>Was you sleeping at midnight? <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>We was walking to school when it started to rain. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>He was runing very fast. <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Combine each pair with "when" or "while" as shown.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Tom was cooking dinner. The phone rang. <em>(when)</em></li>
-      <li>It was raining. We were driving home. <em>(while)</em></li>
-      <li>She was sleeping. Someone knocked on the door. <em>(when)</em></li>
-      <li>I was reading a book. My sister was watching TV. <em>(while)</em></li>
-      <li>They were playing outside. It started to snow. <em>(when)</em></li>
+      <li>Tom was cooking dinner. The phone rang. <em>(when)</em> <input class="iq-input iq-input-wide" id="ex8-1" placeholder="combine the sentences…"></li>
+      <li>It was raining. We were driving home. <em>(while)</em> <input class="iq-input iq-input-wide" id="ex8-2" placeholder="combine the sentences…"></li>
+      <li>She was sleeping. Someone knocked on the door. <em>(when)</em> <input class="iq-input iq-input-wide" id="ex8-3" placeholder="combine the sentences…"></li>
+      <li>I was reading a book. My sister was watching TV. <em>(while)</em> <input class="iq-input iq-input-wide" id="ex8-4" placeholder="combine the sentences…"></li>
+      <li>They were playing outside. It started to snow. <em>(when)</em> <input class="iq-input iq-input-wide" id="ex8-5" placeholder="combine the sentences…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
 
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: past simple or past continuous?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>While I ___ dinner, the fire alarm went off. a) was cooking&nbsp; b) cooked</li>
-      <li>When the fire alarm ___ off, I was cooking. a) was going&nbsp; b) went</li>
-      <li>I ___ an old friend yesterday. a) was seeing&nbsp; b) saw</li>
-      <li>She ___ home when it started to rain. a) was walking&nbsp; b) walked</li>
-      <li>It ___ to rain while she was walking home. a) was starting&nbsp; b) started</li>
-      <li>We ___ dinner when the lights went out. a) were having&nbsp; b) had</li>
+      <li>While I ___ dinner, the fire alarm went off. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) was cooking</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) cooked</button></span></li>
+      <li>When the fire alarm ___ off, I was cooking. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) was going</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) went</button></span></li>
+      <li>I ___ an old friend yesterday. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) was seeing</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) saw</button></span></li>
+      <li>She ___ home when it started to rain. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) was walking</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) walked</button></span></li>
+      <li>It ___ to rain while she was walking home. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) was starting</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) started</button></span></li>
+      <li>We ___ dinner when the lights went out. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) were having</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) had</button></span></li>
     </ol>
   </div>
 
@@ -267,33 +299,31 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">While Elena was studying for her final exams last spring, she was also working part-time at a bookshop, which meant she was rarely getting more than five hours of sleep. Although she was constantly complaining about exhaustion, she never considered quitting the job, since she was saving money for a trip abroad. One evening, as she was closing the shop, a stranger walked in and asked for directions; she was still thinking about that odd encounter when she got home. Looking back, she believes that period, however difficult, was teaching her time-management skills she still uses today.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Elena had a full-time job while studying. ___</li>
-      <li>She was usually sleeping fewer than five hours a night. ___</li>
-      <li>She considered quitting her job. ___</li>
-      <li>The stranger walked in while she was opening the shop. ___</li>
-      <li>Elena thinks that period taught her valuable skills. ___</li>
+      <li>Elena had a full-time job while studying. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>She was usually sleeping fewer than five hours a night. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>She considered quitting her job. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The stranger walked in while she was opening the shop. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Elena thinks that period taught her valuable skills. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I was knowing him well back then.</li>
-      <li>While she was study, her phone rang constantly.</li>
-      <li>He was always loosing things when he was a teenager.</li>
-      <li>They was arguing about money every night that year.</li>
-      <li>When I was young, I was believing in magic.</li>
-      <li>We were wait for the bus when it started to pour.</li>
+      <li>I was knowing him well back then. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>While she was study, her phone rang constantly. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>He was always loosing things when he was a teenager. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>They was arguing about money every night that year. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>When I was young, I was believing in magic. <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>We were wait for the bus when it started to pour. <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
 
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Describe a memorable moment in 5–7 sentences. Use the <strong>past continuous</strong> to set the scene / show background action, and <strong>past simple</strong> for the main events. Include at least one <em>while</em> clause and one <em>when</em> clause.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <!-- ===== C1 ===== -->
@@ -302,35 +332,37 @@
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal register, keeping the same tenses.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I was just chilling at home when my phone buzzed like crazy.</li>
-      <li>She was kind of freaking out while she was waiting for the results.</li>
-      <li>We were hanging out when the news broke.</li>
-      <li>He was totally slacking off while everyone else was working hard.</li>
-      <li>They were just messing around when the accident happened.</li>
+      <li>I was just chilling at home when my phone buzzed like crazy. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>She was kind of freaking out while she was waiting for the results. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>We were hanging out when the news broke. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>He was totally slacking off while everyone else was working hard. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>They were just messing around when the accident happened. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: what does the past continuous express here?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"I was wondering if you could help me." → a) an action in progress&nbsp; b) a polite, tentative request</li>
-      <li>"She was always forgetting her umbrella." → a) a neutral habit&nbsp; b) an annoying repeated habit</li>
-      <li>"The sun was setting and the birds were singing." → a) scene-setting background&nbsp; b) a polite request</li>
-      <li>"At this time last year, I was living in Rome." → a) a temporary past situation&nbsp; b) a permanent fact</li>
-      <li>"While the committee was deliberating, new evidence emerged." → the deliberating is: a) the background action&nbsp; b) the interrupting action</li>
-      <li>"He was constantly checking his phone during the meeting." → a) irritation at repeated behaviour&nbsp; b) a single completed action</li>
+      <li>"I was wondering if you could help me." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) an action in progress</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) a polite, tentative request</button></span></li>
+      <li>"She was always forgetting her umbrella." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) a neutral habit</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) an annoying repeated habit</button></span></li>
+      <li>"The sun was setting and the birds were singing." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) scene-setting background</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a polite request</button></span></li>
+      <li>"At this time last year, I was living in Rome." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) a temporary past situation</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a permanent fact</button></span></li>
+      <li>"While the committee was deliberating, new evidence emerged." → the deliberating is: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) the background action</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) the interrupting action</button></span></li>
+      <li>"He was constantly checking his phone during the meeting." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) irritation at repeated behaviour</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a single completed action</button></span></li>
     </ol>
   </div>
 
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>While the negotiations were taking place, the economy were declining rapidly.</li>
-      <li>As the storm was approaching, residents was evacuating the coastal areas.</li>
-      <li>He was always interrupting whenever someone were trying to speak.</li>
-      <li>Whilst she was finalising the report, her colleagues was reviewing the budget.</li>
-      <li>The committee were meeting when the fire alarm was going off.</li>
+      <li>While the negotiations were taking place, the economy were declining rapidly. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>As the storm was approaching, residents was evacuating the coastal areas. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>He was always interrupting whenever someone were trying to speak. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>Whilst she was finalising the report, her colleagues was reviewing the budget. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>The committee were meeting when the fire alarm was going off. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <!-- ===== C2 ===== -->
@@ -339,33 +371,31 @@
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write the opening of a short narrative in a formal/literary register. Use the <strong>past continuous</strong> to establish the background atmosphere, then break it with a <strong>past simple</strong> pivotal event.</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>unfolding / rapidly / were / events / spoke / as / he</li>
-      <li>was / crisis / while / escalating / negotiators / the / stalled</li>
-      <li>gathering / clouds / storm / were / horizon / on / the</li>
-      <li>was / market / plummeting / rapidly / stock / the</li>
-      <li>emerged / were / while / rescuers / searching / survivors</li>
+      <li>unfolding / rapidly / were / events / spoke / as / he <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>was / crisis / while / escalating / negotiators / the / stalled <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>gathering / clouds / storm / were / horizon / on / the <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>was / market / plummeting / rapidly / stock / the <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>emerged / were / while / rescuers / searching / survivors <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
 
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She said she was going to called me later.</li>
-      <li>While the plane was landing, was the storm intensifying rapidly.</li>
-      <li>He was always claiming he were working late, but nobody believed him.</li>
-      <li>As negotiations was stalling, tempers were flaring.</li>
-      <li>It was raining hard while the ceremony were taking place.</li>
+      <li>She said she was going to called me later. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>While the plane was landing, was the storm intensifying rapidly. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>He was always claiming he were working late, but nobody believed him. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>As negotiations was stalling, tempers were flaring. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>It was raining hard while the ceremony were taking place. <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <!-- ============ ANSWER KEY ============ -->
@@ -433,6 +463,132 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* ── Interactive exercises ── */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['was having'] },
+    { accept: ["weren't sleeping", 'were not sleeping'] },
+    { accept: ['was writing'] },
+    { accept: ['were dancing'] },
+    { accept: ['were'] },
+    { accept: ['studying'] },
+    { accept: ['was driving'] }
+  ]},
+  ex5: { type: 'lenient', items: [
+    { accept: ["wasn't watching tv", 'was not watching tv'] },
+    { accept: ["wasn't working"] },
+    { accept: ['were'] },
+    { accept: ['playing'] },
+    { accept: ['was'] },
+    { accept: ['sleeping'] },
+    { accept: ["weren't listening", 'were not listening'] },
+    { accept: ['were'] },
+    { accept: ['waiting'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['it was raining heavily last night'] },
+    { accept: ['the children were doing their homework'] },
+    { accept: ['she was cooking when i arrived'] },
+    { accept: ['what were you doing yesterday at 5 pm', 'what were you doing yesterday at 5 p.m.'] },
+    { accept: ["he wasn't working that day"] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['i was watching'] },
+    { accept: ['she was writing'] },
+    { accept: ["weren't listening"] },
+    { accept: ['were you sleeping'] },
+    { accept: ['we were walking'] },
+    { accept: ['was running'] }
+  ]},
+  ex8: { type: 'lenient', items: [
+    { accept: ['tom was cooking dinner when the phone rang'] },
+    { accept: ['it was raining while we were driving home'] },
+    { accept: ['she was sleeping when someone knocked on the door'] },
+    { accept: ['i was reading a book while my sister was watching tv'] },
+    { accept: ['they were playing outside when it started to snow'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['i knew him'] },
+    { accept: ['she was studying'] },
+    { accept: ['was always losing things'] },
+    { accept: ['they were arguing'] },
+    { accept: ['i believed in magic'] },
+    { accept: ['we were waiting for the bus'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['resting at home'] },
+    { accept: ['extremely anxious'] },
+    { accept: ['we were socialising', 'we were socializing'] },
+    { accept: ['neglecting his duties'] },
+    { accept: ['being careless'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['economy was declining'] },
+    { accept: ['residents were evacuating'] },
+    { accept: ['someone was trying to speak'] },
+    { accept: ['colleagues were reviewing'] },
+    { accept: ['fire alarm went off'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['as he spoke, events were unfolding rapidly', 'as he spoke events were unfolding rapidly'] },
+    { accept: ['while the crisis was escalating, negotiators stalled', 'while the crisis was escalating negotiators stalled'] },
+    { accept: ['storm clouds were gathering on the horizon'] },
+    { accept: ['the stock market was plummeting rapidly'] },
+    { accept: ['while rescuers were searching, survivors emerged', 'while rescuers were searching survivors emerged'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['going to call me later'] },
+    { accept: ['storm was intensifying'] },
+    { accept: ['he was working late'] },
+    { accept: ['negotiations were stalling'] },
+    { accept: ['ceremony was taking place'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

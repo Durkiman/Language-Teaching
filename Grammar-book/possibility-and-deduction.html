@@ -9,6 +9,33 @@
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
     @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
   </style>
 </head>
 <body>
@@ -70,33 +97,34 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She <strong>(might / musts)</strong> be at home.</li>
-      <li>It <strong>(may / mays)</strong> rain later.</li>
-      <li>He <strong>(could / coulds)</strong> be in the kitchen.</li>
-      <li>They <strong>(must / musts)</strong> be tired — it's midnight.</li>
-      <li>She <strong>(can't / cannot's)</strong> be hungry, she just ate.</li>
-      <li>It <strong>(might / mights)</strong> be true.</li>
+      <li>She <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">might</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">musts</button></span> be at home.</li>
+      <li>It <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">may</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">mays</button></span> rain later.</li>
+      <li>He <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">could</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">coulds</button></span> be in the kitchen.</li>
+      <li>They <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">must</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">musts</button></span> be tired — it's midnight.</li>
+      <li>She <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">can't</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">cannot's</button></span> be hungry, she just ate.</li>
+      <li>It <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">might</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">mights</button></span> be true.</li>
     </ol>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each modal (1–4) to its certainty (a–d).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. must</div><div>a. almost impossible</div>
-      <div>2. might</div><div>b. almost certain</div>
-      <div>3. can't</div><div>c. not sure at all</div>
-      <div>4. probably</div><div>d. fairly likely</div>
+      <div>1. must <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>a. almost impossible</div>
+      <div>2. might <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>b. almost certain</div>
+      <div>3. can't <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>c. not sure at all</div>
+      <div>4. probably <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>d. fairly likely</div>
     </div>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank with might, must, or can't.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The lights are on — someone ______ be home.</li>
-      <li>I'm not sure, but it ______ be him.</li>
-      <li>It's freezing — it ______ be summer there.</li>
-      <li>She ______ be tired, she just woke up.</li>
-      <li>He ______ know the answer, but I'm not sure.</li>
-      <li>They ______ be lost — they have a map.</li>
+      <li>The lights are on — someone <input class="iq-input" id="ex3-1"> be home.</li>
+      <li>I'm not sure, but it <input class="iq-input" id="ex3-2"> be him.</li>
+      <li>It's freezing — it <input class="iq-input" id="ex3-3"> be summer there.</li>
+      <li>She <input class="iq-input" id="ex3-4"> be tired, she just woke up.</li>
+      <li>He <input class="iq-input" id="ex3-5"> know the answer, but I'm not sure.</li>
+      <li>They <input class="iq-input" id="ex3-6"> be lost — they have a map.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
@@ -104,62 +132,66 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Where's Tom? His car isn't outside, so he might be at work. Actually, he can't be at work — it's Sunday and the office is closed. He may have gone to his parents' house, or he could just be out for a run. His phone is off, so he must be somewhere without signal.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The writer is 100% sure Tom is at work. ___</li>
-      <li>The office is closed today. ___</li>
-      <li>Tom might have gone to his parents'. ___</li>
-      <li>His phone is on. ___</li>
-      <li>The writer thinks he's probably somewhere without signal. ___</li>
+      <li>The writer is 100% sure Tom is at work. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The office is closed today. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Tom might have gone to his parents'. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>His phone is on. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The writer thinks he's probably somewhere without signal. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Rewrite using the modal in brackets.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Maybe she is busy. (might)</li>
-      <li>I'm sure he isn't at home. (can't)</li>
-      <li>I'm sure they are tired. (must)</li>
-      <li>Perhaps it will rain. (may)</li>
+      <li>Maybe she is busy. (might) <input class="iq-input iq-input-wide" id="ex5-1" placeholder="rewrite…"></li>
+      <li>I'm sure he isn't at home. (can't) <input class="iq-input iq-input-wide" id="ex5-2" placeholder="rewrite…"></li>
+      <li>I'm sure they are tired. (must) <input class="iq-input iq-input-wide" id="ex5-3" placeholder="rewrite…"></li>
+      <li>Perhaps it will rain. (may) <input class="iq-input iq-input-wide" id="ex5-4" placeholder="rewrite…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>be / might / late / she</li>
-      <li>be / can't / true / that</li>
-      <li>tired / must / be / he</li>
-      <li>rain / it / later / may</li>
-      <li>lost / could / they / be</li>
+      <li>be / might / late / she <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>be / can't / true / that <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>tired / must / be / he <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>rain / it / later / may <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>lost / could / they / be <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She must have leave already.</li>
-      <li>He can't has forgotten.</li>
-      <li>They might been at the cinema.</li>
-      <li>It must to be true.</li>
-      <li>She could have missing the train.</li>
-      <li>He must have been forget his phone.</li>
+      <li>She must have leave already. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>He can't has forgotten. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>They might been at the cinema. <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>It must to be true. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>She could have missing the train. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>He must have been forget his phone. <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Choose the correct past modal for each situation.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The light is on. He ______ (must/might) have left it on by accident.</li>
-      <li>She's not answering. She ______ (could/can't) have her phone with her — she never leaves home without it.</li>
-      <li>I'm not sure why he's late. He ______ (might/must) have missed the bus, or he ______ (might/must) have got stuck in traffic.</li>
-      <li>The door was locked from the inside. It ______ (can't/must) have been an outside job.</li>
+      <li>The light is on. He <input class="iq-input" id="ex8-1"> (must/might) have left it on by accident.</li>
+      <li>She's not answering. She <input class="iq-input" id="ex8-2"> (could/can't) have her phone with her — she never leaves home without it.</li>
+      <li>I'm not sure why he's late. He <input class="iq-input" id="ex8-3"> (might/must) have missed the bus, or he <input class="iq-input" id="ex8-4"> (might/must) have got stuck in traffic.</li>
+      <li>The door was locked from the inside. It <input class="iq-input" id="ex8-5"> (can't/must) have been an outside job.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: deduction or criticism?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"He must have taken the wrong bus." a) deduction&nbsp; b) criticism</li>
-      <li>"You should have told me earlier." a) criticism&nbsp; b) deduction</li>
-      <li>"She shouldn't have said that." a) criticism&nbsp; b) deduction</li>
-      <li>"They can't have finished already." a) deduction&nbsp; b) criticism</li>
-      <li>"I should have checked the weather first." a) criticism (self)&nbsp; b) deduction</li>
+      <li>"He must have taken the wrong bus." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) deduction</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) criticism</button></span></li>
+      <li>"You should have told me earlier." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) criticism</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) deduction</button></span></li>
+      <li>"She shouldn't have said that." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) criticism</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) deduction</button></span></li>
+      <li>"They can't have finished already." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) deduction</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) criticism</button></span></li>
+      <li>"I should have checked the weather first." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) criticism (self)</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) deduction</button></span></li>
     </ol>
   </div>
 
@@ -168,93 +200,91 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Detectives believe the burglar must have entered through the back window, since it was found unlocked, though the alarm didn't go off, which suggests they might have disabled it beforehand — a level of planning that rules out a random opportunist. Neighbours reported nothing unusual, so the break-in can't have happened during the day. Investigators admit they should have checked the window locks during the previous inspection.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Detectives are certain the burglar used the back window. ___</li>
-      <li>The alarm went off during the break-in. ___</li>
-      <li>Investigators think this could have been carefully planned. ___</li>
-      <li>The break-in probably happened during the day. ___</li>
-      <li>Investigators admit a past mistake. ___</li>
+      <li>Detectives are certain the burglar used the back window. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The alarm went off during the break-in. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Investigators think this could have been carefully planned. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The break-in probably happened during the day. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Investigators admit a past mistake. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>He must to have known about it.</li>
-      <li>They can't have not noticed.</li>
-      <li>She might of forgotten the appointment.</li>
-      <li>It must have being a mistake.</li>
-      <li>He should have to call ahead.</li>
-      <li>She could have been avoid the accident.</li>
+      <li>He must to have known about it. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>They can't have not noticed. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>She might of forgotten the appointment. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>It must have being a mistake. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>He should have to call ahead. <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>She could have been avoid the accident. <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">A friend didn't show up to an event. Write 6–8 sentences speculating about why, using <strong>might have, could have, must have,</strong> and <strong>can't have</strong>.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal, hedged register.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>It's probably a mistake.</li>
-      <li>Maybe the figures are wrong.</li>
-      <li>I bet it was an accident.</li>
-      <li>He definitely knew about it.</li>
-      <li>There's no way she said that.</li>
+      <li>It's probably a mistake. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>Maybe the figures are wrong. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>I bet it was an accident. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>He definitely knew about it. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>There's no way she said that. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: which is the stronger claim of certainty?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>a) It could well have been avoided.&nbsp; b) It must surely have been avoided. — Which is stronger?</li>
-      <li>a) There's every possibility she knew.&nbsp; b) She may possibly have known. — Which is stronger?</li>
-      <li>a) It can hardly have been an accident.&nbsp; b) It might not have been an accident. — Which is stronger?</li>
-      <li>a) He is bound to have noticed.&nbsp; b) He might have noticed. — Which is stronger?</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) It could well have been avoided.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) It must surely have been avoided.</button></span> — Which is stronger?</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) There's every possibility she knew.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) She may possibly have known.</button></span> — Which is stronger?</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) It can hardly have been an accident.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) It might not have been an accident.</button></span> — Which is stronger?</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) He is bound to have noticed.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) He might have noticed.</button></span> — Which is stronger?</li>
     </ol>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>It must have being an oversight on their part.</li>
-      <li>There is bound to being consequences.</li>
-      <li>She can't possibly have not known.</li>
-      <li>He is likely to have forget the details.</li>
-      <li>It could well be that they had missed it, isn't it.</li>
+      <li>It must have being an oversight on their part. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>There is bound to being consequences. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>She can't possibly have not known. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>He is likely to have forget the details. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>It could well be that they had missed it, isn't it. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal incident analysis speculating on the cause of a workplace error, using a full range of certainty (must have, may/might have, can't have) in a hedged, formal register.</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>have / an / it / been / must / oversight</li>
-      <li>known / could / not / possibly / she / have</li>
-      <li>consequences / bound / are / there / to / be</li>
-      <li>overlooked / likely / detail / the / is / been / to / have</li>
-      <li>missed / well / have / it / could / been</li>
+      <li>have / an / it / been / must / oversight <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>known / could / not / possibly / she / have <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>consequences / bound / are / there / to / be <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>overlooked / likely / detail / the / is / been / to / have <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>missed / well / have / it / could / been <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>It must have been an oversight, isn't it.</li>
-      <li>She can't possibly have not known about it.</li>
-      <li>He is bound to having noticed the discrepancy.</li>
-      <li>There could well being a simpler explanation.</li>
-      <li>It should have been prevent, in hindsight.</li>
+      <li>It must have been an oversight, isn't it. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>She can't possibly have not known about it. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>He is bound to having noticed the discrepancy. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>There could well being a simpler explanation. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>It should have been prevent, in hindsight. <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
@@ -314,6 +344,126 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* -- Interactive exercises -- */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['must'] },
+    { accept: ['might'] },
+    { accept: ["can't", 'cant'] },
+    { accept: ["can't", 'cant'] },
+    { accept: ['might'] },
+    { accept: ["can't", 'cant'] }
+  ]},
+  ex5: { type: 'lenient', items: [
+    { accept: ['might be busy'] },
+    { accept: ["can't be at home", 'cant be at home'] },
+    { accept: ['must be tired'] },
+    { accept: ['may rain'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['she might be late'] },
+    { accept: ["that can't be true", 'that cant be true'] },
+    { accept: ['he must be tired'] },
+    { accept: ['it may rain later'] },
+    { accept: ['they could be lost'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['must have left already'] },
+    { accept: ["can't have forgotten", 'cant have forgotten'] },
+    { accept: ['might have been at the cinema'] },
+    { accept: ['it must be true'] },
+    { accept: ['could have missed the train'] },
+    { accept: ['must have forgotten his phone'] }
+  ]},
+  ex8: { type: 'exact', items: [
+    { accept: ['must'] },
+    { accept: ["can't", 'cant'] },
+    { accept: ['might'] },
+    { accept: ['might'] },
+    { accept: ['must'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['must have known about it'] },
+    { accept: ["can't have failed to notice", 'cant have failed to notice'] },
+    { accept: ['might have forgotten'] },
+    { accept: ['must have been a mistake'] },
+    { accept: ['should have called ahead'] },
+    { accept: ['could have avoided the accident'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['likely to be a mistake'] },
+    { accept: ['may well be wrong'] },
+    { accept: ['probably an accident'] },
+    { accept: ['must have known about it'] },
+    { accept: ["can't possibly have said that", 'cant possibly have said that'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['must have been an oversight'] },
+    { accept: ['bound to be consequences'] },
+    { accept: ["can't possibly have known", 'cant possibly have known'] },
+    { accept: ['likely to have forgotten'] },
+    { accept: ["hadn't they", 'hadnt they'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['it must have been an oversight'] },
+    { accept: ['she could not possibly have known', "she couldn't possibly have known", 'she couldnt possibly have known'] },
+    { accept: ['there are bound to be consequences'] },
+    { accept: ['the detail is likely to have been overlooked'] },
+    { accept: ['it could well have been missed'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ["mustn't it", 'mustnt it'] },
+    { accept: ["can't possibly have failed to know", 'cant possibly have failed to know'] },
+    { accept: ['bound to have noticed'] },
+    { accept: ['could well be a simpler explanation'] },
+    { accept: ['should have been prevented'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

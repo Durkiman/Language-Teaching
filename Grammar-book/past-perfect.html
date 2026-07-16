@@ -9,6 +9,33 @@
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
     @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
   </style>
 </head>
 <body>
@@ -68,33 +95,34 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I <strong>(had / have)</strong> already eaten when he called.</li>
-      <li>She <strong>(had / has)</strong> finished her homework before dinner.</li>
-      <li>They <strong>(had / have)</strong> never seen snow before that trip.</li>
-      <li>We <strong>(had / has)</strong> left before the rain started.</li>
-      <li>He <strong>(had / have)</strong> already gone when I called.</li>
-      <li>You <strong>(had / has)</strong> forgotten your keys.</li>
+      <li>I <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">had</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">have</button></span> already eaten when he called.</li>
+      <li>She <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">had</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">has</button></span> finished her homework before dinner.</li>
+      <li>They <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">had</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">have</button></span> never seen snow before that trip.</li>
+      <li>We <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">had</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">has</button></span> left before the rain started.</li>
+      <li>He <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">had</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">have</button></span> already gone when I called.</li>
+      <li>You <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">had</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">has</button></span> forgotten your keys.</li>
     </ol>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each sentence half (1–4) to its ending (a–d).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. By 8pm, we</div><div>a. had never flown before.</div>
-      <div>2. She was nervous because she</div><div>b. had already left.</div>
-      <div>3. When we got to the station, the train</div><div>c. had finished dinner.</div>
-      <div>4. It was his first flight — he</div><div>d. had forgotten her lines.</div>
+      <div>1. By 8pm, we <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>a. had never flown before.</div>
+      <div>2. She was nervous because she <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>b. had already left.</div>
+      <div>3. When we got to the station, the train <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>c. had finished dinner.</div>
+      <div>4. It was his first flight — he <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>d. had forgotten her lines.</div>
     </div>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank with the past perfect of the verb in brackets.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She ______ (finish) her work before she went home.</li>
-      <li>We ______ (not/eat) before the film started.</li>
-      <li>He ______ (already/leave) when I arrived.</li>
-      <li>They ______ (never/be) to Japan before that trip.</li>
-      <li>I ______ (lose) my phone before I noticed.</li>
-      <li>You ______ (forget) to call her.</li>
+      <li>She <input class="iq-input" id="ex3-1"> (finish) her work before she went home.</li>
+      <li>We <input class="iq-input" id="ex3-2"> (not/eat) before the film started.</li>
+      <li>He <input class="iq-input" id="ex3-3"> (already/leave) when I arrived.</li>
+      <li>They <input class="iq-input" id="ex3-4"> (never/be) to Japan before that trip.</li>
+      <li>I <input class="iq-input" id="ex3-5"> (lose) my phone before I noticed.</li>
+      <li>You <input class="iq-input" id="ex3-6"> (forget) to call her.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
@@ -102,61 +130,65 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">When Sam got to the airport, his flight had already left — he had arrived twenty minutes late. He hadn't checked the time properly because he had been rushing since the morning. Luckily, he had bought travel insurance the week before, so the airline rebooked him for free. He had never missed a flight before, and he promised himself it wouldn't happen again.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Sam's flight had already left when he arrived. ___</li>
-      <li>He had checked the time carefully. ___</li>
-      <li>He had bought travel insurance. ___</li>
-      <li>The airline charged him to rebook. ___</li>
-      <li>He had missed flights many times before. ___</li>
+      <li>Sam's flight had already left when he arrived. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>He had checked the time carefully. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>He had bought travel insurance. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The airline charged him to rebook. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>He had missed flights many times before. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write negatives (1, 3) and questions (2, 4).</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She ______ (finish/not) before we called.</li>
-      <li>___ they ___ (leave) already?</li>
-      <li>We ______ (see/not) that film before.</li>
-      <li>___ you ___ (meet) him before that party?</li>
+      <li>She <input class="iq-input" id="ex5-1"> (finish/not) before we called.</li>
+      <li><input class="iq-input" id="ex5-2" style="min-width:70px;"> they <input class="iq-input" id="ex5-3" style="min-width:70px;"> (leave) already?</li>
+      <li>We <input class="iq-input" id="ex5-4"> (see/not) that film before.</li>
+      <li><input class="iq-input" id="ex5-5" style="min-width:70px;"> you <input class="iq-input" id="ex5-6" style="min-width:70px;"> (meet) him before that party?</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Combine each pair of sentences using the past perfect.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The film started. I arrived late.</li>
-      <li>She finished her exam. Then she went home.</li>
-      <li>He lost his wallet. He noticed it an hour later.</li>
-      <li>We ate dinner. Then the guests arrived.</li>
-      <li>They left the party. I got there.</li>
+      <li>The film started. I arrived late. <input class="iq-input iq-input-wide" id="ex6-1" placeholder="combine using past perfect…"></li>
+      <li>She finished her exam. Then she went home. <input class="iq-input iq-input-wide" id="ex6-2" placeholder="combine using past perfect…"></li>
+      <li>He lost his wallet. He noticed it an hour later. <input class="iq-input iq-input-wide" id="ex6-3" placeholder="combine using past perfect…"></li>
+      <li>We ate dinner. Then the guests arrived. <input class="iq-input iq-input-wide" id="ex6-4" placeholder="combine using past perfect…"></li>
+      <li>They left the party. I got there. <input class="iq-input iq-input-wide" id="ex6-5" placeholder="combine using past perfect…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She had went home before I called.</li>
-      <li>By the time we got there, the show has started.</li>
-      <li>I never had seen anything like it.</li>
-      <li>He said he had finish the report.</li>
-      <li>Had you ever saw the ocean before that trip?</li>
-      <li>We had ate before they arrived.</li>
+      <li>She had went home before I called. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>By the time we got there, the show has started. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>I never had seen anything like it. <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>He said he had finish the report. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>Had you ever saw the ocean before that trip? <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>We had ate before they arrived. <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Choose past simple or past perfect for each blank.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>When she ______ (arrive) home, she realised she ______ (forget) her keys.</li>
-      <li>By the time the police ______ (arrive), the thief ______ (escape).</li>
-      <li>He ______ (feel) proud because he ______ (finish) the marathon.</li>
-      <li>We ______ (miss) the train because we ______ (leave) too late.</li>
+      <li>When she <input class="iq-input" id="ex8-1"> (arrive) home, she realised she <input class="iq-input" id="ex8-2"> (forget) her keys.</li>
+      <li>By the time the police <input class="iq-input" id="ex8-3"> (arrive), the thief <input class="iq-input" id="ex8-4"> (escape).</li>
+      <li>He <input class="iq-input" id="ex8-5"> (feel) proud because he <input class="iq-input" id="ex8-6"> (finish) the marathon.</li>
+      <li>We <input class="iq-input" id="ex8-7"> (miss) the train because we <input class="iq-input" id="ex8-8"> (leave) too late.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: which sentence describes the earlier event?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>a) The lights had gone out before we noticed.&nbsp; b) The lights went out before we noticed. — Which happened first?</li>
-      <li>"She was upset because she had failed the test." — Which happened first, being upset or failing? a) failing&nbsp; b) being upset</li>
-      <li>"He arrived after the meeting had ended." — a) the meeting ended first&nbsp; b) he arrived first</li>
-      <li>"I recognised her because I had met her before." — a) meeting happened first&nbsp; b) recognising happened first</li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) The lights had gone out before we noticed.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) The lights went out before we noticed.</button></span> — Which happened first?</li>
+      <li>"She was upset because she had failed the test." — Which happened first, being upset or failing? <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) failing</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) being upset</button></span></li>
+      <li>"He arrived after the meeting had ended." — <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) the meeting ended first</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) he arrived first</button></span></li>
+      <li>"I recognised her because I had met her before." — <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) meeting happened first</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) recognising happened first</button></span></li>
     </ol>
   </div>
 
@@ -165,91 +197,89 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">By the time investigators arrived at the scene, the evidence had already been compromised. Witnesses reported that a cleaning crew had entered the building shortly after the alarm had gone off, unaware that a crime had taken place. Had the crew known, they would have left everything untouched. The company later admitted it hadn't updated its emergency protocol in over a decade.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The evidence was untouched when investigators arrived. ___</li>
-      <li>The cleaning crew entered after the alarm had gone off. ___</li>
-      <li>The crew knew a crime had taken place. ___</li>
-      <li>The company had recently updated its protocol. ___</li>
+      <li>The evidence was untouched when investigators arrived. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The cleaning crew entered after the alarm had gone off. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The crew knew a crime had taken place. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The company had recently updated its protocol. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Scarcely had she sat down when the phone rang, did she answer it.</li>
-      <li>No sooner had we left than the storm hits.</li>
-      <li>Had I known that, I would tell you.</li>
-      <li>By the time we finish, they had already gone.</li>
-      <li>If I had knew, I would have said something.</li>
+      <li>Scarcely had she sat down when the phone rang, did she answer it. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>No sooner had we left than the storm hits. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>Had I known that, I would tell you. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>By the time we finish, they had already gone. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>If I had knew, I would have said something. <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write about a memorable day, in 6–8 sentences, describing what had already happened before the main event of your story. Use the past perfect at least three times.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite using inversion for emphasis (Scarcely had… / No sooner had…).</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She had barely sat down when her phone rang.</li>
-      <li>We had just left when the storm started.</li>
-      <li>He had hardly finished speaking when the crowd erupted.</li>
-      <li>I had only just arrived when they called me back.</li>
-      <li>They had barely signed the contract when the deal fell through.</li>
+      <li>She had barely sat down when her phone rang. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite using inversion…"></li>
+      <li>We had just left when the storm started. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite using inversion…"></li>
+      <li>He had hardly finished speaking when the crowd erupted. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite using inversion…"></li>
+      <li>I had only just arrived when they called me back. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite using inversion…"></li>
+      <li>They had barely signed the contract when the deal fell through. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite using inversion…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: what does the past perfect add here?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"Had she only known…" a) formal, regretful hypothetical&nbsp; b) simple past narration</li>
-      <li>"It later emerged that he had lied." a) revealing something hidden until now&nbsp; b) ongoing action</li>
-      <li>"Not until the results came in had anyone suspected fraud." a) formal inversion for emphasis&nbsp; b) casual statement</li>
-      <li>"She wished she had said something." a) regret about the past&nbsp; b) present possibility</li>
+      <li>"Had she only known…" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) formal, regretful hypothetical</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) simple past narration</button></span></li>
+      <li>"It later emerged that he had lied." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) revealing something hidden until now</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) ongoing action</button></span></li>
+      <li>"Not until the results came in had anyone suspected fraud." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) formal inversion for emphasis</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) casual statement</button></span></li>
+      <li>"She wished she had said something." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) regret about the past</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) present possibility</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Not until later had he realised his mistake.</li>
-      <li>Had she of known, she would have acted differently.</li>
-      <li>It transpired that they had knew all along.</li>
-      <li>Scarcely he had arrived when the trouble began.</li>
-      <li>She regretted that she hadn't said anything sooner, isn't it.</li>
+      <li>Not until later had he realised his mistake. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>Had she of known, she would have acted differently. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>It transpired that they had knew all along. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>Scarcely he had arrived when the trouble began. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>She regretted that she hadn't said anything sooner, isn't it. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal incident report excerpt describing a sequence of events, using the past perfect to clarify what had already happened before the incident, including at least one inverted construction (Not until…, Scarcely had…).</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>had / sat / scarcely / down / she / when / rang / the / phone</li>
-      <li>emerged / it / had / later / lied / that / he</li>
-      <li>known / had / only / she / differently / would / acted / have</li>
-      <li>results / until / suspected / not / had / anyone / the</li>
-      <li>gone / when / left / no / sooner / than / had / we / the / alarm / off</li>
+      <li>had / sat / scarcely / down / she / when / rang / the / phone <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>emerged / it / had / later / lied / that / he <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>known / had / only / she / differently / would / acted / have <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>results / until / suspected / not / had / anyone / the <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>gone / when / left / no / sooner / than / had / we / the / alarm / off <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Scarcely had she sat down, did the phone ring.</li>
-      <li>Had I have known, I would have acted differently.</li>
-      <li>Not until then he had realised the truth.</li>
-      <li>It transpired that they had all along knew.</li>
-      <li>No sooner the meeting had started than it was interrupted.</li>
+      <li>Scarcely had she sat down, did the phone ring. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>Had I have known, I would have acted differently. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>Not until then he had realised the truth. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>It transpired that they had all along knew. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>No sooner the meeting had started than it was interrupted. <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
@@ -309,6 +339,130 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* ── Interactive exercises ── */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['had finished'] },
+    { accept: ["hadn't eaten", 'had not eaten'] },
+    { accept: ['had already left', 'already had left'] },
+    { accept: ['had never been'] },
+    { accept: ['had lost'] },
+    { accept: ['had forgotten'] }
+  ]},
+  ex5: { type: 'exact', items: [
+    { accept: ["hadn't finished", 'had not finished'] },
+    { accept: ['had', 'Had'] },
+    { accept: ['left'] },
+    { accept: ["hadn't seen", 'had not seen'] },
+    { accept: ['had', 'Had'] },
+    { accept: ['met'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['film had started before i arrived'] },
+    { accept: ['she had finished her exam before she went home'] },
+    { accept: ['he had lost his wallet before he noticed'] },
+    { accept: ['we had eaten dinner before the guests arrived'] },
+    { accept: ['they had left the party before i got there'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['had gone home'] },
+    { accept: ['show had started'] },
+    { accept: ['i had never seen'] },
+    { accept: ['he had finished the report'] },
+    { accept: ['had you ever seen'] },
+    { accept: ['we had eaten'] }
+  ]},
+  ex8: { type: 'exact', items: [
+    { accept: ['arrived'] },
+    { accept: ['had forgotten'] },
+    { accept: ['arrived'] },
+    { accept: ['had escaped'] },
+    { accept: ['felt'] },
+    { accept: ['had finished'] },
+    { accept: ['missed'] },
+    { accept: ['had left'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['scarcely had she sat down when the phone rang'] },
+    { accept: ['no sooner had we left than the storm hit'] },
+    { accept: ['i would have told you'] },
+    { accept: ['by the time we finished'] },
+    { accept: ['if i had known'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['scarcely had she sat down when her phone rang'] },
+    { accept: ['no sooner had we left than the storm started'] },
+    { accept: ['scarcely had he finished speaking when the crowd erupted'] },
+    { accept: ['no sooner had i arrived than they called me back'] },
+    { accept: ['scarcely had they signed the contract when the deal fell through'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['not until later did he realise his mistake', 'not until later did he realize his mistake'] },
+    { accept: ['had she known'] },
+    { accept: ['they had known all along'] },
+    { accept: ['scarcely had he arrived'] },
+    { accept: ["hadn't she"] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['scarcely had she sat down when the phone rang'] },
+    { accept: ['it later emerged that he had lied'] },
+    { accept: ['had she only known, she would have acted differently', 'had she only known she would have acted differently'] },
+    { accept: ['not until the results had anyone suspected'] },
+    { accept: ['no sooner had we left than the alarm had gone off'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['when the phone rang'] },
+    { accept: ['had i known'] },
+    { accept: ['not until then had he realised the truth', 'not until then had he realized the truth'] },
+    { accept: ['they had known all along'] },
+    { accept: ['no sooner had the meeting started than it was interrupted'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

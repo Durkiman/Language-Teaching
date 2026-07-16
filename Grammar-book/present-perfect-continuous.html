@@ -9,6 +9,33 @@
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
     @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
   </style>
 </head>
 <body>
@@ -68,33 +95,34 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I <strong>(have / has)</strong> been waiting for an hour.</li>
-      <li>She <strong>(have / has)</strong> been working all day.</li>
-      <li>They <strong>(have / has)</strong> been playing football.</li>
-      <li>He <strong>(have / has)</strong> been cooking since noon.</li>
-      <li>We <strong>(have / has)</strong> been studying English for a year.</li>
-      <li>You <strong>(have / has)</strong> been running — you're out of breath!</li>
+      <li>I <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">have</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">has</button></span> been waiting for an hour.</li>
+      <li>She <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">have</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">has</button></span> been working all day.</li>
+      <li>They <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">have</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">has</button></span> been playing football.</li>
+      <li>He <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">have</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">has</button></span> been cooking since noon.</li>
+      <li>We <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">have</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">has</button></span> been studying English for a year.</li>
+      <li>You <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">have</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">has</button></span> been running — you're out of breath!</li>
     </ol>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each sentence (1–4) to the clue that explains it (a–d).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. Your hands are dirty.</div><div>a. He's been crying.</div>
-      <div>2. She's out of breath.</div><div>b. You've been gardening.</div>
-      <div>3. His eyes are red.</div><div>c. She's been running.</div>
-      <div>4. The kitchen smells amazing.</div><div>d. Someone's been baking.</div>
+      <div>1. Your hands are dirty. <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>a. He's been crying.</div>
+      <div>2. She's out of breath. <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>b. You've been gardening.</div>
+      <div>3. His eyes are red. <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>c. She's been running.</div>
+      <div>4. The kitchen smells amazing. <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>d. Someone's been baking.</div>
     </div>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank with the present perfect continuous of the verb in brackets.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I ______ (wait) for twenty minutes.</li>
-      <li>She ______ (work) here since 2020.</li>
-      <li>We ______ (learn) English for six months.</li>
-      <li>He ______ (not/sleep) well recently.</li>
-      <li>They ______ (travel) around Europe all summer.</li>
-      <li>You ______ (watch) too much TV.</li>
+      <li>I <input class="iq-input" id="ex3-1"> (wait) for twenty minutes.</li>
+      <li>She <input class="iq-input" id="ex3-2"> (work) here since 2020.</li>
+      <li>We <input class="iq-input" id="ex3-3"> (learn) English for six months.</li>
+      <li>He <input class="iq-input" id="ex3-4"> (not/sleep) well recently.</li>
+      <li>They <input class="iq-input" id="ex3-5"> (travel) around Europe all summer.</li>
+      <li>You <input class="iq-input" id="ex3-6"> (watch) too much TV.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
@@ -102,61 +130,65 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Maya has been learning to paint for about a year now. She's been taking classes every Saturday, and lately she's been experimenting with watercolours. She hasn't been selling her work yet, but she's been posting pictures online, and people have been asking to buy some. She's been thinking about opening a small shop.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Maya has been learning to paint for a year. ___</li>
-      <li>She has been taking classes every day. ___</li>
-      <li>She has been experimenting with watercolours. ___</li>
-      <li>She has been selling her work already. ___</li>
-      <li>People have been asking to buy her paintings. ___</li>
+      <li>Maya has been learning to paint for a year. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>She has been taking classes every day. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>She has been experimenting with watercolours. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>She has been selling her work already. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>People have been asking to buy her paintings. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write negatives (1, 3) and questions (2, 4).</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I ______ (feel/not) well lately.</li>
-      <li>___ you ___ (work) here long?</li>
-      <li>She ______ (not/answer) her phone all day.</li>
-      <li>___ they ___ (wait) long?</li>
+      <li>I <input class="iq-input iq-input-wide" id="ex5-1"> (feel/not) well lately.</li>
+      <li><input class="iq-input" id="ex5-2" style="min-width:70px;"> you <input class="iq-input" id="ex5-3" style="min-width:70px;"> (work) here long?</li>
+      <li>She <input class="iq-input iq-input-wide" id="ex5-4"> (not/answer) her phone all day.</li>
+      <li><input class="iq-input" id="ex5-5" style="min-width:70px;"> they <input class="iq-input" id="ex5-6" style="min-width:70px;"> (wait) long?</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>hour / been / an / I've / waiting / for</li>
-      <li>she's / studying / all / been / day</li>
-      <li>long / working / you / have / here / been?</li>
-      <li>hasn't / he / feeling / been / well</li>
-      <li>been / raining / it's / morning / since</li>
+      <li>hour / been / an / I've / waiting / for <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>she's / studying / all / been / day <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>long / working / you / have / here / been? <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>hasn't / he / feeling / been / well <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>been / raining / it's / morning / since <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
-    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence (one sentence is already correct).</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I've been knowing him for ten years.</li>
-      <li>She has been study all night.</li>
-      <li>How long you have been living here?</li>
-      <li>We've been wanting to visit for a while.</li>
-      <li>He have been working too hard.</li>
-      <li>They've been to owning this house since 2015.</li>
+      <li>I've been knowing him for ten years. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>She has been study all night. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>How long you have been living here? <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>We've been wanting to visit for a while. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>He have been working too hard. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>They've been to owning this house since 2015. <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Choose present perfect simple or continuous for each blank.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I ______ (read) that book — it was excellent. (finished, result)</li>
-      <li>I ______ (read) that book for weeks — I'm nearly done. (ongoing)</li>
-      <li>She ______ (write) three emails this morning. (countable result)</li>
-      <li>She ______ (write) emails all morning. (activity, duration)</li>
+      <li>I <input class="iq-input" id="ex8-1"> (read) that book — it was excellent. (finished, result)</li>
+      <li>I <input class="iq-input" id="ex8-2"> (read) that book for weeks — I'm nearly done. (ongoing)</li>
+      <li>She <input class="iq-input" id="ex8-3"> (write) three emails this morning. (countable result)</li>
+      <li>She <input class="iq-input" id="ex8-4"> (write) emails all morning. (activity, duration)</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: duration, evidence, or temporary habit?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"I've been living here for five years." a) duration&nbsp; b) evidence</li>
-      <li>"Why are you so wet? — I've been swimming." a) evidence&nbsp; b) temporary habit</li>
-      <li>"She's been taking the bus while her car is fixed." a) temporary habit&nbsp; b) duration</li>
-      <li>"He's been smoking since he was a teenager." a) duration&nbsp; b) evidence</li>
+      <li>"I've been living here for five years." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) duration</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) evidence</button></span></li>
+      <li>"Why are you so wet? — I've been swimming." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) evidence</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) temporary habit</button></span></li>
+      <li>"She's been taking the bus while her car is fixed." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) temporary habit</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) duration</button></span></li>
+      <li>"He's been smoking since he was a teenager." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) duration</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) evidence</button></span></li>
     </ol>
   </div>
 
@@ -165,92 +197,90 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">The city has been experiencing unusually high temperatures for the past month, and residents have been complaining about power cuts as demand for air conditioning has been rising. Officials have been meeting daily to discuss solutions, though they haven't yet announced a long-term plan. Meanwhile, local shops have been running out of fans and portable coolers almost as soon as they arrive.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>High temperatures have lasted about a month. ___</li>
-      <li>Residents are happy about the power supply. ___</li>
-      <li>Officials have announced a final long-term plan. ___</li>
-      <li>Shops have struggled to keep fans in stock. ___</li>
+      <li>High temperatures have lasted about a month. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Residents are happy about the power supply. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Officials have announced a final long-term plan. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Shops have struggled to keep fans in stock. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>I've been believing this for years.</li>
-      <li>She has been owning the company since 2010.</li>
-      <li>We've been understanding the issue for a while now.</li>
-      <li>He's been having a car since college. (possession)</li>
-      <li>They've been knowing each other since school.</li>
-      <li>I've been preferring tea to coffee lately.</li>
+      <li>I've been believing this for years. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>She has been owning the company since 2010. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>We've been understanding the issue for a while now. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>He's been having a car since college. (possession) <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>They've been knowing each other since school. <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>I've been preferring tea to coffee lately. <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Describe something you've been doing lately — a project, a habit, a change in routine — in 6–8 sentences using the present perfect continuous, then add one present perfect simple sentence to state a result.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal register.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>We've been looking into it for a while.</li>
-      <li>They've been dragging their feet on this.</li>
-      <li>I've been meaning to call you.</li>
-      <li>She's been putting in a lot of hours.</li>
-      <li>We've been kicking around some ideas.</li>
+      <li>We've been looking into it for a while. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>They've been dragging their feet on this. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>I've been meaning to call you. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>She's been putting in a lot of hours. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>We've been kicking around some ideas. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: what does the present perfect continuous suggest here?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"Have you been eating properly?" a) mild concern about a habit&nbsp; b) neutral question</li>
-      <li>"I've been meaning to mention this." a) something delayed, slightly apologetic&nbsp; b) urgent action</li>
-      <li>"They've been promising results for months." a) implied criticism/scepticism&nbsp; b) neutral fact</li>
-      <li>"She's been carrying the whole team." a) idiomatic — doing more than her share&nbsp; b) literal carrying</li>
+      <li>"Have you been eating properly?" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) mild concern about a habit</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) neutral question</button></span></li>
+      <li>"I've been meaning to mention this." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) something delayed, slightly apologetic</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) urgent action</button></span></li>
+      <li>"They've been promising results for months." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) implied criticism/scepticism</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) neutral fact</button></span></li>
+      <li>"She's been carrying the whole team." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) idiomatic — doing more than her share</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) literal carrying</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The committee has been deliberate on this for weeks.</li>
-      <li>She has been having doubts about it for a while, isn't she.</li>
-      <li>We've been being aware of the risks all along.</li>
-      <li>They've been to negotiating for months without progress.</li>
-      <li>He's been consistently missing to attend meetings.</li>
+      <li>The committee has been deliberate on this for weeks. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>She has been having doubts about it for a while, isn't she. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>We've been being aware of the risks all along. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>They've been to negotiating for months without progress. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>He's been consistently missing to attend meetings. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal progress update on a long-running project, using the present perfect continuous to describe ongoing efforts and the present perfect simple to state concrete results achieved so far.</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>been / has / months / for / committee / deliberating / the</li>
-      <li>weeks / been / has / for / rising / demand</li>
-      <li>been / raised / concerns / consistently / have / stakeholders</li>
-      <li>progress / been / has / monitoring / closely / team / the</li>
-      <li>been / negotiating / months / parties / for / have / the</li>
+      <li>been / has / months / for / committee / deliberating / the <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>weeks / been / has / for / rising / demand <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>been / raised / concerns / consistently / have / stakeholders <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>progress / been / has / monitoring / closely / team / the <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>been / negotiating / months / parties / for / have / the <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The board has been reviewing to the proposal for weeks.</li>
-      <li>She's been being cautious about this, hasn't she.</li>
-      <li>We've been to discussing this at length.</li>
-      <li>They have been consistently to underestimate the cost.</li>
-      <li>He's been having known about this for months. (possession)</li>
+      <li>The board has been reviewing to the proposal for weeks. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>She's been being cautious about this, hasn't she. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>We've been to discussing this at length. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>They have been consistently to underestimate the cost. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>He's been having known about this for months. (possession) <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
@@ -310,6 +340,127 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* -- Interactive exercises -- */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'lenient', items: [
+    { accept: ['have been waiting'] },
+    { accept: ['has been working'] },
+    { accept: ['have been learning'] },
+    { accept: ["hasn't been sleeping", 'has not been sleeping'] },
+    { accept: ['have been travelling', 'have been traveling'] },
+    { accept: ['have been watching'] }
+  ]},
+  ex5: { type: 'exact', items: [
+    { accept: ["haven't been feeling", 'have not been feeling'] },
+    { accept: ['have'] },
+    { accept: ['been working'] },
+    { accept: ["hasn't been answering", 'has not been answering'] },
+    { accept: ['have'] },
+    { accept: ['been waiting'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ["i've been waiting for an hour", 'i have been waiting for an hour'] },
+    { accept: ["she's been studying all day", 'she has been studying all day'] },
+    { accept: ['have you been working here long'] },
+    { accept: ["he hasn't been feeling well", 'he has not been feeling well'] },
+    { accept: ["it's been raining since this morning", 'it has been raining since this morning'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ["i've known him for ten years", 'i have known him for ten years'] },
+    { accept: ['she has been studying all night'] },
+    { accept: ['how long have you been living here'] },
+    { accept: ["we've been wanting to visit for a while", 'we have been wanting to visit for a while'] },
+    { accept: ['he has been working too hard'] },
+    { accept: ["they've owned this house since 2015", 'they have owned this house since 2015'] }
+  ]},
+  ex8: { type: 'exact', items: [
+    { accept: ['have read'] },
+    { accept: ['have been reading'] },
+    { accept: ['has written'] },
+    { accept: ['has been writing'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ["i've believed this for years", 'i have believed this for years'] },
+    { accept: ['she has owned the company since 2010'] },
+    { accept: ["we've understood the issue", 'we have understood the issue'] },
+    { accept: ["he's had a car since college", 'he has had a car since college'] },
+    { accept: ["they've known each other since school", 'they have known each other since school'] },
+    { accept: ["i've preferred tea to coffee lately", 'i have preferred tea to coffee lately'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['investigating it for some time'] },
+    { accept: ['delaying a decision'] },
+    { accept: ['intending to call you'] },
+    { accept: ['working long hours'] },
+    { accept: ['considering some ideas'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['deliberating on this'] },
+    { accept: ["hasn't she", 'hasnt she'] },
+    { accept: ['been aware of the risks'] },
+    { accept: ['been negotiating for months'] },
+    { accept: ['missing meetings'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['the committee has been deliberating for months'] },
+    { accept: ['demand has been rising for weeks'] },
+    { accept: ['stakeholders have consistently raised concerns'] },
+    { accept: ['the team has been closely monitoring progress'] },
+    { accept: ['the parties have been negotiating for months'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['reviewing the proposal'] },
+    { accept: ["hasn't she", 'hasnt she'] },
+    { accept: ["we've been discussing this at length", 'we have been discussing this at length'] },
+    { accept: ['consistently underestimating the cost'] },
+    { accept: ["he's known about this for months", 'he has known about this for months'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>

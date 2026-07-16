@@ -9,6 +9,33 @@
   <style>
     body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
     @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
   </style>
 </head>
 <body>
@@ -80,34 +107,35 @@
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: circle the correct form.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>My car is <strong>(fast / faster)</strong> than yours.</li>
-      <li>This book is <strong>(interesting / more interesting)</strong> than that one.</li>
-      <li>She is the <strong>(tall / tallest)</strong> student in the class.</li>
-      <li>Winter is <strong>(cold / colder)</strong> than summer.</li>
-      <li>This is the <strong>(good / best)</strong> pizza I've ever had.</li>
-      <li>He is <strong>(older / more old)</strong> than his brother.</li>
+      <li>My car is <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">fast</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">faster</button></span> than yours.</li>
+      <li>This book is <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">interesting</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">more interesting</button></span> than that one.</li>
+      <li>She is the <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">tall</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">tallest</button></span> student in the class.</li>
+      <li>Winter is <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">cold</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">colder</button></span> than summer.</li>
+      <li>This is the <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">good</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">best</button></span> pizza I've ever had.</li>
+      <li>He is <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">older</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">more old</button></span> than his brother.</li>
     </ol>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each adjective (1–5) to its comparative (a–e).</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
-      <div>1. big</div><div>a. more expensive</div>
-      <div>2. happy</div><div>b. bigger</div>
-      <div>3. expensive</div><div>c. happier</div>
-      <div>4. good</div><div>d. worse</div>
-      <div>5. bad</div><div>e. better</div>
+      <div>1. big <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>a. more expensive</div>
+      <div>2. happy <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>b. bigger</div>
+      <div>3. expensive <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>c. happier</div>
+      <div>4. good <select class="iq-select" onchange="checkSelect(this,'e')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>d. worse</div>
+      <div>5. bad <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>e. better</div>
     </div>
   </div>
   <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank: complete with the comparative or superlative.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>This is the ______ (big) city in the country.</li>
-      <li>My sister is ______ (young) than me.</li>
-      <li>Today is ______ (hot) day of the year.</li>
-      <li>This exercise is ______ (easy) than the last one.</li>
-      <li>She is the ______ (good) singer in the school.</li>
-      <li>This phone is ______ (expensive) than that one.</li>
+      <li>This is the <input class="iq-input" id="ex3-1"> (big) city in the country.</li>
+      <li>My sister is <input class="iq-input" id="ex3-2"> (young) than me.</li>
+      <li>Today is <input class="iq-input" id="ex3-3"> (hot) day of the year.</li>
+      <li>This exercise is <input class="iq-input" id="ex3-4"> (easy) than the last one.</li>
+      <li>She is the <input class="iq-input" id="ex3-5"> (good) singer in the school.</li>
+      <li>This phone is <input class="iq-input" id="ex3-6"> (expensive) than that one.</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
@@ -115,66 +143,70 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">The Nile is the longest river in Africa. It is longer than the Amazon River, but the Amazon carries more water. Mount Everest is the highest mountain in the world — it is much taller than any mountain in Europe. The Pacific Ocean is the biggest ocean, bigger than the Atlantic and the Indian Ocean combined.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The Nile is shorter than the Amazon. ___</li>
-      <li>The Amazon carries more water than the Nile. ___</li>
-      <li>Mount Everest is the highest mountain in the world. ___</li>
-      <li>The Atlantic Ocean is bigger than the Pacific. ___</li>
-      <li>European mountains are taller than Everest. ___</li>
+      <li>The Nile is shorter than the Amazon. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The Amazon carries more water than the Nile. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Mount Everest is the highest mountain in the world. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The Atlantic Ocean is bigger than the Pacific. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>European mountains are taller than Everest. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write negatives (1–2, 5) and questions (3–4, 6).</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>My house (not/big) as hers. → ______________________</li>
-      <li>This test (not/difficult) as the last one. → ______________________</li>
-      <li>___ this restaurant ___ (expensive) than that one?</li>
-      <li>___ she ___ (tall) as her sister?</li>
-      <li>This car (not/fast) as that one. → ______________________</li>
-      <li>___ math ___ (hard) than science for you?</li>
+      <li>My house (not/big) as hers. → <input class="iq-input iq-input-wide" id="ex5-1"></li>
+      <li>This test (not/difficult) as the last one. → <input class="iq-input iq-input-wide" id="ex5-2"></li>
+      <li><input class="iq-input" id="ex5-3" style="min-width:70px;"> this restaurant <input class="iq-input" id="ex5-4" style="min-width:70px;"> (expensive) than that one?</li>
+      <li><input class="iq-input" id="ex5-5" style="min-width:70px;"> she <input class="iq-input" id="ex5-6" style="min-width:70px;"> (tall) as her sister?</li>
+      <li>This car (not/fast) as that one. → <input class="iq-input iq-input-wide" id="ex5-7"></li>
+      <li><input class="iq-input" id="ex5-8" style="min-width:70px;"> math <input class="iq-input" id="ex5-9" style="min-width:70px;"> (hard) than science for you?</li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
   </div>
   <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>than / bigger / house / my / is / yours</li>
-      <li>the / world / tallest / building / the / is / in</li>
-      <li>as / not / fast / is / she / as / me</li>
-      <li>city / this / most / the / expensive / is</li>
-      <li>brother / older / my / is / than / me</li>
+      <li>than / bigger / house / my / is / yours <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>the / world / tallest / building / the / is / in <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>as / not / fast / is / she / as / me <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>city / this / most / the / expensive / is <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>brother / older / my / is / than / me <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She is more taller than me.</li>
-      <li>This is the most best restaurant in town.</li>
-      <li>He is more good at math than I am.</li>
-      <li>This box is more heavy than that one.</li>
-      <li>It's the most easiest exercise.</li>
-      <li>My city is beautifuller than yours.</li>
+      <li>She is more taller than me. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>This is the most best restaurant in town. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>He is more good at math than I am. <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>This box is more heavy than that one. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>It's the most easiest exercise. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>My city is beautifuller than yours. <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Transform each sentence as instructed.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>New York is big. Los Angeles is bigger. <em>(rewrite with "not as...as")</em></li>
-      <li>This is a good restaurant. I've never been to a better one. <em>(rewrite as superlative)</em></li>
-      <li>Tom is 25. His sister is also 25. <em>(rewrite with "as...as")</em></li>
-      <li>This phone is expensive. That one is a lot less expensive. <em>(rewrite with "much")</em></li>
-      <li>Emma is smart. Her brother is smarter. <em>(combine into one sentence)</em></li>
+      <li>New York is big. Los Angeles is bigger. <em>(rewrite with "not as...as")</em> <input class="iq-input iq-input-wide" id="ex8-1" placeholder="rewrite…"></li>
+      <li>This is a good restaurant. I've never been to a better one. <em>(rewrite as superlative)</em> <input class="iq-input iq-input-wide" id="ex8-2" placeholder="rewrite…"></li>
+      <li>Tom is 25. His sister is also 25. <em>(rewrite with "as...as")</em> <input class="iq-input iq-input-wide" id="ex8-3" placeholder="rewrite…"></li>
+      <li>This phone is expensive. That one is a lot less expensive. <em>(rewrite with "much")</em> <input class="iq-input iq-input-wide" id="ex8-4" placeholder="rewrite…"></li>
+      <li>Emma is smart. Her brother is smarter. <em>(combine into one sentence)</em> <input class="iq-input iq-input-wide" id="ex8-5" placeholder="rewrite…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
   </div>
   <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: choose the correct degree modifier.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>This car is ___ faster than mine. a) much&nbsp; b) very</li>
-      <li>She is ___ taller than her sister. a) a bit&nbsp; b) most</li>
-      <li>This is ___ the best film of the year. a) by far&nbsp; b) more</li>
-      <li>He runs ___ faster than me. a) far&nbsp; b) more</li>
-      <li>It's ___ more expensive here. a) slightly&nbsp; b) much most</li>
-      <li>This is ___ easiest exercise in the book. a) far the&nbsp; b) by far the</li>
+      <li>This car is <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) much</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) very</button></span> faster than mine.</li>
+      <li>She is <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) a bit</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) most</button></span> taller than her sister.</li>
+      <li>This is <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) by far</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) more</button></span> the best film of the year.</li>
+      <li>He runs <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) far</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) more</button></span> faster than me.</li>
+      <li>It's <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) slightly</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) much most</button></span> more expensive here.</li>
+      <li>This is <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) far the</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) by far the</button></span> easiest exercise in the book.</li>
     </ol>
   </div>
 
@@ -183,95 +215,93 @@
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
     <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Although Tokyo is often considered one of the most expensive cities in the world, it is actually less costly than several European capitals when it comes to everyday groceries. Public transport, however, is far more efficient than in most Western cities, making daily commutes considerably less stressful. Housing remains the biggest financial burden for most residents, with prices in central districts rising faster than incomes. Despite this, surveys consistently rank Tokyo as one of the safest and most livable cities globally.</p>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>Tokyo's groceries are more expensive than several European capitals. ___</li>
-      <li>Public transport in Tokyo is more efficient than in most Western cities. ___</li>
-      <li>Housing costs are rising slower than incomes. ___</li>
-      <li>Tokyo is generally considered unsafe. ___</li>
-      <li>Tokyo ranks among the most livable cities. ___</li>
+      <li>Tokyo's groceries are more expensive than several European capitals. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Public transport in Tokyo is more efficient than in most Western cities. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Housing costs are rising slower than incomes. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Tokyo is generally considered unsafe. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Tokyo ranks among the most livable cities. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>She is the more talented singer I've ever heard.</li>
-      <li>This year's profits are more higher than last year's.</li>
-      <li>Of the two candidates, he is the most experienced.</li>
-      <li>This is by far most interesting book I've read.</li>
-      <li>The weather today is more worse than yesterday.</li>
-      <li>She sings good than her sister.</li>
+      <li>She is the more talented singer I've ever heard. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>This year's profits are more higher than last year's. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>Of the two candidates, he is the most experienced. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>This is by far most interesting book I've read. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>The weather today is more worse than yesterday. <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>She sings good than her sister. <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
   </div>
   <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Compare two cities, products, or people you know in 5–7 sentences. Use <strong>at least three comparatives</strong>, <strong>one superlative</strong>, and <strong>one "as...as" structure</strong>.</p>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
-    <div style="border-bottom:1px solid #D8D2EE;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
 
   <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal register.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>This gadget is way better than the old one.</li>
-      <li>That's like, the worst idea ever.</li>
-      <li>She's smarter than pretty much everyone in the office.</li>
-      <li>This new policy is way more effective than the last one.</li>
-      <li>Their team is just way ahead of ours.</li>
+      <li>This gadget is way better than the old one. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>That's like, the worst idea ever. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>She's smarter than pretty much everyone in the office. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>This new policy is way more effective than the last one. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>Their team is just way ahead of ours. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: what does this structure express?</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>"The more you practice, the better you get." a) a proportional relationship&nbsp; b) a simple comparison</li>
-      <li>"Things are getting harder and harder." a) a gradual increase over time&nbsp; b) a single comparison</li>
-      <li>"She's far more experienced than she lets on." — "far": a) intensifies the comparative&nbsp; b) marks a superlative</li>
-      <li>"This is the third-highest peak in the range." a) ranks among several items&nbsp; b) a simple comparative</li>
-      <li>"The sooner we start, the sooner we'll finish." — same pattern as: a) "the more...the more"&nbsp; b) "as...as"</li>
-      <li>"It's nowhere near as good as the original." a) a very large negative gap&nbsp; b) near equality</li>
+      <li>"The more you practice, the better you get." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) a proportional relationship</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a simple comparison</button></span></li>
+      <li>"Things are getting harder and harder." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) a gradual increase over time</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a single comparison</button></span></li>
+      <li>"She's far more experienced than she lets on." — "far": <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) intensifies the comparative</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) marks a superlative</button></span></li>
+      <li>"This is the third-highest peak in the range." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) ranks among several items</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) a simple comparative</button></span></li>
+      <li>"The sooner we start, the sooner we'll finish." — same pattern as: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) "the more...the more"</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) "as...as"</button></span></li>
+      <li>"It's nowhere near as good as the original." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) a very large negative gap</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) near equality</button></span></li>
     </ol>
   </div>
   <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>The more you practice, more you improve.</li>
-      <li>This is one of most fascinating documentaries I've seen.</li>
-      <li>He is by far most qualified candidate we've interviewed.</li>
-      <li>The situation is getting worse and worst.</li>
-      <li>She is nowhere near good as her predecessor.</li>
+      <li>The more you practice, more you improve. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>This is one of most fascinating documentaries I've seen. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>He is by far most qualified candidate we've interviewed. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>The situation is getting worse and worst. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>She is nowhere near good as her predecessor. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
   </div>
 
   <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
     <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal comparative analysis of two approaches, policies, or products. Include <strong>at least one "the more...the more" structure</strong>, in a formal register.</p>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;margin-top:14px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
-    <div style="border-bottom:1px solid #F2D5D8;height:22px;"></div>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>considerably / predecessor / its / effective / than / this / is / more / policy</li>
-      <li>by / candidate / far / qualified / most / the / is / she</li>
-      <li>worse / gets / situation / and / worse / the</li>
-      <li>practice / improve / more / you / more / the / you / the</li>
-      <li>anticipated / far / exceeded / results / expectations / the</li>
+      <li>considerably / predecessor / its / effective / than / this / is / more / policy <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>by / candidate / far / qualified / most / the / is / she <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>worse / gets / situation / and / worse / the <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>practice / improve / more / you / more / the / you / the <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>anticipated / far / exceeded / results / expectations / the <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
   </div>
   <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
     <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
     <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
-      <li>This is not any better than the previous version, if not worst.</li>
-      <li>Nothing could be more further from the truth.</li>
-      <li>The findings are considerable more significant than previously thought.</li>
-      <li>This is easily the most complex issue we faced.</li>
-      <li>It could not have gone any worst.</li>
+      <li>This is not any better than the previous version, if not worst. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>Nothing could be more further from the truth. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>The findings are considerable more significant than previously thought. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>This is easily the most complex issue we faced. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>It could not have gone any worst. <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
     </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
   </div>
 
   <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
@@ -331,6 +361,131 @@
     btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
   });
 })();
+
+/* -- Interactive exercises -- */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['biggest'] },
+    { accept: ['younger'] },
+    { accept: ['the hottest'] },
+    { accept: ['easier'] },
+    { accept: ['best'] },
+    { accept: ['more expensive'] }
+  ]},
+  ex5: { type: 'lenient', items: [
+    { accept: ["isn't as big as hers", "is not as big as hers"] },
+    { accept: ["isn't as difficult as the last one", "is not as difficult as the last one"] },
+    { accept: ['is'] },
+    { accept: ['more expensive'] },
+    { accept: ['is'] },
+    { accept: ['as tall'] },
+    { accept: ["isn't as fast as that one", "is not as fast as that one"] },
+    { accept: ['is'] },
+    { accept: ['harder'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['my house is bigger than yours'] },
+    { accept: ['it is the tallest building in the world'] },
+    { accept: ['she is not as fast as me'] },
+    { accept: ['this is the most expensive city'] },
+    { accept: ['my brother is older than me'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['she is taller than me'] },
+    { accept: ['this is the best restaurant in town'] },
+    { accept: ['he is better at math than i am'] },
+    { accept: ['this box is heavier than that one'] },
+    { accept: ["it's the easiest exercise", 'it is the easiest exercise'] },
+    { accept: ['my city is more beautiful than yours'] }
+  ]},
+  ex8: { type: 'lenient', items: [
+    { accept: ['not as small as'] },
+    { accept: ["the best restaurant i've ever been to", 'the best restaurant i have ever been to'] },
+    { accept: ['as old as his sister'] },
+    { accept: ['much more expensive than that one'] },
+    { accept: ["smarter than her", 'emma is smarter than her brother'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['the most talented singer'] },
+    { accept: ['are higher than'] },
+    { accept: ['he is the more experienced'] },
+    { accept: ['by far the most interesting book'] },
+    { accept: ['worse than yesterday'] },
+    { accept: ['sings better than her sister'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['considerable improvement'] },
+    { accept: ['least advisable'] },
+    { accept: ['more capable', 'more intellectually capable'] },
+    { accept: ['considerably more effective'] },
+    { accept: ['significantly more advanced', 'far more advanced'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['the more you improve'] },
+    { accept: ['one of the most fascinating documentaries'] },
+    { accept: ['by far the most qualified candidate'] },
+    { accept: ['worse and worse'] },
+    { accept: ['as good as her predecessor'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['this policy is considerably more effective than its predecessor'] },
+    { accept: ['she is by far the most qualified candidate'] },
+    { accept: ['the situation gets worse and worse'] },
+    { accept: ['the more you practice the more you improve'] },
+    { accept: ['the results far exceeded expectations'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['if not worse'] },
+    { accept: ['further from the truth'] },
+    { accept: ['considerably more significant'] },
+    { accept: ['the most complex issue we have faced'] },
+    { accept: ['any worse'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
 </script>
 </body>
 </html>
