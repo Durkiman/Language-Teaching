@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Guess the Player — Warm-Up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F6F8; --surface:#FFFFFF; --teal:#2A8A8A; --teal-light:#E3F2F2;
+  --ink:#1F2B33; --muted:#6B7A82; --border:#E3E8EB;
+  --orange:#E08A3C; --orange-light:#FFF3E6; --blue:#3E6FB0;
+  --green:#3FA66A; --green-light:#E5F6EC;
+  --shadow:0 2px 8px rgba(31,43,51,.06),0 1px 2px rgba(31,43,51,.04);
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);padding-bottom:40px;}
+.app-header{background:var(--surface);padding:20px 20px 16px;border-bottom:1px solid var(--border);}
+.app-header h1{margin:0 0 4px;font-size:21px;font-weight:800;}
+.app-header p{margin:0;font-size:13px;color:var(--muted);font-weight:600;}
+.wrap{max-width:640px;margin:0 auto;padding:18px 16px 30px;}
+.card{background:var(--surface);border-radius:16px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow);border:1px solid var(--border);}
+.card h2{margin:0 0 10px;font-size:16px;font-weight:800;}
+.card h3{margin:0 0 8px;font-size:14px;font-weight:800;color:var(--teal);}
+.fr{color:var(--blue);font-size:13px;font-style:italic;font-weight:600;margin-top:4px;}
+
+.round-tabs{display:flex;gap:8px;margin-bottom:14px;}
+.round-tab{flex:1;padding:12px;border-radius:12px;border:2px solid var(--border);background:var(--surface);font-weight:800;font-size:13px;color:var(--muted);cursor:pointer;text-align:center;}
+.round-tab.active{border-color:var(--teal);background:var(--teal-light);color:var(--teal);}
+.round-panel{display:none;}
+.round-panel.active{display:block;}
+
+.role-box{border-radius:12px;padding:14px;margin-bottom:12px;font-size:13px;line-height:1.6;}
+.role-box.teacher{background:var(--teal-light);}
+.role-box.student{background:var(--orange-light);}
+.role-box b{display:block;margin-bottom:4px;font-size:13px;}
+.role-box.teacher b{color:var(--teal);}
+.role-box.student b{color:var(--orange);}
+
+.frame-bank{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.frame-chip{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:13px;font-weight:700;}
+.frame-chip .fr{display:block;font-size:12px;margin-top:2px;}
+
+.player-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px;}
+.player-card{background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:14px 8px;text-align:center;}
+.player-avatar{width:44px;height:44px;border-radius:50%;background:var(--teal-light);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;margin:0 auto 8px;color:var(--teal);}
+.hidden-state{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;}
+.revealed-state{margin-bottom:10px;}
+.p-name{font-weight:800;font-size:13px;color:var(--ink);margin-bottom:2px;}
+.p-detail{font-size:11px;color:var(--muted);font-weight:600;}
+.reveal-btn{background:var(--teal);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;cursor:pointer;width:100%;}
+.reveal-btn:active{transform:scale(.96);}
+.reveal-btn.revealed{background:var(--border);color:var(--muted);cursor:default;}
+.btn-reveal-all{display:block;width:100%;margin-top:12px;background:var(--surface);border:2px solid var(--teal);color:var(--teal);border-radius:10px;padding:10px;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;cursor:pointer;}
+.btn-reveal-all:active{transform:scale(.98);}
+.teacher-facts{background:#FFF8E8;border:1px solid #f0dca0;border-radius:12px;padding:12px 14px;margin-top:14px;}
+.teacher-facts b{display:block;font-size:12px;color:#9a7a2e;margin-bottom:8px;}
+.teacher-facts p{margin:0 0 6px;font-size:12px;line-height:1.5;color:#5a4620;}
+
+.example-card{background:#FFF8E8;border:1px solid #f0dca0;border-radius:14px;padding:14px;margin-top:10px;}
+.example-card h4{margin:0 0 8px;font-size:13px;font-weight:800;color:#9a7a2e;}
+.example-card p{margin:0 0 6px;font-size:13px;line-height:1.6;}
+
+.checklist{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.checklist label{display:flex;align-items:flex-start;gap:8px;font-size:13px;background:var(--bg);border-radius:10px;padding:10px 12px;cursor:pointer;}
+.checklist input{margin-top:2px;width:16px;height:16px;accent-color:var(--teal);flex-shrink:0;}
+</style>
+</head>
+<body>
+<div style="background:#0E7C86;">
+  <a href="../Grammar-book/modal-verbs.html" style="display:block;color:#FFF6D8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;text-decoration:none;text-align:center;padding:10px 16px;letter-spacing:.01em;">📘 Related grammar: Modal Verbs (can / can't) — open the workbook page &amp; exercises →</a>
+  <a href="../Grammar-book/present-simple.html" style="display:block;color:#FFF6D8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;text-decoration:none;text-align:center;padding:10px 16px;letter-spacing:.01em;border-top:1px solid rgba(255,255,255,.25);">📘 Recap grammar: Present Simple — open the workbook page &amp; exercises →</a>
+  <a href="../Grammar-book/have-got.html" style="display:block;color:#FFF6D8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;text-decoration:none;text-align:center;padding:10px 16px;letter-spacing:.01em;border-top:1px solid rgba(255,255,255,.25);">📘 Recap grammar: Have Got — open the workbook page &amp; exercises →</a>
+</div>
+
+<div class="app-header">
+  <h1>⚽ Guess the Player</h1>
+  <p>Warm-Up Game — Present Simple, "have got" &amp; can/can't for ability</p>
+</div>
+
+<div class="wrap">
+
+  <div class="card">
+    <h2>How to Play</h2>
+    <p style="font-size:13px;line-height:1.6;">Pick 3 real football players Micha knows. Fill in their names below (just for your own reference — no need to show him this screen). Then play two rounds — descriptions should mix present simple, "have got" <strong>and</strong> "can/can't" for what the player is able (or not able) to do.</p>
+    <p class="fr">Choisis 3 vrais joueurs de football que Micha connaît. Note leurs noms ci-dessous (juste pour toi — pas besoin de montrer cet écran à Micha). Puis joue les deux tours — les descriptions doivent mélanger le présent simple, "have got" <strong>et</strong> "can/can't" pour ce que le joueur sait faire (ou ne sait pas faire).</p>
+  </div>
+
+  <div class="card">
+    <h3>Today's 3 Players</h3>
+    <p class="fr" style="margin-bottom:10px;">1 joueur belge, 1 espagnol, 1 néerlandais — cachés jusqu'à ce que tu clique sur "Reveal". Idéal pour partager ton écran !</p>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">One Belgian, one Spanish, one Dutch player — real, but not the most famous names, so it's a genuine guessing challenge. Click "Reveal" when you're ready to show Micha.</p>
+    <div class="player-grid">
+
+      <div class="player-card" id="pcard1">
+        <div class="player-avatar">?</div>
+        <div class="hidden-state">Hidden</div>
+        <div class="revealed-state" style="display:none;">
+          <div class="p-name">Charles De Ketelaere</div>
+          <div class="p-detail">Atalanta (Belgium)</div>
+          <div class="p-detail">Attacking Midfielder</div>
+          <div class="p-detail">Can: score with both feet · Can't: head the ball well</div>
+        </div>
+        <button class="reveal-btn" onclick="revealCard(1)">Reveal</button>
+      </div>
+
+      <div class="player-card" id="pcard2">
+        <div class="player-avatar">?</div>
+        <div class="hidden-state">Hidden</div>
+        <div class="revealed-state" style="display:none;">
+          <div class="p-name">Nico Williams</div>
+          <div class="p-detail">Athletic Club (Spain)</div>
+          <div class="p-detail">Left Winger</div>
+          <div class="p-detail">Can: run very fast · Can't: play well with his head</div>
+        </div>
+        <button class="reveal-btn" onclick="revealCard(2)">Reveal</button>
+      </div>
+
+      <div class="player-card" id="pcard3">
+        <div class="player-avatar">?</div>
+        <div class="hidden-state">Hidden</div>
+        <div class="revealed-state" style="display:none;">
+          <div class="p-name">Xavi Simons</div>
+          <div class="p-detail">Tottenham Hotspur (Netherlands)</div>
+          <div class="p-detail">Attacking Midfielder</div>
+          <div class="p-detail">Can: create chances for others · Can't: win many aerial duels</div>
+        </div>
+        <button class="reveal-btn" onclick="revealCard(3)">Reveal</button>
+      </div>
+
+    </div>
+    <button class="btn-reveal-all" onclick="revealCard(1);revealCard(2);revealCard(3);">Reveal All 3</button>
+
+    <div class="teacher-facts">
+      <b>👤 For you only — description material</b>
+      <p><b>Charles De Ketelaere</b> — Belgian, plays for Atalanta in Italy, attacking midfielder, tall, left-footed, from Bruges. Can score with both feet; can't head the ball well.</p>
+      <p><b>Nico Williams</b> — Spanish, plays for Athletic Club in Bilbao, left winger, quick, has a brother who plays for the same club. Can run very fast; can't play well with his head.</p>
+      <p><b>Xavi Simons</b> — Dutch, plays for Tottenham Hotspur in England, attacking midfielder, creative playmaker, from Amsterdam. Can create chances for others; can't win many aerial duels.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📚 Sentence Bank — use these to describe</h3>
+    <p class="fr" style="margin-bottom:6px;">Banque de phrases — utilise-les pour décrire</p>
+    <div class="frame-bank">
+      <div class="frame-chip">He plays for ___.<span class="fr">Il joue pour ___.</span></div>
+      <div class="frame-chip">He is a ___ (striker / defender / goalkeeper...).<span class="fr">Il est ___ (attaquant / défenseur / gardien...).</span></div>
+      <div class="frame-chip">He has got ___ hair (short / long / curly...).<span class="fr">Il a les cheveux ___ (courts / longs / bouclés...).</span></div>
+      <div class="frame-chip">He has got a beard. / He hasn't got a beard.<span class="fr">Il a une barbe. / Il n'a pas de barbe.</span></div>
+      <div class="frame-chip">He wears number ___.<span class="fr">Il porte le numéro ___.</span></div>
+      <div class="frame-chip">He comes from ___ (country).<span class="fr">Il vient de ___ (pays).</span></div>
+      <div class="frame-chip">He is very tall / quite short.<span class="fr">Il est très grand / assez petit.</span></div>
+    </div>
+
+    <h3 style="margin-top:16px;">💪 Talking about ability — can / can't</h3>
+    <p class="fr" style="margin-bottom:6px;">Parler de ce qu'un joueur sait faire — can / can't</p>
+    <div class="frame-bank">
+      <div class="frame-chip">He can score with both feet.<span class="fr">Il peut marquer des deux pieds.</span></div>
+      <div class="frame-chip">He can run very fast.<span class="fr">Il peut courir très vite.</span></div>
+      <div class="frame-chip">He can head the ball well.<span class="fr">Il peut bien jouer de la tête.</span></div>
+      <div class="frame-chip">He can't play well with his head. / He can't head the ball well.<span class="fr">Il ne peut pas bien jouer de la tête.</span></div>
+      <div class="frame-chip">He can dribble past defenders.<span class="fr">Il peut dribbler les défenseurs.</span></div>
+    </div>
+
+    <div class="example-card">
+      <h4>🎯 Worked example (to model the pattern for Micha)</h4>
+      <p>"He plays for Manchester City. He is a striker. He is very tall — he has got a strong, powerful body. He can score with both feet, but he can't head the ball as well as you'd expect. He hasn't got long hair. He comes from Norway. He wears number 9."</p>
+      <p style="font-weight:800;color:#9a7a2e;">→ Who is it? (Erling Haaland)</p>
+      <p class="fr" style="color:var(--blue);">"Il joue pour Manchester City. Il est attaquant. Il est très grand — il a un corps fort et puissant. Il peut marquer des deux pieds, mais il ne joue pas aussi bien de la tête qu'on pourrait le croire. Il n'a pas les cheveux longs. Il vient de Norvège. Il porte le numéro 9." → Qui est-ce ?</p>
+    </div>
+  </div>
+
+  <div class="round-tabs">
+    <button class="round-tab active" data-round="r1" onclick="showRound('r1')">Round 1</button>
+    <button class="round-tab" data-round="r2" onclick="showRound('r2')">Round 2</button>
+  </div>
+
+  <div class="round-panel active" id="r1">
+    <div class="card">
+      <h2>Round 1 — You Describe, Micha Guesses</h2>
+      <p class="fr">Tour 1 — Tu décris, Micha devine</p>
+      <div class="role-box teacher">
+        <b>👤 You (teacher)</b>
+        Show Micha the 3 players (photos on your phone or screen). Silently pick one. Describe him using Present Simple + "have got" <strong>and at least one can/can't sentence</strong> from the bank above — don't say the name!
+      </div>
+      <div class="role-box student">
+        <b>🗣️ Micha (student)</b>
+        Listens to the description and points to / says which of the 3 players you're describing.
+      </div>
+      <div class="checklist">
+        <label><input type="checkbox"> Showed Micha the 3 players</label>
+        <label><input type="checkbox"> Described one player (3-4 sentences minimum, incl. one can/can't sentence)</label>
+        <label><input type="checkbox"> Micha guessed correctly</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="round-panel" id="r2">
+    <div class="card">
+      <h2>Round 2 — Micha Describes, You Guess</h2>
+      <p class="fr">Tour 2 — Micha décrit, tu devines</p>
+      <div class="role-box student">
+        <b>🗣️ Micha (student)</b>
+        Picks one of the 3 players (or a new one) and describes him using Present Simple + "have got" <strong>and at least one can/can't sentence</strong> — you don't know which one yet!
+      </div>
+      <div class="role-box teacher">
+        <b>👤 You (teacher)</b>
+        Listen for correct use of Present Simple, "have got" and can/can't. Don't correct mid-task — note errors for the end. Guess which player once he's done.
+      </div>
+      <div class="checklist">
+        <label><input type="checkbox"> Micha chose a player without telling you</label>
+        <label><input type="checkbox"> Micha described him (3-4 sentences minimum, incl. one can/can't sentence)</label>
+        <label><input type="checkbox"> You guessed — correctly or not!</label>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showRound(id){
+  document.querySelectorAll('.round-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.round-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector(`.round-tab[data-round="${id}"]`).classList.add('active');
+}
+
+function revealCard(n){
+  const card = document.getElementById('pcard'+n);
+  if(!card) return;
+  const hidden = card.querySelector('.hidden-state');
+  const revealed = card.querySelector('.revealed-state');
+  const btn = card.querySelector('.reveal-btn');
+  const avatar = card.querySelector('.player-avatar');
+  if(hidden) hidden.style.display = 'none';
+  if(revealed) revealed.style.display = 'block';
+  if(btn){ btn.textContent = 'Revealed'; btn.classList.add('revealed'); btn.disabled = true; }
+  if(avatar) avatar.textContent = n;
+}
+</script>
+</body>
+</html>
