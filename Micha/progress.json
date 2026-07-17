@@ -9,6 +9,8 @@
     "A2-06": { "status": "reviewed", "introduced": null, "reviews": [null], "notes": "Past simple across many lessons; 28 irregular verbs" },
     "A2-10": { "status": "introduced", "introduced": null, "reviews": [], "notes": "Artemis II going-to lesson" },
     "A2-11": { "status": "introduced", "introduced": null, "reviews": [], "notes": "Going-to predictions done; will vs going to not yet contrasted" },
-    "A2-20": { "status": "introduced", "introduced": null, "reviews": [], "notes": "Comparatives + superlatives covered" }
+    "A2-20": { "status": "introduced", "introduced": null, "reviews": [], "notes": "Comparatives + superlatives covered" },
+    "A1-09": { "status": "introduced", "introduced": null, "reviews": [], "notes": "Guess the Player lesson (#17) — can/can't for ability, football skills" },
+    "A2-02": { "status": "introduced", "introduced": null, "reviews": [], "notes": "World Cup MVPs (#16); recycled in Guess the Player (#17)" }
   }
 }

@@ -1,5 +1,17 @@
 [
   {
+    "file": "micha-ability-guess-the-player.html",
+    "title": "#17 Guess the Player",
+    "goals": {
+      "primary": [
+        "A1-09"
+      ],
+      "incidental": [
+        "A2-02"
+      ]
+    }
+  },
+  {
     "file": "micha-describing-people-world-cup.html",
     "title": "#16 World Cup MVPs",
     "goals": {
