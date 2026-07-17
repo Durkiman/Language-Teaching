@@ -113,3 +113,4 @@ Day-count thresholds (14/7) approximate the 2–3-sessions-then-1-week rule for 
 - Mehdi's business track keeps its five-pillar structure; if you want him tracked, borrow individual B1 cards (B1-08, B1-09, B1-11, B1-19, B1-20 map cleanly onto coaching/business English) rather than assigning him the whole level.
 - Mel (Albanian) and Emma (Spanish) need their own card sets — the schema is language-agnostic, only `curriculum/*.json` contents are English-specific.
 - A1 set (Angelique) not yet drafted; same process from the Core Inventory A1 section when needed.
+- Durim (French) has a full FR-B1/FR-B2 set drafted (`curriculum/fr-b1.json`, `curriculum/fr-b2.json`) covering the same six-strand structure as the English B1/B2 sets.
