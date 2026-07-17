@@ -147,6 +147,7 @@
   .student-card.thomas::before   { background: var(--gray); }
   .student-card.angelique::before { background: var(--amber); }
   .student-card.greg::before     { background: var(--teal); }
+  .student-card.durim::before    { background: var(--terra); }
 
   .card-emoji { font-size: 28px; margin-bottom: 14px; display: block; }
 
@@ -172,6 +173,7 @@
   .student-card.thomas   .card-level { color: var(--gray); }
   .student-card.angelique .card-level { color: var(--amber); }
   .student-card.greg     .card-level { color: var(--teal); }
+  .student-card.durim    .card-level { color: var(--terra); }
 
   .card-desc {
     font-size: 13px;
@@ -209,6 +211,7 @@
   .student-card.thomas   .lesson-list li a:hover { background: #e8eaec; color: var(--gray); }
   .student-card.angelique .lesson-list li a:hover { background: #fdf3e0; color: var(--amber); }
   .student-card.greg     .lesson-list li a:hover { background: #d6f0f0; color: var(--teal); }
+  .student-card.durim    .lesson-list li a:hover { background: #f8e4d8; color: var(--terra); }
 
   .lesson-list li a .icon { font-size: 13px; flex-shrink: 0; }
 
@@ -233,6 +236,7 @@
   .student-card.thomas   .see-all { color: var(--gray); }
   .student-card.angelique .see-all { color: var(--amber); }
   .student-card.greg     .see-all { color: var(--teal); }
+  .student-card.durim    .see-all { color: var(--terra); }
 
   .see-all:hover { gap: 10px; }
 
@@ -640,6 +644,34 @@
       </details>
     </div>
 
+    <div class="student-card durim">
+      <span class="card-emoji">🇫🇷</span>
+      <div class="card-name">Durim</div>
+      <div class="card-level">Intermediate · French</div>
+      <p class="card-desc">Building fluency from B1 towards B2.</p>
+      <ul class="lesson-list" id="lessons-durim"></ul>
+      <div id="meta-durim"></div>
+
+      <details style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #ddd;">
+        <summary style="cursor: pointer; font-weight: 600; color: #2A8A8A;">📚 Curriculum Tracking</summary>
+        <div id="curriculum-durim" style="margin-top: 0.5rem; font-size: 0.9rem;">
+          <div style="margin-bottom: 0.5rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span id="prog-durim" style="font-weight: 600;">Loading…</span>
+            </div>
+            <div style="width: 100%; background: #eee; border-radius: 4px; height: 16px; overflow: hidden;">
+              <div id="prog-bar-durim" style="height: 100%; background: #2A8A8A; width: 0%;"></div>
+            </div>
+          </div>
+          <div id="due-durim" style="margin-bottom: 0.5rem;"></div>
+          <details style="margin-top: 0.5rem;">
+            <summary style="cursor: pointer; font-size: 0.85rem;">Gaps (learning to-do)</summary>
+            <ul id="gaps-durim" style="margin: 0.5rem 0; padding-left: 1.5rem; font-size: 0.85rem;"></ul>
+          </details>
+        </div>
+      </details>
+    </div>
+
   </div>
 
   <div class="footer-note">
@@ -665,10 +697,11 @@
     { id: 'thomas',    folder: 'Thomas'    },
     { id: 'angelique', folder: 'Angelique' },
     { id: 'greg',      folder: 'Greg'      },
+    { id: 'durim',     folder: 'Durim'     },
   ];
 
   // Students with a progress.json — add ids here as new levels get assigned.
-  const CURRICULUM_STUDENT_IDS = ['micha', 'thomas', 'greg', 'angelique', 'mel', 'emma'];
+  const CURRICULUM_STUDENT_IDS = ['micha', 'thomas', 'greg', 'angelique', 'mel', 'emma', 'durim'];
 
   // Each level and each student's progress.json are fetched independently and
   // in parallel — one bad fetch must not block the rest (a level 404 or a

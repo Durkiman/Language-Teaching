@@ -165,6 +165,7 @@
   .student-card.thomas::before   { background: var(--gray); }
   .student-card.angelique::before { background: var(--amber); }
   .student-card.greg::before     { background: var(--teal); }
+  .student-card.durim::before    { background: var(--terra); }
 
   .card-top { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
   .card-emoji { font-size: 26px; flex-shrink: 0; }
@@ -189,6 +190,7 @@
   .student-card.thomas   .card-level { color: var(--gray); }
   .student-card.angelique .card-level { color: var(--amber); }
   .student-card.greg     .card-level { color: var(--teal); }
+  .student-card.durim    .card-level { color: var(--terra); }
 
   .stat-block {
     display: flex;
@@ -212,6 +214,7 @@
   .student-card.thomas   .stat-number { color: var(--gray); }
   .student-card.angelique .stat-number { color: var(--amber); }
   .student-card.greg     .stat-number { color: var(--teal); }
+  .student-card.durim    .stat-number { color: var(--terra); }
 
   .stat-label {
     font-size: 12px;
@@ -267,6 +270,7 @@
   .student-card.thomas   .tab-row.is-top .tab-bar-fill { background: var(--gray); }
   .student-card.angelique .tab-row.is-top .tab-bar-fill { background: var(--amber); }
   .student-card.greg     .tab-row.is-top .tab-bar-fill { background: var(--teal); }
+  .student-card.durim    .tab-row.is-top .tab-bar-fill { background: var(--terra); }
 
   .tab-count {
     width: 16px;
@@ -446,6 +450,19 @@
       <div id="tabs-greg"></div>
     </div>
 
+    <div class="student-card durim">
+      <div class="card-top">
+        <span class="card-emoji">🇫🇷</span>
+        <div>
+          <div class="card-name">Durim</div>
+          <div class="card-level">Intermediate · French</div>
+        </div>
+      </div>
+      <div class="stat-block" id="stat-durim"></div>
+      <p class="tabs-label">Tab breakdown</p>
+      <div id="tabs-durim"></div>
+    </div>
+
   </div>
 
   <div class="footer-note">
@@ -465,6 +482,7 @@
     { id: 'thomas',    folder: 'Thomas'    },
     { id: 'angelique', folder: 'Angelique' },
     { id: 'greg',      folder: 'Greg'      },
+    { id: 'durim',     folder: 'Durim'     },
   ];
 
   // Tabs are detected by matching visible tab-label text against these patterns.
