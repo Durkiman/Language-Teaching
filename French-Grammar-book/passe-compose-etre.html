@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+  .gb-mc-btn:hover { filter: brightness(0.97); }
+  .gb-check-btn:hover, .gb-reveal-btn:hover, .gb-reset-btn:hover { filter: brightness(0.95); }
+  a { color: #0E7C86; }
+  a:hover { color: #0A5E66; }
+  @media print {
+    .gb-noprint { display: none !important; }
+    input.gb-input { border: none !important; border-bottom: 1px solid #1B4B4F !important; border-radius: 0 !important; background: transparent !important; color: transparent !important; }
+    .gb-word-bank, .gb-mc-row { display: none !important; }
+  }
+</style>
+<script src="./doc-page.js"></script>
+</head>
+<body>
+
+<doc-page size="letter" margin="0.7in">
+
+  <div slot="header" style="display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px;border-bottom:3px solid #0E7C86;"></div>
+  <div slot="footer" style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #DDD8CC;font-size:10.5px;color:#9A9483;font-family:'Nunito',sans-serif;">
+    <span>© Le passé composé avec ÊTRE</span>
+    <span>Cahier de grammaire française</span>
+  </div>
+
+  <div style="text-align:center;padding:8px 0 22px;">
+    <div style="display:inline-block;background:#0E7C86;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Cahier de grammaire française : A2–B1</div>
+    <h1 style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:44px;color:#1B4B4F;margin:16px 0 4px;line-height:1.05;">Le passé composé avec ÊTRE</h1>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:600;font-size:22px;color:#F2994A;margin-bottom:6px;">je suis allé(e) · elle est partie · ils se sont levés</div>
+    <div id="gb-progress" style="display:inline-block;background:#FFF6D8;border:2px dashed #F2C94C;border-radius:999px;padding:6px 18px;font-size:13.5px;font-weight:700;color:#5C4A00;margin-top:8px;">0 / 12 exercices terminés</div>
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:6px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;">📖 1. Explication</h2>
+
+  <p style="font-size:15px;line-height:1.65;color:#2B2B2B;margin:0 0 10px;">Un groupe restreint de verbes intransitifs (sans complément d'objet direct), surtout des verbes de déplacement ou de changement d'état, se conjuguent au passé composé avec <strong>ÊTRE</strong>. Avec ÊTRE, le participe passé s'accorde <strong>toujours</strong> avec le sujet en genre et en nombre.</p>
+
+  <div style="background:#FFF6D8;border:2px dashed #F2C94C;border-radius:12px;padding:14px 16px;margin:10px 0 18px;font-size:14px;color:#5C4A00;">
+    🏠 <strong>Mnémotechnique — la maison de DR MRS VANDERTRAMP :</strong> Devenir · Revenir · Monter · Rester · Sortir · Venir · Aller · Naître · Descendre · Entrer · Retourner · Tomber · Rentrer · Arriver · Mourir · Partir. Plus <strong>tous les verbes pronominaux</strong> (se lever, se coucher, s'habiller, se souvenir…).
+  </div>
+
+  <table style="width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:14px;">
+    <thead>
+      <tr style="background:#0E7C86;color:#fff;font-family:'Baloo 2',sans-serif;">
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Sujet</th>
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Participe passé</th>
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Exemple</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">masculin singulier</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">participe de base</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Paul est arrivé.</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">féminin singulier</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">participe + -e</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Marie est arrivée.</td></tr>
+      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">masculin pluriel</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">participe + -s</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Les garçons sont arrivés.</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">féminin pluriel</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">participe + -es</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Les filles sont arrivées.</td></tr>
+    </tbody>
+  </table>
+
+  <div style="background:#EAF2FF;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;margin-bottom:18px;"><strong>Cas particulier des pronominaux :</strong> ils s'accordent avec le sujet, sauf si suivis d'un COD placé après. « Elle s'est lavé <em>les mains</em> » (les mains = COD après → pas d'accord) mais « Elle s'est lavée » (pas de COD → accord).</div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:30px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">📊 2. Tableaux de référence</h2>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Conjugaison avec ÊTRE</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#F2994A;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #F2994A;">Pronom</th><th style="padding:7px 10px;text-align:left;border:1px solid #F2994A;">ALLER</th><th style="padding:7px 10px;text-align:left;border:1px solid #F2994A;">PARTIR</th><th style="padding:7px 10px;text-align:left;border:1px solid #F2994A;">SE LEVER</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">je</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">je suis allé(e)</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">je suis parti(e)</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">je me suis levé(e)</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">tu</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">tu es allé(e)</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">tu es parti(e)</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">tu t'es levé(e)</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">il/elle/on</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">il est allé</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">elle est partie</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">il s'est levé</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">nous</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">nous sommes allé(e)s</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">nous sommes parti(e)s</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">nous nous sommes levé(e)s</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">vous</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">vous êtes allé(e)s</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">vous êtes parti(e)s</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">vous vous êtes levé(e)s</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">ils/elles</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">ils sont allés</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">elles sont parties</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">ils se sont levés</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Les 17 verbes DR MRS VANDERTRAMP</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px;">
+    <div style="background:#EAF2FF;border-radius:10px;padding:8px 12px;font-size:13px;color:#1B4B4F;">Devenir · Revenir · Monter</div>
+    <div style="background:#F0EAFE;border-radius:10px;padding:8px 12px;font-size:13px;color:#1B4B4F;">Rester · Sortir · Venir</div>
+    <div style="background:#FFE9E4;border-radius:10px;padding:8px 12px;font-size:13px;color:#1B4B4F;">Aller · Naître · Descendre</div>
+    <div style="background:#E4F8ED;border-radius:10px;padding:8px 12px;font-size:13px;color:#1B4B4F;">Entrer · Retourner · Tomber</div>
+    <div style="background:#FFF6D8;border-radius:10px;padding:8px 12px;font-size:13px;color:#5C4A00;">Rentrer · Arriver · Mourir</div>
+    <div style="background:#FDEBEE;border-radius:10px;padding:8px 12px;font-size:13px;color:#1B4B4F;">Partir · + pronominaux</div>
+  </div>
+  <div style="font-size:12.5px;color:#9A9483;margin:0 0 20px;">Astuce : « passer » se conjugue aussi avec être dans certains emplois (il est passé chez moi), mais avec avoir quand il a un COD (il a passé son examen).</div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:24px 0 6px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">✏️ 3. Exercices pratiques</h2>
+  <p style="font-size:13.5px;color:#9A9483;margin:0 0 16px;">12 exercices répartis sur deux niveaux (A2, B1), en difficulté croissante. Vérifiez chaque réponse ou révélez la solution.</p>
+
+  <div id="gb-exercises"></div>
+
+  <div class="gb-noprint" style="text-align:center;margin-top:24px;">
+    <button id="gb-reset" style="font-family:'Nunito',sans-serif;background:#fff;color:#B23A3A;border:1.5px solid #E3B3B3;border-radius:10px;padding:8px 18px;font-size:14px;font-weight:700;cursor:pointer;">Réinitialiser cette page</button>
+  </div>
+
+</doc-page>
+
+<script>
+const LEVELS = {
+  A2: { badge:'#3AA6A6', border:'#D9EFEF', bg:'#F9FDFD', name:'Élémentaire' },
+  B1: { badge:'#4C7BF5', border:'#DCE5FB', bg:'#F9FAFE', name:'Intermédiaire' },
+};
+const STORAGE_KEY = 'grammar-fr-passe-compose-etre-v1';
+
+function norm(s) {
+  return (s || '').toString().trim().toLowerCase()
+    .replace(/['’]/g, "'")
+    .replace(/\s+/g, ' ')
+    .replace(/[.!?]+$/g, '');
+}
+
+const EXERCISES = [
+  { id:'ex1', level:'A2', type:'fill', label:'Complétez au passé composé.', prompt:'Marie {{b}} à la bibliothèque hier après-midi. (aller)', answers:['est allée'],
+    explain:"📖 aller fait partie de DR MRS VANDERTRAMP → auxiliaire être. 💡 Sujet féminin singulier (Marie) → participe + -e." },
+  { id:'ex2', level:'A2', type:'fill', label:'Complétez au passé composé.', prompt:'Les enfants {{b}} à Paris. (naître)', answers:['sont nés'],
+    explain:"📖 naître → être, participe « né ». 💡 Sujet masculin pluriel → participe + -s." },
+  { id:'ex3', level:'A2', type:'mc', label:'Choix multiple : choisissez la bonne forme.', prompt:'Il {{b}} très tôt ce matin pour son travail. (partir)', options:['est parti','a parti','est partie','ont parti'], answer:'est parti',
+    explain:"📖 partir → être. « il » = masculin singulier → pas de -e final. 💡 L'accord suit le genre et le nombre du sujet, jamais l'auxiliaire seul." },
+  { id:'ex4', level:'A2', type:'fill', label:'Complétez au passé composé.', prompt:'Nous {{b}} à destination après cinq heures de route. (arriver)', answers:['sommes arrivés','sommes arrivées'],
+    explain:"📖 arriver → être. 💡 « nous » peut être masculin ou mixte (arrivés) ou entièrement féminin (arrivées) selon le groupe." },
+  { id:'ex5', level:'A2', type:'correct', label:"Correction d'erreur : réécrivez la phrase correctement.", original:"Elle est tombé dans l'escalier.", answers:["Elle est tombée dans l'escalier."],
+    explain:"📖 Avec ÊTRE, l'accord avec le sujet est obligatoire. « elle » = féminin singulier → tombée. 💡 N'oubliez jamais le -e final au féminin." },
+  { id:'ex6', level:'A2', type:'reorder', label:"Remettez les mots dans l'ordre pour former une phrase correcte.", tokens:['Ils','sont','revenus','de','vacances'], answers:['Ils sont revenus de vacances.'],
+    explain:"📖 revenir → être, participe « revenu ». 💡 Sujet masculin pluriel (ils) → revenus." },
+
+  { id:'ex7', level:'B1', type:'fill', label:'Complétez au passé composé (verbe pronominal).', prompt:'Elle {{b}} très tôt pour ne pas rater son train. (se lever)', answers:["s'est levée"],
+    explain:"📖 Les verbes pronominaux s'accordent comme avec être. « elle » féminin singulier → levée. 💡 se + être + participe accordé." },
+  { id:'ex8', level:'B1', type:'fill', label:'Complétez au passé composé (verbe pronominal).', prompt:'Ils {{b}} tard hier soir. (se coucher)', answers:['se sont couchés'],
+    explain:"📖 « ils » masculin pluriel → couchés. 💡 Même construction que les verbes DR MRS VANDERTRAMP." },
+  { id:'ex9', level:'B1', type:'mc', label:'Choix multiple : accord du participe pronominal.', prompt:'Elles {{b}} élégamment pour la cérémonie. (s\'habiller)', options:['se sont habillé','se sont habillées','sont habillées','se sont habillés'], answer:'se sont habillées',
+    explain:"📖 « elles » féminin pluriel → accord en -es, avec le pronom réfléchi « se ». 💡 se + sont + participe + -es." },
+  { id:'ex10', level:'B1', type:'correct', label:"Correction d'erreur : réécrivez la phrase correctement.", original:"Elle s'est lavée les mains.", answers:["Elle s'est lavé les mains."],
+    explain:"📖 « les mains » est un COD placé après le verbe → pas d'accord avec « se ». 💡 Si un pronominal a un COD après lui, le participe reste invariable." },
+  { id:'ex11', level:'B1', type:'fill', label:'Complétez au passé composé (verbe pronominal).', prompt:'Nous {{b}} de notre première rencontre. (se souvenir)', answers:['nous sommes souvenus','nous sommes souvenues'],
+    explain:"📖 se souvenir → pronominal, accord avec le sujet. 💡 « nous » peut être masculin/mixte (souvenus) ou féminin (souvenues)." },
+  { id:'ex12', level:'B1', type:'reorder', label:"Remettez les mots dans l'ordre pour former une phrase correcte.", tokens:['Vous','êtes','entrés','sans','frapper'], answers:['Vous êtes entrés sans frapper.'],
+    explain:"📖 entrer → être, participe « entré ». 💡 « vous » pluriel (masculin/mixte) → entrés." }
+];
+
+class Component {
+  componentDidMount() {
+    this.store = this.loadStore();
+    this.waitForMount();
+  }
+
+  waitForMount() {
+    const container = document.getElementById('gb-exercises');
+    const resetBtn = document.getElementById('gb-reset');
+    if (!container || !resetBtn) {
+      requestAnimationFrame(() => this.waitForMount());
+      return;
+    }
+    this.buildExercises();
+    this.updateProgress();
+    resetBtn.addEventListener('click', () => this.resetPage());
+  }
+
+  loadStore() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : { answers: {}, results: {}, reorder: {} };
+    } catch (e) { return { answers: {}, results: {}, reorder: {} }; }
+  }
+
+  saveStore() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(this.store)); } catch (e) {}
+  }
+
+  updateProgress() {
+    const done = EXERCISES.filter(ex => this.store.results[ex.id] === true).length;
+    document.getElementById('gb-progress').textContent = done + ' / 12 exercices terminés';
+  }
+
+  resetPage() {
+    if (!confirm('Réinitialiser toutes vos réponses et scores sur cette page ?')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    this.store = { answers: {}, results: {}, reorder: {} };
+    this.buildExercises();
+    this.updateProgress();
+  }
+
+  markResult(id, correct) {
+    this.store.results[id] = correct;
+    this.saveStore();
+    this.updateProgress();
+  }
+
+  buildExercises() {
+    const container = document.getElementById('gb-exercises');
+    container.innerHTML = '';
+    let currentLevel = null;
+    EXERCISES.forEach((ex, i) => {
+      if (ex.level !== currentLevel) {
+        currentLevel = ex.level;
+        const info = LEVELS[currentLevel];
+        const badge = document.createElement('div');
+        badge.style.cssText = 'display:inline-block;background:' + info.badge + ';color:#fff;font-family:\'Baloo 2\',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:10px 0 10px;';
+        if (currentLevel === 'B1') badge.style.breakBefore = 'page';
+        badge.textContent = 'NIVEAU ' + currentLevel + ' · ' + info.name;
+        container.appendChild(badge);
+      }
+      container.appendChild(this.renderExercise(ex, i + 1));
+    });
+  }
+
+  cardShell(ex, num, bodyHtml) {
+    const info = LEVELS[ex.level];
+    const div = document.createElement('div');
+    div.style.cssText = 'border:2px solid ' + info.border + ';border-radius:14px;padding:16px 18px;margin:0 0 14px;background:' + info.bg + ';break-inside:avoid;';
+    div.innerHTML =
+      '<div style="font-family:\'Baloo 2\',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:10px;">Exercice ' + num + ' — ' + ex.label + '</div>' +
+      bodyHtml +
+      '<div class="gb-noprint" style="display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap;">' +
+        '<button class="gb-check-btn" data-id="' + ex.id + '" style="font-family:\'Nunito\',sans-serif;background:#0E7C86;color:#fff;border:none;border-radius:10px;padding:9px 18px;font-size:14px;font-weight:700;cursor:pointer;min-height:40px;">Vérifier</button>' +
+        '<button class="gb-reveal-btn" data-id="' + ex.id + '" style="font-family:\'Nunito\',sans-serif;background:#fff;color:#1B4B4F;border:1px solid #ddd;border-radius:10px;padding:9px 16px;font-size:13px;cursor:pointer;min-height:40px;">Voir la réponse</button>' +
+      '</div>' +
+      '<div class="gb-feedback" data-id="' + ex.id + '" style="margin-top:10px;font-size:14px;"></div>';
+    setTimeout(() => this.wireExercise(div, ex), 0);
+    return div;
+  }
+
+  renderExercise(ex, num) {
+    if (ex.type === 'fill') return this.renderFill(ex, num);
+    if (ex.type === 'mc') return this.renderMC(ex, num);
+    if (ex.type === 'reorder') return this.renderReorder(ex, num);
+    if (ex.type === 'correct') return this.renderCorrect(ex, num);
+  }
+
+  renderFill(ex, num) {
+    const savedRaw = this.store.answers[ex.id];
+    const saved = Array.isArray(savedRaw) ? savedRaw : (savedRaw ? [savedRaw] : []);
+    let idx = 0;
+    const promptHtml = ex.prompt.replace(/\{\{b\d?\}\}/g, () => {
+      const w = Math.max(6, Math.max(...ex.answers.map(a => a.length))) + 2;
+      const val = saved[idx] || '';
+      idx++;
+      return '<input type="text" class="gb-input gb-fill-input" data-id="' + ex.id + '" data-idx="' + (idx - 1) + '" placeholder="…" value="' + val.replace(/"/g, '&quot;') + '" style="width:' + w + 'ch;font-size:15px;padding:5px 8px;border:1.5px solid #ddd;border-radius:8px;text-align:center;font-family:\'Nunito\',sans-serif;">';
+    });
+    const body = '<div style="font-size:15.5px;color:#2B2B2B;">' + promptHtml + '</div>';
+    const card = this.cardShell(ex, num, body);
+    const result = this.store.results[ex.id];
+    if (result !== undefined) this.paintFillResult(card, ex, result === true);
+    return card;
+  }
+
+  renderMC(ex, num) {
+    const promptHtml = ex.prompt.replace('{{b}}', '<span style="color:#0E7C86;font-weight:700;">___</span>');
+    let optsHtml = '<div class="gb-mc-row" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">';
+    ex.options.forEach(opt => {
+      optsHtml += '<button class="gb-mc-btn" data-id="' + ex.id + '" data-value="' + opt.replace(/"/g, '&quot;') + '" style="font-family:\'Nunito\',sans-serif;background:#fff;border:1.5px solid #ddd;border-radius:10px;padding:9px 16px;font-size:14px;cursor:pointer;min-height:44px;">' + opt + '</button>';
+    });
+    optsHtml += '</div>';
+    const body = '<div style="font-size:15.5px;color:#2B2B2B;">' + promptHtml + '</div>' + optsHtml;
+    const card = this.cardShell(ex, num, body);
+    const saved = this.store.answers[ex.id];
+    if (saved) this.highlightMC(card, ex, saved);
+    const result = this.store.results[ex.id];
+    if (result !== undefined) this.paintMCResult(card, ex, result === true, saved);
+    return card;
+  }
+
+  renderReorder(ex, num) {
+    const savedOrder = this.store.reorder[ex.id] || [];
+    const remaining = ex.tokens.slice();
+    savedOrder.forEach(t => { const i = remaining.indexOf(t); if (i > -1) remaining.splice(i, 1); });
+    const body =
+      '<div class="gb-build-area" data-id="' + ex.id + '" style="min-height:44px;border:1.5px dashed #ccc;border-radius:10px;padding:8px 10px;display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;background:#fff;">' +
+        savedOrder.map(t => '<button class="gb-token gb-token-used" data-id="' + ex.id + '" data-word="' + t.replace(/"/g, '&quot;') + '" style="font-family:\'Nunito\',sans-serif;background:#fff;border:1.5px solid #0E7C86;color:#0E7C86;border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer;min-height:40px;">' + t + '</button>').join('') +
+      '</div>' +
+      '<div class="gb-word-bank" data-id="' + ex.id + '" style="display:flex;gap:6px;flex-wrap:wrap;">' +
+        remaining.map(t => '<button class="gb-token gb-token-bank" data-id="' + ex.id + '" data-word="' + t.replace(/"/g, '&quot;') + '" style="font-family:\'Nunito\',sans-serif;background:#fff;border:1.5px solid #ddd;border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer;min-height:40px;">' + t + '</button>').join('') +
+      '</div>' +
+      '<div style="font-size:12px;color:#9A9483;margin-top:6px;">Touchez les mots dans l\'ordre pour construire la phrase. Touchez un mot de la phrase pour le retirer.</div>';
+    return this.cardShell(ex, num, body);
+  }
+
+  renderCorrect(ex, num) {
+    const saved = this.store.answers[ex.id] || '';
+    const body =
+      '<div style="font-size:14.5px;color:#2B2B2B;margin-bottom:8px;">Réécrivez correctement : <em>« ' + ex.original + ' »</em></div>' +
+      '<input type="text" class="gb-input gb-correct-input" data-id="' + ex.id + '" placeholder="…" value="' + saved.replace(/"/g, '&quot;') + '" style="width:100%;box-sizing:border-box;font-size:15px;padding:8px 10px;border:1.5px solid #ddd;border-radius:8px;font-family:\'Nunito\',sans-serif;">';
+    const card = this.cardShell(ex, num, body);
+    const result = this.store.results[ex.id];
+    if (result !== undefined) this.paintFillResult(card, ex, result === true);
+    return card;
+  }
+
+  wireExercise(card, ex) {
+    const checkBtn = card.querySelector('.gb-check-btn');
+    const revealBtn = card.querySelector('.gb-reveal-btn');
+    checkBtn.addEventListener('click', () => this.checkExercise(card, ex));
+    revealBtn.addEventListener('click', () => this.revealExercise(card, ex));
+
+    if (ex.type === 'fill' || ex.type === 'correct') {
+      card.querySelectorAll('input').forEach(input => {
+        input.addEventListener('input', () => {
+          if (ex.type === 'correct') {
+            this.store.answers[ex.id] = input.value;
+          } else {
+            const idx = parseInt(input.dataset.idx, 10);
+            const arr = Array.isArray(this.store.answers[ex.id]) ? this.store.answers[ex.id].slice() : [];
+            arr[idx] = input.value;
+            this.store.answers[ex.id] = arr;
+          }
+          this.saveStore();
+        });
+      });
+    }
+
+    if (ex.type === 'mc') {
+      card.querySelectorAll('.gb-mc-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          this.store.answers[ex.id] = btn.dataset.value;
+          this.saveStore();
+          this.highlightMC(card, ex, btn.dataset.value);
+        });
+      });
+    }
+
+    if (ex.type === 'reorder') {
+      card.querySelectorAll('.gb-token-bank').forEach(btn => {
+        btn.addEventListener('click', () => this.moveToken(ex, btn.dataset.word, true));
+      });
+      card.querySelectorAll('.gb-token-used').forEach(btn => {
+        btn.addEventListener('click', () => this.moveToken(ex, btn.dataset.word, false));
+      });
+    }
+  }
+
+  moveToken(ex, word, toUsed) {
+    const order = (this.store.reorder[ex.id] || []).slice();
+    if (toUsed) {
+      if (order.indexOf(word) === -1) order.push(word);
+    } else {
+      const idx = order.indexOf(word);
+      if (idx > -1) order.splice(idx, 1);
+    }
+    this.store.reorder[ex.id] = order;
+    this.saveStore();
+    this.buildExercises();
+  }
+
+  highlightMC(card, ex, value) {
+    card.querySelectorAll('.gb-mc-btn').forEach(btn => {
+      const selected = btn.dataset.value === value;
+      btn.style.background = selected ? '#0E7C86' : '#fff';
+      btn.style.color = selected ? '#fff' : '#1B4B4F';
+      btn.style.borderColor = selected ? '#0E7C86' : '#ddd';
+    });
+  }
+
+  paintMCResult(card, ex, correct, value) {
+    card.querySelectorAll('.gb-mc-btn').forEach(btn => {
+      if (btn.dataset.value === value) {
+        btn.style.background = correct ? '#E8F5E9' : '#FDECEA';
+        btn.style.color = correct ? '#2E7D32' : '#C62828';
+        btn.style.borderColor = correct ? '#66BB6A' : '#E57373';
+      }
+    });
+  }
+
+  paintFillResult(card, ex, correct) {
+    card.querySelectorAll('input').forEach(input => {
+      input.style.background = correct ? '#E8F5E9' : '#FDECEA';
+      input.style.borderColor = correct ? '#66BB6A' : '#E57373';
+      input.style.color = correct ? '#2E7D32' : '#C62828';
+    });
+  }
+
+  getUserAnswer(ex) {
+    if (ex.type === 'mc') return this.store.answers[ex.id] || '';
+    if (ex.type === 'correct') return this.store.answers[ex.id] || '';
+    if (ex.type === 'reorder') return (this.store.reorder[ex.id] || []).join(' ');
+    const arr = this.store.answers[ex.id];
+    return Array.isArray(arr) ? arr : [];
+  }
+
+  isCorrect(ex) {
+    if (ex.type === 'mc') return this.store.answers[ex.id] === ex.answer;
+    if (ex.type === 'correct' || ex.type === 'reorder') {
+      const user = norm(this.getUserAnswer(ex));
+      return ex.answers.some(a => norm(a) === user);
+    }
+    const arr = this.getUserAnswer(ex);
+    return ex.answers.every((a, i) => norm(arr[i] || '') === norm(a));
+  }
+
+  checkExercise(card, ex) {
+    const correct = this.isCorrect(ex);
+    this.markResult(ex.id, correct);
+    if (ex.type === 'mc') this.paintMCResult(card, ex, correct, this.store.answers[ex.id]);
+    else this.paintFillResult(card, ex, correct);
+    this.showFeedback(card, ex, correct);
+  }
+
+  showFeedback(card, ex, correct) {
+    const fb = card.querySelector('.gb-feedback');
+    fb.innerHTML =
+      '<div style="font-weight:700;color:' + (correct ? '#2E7D32' : '#C62828') + ';margin-bottom:4px;">' + (correct ? 'Correct' : 'Pas tout à fait') + '</div>' +
+      '<div style="color:#2B2B2B;opacity:0.9;">' + ex.explain + '</div>';
+  }
+
+  revealExercise(card, ex) {
+    const fb = card.querySelector('.gb-feedback');
+    let answerText = '';
+    if (ex.type === 'mc') answerText = ex.answer;
+    else if (ex.type === 'correct' || ex.type === 'reorder') answerText = ex.answers[0];
+    else answerText = ex.answers.join(' / ');
+    fb.innerHTML =
+      '<div style="font-weight:700;color:#0E7C86;margin-bottom:4px;">Réponse : ' + answerText + '</div>' +
+      '<div style="color:#2B2B2B;opacity:0.9;">' + ex.explain + '</div>';
+  }
+
+  renderVals() { return {}; }
+}
+
+new Component().componentDidMount();
+</script>
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+  .gb-mc-btn:hover { filter: brightness(0.97); }
+  .gb-check-btn:hover, .gb-reveal-btn:hover, .gb-reset-btn:hover { filter: brightness(0.95); }
+  a { color: #0E7C86; }
+  a:hover { color: #0A5E66; }
+  @media print {
+    .gb-noprint { display: none !important; }
+    input.gb-input { border: none !important; border-bottom: 1px solid #1B4B4F !important; border-radius: 0 !important; background: transparent !important; color: transparent !important; }
+    .gb-word-bank, .gb-mc-row { display: none !important; }
+  }
+</style>
+<script src="./doc-page.js"></script>
+</head>
+<body>
+
+<doc-page size="letter" margin="0.7in">
+
+  <div slot="header" style="display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px;border-bottom:3px solid #0E7C86;"></div>
+  <div slot="footer" style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #DDD8CC;font-size:10.5px;color:#9A9483;font-family:'Nunito',sans-serif;">
+    <span>© L'imparfait</span>
+    <span>Cahier de grammaire française</span>
+  </div>
+
+  <div style="text-align:center;padding:8px 0 22px;">
+    <div style="display:inline-block;background:#0E7C86;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Cahier de grammaire française : A2–B1</div>
+    <h1 style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:44px;color:#1B4B4F;margin:16px 0 4px;line-height:1.05;">L'imparfait</h1>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:600;font-size:22px;color:#F2994A;margin-bottom:6px;">je parlais · tu finissais · il prenait</div>
+    <div id="gb-progress" style="display:inline-block;background:#FFF6D8;border:2px dashed #F2C94C;border-radius:999px;padding:6px 18px;font-size:13.5px;font-weight:700;color:#5C4A00;margin-top:8px;">0 / 12 exercices terminés</div>
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:6px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;">📖 1. Explication</h2>
+
+  <p style="font-size:15px;line-height:1.65;color:#2B2B2B;margin:0 0 10px;">L'imparfait se forme à partir du radical de la forme <strong>nous</strong> au présent (on enlève <strong>-ons</strong>), auquel on ajoute les terminaisons de l'imparfait. Ex. : parler → nous parl<strong>ons</strong> → je parl<strong>ais</strong>.</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px;">
+    <div style="background:#EAF2FF;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>Le radical</strong><br>nous parl<u>ons</u> → parl-<br>nous finiss<u>ons</u> → finiss-<br>nous pren<u>ons</u> → pren-</div>
+    <div style="background:#F0EAFE;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>Les terminaisons</strong><br>-ais, -ais, -ait,<br>-ions, -iez, -aient</div>
+    <div style="background:#FFE9E4;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>Seule exception : ÊTRE</strong><br>radical ét-<br>j'étais, nous étions</div>
+  </div>
+
+  <p style="font-size:15px;line-height:1.65;color:#2B2B2B;margin:0 0 10px;">On utilise l'imparfait pour : <strong>décrire</strong> le passé (Il faisait beau, elle avait les cheveux longs), exprimer une <strong>habitude</strong> (Tous les dimanches, nous mangions chez ma grand-mère), poser un <strong>décor</strong> ou un état continu (Pendant qu'il pleuvait, nous regardions un film), et par <strong>politesse</strong> (Je voulais vous demander un service).</p>
+
+  <div style="background:#FFF6D8;border:2px dashed #F2C94C;border-radius:12px;padding:14px 16px;margin:0 0 14px;font-size:14px;color:#5C4A00;">
+    <strong>Test rapide :</strong> si en anglais on peut dire « used to » ou « was …-ing », c'est l'imparfait.
+  </div>
+
+  <div style="background:#EAF2FF;border-radius:10px;padding:12px 16px;margin:0 0 20px;font-size:13.5px;color:#1B4B4F;">
+    💡 Aperçu : l'imparfait ne raconte pas d'événements ponctuels qui font avancer une histoire — c'est le rôle du passé composé. Le contraste entre les deux fera l'objet d'un chapitre entier.
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:30px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">📊 2. Tableaux de référence</h2>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Terminaisons de l'imparfait</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#F2994A;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #F2994A;">Pronom</th><th style="padding:7px 10px;text-align:left;border:1px solid #F2994A;">Terminaison</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">je</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">-ais</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">tu</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">-ais</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">il / elle / on</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">-ait</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">nous</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">-ions</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">vous</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">-iez</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">ils / elles</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">-aient</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Conjugaison complète</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#8B5FE0;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Pronom</th><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">PARLER</th><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">FINIR</th><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">ÊTRE</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">je / j'</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">parlais</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">finissais</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">étais</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">tu</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">parlais</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">finissais</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">étais</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">il/elle/on</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">parlait</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">finissait</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">était</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">nous</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">parlions</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">finissions</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">étions</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">vous</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">parliez</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">finissiez</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">étiez</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">ils/elles</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">parlaient</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">finissaient</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">étaient</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Emplois principaux</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 8px;font-size:13.5px;">
+    <thead><tr style="background:#4C7BF5;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Emploi</th><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Exemple</th><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Mots-signaux</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Description</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">Il faisait beau, le ciel était bleu.</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">—</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Habitude</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">Tous les jours, je marchais au parc.</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">tous les jours, souvent, d'habitude</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">État continu / décor</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">Pendant qu'il pleuvait, nous lisions.</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">pendant que, quand j'étais petit</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Politesse</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">Je voulais vous demander un service.</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">—</td></tr>
+    </tbody>
+  </table>
+  <div style="font-size:12.5px;color:#9A9483;margin:0 0 20px;">Attention à l'orthographe : les verbes en -GER et -CER gardent le e/ç seulement devant a ou o (je mangeais, je commençais) — mais pas devant -ions (nous mangions, nous commencions).</div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:24px 0 6px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">✏️ 3. Exercices pratiques</h2>
+  <p style="font-size:13.5px;color:#9A9483;margin:0 0 16px;">12 exercices répartis sur deux niveaux (A2, B1), en difficulté croissante. Vérifiez chaque réponse ou révélez la solution.</p>
+
+  <div id="gb-exercises"></div>
+
+  <div class="gb-noprint" style="text-align:center;margin-top:24px;">
+    <button id="gb-reset" style="font-family:'Nunito',sans-serif;background:#fff;color:#B23A3A;border:1.5px solid #E3B3B3;border-radius:10px;padding:8px 18px;font-size:14px;font-weight:700;cursor:pointer;">Réinitialiser cette page</button>
+  </div>
+
+</doc-page>
+
+<script>
+const LEVELS = {
+  A2: { badge:'#3AA6A6', border:'#D9EFEF', bg:'#F9FDFD', name:'Élémentaire' },
+  B1: { badge:'#4C7BF5', border:'#DCE5FB', bg:'#F9FAFE', name:'Intermédiaire' },
+};
+const STORAGE_KEY = 'grammar-fr-imparfait-v1';
+
+function norm(s) {
+  return (s || '').toString().trim().toLowerCase()
+    .replace(/['’]/g, "'")
+    .replace(/\s+/g, ' ')
+    .replace(/[.!?]+$/g, '');
+}
+
+const EXERCISES = [
+  { id:'ex1', level:'A2', type:'fill', label:'Complétez à l\'imparfait.', prompt:'Quand j\'étais petit, je {{b}} dans le jardin. (jouer)', answers:['jouais'],
+    explain:"📖 Radical (nous jou-ons → jou-) + terminaison -ais. 💡 « Quand j'étais petit » annonce presque toujours l'imparfait." },
+  { id:'ex2', level:'A2', type:'fill', label:'Complétez à l\'imparfait (attention à l\'orthographe).', prompt:'Tous les dimanches, nous {{b}} chez ma grand-mère. (manger)', answers:['mangions'],
+    explain:"📖 Devant -ions, les verbes en -GER perdent le e : nous mangions (pas de « e » supplémentaire, contrairement à je mangeais). 💡 Comparez : je mangeais / nous mangions." },
+  { id:'ex3', level:'A2', type:'fill', label:'Complétez à l\'imparfait.', prompt:'Elle {{b}} très fatiguée après le voyage. (être)', answers:['était'],
+    explain:"📖 être est le seul verbe irrégulier à l'imparfait : radical ét-. 💡 j'étais, tu étais, il était, nous étions, vous étiez, ils étaient." },
+  { id:'ex4', level:'A2', type:'mc', label:'Choix multiple : choisissez la bonne forme.', prompt:'Vous {{b}} beaucoup de patience avec les enfants.', options:['aviez','avez','aurez','ayez'], answer:'aviez',
+    explain:"📖 avoir à l'imparfait : radical av- (nous avons → av-) + terminaison -iez. 💡 Ne confondez pas avec le présent (avez) ou le futur (aurez)." },
+  { id:'ex5', level:'A2', type:'correct', label:"Correction d'erreur : réécrivez la phrase correctement.", original:'Nous manger tous les jours du pain.', answers:['Nous mangions tous les jours du pain.'],
+    explain:"📖 « tous les jours » indique une habitude → imparfait, pas l'infinitif. 💡 Radical de nous mangeons (mange-) + -ions = mangions." },
+  { id:'ex6', level:'A2', type:'reorder', label:"Remettez les mots dans l'ordre pour former une phrase correcte.", tokens:['Il','faisait','beau','ce','jour-là'], answers:['Il faisait beau ce jour-là.'],
+    explain:"📖 Description d'un état passé → imparfait. 💡 faire au présent (nous faisons) donne le radical fais-." },
+
+  { id:'ex7', level:'B1', type:'fill', label:'Complétez à l\'imparfait (action continue).', prompt:'Quand tu es arrivé, je {{b}} un livre. (lire)', answers:['lisais'],
+    explain:"📖 Action en cours interrompue par un événement → imparfait. 💡 lire : nous lisons → radical lis-." },
+  { id:'ex8', level:'B1', type:'fill', label:'Complétez à l\'imparfait (verbe en -CER).', prompt:'Nous {{b}} toujours la réunion par un café. (commencer)', answers:['commencions'],
+    explain:"📖 Devant -ions, pas de cédille : nous commencions (comparez je commençais, avec ç). 💡 Règle des -CER : ç seulement devant a ou o." },
+  { id:'ex9', level:'B1', type:'mc', label:"Choix multiple : identifiez l'emploi correct (habitude).", prompt:'Chaque été, nous {{b}} à la mer.', options:['sommes allés','allions','irons','allâmes'], answer:'allions',
+    explain:"📖 « chaque été » = habitude répétée dans le passé → imparfait. 💡 Les mots comme chaque, souvent, d'habitude annoncent l'imparfait." },
+  { id:'ex10', level:'B1', type:'correct', label:"Correction d'erreur : réécrivez la phrase correctement.", original:"Quand j'étais enfant, j'ai joué au foot tous les samedis.", answers:["Quand j'étais enfant, je jouais au foot tous les samedis."],
+    explain:"📖 « tous les samedis » décrit une habitude répétée, pas un événement unique → imparfait, pas passé composé. 💡 Une habitude n'a pas de limite précise dans le temps." },
+  { id:'ex11', level:'B1', type:'fill', label:'Complétez à l\'imparfait (politesse).', prompt:'{{b}}-vous vous asseoir ? (vouloir)', answers:['Vouliez'],
+    explain:"📖 L'imparfait de politesse adoucit une demande. 💡 vouloir : nous voulons → radical voul- + -iez." },
+  { id:'ex12', level:'B1', type:'reorder', label:"Remettez les mots dans l'ordre pour former une phrase correcte.", tokens:['Pendant','qu\'il','pleuvait','nous','regardions','un','film'], answers:["Pendant qu'il pleuvait, nous regardions un film."],
+    explain:"📖 Deux actions simultanées en arrière-plan → imparfait des deux côtés. 💡 « pendant que » introduit souvent deux imparfaits." }
+];
+
+class Component {
+  componentDidMount() {
+    this.store = this.loadStore();
+    this.waitForMount();
+  }
+
+  waitForMount() {
+    const container = document.getElementById('gb-exercises');
+    const resetBtn = document.getElementById('gb-reset');
+    if (!container || !resetBtn) {
+      requestAnimationFrame(() => this.waitForMount());
+      return;
+    }
+    this.buildExercises();
+    this.updateProgress();
+    resetBtn.addEventListener('click', () => this.resetPage());
+  }
+
+  loadStore() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : { answers: {}, results: {}, reorder: {} };
+    } catch (e) { return { answers: {}, results: {}, reorder: {} }; }
+  }
+
+  saveStore() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(this.store)); } catch (e) {}
+  }
+
+  updateProgress() {
+    const done = EXERCISES.filter(ex => this.store.results[ex.id] === true).length;
+    document.getElementById('gb-progress').textContent = done + ' / 12 exercices terminés';
+  }
+
+  resetPage() {
+    if (!confirm('Réinitialiser toutes vos réponses et scores sur cette page ?')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    this.store = { answers: {}, results: {}, reorder: {} };
+    this.buildExercises();
+    this.updateProgress();
+  }
+
+  markResult(id, correct) {
+    this.store.results[id] = correct;
+    this.saveStore();
+    this.updateProgress();
+  }
+
+  buildExercises() {
+    const container = document.getElementById('gb-exercises');
+    container.innerHTML = '';
+    let currentLevel = null;
+    EXERCISES.forEach((ex, i) => {
+      if (ex.level !== currentLevel) {
+        currentLevel = ex.level;
+        const info = LEVELS[currentLevel];
+        const badge = document.createElement('div');
+        badge.style.cssText = 'display:inline-block;background:' + info.badge + ';color:#fff;font-family:\'Baloo 2\',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:10px 0 10px;';
+        if (currentLevel === 'B1') badge.style.breakBefore = 'page';
+        badge.textContent = 'NIVEAU ' + currentLevel + ' · ' + info.name;
+        container.appendChild(badge);
+      }
+      container.appendChild(this.renderExercise(ex, i + 1));
+    });
+  }
+
+  cardShell(ex, num, bodyHtml) {
+    const info = LEVELS[ex.level];
+    const div = document.createElement('div');
+    div.style.cssText = 'border:2px solid ' + info.border + ';border-radius:14px;padding:16px 18px;margin:0 0 14px;background:' + info.bg + ';break-inside:avoid;';
+    div.innerHTML =
+      '<div style="font-family:\'Baloo 2\',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:10px;">Exercice ' + num + ' — ' + ex.label + '</div>' +
+      bodyHtml +
+      '<div class="gb-noprint" style="display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap;">' +
+        '<button class="gb-check-btn" data-id="' + ex.id + '" style="font-family:\'Nunito\',sans-serif;background:#0E7C86;color:#fff;border:none;border-radius:10px;padding:9px 18px;font-size:14px;font-weight:700;cursor:pointer;min-height:40px;">Vérifier</button>' +
+        '<button class="gb-reveal-btn" data-id="' + ex.id + '" style="font-family:\'Nunito\',sans-serif;background:#fff;color:#1B4B4F;border:1px solid #ddd;border-radius:10px;padding:9px 16px;font-size:13px;cursor:pointer;min-height:40px;">Voir la réponse</button>' +
+      '</div>' +
+      '<div class="gb-feedback" data-id="' + ex.id + '" style="margin-top:10px;font-size:14px;"></div>';
+    setTimeout(() => this.wireExercise(div, ex), 0);
+    return div;
+  }
+
+  renderExercise(ex, num) {
+    if (ex.type === 'fill') return this.renderFill(ex, num);
+    if (ex.type === 'mc') return this.renderMC(ex, num);
+    if (ex.type === 'reorder') return this.renderReorder(ex, num);
+    if (ex.type === 'correct') return this.renderCorrect(ex, num);
+  }
+
+  renderFill(ex, num) {
+    const savedRaw = this.store.answers[ex.id];
+    const saved = Array.isArray(savedRaw) ? savedRaw : (savedRaw ? [savedRaw] : []);
+    let idx = 0;
+    const promptHtml = ex.prompt.replace(/\{\{b\d?\}\}/g, () => {
+      const w = Math.max(6, Math.max(...ex.answers.map(a => a.length))) + 2;
+      const val = saved[idx] || '';
+      idx++;
+      return '<input type="text" class="gb-input gb-fill-input" data-id="' + ex.id + '" data-idx="' + (idx - 1) + '" placeholder="…" value="' + val.replace(/"/g, '&quot;') + '" style="width:' + w + 'ch;font-size:15px;padding:5px 8px;border:1.5px solid #ddd;border-radius:8px;text-align:center;font-family:\'Nunito\',sans-serif;">';
+    });
+    const body = '<div style="font-size:15.5px;color:#2B2B2B;">' + promptHtml + '</div>';
+    const card = this.cardShell(ex, num, body);
+    const result = this.store.results[ex.id];
+    if (result !== undefined) this.paintFillResult(card, ex, result === true);
+    return card;
+  }
+
+  renderMC(ex, num) {
+    const promptHtml = ex.prompt.replace('{{b}}', '<span style="color:#0E7C86;font-weight:700;">___</span>');
+    let optsHtml = '<div class="gb-mc-row" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">';
+    ex.options.forEach(opt => {
+      optsHtml += '<button class="gb-mc-btn" data-id="' + ex.id + '" data-value="' + opt.replace(/"/g, '&quot;') + '" style="font-family:\'Nunito\',sans-serif;background:#fff;border:1.5px solid #ddd;border-radius:10px;padding:9px 16px;font-size:14px;cursor:pointer;min-height:44px;">' + opt + '</button>';
+    });
+    optsHtml += '</div>';
+    const body = '<div style="font-size:15.5px;color:#2B2B2B;">' + promptHtml + '</div>' + optsHtml;
+    const card = this.cardShell(ex, num, body);
+    const saved = this.store.answers[ex.id];
+    if (saved) this.highlightMC(card, ex, saved);
+    const result = this.store.results[ex.id];
+    if (result !== undefined) this.paintMCResult(card, ex, result === true, saved);
+    return card;
+  }
+
+  renderReorder(ex, num) {
+    const savedOrder = this.store.reorder[ex.id] || [];
+    const remaining = ex.tokens.slice();
+    savedOrder.forEach(t => { const i = remaining.indexOf(t); if (i > -1) remaining.splice(i, 1); });
+    const body =
+      '<div class="gb-build-area" data-id="' + ex.id + '" style="min-height:44px;border:1.5px dashed #ccc;border-radius:10px;padding:8px 10px;display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;background:#fff;">' +
+        savedOrder.map(t => '<button class="gb-token gb-token-used" data-id="' + ex.id + '" data-word="' + t.replace(/"/g, '&quot;') + '" style="font-family:\'Nunito\',sans-serif;background:#fff;border:1.5px solid #0E7C86;color:#0E7C86;border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer;min-height:40px;">' + t + '</button>').join('') +
+      '</div>' +
+      '<div class="gb-word-bank" data-id="' + ex.id + '" style="display:flex;gap:6px;flex-wrap:wrap;">' +
+        remaining.map(t => '<button class="gb-token gb-token-bank" data-id="' + ex.id + '" data-word="' + t.replace(/"/g, '&quot;') + '" style="font-family:\'Nunito\',sans-serif;background:#fff;border:1.5px solid #ddd;border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer;min-height:40px;">' + t + '</button>').join('') +
+      '</div>' +
+      '<div style="font-size:12px;color:#9A9483;margin-top:6px;">Touchez les mots dans l\'ordre pour construire la phrase. Touchez un mot de la phrase pour le retirer.</div>';
+    return this.cardShell(ex, num, body);
+  }
+
+  renderCorrect(ex, num) {
+    const saved = this.store.answers[ex.id] || '';
+    const body =
+      '<div style="font-size:14.5px;color:#2B2B2B;margin-bottom:8px;">Réécrivez correctement : <em>« ' + ex.original + ' »</em></div>' +
+      '<input type="text" class="gb-input gb-correct-input" data-id="' + ex.id + '" placeholder="…" value="' + saved.replace(/"/g, '&quot;') + '" style="width:100%;box-sizing:border-box;font-size:15px;padding:8px 10px;border:1.5px solid #ddd;border-radius:8px;font-family:\'Nunito\',sans-serif;">';
+    const card = this.cardShell(ex, num, body);
+    const result = this.store.results[ex.id];
+    if (result !== undefined) this.paintFillResult(card, ex, result === true);
+    return card;
+  }
+
+  wireExercise(card, ex) {
+    const checkBtn = card.querySelector('.gb-check-btn');
+    const revealBtn = card.querySelector('.gb-reveal-btn');
+    checkBtn.addEventListener('click', () => this.checkExercise(card, ex));
+    revealBtn.addEventListener('click', () => this.revealExercise(card, ex));
+
+    if (ex.type === 'fill' || ex.type === 'correct') {
+      card.querySelectorAll('input').forEach(input => {
+        input.addEventListener('input', () => {
+          if (ex.type === 'correct') {
+            this.store.answers[ex.id] = input.value;
+          } else {
+            const idx = parseInt(input.dataset.idx, 10);
+            const arr = Array.isArray(this.store.answers[ex.id]) ? this.store.answers[ex.id].slice() : [];
+            arr[idx] = input.value;
+            this.store.answers[ex.id] = arr;
+          }
+          this.saveStore();
+        });
+      });
+    }
+
+    if (ex.type === 'mc') {
+      card.querySelectorAll('.gb-mc-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          this.store.answers[ex.id] = btn.dataset.value;
+          this.saveStore();
+          this.highlightMC(card, ex, btn.dataset.value);
+        });
+      });
+    }
+
+    if (ex.type === 'reorder') {
+      card.querySelectorAll('.gb-token-bank').forEach(btn => {
+        btn.addEventListener('click', () => this.moveToken(ex, btn.dataset.word, true));
+      });
+      card.querySelectorAll('.gb-token-used').forEach(btn => {
+        btn.addEventListener('click', () => this.moveToken(ex, btn.dataset.word, false));
+      });
+    }
+  }
+
+  moveToken(ex, word, toUsed) {
+    const order = (this.store.reorder[ex.id] || []).slice();
+    if (toUsed) {
+      if (order.indexOf(word) === -1) order.push(word);
+    } else {
+      const idx = order.indexOf(word);
+      if (idx > -1) order.splice(idx, 1);
+    }
+    this.store.reorder[ex.id] = order;
+    this.saveStore();
+    this.buildExercises();
+  }
+
+  highlightMC(card, ex, value) {
+    card.querySelectorAll('.gb-mc-btn').forEach(btn => {
+      const selected = btn.dataset.value === value;
+      btn.style.background = selected ? '#0E7C86' : '#fff';
+      btn.style.color = selected ? '#fff' : '#1B4B4F';
+      btn.style.borderColor = selected ? '#0E7C86' : '#ddd';
+    });
+  }
+
+  paintMCResult(card, ex, correct, value) {
+    card.querySelectorAll('.gb-mc-btn').forEach(btn => {
+      if (btn.dataset.value === value) {
+        btn.style.background = correct ? '#E8F5E9' : '#FDECEA';
+        btn.style.color = correct ? '#2E7D32' : '#C62828';
+        btn.style.borderColor = correct ? '#66BB6A' : '#E57373';
+      }
+    });
+  }
+
+  paintFillResult(card, ex, correct) {
+    card.querySelectorAll('input').forEach(input => {
+      input.style.background = correct ? '#E8F5E9' : '#FDECEA';
+      input.style.borderColor = correct ? '#66BB6A' : '#E57373';
+      input.style.color = correct ? '#2E7D32' : '#C62828';
+    });
+  }
+
+  getUserAnswer(ex) {
+    if (ex.type === 'mc') return this.store.answers[ex.id] || '';
+    if (ex.type === 'correct') return this.store.answers[ex.id] || '';
+    if (ex.type === 'reorder') return (this.store.reorder[ex.id] || []).join(' ');
+    const arr = this.store.answers[ex.id];
+    return Array.isArray(arr) ? arr : [];
+  }
+
+  isCorrect(ex) {
+    if (ex.type === 'mc') return this.store.answers[ex.id] === ex.answer;
+    if (ex.type === 'correct' || ex.type === 'reorder') {
+      const user = norm(this.getUserAnswer(ex));
+      return ex.answers.some(a => norm(a) === user);
+    }
+    const arr = this.getUserAnswer(ex);
+    return ex.answers.every((a, i) => norm(arr[i] || '') === norm(a));
+  }
+
+  checkExercise(card, ex) {
+    const correct = this.isCorrect(ex);
+    this.markResult(ex.id, correct);
+    if (ex.type === 'mc') this.paintMCResult(card, ex, correct, this.store.answers[ex.id]);
+    else this.paintFillResult(card, ex, correct);
+    this.showFeedback(card, ex, correct);
+  }
+
+  showFeedback(card, ex, correct) {
+    const fb = card.querySelector('.gb-feedback');
+    fb.innerHTML =
+      '<div style="font-weight:700;color:' + (correct ? '#2E7D32' : '#C62828') + ';margin-bottom:4px;">' + (correct ? 'Correct' : 'Pas tout à fait') + '</div>' +
+      '<div style="color:#2B2B2B;opacity:0.9;">' + ex.explain + '</div>';
+  }
+
+  revealExercise(card, ex) {
+    const fb = card.querySelector('.gb-feedback');
+    let answerText = '';
+    if (ex.type === 'mc') answerText = ex.answer;
+    else if (ex.type === 'correct' || ex.type === 'reorder') answerText = ex.answers[0];
+    else answerText = ex.answers.join(' / ');
+    fb.innerHTML =
+      '<div style="font-weight:700;color:#0E7C86;margin-bottom:4px;">Réponse : ' + answerText + '</div>' +
+      '<div style="color:#2B2B2B;opacity:0.9;">' + ex.explain + '</div>';
+  }
+
+  renderVals() { return {}; }
+}
+
+new Component().componentDidMount();
+</script>
+</body>
+</html>
