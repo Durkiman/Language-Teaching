@@ -22,6 +22,8 @@
     --gray: #8a9099;
     --amber: #c49a3c;
     --teal: #2a8a8a;
+    --plum: #8e4a86;
+    --olive: #7a8a3f;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -148,6 +150,8 @@
   .student-card.angelique::before { background: var(--amber); }
   .student-card.greg::before     { background: var(--teal); }
   .student-card.durim::before    { background: var(--terra); }
+  .student-card.hatice::before   { background: var(--plum); }
+  .student-card.faycal::before   { background: var(--olive); }
 
   .card-emoji { font-size: 28px; margin-bottom: 14px; display: block; }
 
@@ -174,6 +178,8 @@
   .student-card.angelique .card-level { color: var(--amber); }
   .student-card.greg     .card-level { color: var(--teal); }
   .student-card.durim    .card-level { color: var(--terra); }
+  .student-card.hatice   .card-level { color: var(--plum); }
+  .student-card.faycal   .card-level { color: var(--olive); }
 
   .card-desc {
     font-size: 13px;
@@ -212,6 +218,8 @@
   .student-card.angelique .lesson-list li a:hover { background: #fdf3e0; color: var(--amber); }
   .student-card.greg     .lesson-list li a:hover { background: #d6f0f0; color: var(--teal); }
   .student-card.durim    .lesson-list li a:hover { background: #f8e4d8; color: var(--terra); }
+  .student-card.hatice   .lesson-list li a:hover { background: #f0e0ee; color: var(--plum); }
+  .student-card.faycal   .lesson-list li a:hover { background: #eef0d6; color: var(--olive); }
 
   .lesson-list li a .icon { font-size: 13px; flex-shrink: 0; }
 
@@ -237,6 +245,8 @@
   .student-card.angelique .see-all { color: var(--amber); }
   .student-card.greg     .see-all { color: var(--teal); }
   .student-card.durim    .see-all { color: var(--terra); }
+  .student-card.hatice   .see-all { color: var(--plum); }
+  .student-card.faycal   .see-all { color: var(--olive); }
 
   .see-all:hover { gap: 10px; }
 
@@ -672,6 +682,62 @@
       </details>
     </div>
 
+    <div class="student-card hatice">
+      <span class="card-emoji">🌺</span>
+      <div class="card-name">Hatice</div>
+      <div class="card-level">Pre-Intermediate · English</div>
+      <p class="card-desc">Building confidence from A2 towards B1.</p>
+      <ul class="lesson-list" id="lessons-hatice"></ul>
+      <div id="meta-hatice"></div>
+
+      <details style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #ddd;">
+        <summary style="cursor: pointer; font-weight: 600; color: #2A8A8A;">📚 Curriculum Tracking</summary>
+        <div id="curriculum-hatice" style="margin-top: 0.5rem; font-size: 0.9rem;">
+          <div style="margin-bottom: 0.5rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span id="prog-hatice" style="font-weight: 600;">Loading…</span>
+            </div>
+            <div style="width: 100%; background: #eee; border-radius: 4px; height: 16px; overflow: hidden;">
+              <div id="prog-bar-hatice" style="height: 100%; background: #2A8A8A; width: 0%;"></div>
+            </div>
+          </div>
+          <div id="due-hatice" style="margin-bottom: 0.5rem;"></div>
+          <details style="margin-top: 0.5rem;">
+            <summary style="cursor: pointer; font-size: 0.85rem;">Gaps (learning to-do)</summary>
+            <ul id="gaps-hatice" style="margin: 0.5rem 0; padding-left: 1.5rem; font-size: 0.85rem;"></ul>
+          </details>
+        </div>
+      </details>
+    </div>
+
+    <div class="student-card faycal">
+      <span class="card-emoji">🧭</span>
+      <div class="card-name">Fayçal</div>
+      <div class="card-level">Intermediate · English</div>
+      <p class="card-desc">Strengthening fluency from B1 towards B2.</p>
+      <ul class="lesson-list" id="lessons-faycal"></ul>
+      <div id="meta-faycal"></div>
+
+      <details style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #ddd;">
+        <summary style="cursor: pointer; font-weight: 600; color: #2A8A8A;">📚 Curriculum Tracking</summary>
+        <div id="curriculum-faycal" style="margin-top: 0.5rem; font-size: 0.9rem;">
+          <div style="margin-bottom: 0.5rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span id="prog-faycal" style="font-weight: 600;">Loading…</span>
+            </div>
+            <div style="width: 100%; background: #eee; border-radius: 4px; height: 16px; overflow: hidden;">
+              <div id="prog-bar-faycal" style="height: 100%; background: #2A8A8A; width: 0%;"></div>
+            </div>
+          </div>
+          <div id="due-faycal" style="margin-bottom: 0.5rem;"></div>
+          <details style="margin-top: 0.5rem;">
+            <summary style="cursor: pointer; font-size: 0.85rem;">Gaps (learning to-do)</summary>
+            <ul id="gaps-faycal" style="margin: 0.5rem 0; padding-left: 1.5rem; font-size: 0.85rem;"></ul>
+          </details>
+        </div>
+      </details>
+    </div>
+
   </div>
 
   <div class="footer-note">
@@ -698,10 +764,12 @@
     { id: 'angelique', folder: 'Angelique' },
     { id: 'greg',      folder: 'Greg'      },
     { id: 'durim',     folder: 'Durim'     },
+    { id: 'hatice',    folder: 'Hatice'    },
+    { id: 'faycal',    folder: 'Faycal'    },
   ];
 
   // Students with a progress.json — add ids here as new levels get assigned.
-  const CURRICULUM_STUDENT_IDS = ['micha', 'thomas', 'greg', 'angelique', 'mel', 'emma', 'durim'];
+  const CURRICULUM_STUDENT_IDS = ['micha', 'thomas', 'greg', 'angelique', 'mel', 'emma', 'durim', 'hatice', 'faycal'];
 
   // Each level and each student's progress.json are fetched independently and
   // in parallel — one bad fetch must not block the rest (a level 404 or a
