@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Likes & Dislikes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F6F8;
+    --surface:#FFFFFF;
+    --teal:#2A8A8A;
+    --teal-light:#E4F3F3;
+    --green:#22A559;
+    --green-light:#DCFCE7;
+    --red:#E5484D;
+    --amber:#F2994A;
+    --text:#1F2937;
+    --muted:#6B7280;
+    --radius:14px;
+    --shadow:0 2px 10px rgba(0,0,0,0.06);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:'Nunito',sans-serif; padding-bottom:90px;
+  }
+  .app{max-width:720px;margin:0 auto;padding:20px 16px 40px;}
+  header{text-align:center;margin-bottom:18px;}
+  header h1{font-size:26px;font-weight:800;margin:0 0 4px;color:#134E4E;}
+  header p{margin:0;color:var(--muted);font-weight:600;font-size:14px;}
+
+  .tabbar{
+    position:sticky;top:0;z-index:50;background:var(--bg);
+    display:flex;gap:6px;overflow-x:auto;padding:10px 0 12px;
+    border-bottom:2px solid #E5E7EB;margin-bottom:18px;
+  }
+  .tab-btn{
+    flex:0 0 auto;background:var(--surface);border:2px solid transparent;
+    border-radius:999px;padding:8px 16px;font-family:'Nunito',sans-serif;
+    font-weight:700;font-size:13px;color:var(--muted);cursor:pointer;
+    white-space:nowrap;box-shadow:var(--shadow);transition:all .2s;
+  }
+  .tab-btn.active{background:var(--teal);color:#fff;}
+
+  .panel{display:none;animation:fadeIn .25s ease;}
+  .panel.active{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+  .card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-bottom:14px;}
+  .card h2{font-size:18px;margin:0 0 10px;color:#134E4E;}
+  .card h3{font-size:15px;margin:14px 0 8px;color:#134E4E;}
+  .fr{color:var(--amber);font-weight:700;font-size:13px;}
+
+  .nav-btns{display:flex;justify-content:space-between;margin-top:8px;}
+  .nav-btns button{
+    background:var(--teal);color:#fff;border:none;border-radius:10px;
+    padding:10px 18px;font-family:'Nunito',sans-serif;font-weight:700;
+    font-size:14px;cursor:pointer;
+  }
+  .nav-btns button.secondary{background:#E5E7EB;color:var(--text);}
+  .nav-btns button:disabled{opacity:0.35;cursor:default;}
+
+  /* Teacher toggle */
+  .toggle-btn{
+    background:#F3F4F6;border:1px dashed #9CA3AF;border-radius:8px;
+    padding:6px 12px;font-size:12px;font-weight:700;color:var(--muted);
+    cursor:pointer;margin-bottom:10px;
+  }
+  .goal-box{display:none;background:var(--teal-light);border-radius:10px;padding:12px 14px;margin-bottom:10px;font-size:13px;line-height:1.6;}
+  .goal-box.show{display:block;}
+  .goal-box b{color:#134E4E;}
+
+  /* Grammar */
+  .rule-box{background:var(--teal-light);border-radius:10px;padding:14px;margin:10px 0;font-weight:700;text-align:center;font-size:15px;}
+  .example-list{list-style:none;padding:0;margin:10px 0;}
+  .example-list li{padding:8px 10px;border-left:3px solid var(--teal);background:#FAFAFA;border-radius:6px;margin-bottom:6px;font-size:14px;}
+  .mistake-box{background:#FFF0EE;border:1px dashed var(--red);border-radius:10px;padding:10px 14px;margin-top:12px;font-size:13px;}
+  .mistake-box b{color:var(--red);}
+
+  /* Vocab cards */
+  .vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:10px;}
+  .vocab-card{
+    background:#FAFAFA;border:2px solid #E5E7EB;border-radius:12px;
+    padding:14px 8px;text-align:center;cursor:pointer;user-select:none;
+    transition:all .2s;min-height:74px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+  }
+  .vocab-card .en{font-weight:800;font-size:14px;}
+  .vocab-card .fr-word{font-size:12px;color:var(--amber);font-weight:700;margin-top:4px;display:none;}
+  .vocab-card.revealed .fr-word{display:block;}
+  .vocab-card.mastered{background:var(--green-light);border-color:var(--green);}
+  .vocab-card.mastered .fr-word{display:block;color:#166534;}
+
+  /* Reading */
+  .reading-text{background:#F9FAFB;border-radius:10px;padding:16px;font-size:14px;line-height:1.85;}
+  .hl{background:#BBF7D0;color:#166534;border-radius:4px;padding:1px 4px;font-weight:800;}
+
+  /* Exercises */
+  .ex-card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;margin-bottom:12px;}
+  .diff{font-size:11px;font-weight:800;text-transform:uppercase;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:8px;}
+  .diff.easy{background:#DCFCE7;color:#166534;}
+  .diff.medium{background:#FEF3C7;color:#92400E;}
+  .diff.hard{background:#FFE4E6;color:#9F1239;}
+  .ex-q{font-weight:700;font-size:14.5px;margin-bottom:10px;line-height:1.6;}
+  .ex-input{border:2px solid #E5E7EB;border-radius:8px;padding:7px 10px;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;width:150px;}
+  .ex-input:focus{outline:none;border-color:var(--teal);}
+  .mc-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+  .mc-btn{background:#F3F4F6;border:2px solid #E5E7EB;border-radius:8px;padding:7px 14px;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;cursor:pointer;}
+  .mc-btn.correct{background:#F0FFF4;border-color:var(--green);color:var(--green);}
+  .mc-btn.wrong{background:#FFF5F5;border-color:var(--red);color:var(--red);}
+  .hint-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+  .hint-tag{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:700;cursor:pointer;}
+  .hint-tag.fr{background:#FEF3C7;color:#92400E;}
+  .hint-tag.gr{background:#DBEAFE;color:#1E40AF;}
+  .hint-popup{display:none;font-size:12.5px;margin-top:6px;padding:8px 12px;background:#F9FAFB;border-radius:8px;}
+  .hint-popup.show{display:block;}
+  .check-btn{margin-top:10px;background:var(--teal);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-weight:700;font-size:12.5px;cursor:pointer;}
+  .fb{font-size:13px;font-weight:700;margin-top:6px;display:none;}
+  .fb.show{display:block;}
+  .fb.ok{color:var(--green);}
+  .fb.no{color:var(--red);}
+
+  /* Writing */
+  .starter-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
+  .starter-btn{background:var(--teal-light);border:none;border-radius:20px;padding:8px 14px;font-family:'Nunito',sans-serif;font-weight:700;font-size:12.5px;color:#134E4E;cursor:pointer;}
+  textarea.writing-area{width:100%;min-height:120px;border:2px solid #E5E7EB;border-radius:10px;padding:12px;font-family:'Nunito',sans-serif;font-size:14px;resize:vertical;}
+  textarea.writing-area:focus{outline:none;border-color:var(--teal);}
+
+  /* Speaking */
+  .speak-card{border-radius:10px;padding:12px 14px;margin-bottom:10px;font-size:14px;font-weight:600;}
+  .speak-card.warm{background:#EFF6FF;border-left:4px solid #3B82F6;}
+  .speak-card.core{background:#FFF7ED;border-left:4px solid var(--amber);}
+  .speak-card.challenge{background:#FDF2F8;border-left:4px solid #DB2777;}
+  .speak-label{font-size:11px;text-transform:uppercase;font-weight:800;letter-spacing:.5px;display:block;margin-bottom:4px;opacity:.7;}
+
+  /* Timer bubble */
+  #timerBubble{
+    position:fixed;bottom:18px;left:18px;z-index:100;
+    background:var(--teal);color:#fff;border-radius:50%;
+    width:58px;height:58px;display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:13px;box-shadow:0 4px 14px rgba(0,0,0,0.2);
+    cursor:pointer;transition:background .3s;
+  }
+  #timerBubble.danger{background:var(--red);}
+  #timerBubble.face{font-size:26px;}
+
+  #panelOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:99;}
+  #panelOverlay.show{display:block;}
+  #whiteboard{
+    position:fixed;bottom:0;left:0;right:0;z-index:101;background:var(--surface);
+    border-radius:20px 20px 0 0;padding:18px;max-height:70vh;overflow-y:auto;
+    transform:translateY(100%);transition:transform .3s;box-shadow:0 -4px 20px rgba(0,0,0,0.15);
+  }
+  #whiteboard.show{transform:translateY(0);}
+  #whiteboard h3{margin:0 0 10px;font-size:15px;}
+  .preset-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+  .preset-btn{background:var(--teal-light);border:none;border-radius:8px;padding:8px 12px;font-weight:700;font-size:12.5px;color:#134E4E;cursor:pointer;}
+  .stamp-row{display:flex;gap:8px;margin-bottom:10px;}
+  .stamp-btn{font-size:20px;background:#F3F4F6;border:none;border-radius:8px;padding:6px 12px;cursor:pointer;}
+  #correctionDisplay{background:#F9FAFB;border-radius:8px;padding:10px;min-height:40px;font-size:20px;letter-spacing:6px;margin-bottom:10px;}
+  #notesArea{width:100%;min-height:70px;border:2px solid #E5E7EB;border-radius:8px;padding:8px;font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:10px;}
+  .board-actions{display:flex;gap:8px;justify-content:flex-end;}
+  .board-actions button{background:#E5E7EB;border:none;border-radius:8px;padding:7px 14px;font-weight:700;font-size:12.5px;cursor:pointer;}
+  .board-actions button.close{background:var(--teal);color:#fff;}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <header>
+    <h1>Likes & Dislikes 🎒</h1>
+    <p>Packing for the trip — food, drinks & hobbies</p>
+  </header>
+
+  <div class="tabbar">
+    <button class="tab-btn active" data-tab="warmup">Warm-Up</button>
+    <button class="tab-btn" data-tab="grammar">Grammar</button>
+    <button class="tab-btn" data-tab="content">Vocabulary</button>
+    <button class="tab-btn" data-tab="reading">Reading & Exercises</button>
+    <button class="tab-btn" data-tab="writing">Writing & Speaking</button>
+  </div>
+
+  <!-- WARM UP -->
+  <div class="panel active" id="warmup">
+    <div class="card">
+      <button class="toggle-btn" id="goalToggle">👁 Teacher: show learning objective</button>
+      <div class="goal-box" id="goalBox">
+        <b>Card:</b> A1-04 — Likes & dislikes<br>
+        <b>Goal:</b> Can say what he/she likes, loves and hates.<br>
+        <b>Grammar focus:</b> verb + -ing with like/love/hate<br>
+        <b>Evidence task:</b> Six true like/dislike sentences across two topics, at least three with verb + -ing.
+      </div>
+      <h2>Get ready 🧳</h2>
+      <p style="font-size:14px;line-height:1.7;">Imagine your squad is going on a big adventure trip — new city, new food, free time between games. Before we plan it, let's warm up:</p>
+      <ul style="font-size:14px;line-height:1.9;">
+        <li>Name 3 foods you already know in English.</li>
+        <li>Name 2 hobbies or free-time activities you already know.</li>
+        <li>Quick chat: "Do you like pizza?" — "Yes, I love it!" / "No, I hate it."</li>
+      </ul>
+    </div>
+    <div class="nav-btns"><button class="secondary" disabled>Back</button><button onclick="goTab('grammar')">Next →</button></div>
+  </div>
+
+  <!-- GRAMMAR -->
+  <div class="panel" id="grammar">
+    <div class="card">
+      <h2>like / love / hate + verb-ing</h2>
+      <p class="fr">🇫🇷 aimer bien / adorer / détester + verbe en -ing</p>
+      <div class="rule-box">Subject + like / love / hate + verb-ing</div>
+      <ul class="example-list">
+        <li>I <b>like eating</b> pizza. <span class="fr">🇫🇷 J'aime bien manger de la pizza.</span></li>
+        <li>He <b>loves playing</b> football. <span class="fr">🇫🇷 Il adore jouer au football.</span></li>
+        <li>They <b>hate losing</b>. <span class="fr">🇫🇷 Ils détestent perdre.</span></li>
+        <li>She <b>doesn't like waiting</b>. <span class="fr">🇫🇷 Elle n'aime pas attendre.</span></li>
+      </ul>
+      <h3>💡 How to build the -ing form</h3>
+      <ul class="example-list">
+        <li>eat → eat<b>ing</b> · play → play<b>ing</b></li>
+        <li>swim → swim<b>ming</b> (double letter) · dance → danc<b>ing</b> (drop the e)</li>
+      </ul>
+      <div class="mistake-box"><b>⚠ Common mistake:</b> Don't add "to" — say <b>"I like eating"</b>, not "I like to eating".</div>
+    </div>
+    <div class="nav-btns"><button class="secondary" onclick="goTab('warmup')">← Back</button><button onclick="goTab('content')">Next →</button></div>
+  </div>
+
+  <!-- CONTENT / VOCAB -->
+  <div class="panel" id="content">
+    <div class="card">
+      <h2>🍽 Food & Drink</h2>
+      <p class="fr">Tap once = French. Tap again = mastered ✓. Tap again = reset.</p>
+      <div class="vocab-grid" id="foodGrid"></div>
+    </div>
+    <div class="card">
+      <h2>⚽ Hobbies</h2>
+      <div class="vocab-grid" id="hobbyGrid"></div>
+    </div>
+    <div class="nav-btns"><button class="secondary" onclick="goTab('grammar')">← Back</button><button onclick="goTab('reading')">Next →</button></div>
+  </div>
+
+  <!-- READING & EXERCISES -->
+  <div class="panel" id="reading">
+    <div class="card">
+      <h2>📖 Reading: Before the Match</h2>
+      <div class="reading-text">
+        Meet Leo, a young footballer getting ready for a tournament abroad. He <span class="hl">loves eating</span> pasta the night before a game — it gives him energy. He <span class="hl">likes drinking</span> water all day, not juice. In his free time, he <span class="hl">loves listening to music</span> to relax, and he <span class="hl">likes playing</span> video games with his teammates. But he <span class="hl">hates waiting</span> at the airport before a trip — he says it's the worst part of travelling!
+      </div>
+    </div>
+
+    <div class="ex-card">
+      <span class="diff easy">Easy</span>
+      <div class="ex-q">1. I ___ (like) <u>eat</u> pizza before a match.</div>
+      <input class="ex-input" id="ex1" placeholder="type here">
+      <button class="check-btn" onclick="checkFill('ex1','eating','fb1')">Check</button>
+      <div class="fb" id="fb1"></div>
+      <div class="hint-row">
+        <span class="hint-tag fr" onclick="toggleHint('h1fr')">🇫🇷 hint</span>
+        <span class="hint-tag gr" onclick="toggleHint('h1gr')">💡 grammar</span>
+      </div>
+      <div class="hint-popup" id="h1fr">Aimer manger → verbe en -ing.</div>
+      <div class="hint-popup" id="h1gr">Remember: like + verb-ing, no "to".</div>
+    </div>
+
+    <div class="ex-card">
+      <span class="diff easy">Easy</span>
+      <div class="ex-q">2. She loves ___ (dance) at parties.</div>
+      <input class="ex-input" id="ex2" placeholder="type here">
+      <button class="check-btn" onclick="checkFill('ex2','dancing','fb2')">Check</button>
+      <div class="fb" id="fb2"></div>
+      <div class="hint-row">
+        <span class="hint-tag fr" onclick="toggleHint('h2fr')">🇫🇷 hint</span>
+        <span class="hint-tag gr" onclick="toggleHint('h2gr')">💡 grammar</span>
+      </div>
+      <div class="hint-popup" id="h2fr">danser → dancing (on enlève le "e").</div>
+      <div class="hint-popup" id="h2gr">Verbs ending in silent -e drop the e before -ing.</div>
+    </div>
+
+    <div class="ex-card">
+      <span class="diff medium">Medium</span>
+      <div class="ex-q">3. Choose the correct sentence:</div>
+      <div class="mc-row">
+        <button class="mc-btn" onclick="checkMC(this,false)">They hate to losing.</button>
+        <button class="mc-btn" onclick="checkMC(this,true)">They hate losing.</button>
+        <button class="mc-btn" onclick="checkMC(this,false)">They hates losing.</button>
+      </div>
+      <div class="hint-row">
+        <span class="hint-tag gr" onclick="toggleHint('h3gr')">💡 grammar</span>
+      </div>
+      <div class="hint-popup" id="h3gr">No "to" after hate, and "they" doesn't take -s.</div>
+    </div>
+
+    <div class="ex-card">
+      <span class="diff medium">Medium</span>
+      <div class="ex-q">4. We love ___ (travel) to new cities.</div>
+      <input class="ex-input" id="ex4" placeholder="type here">
+      <button class="check-btn" onclick="checkFill('ex4','travelling','fb4')">Check</button>
+      <div class="fb" id="fb4"></div>
+      <div class="hint-row">
+        <span class="hint-tag fr" onclick="toggleHint('h4fr')">🇫🇷 hint</span>
+      </div>
+      <div class="hint-popup" id="h4fr">voyager → travelling (double l in British English).</div>
+    </div>
+
+    <div class="ex-card">
+      <span class="diff hard">Hard</span>
+      <div class="ex-q">5. Find and fix the mistake: "I like to swimming in the sea."</div>
+      <input class="ex-input" style="width:260px;" id="ex5" placeholder="type the correct sentence">
+      <button class="check-btn" onclick="checkFill('ex5','i like swimming in the sea','fb5')">Check</button>
+      <div class="fb" id="fb5"></div>
+      <div class="hint-row">
+        <span class="hint-tag gr" onclick="toggleHint('h5gr')">💡 grammar</span>
+      </div>
+      <div class="hint-popup" id="h5gr">Remove "to" — like is directly followed by verb-ing.</div>
+    </div>
+
+    <div class="ex-card">
+      <span class="diff hard">Hard</span>
+      <div class="ex-q">6. Choose the correct form: "He doesn't like ___ (wait) at the airport."</div>
+      <div class="mc-row">
+        <button class="mc-btn" onclick="checkMC(this,false)">to wait</button>
+        <button class="mc-btn" onclick="checkMC(this,true)">waiting</button>
+        <button class="mc-btn" onclick="checkMC(this,false)">waits</button>
+      </div>
+    </div>
+
+    <div class="nav-btns"><button class="secondary" onclick="goTab('content')">← Back</button><button onclick="goTab('writing')">Next →</button></div>
+  </div>
+
+  <!-- WRITING & SPEAKING -->
+  <div class="panel" id="writing">
+    <div class="card">
+      <h2>✍️ Writing</h2>
+      <p class="fr">Tap a starter to begin, then finish the sentence.</p>
+      <div class="starter-row">
+        <button class="starter-btn" onclick="fillStarter('Before a trip, I love ')">Before a trip, I love...</button>
+        <button class="starter-btn" onclick="fillStarter('I really like ')">I really like...</button>
+        <button class="starter-btn" onclick="fillStarter('Honestly, I hate ')">Honestly, I hate...</button>
+        <button class="starter-btn" onclick="fillStarter('My favorite hobby is ')">My favorite hobby is...</button>
+      </div>
+      <textarea class="writing-area" id="writingArea" placeholder="Write your sentences here..."></textarea>
+    </div>
+
+    <div class="card">
+      <h2>🗣 Speaking</h2>
+      <div class="speak-card warm"><span class="speak-label">Warm-up</span>Tell me two foods you like and one food you hate.</div>
+      <div class="speak-card core"><span class="speak-label">Core</span>Talk about your favorite hobby — say what it is and why you love it.</div>
+      <div class="speak-card challenge"><span class="speak-label">Challenge</span>Imagine you're packing for a trip with your team. Say six true sentences about food/drink AND hobbies you like, love or hate — use verb-ing in at least three of them.</div>
+    </div>
+    <div class="nav-btns"><button class="secondary" onclick="goTab('reading')">← Back</button><button disabled>Finish 🎉</button></div>
+  </div>
+</div>
+
+<!-- Timer bubble -->
+<div id="timerBubble">05:00</div>
+<div id="panelOverlay" onclick="closeBoard()"></div>
+<div id="whiteboard">
+  <h3>⏱ Session Timer</h3>
+  <div class="preset-row">
+    <button class="preset-btn" onclick="startTimer(25)">25 min</button>
+    <button class="preset-btn" onclick="startTimer(30)">30 min</button>
+    <button class="preset-btn" onclick="startTimer(45)">45 min</button>
+    <button class="preset-btn" onclick="startTimer(50)">50 min</button>
+  </div>
+  <h3>✔ Correction Stamps</h3>
+  <div class="stamp-row">
+    <button class="stamp-btn" onclick="addStamp('✓')">✓</button>
+    <button class="stamp-btn" onclick="addStamp('✗')">✗</button>
+    <button class="stamp-btn" onclick="addStamp('~')">~</button>
+  </div>
+  <div id="correctionDisplay"></div>
+  <h3>📝 Notes</h3>
+  <textarea id="notesArea" placeholder="Session notes..."></textarea>
+  <div class="board-actions">
+    <button onclick="copyNotes()">Copy</button>
+    <button onclick="clearNotes()">Clear</button>
+    <button class="close" onclick="closeBoard()">Close</button>
+  </div>
+</div>
+
+<script>
+/* ---------- TABS ---------- */
+const tabs = ['warmup','grammar','content','reading','writing'];
+function goTab(id){
+  tabs.forEach(t=>{
+    document.getElementById(t).classList.toggle('active', t===id);
+  });
+  document.querySelectorAll('.tab-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.tab===id);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.tab-btn').forEach(b=>{
+  b.addEventListener('click', ()=>goTab(b.dataset.tab));
+});
+
+/* ---------- TEACHER GOAL TOGGLE ---------- */
+document.getElementById('goalToggle').addEventListener('click', ()=>{
+  document.getElementById('goalBox').classList.toggle('show');
+});
+
+/* ---------- VOCAB CARDS ---------- */
+const food = [
+  ['pizza','la pizza'], ['pasta','les pâtes'], ['fish','le poisson'],
+  ['chicken','le poulet'], ['rice','le riz'], ['salad','la salade'],
+  ["water","l'eau"], ["juice","le jus"], ["coffee","le café"], ["chocolate","le chocolat"]
+];
+const hobbies = [
+  ['playing football','jouer au football'], ['watching movies','regarder des films'],
+  ['listening to music','écouter de la musique'], ['reading comics','lire des BD'],
+  ['swimming','nager'], ['drawing','dessiner'], ['dancing','danser'],
+  ['gaming','jouer aux jeux vidéo'], ['cycling','faire du vélo'], ['travelling','voyager']
+];
+function buildGrid(list, gridId){
+  const grid = document.getElementById(gridId);
+  list.forEach(([en,fr])=>{
+    const card = document.createElement('div');
+    card.className = 'vocab-card';
+    card.dataset.state = '0';
+    card.innerHTML = `<div class="en">${en}</div><div class="fr-word">${fr}</div>`;
+    card.addEventListener('click', ()=>{
+      let s = (parseInt(card.dataset.state)+1) % 3;
+      card.dataset.state = s;
+      card.classList.remove('revealed','mastered');
+      if(s===1) card.classList.add('revealed');
+      if(s===2) card.classList.add('mastered');
+    });
+    grid.appendChild(card);
+  });
+}
+buildGrid(food, 'foodGrid');
+buildGrid(hobbies, 'hobbyGrid');
+
+/* ---------- EXERCISES ---------- */
+function checkFill(inputId, answer, fbId){
+  const val = document.getElementById(inputId).value.trim().toLowerCase().replace(/\.$/, '');
+  const fb = document.getElementById(fbId);
+  fb.classList.add('show');
+  if(val === answer){
+    fb.textContent = '✓ Correct!';
+    fb.className = 'fb show ok';
+  } else {
+    fb.textContent = '✗ Try again — check the hints below.';
+    fb.className = 'fb show no';
+  }
+}
+function checkMC(btn, isCorrect){
+  const row = btn.parentElement;
+  row.querySelectorAll('.mc-btn').forEach(b=>b.classList.remove('correct','wrong'));
+  btn.classList.add(isCorrect ? 'correct' : 'wrong');
+}
+function toggleHint(id){
+  document.getElementById(id).classList.toggle('show');
+}
+
+/* ---------- WRITING STARTERS ---------- */
+function fillStarter(text){
+  const area = document.getElementById('writingArea');
+  area.value = text;
+  area.focus();
+  area.setSelectionRange(text.length, text.length);
+}
+
+/* ---------- TIMER BUBBLE ---------- */
+const bubble = document.getElementById('timerBubble');
+const overlay = document.getElementById('panelOverlay');
+const board = document.getElementById('whiteboard');
+let sessionStart = Date.now();
+let countdownInterval = null;
+let countdownEnd = null;
+const faces = ['😀','🎉','🥳','😎','🤩'];
+
+function formatTime(sec){
+  const m = Math.floor(sec/60).toString().padStart(2,'0');
+  const s = Math.floor(sec%60).toString().padStart(2,'0');
+  return m+':'+s;
+}
+
+function idleTick(){
+  if(countdownInterval) return;
+  const elapsed = Math.floor((Date.now()-sessionStart)/1000);
+  bubble.textContent = formatTime(elapsed);
+}
+setInterval(idleTick, 1000);
+
+function startTimer(minutes){
+  clearInterval(countdownInterval);
+  countdownEnd = Date.now() + minutes*60000;
+  countdownInterval = setInterval(()=>{
+    const remaining = Math.round((countdownEnd - Date.now())/1000);
+    if(remaining <= 0){
+      clearInterval(countdownInterval);
+      countdownInterval = null;
+      bubble.classList.remove('danger');
+      bubble.classList.add('face');
+      bubble.textContent = faces[Math.floor(Math.random()*faces.length)];
+      setTimeout(()=>{ bubble.classList.remove('face'); sessionStart = Date.now(); }, 3000);
+      return;
+    }
+    bubble.textContent = formatTime(remaining);
+    bubble.classList.toggle('danger', remaining < 30);
+  }, 1000);
+  closeBoard();
+}
+
+bubble.addEventListener('click', ()=>{
+  overlay.classList.add('show');
+  board.classList.add('show');
+});
+function closeBoard(){
+  overlay.classList.remove('show');
+  board.classList.remove('show');
+}
+
+/* ---------- CORRECTION STAMPS ---------- */
+function addStamp(sym){
+  const disp = document.getElementById('correctionDisplay');
+  disp.textContent += sym + ' ';
+}
+
+/* ---------- NOTES ---------- */
+function copyNotes(){
+  const area = document.getElementById('notesArea');
+  area.select();
+  document.execCommand('copy');
+}
+function clearNotes(){
+  document.getElementById('notesArea').value = '';
+  document.getElementById('correctionDisplay').textContent = '';
+}
+</script>
+
+</body>
+</html>

@@ -1,5 +1,14 @@
 [
   {
+    "file": "micha-likes-dislikes.html",
+    "title": "#18 Likes & Dislikes",
+    "goals": {
+      "primary": [
+        "A1-04"
+      ]
+    }
+  },
+  {
     "file": "micha-ability-guess-the-player.html",
     "title": "#17 Guess the Player",
     "goals": {
