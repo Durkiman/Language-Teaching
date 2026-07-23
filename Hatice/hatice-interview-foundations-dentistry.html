@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview Foundations — Motivation, Structure & Recovery</title>
+<style>
+  :root{
+    --bg:#F5F3F7;
+    --surface:#FFFFFF;
+    --ink:#2B2A33;
+    --muted:#7A7686;
+    --accent:#5B6EAE;
+    --accent-light:#E9EBF7;
+    --border:#E1DEEB;
+    --good:#5B8A6E;
+    --warn:#C08A3E;
+    --bad:#B0554A;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Nunito', 'DM Sans', sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    padding-bottom:90px;
+  }
+  header{
+    background:var(--surface);
+    border-bottom:1px solid var(--border);
+    padding:16px 20px 0;
+    position:sticky;
+    top:0;
+    z-index:15;
+  }
+  header h1{
+    margin:0 0 12px;
+    font-size:1.15rem;
+    font-weight:800;
+    color:var(--accent);
+  }
+  nav{
+    display:flex;
+    gap:4px;
+    overflow-x:auto;
+    padding-bottom:0;
+  }
+  nav button{
+    background:none;
+    border:none;
+    padding:10px 14px;
+    font-family:inherit;
+    font-size:0.85rem;
+    font-weight:700;
+    color:var(--muted);
+    cursor:pointer;
+    white-space:nowrap;
+    border-bottom:3px solid transparent;
+  }
+  nav button.active{
+    color:var(--accent);
+    border-bottom:3px solid var(--accent);
+  }
+  main{
+    max-width:760px;
+    margin:0 auto;
+    padding:20px;
+  }
+  .tab{display:none;}
+  .tab.active{display:block;}
+  section{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:16px;
+  }
+  h2{
+    font-size:1.05rem;
+    margin:0 0 6px;
+    color:var(--accent);
+  }
+  .lead{
+    color:var(--muted);
+    font-size:0.88rem;
+    margin-bottom:16px;
+  }
+
+  /* teacher notes toggle */
+  .tnotes-toggle{
+    background:var(--accent-light);
+    border:none;
+    color:var(--accent);
+    font-weight:700;
+    font-size:0.78rem;
+    padding:6px 12px;
+    border-radius:20px;
+    cursor:pointer;
+    margin-bottom:10px;
+  }
+  .tnotes{
+    display:none;
+    background:#FBF9F4;
+    border-left:3px solid var(--warn);
+    padding:10px 12px;
+    font-size:0.82rem;
+    color:#5c5340;
+    border-radius:0 8px 8px 0;
+    margin-bottom:14px;
+  }
+  .tnotes.show{display:block;}
+
+  /* question cards */
+  .q-card{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:10px;
+    background:#FDFCFF;
+  }
+  .q-card .qtext{
+    font-weight:700;
+    font-size:0.98rem;
+    margin-bottom:4px;
+  }
+  .q-card .qtag{
+    display:inline-block;
+    font-size:0.68rem;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    color:#fff;
+    background:var(--accent);
+    padding:2px 8px;
+    border-radius:10px;
+    margin-bottom:8px;
+  }
+  .q-card .qtag.curveball{background:var(--bad);}
+
+  /* phrase bank */
+  .phrase-card{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:0;
+    margin-bottom:10px;
+    overflow:hidden;
+    cursor:pointer;
+    background:#FDFCFF;
+  }
+  .phrase-front{
+    padding:14px 16px;
+    font-weight:700;
+    font-size:0.98rem;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .phrase-front .icon{color:var(--accent); font-size:1.1rem;}
+  .phrase-back{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.25s ease;
+    background:var(--accent-light);
+  }
+  .phrase-card.open .phrase-back{max-height:200px;}
+  .phrase-back-inner{
+    padding:12px 16px 14px;
+    font-size:0.88rem;
+    color:#40395c;
+  }
+  .phrase-back-inner .example{font-style:italic; margin-top:6px;}
+  .mastered{
+    background:#E5F0E8 !important;
+  }
+  .mastered .phrase-front{color:var(--good);}
+  .master-btn{
+    font-size:0.72rem;
+    color:var(--muted);
+    background:none;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:3px 10px;
+    cursor:pointer;
+    margin-top:8px;
+  }
+
+  /* structure template */
+  .structure-flow{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:16px;
+  }
+  .structure-step{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    background:var(--accent-light);
+    border-radius:10px;
+    padding:12px 14px;
+  }
+  .structure-step .num{
+    background:var(--accent);
+    color:#fff;
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    font-size:0.85rem;
+    flex-shrink:0;
+  }
+  .structure-step .label{font-weight:700; font-size:0.92rem;}
+  .structure-step .desc{font-size:0.82rem; color:var(--muted); margin-top:2px;}
+  .practice-box{
+    border:1px dashed var(--border);
+    border-radius:10px;
+    padding:14px;
+    margin-top:10px;
+  }
+  .practice-box label{
+    display:block;
+    font-size:0.78rem;
+    font-weight:700;
+    color:var(--accent);
+    margin-bottom:4px;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+  }
+  textarea{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:8px 10px;
+    font-family:inherit;
+    font-size:0.9rem;
+    min-height:44px;
+    margin-bottom:10px;
+  }
+
+  /* recovery language */
+  .recovery-card{
+    background:var(--accent-light);
+    border-radius:10px;
+    padding:12px 14px;
+    margin-bottom:8px;
+    font-size:0.92rem;
+  }
+  .recovery-card .situation{
+    font-size:0.75rem;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:.03em;
+    margin-bottom:4px;
+  }
+  .interference-warn{
+    background:#FBEDE9;
+    border-left:3px solid var(--bad);
+    padding:10px 14px;
+    border-radius:0 8px 8px 0;
+    font-size:0.86rem;
+    margin-bottom:14px;
+    color:#6b352b;
+  }
+
+  /* false friends */
+  .ff-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  @media (max-width:600px){ .ff-grid{grid-template-columns:1fr;} }
+  .ff-card{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:12px 14px;
+    background:#FDFCFF;
+  }
+  .ff-word{
+    font-weight:800;
+    font-size:0.95rem;
+    color:var(--accent);
+    margin-bottom:8px;
+    padding-bottom:6px;
+    border-bottom:1px solid var(--border);
+  }
+  .ff-row{
+    font-size:0.82rem;
+    margin-bottom:6px;
+    line-height:1.4;
+  }
+  .ff-tag{
+    display:inline-block;
+    font-size:0.65rem;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+    padding:2px 7px;
+    border-radius:8px;
+    margin-right:6px;
+    color:#fff;
+  }
+  .ff-tag.wrong{background:var(--bad);}
+  .ff-tag.right{background:var(--good);}
+  .ff-example{
+    font-size:0.82rem;
+    font-style:italic;
+    color:var(--muted);
+    margin-top:8px;
+    padding-top:8px;
+    border-top:1px dashed var(--border);
+  }
+  .ff-card.add-card{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:var(--muted);
+    font-size:0.85rem;
+    border-style:dashed;
+    background:transparent;
+    min-height:80px;
+  }
+
+  /* speaking/mock */
+  .mock-btns{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;}
+  .mock-btns button{
+    background:var(--surface);
+    border:1px solid var(--accent);
+    color:var(--accent);
+    font-weight:700;
+    font-size:0.82rem;
+    padding:8px 14px;
+    border-radius:20px;
+    cursor:pointer;
+  }
+  .mock-btns button.active{background:var(--accent); color:#fff;}
+  .mock-display{
+    background:var(--accent-light);
+    border-radius:10px;
+    padding:18px;
+    font-size:1.05rem;
+    font-weight:700;
+    text-align:center;
+    min-height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  /* timer bubble */
+  .timer-bubble{
+    position:fixed;
+    bottom:20px;
+    left:20px;
+    background:var(--accent);
+    color:#fff;
+    border-radius:50px;
+    padding:10px 18px;
+    font-weight:700;
+    font-size:0.95rem;
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    cursor:pointer;
+    z-index:20;
+    user-select:none;
+  }
+  .timer-bubble.running{background:var(--bad);}
+
+  .next-back{
+    display:flex;
+    justify-content:space-between;
+    max-width:760px;
+    margin:0 auto;
+    padding:0 20px;
+  }
+  .next-back button{
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    font-weight:700;
+    cursor:pointer;
+    font-size:0.88rem;
+  }
+  .next-back button.ghost{
+    background:none;
+    color:var(--accent);
+    border:1px solid var(--accent);
+  }
+</style>
+</head>
+<body>
+
+<div style="background:#0E7C86;">
+  <a href="../Grammar-book/conditionals.html" style="display:block;color:#FFF6D8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;text-decoration:none;text-align:center;padding:10px 16px;letter-spacing:.01em;">📘 Related grammar: Conditionals — open the workbook page &amp; exercises →</a>
+  <a href="../Grammar-book/present-perfect-vs-past-simple.html" style="display:block;color:#FFF6D8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;text-decoration:none;text-align:center;padding:10px 16px;letter-spacing:.01em;border-top:1px solid rgba(255,255,255,.25);">📘 Related grammar: Present Perfect vs Past Simple — open the workbook page &amp; exercises →</a>
+</div>
+
+<header>
+  <h1>Interview Foundations — Motivation, Structure & Recovery <span style="font-size:0.7rem; color:var(--muted); font-weight:600;">· Session 1 of 9</span></h1>
+  <nav id="tabNav">
+    <button class="active" data-tab="warmup">Warm-Up</button>
+    <button data-tab="phrases">Phrase Bank</button>
+    <button data-tab="structure">Structure</button>
+    <button data-tab="recovery">Recovery</button>
+    <button data-tab="mock">Mock Round</button>
+  </nav>
+</header>
+
+<div class="timer-bubble" id="timerBubble" onclick="toggleTimer()">50:00</div>
+
+<main>
+
+  <!-- WARM-UP / DIAGNOSTIC -->
+  <div class="tab active" id="tab-warmup">
+    <section>
+      <h2>Diagnostic Mock Round</h2>
+      <div class="lead">Ask these cold, no prep. Don't correct yet — just observe where she breaks down.</div>
+      <button class="tnotes-toggle" onclick="toggleNotes(this)">Teacher notes</button>
+      <div class="tnotes">
+        Watch for: Dutch surfacing when searching for words, whether answers sound pre-built vs. constructed live, whether she freezes or over-simplifies on the curveball. This determines whether the block is access, anxiety, or a genuine gap — feed this into the phrase bank section next.
+      </div>
+
+      <div class="q-card">
+        <span class="qtag">Familiar</span>
+        <div class="qtext">Why do you want this position?</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag">Familiar</span>
+        <div class="qtext">Why dentistry?</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag">Familiar</span>
+        <div class="qtext">Tell me about your background.</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag curveball">Curveball</span>
+        <div class="qtext">What would you do if a patient was very anxious or difficult?</div>
+      </div>
+
+      <div class="practice-box" style="margin-top:16px;">
+        <label>Quick read after the round</label>
+        <div class="mock-btns" data-group="diagBlock">
+          <button onclick="rate(this)">Accuracy issue</button>
+          <button onclick="rate(this)">Access issue (words won't come)</button>
+          <button onclick="rate(this)">Anxiety / freezes</button>
+          <button onclick="rate(this)">Dutch interference</button>
+        </div>
+        <textarea id="diagNotes" placeholder="Anything specific worth remembering for next session..."></textarea>
+      </div>
+    </section>
+  </div>
+
+  <!-- PHRASE BANK -->
+  <div class="tab" id="tab-phrases">
+    <section>
+      <h2>Core Phrase Bank</h2>
+      <div class="lead">Tap a card to reveal how to use it. Have her repeat and personalize each one out loud immediately.</div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>What really motivates me is...</span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Use to open an answer about motivation or "why".<br>
+          <span class="example">"What really motivates me is helping people feel comfortable, even when they're afraid of the dentist."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>One thing I've learned from... is...</span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Use to connect past experience to the role. Grammar: present perfect (have/has + past participle) — it links something from your past to who you are <em>now</em>, unlike past simple, which just reports a finished event.<br>
+          <span class="example">"One thing I've learned from my studies is how important patience is with nervous patients."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>If that happened, my first step would be to...</span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Use for hypothetical / "what would you do" questions.<br>
+          <span class="example">"If that happened, my first step would be to stay calm and explain each step to the patient."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>My background is in..., and along the way I...</span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Use to open the "tell me about your background" question — often asked first.<br>
+          <span class="example">"My background is in dental studies, and along the way I discovered how much I enjoy working directly with patients."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>What draws me to this position specifically is...</span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Use when asked "why this position / why here".<br>
+          <span class="example">"What draws me to this position specifically is the chance to work directly with patients every day."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>Something I'm actively working on is...</span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Use for weakness questions — honest but forward-looking.<br>
+          <span class="example">"Something I'm actively working on is speaking more confidently in English during fast conversations."</span>
+        </div></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- STRUCTURE -->
+  <div class="tab" id="tab-structure">
+    <section>
+      <h2>The Answer Frame: Claim → Reason → Example</h2>
+      <div class="lead">One simple shape for any answer, even ones you don't expect.</div>
+
+      <div class="structure-flow">
+        <div class="structure-step">
+          <div class="num">1</div>
+          <div>
+            <div class="label">Claim</div>
+            <div class="desc">Say your main point in one short sentence.</div>
+          </div>
+        </div>
+        <div class="structure-step">
+          <div class="num">2</div>
+          <div>
+            <div class="label">Reason</div>
+            <div class="desc">Explain why, in one sentence.</div>
+          </div>
+        </div>
+        <div class="structure-step">
+          <div class="num">3</div>
+          <div>
+            <div class="label">Example</div>
+            <div class="desc">Give one short, concrete example or moment.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="recovery-card" style="margin-bottom:16px;">
+        <div class="situation">Grammar focus — second conditional (for "what would you do if...?")</div>
+        Curveball questions like <em>"What would you do if a patient was very anxious?"</em> ask about an imagined situation, not a real one. Answer the same way:<br>
+        <strong>If + past simple, ... + would + base verb</strong><br>
+        <span class="example">"If a patient was/were anxious, I would explain each step slowly."</span><br>
+        <span class="example">"If I didn't know an answer, I would ask a colleague rather than guess."</span><br>
+        Both <em>"if I was"</em> and <em>"if I were"</em> are heard in real interviews — "were" is the safer, slightly more formal choice.
+      </div>
+
+      <div class="practice-box" style="margin-bottom:16px;">
+        <label>Grammar practice — finish with a second conditional</label>
+        <textarea placeholder="If a patient refused treatment, I..."></textarea>
+        <textarea placeholder="If I didn't understand a question in the interview, I..."></textarea>
+        <textarea placeholder="If they asked about a weakness, I..."></textarea>
+      </div>
+
+      <div class="recovery-card" style="margin-bottom:16px;">
+        <div class="situation">Worked example — "Why do you want this position?"</div>
+        <strong>Claim:</strong> "I want this position because it's the best next step for my career in dentistry."<br>
+        <strong>Reason:</strong> "It combines direct patient contact with real clinical experience, which is exactly what I need right now."<br>
+        <strong>Example:</strong> "For example, during my training I noticed I was most motivated on the days I worked directly with patients, not in the lab."
+      </div>
+
+      <div class="recovery-card" style="margin-bottom:16px;">
+        <div class="situation">Worked example — curveball: "What would you do if a patient was very anxious or difficult?"</div>
+        <strong>Claim:</strong> "I would stay calm and focus on making the patient feel safe first."<br>
+        <strong>Reason:</strong> "Because anxious patients need reassurance before any procedure can go smoothly."<br>
+        <strong>Example:</strong> "For example, I would explain each step slowly and check in with them before continuing."
+      </div>
+
+      <div class="practice-box">
+        <label>Practice: "Why dentistry?"</label>
+        <textarea placeholder="Claim..."></textarea>
+        <textarea placeholder="Reason..."></textarea>
+        <textarea placeholder="Example..."></textarea>
+      </div>
+
+      <div class="practice-box">
+        <label>Practice: difficult patient question</label>
+        <textarea placeholder="Claim..."></textarea>
+        <textarea placeholder="Reason..."></textarea>
+        <textarea placeholder="Example..."></textarea>
+      </div>
+    </section>
+  </div>
+
+  <!-- RECOVERY -->
+  <div class="tab" id="tab-recovery">
+    <section>
+      <h2>Recovery Language</h2>
+      <div class="lead">For when you blank, or catch yourself switching to Dutch.</div>
+
+      <div class="interference-warn">
+        You're living and studying between English and Dutch right now — it's completely normal for words to cross over under pressure. These phrases let you recover smoothly instead of panicking.
+      </div>
+
+      <div class="lead" style="margin-top:4px;">English/Dutch False Friends</div>
+      <div class="lead" style="margin-top:-10px; margin-bottom:14px;">Words that look similar but don't mean the same thing — easy to mix up under pressure.</div>
+
+      <div class="ff-grid">
+        <div class="ff-card">
+          <div class="ff-word">practice / praktijk</div>
+          <div class="ff-row"><span class="ff-tag wrong">NL sense</span> "praktijk" = a clinic / office</div>
+          <div class="ff-row"><span class="ff-tag right">EN meaning</span> repeated training, or "in practice" = in reality</div>
+          <div class="ff-example">✓ "I want to gain more practice with patients." (not "I want to work in a practice" for a clinic)</div>
+        </div>
+
+        <div class="ff-card">
+          <div class="ff-word">eventually / eventueel</div>
+          <div class="ff-row"><span class="ff-tag wrong">NL sense</span> "eventueel" = possibly, maybe</div>
+          <div class="ff-row"><span class="ff-tag right">EN meaning</span> in the end, after some time</div>
+          <div class="ff-example">✓ "I eventually chose dentistry after trying other fields." (means: in the end — not "possibly")</div>
+        </div>
+
+        <div class="ff-card">
+          <div class="ff-word">actually / actueel</div>
+          <div class="ff-row"><span class="ff-tag wrong">NL sense</span> "actueel" = current, up to date</div>
+          <div class="ff-row"><span class="ff-tag right">EN meaning</span> in fact, really</div>
+          <div class="ff-example">✓ "Actually, I first became interested in dentistry at 16." (means: in fact — not "currently")</div>
+        </div>
+
+        <div class="ff-card">
+          <div class="ff-word">sensible / sensibel</div>
+          <div class="ff-row"><span class="ff-tag wrong">NL sense</span> "sensibel" = sensitive, easily affected</div>
+          <div class="ff-row"><span class="ff-tag right">EN meaning</span> reasonable, showing good judgment</div>
+          <div class="ff-example">✓ "It was a sensible decision to specialize early." (means: wise — not "emotionally sensitive")</div>
+        </div>
+
+        <div class="ff-card">
+          <div class="ff-word">to control / controleren</div>
+          <div class="ff-row"><span class="ff-tag wrong">NL sense</span> "controleren" = to check, to inspect</div>
+          <div class="ff-row"><span class="ff-tag right">EN meaning</span> to have power over, to direct</div>
+          <div class="ff-example">✓ "I checked the patient's chart" (not "I controlled the patient's chart")</div>
+        </div>
+
+        <div class="ff-card add-card">
+          + Add a new one here as it comes up live
+        </div>
+      </div>
+
+      <div class="recovery-card">
+        <div class="situation">Need a second to think</div>
+        "That's a good question — let me think for a second."
+      </div>
+      <div class="recovery-card">
+        <div class="situation">Caught yourself in Dutch</div>
+        "Sorry, let me say that in English."
+      </div>
+      <div class="recovery-card">
+        <div class="situation">Want to restart an answer</div>
+        "Let me start again — what I mean is..."
+      </div>
+      <div class="recovery-card">
+        <div class="situation">Didn't understand the question</div>
+        "Could you say that again, please?"
+      </div>
+    </section>
+  </div>
+
+  <!-- MOCK ROUND -->
+  <div class="tab" id="tab-mock">
+    <section>
+      <h2>Mock Interview — Round 2</h2>
+      <div class="lead">Same questions as the warm-up, now with phrase bank + structure available. Compare the difference out loud after.</div>
+
+      <div class="mock-btns" id="mockBtns">
+        <button onclick="showMock(this, 0)">1</button>
+        <button onclick="showMock(this, 1)">2</button>
+        <button onclick="showMock(this, 2)">3</button>
+        <button onclick="showMock(this, 3)">4 (curveball)</button>
+      </div>
+      <div class="mock-display" id="mockDisplay">Tap a number to reveal a question</div>
+
+      <div class="practice-box" style="margin-top:16px;">
+        <label>How did that feel compared to round 1?</label>
+        <div class="mock-btns" data-group="selfRating">
+          <button onclick="rate(this)">Much better</button>
+          <button onclick="rate(this)">A little better</button>
+          <button onclick="rate(this)">About the same</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<div class="next-back">
+  <button class="ghost" onclick="prevTab()">Back</button>
+  <button onclick="nextTab()">Next</button>
+</div>
+
+<script>
+  const tabs = ['warmup','phrases','structure','recovery','mock'];
+  let currentTab = 0;
+
+  function showTab(name){
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-'+name).classList.add('active');
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.querySelector(`nav button[data-tab="${name}"]`).classList.add('active');
+    currentTab = tabs.indexOf(name);
+  }
+  document.querySelectorAll('nav button').forEach(b=>{
+    b.addEventListener('click', ()=> showTab(b.dataset.tab));
+  });
+  function nextTab(){ if(currentTab < tabs.length-1) showTab(tabs[currentTab+1]); }
+  function prevTab(){ if(currentTab > 0) showTab(tabs[currentTab-1]); }
+
+  function toggleNotes(btn){
+    const notes = btn.nextElementSibling;
+    notes.classList.toggle('show');
+  }
+
+  // phrase card flip / mastery
+  function togglePhrase(card){
+    card.classList.toggle('open');
+  }
+
+  // single-select rating buttons (diagnostic, self-rating)
+  function rate(btn){
+    const group = btn.parentElement;
+    [...group.children].forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  // mock round questions
+  const mockQuestions = [
+    "Why do you want this position?",
+    "Why dentistry?",
+    "Tell me about your background.",
+    "What would you do if a patient was very anxious or difficult?"
+  ];
+  function showMock(btn, i){
+    document.querySelectorAll('#mockBtns button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('mockDisplay').textContent = mockQuestions[i];
+  }
+
+  // timer
+  let seconds = 50*60;
+  let running = false;
+  let interval = null;
+  const bubble = document.getElementById('timerBubble');
+  function formatTime(s){
+    const m = Math.floor(s/60);
+    const sec = s%60;
+    return `${m}:${sec.toString().padStart(2,'0')}`;
+  }
+  function toggleTimer(){
+    if(running){
+      clearInterval(interval);
+      running = false;
+      bubble.classList.remove('running');
+    } else {
+      running = true;
+      bubble.classList.add('running');
+      interval = setInterval(()=>{
+        if(seconds > 0){
+          seconds--;
+          bubble.textContent = formatTime(seconds);
+        } else {
+          clearInterval(interval);
+          bubble.textContent = "Time's up";
+        }
+      }, 1000);
+    }
+  }
+</script>
+
+</body>
+</html>
