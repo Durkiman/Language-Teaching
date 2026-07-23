@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Meetings — Vocabulary &amp; Turn-Taking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F5F0;
+    --card:#FFFFFF;
+    --ink:#262A2E;
+    --ink-soft:#6B6F76;
+    --navy:#33526B;
+    --navy-dark:#24394B;
+    --navy-pale:#E7ECF1;
+    --gold:#B98B4E;
+    --gold-pale:#F3E7D4;
+    --line:#E2DED4;
+    --red:#B4674E;
+    --green:#5C8A6A;
+    --radius:14px;
+    --shadow:0 4px 18px rgba(38,42,46,0.08);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-tap-highlight-color:transparent;
+    padding-bottom:100px;
+  }
+  h1,h2,h3,h4{font-family:'Lora',serif;margin:0;}
+  header{
+    padding:26px 20px 14px;text-align:center;
+    border-bottom:1px solid var(--line);
+    background:var(--paper);
+    position:relative;
+  }
+  header h1{font-size:1.4rem;color:var(--navy-dark);font-weight:600;}
+  header p{margin:8px 0 0;color:var(--ink-soft);font-size:0.87rem;}
+
+  #goalToggle{
+    display:inline-flex;align-items:center;gap:6px;
+    margin-top:12px;padding:7px 14px;border-radius:20px;
+    background:var(--navy-pale);color:var(--navy-dark);
+    border:none;font-family:'Inter',sans-serif;font-weight:600;font-size:0.78rem;
+    cursor:pointer;
+  }
+  #goalPanel{
+    display:none;max-width:520px;margin:12px auto 0;text-align:left;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px 18px;box-shadow:var(--shadow);
+  }
+  #goalPanel.open{display:block;}
+  #goalPanel .code{
+    display:inline-block;background:var(--gold);color:#fff;font-size:0.68rem;font-weight:700;
+    padding:3px 9px;border-radius:6px;letter-spacing:.03em;margin-bottom:8px;
+  }
+  #goalPanel p{font-size:0.85rem;line-height:1.55;margin:6px 0;color:var(--ink);}
+  #goalPanel b{color:var(--navy-dark);}
+
+  nav.tabs{
+    position:sticky;top:0;z-index:20;display:flex;overflow-x:auto;
+    background:var(--paper);border-bottom:1px solid var(--line);scrollbar-width:none;
+  }
+  nav.tabs::-webkit-scrollbar{display:none;}
+  nav.tabs button{
+    flex:1 0 auto;padding:14px 16px;background:none;border:none;
+    font-family:'Inter',sans-serif;font-size:0.82rem;font-weight:600;color:var(--ink-soft);
+    cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;
+    transition:color .2s, border-color .2s;
+  }
+  nav.tabs button.active{color:var(--navy);border-bottom-color:var(--gold);}
+
+  main{max-width:640px;margin:0 auto;padding:20px 16px 40px;}
+  .panel{display:none;animation:fade .25s ease;}
+  .panel.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px;margin-bottom:14px;box-shadow:var(--shadow);
+  }
+  .card h3{font-size:1.02rem;color:var(--navy-dark);margin-bottom:8px;}
+  .lead{color:var(--ink-soft);font-size:0.87rem;line-height:1.55;margin:0 0 16px;}
+
+  /* Warm-up */
+  .prompt-card{
+    background:var(--navy-pale);border-radius:10px;padding:14px 16px;margin-bottom:10px;
+    font-size:0.92rem;line-height:1.5;color:var(--navy-dark);font-family:'Lora',serif;font-weight:500;
+  }
+  .prompt-card:last-child{margin-bottom:0;}
+
+  /* Dialogue */
+  .dialogue{background:var(--navy-pale);border-radius:10px;padding:16px;margin-bottom:16px;}
+  .dialogue p{margin:0 0 10px;font-size:0.9rem;line-height:1.6;color:var(--ink);}
+  .dialogue p:last-child{margin-bottom:0;}
+  .dialogue b{color:var(--navy-dark);}
+  .hl{background:var(--gold-pale);padding:1px 4px;border-radius:4px;color:var(--navy-dark);font-weight:600;}
+
+  /* Vocab flip cards */
+  .vocab-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media (max-width:420px){.vocab-grid{grid-template-columns:1fr;}}
+  .vcard{
+    background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:13px 14px;cursor:pointer;transition:all .2s;min-height:64px;
+  }
+  .vcard .term{font-family:'Lora',serif;font-weight:600;font-size:0.95rem;color:var(--navy-dark);}
+  .vcard .reveal{display:none;margin-top:7px;font-size:0.8rem;color:var(--ink-soft);line-height:1.45;}
+  .vcard.flipped{background:var(--gold-pale);border-color:var(--gold);}
+  .vcard.flipped .reveal{display:block;}
+
+  /* Grammar cards */
+  .gcard{border:1px solid var(--line);border-radius:var(--radius);background:var(--card);padding:16px 18px;margin-bottom:12px;}
+  .gcard h4{font-size:0.95rem;color:var(--navy-dark);margin-bottom:8px;}
+  .gcard .formula{
+    font-family:'Lora',serif;font-style:italic;color:var(--navy);
+    background:var(--navy-pale);border-radius:8px;padding:8px 12px;margin-bottom:8px;font-size:0.86rem;
+  }
+  .gcard .ex{font-size:0.85rem;color:var(--ink);margin:4px 0;line-height:1.5;}
+  .gcard .fr{font-size:0.8rem;color:var(--ink-soft);margin:6px 0 10px;font-style:italic;}
+  .gcard .mistake{
+    background:#FBEFEA;border:1px dashed var(--red);border-radius:8px;padding:8px 12px;
+    font-size:0.8rem;color:#7A4635;line-height:1.5;
+  }
+
+  /* Practice */
+  .diff-tag{
+    display:inline-block;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;
+    padding:3px 8px;border-radius:6px;margin-bottom:8px;
+  }
+  .diff-easy{background:#E4F0E6;color:var(--green);}
+  .diff-medium{background:var(--gold-pale);color:#8A6A2F;}
+  .diff-hard{background:#F3E0DA;color:var(--red);}
+  .ex-card{border:1px solid var(--line);border-radius:12px;padding:15px 16px;margin-bottom:14px;background:var(--card);}
+  .ex-card .q{font-size:0.9rem;margin-bottom:10px;line-height:1.5;}
+  .hint{font-size:0.75rem;color:var(--ink-soft);font-style:italic;}
+  .mc-options{display:flex;flex-direction:column;gap:7px;margin-top:8px;}
+  .mc-opt{
+    text-align:left;border:1px solid var(--line);background:var(--paper);border-radius:8px;
+    padding:9px 12px;font-size:0.85rem;cursor:pointer;color:var(--ink);
+  }
+  .mc-opt.correct{background:#E4F0E6;border-color:var(--green);}
+  .mc-opt.incorrect{background:#F3E0DA;border-color:var(--red);}
+  .gapfill-row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;align-items:center;}
+  input.gap-input{
+    flex:1;min-width:160px;border:1px solid var(--line);border-radius:8px;
+    padding:9px 11px;font-family:'Inter',sans-serif;font-size:0.85rem;background:var(--paper);color:var(--ink);
+  }
+  input.gap-input.correct{border-color:var(--green);background:#E4F0E6;}
+  input.gap-input.incorrect{border-color:var(--red);background:#F3E0DA;}
+  .mini-btn{
+    border:none;border-radius:8px;padding:9px 13px;font-size:0.78rem;font-weight:700;
+    cursor:pointer;background:var(--navy);color:#fff;white-space:nowrap;
+  }
+  .mini-btn.outline{background:none;border:1px solid var(--line);color:var(--ink-soft);}
+  .feedback{font-size:0.78rem;margin-top:6px;min-height:16px;}
+  .feedback.ok{color:var(--green);}
+  .feedback.no{color:var(--red);}
+
+  /* Speaking */
+  .scenario{
+    border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px;background:var(--card);
+    cursor:pointer;
+  }
+  .scenario.selected{border-color:var(--gold);background:var(--gold-pale);}
+  .scenario h4{font-size:0.9rem;color:var(--navy-dark);margin-bottom:4px;}
+  .scenario p{margin:0;font-size:0.82rem;color:var(--ink-soft);line-height:1.5;}
+  .checklist{margin-top:14px;}
+  .check-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);}
+  .check-item:last-child{border-bottom:none;}
+  .check-box{
+    width:22px;height:22px;border-radius:6px;border:1px solid var(--line);
+    background:var(--paper);cursor:pointer;flex-shrink:0;
+  }
+  .check-box.done{background:var(--green);border-color:var(--green);}
+  .check-item span{font-size:0.86rem;color:var(--ink);}
+
+  /* Teacher notes */
+  .tnote{
+    display:none;background:var(--navy-pale);border-left:3px solid var(--navy);
+    border-radius:8px;padding:10px 13px;margin-top:10px;font-size:0.8rem;color:var(--navy-dark);line-height:1.5;
+  }
+  body.notes-on .tnote{display:block;}
+  #notesToggle{
+    position:fixed;top:16px;right:16px;z-index:31;
+    background:var(--navy);color:#fff;border:none;border-radius:20px;
+    padding:8px 14px;font-size:0.75rem;font-weight:700;cursor:pointer;
+    box-shadow:var(--shadow);
+  }
+  body.notes-on #notesToggle{background:var(--gold);}
+
+  /* Timer */
+  #timerBubble{
+    position:fixed;bottom:18px;left:18px;z-index:30;width:58px;height:58px;border-radius:50%;
+    background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;
+    font-family:'Inter',sans-serif;font-weight:700;font-size:0.78rem;
+    box-shadow:0 6px 16px rgba(38,42,46,0.25);cursor:pointer;user-select:none;
+  }
+  #timerBubble.running{background:var(--green);}
+  #timerBubble.warn{background:var(--red);}
+
+  /* Notes drawer */
+  #notesDrawer{
+    position:fixed;bottom:18px;right:16px;z-index:30;
+    width:52px;height:52px;border-radius:50%;background:var(--card);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;box-shadow:var(--shadow);
+  }
+  #drawerPanel{
+    position:fixed;bottom:82px;right:16px;z-index:30;width:min(320px,88vw);
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:14px;display:none;
+  }
+  #drawerPanel.open{display:block;}
+  #drawerPanel h4{font-size:0.85rem;margin-bottom:8px;color:var(--navy-dark);}
+  #drawerPanel textarea{
+    width:100%;min-height:70px;border:1px solid var(--line);border-radius:8px;padding:8px;
+    font-family:'Inter',sans-serif;font-size:0.82rem;resize:vertical;margin-bottom:8px;
+  }
+  #savedNotes{max-height:140px;overflow-y:auto;font-size:0.75rem;color:var(--ink-soft);}
+  .saved-entry{border-top:1px solid var(--line);padding:6px 0;}
+  .saved-entry .t{font-size:0.68rem;color:var(--gold);font-weight:700;}
+</style>
+</head>
+<body>
+
+<div style="background:#0E7C86;">
+  <a href="../Grammar-book/polite-requests.html" style="display:block;color:#FFF6D8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;text-decoration:none;text-align:center;padding:10px 16px;letter-spacing:.01em;">📘 Related grammar: Polite Requests — open the workbook page &amp; exercises →</a>
+  <a href="../Grammar-book/modal-verbs.html" style="display:block;color:#FFF6D8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;text-decoration:none;text-align:center;padding:10px 16px;letter-spacing:.01em;border-top:1px solid rgba(255,255,255,.25);">📘 Related grammar: Modal Verbs — open the workbook page &amp; exercises →</a>
+</div>
+
+<button id="notesToggle">Teacher notes</button>
+
+<header>
+  <h1>Meetings — Vocabulary &amp; Turn-Taking</h1>
+  <p>Business English · managing a group discussion with confidence</p>
+  <button id="goalToggle">🎯 Learning goal</button>
+  <div id="goalPanel">
+    <span class="code">B2-11</span>
+    <p><b>Goal:</b> Can manage turn-taking in a group discussion — interrupt, hold the floor under pressure, and yield it gracefully.</p>
+    <p><b>Grammar focus:</b> modal softening (could / would / might) for polite interruption and requests.</p>
+    <p><b>Evidence task:</b> in a 3-person discussion, interrupt politely once, hold the floor against an interruption once, and yield the floor once — all naturally.</p>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="warmup">Warm-Up</button>
+  <button class="tab-btn" data-tab="vocab">Vocabulary</button>
+  <button class="tab-btn" data-tab="grammar">Grammar</button>
+  <button class="tab-btn" data-tab="practice">Practice</button>
+  <button class="tab-btn" data-tab="speaking">Speaking</button>
+</nav>
+
+<main>
+
+  <!-- WARM-UP -->
+  <section class="panel active" id="panel-warmup">
+    <p class="lead">Live and verbal — no need to touch the screen here. Get him talking about his own world before any new language lands.</p>
+    <div class="card">
+      <h3>Discussion openers</h3>
+      <div class="prompt-card">"Tell me about a meeting you had this week. What was it about?"</div>
+      <div class="prompt-card">"What's a meeting habit that annoys you — people talking too much, going off-topic?"</div>
+      <div class="prompt-card">"When you disagree with someone in a meeting, how do you usually say it?"</div>
+      <div class="tnote">Listen for how he currently handles interruption and disagreement in English — this tells you how much of today's language is genuinely new vs. refinement.</div>
+    </div>
+  </section>
+
+  <!-- VOCABULARY -->
+  <section class="panel" id="panel-vocab">
+    <p class="lead">A realistic exchange first, then the pieces. The bolded phrases are today's turn-taking language — the rest is supporting vocabulary.</p>
+    <div class="card">
+      <h3>Budget review — a short exchange</h3>
+      <div class="dialogue">
+        <p><b>Sana:</b> Before we move to the next item on the <span class="hl">agenda</span>, I want to flag a concern about the marketing budget.</p>
+        <p><b>Karim:</b> Sure, go ahead.</p>
+        <p><b>Sana:</b> I think we're allocating too much to paid ads and not enough to —</p>
+        <p><b>Fayçal:</b> Sorry, <span class="hl">can I just come in here</span>? We already discussed this with the stakeholders last month.</p>
+        <p><b>Sana:</b> <span class="hl">Hang on, let me finish</span> — I know we discussed it, but the numbers have changed since then.</p>
+        <p><b>Fayçal:</b> Fair enough, <span class="hl">go on</span>.</p>
+        <p><b>Sana:</b> Thanks. I'd suggest we <span class="hl">table this item</span> and follow up once finance has signed off on the new figures.</p>
+        <p><b>Karim:</b> Agreed. I'll send everyone a <span class="hl">recap</span> and the <span class="hl">action items</span> after the call.</p>
+      </div>
+      <div class="tnote">Read this aloud with him first, assigning roles if useful, before he sees the vocab cards below. Comprehension first, labels second.</div>
+    </div>
+
+    <div class="card">
+      <h3>Key vocabulary — tap to reveal</h3>
+      <div class="vocab-grid" id="vocabGrid"></div>
+    </div>
+  </section>
+
+  <!-- GRAMMAR -->
+  <section class="panel" id="panel-grammar">
+    <p class="lead">The phrases only sound natural because of the softening underneath. Four small patterns carry the whole skill.</p>
+
+    <div class="gcard">
+      <h4>1 · Interrupting politely</h4>
+      <div class="formula">Could / Can I just + verb...? &nbsp;·&nbsp; Sorry, can I + verb...?</div>
+      <p class="ex">"Could I just come in here for a second?"</p>
+      <p class="ex">"Sorry, can I add something to that?"</p>
+      <p class="fr">Fr : Est-ce que je peux juste... / Désolé, je peux ajouter quelque chose ?</p>
+      <div class="mistake">❌ "I want to say something." — too abrupt for a meeting register.<br>✅ "Could I just come in here?"</div>
+    </div>
+
+    <div class="gcard">
+      <h4>2 · Holding the floor</h4>
+      <div class="formula">Hang on, let me + verb. &nbsp;·&nbsp; If I could just + verb...</div>
+      <p class="ex">"Hang on, let me finish this point."</p>
+      <p class="ex">"If I could just finish, then I'll pass it over to you."</p>
+      <p class="fr">Fr : Attends, laisse-moi finir. / Si je pouvais juste terminer...</p>
+      <div class="mistake">❌ "Wait wait wait." — reads as impatient in a professional setting.<br>✅ "Hang on, let me finish."</div>
+    </div>
+
+    <div class="gcard">
+      <h4>3 · Yielding the floor</h4>
+      <div class="formula">Go on. &nbsp;·&nbsp; Sorry, you were saying?</div>
+      <p class="ex">"Go on, please."</p>
+      <p class="ex">"Sorry — you were saying? Please continue."</p>
+      <p class="fr">Fr : Vas-y. / Désolé, tu disais ?</p>
+      <div class="mistake">❌ Staying silent and letting it feel awkward.<br>✅ Actively inviting them back in signals confidence, not weakness.</div>
+    </div>
+
+    <div class="gcard">
+      <h4>4 · Softening a request or question</h4>
+      <div class="formula">Would you mind if I...? &nbsp;·&nbsp; I was wondering whether we could...</div>
+      <p class="ex">"Would you mind if I asked a quick question?"</p>
+      <p class="ex">"I was wondering whether we could revisit the timeline."</p>
+      <p class="fr">Fr : Ça vous dérangerait si... / Je me demandais si on pourrait...</p>
+      <div class="mistake">❌ "I need you to explain that again." — too direct for most meeting contexts.<br>✅ "Would you mind explaining that again?"</div>
+    </div>
+  </section>
+
+  <!-- PRACTICE -->
+  <section class="panel" id="panel-practice">
+    <p class="lead">Controlled practice before he has to produce it live.</p>
+
+    <div class="card">
+      <h3>A · Choose the most natural phrase</h3>
+      <span class="diff-tag diff-easy">Easy</span>
+      <div id="mcContainer"></div>
+    </div>
+
+    <div class="card">
+      <h3>B · Complete the mini-dialogue</h3>
+      <span class="diff-tag diff-medium">Medium</span>
+      <div id="gapContainer"></div>
+    </div>
+
+    <div class="card">
+      <h3>C · Match the term to its meaning</h3>
+      <span class="diff-tag diff-hard">Hard</span>
+      <p class="hint">Tap a term, then tap its match.</p>
+      <div id="matchContainer" style="margin-top:10px;"></div>
+      <div class="feedback" id="matchFeedback"></div>
+    </div>
+  </section>
+
+  <!-- SPEAKING -->
+  <section class="panel" id="panel-speaking">
+    <p class="lead">This is the evidence task for today's can-do card. Pick a scenario close to his real work.</p>
+
+    <div class="card">
+      <h3>Choose a scenario</h3>
+      <div class="scenario" data-s="1">
+        <h4>Budget allocation disagreement</h4>
+        <p>Two departments disagree on how to split next quarter's budget.</p>
+      </div>
+      <div class="scenario" data-s="2">
+        <h4>Delayed deliverable, client on the call</h4>
+        <p>A client wants to escalate a delay; the team needs to manage the conversation.</p>
+      </div>
+      <div class="scenario" data-s="3">
+        <h4>Sign-off before double-checking figures</h4>
+        <p>One person wants to sign off now; another insists on checking the numbers first.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Roleplay it — 3 people, one of them him</h3>
+      <p class="lead" style="margin-bottom:10px;">Play the second role yourself, or simulate a third voice for a genuine 3-way exchange. Tick each box live as you see it happen naturally — don't announce it to him in the moment.</p>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box" data-check="1"></div><span>Interrupted politely, once</span></div>
+        <div class="check-item"><div class="check-box" data-check="2"></div><span>Held the floor against an interruption, once</span></div>
+        <div class="check-item"><div class="check-box" data-check="3"></div><span>Yielded the floor gracefully, once</span></div>
+      </div>
+      <div class="tnote">If he defaults to French phrasing translated word-for-word ("I want to say" instead of "Could I just come in here"), that's fine to gently reformulate in the moment — this doesn't count against the pass/fail, it's exactly what session two will reinforce.</div>
+    </div>
+  </section>
+
+</main>
+
+<div id="timerBubble">50:00</div>
+<div id="notesDrawer">📝</div>
+<div id="drawerPanel">
+  <h4>Session notes</h4>
+  <textarea id="noteInput" placeholder="Quick note..."></textarea>
+  <button class="mini-btn" id="saveNoteBtn" style="width:100%;margin-bottom:8px;">Save</button>
+  <div id="savedNotes"></div>
+</div>
+
+<script>
+  // ---------- Tabs ----------
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.panel');
+  tabBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      tabBtns.forEach(b=>b.classList.remove('active'));
+      panels.forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // ---------- Goal toggle ----------
+  document.getElementById('goalToggle').addEventListener('click', ()=>{
+    document.getElementById('goalPanel').classList.toggle('open');
+  });
+
+  // ---------- Teacher notes toggle ----------
+  document.getElementById('notesToggle').addEventListener('click', ()=>{
+    document.body.classList.toggle('notes-on');
+  });
+
+  // ---------- Vocabulary ----------
+  const vocab = [
+    {term:'agenda', fr:'ordre du jour', ex:'"Let\'s stick to the agenda and cover item three next."'},
+    {term:'recap', fr:'récapitulatif / résumé', ex:'"Let\'s send a quick recap after the meeting."'},
+    {term:'action items', fr:'actions à mener', ex:'"We\'ll close with a list of action items."'},
+    {term:'stakeholders', fr:'parties prenantes', ex:'"We need buy-in from all the stakeholders first."'},
+    {term:'follow up', fr:'faire un suivi', ex:'"I\'ll follow up with finance by Friday."'},
+    {term:'circle back', fr:'revenir sur un sujet', ex:'"Let\'s circle back to the budget question later."'},
+    {term:'table an item', fr:'reporter un point', ex:'"Can we table this and come back to it next week?"'},
+    {term:'sign off', fr:'valider / donner son accord', ex:'"I need the CFO to sign off before we proceed."'},
+    {term:'deliverable', fr:'livrable', ex:'"The first deliverable is due at the end of the month."'},
+    {term:'escalate', fr:'faire remonter', ex:'"If it\'s not resolved, we\'ll need to escalate it."'}
+  ];
+  const vocabGrid = document.getElementById('vocabGrid');
+  vocab.forEach((v,i)=>{
+    const el = document.createElement('div');
+    el.className = 'vcard';
+    el.dataset.idx = i;
+    el.innerHTML = `<div class="term">${v.term}</div><div class="reveal">${v.fr}<br><em>${v.ex}</em></div>`;
+    vocabGrid.appendChild(el);
+  });
+  vocabGrid.addEventListener('click', (e)=>{
+    const card = e.target.closest('.vcard');
+    if(card) card.classList.toggle('flipped');
+  });
+
+  // ---------- Practice A: multiple choice ----------
+  const mcData = [
+    {q:'You want to jump in while a colleague is speaking.', hint:'verb: interrupt', opts:['I want to say something.','Could I just come in here?','You need to stop talking.'], correct:1},
+    {q:'Someone interrupts you and you want to finish your point.', hint:'phrase: hold the floor', opts:['Hang on, let me finish.','Be quiet, please.','Okay, never mind.'], correct:0},
+    {q:'You just held the floor and now want to let the other person continue.', hint:'phrase: yield', opts:['Stop interrupting me.','Go on.','I already told you.'], correct:1},
+    {q:'You want to ask a slightly sensitive question in a formal meeting.', hint:'modal: soften', opts:['Answer this now.','Tell me why.','Would you mind if I asked a quick question?'], correct:2},
+    {q:'You want to gently reopen a topic discussed earlier.', hint:'phrasal verb', opts:['Circle back to it.','Attack it again.','Forget about it.'], correct:0}
+  ];
+  const mcContainer = document.getElementById('mcContainer');
+  mcData.forEach((item,qi)=>{
+    const wrap = document.createElement('div');
+    wrap.className = 'ex-card';
+    wrap.innerHTML = `<p class="q">${qi+1}. ${item.q} <span class="hint">(${item.hint})</span></p>
+      <div class="mc-options" data-qi="${qi}">
+        ${item.opts.map((o,oi)=>`<button class="mc-opt" data-oi="${oi}">${o}</button>`).join('')}
+      </div>`;
+    mcContainer.appendChild(wrap);
+  });
+  mcContainer.addEventListener('click', (e)=>{
+    if(!e.target.classList.contains('mc-opt')) return;
+    const group = e.target.closest('.mc-options');
+    const qi = parseInt(group.dataset.qi);
+    const oi = parseInt(e.target.dataset.oi);
+    if(group.dataset.answered) return;
+    group.dataset.answered = '1';
+    const buttons = group.querySelectorAll('.mc-opt');
+    buttons.forEach((b,i)=>{
+      if(i === mcData[qi].correct) b.classList.add('correct');
+      else if(i === oi) b.classList.add('incorrect');
+    });
+  });
+
+  // ---------- Practice B: gap fill ----------
+  const gapData = [
+    {before:'Karim: I think the launch date should move.', blank:'____________________ — I don\'t think we\'ve looked at all the options yet.', after:'', answers:['hang on, let me finish','hang on let me finish'], hint:'hold the floor'},
+    {before:'Sana is explaining the new process in detail.', blank:'Fayçal: Sorry, ____________________? I want to check something with finance first.', after:'', answers:['can i just come in here','can i come in here'], hint:'interrupt'},
+    {before:'Fayçal has just finished making his point after an interruption.', blank:'Karim: Fair enough. ____________________.', after:'', answers:['go on','sorry, you were saying','sorry you were saying'], hint:'yield'}
+  ];
+  const gapContainer = document.getElementById('gapContainer');
+  gapData.forEach((item,gi)=>{
+    const wrap = document.createElement('div');
+    wrap.className = 'ex-card';
+    wrap.innerHTML = `<p class="q">${item.before}<br>${item.blank} <span class="hint">(${item.hint})</span></p>
+      <div class="gapfill-row">
+        <input type="text" class="gap-input" data-gi="${gi}" placeholder="Type the phrase...">
+        <button class="mini-btn" data-check="${gi}">Check</button>
+        <button class="mini-btn outline" data-reveal="${gi}">Reveal</button>
+      </div>
+      <div class="feedback" id="gapFeedback${gi}"></div>`;
+    gapContainer.appendChild(wrap);
+  });
+  gapContainer.addEventListener('click', (e)=>{
+    if(e.target.dataset.check !== undefined){
+      const gi = parseInt(e.target.dataset.check);
+      const input = gapContainer.querySelector(`.gap-input[data-gi="${gi}"]`);
+      const val = input.value.trim().toLowerCase().replace(/[.,!?]/g,'');
+      const fb = document.getElementById('gapFeedback'+gi);
+      if(gapData[gi].answers.includes(val)){
+        input.classList.add('correct'); input.classList.remove('incorrect');
+        fb.textContent = 'Nice — natural and correct.'; fb.className = 'feedback ok';
+      } else {
+        input.classList.add('incorrect'); input.classList.remove('correct');
+        fb.textContent = 'Not quite — try again, or tap Reveal.'; fb.className = 'feedback no';
+      }
+    }
+    if(e.target.dataset.reveal !== undefined){
+      const gi = parseInt(e.target.dataset.reveal);
+      const fb = document.getElementById('gapFeedback'+gi);
+      fb.textContent = 'Sample: "' + gapData[gi].answers[0] + '"'; fb.className = 'feedback ok';
+    }
+  });
+
+  // ---------- Practice C: matching ----------
+  const matchData = [
+    {term:'agenda', def:'the list of topics to cover'},
+    {term:'stakeholders', def:'people with an interest in the outcome'},
+    {term:'deliverable', def:'something that must be produced by a deadline'},
+    {term:'escalate', def:'pass a problem to someone with more authority'}
+  ];
+  let matchSelectedTerm = null;
+  let matchedPairs = 0;
+  const matchContainer = document.getElementById('matchContainer');
+  function renderMatch(){
+    const terms = matchData.map(m=>m.term);
+    const defs = [...matchData.map(m=>m.def)].sort(()=>Math.random()-0.5);
+    matchContainer.innerHTML = `
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <div id="matchTerms" style="flex:1;min-width:140px;display:flex;flex-direction:column;gap:8px;">
+          ${terms.map(t=>`<button class="mc-opt" data-term="${t}">${t}</button>`).join('')}
+        </div>
+        <div id="matchDefs" style="flex:1;min-width:160px;display:flex;flex-direction:column;gap:8px;">
+          ${defs.map(d=>`<button class="mc-opt" data-def="${d}">${d}</button>`).join('')}
+        </div>
+      </div>`;
+  }
+  renderMatch();
+  matchContainer.addEventListener('click', (e)=>{
+    const termBtn = e.target.closest('[data-term]');
+    const defBtn = e.target.closest('[data-def]');
+    const fb = document.getElementById('matchFeedback');
+    if(termBtn && !termBtn.classList.contains('correct')){
+      document.querySelectorAll('#matchTerms .mc-opt').forEach(b=>b.style.outline='none');
+      matchSelectedTerm = termBtn.dataset.term;
+      termBtn.style.outline = '2px solid var(--navy)';
+    }
+    if(defBtn && matchSelectedTerm && !defBtn.classList.contains('correct')){
+      const correctDef = matchData.find(m=>m.term===matchSelectedTerm).def;
+      if(defBtn.dataset.def === correctDef){
+        const termBtn2 = [...document.querySelectorAll('#matchTerms .mc-opt')].find(b=>b.dataset.term===matchSelectedTerm);
+        termBtn2.classList.add('correct'); termBtn2.style.outline='none';
+        defBtn.classList.add('correct');
+        matchedPairs++;
+        fb.textContent = matchedPairs === matchData.length ? 'All matched — well done.' : 'Correct match.';
+        fb.className = 'feedback ok';
+      } else {
+        fb.textContent = 'Not a match — try again.';
+        fb.className = 'feedback no';
+      }
+      matchSelectedTerm = null;
+    }
+  });
+
+  // ---------- Speaking: scenario select + checklist ----------
+  document.querySelectorAll('.scenario').forEach(s=>{
+    s.addEventListener('click', ()=>{
+      document.querySelectorAll('.scenario').forEach(x=>x.classList.remove('selected'));
+      s.classList.add('selected');
+    });
+  });
+  document.querySelectorAll('.check-box').forEach(cb=>{
+    cb.addEventListener('click', ()=> cb.classList.toggle('done'));
+  });
+
+  // ---------- Timer ----------
+  const timerBubble = document.getElementById('timerBubble');
+  let remaining = 3000, running = false, intervalId = null;
+  function formatTime(s){ const m=Math.floor(s/60), sec=s%60; return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0'); }
+  function renderTimer(){ timerBubble.textContent = formatTime(remaining); timerBubble.classList.toggle('warn', remaining<=30 && remaining>0); }
+  timerBubble.addEventListener('click', ()=>{
+    if(running){
+      running=false; clearInterval(intervalId); timerBubble.classList.remove('running');
+    } else {
+      running=true; timerBubble.classList.add('running');
+      intervalId = setInterval(()=>{
+        remaining--;
+        if(remaining<=0){ remaining=0; running=false; clearInterval(intervalId); timerBubble.classList.remove('running'); }
+        renderTimer();
+      },1000);
+    }
+  });
+  renderTimer();
+
+  // ---------- Notes drawer ----------
+  const notesDrawer = document.getElementById('notesDrawer');
+  const drawerPanel = document.getElementById('drawerPanel');
+  const savedNotesEl = document.getElementById('savedNotes');
+  let notes = [];
+  notesDrawer.addEventListener('click', ()=> drawerPanel.classList.toggle('open'));
+  document.getElementById('saveNoteBtn').addEventListener('click', ()=>{
+    const input = document.getElementById('noteInput');
+    const val = input.value.trim();
+    if(!val) return;
+    const time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    notes.unshift({time, val});
+    input.value = '';
+    renderNotes();
+  });
+  function renderNotes(){
+    savedNotesEl.innerHTML = notes.map(n=>`<div class="saved-entry"><div class="t">${n.time}</div>${n.val}</div>`).join('');
+  }
+</script>
+
+</body>
+</html>
