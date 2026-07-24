@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./doc-page.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
+
+  </style>
+</head>
+<body>
+<doc-page size="letter" margin="0.7in">
+
+  <div slot="header" style="display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px;border-bottom:3px solid #0E7C86;"></div>
+  <div slot="footer" style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #DDD8CC;font-size:10.5px;color:#9A9483;font-family:'Nunito',sans-serif;">
+    <span>© Telling Time</span>
+    <span>ESL Grammar Workbook</span>
+  </div>
+
+  <div style="text-align:center;padding:8px 0 22px;">
+    <div style="display:inline-block;background:#0E7C86;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Durim's ESL Grammar Workbook: A1–C2</div>
+    <h1 style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:44px;color:#1B4B4F;margin:16px 0 4px;line-height:1.05;">Telling Time</h1>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:600;font-size:22px;color:#F2994A;margin-bottom:10px;">What Time Is It?</div>
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:6px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;">📘 1. Understanding the Rule</h2>
+
+  <p style="font-size:15px;line-height:1.65;color:#2B2B2B;margin:0 0 12px;">English has <strong>two common ways</strong> to say a clock time. Both are correct — choose the one that fits the situation.</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
+    <div style="background:#EAF2FF;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>Digital style</strong><br/>hour + minutes, read like a number: 3:15 → "three fifteen"</div>
+    <div style="background:#F0EAFE;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>Clock-face style</strong><br/>past / to the hour: 3:15 → "quarter past three"</div>
+  </div>
+
+  <table style="width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:14px;">
+    <thead><tr style="background:#0E7C86;color:#fff;font-family:'Baloo 2',sans-serif;"><th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Time</th><th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Clock-face style</th><th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Digital style</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;">3:00</td><td style="padding:8px 10px;border:1px solid #E4E4E4;"><strong>three o'clock</strong></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">three</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;">3:05</td><td style="padding:8px 10px;border:1px solid #E4E4E4;"><strong>five past three</strong></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">three oh five</td></tr>
+      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;">3:15</td><td style="padding:8px 10px;border:1px solid #E4E4E4;"><strong>quarter past three</strong></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">three fifteen</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;">3:30</td><td style="padding:8px 10px;border:1px solid #E4E4E4;"><strong>half past three</strong></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">three thirty</td></tr>
+      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;">3:45</td><td style="padding:8px 10px;border:1px solid #E4E4E4;"><strong>quarter to four</strong></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">three forty-five</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;">3:50</td><td style="padding:8px 10px;border:1px solid #E4E4E4;"><strong>ten to four</strong></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">three fifty</td></tr>
+    </tbody>
+  </table>
+
+  <div style="background:#FFF6D8;border:2px dashed #F2C94C;border-radius:12px;padding:14px 16px;margin:0 0 18px;font-size:14px;color:#5C4A00;">
+    <strong>Careful: "half three" ≠ "half past three" in every language.</strong> In English, <em>half past three</em> (and the informal short form <em>half three</em>) both mean <strong>3:30</strong>. But in German, Dutch and several other languages, the equivalent phrase ("halb drei" / "half drie") means <strong>2:30</strong> — half <em>to</em> three, not half <em>past</em> it. If in doubt, say "half past three" in full.
+  </div>
+
+  <div style="background:#EAF2FF;border:2px solid #C7DBFF;border-radius:12px;padding:14px 16px;margin:0 0 18px;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;color:#1B4B4F;margin-bottom:10px;">⏰ Two clocks: 12-hour vs 24-hour</div>
+    <p style="font-size:13.5px;line-height:1.6;color:#2B2B2B;margin:0 0 8px;">Everyday spoken English uses the <strong>12-hour clock</strong> with a.m./p.m. Timetables, official schedules and much of Europe use the <strong>24-hour clock</strong> — no a.m./p.m. needed.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;font-size:13.5px;color:#2B2B2B;">9:00 a.m. → <strong>09:00</strong></div>
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;font-size:13.5px;color:#2B2B2B;">1:00 p.m. → <strong>13:00</strong></div>
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;font-size:13.5px;color:#2B2B2B;">6:30 p.m. → <strong>18:30</strong></div>
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;font-size:13.5px;color:#2B2B2B;">midnight → <strong>00:00</strong></div>
+    </div>
+  </div>
+
+  <div style="background:#FFF6D8;border:2px dashed #F2C94C;border-radius:12px;padding:14px 16px;margin:0 0 20px;font-size:14px;color:#5C4A00;">
+    <strong>Careful: 12 a.m. / 12 p.m.</strong> "12 a.m." = midnight (00:00), "12 p.m." = midday/noon (12:00) — the numbers don't follow the usual a.m./p.m. pattern, so it's safer to just say "midnight" or "noon/midday."
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:30px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">📊 2. Reference Tables</h2>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Minutes past / to the hour</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#8B5FE0;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Minutes</th><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Rule</th><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Example</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">1–29 after the hour</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">minutes + <strong>past</strong> + hour</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">twenty past four (4:20)</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">31–59 (i.e. before the next hour)</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">minutes left + <strong>to</strong> + next hour</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">twenty to five (4:40)</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">exactly 15</td><td style="padding:7px 10px;border:1px solid #E4E4E4;"><strong>quarter</strong> past + hour</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">quarter past four (4:15)</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">exactly 45</td><td style="padding:7px 10px;border:1px solid #E4E4E4;"><strong>quarter</strong> to + next hour</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">quarter to five (4:45)</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">exactly 30</td><td style="padding:7px 10px;border:1px solid #E4E4E4;"><strong>half</strong> past + hour (never "half to")</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">half past four (4:30)</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Talking about time: prepositions &amp; useful phrases</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 20px;font-size:13.5px;">
+    <thead><tr style="background:#4C7BF5;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Phrase</th><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Use</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">What time is it? / What's the time?</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">asking the time</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">at + clock time</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">scheduled moment: "The train leaves at 6:15."</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">It's + time</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">stating the time: "It's half past three."</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">around / about + time</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">approximate: "Let's meet around 5."</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">sharp / on the dot</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">exact, no later: "9 o'clock sharp."</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:24px 0 6px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">✏️ 3. Practice Exercises</h2>
+  <p style="font-size:13.5px;color:#9A9483;margin:0 0 16px;">18 exercises across all six CEFR levels — three per level, increasing in difficulty. Answers on the last page.</p>
+
+  <div style="display:inline-block;background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:10px 0 10px;">LEVEL A1 · Beginner</div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: choose how to say this time.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>3:00 → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">three o'clock</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">three past</button></span></li>
+      <li>3:15 → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">quarter past three</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">quarter to three</button></span></li>
+      <li>3:30 → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">half past three</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">half to four</button></span></li>
+      <li>3:45 → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">quarter to four</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">quarter past four</button></span></li>
+      <li>3:05 → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">five past three</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">five to three</button></span></li>
+      <li>3:50 → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">ten to four</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">ten past four</button></span></li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each time (1–5) to its word form (a–e).</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
+      <div>1. 6:00 <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>a. quarter past six</div>
+      <div>2. 6:15 <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>b. half past six</div>
+      <div>3. 6:30 <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>c. six o'clock</div>
+      <div>4. 6:45 <select class="iq-select" onchange="checkSelect(this,'e')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>d. ten past six</div>
+      <div>5. 6:10 <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option></select></div><div>e. quarter to seven</div>
+    </div>
+  </div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Write the missing word (past / to / o'clock / quarter / half).</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>It's ten <input class="iq-input" id="ex3-1"> five. (5:10)</li>
+      <li>It's <input class="iq-input" id="ex3-2"> past seven. (7:15)</li>
+      <li>It's <input class="iq-input" id="ex3-3"> past eight. (8:30)</li>
+      <li>It's quarter <input class="iq-input" id="ex3-4"> nine. (8:45)</li>
+      <li>It's nine <input class="iq-input" id="ex3-5">. (9:00)</li>
+      <li>It's twenty <input class="iq-input" id="ex3-6"> ten. (9:40)</li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
+  </div>
+
+  <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Maria wakes up at quarter to seven. She has breakfast at seven o'clock and leaves the house at half past seven. Her train leaves at ten past eight, so she has plenty of time. She arrives at work at nine o'clock sharp.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Maria wakes up at 6:45. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>She has breakfast at 7:30. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>She leaves the house at half past seven. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Her train leaves before she gets to the station. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>She arrives at work exactly at nine. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+    </ol>
+  </div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write a question or negative about the time.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li><input class="iq-input iq-input-wide" id="ex5-1" style="min-width:70px;" placeholder="…"> time is it? <span style="font-size:12.5px;color:#9A9483;">(ask the time)</span></li>
+      <li>The film <input class="iq-input" id="ex5-2"> start at 7 — it starts at half past seven. <span style="font-size:12.5px;color:#9A9483;">(negative)</span></li>
+      <li><input class="iq-input" id="ex5-3" style="min-width:70px;"> the shop open at nine? <span style="font-size:12.5px;color:#9A9483;">(question)</span></li>
+      <li>We <input class="iq-input" id="ex5-4"> have class at quarter to six. <span style="font-size:12.5px;color:#9A9483;">(negative)</span></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
+  </div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>quarter / it's / six / past <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>leaves / at / train / 6:15 / the <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>half / it's / eight / past <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>nine / meet / let's / around <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>four / to / it's / quarter <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
+  </div>
+
+  <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The meeting is in 3 o'clock. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>It's half to four. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>The train leaves on 6:15. <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>It's quarter four. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>We meet at half past to five. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>The shop closes at 12 p.m. midnight. <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
+  </div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Convert between the 12-hour and 24-hour clock.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>7:00 a.m. → <input class="iq-input" id="ex8-1" placeholder="24-hour…"></li>
+      <li>2:30 p.m. → <input class="iq-input" id="ex8-2" placeholder="24-hour…"></li>
+      <li>18:00 → <input class="iq-input" id="ex8-3" placeholder="12-hour…"></li>
+      <li>23:15 → <input class="iq-input" id="ex8-4" placeholder="12-hour…"></li>
+      <li>midnight → <input class="iq-input" id="ex8-5" placeholder="24-hour…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
+  </div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: which register fits?</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Telling a friend the time casually: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) It's half past three.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) The time is 15:30 hours.</button></span></li>
+      <li>An airport departures board: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) quarter past six in the evening</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) 18:15</button></span></li>
+      <li>"The shop opens at 9." What does this most likely mean? <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) 9 a.m.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) 9 p.m.</button></span></li>
+      <li>"See you around 8." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) approximately 8, not exact</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) exactly 8, no later</button></span></li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B2 · Upper-Intermediate</div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">The itinerary lists departure at 07:45 and arrival at 11:20, local time. Passengers should check in no later than 06:30 — that's an hour and a quarter before departure. Because of the time difference, it will feel like early afternoon on arrival, even though the local clock reads just after eleven in the morning.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Departure is at 7:45 a.m. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Check-in closes exactly at departure time. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Check-in is an hour and 15 minutes before departure. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>There is no time difference at the destination. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Local arrival time is just after 11 a.m. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+    </ol>
+  </div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The meeting starts sharp at around three. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>Check-in closes on 06:30. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>It's half past to eleven. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>The store closes at 12 a.m. noon. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>We land in 11:20, local time. <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
+  </div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Describe your typical day in 6–8 sentences. Use <strong>at least six different time expressions</strong> (o'clock, past, to, half, quarter, around, sharp).</p>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
+  </div>
+
+  <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each casual time expression more formally, for a written schedule.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The call's at like half two-ish. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>Doors open around 7, give or take. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>We'll wrap up sometime after five. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>Show up at nine sharp, no excuses. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>It kicks off at like quarter to eight tonight. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
+  </div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: what does this nuance mean?</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"Arrive at nine sharp." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) exactly 9, not a minute later</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) approximately 9</button></span></li>
+      <li>"Let's say around nine." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) roughly 9, some flexibility</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) exactly 9</button></span></li>
+      <li>"The flight departs at 14:00 local time." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) the destination's own clock, not the traveller's home time</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) the traveller's home time</button></span></li>
+      <li>"Please confirm your ETA." <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) estimated time of arrival</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) exact time of arrival, guaranteed</button></span></li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>By the time the meeting will start, everyone must be seated at 15:00 hours. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>The last train departs on 23:45, not on midnight. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>Check-in is until 06:30, an hour before at departure. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>The workshop runs from 9 until 12 p.m. noon. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>Please arrive prior 8:45 for registration. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
+  </div>
+
+  <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal conference itinerary for one day. Use the <strong>24-hour clock throughout</strong>, and include at least one instance each of "sharp," "no later than," and a time zone note (e.g. "local time").</p>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
+  </div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, precise sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>later / no / 06:30 / than / check-in / closes <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>time / 11:20 / arrival / is / local / at <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>be / must / seated / 15:00 / by / everyone <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>sharp / begins / registration / 08:45 / at <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>midnight / not / 23:45 / departs / at / train / the / last <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
+  </div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The workshop runs until 12 p.m. midnight. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>Please arrive prior 8:45 for registration. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>The last train departs on 23:45. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>Check-in is until 06:30, an hour before at departure. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>By the time the meeting will start, everyone must be seated. <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
+    <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:0;white-space:nowrap;">🔑 Answer Key</h2>
+    <button id="answerToggleBtn" style="flex:0 0 auto;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#fff;background:#8B5FE0;border:none;border-radius:999px;padding:8px 18px;cursor:pointer;white-space:nowrap;">🙈 Hide Answer Key</button>
+  </div>
+  <p style="font-size:12.5px;color:#9A9483;margin:0 0 14px;">Tip: click "Hide Answer Key" above before printing a copy for students — the button itself never prints.</p>
+
+  <div id="answer-key" style="display:block;">
+    <div style="background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.1</strong> 1. three o'clock 2. quarter past three 3. half past three 4. quarter to four 5. five past three 6. ten to four<br/>
+      <strong>Ex.2</strong> 1–c, 2–a, 3–b, 4–e, 5–d<br/>
+      <strong>Ex.3</strong> 1. past 2. quarter 3. half 4. to 5. o'clock 6. to
+    </div>
+    <div style="background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.4</strong> 1. T 2. F 3. T 4. F 5. T<br/>
+      <strong>Ex.5</strong> 1. What 2. doesn't 3. Does 4. don't<br/>
+      <strong>Ex.6</strong> 1. It's quarter past six. 2. The train leaves at 6:15. 3. It's half past eight. 4. Let's meet around nine. 5. It's quarter to four.
+    </div>
+    <div style="background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.7</strong> 1. The meeting is at 3 o'clock. 2. It's half past four. 3. The train leaves at 6:15. 4. It's quarter past four. 5. We meet at half past five. 6. The shop closes at midnight.<br/>
+      <strong>Ex.8</strong> 1. 07:00 2. 14:30 3. 6:00 p.m. 4. 11:15 p.m. 5. 00:00<br/>
+      <strong>Ex.9</strong> 1–a 2–b 3–a 4–a
+    </div>
+    <div style="background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.10</strong> 1. T 2. F 3. T 4. F 5. T<br/>
+      <strong>Ex.11</strong> 1. …sharp at three. 2. …closes at 06:30. 3. It's half past eleven. 4. The store closes at noon. 5. We land at 11:20.<br/>
+      <strong>Ex.12</strong> Open answer — check 6+ distinct, correctly-used time expressions.
+    </div>
+    <div style="background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">C1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.13</strong> Sample answers (accept close equivalents): 1. The call is at approximately 2:30 p.m. 2. Doors open at approximately 7 p.m. 3. We will conclude sometime after 5 p.m. 4. Please arrive at 9 a.m. sharp. 5. It begins at quarter to eight this evening.<br/>
+      <strong>Ex.14</strong> 1–a 2–a 3–a 4–a<br/>
+      <strong>Ex.15</strong> 1. By the time the meeting starts… 2. …departs at 23:45, not at midnight. 3. Check-in is until 06:30, an hour before departure. 4. …from 9 until noon. 5. …arrive prior to 8:45.
+    </div>
+    <div style="background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 4px;">C2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 4px;">
+      <strong>Ex.16</strong> Open answer — check for consistent 24-hour clock use, "sharp," "no later than," and a local-time note.<br/>
+      <strong>Ex.17</strong> 1. Check-in closes no later than 06:30. 2. Local arrival time is at 11:20. 3. Everyone must be seated by 15:00. 4. Registration begins at 08:45 sharp. 5. The last train departs at 23:45, not midnight.<br/>
+      <strong>Ex.18</strong> 1. …runs until noon. 2. …arrive prior to 8:45. 3. …departs at 23:45. 4. Check-in is until 06:30, an hour before departure. 5. By the time the meeting starts, everyone must be seated.
+    </div>
+  </div>
+
+</doc-page>
+
+<script>
+(function () {
+  var btn = document.getElementById('answerToggleBtn');
+  var key = document.getElementById('answer-key');
+  btn.addEventListener('click', function () {
+    var showing = key.style.display !== 'none';
+    key.style.display = showing ? 'none' : 'block';
+    btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
+  });
+})();
+
+/* -- Interactive exercises -- */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['past'] },
+    { accept: ['quarter'] },
+    { accept: ['half'] },
+    { accept: ['to'] },
+    { accept: ["o'clock", 'oclock'] },
+    { accept: ['to'] }
+  ]},
+  ex5: { type: 'exact', items: [
+    { accept: ['what'] },
+    { accept: ["doesn't", 'does not'] },
+    { accept: ['does'] },
+    { accept: ["don't", 'do not'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ["it's quarter past six", 'it is quarter past six'] },
+    { accept: ['the train leaves at 6:15'] },
+    { accept: ["it's half past eight", 'it is half past eight'] },
+    { accept: ["let's meet around nine", 'let us meet around nine'] },
+    { accept: ["it's quarter to four", 'it is quarter to four'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['at 3 o\'clock', 'at 3 oclock', 'at three o\'clock'] },
+    { accept: ['half past four'] },
+    { accept: ['at 6:15'] },
+    { accept: ['quarter past four'] },
+    { accept: ['half past five'] },
+    { accept: ['at midnight'] }
+  ]},
+  ex8: { type: 'exact', items: [
+    { accept: ['07:00', '7:00'] },
+    { accept: ['14:30'] },
+    { accept: ['6:00 p.m.', '6:00 pm', '6 p.m.', '6 pm'] },
+    { accept: ['11:15 p.m.', '11:15 pm'] },
+    { accept: ['00:00', '24:00'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['sharp at three', 'at three sharp'] },
+    { accept: ['closes at 06:30', 'closes at 6:30'] },
+    { accept: ['half past eleven'] },
+    { accept: ['closes at noon'] },
+    { accept: ['land at 11:20'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['approximately 2:30', 'approximately half past two'] },
+    { accept: ['approximately 7'] },
+    { accept: ['sometime after 5', 'sometime after five'] },
+    { accept: ['9 a.m. sharp', 'nine a.m. sharp', '9am sharp'] },
+    { accept: ['quarter to eight'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['meeting starts'] },
+    { accept: ['departs at 23:45, not at midnight', 'departs at 23:45 not at midnight'] },
+    { accept: ['until 06:30, an hour before departure'] },
+    { accept: ['from 9 until noon'] },
+    { accept: ['arrive prior to 8:45', 'arrive prior to 8.45'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['check-in closes no later than 06:30', 'check in closes no later than 06:30'] },
+    { accept: ['local arrival time is at 11:20'] },
+    { accept: ['everyone must be seated by 15:00'] },
+    { accept: ['registration begins at 08:45 sharp'] },
+    { accept: ['the last train departs at 23:45, not midnight', 'the last train departs at 23:45 not midnight'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['runs until noon', 'runs until 12 noon'] },
+    { accept: ['arrive prior to 8:45', 'arrive prior to 8.45'] },
+    { accept: ['departs at 23:45'] },
+    { accept: ['until 06:30, an hour before departure'] },
+    { accept: ['meeting starts, everyone must be seated'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
+</script>
+</body>
+</html>
