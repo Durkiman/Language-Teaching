@@ -179,18 +179,17 @@
   .check-item span{font-size:0.86rem;color:var(--ink);}
 
   /* Teacher notes */
+  .tnote-toggle{
+    display:inline-flex;align-items:center;gap:5px;
+    background:var(--navy-pale);color:var(--navy-dark);border:none;border-radius:20px;
+    padding:6px 12px;font-family:'Inter',sans-serif;font-size:0.72rem;font-weight:700;
+    cursor:pointer;margin-top:10px;
+  }
   .tnote{
     display:none;background:var(--navy-pale);border-left:3px solid var(--navy);
-    border-radius:8px;padding:10px 13px;margin-top:10px;font-size:0.8rem;color:var(--navy-dark);line-height:1.5;
+    border-radius:8px;padding:10px 13px;margin-top:8px;font-size:0.8rem;color:var(--navy-dark);line-height:1.5;
   }
-  body.notes-on .tnote{display:block;}
-  #notesToggle{
-    position:fixed;top:16px;right:16px;z-index:31;
-    background:var(--navy);color:#fff;border:none;border-radius:20px;
-    padding:8px 14px;font-size:0.75rem;font-weight:700;cursor:pointer;
-    box-shadow:var(--shadow);
-  }
-  body.notes-on #notesToggle{background:var(--gold);}
+  .tnote.show{display:block;}
 
   /* Timer */
   #timerBubble{
@@ -226,12 +225,10 @@
 </head>
 <body>
 
-<div style="background:#0E7C86;">
-  <a href="../Grammar-book/polite-requests.html" style="display:block;color:#FFF6D8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;text-decoration:none;text-align:center;padding:10px 16px;letter-spacing:.01em;">📘 Related grammar: Polite Requests — open the workbook page &amp; exercises →</a>
-  <a href="../Grammar-book/modal-verbs.html" style="display:block;color:#FFF6D8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;text-decoration:none;text-align:center;padding:10px 16px;letter-spacing:.01em;border-top:1px solid rgba(255,255,255,.25);">📘 Related grammar: Modal Verbs — open the workbook page &amp; exercises →</a>
+<div style="display:flex;flex-wrap:wrap;gap:8px;padding:10px 16px;background:var(--paper);border-bottom:1px solid var(--line);">
+  <a href="../Grammar-book/polite-requests.html" style="display:inline-flex;align-items:center;gap:6px;color:var(--navy-dark);background:var(--navy-pale);font-family:'Inter',sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Polite Requests</a>
+  <a href="../Grammar-book/modal-verbs.html" style="display:inline-flex;align-items:center;gap:6px;color:var(--navy-dark);background:var(--navy-pale);font-family:'Inter',sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Modal Verbs</a>
 </div>
-
-<button id="notesToggle">Teacher notes</button>
 
 <header>
   <h1>Meetings — Vocabulary &amp; Turn-Taking</h1>
@@ -263,6 +260,7 @@
       <div class="prompt-card">"Tell me about a meeting you had this week. What was it about?"</div>
       <div class="prompt-card">"What's a meeting habit that annoys you — people talking too much, going off-topic?"</div>
       <div class="prompt-card">"When you disagree with someone in a meeting, how do you usually say it?"</div>
+      <button class="tnote-toggle" onclick="toggleNote(this)">Teacher notes</button>
       <div class="tnote">Listen for how he currently handles interruption and disagreement in English — this tells you how much of today's language is genuinely new vs. refinement.</div>
     </div>
   </section>
@@ -282,6 +280,7 @@
         <p><b>Sana:</b> Thanks. I'd suggest we <span class="hl">table this item</span> and follow up once finance has signed off on the new figures.</p>
         <p><b>Karim:</b> Agreed. I'll send everyone a <span class="hl">recap</span> and the <span class="hl">action items</span> after the call.</p>
       </div>
+      <button class="tnote-toggle" onclick="toggleNote(this)">Teacher notes</button>
       <div class="tnote">Read this aloud with him first, assigning roles if useful, before he sees the vocab cards below. Comprehension first, labels second.</div>
     </div>
 
@@ -385,6 +384,7 @@
         <div class="check-item"><div class="check-box" data-check="2"></div><span>Held the floor against an interruption, once</span></div>
         <div class="check-item"><div class="check-box" data-check="3"></div><span>Yielded the floor gracefully, once</span></div>
       </div>
+      <button class="tnote-toggle" onclick="toggleNote(this)">Teacher notes</button>
       <div class="tnote">If he defaults to French phrasing translated word-for-word ("I want to say" instead of "Could I just come in here"), that's fine to gently reformulate in the moment — this doesn't count against the pass/fail, it's exactly what session two will reinforce.</div>
     </div>
   </section>
@@ -419,9 +419,9 @@
   });
 
   // ---------- Teacher notes toggle ----------
-  document.getElementById('notesToggle').addEventListener('click', ()=>{
-    document.body.classList.toggle('notes-on');
-  });
+  function toggleNote(btn){
+    btn.nextElementSibling.classList.toggle('show');
+  }
 
   // ---------- Vocabulary ----------
   const vocab = [
