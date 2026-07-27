@@ -6,38 +6,71 @@
       "primary": [
         "B1-19"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "modal-verbs.html",
+        "title": "Modal Verbs"
+      }
+    ]
   },
   {
     "file": "mehdi-reformulation-selling.html",
-    "title": "#8 Pillar 3 - selling"
+    "title": "#8 Pillar 3 - selling",
+    "grammar": []
   },
   {
     "file": "mehdi-present-tenses-purpose.html",
-    "title": "#7 Start with Why (Present Simple)"
+    "title": "#7 Start with Why (Present Simple)",
+    "grammar": [
+      {
+        "file": "present-continuous.html",
+        "title": "Present Continuous"
+      },
+      {
+        "file": "present-simple.html",
+        "title": "Present Simple"
+      }
+    ]
   },
   {
     "file": "mehdi-comparatives-marketing-message.html",
-    "title": "#6 Pillar 2.2 – Marketing Message"
+    "title": "#6 Pillar 2.2 – Marketing Message",
+    "grammar": [
+      {
+        "file": "comparatives-and-superlatives.html",
+        "title": "Comparatives & Superlatives"
+      }
+    ]
   },
   {
     "file": "mehdi-comparatives-marketing-overview.html",
-    "title": "#5 Pillar 2.1 – Marketing"
+    "title": "#5 Pillar 2.1 – Marketing",
+    "grammar": [
+      {
+        "file": "comparatives-and-superlatives.html",
+        "title": "Comparatives & Superlatives"
+      }
+    ]
   },
   {
     "file": "mehdi-connectors-value-summary.html",
-    "title": "#4 Pillar 1.2 – Value Summary"
+    "title": "#4 Pillar 1.2 – Value Summary",
+    "grammar": []
   },
   {
     "file": "mehdi-business-vocabulary-value-creation.html",
-    "title": "#3 Pillar 1.1 – Value Creation"
+    "title": "#3 Pillar 1.1 – Value Creation",
+    "grammar": []
   },
   {
     "file": "mehdi-question-forms-client-interview.html",
-    "title": "#2 Client Interview"
+    "title": "#2 Client Interview",
+    "grammar": []
   },
   {
     "file": "mehdi-present-simple-self-introduction.html",
-    "title": "#1 About Yourself"
+    "title": "#1 About Yourself",
+    "grammar": []
   }
 ]

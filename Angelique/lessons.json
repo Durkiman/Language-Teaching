@@ -1,18 +1,27 @@
 [
   {
     "file": "angelique-question-formation-personal-info.html",
-    "title": "#3 Personal Information"
+    "title": "#3 Personal Information",
+    "grammar": [
+      {
+        "file": "question-formation.html",
+        "title": "Question Formation"
+      }
+    ]
   },
   {
     "file": "angelique-emotions-vocabulary-mindfulness.html",
-    "title": "#2 Feelings"
+    "title": "#2 Feelings",
+    "grammar": []
   },
   {
     "file": "angelique-energy-vocabulary-chakras.html",
-    "title": "#1 chakras"
+    "title": "#1 chakras",
+    "grammar": []
   },
   {
     "file": "angelique-needs-assessment-onboarding.html",
-    "title": "#0 discovery"
+    "title": "#0 discovery",
+    "grammar": []
   }
 ]

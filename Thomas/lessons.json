@@ -6,7 +6,13 @@
       "incidental": [
         "B1-01"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "phrasal-verbs.html",
+        "title": "Phrasal Verbs"
+      }
+    ]
   },
   {
     "file": "thomas-past-simple-linkin-park.html",
@@ -15,7 +21,13 @@
       "primary": [
         "B1-01"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "past-simple.html",
+        "title": "Past Simple"
+      }
+    ]
   },
   {
     "file": "thomas-past-simple-continuous-storytelling.html",
@@ -24,7 +36,13 @@
       "primary": [
         "B1-01"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "past-simple.html",
+        "title": "Past Simple"
+      }
+    ]
   },
   {
     "file": "thomas-opinions-techno-music.html",
@@ -33,6 +51,7 @@
       "incidental": [
         "B1-08"
       ]
-    }
+    },
+    "grammar": []
   }
 ]

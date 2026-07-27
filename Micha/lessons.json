@@ -6,7 +6,8 @@
       "primary": [
         "A1-04"
       ]
-    }
+    },
+    "grammar": []
   },
   {
     "file": "micha-ability-guess-the-player.html",
@@ -18,7 +19,21 @@
       "incidental": [
         "A2-02"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "modal-verbs.html",
+        "title": "Modal Verbs"
+      },
+      {
+        "file": "present-simple.html",
+        "title": "Present Simple"
+      },
+      {
+        "file": "have-got.html",
+        "title": "Have Got"
+      }
+    ]
   },
   {
     "file": "micha-describing-people-world-cup.html",
@@ -27,7 +42,17 @@
       "primary": [
         "A2-02"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "present-simple.html",
+        "title": "Present Simple"
+      },
+      {
+        "file": "have-got.html",
+        "title": "Have Got"
+      }
+    ]
   },
   {
     "file": "micha-present-simple-continuous-wildlife.html",
@@ -37,7 +62,17 @@
         "A1-06",
         "A2-01"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "present-continuous.html",
+        "title": "Present Continuous"
+      },
+      {
+        "file": "present-simple.html",
+        "title": "Present Simple"
+      }
+    ]
   },
   {
     "file": "micha-grammar-review-escape-room.html",
@@ -49,11 +84,13 @@
         "A2-04",
         "A2-10"
       ]
-    }
+    },
+    "grammar": []
   },
   {
     "file": "micha-vocabulary-reference.html",
-    "title": "-Vocabulary builder-"
+    "title": "-Vocabulary builder-",
+    "grammar": []
   },
   {
     "file": "micha-present-simple-weather.html",
@@ -62,7 +99,13 @@
       "primary": [
         "A2-01"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "present-simple.html",
+        "title": "Present Simple"
+      }
+    ]
   },
   {
     "file": "micha-will-vs-going-to-moon-mission.html",
@@ -72,11 +115,18 @@
         "A2-10",
         "A2-11"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "going-to-future.html",
+        "title": "Going to Future"
+      }
+    ]
   },
   {
     "file": "worldcup-lesson.html",
-    "title": "#11 World Cup 2026"
+    "title": "#11 World Cup 2026",
+    "grammar": []
   },
   {
     "file": "micha-going-to-plans.html",
@@ -85,7 +135,13 @@
       "primary": [
         "A2-10"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "going-to-future.html",
+        "title": "Going to Future"
+      }
+    ]
   },
   {
     "file": "micha-comparatives-azores.html",
@@ -95,7 +151,13 @@
         "A2-20",
         "A2-04"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "comparatives-and-superlatives.html",
+        "title": "Comparatives & Superlatives"
+      }
+    ]
   },
   {
     "file": "micha-past-simple-football-report.html",
@@ -104,11 +166,18 @@
       "primary": [
         "A2-06"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "past-simple.html",
+        "title": "Past Simple"
+      }
+    ]
   },
   {
     "file": "micha-past-simple-champions-final.html",
-    "title": "#7 UCL Final"
+    "title": "#7 UCL Final",
+    "grammar": []
   },
   {
     "file": "micha-past-simple-nyc-food.html",
@@ -117,7 +186,13 @@
       "primary": [
         "A2-06"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "past-simple.html",
+        "title": "Past Simple"
+      }
+    ]
   },
   {
     "file": "micha-past-simple-saint-martin.html",
@@ -126,7 +201,13 @@
       "primary": [
         "A2-06"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "past-simple.html",
+        "title": "Past Simple"
+      }
+    ]
   },
   {
     "file": "micha-past-simple-saint-barth.html",
@@ -136,11 +217,18 @@
         "A2-06",
         "A2-04"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "past-simple.html",
+        "title": "Past Simple"
+      }
+    ]
   },
   {
     "file": "micha-superlatives-theme-parks.html",
-    "title": "#3.1 Theme Parks"
+    "title": "#3.1 Theme Parks",
+    "grammar": []
   },
   {
     "file": "micha-past-simple-kauai.html",
@@ -150,7 +238,13 @@
         "A2-06",
         "A2-04"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "past-simple.html",
+        "title": "Past Simple"
+      }
+    ]
   },
   {
     "file": "micha-past-simple-samoa.html",
@@ -160,7 +254,13 @@
         "A2-06",
         "A2-04"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "past-simple.html",
+        "title": "Past Simple"
+      }
+    ]
   },
   {
     "file": "micha-possessives-saba.html",
@@ -169,7 +269,13 @@
       "primary": [
         "A1-03"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "possessive-adjectives-and-pronouns.html",
+        "title": "Possessive Adjectives & Pronouns"
+      }
+    ]
   },
   {
     "file": "micha-prepositions-one-piece.html",
@@ -178,7 +284,13 @@
       "incidental": [
         "A2-04"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "prepositions-of-place.html",
+        "title": "Prepositions of Place"
+      }
+    ]
   },
   {
     "file": "micha-past-simple-verb-test.html",
@@ -187,6 +299,12 @@
       "primary": [
         "A2-06"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "past-simple.html",
+        "title": "Past Simple"
+      }
+    ]
   }
 ]

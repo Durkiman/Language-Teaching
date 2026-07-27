@@ -204,6 +204,30 @@
   .lessons-toggle[open] summary::before { content: '▾ '; }
   .lessons-toggle[open] summary { margin-bottom: 10px; }
 
+  .grammar-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--warm);
+  }
+
+  .grammar-links:empty { display: none; }
+
+  .grammar-links a {
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+    color: #0E7C86;
+    background: #E8F4F4;
+    padding: 4px 10px;
+    border-radius: 999px;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .grammar-links a:hover { background: #0E7C86; color: #fff; }
+
   .lesson-list {
     list-style: none;
     display: flex;
@@ -486,6 +510,7 @@
         <ul class="lesson-list" id="lessons-micha"></ul>
         <div id="meta-micha"></div>
       </details>
+      <div class="grammar-links" id="grammar-micha"></div>
     </div>
 
     <div class="student-card mehdi">
@@ -498,6 +523,7 @@
         <ul class="lesson-list" id="lessons-mehdi"></ul>
         <div id="meta-mehdi"></div>
       </details>
+      <div class="grammar-links" id="grammar-mehdi"></div>
     </div>
 
     <div class="student-card mel">
@@ -510,6 +536,7 @@
         <ul class="lesson-list" id="lessons-mel"></ul>
         <div id="meta-mel"></div>
       </details>
+      <div class="grammar-links" id="grammar-mel"></div>
     </div>
 
     <div class="student-card emma">
@@ -522,6 +549,7 @@
         <ul class="lesson-list" id="lessons-emma"></ul>
         <div id="meta-emma"></div>
       </details>
+      <div class="grammar-links" id="grammar-emma"></div>
     </div>
 
     <div class="student-card thomas">
@@ -534,6 +562,7 @@
         <ul class="lesson-list" id="lessons-thomas"></ul>
         <div id="meta-thomas"></div>
       </details>
+      <div class="grammar-links" id="grammar-thomas"></div>
     </div>
 
     <div class="student-card angelique">
@@ -546,6 +575,7 @@
         <ul class="lesson-list" id="lessons-angelique"></ul>
         <div id="meta-angelique"></div>
       </details>
+      <div class="grammar-links" id="grammar-angelique"></div>
     </div>
 
     <div class="student-card greg">
@@ -558,6 +588,7 @@
         <ul class="lesson-list" id="lessons-greg"></ul>
         <div id="meta-greg"></div>
       </details>
+      <div class="grammar-links" id="grammar-greg"></div>
     </div>
 
     <div class="student-card durim">
@@ -570,6 +601,7 @@
         <ul class="lesson-list" id="lessons-durim"></ul>
         <div id="meta-durim"></div>
       </details>
+      <div class="grammar-links" id="grammar-durim"></div>
     </div>
 
     <div class="student-card hatice">
@@ -582,6 +614,7 @@
         <ul class="lesson-list" id="lessons-hatice"></ul>
         <div id="meta-hatice"></div>
       </details>
+      <div class="grammar-links" id="grammar-hatice"></div>
     </div>
 
     <div class="student-card faycal">
@@ -594,6 +627,7 @@
         <ul class="lesson-list" id="lessons-faycal"></ul>
         <div id="meta-faycal"></div>
       </details>
+      <div class="grammar-links" id="grammar-faycal"></div>
     </div>
 
     <div class="student-card alejandro">
@@ -606,6 +640,7 @@
         <ul class="lesson-list" id="lessons-alejandro"></ul>
         <div id="meta-alejandro"></div>
       </details>
+      <div class="grammar-links" id="grammar-alejandro"></div>
     </div>
 
   </div>
@@ -639,6 +674,7 @@
     const listEl = document.getElementById('lessons-' + student.id);
     const metaEl = document.getElementById('meta-' + student.id);
     const countEl = document.getElementById('lessons-count-' + student.id);
+    const grammarEl = document.getElementById('grammar-' + student.id);
 
     listEl.innerHTML = '<li><div class="loading-state"><div class="spinner"></div> Loading…</div></li>';
 
@@ -681,6 +717,16 @@
       } else {
         metaEl.innerHTML = `<a class="see-all" href="${student.folder}/">Open lesson page →</a>`;
       }
+
+      const grammarSeen = new Map();
+      lessons.forEach(lesson => {
+        (lesson.grammar || []).forEach(g => {
+          if (!grammarSeen.has(g.file)) grammarSeen.set(g.file, g.title);
+        });
+      });
+      grammarEl.innerHTML = [...grammarSeen].map(([file, title]) =>
+        `<a href="Grammar-book/${file}">📘 ${title}</a>`
+      ).join('');
 
     } catch (err) {
       listEl.innerHTML = '<li><span class="empty-state">Could not load lessons.</span></li>';
