@@ -24,6 +24,7 @@
     --teal: #2a8a8a;
     --plum: #8e4a86;
     --olive: #7a8a3f;
+    --slate: #3D5A80;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -152,6 +153,7 @@
   .student-card.durim::before    { background: var(--terra); }
   .student-card.hatice::before   { background: var(--plum); }
   .student-card.faycal::before   { background: var(--olive); }
+  .student-card.alejandro::before { background: var(--slate); }
 
   .card-emoji { font-size: 28px; margin-bottom: 14px; display: block; }
 
@@ -180,6 +182,7 @@
   .student-card.durim    .card-level { color: var(--terra); }
   .student-card.hatice   .card-level { color: var(--plum); }
   .student-card.faycal   .card-level { color: var(--olive); }
+  .student-card.alejandro .card-level { color: var(--slate); }
 
   .card-desc {
     font-size: 13px;
@@ -220,6 +223,7 @@
   .student-card.durim    .lesson-list li a:hover { background: #f8e4d8; color: var(--terra); }
   .student-card.hatice   .lesson-list li a:hover { background: #f0e0ee; color: var(--plum); }
   .student-card.faycal   .lesson-list li a:hover { background: #eef0d6; color: var(--olive); }
+  .student-card.alejandro .lesson-list li a:hover { background: #dbe4ee; color: var(--slate); }
 
   .lesson-list li a .icon { font-size: 13px; flex-shrink: 0; }
 
@@ -247,6 +251,7 @@
   .student-card.durim    .see-all { color: var(--terra); }
   .student-card.hatice   .see-all { color: var(--plum); }
   .student-card.faycal   .see-all { color: var(--olive); }
+  .student-card.alejandro .see-all { color: var(--slate); }
 
   .see-all:hover { gap: 10px; }
 
@@ -738,6 +743,34 @@
       </details>
     </div>
 
+    <div class="student-card alejandro">
+      <span class="card-emoji">🖥️</span>
+      <div class="card-name">Alejandro</div>
+      <div class="card-level">Upper-Intermediate · English</div>
+      <p class="card-desc">Fluency & confidence for a job search in Flanders.</p>
+      <ul class="lesson-list" id="lessons-alejandro"></ul>
+      <div id="meta-alejandro"></div>
+
+      <details style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #ddd;">
+        <summary style="cursor: pointer; font-weight: 600; color: #2A8A8A;">📚 Curriculum Tracking</summary>
+        <div id="curriculum-alejandro" style="margin-top: 0.5rem; font-size: 0.9rem;">
+          <div style="margin-bottom: 0.5rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span id="prog-alejandro" style="font-weight: 600;">Loading…</span>
+            </div>
+            <div style="width: 100%; background: #eee; border-radius: 4px; height: 16px; overflow: hidden;">
+              <div id="prog-bar-alejandro" style="height: 100%; background: #2A8A8A; width: 0%;"></div>
+            </div>
+          </div>
+          <div id="due-alejandro" style="margin-bottom: 0.5rem;"></div>
+          <details style="margin-top: 0.5rem;">
+            <summary style="cursor: pointer; font-size: 0.85rem;">Gaps (learning to-do)</summary>
+            <ul id="gaps-alejandro" style="margin: 0.5rem 0; padding-left: 1.5rem; font-size: 0.85rem;"></ul>
+          </details>
+        </div>
+      </details>
+    </div>
+
   </div>
 
   <div class="footer-note">
@@ -766,10 +799,11 @@
     { id: 'durim',     folder: 'Durim'     },
     { id: 'hatice',    folder: 'Hatice'    },
     { id: 'faycal',    folder: 'Faycal'    },
+    { id: 'alejandro', folder: 'Alejandro' },
   ];
 
   // Students with a progress.json — add ids here as new levels get assigned.
-  const CURRICULUM_STUDENT_IDS = ['micha', 'thomas', 'greg', 'angelique', 'mel', 'emma', 'durim', 'hatice', 'faycal'];
+  const CURRICULUM_STUDENT_IDS = ['micha', 'thomas', 'greg', 'angelique', 'mel', 'emma', 'durim', 'hatice', 'faycal', 'alejandro'];
 
   // Each level and each student's progress.json are fetched independently and
   // in parallel — one bad fetch must not block the rest (a level 404 or a
