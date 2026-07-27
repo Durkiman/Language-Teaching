@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./doc-page.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
+
+  </style>
+</head>
+<body>
+<doc-page size="letter" margin="0.7in">
+
+  <div slot="header" style="display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px;border-bottom:3px solid #0E7C86;"></div>
+  <div slot="footer" style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #DDD8CC;font-size:10.5px;color:#9A9483;font-family:'Nunito',sans-serif;">
+    <span>© Linking Words</span>
+    <span>ESL Grammar Workbook</span>
+  </div>
+
+  <div style="text-align:center;padding:8px 0 22px;">
+    <div style="display:inline-block;background:#0E7C86;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Durim's ESL Grammar Workbook: A1–C2</div>
+    <h1 style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:44px;color:#1B4B4F;margin:16px 0 4px;line-height:1.05;">Linking Words</h1>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:600;font-size:22px;color:#F2994A;margin-bottom:10px;">Connecting Ideas Clearly</div>
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:6px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;">📘 1. Understanding the Rule</h2>
+
+  <p style="font-size:15px;line-height:1.65;color:#2B2B2B;margin:0 0 12px;">Linking words connect ideas within and between sentences. Each one belongs to a <strong>function</strong> (addition, contrast, cause, result, purpose, condition, sequence) — and each function has both everyday and formal options.</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
+    <div style="background:#EAF2FF;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>Addition</strong><br/>and, also, as well as, furthermore.</div>
+    <div style="background:#F0EAFE;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>Contrast</strong><br/>but, although, however, despite, whereas.</div>
+    <div style="background:#FFE9E4;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>Cause &amp; Result</strong><br/>because, so, as a result, therefore.</div>
+    <div style="background:#E4F8ED;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>Condition</strong><br/>if, unless, provided that, in case.</div>
+  </div>
+
+  <div style="background:#FFF6D8;border:2px dashed #F2C94C;border-radius:12px;padding:14px 16px;margin:0 0 18px;font-size:14px;color:#5C4A00;">
+    <strong>Careful: clause words vs noun words.</strong> <em>Although / because</em> + subject + verb (a clause). <em>Despite / because of</em> + noun or -ing (no verb after). "Although it was raining" ✓ but "Despite it was raining" ✗ — say "Despite the rain" or "Despite it raining."
+  </div>
+
+  <div style="background:#FFF6D8;border:2px dashed #F2C94C;border-radius:12px;padding:14px 16px;margin:0 0 18px;font-size:14px;color:#5C4A00;">
+    <strong>Careful: "despite of" doesn't exist.</strong> It's just <em>despite</em>, or <em>in spite of</em> — never "despite of."
+  </div>
+
+  <div style="background:#EAF2FF;border:2px solid #C7DBFF;border-radius:12px;padding:14px 16px;margin:0 0 20px;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;color:#1B4B4F;margin-bottom:10px;">⚡ "So" (result) vs "so that" (purpose)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;">
+        <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#4C7BF5;margin-bottom:4px;">so (result)</div>
+        <p style="font-size:13.5px;line-height:1.6;color:#2B2B2B;margin:0;font-style:italic;">It was cold, so I closed the window.</p>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;">
+        <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#F2994A;margin-bottom:4px;">so that (purpose)</div>
+        <p style="font-size:13.5px;line-height:1.6;color:#2B2B2B;margin:0;font-style:italic;">I closed the window so that it wouldn't get cold.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:30px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">📊 2. Reference Tables</h2>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Linking words by function</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#8B5FE0;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Function</th><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Words</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">addition</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">and, also, as well as, in addition, furthermore</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">contrast</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">but, although, though, however, despite, in spite of, whereas, nevertheless</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">cause</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">because, since, as, due to, because of</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">result</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">so, as a result, therefore, consequently</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">purpose</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">to, in order to, so that</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">condition</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">if, unless, provided that, as long as, in case</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">sequence</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">first, then, next, after that, finally</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Everyday vs formal equivalents</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#4C7BF5;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Everyday</th><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Formal</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">but</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">however, nevertheless</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">so</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">therefore, consequently, as a result</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">also</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">furthermore, in addition, moreover</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">but (still)</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">notwithstanding this, that said</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">about</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">with regard to, regarding</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Position in the sentence</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 20px;font-size:13.5px;">
+    <thead><tr style="background:#F2994A;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #F2994A;">Word</th><th style="padding:7px 10px;text-align:left;border:1px solid #F2994A;">Typical position</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">however, nevertheless, therefore</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">start of sentence, followed by a comma</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">although, because, if, unless</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">start OR middle of the sentence (joins two clauses)</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">despite, in spite of, because of</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">before a noun/-ing, start or middle</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:24px 0 6px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">✏️ 3. Practice Exercises</h2>
+  <p style="font-size:13.5px;color:#9A9483;margin:0 0 16px;">18 exercises across all six CEFR levels — three per level, increasing in difficulty. Answers on the last page.</p>
+
+  <div style="display:inline-block;background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:10px 0 10px;">LEVEL A1 · Beginner (and / but / because / so)</div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: choose the correct linking word.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>I like tea <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">and</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">but</button></span> coffee.</li>
+      <li>She is tired <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">but</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">and</button></span> happy.</li>
+      <li>It was raining, <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">so</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">because</button></span> we stayed home.</li>
+      <li>We stayed home <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">because</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">so</button></span> it was raining.</li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match the first half (1–4) to the correct second half (a–d).</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
+      <div>1. I was hungry, so <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>a. it was expensive.</div>
+      <div>2. I like dogs and <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>b. I was tired.</div>
+      <div>3. I bought it, but <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>c. I ate.</div>
+      <div>4. I went to bed because <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>d. cats.</div>
+    </div>
+  </div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank (and / but / because / so).</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>I was late <input class="iq-input" id="ex3-1"> the traffic was bad.</li>
+      <li>The traffic was bad, <input class="iq-input" id="ex3-2"> I was late.</li>
+      <li>He plays guitar <input class="iq-input" id="ex3-3"> piano.</li>
+      <li>She is small <input class="iq-input" id="ex3-4"> strong.</li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
+  </div>
+
+  <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary (Sequencing)</div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read the recipe, then mark T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">First, boil the water. Then, add the pasta. Next, wait ten minutes. After that, drain the pasta. Finally, add the sauce.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>You add the pasta before the water boils. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>You wait ten minutes after adding the pasta. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>The sauce is the last step. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+    </ol>
+  </div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Fill in the sequencing word (First / Then / Next / After that / Finally).</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li><input class="iq-input" id="ex5-1">, wake up.</li>
+      <li><input class="iq-input" id="ex5-2">, have breakfast.</li>
+      <li><input class="iq-input" id="ex5-3">, brush your teeth.</li>
+      <li><input class="iq-input" id="ex5-4">, leave the house.</li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
+  </div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>tired / but / happy / was / she <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>late / so / left / we / were / early <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>bed / because / to / tired / went / I / was / I <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
+  </div>
+
+  <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate (although / despite / because of)</div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Despite it was raining, we went out. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>We stayed home because of it was cold. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>Although the traffic, we arrived on time. <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>In spite of of the rain, the match continued. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>I closed the window so it wouldn't get cold, that's the reason. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
+  </div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Choose "although" or "despite."</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li><input class="iq-input" id="ex8-1"> the heavy traffic, we arrived early.</li>
+      <li><input class="iq-input" id="ex8-2"> it was expensive, she bought it.</li>
+      <li><input class="iq-input" id="ex8-3"> his injury, he finished the race.</li>
+      <li><input class="iq-input" id="ex8-4"> we were tired, we kept working.</li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
+  </div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: so or so that?</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>It was late, ___ we left. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) so</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) so that</button></span></li>
+      <li>I saved money ___ I could travel. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) so</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) so that</button></span></li>
+      <li>She whispered ___ nobody would hear. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">a) so</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">b) so that</button></span></li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B2 · Upper-Intermediate (whereas / nevertheless / provided that)</div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">The plan will go ahead, provided that the budget is approved. The team will proceed unless new problems come up. Sales rose in the north, whereas they fell slightly in the south. Nevertheless, the company remains confident about the full year.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The plan needs budget approval to go ahead. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>New problems would stop the team from proceeding. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Sales fell in both regions. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>The company is confident despite the mixed results. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+    </ol>
+  </div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>We'll proceed unless if the budget is cut. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>Provided the weather is good, we'll go, whereas otherwise we won't. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>In case it rains, we will bring an umbrella just in case. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>Sales rose, nevertheless costs rose too, however. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
+  </div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Compare two cities, jobs, or habits in 6–8 sentences. Use <strong>at least six different linking words</strong> from at least three different functions (addition, contrast, cause/result, condition).</p>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
+  </div>
+
+  <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced (Formal Connectors)</div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal register.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Sales went up, but costs went up too. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>We missed the deadline, so we lost the contract. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>Also, the new system is faster. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>About the budget, we need more time. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
+  </div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: which connector fits best?</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Formal report, adding a point: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) Furthermore, sales rose.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) Also sales rose, yeah.</button></span></li>
+      <li>Formal report, showing result: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) Consequently, output increased.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) So output went up.</button></span></li>
+      <li>Formal, introducing a topic: <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) With regard to the budget…</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) About the budget thing…</button></span></li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Despite of the delay, the project succeeded. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>Notwithstanding of these concerns, we approved the plan. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>Consequently of the delay, costs rose. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>With regard the budget, no decision has been made. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
+  </div>
+
+  <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency (Nuance &amp; Register)</div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a formal paragraph evaluating a decision (a policy, a business choice, anything). Include at least one instance each of "whereas," "notwithstanding" or "nevertheless," and "consequently" or "as a result."</p>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
+  </div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>approved / notwithstanding / the / concerns / plan / was <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>north / rose / south / whereas / sales / in / fell / the / in / they / the <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>rose / consequently / costs / delay / the / of <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>budget / regard / with / made / to / been / has / decision / no / the <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
+  </div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Despite of the concerns, the board approved it. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>With regard the timeline, nothing has changed. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>Consequently of the merger, two roles were cut. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>Notwithstanding of the delay, the launch went ahead. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
+    <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:0;white-space:nowrap;">🔑 Answer Key</h2>
+    <button id="answerToggleBtn" style="flex:0 0 auto;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#fff;background:#8B5FE0;border:none;border-radius:999px;padding:8px 18px;cursor:pointer;white-space:nowrap;">🙈 Hide Answer Key</button>
+  </div>
+  <p style="font-size:12.5px;color:#9A9483;margin:0 0 14px;">Tip: click "Hide Answer Key" above before printing a copy for students — the button itself never prints.</p>
+
+  <div id="answer-key" style="display:block;">
+    <div style="background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.1</strong> 1. and 2. but 3. so 4. because<br/>
+      <strong>Ex.2</strong> 1–c, 2–d, 3–a, 4–b<br/>
+      <strong>Ex.3</strong> 1. because 2. so 3. and 4. but
+    </div>
+    <div style="background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.4</strong> 1. F 2. T 3. T<br/>
+      <strong>Ex.5</strong> 1. First 2. Then 3. Next 4. Finally<br/>
+      <strong>Ex.6</strong> 1. She was tired but happy. 2. We were late so we left early. 3. I went to bed because I was tired.
+    </div>
+    <div style="background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.7</strong> 1. Although it was raining, we went out. 2. We stayed home because it was cold. 3. Despite the traffic, we arrived on time. 4. In spite of the rain, the match continued. 5. I closed the window so that it wouldn't get cold.<br/>
+      <strong>Ex.8</strong> 1. Despite 2. Although 3. Despite 4. Although<br/>
+      <strong>Ex.9</strong> 1–a 2–b 3–b
+    </div>
+    <div style="background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.10</strong> 1. T 2. T 3. F 4. T<br/>
+      <strong>Ex.11</strong> 1. We'll proceed unless the budget is cut. 2. Provided the weather is good, we'll go; otherwise we won't. 3. In case it rains, we will bring an umbrella. 4. Sales rose; however, costs rose too.<br/>
+      <strong>Ex.12</strong> Open answer — check 6+ distinct linking words from at least three functions.
+    </div>
+    <div style="background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">C1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.13</strong> Sample answers (accept close equivalents): 1. Sales rose; however, costs rose too. 2. We missed the deadline; consequently, we lost the contract. 3. Furthermore, the new system is faster. 4. With regard to the budget, we need more time.<br/>
+      <strong>Ex.14</strong> 1–a 2–a 3–a<br/>
+      <strong>Ex.15</strong> 1. Despite the delay… 2. Notwithstanding these concerns… 3. As a result of the delay… / Consequently, costs rose. 4. With regard to the budget…
+    </div>
+    <div style="background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 4px;">C2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 4px;">
+      <strong>Ex.16</strong> Open answer — check for correct "whereas," "notwithstanding"/"nevertheless," and "consequently"/"as a result" usage.<br/>
+      <strong>Ex.17</strong> 1. Notwithstanding the concerns, the plan was approved. 2. Sales rose in the north, whereas they fell in the south. 3. Consequently of the delay, costs rose. / As a result of the delay, costs rose. 4. With regard to the budget, no decision has been made.<br/>
+      <strong>Ex.18</strong> 1. Despite the concerns… 2. With regard to the timeline… 3. As a result of the merger… / Consequently, two roles were cut. 4. Notwithstanding the delay…
+    </div>
+  </div>
+
+</doc-page>
+
+<script>
+(function () {
+  var btn = document.getElementById('answerToggleBtn');
+  var key = document.getElementById('answer-key');
+  btn.addEventListener('click', function () {
+    var showing = key.style.display !== 'none';
+    key.style.display = showing ? 'none' : 'block';
+    btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
+  });
+})();
+
+/* -- Interactive exercises -- */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['because'] },
+    { accept: ['so'] },
+    { accept: ['and'] },
+    { accept: ['but'] }
+  ]},
+  ex5: { type: 'exact', items: [
+    { accept: ['first'] },
+    { accept: ['then'] },
+    { accept: ['next'] },
+    { accept: ['finally'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['she was tired but happy'] },
+    { accept: ['we were late so we left early'] },
+    { accept: ['i went to bed because i was tired'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['although it was raining, we went out', 'although it was raining we went out'] },
+    { accept: ['because it was cold'] },
+    { accept: ['despite the traffic'] },
+    { accept: ['in spite of the rain'] },
+    { accept: ["so that it wouldn't get cold", 'so that it would not get cold'] }
+  ]},
+  ex8: { type: 'exact', items: [
+    { accept: ['despite'] },
+    { accept: ['although'] },
+    { accept: ['despite'] },
+    { accept: ['although'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ["we'll proceed unless the budget is cut", 'we will proceed unless the budget is cut'] },
+    { accept: ["we'll go; otherwise we won't", 'we will go otherwise we will not'] },
+    { accept: ['we will bring an umbrella'] },
+    { accept: ['however, costs rose too', 'however costs rose too'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['however, costs rose too', 'however costs rose too'] },
+    { accept: ['consequently, we lost the contract', 'consequently we lost the contract'] },
+    { accept: ['furthermore, the new system is faster', 'furthermore the new system is faster'] },
+    { accept: ['with regard to the budget'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['despite the delay'] },
+    { accept: ['notwithstanding these concerns'] },
+    { accept: ['as a result of the delay', 'consequently, costs rose', 'consequently costs rose'] },
+    { accept: ['with regard to the budget'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['notwithstanding the concerns, the plan was approved'] },
+    { accept: ['sales rose in the north, whereas they fell in the south', 'sales rose in the north whereas they fell in the south'] },
+    { accept: ['as a result of the delay, costs rose', 'consequently of the delay costs rose', 'consequently, costs rose as a result of the delay'] },
+    { accept: ['with regard to the budget, no decision has been made'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['despite the concerns'] },
+    { accept: ['with regard to the timeline'] },
+    { accept: ['as a result of the merger', 'consequently, two roles were cut', 'consequently two roles were cut'] },
+    { accept: ['notwithstanding the delay'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
+</script>
+</body>
+</html>

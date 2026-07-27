@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Albania — Culture &amp; Future Plans</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F5F0; --card:#FFFFFF; --ink:#262A2E; --ink-soft:#6B6F76;
+    --navy:#33526B; --navy-dark:#24394B; --navy-pale:#E7ECF1;
+    --gold:#B98B4E; --gold-pale:#F3E7D4; --line:#E2DED4;
+    --red:#B4674E; --green:#5C8A6A;
+    --radius:14px; --shadow:0 4px 18px rgba(38,42,46,0.08);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;-webkit-tap-highlight-color:transparent;padding-bottom:100px;}
+  h1,h2,h3,h4{font-family:'Lora',serif;margin:0;}
+  header{padding:26px 20px 14px;text-align:center;border-bottom:1px solid var(--line);background:var(--paper);}
+  header h1{font-size:1.4rem;color:var(--navy-dark);font-weight:600;}
+
+  #goalToggle{display:inline-flex;align-items:center;gap:6px;margin-top:14px;padding:7px 14px;border-radius:20px;background:var(--navy-pale);color:var(--navy-dark);border:none;font-family:'Inter',sans-serif;font-weight:600;font-size:0.78rem;cursor:pointer;}
+  #goalPanel{display:none;max-width:520px;margin:12px auto 0;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);}
+  #goalPanel.open{display:block;}
+  #goalPanel .code{display:inline-block;background:var(--gold);color:#fff;font-size:0.68rem;font-weight:700;padding:3px 9px;border-radius:6px;letter-spacing:.03em;margin-bottom:8px;}
+  #goalPanel p{font-size:0.85rem;line-height:1.55;margin:6px 0;color:var(--ink);}
+  #goalPanel b{color:var(--navy-dark);}
+
+  nav.tabs{position:sticky;top:0;z-index:20;display:flex;overflow-x:auto;background:var(--paper);border-bottom:1px solid var(--line);scrollbar-width:none;}
+  nav.tabs::-webkit-scrollbar{display:none;}
+  nav.tabs button{flex:1 0 auto;padding:14px 16px;background:none;border:none;font-family:'Inter',sans-serif;font-size:0.82rem;font-weight:600;color:var(--ink-soft);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:color .2s, border-color .2s;}
+  nav.tabs button.active{color:var(--navy);border-bottom-color:var(--gold);}
+
+  main{max-width:640px;margin:0 auto;padding:20px 16px 40px;}
+  .panel{display:none;animation:fade .25s ease;}
+  .panel.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:var(--shadow);}
+  .card h3{font-size:1.02rem;color:var(--navy-dark);margin-bottom:8px;}
+  .lead{color:var(--ink-soft);font-size:0.87rem;line-height:1.55;margin:0 0 16px;}
+
+  .prompt-card{background:var(--navy-pale);border-radius:10px;padding:14px 16px;margin-bottom:10px;font-size:0.92rem;line-height:1.5;color:var(--navy-dark);font-family:'Lora',serif;font-weight:500;}
+  .prompt-card:last-child{margin-bottom:0;}
+
+  .section-label{display:flex;align-items:center;gap:6px;margin-bottom:12px;}
+
+  .place-card{border:1px solid var(--line);border-left:4px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px;background:var(--card);}
+  .place-card h4{font-size:0.95rem;color:var(--navy-dark);margin-bottom:5px;}
+  .place-card p{font-size:0.85rem;line-height:1.55;color:var(--ink);margin:0;}
+  .place-card.tag-navy{border-left-color:var(--navy);}
+  .place-card.tag-gold{border-left-color:var(--gold);}
+  .place-card.tag-green{border-left-color:var(--green);}
+
+  .fact-tag{display:inline-block;background:var(--gold-pale);color:#8A6A2F;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;padding:3px 8px;border-radius:6px;margin-bottom:6px;}
+  .fact-tag.fact-navy{background:var(--navy-pale);color:var(--navy-dark);}
+  .fact-tag.fact-green{background:#E4F0E6;color:var(--green);}
+  .fact-tag.fact-rust{background:#F3E0DA;color:#8A4632;}
+
+  .current-affairs-card{border-color:#E3C9B8;}
+  .current-affairs-card p{font-size:0.87rem;line-height:1.65;color:var(--ink);margin:0 0 12px;}
+  .current-affairs-card p:last-of-type{margin-bottom:0;}
+  .pull-quote{background:#FBF3EC;border-left:3px solid #C08A5E;border-radius:8px;padding:11px 14px;font-size:0.85rem;line-height:1.55;color:#6B4A32;margin:12px 0;font-family:'Lora',serif;font-style:italic;}
+  .pull-quote b{font-style:normal;}
+  abbr.gloss{text-decoration:underline dotted;text-decoration-color:var(--gold);cursor:help;font-style:normal;}
+  .protest-img{width:100%;height:auto;border-radius:10px;display:block;margin-top:10px;}
+  .img-caption{font-size:0.76rem;color:var(--ink-soft);font-style:italic;margin:6px 0 14px;}
+
+  .plan-text{background:var(--navy-pale);border-radius:10px;padding:16px;font-size:0.9rem;line-height:1.75;color:var(--ink);}
+  .plan-text .hl{background:var(--gold-pale);padding:1px 4px;border-radius:4px;color:var(--navy-dark);font-weight:600;}
+
+  .gcard{border:1px solid var(--line);border-radius:var(--radius);background:var(--card);padding:16px 18px;margin-bottom:12px;}
+  .gcard h4{font-size:0.95rem;color:var(--navy-dark);margin-bottom:8px;}
+  .gcard .formula{font-family:'Lora',serif;font-style:italic;color:var(--navy);background:var(--navy-pale);border-radius:8px;padding:8px 12px;margin-bottom:8px;font-size:0.86rem;}
+  .gcard .ex{font-size:0.85rem;color:var(--ink);margin:4px 0;line-height:1.5;}
+  .gcard .fr{font-size:0.8rem;color:var(--ink-soft);margin:6px 0 10px;font-style:italic;}
+  .gcard .mistake{background:#FBEFEA;border:1px dashed var(--red);border-radius:8px;padding:8px 12px;font-size:0.8rem;color:#7A4635;line-height:1.5;}
+
+  .diff-tag{display:inline-block;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;padding:3px 8px;border-radius:6px;margin-bottom:8px;}
+  .diff-easy{background:#E4F0E6;color:var(--green);}
+  .diff-medium{background:var(--gold-pale);color:#8A6A2F;}
+  .diff-hard{background:#F3E0DA;color:var(--red);}
+  .ex-card{border:1px solid var(--line);border-radius:12px;padding:15px 16px;margin-bottom:14px;background:var(--card);}
+  .ex-card .q{font-size:0.9rem;margin-bottom:10px;line-height:1.5;}
+  .hint{font-size:0.75rem;color:var(--ink-soft);font-style:italic;}
+  .mc-options{display:flex;flex-direction:column;gap:7px;margin-top:8px;}
+  .mc-opt{text-align:left;border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:9px 12px;font-size:0.85rem;cursor:pointer;color:var(--ink);}
+  .mc-opt.correct{background:#E4F0E6;border-color:var(--green);}
+  .mc-opt.incorrect{background:#F3E0DA;border-color:var(--red);}
+  .gapfill-row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;align-items:center;}
+  input.gap-input{flex:1;min-width:160px;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-family:'Inter',sans-serif;font-size:0.85rem;background:var(--paper);color:var(--ink);}
+  input.gap-input.correct{border-color:var(--green);background:#E4F0E6;}
+  input.gap-input.incorrect{border-color:var(--red);background:#F3E0DA;}
+  .mini-btn{border:none;border-radius:8px;padding:9px 13px;font-size:0.78rem;font-weight:700;cursor:pointer;background:var(--navy);color:#fff;white-space:nowrap;}
+  .mini-btn.outline{background:none;border:1px solid var(--line);color:var(--ink-soft);}
+  .feedback{font-size:0.78rem;margin-top:6px;min-height:16px;}
+  .feedback.ok{color:var(--green);}
+  .feedback.no{color:var(--red);}
+
+  .checklist{margin-top:14px;}
+  .check-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);}
+  .check-item:last-child{border-bottom:none;}
+  .check-box{width:22px;height:22px;border-radius:6px;border:1px solid var(--line);background:var(--paper);cursor:pointer;flex-shrink:0;}
+  .check-box.done{background:var(--green);border-color:var(--green);}
+  .check-item span{font-size:0.86rem;color:var(--ink);}
+
+  .tnote{display:none;background:var(--navy-pale);border-left:3px solid var(--navy);border-radius:8px;padding:10px 13px;margin-top:10px;font-size:0.8rem;color:var(--navy-dark);line-height:1.5;}
+  body.notes-on .tnote{display:block;}
+  #notesToggle{position:fixed;top:16px;right:16px;z-index:31;background:var(--navy);color:#fff;border:none;border-radius:20px;padding:8px 14px;font-size:0.75rem;font-weight:700;cursor:pointer;box-shadow:var(--shadow);}
+  body.notes-on #notesToggle{background:var(--gold);}
+
+  #timerBubble{position:fixed;bottom:18px;left:18px;z-index:30;width:58px;height:58px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-weight:700;font-size:0.78rem;box-shadow:0 6px 16px rgba(38,42,46,0.25);cursor:pointer;user-select:none;}
+  #timerBubble.running{background:var(--green);}
+  #timerBubble.warn{background:var(--red);}
+</style>
+</head>
+<body>
+
+<div style="display:flex;flex-wrap:wrap;gap:8px;padding:10px 16px;">
+  <a href="../Grammar-book/future-with-will.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Future with Will</a>
+  <a href="../Grammar-book/going-to-future.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Recap: Going to Future</a>
+  <a href="../Grammar-book/future-perfect-and-continuous.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Future Continuous</a>
+</div>
+
+<button id="notesToggle">Teacher notes</button>
+
+<header>
+  <h1>Albania — Culture &amp; Future Plans</h1>
+  <button id="goalToggle">🎯 Learning goal</button>
+  <div id="goalPanel">
+    <span class="code">B1-21 · Strand F</span>
+    <p><b>Goal:</b> Can make predictions with graded confidence and describe what will be in progress at a future time.</p>
+    <p><b>Grammar focus:</b> will vs going to (consolidated), might/may/probably/definitely integrated, future continuous.</p>
+    <p><b>Evidence task:</b> a "this time next year" monologue — three graded predictions (certain / probable / possible, each linguistically marked) plus two future continuous sentences.</p>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="warmup">Warm-Up</button>
+  <button class="tab-btn" data-tab="culture">Discovering Albania</button>
+  <button class="tab-btn" data-tab="grammar">Grammar</button>
+  <button class="tab-btn" data-tab="practice">Practice</button>
+  <button class="tab-btn" data-tab="speaking">Speaking</button>
+</nav>
+
+<main>
+
+  <!-- WARM-UP -->
+  <section class="panel active" id="panel-warmup">
+    <p class="lead">Live and verbal. This primes both the culture content and the grammar without naming either yet.</p>
+    <div class="card">
+      <h3>Discussion openers</h3>
+      <div class="prompt-card">"What comes to mind when you hear 'Albania'? Have you ever met anyone from there?"</div>
+      <div class="prompt-card">"If you were planning a trip somewhere completely new, how far ahead would you plan it — and how much would you leave open?"</div>
+      <div class="prompt-card">"Tell me about a trip you're fairly confident about versus one you're still unsure of."</div>
+      <div class="tnote">That last question is doing real work — listen for whether he naturally reaches for certainty language (definitely, probably, might) without prompting. It tells you how much of today's grammar is genuinely new.</div>
+    </div>
+  </section>
+
+  <!-- CULTURE -->
+  <section class="panel" id="panel-culture">
+    <p class="lead">A few places worth knowing, then a planning text that models today's grammar in a genuinely useful context — not a drill.</p>
+
+    <div class="card">
+      <h3 class="section-label">📍 Where to go</h3>
+      <div class="place-card tag-navy">
+        <span class="fact-tag fact-navy">Capital</span>
+        <h4>Tirana</h4>
+        <p>Apartment blocks painted in bold colour blocks — a former mayor's idea to shake off the grey Communist-era look. Bunk'Art turns a Cold War bunker into a museum.</p>
+      </div>
+      <div class="place-card tag-gold">
+        <span class="fact-tag">UNESCO</span>
+        <h4>Berat</h4>
+        <p>The "City of a Thousand Windows" — Ottoman-era houses stacked up a hillside, castle at the top, river below.</p>
+      </div>
+      <div class="place-card tag-gold">
+        <span class="fact-tag">UNESCO</span>
+        <h4>Gjirokastër</h4>
+        <p>The "Stone City" — grey stone roofs, a hilltop fortress, and the birthplace of writer Ismail Kadare.</p>
+      </div>
+      <div class="place-card tag-green">
+        <span class="fact-tag fact-green">Coast</span>
+        <h4>Albanian Riviera</h4>
+        <p>Ksamil and Sarandë — turquoise water, quieter and cheaper than Corfu, which you can actually see across the water.</p>
+      </div>
+      <div class="tnote">One genuinely fun fact worth dropping in conversation: a head nod in Albania can traditionally mean "no," and a shake can mean "yes" — the reverse of most of Europe. Good icebreaker, not essential content.</div>
+    </div>
+
+    <div class="card current-affairs-card">
+      <h3 class="section-label">📰 What's happening on the coast right now</h3>
+      <span class="fact-tag fact-rust">Ongoing · since May 2026</span>
+      <img class="protest-img" src="albania-riviera-protests.jpg" alt="Protesters at the Zvërnec/Tirana demonstrations carrying inflatable flamingos and signs referencing the resort deal">
+      <p class="img-caption">Scenes from the "Flamingo Revolution" marches — inflatable flamingos, Albanian flags, and signs directed at the resort deal.</p>
+      <p>Not everything about the Riviera is postcard-perfect at the moment. Since May 2026, protests have been building in Zvërnec, a small village by the Narta Lagoon — right in the heart of the region. Local residents, environmental groups and ordinary Albanians are opposing a huge planned resort: around €5 billion, close to 10,000 rooms, backed partly by American investors. The problem is location — the site borders a <abbr class="gloss" title="an area of land covered by water, important for wildlife">protected wetland</abbr> that's home to flamingos and nesting sea turtles.</p>
+      <div class="pull-quote">Nicknamed the <b>"Flamingo Revolution"</b> — protesters carry inflatable flamingos at marches, echoing the real ones in the lagoon they're trying to protect.</div>
+      <p>Protesters say the approval process lacked <abbr class="gloss" title="openness — decisions made clearly and in the open">transparency</abbr> and that land ownership in the area is genuinely disputed. The government and developers point the other way — to the investment, jobs and tourism revenue a project this size could bring. Prime Minister Edi Rama has defended the plan and offered talks with a protester delegation, an offer rejected so far. Marches in Tirana have drawn crowds in the thousands, with one recurring chant: <span class="hl">"Albania is not for sale."</span> As of mid-2026, nothing is resolved.</p>
+      <div class="tnote">Genuinely live and contested — keep your own framing neutral in the room. Good material for opinion language and today's predictions ("Do you think it will go ahead?"), but gauge his interest before spending much time on it; not everyone wants politics in a language lesson.</div>
+    </div>
+
+    <div class="card">
+      <h3>Planning the trip — a short text</h3>
+      <div class="plan-text">
+        I'm planning a trip to Albania this autumn, and I've already worked a few things out. I'<span class="hl">ll definitely</span> start in Tirana — everyone says the colourful buildings and Bunk'Art are worth a full day. From there, I'<span class="hl">ll probably</span> head south along the coast; Ksamil looks incredible in photos, though I <span class="hl">might</span> skip the busiest weeks in August. By the time I reach Berat, <span class="hl">I'll be slowing down</span> — this time next month, <span class="hl">I'll be wandering</span> through the old town with no real plan. One thing I've read: a head nod doesn't always mean what you'd expect here, so I'<span class="hl">ll definitely</span> ask a local to explain it properly.
+      </div>
+    </div>
+  </section>
+
+  <!-- GRAMMAR -->
+  <section class="panel" id="panel-grammar">
+    <p class="lead">Three patterns, all doing the same job: being precise about how sure you actually are.</p>
+
+    <div class="gcard">
+      <h4>1 · Grading certainty (will + adverb, might/may)</h4>
+      <div class="formula">will definitely / probably + verb &nbsp;·&nbsp; might / may + verb (base)</div>
+      <p class="ex">"I'll definitely visit Berat." (certain)</p>
+      <p class="ex">"I'll probably skip Tirana's nightlife." (fairly confident)</p>
+      <p class="ex">"I might extend my trip by a few days." (genuinely unsure)</p>
+      <p class="fr">Fr : Je vais sûrement / certainement... · Il se peut que...</p>
+      <div class="mistake">❌ "Maybe I will definitely go." — mixing two certainty levels in one clause.<br>✅ Pick one: "I'll definitely go" or "I might go."</div>
+    </div>
+
+    <div class="gcard">
+      <h4>2 · Going to vs will (quick recap)</h4>
+      <div class="formula">going to = already decided &nbsp;·&nbsp; will = opinion-based prediction, decided now</div>
+      <p class="ex">"I'm going to book my flights this week." (a firm decision already made)</p>
+      <p class="ex">"I think I'll enjoy the coast more than the cities." (an opinion, not a fact yet)</p>
+      <p class="fr">Fr : je vais + infinitif (décidé) vs je pense que + futur (opinion)</p>
+      <div class="mistake">❌ "I go to visit Albania next year." — missing "am going to."<br>✅ "I'm going to visit Albania next year."</div>
+    </div>
+
+    <div class="gcard">
+      <h4>3 · Future continuous — in progress at a future moment</h4>
+      <div class="formula">will be + verb-ing</div>
+      <p class="ex">"This time next month, I'll be exploring the Albanian Riviera."</p>
+      <p class="ex">"By 6pm, I'll still be driving through the mountains."</p>
+      <p class="fr">Fr : je serai en train de...</p>
+      <div class="mistake">❌ "This time next month, I will explore..." — sounds like one finished action, not something ongoing at that moment.<br>✅ "I'll be exploring..."</div>
+    </div>
+  </section>
+
+  <!-- PRACTICE -->
+  <section class="panel" id="panel-practice">
+    <p class="lead">Controlled practice, still inside the trip-planning context.</p>
+
+    <div class="card">
+      <h3>A · How sure does this sound?</h3>
+      <span class="diff-tag diff-easy">Easy</span>
+      <div id="mcContainer"></div>
+    </div>
+
+    <div class="card">
+      <h3>B · Complete the plan</h3>
+      <span class="diff-tag diff-medium">Medium</span>
+      <div id="gapContainer"></div>
+    </div>
+  </section>
+
+  <!-- SPEAKING -->
+  <section class="panel" id="panel-speaking">
+    <p class="lead">This is the evidence task for today's can-do card — a "this time next year" monologue about a real or imagined trip to Albania.</p>
+
+    <div class="card">
+      <h3>The task</h3>
+      <p style="font-size:0.88rem;line-height:1.6;">Imagine it's exactly one year from now. Describe your Albania trip — where you are, what you're doing, what's already happened. Aim for:</p>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box" data-check="1"></div><span>One <b>certain</b> prediction ("I'll definitely...")</span></div>
+        <div class="check-item"><div class="check-box" data-check="2"></div><span>One <b>probable</b> prediction ("I'll probably...")</span></div>
+        <div class="check-item"><div class="check-box" data-check="3"></div><span>One <b>possible</b> prediction ("I might...")</span></div>
+        <div class="check-item"><div class="check-box" data-check="4"></div><span>Two <b>future continuous</b> sentences ("I'll be...")</span></div>
+      </div>
+      <div class="tnote">Tick these live as you hear them — don't announce the checklist to him beforehand beyond the general task. If he leans on "going to" throughout instead of grading certainty, that's the signal this needs a second pass next session.</div>
+    </div>
+  </section>
+
+</main>
+
+<div id="timerBubble">50:00</div>
+
+<script>
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.panel');
+  tabBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      tabBtns.forEach(b=>b.classList.remove('active'));
+      panels.forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  document.getElementById('goalToggle').addEventListener('click', ()=>{
+    document.getElementById('goalPanel').classList.toggle('open');
+  });
+  document.getElementById('notesToggle').addEventListener('click', ()=>{
+    document.body.classList.toggle('notes-on');
+  });
+
+  // Practice A
+  const mcData = [
+    {q:'"I\'ll definitely visit Berat."', hint:'how sure?', opts:['Certain','Probable','Possible'], correct:0},
+    {q:'"I might extend the trip by a few days."', hint:'how sure?', opts:['Certain','Probable','Possible'], correct:2},
+    {q:'"I\'ll probably head to the coast first."', hint:'how sure?', opts:['Certain','Probable','Possible'], correct:1},
+    {q:'"This time next month, I\'ll be exploring Ksamil."', hint:'what kind of sentence?', opts:['A finished action','An action in progress at that moment','A past habit'], correct:1},
+    {q:'"I\'m going to book my flights this week."', hint:'already decided, or just an opinion?', opts:['Already decided','Just an opinion','Uncertain'], correct:0}
+  ];
+  const mcContainer = document.getElementById('mcContainer');
+  mcData.forEach((item,qi)=>{
+    const wrap = document.createElement('div');
+    wrap.className = 'ex-card';
+    wrap.innerHTML = `<p class="q">${qi+1}. ${item.q} <span class="hint">(${item.hint})</span></p>
+      <div class="mc-options" data-qi="${qi}">
+        ${item.opts.map((o,oi)=>`<button class="mc-opt" data-oi="${oi}">${o}</button>`).join('')}
+      </div>`;
+    mcContainer.appendChild(wrap);
+  });
+  mcContainer.addEventListener('click', (e)=>{
+    if(!e.target.classList.contains('mc-opt')) return;
+    const group = e.target.closest('.mc-options');
+    if(group.dataset.answered) return;
+    group.dataset.answered = '1';
+    const qi = parseInt(group.dataset.qi);
+    const oi = parseInt(e.target.dataset.oi);
+    const buttons = group.querySelectorAll('.mc-opt');
+    buttons.forEach((b,i)=>{
+      if(i === mcData[qi].correct) b.classList.add('correct');
+      else if(i === oi) b.classList.add('incorrect');
+    });
+  });
+
+  // Practice B
+  const gapData = [
+    {before:'You are 100% sure about your first stop.', blank:'I ____________________ start in Tirana.', hint:'certain', answers:['ll definitely','will definitely']},
+    {before:'You are not sure at all if you will visit the mountains.', blank:'I ____________________ visit the mountains in the north.', hint:'possible', answers:['might','may']},
+    {before:'Describe what will be happening exactly this time next month.', blank:'This time next month, I ____________________ the old town in Berat.', hint:'future continuous', answers:['ll be exploring','will be exploring','ll be wandering through','will be wandering through']}
+  ];
+  const gapContainer = document.getElementById('gapContainer');
+  gapData.forEach((item,gi)=>{
+    const wrap = document.createElement('div');
+    wrap.className = 'ex-card';
+    wrap.innerHTML = `<p class="q">${item.before}<br>${item.blank} <span class="hint">(${item.hint})</span></p>
+      <div class="gapfill-row">
+        <input type="text" class="gap-input" data-gi="${gi}" placeholder="Type the missing words...">
+        <button class="mini-btn" data-check="${gi}">Check</button>
+        <button class="mini-btn outline" data-reveal="${gi}">Reveal</button>
+      </div>
+      <div class="feedback" id="gapFeedback${gi}"></div>`;
+    gapContainer.appendChild(wrap);
+  });
+  gapContainer.addEventListener('click', (e)=>{
+    if(e.target.dataset.check !== undefined){
+      const gi = parseInt(e.target.dataset.check);
+      const input = gapContainer.querySelector(`.gap-input[data-gi="${gi}"]`);
+      const val = input.value.trim().toLowerCase().replace(/[.,!?']/g,'');
+      const fb = document.getElementById('gapFeedback'+gi);
+      const normalizedAnswers = gapData[gi].answers.map(a=>a.replace(/[.,!?']/g,''));
+      if(normalizedAnswers.includes(val)){
+        input.classList.add('correct'); input.classList.remove('incorrect');
+        fb.textContent = 'Nice — natural and correct.'; fb.className = 'feedback ok';
+      } else {
+        input.classList.add('incorrect'); input.classList.remove('correct');
+        fb.textContent = 'Not quite — try again, or tap Reveal.'; fb.className = 'feedback no';
+      }
+    }
+    if(e.target.dataset.reveal !== undefined){
+      const gi = parseInt(e.target.dataset.reveal);
+      const fb = document.getElementById('gapFeedback'+gi);
+      fb.textContent = 'Sample: "' + gapData[gi].answers[0] + '"'; fb.className = 'feedback ok';
+    }
+  });
+
+  // Speaking checklist
+  document.querySelectorAll('.check-box').forEach(cb=>{
+    cb.addEventListener('click', ()=> cb.classList.toggle('done'));
+  });
+
+  // Timer
+  const timerBubble = document.getElementById('timerBubble');
+  let remaining = 3000, running = false, intervalId = null;
+  function formatTime(s){ const m=Math.floor(s/60), sec=s%60; return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0'); }
+  function renderTimer(){ timerBubble.textContent = formatTime(remaining); timerBubble.classList.toggle('warn', remaining<=30 && remaining>0); }
+  timerBubble.addEventListener('click', ()=>{
+    if(running){ running=false; clearInterval(intervalId); timerBubble.classList.remove('running'); }
+    else {
+      running=true; timerBubble.classList.add('running');
+      intervalId = setInterval(()=>{
+        remaining--;
+        if(remaining<=0){ remaining=0; running=false; clearInterval(intervalId); timerBubble.classList.remove('running'); }
+        renderTimer();
+      },1000);
+    }
+  });
+  renderTimer();
+</script>
+
+</body>
+</html>
