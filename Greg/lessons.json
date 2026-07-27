@@ -10,7 +10,21 @@
         "A2-10",
         "A2-11"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "polite-requests.html",
+        "title": "Polite Requests"
+      },
+      {
+        "file": "future-with-will.html",
+        "title": "Future with Will"
+      },
+      {
+        "file": "going-to-future.html",
+        "title": "Going to Future"
+      }
+    ]
   },
   {
     "file": "greg-will-vs-going-to-brazil-trip.html",
@@ -24,7 +38,17 @@
         "A2-01",
         "B1-21"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "future-with-will.html",
+        "title": "Future with Will"
+      },
+      {
+        "file": "going-to-future.html",
+        "title": "Going to Future"
+      }
+    ]
   },
   {
     "file": "greg-present-perfect-travel.html",
@@ -33,10 +57,17 @@
       "primary": [
         "B1-04"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "present-perfect-vs-past-simple.html",
+        "title": "Present Perfect vs. Past Simple"
+      }
+    ]
   },
   {
     "file": "greg-present-simple-introductions.html",
-    "title": "#1 introducing yourself"
+    "title": "#1 introducing yourself",
+    "grammar": []
   }
 ]

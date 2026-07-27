@@ -6,6 +6,16 @@
       "primary": [
         "B2-11"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "polite-requests.html",
+        "title": "Polite Requests"
+      },
+      {
+        "file": "modal-verbs.html",
+        "title": "Modal Verbs"
+      }
+    ]
   }
 ]

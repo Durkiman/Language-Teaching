@@ -2,30 +2,44 @@
   {
     "file": "mel-greetings-intro-family.html",
     "title": "#6 Tung, jam & kam",
-    "goals": { "primary": ["SQ-A1-01", "SQ-A1-02", "SQ-A1-03"], "incidental": [] }
+    "goals": {
+      "primary": [
+        "SQ-A1-01",
+        "SQ-A1-02",
+        "SQ-A1-03"
+      ],
+      "incidental": []
+    },
+    "grammar": []
   },
   {
     "file": "mel-past-tense-storytelling.html",
-    "title": "#5 Kujto & trego"
+    "title": "#5 Kujto & trego",
+    "grammar": []
   },
   {
     "file": "mel-question-marker-self-expression.html",
-    "title": "#4 Fol si ti"
+    "title": "#4 Fol si ti",
+    "grammar": []
   },
   {
     "file": "mel-vocabulary-reference.html",
-    "title": "# Vocabulary builder"
+    "title": "# Vocabulary builder",
+    "grammar": []
   },
   {
     "file": "mel-adjective-agreement-feelings.html",
-    "title": "#3 Ndihem & mendoj"
+    "title": "#3 Ndihem & mendoj",
+    "grammar": []
   },
   {
     "file": "mel-verb-conjugation-preferences.html",
-    "title": "#2 Çka don?"
+    "title": "#2 Çka don?",
+    "grammar": []
   },
   {
     "file": "mel-definite-nouns-welcome.html",
-    "title": "#1 restart"
+    "title": "#1 restart",
+    "grammar": []
   }
 ]

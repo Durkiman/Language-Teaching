@@ -1,3 +1,16 @@
 [
-  { "title": "Interview Foundations — Motivation, Structure & Recovery", "file": "hatice-interview-foundations-dentistry.html" }
+  {
+    "title": "Interview Foundations — Motivation, Structure & Recovery",
+    "file": "hatice-interview-foundations-dentistry.html",
+    "grammar": [
+      {
+        "file": "conditionals.html",
+        "title": "Conditionals"
+      },
+      {
+        "file": "present-perfect-vs-past-simple.html",
+        "title": "Present Perfect vs. Past Simple"
+      }
+    ]
+  }
 ]
