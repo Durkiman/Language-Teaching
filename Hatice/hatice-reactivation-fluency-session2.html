@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reactivation & Fluency — Speaking Warm-Up to Interview Talk</title>
+<style>
+  :root{
+    --bg:#F5F3F7;
+    --surface:#FFFFFF;
+    --ink:#2B2A33;
+    --muted:#7A7686;
+    --accent:#5B6EAE;
+    --accent-light:#E9EBF7;
+    --border:#E1DEEB;
+    --good:#5B8A6E;
+    --warn:#C08A3E;
+    --bad:#B0554A;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Nunito', 'DM Sans', sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    padding-bottom:90px;
+  }
+  header{
+    background:var(--surface);
+    border-bottom:1px solid var(--border);
+    padding:16px 20px 0;
+    position:sticky;
+    top:0;
+    z-index:15;
+  }
+  header h1{
+    margin:0 0 12px;
+    font-size:1.1rem;
+    font-weight:800;
+    color:var(--accent);
+  }
+  header h1 span{
+    font-size:0.7rem;
+    color:var(--muted);
+    font-weight:600;
+  }
+  nav{
+    display:flex;
+    gap:4px;
+    overflow-x:auto;
+  }
+  nav button{
+    background:none;
+    border:none;
+    padding:10px 14px;
+    font-family:inherit;
+    font-size:0.85rem;
+    font-weight:700;
+    color:var(--muted);
+    cursor:pointer;
+    white-space:nowrap;
+    border-bottom:3px solid transparent;
+  }
+  nav button.active{
+    color:var(--accent);
+    border-bottom:3px solid var(--accent);
+  }
+  main{
+    max-width:760px;
+    margin:0 auto;
+    padding:20px;
+  }
+  .tab{display:none;}
+  .tab.active{display:block;}
+  section{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:16px;
+  }
+  h2{
+    font-size:1.05rem;
+    margin:0 0 6px;
+    color:var(--accent);
+  }
+  .lead{
+    color:var(--muted);
+    font-size:0.88rem;
+    margin-bottom:16px;
+  }
+
+  .tnotes-toggle{
+    background:var(--accent-light);
+    border:none;
+    color:var(--accent);
+    font-weight:700;
+    font-size:0.78rem;
+    padding:6px 12px;
+    border-radius:20px;
+    cursor:pointer;
+    margin-bottom:10px;
+  }
+  .tnotes{
+    display:none;
+    background:#FBF9F4;
+    border-left:3px solid var(--warn);
+    padding:10px 12px;
+    font-size:0.82rem;
+    color:#5c5340;
+    border-radius:0 8px 8px 0;
+    margin-bottom:14px;
+  }
+  .tnotes.show{display:block;}
+
+  .q-card{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:10px;
+    background:#FDFCFF;
+  }
+  .q-card .qtext{
+    font-weight:700;
+    font-size:0.98rem;
+  }
+  .q-card .qtag{
+    display:inline-block;
+    font-size:0.68rem;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    color:#fff;
+    background:var(--accent);
+    padding:2px 8px;
+    border-radius:10px;
+    margin-bottom:8px;
+  }
+
+  .flow-note{
+    background:var(--accent-light);
+    border-radius:10px;
+    padding:12px 14px;
+    font-size:0.88rem;
+    margin-bottom:14px;
+    color:#40395c;
+  }
+
+  .mock-btns{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;}
+  .mock-btns button{
+    background:var(--surface);
+    border:1px solid var(--accent);
+    color:var(--accent);
+    font-weight:700;
+    font-size:0.82rem;
+    padding:8px 14px;
+    border-radius:20px;
+    cursor:pointer;
+  }
+  .mock-btns button.active{background:var(--accent); color:#fff;}
+  .mock-display{
+    background:var(--accent-light);
+    border-radius:10px;
+    padding:18px;
+    font-size:1.05rem;
+    font-weight:700;
+    text-align:center;
+    min-height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .recovery-card{
+    background:var(--accent-light);
+    border-radius:10px;
+    padding:12px 14px;
+    margin-bottom:8px;
+    font-size:0.92rem;
+  }
+  .recovery-card .situation{
+    font-size:0.75rem;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:.03em;
+    margin-bottom:4px;
+  }
+
+  textarea{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:8px 10px;
+    font-family:inherit;
+    font-size:0.9rem;
+    min-height:44px;
+    margin-bottom:10px;
+  }
+  .practice-box{
+    border:1px dashed var(--border);
+    border-radius:10px;
+    padding:14px;
+    margin-top:10px;
+  }
+  .practice-box label{
+    display:block;
+    font-size:0.78rem;
+    font-weight:700;
+    color:var(--accent);
+    margin-bottom:4px;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+  }
+
+  .timer-bubble{
+    position:fixed;
+    bottom:20px;
+    left:20px;
+    background:var(--accent);
+    color:#fff;
+    border-radius:50px;
+    padding:10px 18px;
+    font-weight:700;
+    font-size:0.95rem;
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    cursor:pointer;
+    z-index:20;
+    user-select:none;
+  }
+  .timer-bubble.running{background:var(--bad);}
+
+  .next-back{
+    display:flex;
+    justify-content:space-between;
+    max-width:760px;
+    margin:0 auto;
+    padding:0 20px;
+  }
+  .next-back button{
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    font-weight:700;
+    cursor:pointer;
+    font-size:0.88rem;
+  }
+  .next-back button.ghost{
+    background:none;
+    color:var(--accent);
+    border:1px solid var(--accent);
+  }
+</style>
+</head>
+<body>
+
+<div style="display:flex;flex-wrap:wrap;gap:8px;padding:10px 16px;">
+  <a href="../Grammar-book/conditionals.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Recap: Conditionals</a>
+  <a href="../Grammar-book/past-simple.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Past Simple</a>
+  <a href="../Grammar-book/storytelling-and-narrative-sequencing.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Storytelling &amp; Narrative Sequencing</a>
+</div>
+
+<header>
+  <h1>Reactivation & Fluency — Speaking Warm-Up to Interview Talk <span>· Session 2 of 9</span></h1>
+  <nav id="tabNav">
+    <button class="active" data-tab="retrieval">Free Talk</button>
+    <button data-tab="story">Story Practice</button>
+    <button data-tab="bridge">Bridge to Interview</button>
+    <button data-tab="recall">Phrase Recall</button>
+    <button data-tab="mock">Mock Round</button>
+    <button data-tab="recap">Recap</button>
+  </nav>
+</header>
+
+<div class="timer-bubble" id="timerBubble" onclick="toggleTimer()">50:00</div>
+
+<main>
+
+  <!-- FREE TALK / RETRIEVAL -->
+  <div class="tab active" id="tab-retrieval">
+    <section>
+      <h2>Free Talk — Retrieval, Not Teaching</h2>
+      <div class="lead">No new material here — just talking. You already know most of this English, it just needs to come out again. Answer naturally, don't worry about mistakes.</div>
+      <button class="tnotes-toggle" onclick="toggleNotes(this)">Teacher notes</button>
+      <div class="tnotes">
+        Resist the urge to teach here. If she reaches for a word, wait a beat before supplying it — she may retrieve it herself. Note what surfaces easily vs. what stays stuck; that tells you what's truly dormant vs. what's a genuine gap. No correction mid-flow — save any fixes for the bridge tab.
+      </div>
+
+      <div class="q-card">
+        <span class="qtag">Everyday</span>
+        <div class="qtext">What did you do this week?</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag">Everyday</span>
+        <div class="qtext">Tell me about a typical day for you right now — studies, work, life.</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag">Everyday</span>
+        <div class="qtext">What's something in Ghent you like, or don't like?</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag">Personal</span>
+        <div class="qtext">How did you first get interested in dentistry — tell it like a story, not an answer.</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag">Everyday</span>
+        <div class="qtext">What do you usually do to relax after a long day?</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag">Everyday</span>
+        <div class="qtext">Is there a difference between how you speak Turkish, Dutch, and English — do you feel like a different person in each?</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag">Opinion</span>
+        <div class="qtext">What's something about working in healthcare that people don't realize until they're actually doing it?</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag">Opinion</span>
+        <div class="qtext">If you could give advice to someone just starting dental studies, what would you say?</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- STORY PRACTICE -->
+  <div class="tab" id="tab-story">
+    <section>
+      <h2>Story Practice — Narrative Retrieval</h2>
+      <div class="lead">Interviewers often want a real moment, not a general answer. Tell each story with a shape: what happened → what you did → what you learned.</div>
+      <button class="tnotes-toggle" onclick="toggleNotes(this)">Teacher notes</button>
+      <div class="tnotes">
+        Let her tell the whole story before any correction. If tense slips happen, note them but don't interrupt — flag 1-2 patterns max at the end, not every slip. The goal is narrative flow, which is exactly what "tell me about a time when..." interview questions require.
+      </div>
+
+      <div class="q-card">
+        <span class="qtag">Story</span>
+        <div class="qtext">Tell me about a time a patient or teacher surprised you.</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag">Story</span>
+        <div class="qtext">Tell me about a moment you felt proud of something you did in your studies or work.</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag">Story</span>
+        <div class="qtext">Tell me about a time something didn't go as planned — and what you did next.</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag">Story</span>
+        <div class="qtext">Tell me about the moment you decided to apply for this position.</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- BRIDGE TO INTERVIEW -->
+  <div class="tab" id="tab-bridge">
+    <section>
+      <h2>Bridge — From Free Talk to Interview Talk</h2>
+      <div class="lead">Same idea, now closer to real interview topics. Build your own answer — don't worry about sounding perfect yet.</div>
+
+      <div class="flow-note">
+        If a phrase from last session surfaces naturally, reinforce it in passing. Don't reintroduce the whole phrase bank — only revive what she reaches for.
+      </div>
+
+      <div class="q-card">
+        <span class="qtag">Interview-adjacent</span>
+        <div class="qtext">Why do you want this position?</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag">Interview-adjacent</span>
+        <div class="qtext">What's a moment from your studies or work that you're proud of?</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag">Interview-adjacent</span>
+        <div class="qtext">What would you do if a patient was very anxious or difficult?</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag">Interview-adjacent</span>
+        <div class="qtext">What's something you'd like to improve about yourself professionally?</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag">Interview-adjacent</span>
+        <div class="qtext">How do you handle working with a team, or with people who see things differently than you?</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag">Interview-adjacent</span>
+        <div class="qtext">Where do you see yourself in a few years?</div>
+      </div>
+
+      <div class="practice-box">
+        <label>How did that round feel for you?</label>
+        <div class="mock-btns" data-group="bridgeBlock">
+          <button onclick="rate(this)">Flowed naturally</button>
+          <button onclick="rate(this)">Needed a nudge</button>
+          <button onclick="rate(this)">Still stuck / new gap</button>
+        </div>
+        <textarea id="bridgeNotes" placeholder="Anything specific worth remembering..."></textarea>
+      </div>
+    </section>
+  </div>
+
+  <!-- PHRASE RECALL -->
+  <div class="tab" id="tab-recall">
+    <section>
+      <h2>Phrase Recall — Self-Check</h2>
+      <div class="lead">A quick check on what you already learned last time. Try to remember the phrase yourself before you look at the answer.</div>
+
+      <div class="q-card">
+        <span class="qtag">Recall</span>
+        <div class="qtext">How would you start an answer about what motivates you?</div>
+      </div>
+      <div class="recovery-card">
+        <div class="situation">Answer</div>
+        "What really motivates me is..."
+      </div>
+
+      <div class="q-card">
+        <span class="qtag">Recall</span>
+        <div class="qtext">How would you start an answer about a hypothetical situation ("what would you do if...")?</div>
+      </div>
+      <div class="recovery-card">
+        <div class="situation">Answer</div>
+        "If that happened, my first step would be to..."
+      </div>
+
+      <div class="q-card">
+        <span class="qtag">Recall</span>
+        <div class="qtext">If you catch yourself speaking Dutch by accident, what do you say?</div>
+      </div>
+      <div class="recovery-card">
+        <div class="situation">Answer</div>
+        "Sorry, let me say that in English."
+      </div>
+
+      <div class="q-card">
+        <span class="qtag">Recall</span>
+        <div class="qtext">What's the 3-part shape for structuring any answer?</div>
+      </div>
+      <div class="recovery-card">
+        <div class="situation">Answer</div>
+        Claim → Reason → Example
+      </div>
+
+      <div class="practice-box">
+        <label>What came back easily vs. needed reminding?</label>
+        <textarea placeholder="Notes..."></textarea>
+      </div>
+    </section>
+  </div>
+
+  <!-- MOCK ROUND -->
+  <div class="tab" id="tab-mock">
+    <section>
+      <h2>Mock Interview Round</h2>
+      <div class="lead">Full pace, like the real thing. Just talk — this is about getting comfortable, not being perfect.</div>
+
+      <div class="mock-btns" id="mockBtns">
+        <button onclick="showMock(this, 0)">1</button>
+        <button onclick="showMock(this, 1)">2</button>
+        <button onclick="showMock(this, 2)">3</button>
+        <button onclick="showMock(this, 3)">4</button>
+        <button onclick="showMock(this, 4)">5</button>
+        <button onclick="showMock(this, 5)">6</button>
+        <button onclick="showMock(this, 6)">7 (curveball)</button>
+      </div>
+      <div class="mock-display" id="mockDisplay">Tap a number to reveal a question</div>
+
+      <div class="practice-box" style="margin-top:16px;">
+        <label>How did that round feel?</label>
+        <div class="mock-btns" data-group="selfRating">
+          <button onclick="rate(this)">Much more natural</button>
+          <button onclick="rate(this)">A little better</button>
+          <button onclick="rate(this)">About the same</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- RECAP -->
+  <div class="tab" id="tab-recap">
+    <section>
+      <h2>Recap</h2>
+      <div class="lead">What felt solid today, what to keep working on next time.</div>
+
+      <div class="recovery-card">
+        <div class="situation">Reminder</div>
+        You already know most of this. The goal isn't to learn new things — it's to make what you know come out faster and with less thinking.
+      </div>
+
+      <div class="practice-box">
+        <label>What felt easy today?</label>
+        <textarea placeholder="Notes..."></textarea>
+      </div>
+      <div class="practice-box">
+        <label>What still felt stuck?</label>
+        <textarea placeholder="Notes..."></textarea>
+      </div>
+
+      <button class="tnotes-toggle" onclick="toggleNotes(this)">Can-do card</button>
+      <div class="tnotes">
+        <strong>B1.15</strong> — Can describe personal motivations and past experiences in a structured way, and respond to unexpected follow-up questions with basic coherence, in an interview or professional context.
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<div class="next-back">
+  <button class="ghost" onclick="prevTab()">Back</button>
+  <button onclick="nextTab()">Next</button>
+</div>
+
+<script>
+  const tabs = ['retrieval','story','bridge','recall','mock','recap'];
+  let currentTab = 0;
+
+  function showTab(name){
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-'+name).classList.add('active');
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.querySelector(`nav button[data-tab="${name}"]`).classList.add('active');
+    currentTab = tabs.indexOf(name);
+  }
+  document.querySelectorAll('nav button').forEach(b=>{
+    b.addEventListener('click', ()=> showTab(b.dataset.tab));
+  });
+  function nextTab(){ if(currentTab < tabs.length-1) showTab(tabs[currentTab+1]); }
+  function prevTab(){ if(currentTab > 0) showTab(tabs[currentTab-1]); }
+
+  function toggleNotes(btn){
+    const notes = btn.nextElementSibling;
+    notes.classList.toggle('show');
+  }
+
+  function rate(btn){
+    const group = btn.parentElement;
+    [...group.children].forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  const mockQuestions = [
+    "Why do you want this position?",
+    "Why dentistry?",
+    "Tell me about your background.",
+    "What's a moment from your studies or work you're proud of?",
+    "What's something you'd like to improve about yourself professionally?",
+    "How do you handle working with a team, or people who see things differently?",
+    "What would you do if a patient was very anxious or difficult?"
+  ];
+  function showMock(btn, i){
+    document.querySelectorAll('#mockBtns button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('mockDisplay').textContent = mockQuestions[i];
+  }
+
+  let seconds = 50*60;
+  let running = false;
+  let interval = null;
+  const bubble = document.getElementById('timerBubble');
+  function formatTime(s){
+    const m = Math.floor(s/60);
+    const sec = s%60;
+    return `${m}:${sec.toString().padStart(2,'0')}`;
+  }
+  function toggleTimer(){
+    if(running){
+      clearInterval(interval);
+      running = false;
+      bubble.classList.remove('running');
+    } else {
+      running = true;
+      bubble.classList.add('running');
+      interval = setInterval(()=>{
+        if(seconds > 0){
+          seconds--;
+          bubble.textContent = formatTime(seconds);
+        } else {
+          clearInterval(interval);
+          bubble.textContent = "Time's up";
+        }
+      }, 1000);
+    }
+  }
+</script>
+
+</body>
+</html>
