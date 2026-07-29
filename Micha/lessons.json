@@ -1,5 +1,35 @@
 [
   {
+    "file": "micha-there-is-there-are-ukraine-homework.html",
+    "title": "#20 Homework: Your Turn — Ukraine",
+    "goals": {
+      "primary": [
+        "A1-07"
+      ]
+    },
+    "grammar": [
+      {
+        "file": "there-is-there-are.html",
+        "title": "There Is / There Are"
+      }
+    ]
+  },
+  {
+    "file": "micha-there-is-there-are-kosovo.html",
+    "title": "#19 My Home Country: Kosovo",
+    "goals": {
+      "primary": [
+        "A1-07"
+      ]
+    },
+    "grammar": [
+      {
+        "file": "there-is-there-are.html",
+        "title": "There Is / There Are"
+      }
+    ]
+  },
+  {
     "file": "micha-likes-dislikes.html",
     "title": "#18 Likes & Dislikes",
     "goals": {

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Your Turn: Ukraine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F6F8; --surface:#FFFFFF; --teal:#2A8A8A; --teal-light:#E3F2F2;
+  --ink:#1F2B33; --muted:#6B7A82; --border:#E3E8EB;
+  --orange:#E08A3C; --orange-light:#FFF3E6; --blue:#3E6FB0;
+  --green:#3FA66A; --green-light:#E5F6EC; --red:#D9534F;
+  --shadow:0 2px 8px rgba(31,43,51,.06),0 1px 2px rgba(31,43,51,.04);
+  --shadow-lg:0 8px 24px rgba(31,43,51,.10);
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);padding-bottom:90px;}
+.app-header{background:var(--surface);padding:20px 20px 16px;border-bottom:1px solid var(--border);}
+.app-header h1{margin:0 0 4px;font-size:22px;font-weight:800;}
+.app-header p{margin:0;font-size:13px;color:var(--muted);font-weight:600;}
+.tabbar{position:sticky;top:0;z-index:50;display:flex;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:var(--shadow);-webkit-overflow-scrolling:touch;}
+.tabbar::-webkit-scrollbar{display:none;}
+.tab-btn{flex:0 0 auto;padding:14px 16px;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;}
+.tab-btn.active{color:var(--teal);border-bottom-color:var(--teal);}
+.panel{display:none;padding:18px 16px 30px;max-width:680px;margin:0 auto;}
+.panel.active{display:block;}
+.card{background:var(--surface);border-radius:16px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow);border:1px solid var(--border);}
+.card h2{margin:0 0 10px;font-size:17px;font-weight:800;}
+.card h3{margin:0 0 8px;font-size:14px;font-weight:800;color:var(--teal);}
+.fr{color:var(--blue);font-size:13px;font-style:italic;font-weight:600;margin-top:4px;}
+.nav-buttons{display:flex;justify-content:space-between;margin-top:18px;gap:10px;}
+.btn{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;padding:12px 22px;border-radius:12px;border:none;cursor:pointer;}
+.btn-primary{background:var(--teal);color:#fff;}
+.btn-secondary{background:var(--surface);color:var(--teal);border:2px solid var(--teal);}
+.btn:active{transform:scale(.97);}
+
+.hero-banner{background:linear-gradient(135deg,#2A8A8A 0%,#1f6b6b 100%);border-radius:18px;padding:22px;color:#fff;margin-bottom:14px;}
+.hero-banner h2{color:#fff;margin:0 0 6px;}
+.hero-banner p{margin:0;font-size:14px;opacity:.95;line-height:1.5;}
+
+.model-recap{background:var(--teal-light);border-radius:14px;padding:14px;margin-bottom:14px;font-size:13px;line-height:1.6;}
+.model-recap b{color:var(--teal);}
+
+.fact-input-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+.fact-input-box{background:var(--teal-light);border-radius:12px;padding:12px;}
+.fact-input-box label{display:block;font-size:11px;font-weight:800;color:var(--teal);text-transform:uppercase;margin-bottom:6px;}
+.fact-input-box input{width:100%;border:none;border-bottom:2px solid var(--border);background:transparent;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;padding:4px 2px;}
+.fact-input-box input:focus{outline:none;border-bottom-color:var(--teal);}
+.fact-help{font-size:11px;color:var(--muted);margin-top:10px;}
+
+.formula-box{background:var(--teal-light);border-radius:12px;padding:14px;text-align:center;font-weight:800;font-size:15px;color:var(--teal);margin-bottom:12px;}
+table.conj{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:10px;}
+table.conj th,table.conj td{border:1px solid var(--border);padding:8px 6px;text-align:left;}
+table.conj th{background:var(--teal-light);font-weight:800;color:var(--teal);}
+
+.task-prompt{background:var(--orange-light);border-radius:12px;padding:12px;margin-bottom:10px;font-size:13px;}
+.task-prompt b{color:var(--orange);display:block;margin-bottom:4px;}
+input.task-blank{width:100%;border:none;border-bottom:2px solid var(--teal);background:var(--teal-light);font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;padding:8px 10px;border-radius:6px;margin-top:6px;}
+
+.starter-chip{display:block;width:100%;text-align:left;background:var(--teal-light);border:none;border-radius:10px;padding:10px 12px;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:var(--teal);margin-bottom:8px;cursor:pointer;}
+textarea.write-box{width:100%;min-height:160px;border:2px solid var(--border);border-radius:12px;padding:12px;font-family:'Nunito',sans-serif;font-size:14px;resize:vertical;}
+
+.speak-card{border-radius:14px;padding:14px;margin-bottom:10px;color:#fff;}
+.speak-card.warmup{background:#7AAFC2;}
+.speak-card.core{background:var(--teal);}
+.speak-card.challenge{background:#B0586B;}
+.speak-card .lvl{font-size:11px;font-weight:800;text-transform:uppercase;opacity:.85;letter-spacing:.5px;}
+.speak-card p{margin:6px 0 0;font-weight:700;font-size:14px;}
+.speak-card .fr{color:#fff;opacity:.85;}
+
+.focus-input-area textarea{width:100%;min-height:90px;border:2px solid var(--border);border-radius:12px;padding:12px;font-family:'Nunito',sans-serif;font-size:15px;resize:vertical;}
+.focus-toolbar{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.focus-toolbar button{flex:1;min-width:90px;padding:11px;border-radius:10px;border:2px solid var(--teal);background:#fff;color:var(--teal);font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;font-size:13px;}
+.focus-toolbar button.go{background:var(--teal);color:#fff;}
+.focus-legend{display:flex;gap:12px;justify-content:center;margin:14px 0;font-size:11px;font-weight:700;flex-wrap:wrap;}
+.legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;}
+#focusStage{display:none;background:#10222B;border-radius:20px;padding:40px 20px;min-height:220px;align-items:center;justify-content:center;text-align:center;flex-wrap:wrap;gap:10px;}
+#focusStage.show{display:flex;}
+#focusStage .word{font-size:26px;font-weight:800;color:#E8EEF0;line-height:1.5;}
+#focusStage .word.gw-there{color:#5DDCC8;}
+#focusStage .word.gw-noun{color:#F9D066;}
+#focusStage .word.gw-neg{color:#F27FAE;}
+#focusStage.wordmode .word{font-size:54px;display:none;}
+#focusStage.wordmode .word.active{display:inline-block;}
+.focus-progress{text-align:center;font-size:12px;color:var(--muted);font-weight:700;margin-top:10px;}
+.focus-hint{font-size:12px;color:var(--muted);text-align:center;margin-top:6px;}
+
+#timerBubble{position:fixed;bottom:18px;left:18px;width:60px;height:60px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;box-shadow:var(--shadow-lg);cursor:pointer;z-index:200;user-select:none;}
+#timerBubble.danger{background:var(--red);}
+#emojiOverlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:500;font-size:120px;}
+#emojiOverlay.show{display:flex;animation:zoomIn .5s ease-out;}
+@keyframes zoomIn{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
+#wbOverlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;z-index:400;}
+#wbOverlay.show{display:flex;}
+#wbPanel{background:var(--surface);width:100%;border-radius:24px 24px 0 0;padding:20px 18px 28px;max-height:85vh;overflow-y:auto;}
+#wbPanel h3{margin:0 0 12px;font-size:16px;font-weight:800;}
+.wb-close{float:right;background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;}
+.timer-controls{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.timer-controls button{flex:1;min-width:60px;padding:10px;border-radius:10px;border:2px solid var(--border);background:var(--bg);font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;}
+.stamp-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.stamp-btn{font-size:20px;background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:8px 10px;cursor:pointer;}
+#correctionLog{background:var(--bg);border-radius:10px;padding:10px;min-height:60px;font-size:13px;margin-bottom:10px;white-space:pre-wrap;}
+#wbNotes{width:100%;min-height:80px;border:2px solid var(--border);border-radius:10px;padding:10px;font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:10px;resize:vertical;}
+.wb-actions{display:flex;gap:8px;}
+.wb-actions button{flex:1;padding:10px;border-radius:10px;border:none;font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;}
+.wb-copy{background:var(--teal);color:#fff;}
+.wb-clear{background:#FBE5E4;color:var(--red);}
+</style>
+</head>
+<body>
+<div style="display:flex;flex-wrap:wrap;gap:8px;padding:10px 16px;">
+  <a href="../Grammar-book/there-is-there-are.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Recap: There Is / There Are</a>
+</div>
+
+<div class="app-header">
+  <h1>Your Turn: Ukraine</h1>
+  <p>Tell me about your home country — using "There is / There are"</p>
+</div>
+
+<div class="tabbar" id="tabbar">
+  <button class="tab-btn active" data-tab="instructions">Instructions</button>
+  <button class="tab-btn" data-tab="facts">My Country Facts</button>
+  <button class="tab-btn" data-tab="grammar">Grammar Recap</button>
+  <button class="tab-btn" data-tab="myhome">My Hometown</button>
+  <button class="tab-btn" data-tab="speaking">Writing &amp; Speaking</button>
+  <button class="tab-btn" data-tab="focus">Focus</button>
+</div>
+
+<!-- INSTRUCTIONS -->
+<div class="panel active" id="instructions">
+  <div class="hero-banner">
+    <h2>Now It's Your Turn!</h2>
+    <p>Your teacher told you about Kosovo — his home country, and his hometown, Peja. Now you're going to do exactly the same thing, but about Ukraine and your own hometown.</p>
+    <p class="fr" style="opacity:.9;">Ton professeur t'a parlé du Kosovo — son pays d'origine, et sa ville natale, Peja. Maintenant, tu vas faire exactement la même chose, mais sur l'Ukraine et ta propre ville natale.</p>
+  </div>
+
+  <div class="model-recap">
+    <b>Remember the model:</b> Your teacher used sentences like <i>"There is a canyon near Peja."</i> and <i>"There are many mountains in Kosovo."</i> You're going to build your own sentences the same way — about Ukraine.
+    <p class="fr" style="margin-top:6px;">Souviens-toi du modèle : ton professeur a utilisé des phrases comme "There is a canyon near Peja" et "There are many mountains in Kosovo." Tu vas construire tes propres phrases de la même façon — sur l'Ukraine.</p>
+  </div>
+
+  <div class="card">
+    <h3>What you'll do</h3>
+    <p style="font-size:13px;line-height:1.7;">1. Fill in some quick facts about Ukraine (ask your teacher if you're not sure).<br>
+    2. Write a few sentences about your own hometown using "There is" and "There are".<br>
+    3. Write a short paragraph about Ukraine.<br>
+    4. Practise saying it out loud.</p>
+    <p class="fr">1. Remplis quelques faits rapides sur l'Ukraine. 2. Écris quelques phrases sur ta ville natale avec "There is" et "There are". 3. Écris un court paragraphe sur l'Ukraine. 4. Entraîne-toi à le dire à voix haute.</p>
+  </div>
+
+  <div class="nav-buttons">
+    <span></span>
+    <button class="btn btn-primary" onclick="goTab('facts')">Next →</button>
+  </div>
+</div>
+
+<!-- MY COUNTRY FACTS -->
+<div class="panel" id="facts">
+  <div class="card">
+    <h2>My Country: Ukraine</h2>
+    <p class="fr">Mon pays : l'Ukraine — remplis ce que tu sais</p>
+    <div class="fact-input-grid">
+      <div class="fact-input-box">
+        <label>Capital</label>
+        <input type="text" placeholder="...">
+      </div>
+      <div class="fact-input-box">
+        <label>Currency</label>
+        <input type="text" placeholder="...">
+      </div>
+      <div class="fact-input-box">
+        <label>Main Language</label>
+        <input type="text" placeholder="...">
+      </div>
+      <div class="fact-input-box">
+        <label>My Hometown / Region</label>
+        <input type="text" placeholder="...">
+      </div>
+    </div>
+    <p class="fact-help">Don't know one of these? That's OK — ask your teacher and fill it in together.</p>
+    <p class="fr fact-help">Tu ne connais pas une réponse ? Pas de problème — demande à ton professeur et remplissez-la ensemble.</p>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('instructions')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('grammar')">Next →</button>
+  </div>
+</div>
+
+<!-- GRAMMAR RECAP -->
+<div class="panel" id="grammar">
+  <div class="card">
+    <h2>Grammar Recap — There is / There are</h2>
+    <p class="fr">Rappel — Il y a...</p>
+    <div class="formula-box">There is + singular noun &nbsp;|&nbsp; There are + plural noun</div>
+    <table class="conj">
+      <tr><th>Form</th><th>Example</th></tr>
+      <tr><td>There is (singular)</td><td>There is a river in my city.</td></tr>
+      <tr><td>There are (plural)</td><td>There are many old buildings.</td></tr>
+      <tr><td>Negative</td><td>There isn't / There aren't</td></tr>
+      <tr><td>Question</td><td>Is there...? / Are there...?</td></tr>
+    </table>
+    <p class="fr">"canyon" = singulier → is · "mountains" = pluriel → are</p>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('facts')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('myhome')">Next →</button>
+  </div>
+</div>
+
+<!-- MY HOMETOWN -->
+<div class="panel" id="myhome">
+  <div class="card">
+    <h2>My Hometown</h2>
+    <p class="fr">Ma ville natale — complète chaque phrase</p>
+
+    <div class="task-prompt">
+      <b>1. Something singular that is there</b>
+      <input type="text" class="task-blank" placeholder="There is a...">
+    </div>
+    <div class="task-prompt">
+      <b>2. Something plural that is there</b>
+      <input type="text" class="task-blank" placeholder="There are...">
+    </div>
+    <div class="task-prompt">
+      <b>3. Something that ISN'T there</b>
+      <input type="text" class="task-blank" placeholder="There isn't...">
+    </div>
+    <div class="task-prompt">
+      <b>4. Ask your teacher a question about their hometown</b>
+      <input type="text" class="task-blank" placeholder="Is there... / Are there...?">
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('grammar')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('speaking')">Next →</button>
+  </div>
+</div>
+
+<!-- WRITING & SPEAKING -->
+<div class="panel" id="speaking">
+  <div class="card">
+    <h2>Writing — Describe Ukraine</h2>
+    <p class="fr">Rédige — décris l'Ukraine — choisis un début de phrase</p>
+    <button class="starter-chip" onclick="setStarter('In Ukraine, there is ')">In Ukraine, there is...</button>
+    <button class="starter-chip" onclick="setStarter('In my hometown, there are ')">In my hometown, there are...</button>
+    <button class="starter-chip" onclick="setStarter('There isn\'t ')">There isn't...</button>
+    <button class="starter-chip" onclick="setStarter('My favourite thing about Ukraine is ')">My favourite thing about Ukraine is...</button>
+    <textarea class="write-box" id="writeBox" placeholder="Write a short paragraph about Ukraine here — try to use both 'there is' AND 'there are'. Aim for at least 4-5 sentences!"></textarea>
+  </div>
+
+  <div class="card">
+    <h2>Speaking</h2>
+    <p class="fr">À l'oral — pas de correction pendant, on note les erreurs pour la fin</p>
+    <div class="speak-card warmup">
+      <span class="lvl">Warm-up</span>
+      <p>Tell me 3 things there are in your hometown.</p>
+      <p class="fr">Dis-moi 3 choses qu'il y a dans ta ville natale.</p>
+    </div>
+    <div class="speak-card core">
+      <span class="lvl">Core</span>
+      <p>Describe Ukraine to me as if I've never seen it — what is there? What isn't there?</p>
+      <p class="fr">Décris-moi l'Ukraine comme si je ne l'avais jamais vue — qu'est-ce qu'il y a ? Qu'est-ce qu'il n'y a pas ?</p>
+    </div>
+    <div class="speak-card challenge">
+      <span class="lvl">Challenge</span>
+      <p>Compare Ukraine to Kosovo — what might be similar, and what is probably different?</p>
+      <p class="fr">Compare l'Ukraine au Kosovo — qu'est-ce qui pourrait être similaire, et qu'est-ce qui est probablement différent ?</p>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('myhome')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('focus')">Next →</button>
+  </div>
+</div>
+
+<!-- FOCUS -->
+<div class="panel" id="focus">
+  <div class="card">
+    <h2>Focus — Read Aloud</h2>
+    <p class="fr">Pour le tuteur : tape une phrase — la structure s'illumine</p>
+    <div class="focus-input-area">
+      <textarea id="focusInput" placeholder="Type a sentence here... e.g. There is a river, and there are many old buildings."></textarea>
+    </div>
+    <div class="focus-toolbar">
+      <button class="go" onclick="renderFocusSentence()">Show sentence</button>
+      <button onclick="renderFocusWords()">Word by word</button>
+      <button onclick="clearFocus()">Clear</button>
+    </div>
+    <div class="focus-legend">
+      <span><span class="legend-dot" style="background:#5DDCC8"></span>There is / There are</span>
+      <span><span class="legend-dot" style="background:#F27FAE"></span>Negative (isn't/aren't)</span>
+      <span><span class="legend-dot" style="background:#F9D066"></span>Noun</span>
+    </div>
+    <div id="focusStage"></div>
+    <div class="focus-progress" id="focusProgress"></div>
+    <div class="focus-hint" id="focusHintText"></div>
+  </div>
+</div>
+
+<div id="timerBubble" onclick="openWb()">50:00</div>
+<div id="emojiOverlay" onclick="this.classList.remove('show')"></div>
+
+<div id="wbOverlay" onclick="if(event.target===this)closeWb()">
+  <div id="wbPanel">
+    <button class="wb-close" onclick="closeWb()">✕</button>
+    <h3>⏱ Whiteboard</h3>
+    <div class="timer-controls">
+      <button onclick="setTimerMin(5)">5m</button>
+      <button onclick="setTimerMin(10)">10m</button>
+      <button onclick="setTimerMin(15)">15m</button>
+      <button onclick="toggleRun()" id="runBtn">▶ Start</button>
+      <button onclick="resetTimer()">↺ Reset</button>
+    </div>
+    <h3 style="font-size:14px;">Correction Stamps</h3>
+    <div class="stamp-row">
+      <button class="stamp-btn" onclick="addStamp('✅')">✅</button>
+      <button class="stamp-btn" onclick="addStamp('⭐')">⭐</button>
+      <button class="stamp-btn" onclick="addStamp('🔁 Try again')">🔁</button>
+      <button class="stamp-btn" onclick="addStamp('🗣 Pronunciation')">🗣</button>
+      <button class="stamp-btn" onclick="addStamp('📐 Grammar')">📐</button>
+    </div>
+    <div id="correctionLog"></div>
+    <h3 style="font-size:14px;">Notes</h3>
+    <textarea id="wbNotes" placeholder="Notes for this lesson..."></textarea>
+    <div class="wb-actions">
+      <button class="wb-copy" onclick="copyWb()">Copy</button>
+      <button class="wb-clear" onclick="clearWb()">Clear</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function goTab(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector(`.tab-btn[data-tab="${id}"]`).classList.add('active');
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('.tab-btn').forEach(btn=>btn.addEventListener('click',()=>goTab(btn.dataset.tab)));
+
+function setStarter(text){
+  const box=document.getElementById('writeBox');
+  box.value=text; box.focus();
+}
+
+let totalSeconds=50*60,timerInterval=null,isRunning=false;
+function updateTimerDisplay(){
+  const m=Math.floor(totalSeconds/60).toString().padStart(2,'0');
+  const s=(totalSeconds%60).toString().padStart(2,'0');
+  const b=document.getElementById('timerBubble');
+  b.textContent=`${m}:${s}`;
+  b.classList.toggle('danger',isRunning&&totalSeconds<=30);
+}
+function toggleRun(){
+  isRunning=!isRunning;
+  document.getElementById('runBtn').textContent=isRunning?'⏸ Pause':'▶ Start';
+  if(isRunning){
+    timerInterval=setInterval(()=>{
+      totalSeconds--;updateTimerDisplay();
+      if(totalSeconds<=0){clearInterval(timerInterval);isRunning=false;document.getElementById('runBtn').textContent='▶ Start';fireEmoji();}
+    },1000);
+  } else { clearInterval(timerInterval); }
+}
+function setTimerMin(min){totalSeconds=min*60;updateTimerDisplay();}
+function resetTimer(){clearInterval(timerInterval);isRunning=false;document.getElementById('runBtn').textContent='▶ Start';totalSeconds=50*60;updateTimerDisplay();}
+const faces=['😀','😎','🤩','😜','🥳','😯','🤓','😼','🙃','😺'];
+function fireEmoji(){
+  const o=document.getElementById('emojiOverlay');
+  o.textContent=faces[Math.floor(Math.random()*faces.length)];
+  o.classList.add('show');
+}
+updateTimerDisplay();
+
+function openWb(){document.getElementById('wbOverlay').classList.add('show');}
+function closeWb(){document.getElementById('wbOverlay').classList.remove('show');}
+function addStamp(label){
+  const log=document.getElementById('correctionLog');
+  log.textContent+=(log.textContent?'\n':'')+label;
+}
+function copyWb(){
+  const text=document.getElementById('correctionLog').textContent+'\n\n'+document.getElementById('wbNotes').value;
+  navigator.clipboard.writeText(text).catch(()=>{});
+}
+function clearWb(){document.getElementById('correctionLog').textContent='';document.getElementById('wbNotes').value='';}
+
+const NOUNS_LIST=['mountain','mountains','canyon','canyons','waterfall','waterfalls','bazaar','bazaars','shop','shops','beach','beaches','desert','deserts','city','cities','river','rivers','park','parks','museum','museums','lake','lakes','castle','castles','forest','forests','building','buildings','church','churches','square','squares'];
+
+const PHRASE_PATTERNS=[
+  {re:/\bthere\s+(isn'?t|aren'?t)\b/gi,cls:'gw-neg'},
+  {re:/\b(is\s+there|are\s+there)\b/gi,cls:'gw-there'},
+  {re:/\bthere\s+(is|are)\b/gi,cls:'gw-there'},
+  {re:new RegExp('\\b('+NOUNS_LIST.join('|')+')\\b','gi'),cls:'gw-noun'},
+];
+
+function buildSegments(text){
+  const claimed=new Array(text.length).fill(false);
+  const matches=[];
+  PHRASE_PATTERNS.forEach(p=>{
+    const re=new RegExp(p.re.source,p.re.flags.replace(/g/g,'')+'g');
+    let m;
+    while((m=re.exec(text))!==null){
+      matches.push({start:m.index,end:m.index+m[0].length,cls:p.cls});
+      if(m[0].length===0) re.lastIndex++;
+    }
+  });
+  matches.sort((a,b)=>a.start-b.start||(b.end-b.start)-(a.end-a.start));
+  const accepted=[];
+  for(const m of matches){
+    let overlap=false;
+    for(let i=m.start;i<m.end;i++){if(claimed[i]){overlap=true;break;}}
+    if(overlap) continue;
+    for(let i=m.start;i<m.end;i++) claimed[i]=true;
+    accepted.push(m);
+  }
+  accepted.sort((a,b)=>a.start-b.start);
+  const out=[];
+  let cursor=0;
+  accepted.forEach(m=>{
+    if(m.start>cursor) out.push({text:text.slice(cursor,m.start),cls:''});
+    out.push({text:text.slice(m.start,m.end),cls:m.cls});
+    cursor=m.end;
+  });
+  if(cursor<text.length) out.push({text:text.slice(cursor),cls:''});
+  return out;
+}
+
+function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function buildSentenceHtml(text){
+  return buildSegments(text).map(seg=>{
+    if(!seg.text) return '';
+    const safe=escapeHtml(seg.text);
+    return seg.cls?`<span class="word ${seg.cls}">${safe}</span>`:`<span class="word">${safe}</span>`;
+  }).join('');
+}
+
+function buildWordTokens(text){
+  const tokens=[];
+  buildSegments(text).forEach(seg=>{
+    if(!seg.text) return;
+    if(seg.cls){tokens.push({text:seg.text.trim(),cls:seg.cls});}
+    else{seg.text.split(/\s+/).filter(w=>w.length>0).forEach(w=>tokens.push({text:w,cls:''}));}
+  });
+  return tokens;
+}
+
+let focusTokens=[],focusIndex=0;
+
+function renderFocusSentence(){
+  const text=document.getElementById('focusInput').value;
+  if(!text.trim()) return;
+  const stage=document.getElementById('focusStage');
+  stage.classList.remove('wordmode');
+  stage.classList.add('show');
+  stage.innerHTML=buildSentenceHtml(text);
+  document.getElementById('focusProgress').textContent='';
+  document.getElementById('focusHintText').textContent='';
+}
+
+function renderFocusWords(){
+  const text=document.getElementById('focusInput').value;
+  if(!text.trim()) return;
+  const stage=document.getElementById('focusStage');
+  stage.classList.add('show','wordmode');
+  const tokens=buildWordTokens(text);
+  stage.innerHTML=tokens.map(t=>`<span class="word ${t.cls}">${escapeHtml(t.text)}</span>`).join(' ');
+  focusTokens=Array.from(stage.querySelectorAll('.word'));
+  focusIndex=0;
+  focusTokens.forEach(w=>w.classList.remove('active'));
+  if(focusTokens.length) focusTokens[0].classList.add('active');
+  updateFocusProgress();
+  document.getElementById('focusHintText').textContent='Tap the box or press → to advance';
+  stage.onclick=advanceFocusWord;
+}
+
+function advanceFocusWord(){
+  if(!focusTokens.length) return;
+  focusTokens[focusIndex].classList.remove('active');
+  focusIndex=(focusIndex+1)%focusTokens.length;
+  focusTokens[focusIndex].classList.add('active');
+  updateFocusProgress();
+}
+function rewindFocusWord(){
+  if(!focusTokens.length) return;
+  focusTokens[focusIndex].classList.remove('active');
+  focusIndex=(focusIndex-1+focusTokens.length)%focusTokens.length;
+  focusTokens[focusIndex].classList.add('active');
+  updateFocusProgress();
+}
+function updateFocusProgress(){
+  document.getElementById('focusProgress').textContent=focusTokens.length?`${focusIndex+1} / ${focusTokens.length}`:'';
+}
+function clearFocus(){
+  document.getElementById('focusInput').value='';
+  const stage=document.getElementById('focusStage');
+  stage.classList.remove('show','wordmode');
+  stage.innerHTML='';
+  focusTokens=[];focusIndex=0;
+  document.getElementById('focusProgress').textContent='';
+  document.getElementById('focusHintText').textContent='';
+}
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('focus').classList.contains('active')){
+    if(e.key==='ArrowRight') advanceFocusWord();
+    if(e.key==='ArrowLeft') rewindFocusWord();
+  }
+});
+</script>
+</body>
+</html>
