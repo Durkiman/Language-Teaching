@@ -45,7 +45,7 @@
     section.innerHTML = `
       <p class="grammar-book-label">📘 My Grammar Book</p>
       <div class="grammar-links">
-        ${[...grammarSeen].map(([file, title]) => `<a href="../Grammar-book/${file}">${title}</a>`).join('')}
+        ${[...grammarSeen].map(([file, title]) => `<a href="../Grammar-book/English/${file}">${title}</a>`).join('')}
       </div>
     `;
     listEl.insertAdjacentElement('afterend', section);
