@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./doc-page.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print { #answerToggleBtn { display: none !important; } }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
+
+  </style>
+</head>
+<body>
+<doc-page size="letter" margin="0.7in">
+
+  <div slot="header" style="display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px;border-bottom:3px solid #0E7C86;"></div>
+  <div slot="footer" style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #DDD8CC;font-size:10.5px;color:#9A9483;font-family:'Nunito',sans-serif;">
+    <span>© Emotional Language</span>
+    <span>ESL Grammar Workbook</span>
+  </div>
+
+  <div style="text-align:center;padding:8px 0 22px;">
+    <div style="display:inline-block;background:#0E7C86;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Durim's ESL Grammar Workbook: A1–C2</div>
+    <h1 style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:44px;color:#1B4B4F;margin:16px 0 4px;line-height:1.05;">Emotional Language</h1>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:600;font-size:22px;color:#F2994A;margin-bottom:10px;">Feelings, Prepositions &amp; Intensity</div>
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:6px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;">📘 1. Understanding the Rule</h2>
+
+  <p style="font-size:15px;line-height:1.65;color:#2B2B2B;margin:0 0 12px;">Talking about feelings needs three things: the right <strong>sentence pattern</strong>, the right <strong>preposition</strong> after the adjective, and the right <strong>intensifier</strong> for how strong the word already is.</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
+    <div style="background:#EAF2FF;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>feel/be + adjective</strong><br/>"I feel nervous." "She's thrilled."</div>
+    <div style="background:#F0EAFE;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>feel like + noun/-ing</strong><br/>"I feel like a fraud." "I feel like crying."</div>
+    <div style="background:#FFE9E4;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>it makes me feel + adjective</strong><br/>"It makes me feel anxious."</div>
+    <div style="background:#E4F8ED;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>adjective + that-clause</strong><br/>"I'm worried that I'll forget."</div>
+  </div>
+
+  <div style="background:#FFF6D8;border:2px dashed #F2C94C;border-radius:12px;padding:14px 16px;margin:0 0 18px;font-size:14px;color:#5C4A00;">
+    <strong>Careful: "I feel bad," not "I feel badly."</strong> After feel/be, use an <em>adjective</em> (bad, sad, nervous), not an adverb — "badly" describes how you do an action, not how you feel.
+  </div>
+
+  <div style="background:#EAF2FF;border:2px solid #C7DBFF;border-radius:12px;padding:14px 16px;margin:0 0 20px;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;color:#1B4B4F;margin-bottom:10px;">🌡️ Gradable vs extreme adjectives</div>
+    <p style="font-size:13.5px;line-height:1.6;color:#2B2B2B;margin:0 0 10px;"><strong>Gradable</strong> adjectives describe a feeling that comes in degrees (a little → very): angry, sad, tired, happy. Use <em>very / really / quite / a bit</em>.</p>
+    <p style="font-size:13.5px;line-height:1.6;color:#2B2B2B;margin:0;"><strong>Extreme</strong> adjectives already mean "very ___": furious (= very angry), devastated (= very sad), exhausted (= very tired), ecstatic (= very happy). Use <em>absolutely / completely / utterly</em> instead — never "very."</p>
+  </div>
+
+  <div style="background:#FFF6D8;border:2px dashed #F2C94C;border-radius:12px;padding:14px 16px;margin:0 0 20px;font-size:14px;color:#5C4A00;">
+    <strong>Careful: "very furious" is a mistake.</strong> Furious already means "very angry," so adding "very" doubles up. Say "absolutely furious" instead.
+  </div>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:30px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">📊 2. Reference Tables</h2>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Emotion adjectives + prepositions</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#8B5FE0;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Adjective</th><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Preposition</th><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Example</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">afraid / scared</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">of</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">afraid of spiders</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">angry</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">with (person) / about (thing)</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">angry with him about the delay</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">ashamed</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">of</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">ashamed of my reaction</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">jealous / envious</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">of</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">jealous of her confidence</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">proud</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">of</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">proud of your progress</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">worried / anxious</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">about</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">worried about the exam</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">excited</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">about</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">excited about the trip</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">disappointed</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">with (person) / in (person) / about (thing)</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">disappointed with myself</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">embarrassed</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">about / by</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">embarrassed about the mistake</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">annoyed / irritated</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">with (person) / about (thing)</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">annoyed with the noise</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Gradable → extreme pairs</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 20px;font-size:13.5px;">
+    <thead><tr style="background:#4C7BF5;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Gradable (very)</th><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Extreme (absolutely)</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">angry</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">furious, livid</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">scared</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">terrified, petrified</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">happy</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">ecstatic, thrilled, overjoyed</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">sad</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">devastated, heartbroken</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">tired</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">exhausted, drained</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">surprised</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">astonished, amazed, stunned</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:24px 0 6px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">✏️ 3. Practice Exercises</h2>
+  <p style="font-size:13.5px;color:#9A9483;margin:0 0 16px;">18 exercises across all six CEFR levels — three per level, increasing in difficulty. Answers on the last page.</p>
+
+  <div style="display:inline-block;background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:10px 0 10px;">LEVEL A1 · Beginner (I feel + adjective)</div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: choose the correct sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">I feel tired.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">I feel tiredly.</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">She is happy.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">She is happily.</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">I feel badly.</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">I feel bad.</button></span></li>
+      <li><span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">He seems nervous.</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">He seems nervously.</button></span></li>
+    </ol>
+  </div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each situation (1–4) to the feeling (a–d).</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
+      <div>1. you passed the exam <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>a. sad</div>
+      <div>2. you lost your keys <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>b. tired</div>
+      <div>3. your friend moved away <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>c. happy</div>
+      <div>4. you worked all night <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div><div>d. frustrated</div>
+    </div>
+  </div>
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank with "feel" or "am/is/are".</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>I <input class="iq-input" id="ex3-1"> nervous about the interview.</li>
+      <li>She <input class="iq-input" id="ex3-2"> excited about the trip.</li>
+      <li>We <input class="iq-input" id="ex3-3"> proud of you.</li>
+      <li>He <input class="iq-input" id="ex3-4"> tired today.</li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
+  </div>
+
+  <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary (Basic Prepositions)</div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Leo is proud of his sister — she just got a new job. He's a little jealous of her confidence, though. He's also worried about his own interview next week, but excited about the opportunity.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Leo is proud of his sister. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>He feels nothing about her confidence. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>He has an interview coming up. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+    </ol>
+  </div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Fill in the missing preposition (of / about / with).</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>I'm afraid <input class="iq-input" id="ex5-1"> spiders.</li>
+      <li>She's proud <input class="iq-input" id="ex5-2"> her work.</li>
+      <li>We're worried <input class="iq-input" id="ex5-3"> the weather.</li>
+      <li>He's angry <input class="iq-input" id="ex5-4"> his brother.</li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
+  </div>
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>the / excited / trip / about / I'm <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>ashamed / mistake / of / she's / the <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>proud / are / you / of / we <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
+  </div>
+
+  <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate (Gradable vs Extreme)</div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the mistake in each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>I was very furious about the delay. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>She's angry with the traffic. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>He's very exhausted after the race. <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>I feel badly about forgetting your birthday. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>We're jealous with her new car. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
+  </div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Choose "very" or "absolutely."</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>I'm <input class="iq-input" id="ex8-1"> tired. (gradable)</li>
+      <li>I'm <input class="iq-input" id="ex8-2"> exhausted. (extreme)</li>
+      <li>She's <input class="iq-input" id="ex8-3"> angry. (gradable)</li>
+      <li>She's <input class="iq-input" id="ex8-4"> furious. (extreme)</li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
+  </div>
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: which is the extreme version?</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>happy → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) ecstatic</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) pleased</button></span></li>
+      <li>scared → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) terrified</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) uneasy</button></span></li>
+      <li>sad → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) devastated</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) low</button></span></li>
+    </ol>
+  </div>
+
+  <div style="display:inline-block;background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B2 · Upper-Intermediate (Feel Like &amp; That-Clauses)</div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">After the long shift, Mara felt like collapsing. She was worried that she'd said something wrong to a patient earlier, though nobody seemed upset with her. By the time she got home, she felt completely drained, but also quietly proud of how she'd handled a difficult case.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Mara felt energetic after her shift. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>She was concerned about something she'd said. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>A patient was clearly angry with her. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>She felt some pride about the difficult case. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+    </ol>
+  </div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>I feel like to cry right now. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>She's disappointed about him for missing the meeting. <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>I'm worried that I will to forget. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>He was very ecstatic about the news. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
+  </div>
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Describe how you felt about a real recent event in 5–7 sentences. Use <strong>at least one dependent preposition</strong> (afraid of, proud of, worried about…), <strong>one "feel like"</strong> structure, and <strong>one extreme adjective with "absolutely."</strong></p>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
+  </div>
+
+  <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced (Register &amp; Nuance)</div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each casual sentence with more precise emotional language.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>I was kind of annoyed but not, like, super mad. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite…"></li>
+      <li>She was really really happy, like over the moon. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite…"></li>
+      <li>I felt bad, like really guilty about it. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite…"></li>
+      <li>He was scared, like properly terrified. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
+  </div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: which nuance is correct?</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"disappointed in her" vs "disappointed with the result" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) "in" for a person's character, "with" for an outcome</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) they're identical, no difference</button></span></li>
+      <li>"angry with him" vs "angry about the situation" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) "with" for a person, "about" for a thing/situation</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) both work identically for people and things</button></span></li>
+      <li>"I feel like a fraud" <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) feel like + noun = a comparison/self-perception</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) feel like + noun always means "want to"</button></span></li>
+    </ol>
+  </div>
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>I was very devastated by the news, and very furious at the same time. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>She's disappointed on the outcome, though not angry about him. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>I feel like I'm failing, and it makes me feel badly. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>He was embarrassed for the mistake in front of everyone. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
+  </div>
+
+  <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency (Precision &amp; Range)</div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, describe a mixed emotional experience (e.g. a bittersweet event). Use at least two gradable adjectives with correct intensifiers, two extreme adjectives with "absolutely"/"completely," and two different dependent prepositions.</p>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
+  </div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into natural, precise sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>absolutely / news / was / the / devastated / by / she <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>proud / of / progress / your / genuinely / I'm <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>jealous / of / a / bit / her / confidence / I'm <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>result / with / disappointed / the / genuinely / were / we <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
+  </div>
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>I was very ecstatic about the result. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>She's disappointed on herself for the mistake. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction…"></li>
+      <li>He felt badly about missing the deadline. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>We were angry about him for the delay. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
+    <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:0;white-space:nowrap;">🔑 Answer Key</h2>
+    <button id="answerToggleBtn" style="flex:0 0 auto;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#fff;background:#8B5FE0;border:none;border-radius:999px;padding:8px 18px;cursor:pointer;white-space:nowrap;">🙈 Hide Answer Key</button>
+  </div>
+  <p style="font-size:12.5px;color:#9A9483;margin:0 0 14px;">Tip: click "Hide Answer Key" above before printing a copy for students — the button itself never prints.</p>
+
+  <div id="answer-key" style="display:block;">
+    <div style="background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.1</strong> 1. I feel tired. 2. She is happy. 3. I feel bad. 4. He seems nervous.<br/>
+      <strong>Ex.2</strong> 1–c, 2–d, 3–a, 4–b<br/>
+      <strong>Ex.3</strong> 1. feel 2. is 3. are 4. is
+    </div>
+    <div style="background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.4</strong> 1. T 2. F 3. T<br/>
+      <strong>Ex.5</strong> 1. of 2. of 3. about 4. with<br/>
+      <strong>Ex.6</strong> 1. I'm excited about the trip. 2. She's ashamed of the mistake. 3. We are proud of you.
+    </div>
+    <div style="background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.7</strong> 1. I was absolutely furious about the delay. 2. She's angry about the traffic. 3. He's absolutely exhausted after the race. 4. I feel bad about forgetting your birthday. 5. We're jealous of her new car.<br/>
+      <strong>Ex.8</strong> 1. very 2. absolutely 3. very 4. absolutely<br/>
+      <strong>Ex.9</strong> 1–a 2–a 3–a
+    </div>
+    <div style="background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.10</strong> 1. F 2. T 3. F 4. T<br/>
+      <strong>Ex.11</strong> 1. I feel like crying right now. 2. She's disappointed with/in him for missing the meeting. 3. I'm worried that I'll forget. 4. He was absolutely ecstatic about the news.<br/>
+      <strong>Ex.12</strong> Open answer — check for a dependent preposition, a "feel like" structure, and an extreme adjective with "absolutely."
+    </div>
+    <div style="background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">C1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.13</strong> Sample answers (accept close equivalents): 1. I was mildly annoyed but not furious. 2. She was absolutely ecstatic. 3. I felt absolutely guilty about it. 4. He was absolutely terrified.<br/>
+      <strong>Ex.14</strong> 1–a 2–a 3–a<br/>
+      <strong>Ex.15</strong> 1. I was devastated by the news, and furious at the same time. 2. She's disappointed with the outcome, though not angry with him. 3. I feel like I'm failing, and it makes me feel bad. 4. He was embarrassed about the mistake in front of everyone.
+    </div>
+    <div style="background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 4px;">C2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 4px;">
+      <strong>Ex.16</strong> Open answer — check gradable + intensifier, extreme + absolutely/completely, and two distinct dependent prepositions.<br/>
+      <strong>Ex.17</strong> 1. She was absolutely devastated by the news. 2. I'm genuinely proud of your progress. 3. I'm a bit jealous of her confidence. 4. We were genuinely disappointed with the result.<br/>
+      <strong>Ex.18</strong> 1. I was absolutely ecstatic about the result. 2. She's disappointed in herself for the mistake. 3. He felt bad about missing the deadline. 4. We were angry with him for the delay.
+    </div>
+  </div>
+
+</doc-page>
+
+<script>
+(function () {
+  var btn = document.getElementById('answerToggleBtn');
+  var key = document.getElementById('answer-key');
+  btn.addEventListener('click', function () {
+    var showing = key.style.display !== 'none';
+    key.style.display = showing ? 'none' : 'block';
+    btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
+  });
+})();
+
+/* -- Interactive exercises -- */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['feel'] },
+    { accept: ['is'] },
+    { accept: ['are'] },
+    { accept: ['is'] }
+  ]},
+  ex5: { type: 'exact', items: [
+    { accept: ['of'] },
+    { accept: ['of'] },
+    { accept: ['about'] },
+    { accept: ['with'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ["i'm excited about the trip", 'i am excited about the trip'] },
+    { accept: ["she's ashamed of the mistake", 'she is ashamed of the mistake'] },
+    { accept: ['we are proud of you', "we're proud of you"] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['absolutely furious about the delay'] },
+    { accept: ["she's angry about the traffic", 'she is angry about the traffic'] },
+    { accept: ['absolutely exhausted after the race'] },
+    { accept: ['i feel bad about forgetting your birthday'] },
+    { accept: ["we're jealous of her new car", 'we are jealous of her new car'] }
+  ]},
+  ex8: { type: 'exact', items: [
+    { accept: ['very'] },
+    { accept: ['absolutely'] },
+    { accept: ['very'] },
+    { accept: ['absolutely'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['i feel like crying'] },
+    { accept: ["disappointed with him", 'disappointed in him'] },
+    { accept: ["i'm worried that i'll forget", 'i am worried that i will forget'] },
+    { accept: ['absolutely ecstatic about the news'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['mildly annoyed but not furious', 'annoyed but not furious'] },
+    { accept: ['absolutely ecstatic'] },
+    { accept: ['absolutely guilty'] },
+    { accept: ['absolutely terrified'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['devastated by the news, and furious', 'devastated by the news and furious'] },
+    { accept: ['disappointed with the outcome, though not angry with him', 'disappointed with the outcome though not angry with him'] },
+    { accept: ['it makes me feel bad'] },
+    { accept: ['embarrassed about the mistake'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['she was absolutely devastated by the news'] },
+    { accept: ["i'm genuinely proud of your progress", 'i am genuinely proud of your progress'] },
+    { accept: ["i'm a bit jealous of her confidence", 'i am a bit jealous of her confidence'] },
+    { accept: ['we were genuinely disappointed with the result'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['absolutely ecstatic about the result'] },
+    { accept: ['disappointed in herself for the mistake'] },
+    { accept: ['felt bad about missing the deadline'] },
+    { accept: ['angry with him for the delay'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
+</script>
+</body>
+</html>
