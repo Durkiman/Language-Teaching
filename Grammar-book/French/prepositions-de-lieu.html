@@ -1,23 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
-<template id="__bundler_thumbnail" data-bg-color="#0E7C86">
-  <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-    <rect width="120" height="120" fill="#0E7C86"/>
-    <text x="60" y="72" font-family="sans-serif" font-size="48" font-weight="700" fill="#FFF6D8" text-anchor="middle">à</text>
-  </svg>
-</template>
-</head>
-<body>
-<x-dc>
-<helmet>
+<title>Les prépositions de lieu — Cahier de grammaire française</title>
+<script src="./doc-page.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
 <style>
   body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+  doc-page:not(:defined) { visibility: hidden; }
   .gb-mc-btn:hover { filter: brightness(0.97); }
   .gb-check-btn:hover, .gb-reveal-btn:hover, .gb-reset-btn:hover { filter: brightness(0.95); }
   @media print {
@@ -26,9 +18,10 @@
     .gb-word-bank, .gb-mc-row { display: none !important; }
   }
 </style>
-</helmet>
+</head>
+<body>
 
-<x-import component-from-global-scope="doc-page" from="./doc-page.js" size="letter" margin="0.7in" hint-size="100%,100%">
+<doc-page size="letter" margin="0.7in">
 
   <div slot="header" style="display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px;border-bottom:3px solid #0E7C86;"></div>
   <div slot="footer" style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #DDD8CC;font-size:10.5px;color:#9A9483;font-family:'Nunito',sans-serif;">
@@ -120,10 +113,10 @@
     <button id="gb-reset" style="font-family:'Nunito',sans-serif;background:#fff;color:#B23A3A;border:1.5px solid #E3B3B3;border-radius:10px;padding:8px 18px;font-size:14px;font-weight:700;cursor:pointer;">Réinitialiser cette page</button>
   </div>
 
-</x-import>
+</doc-page>
 
-</x-dc>
-<script type="text/x-dc" data-dc-script>
+<script>
+(function () {
 const LEVELS = {
   A1: { badge:'#4CAF7D', border:'#DCEEE2', bg:'#FAFCFB', name:'Débutant' },
   A2: { badge:'#3AA6A6', border:'#D9EFEF', bg:'#F9FDFD', name:'Élémentaire' },
@@ -185,8 +178,8 @@ const EXERCISES = [
     explain:'📖 Cuba (île sans article) → « à » ; les États-Unis (pluriel) → « aux ». 💡 Deux règles différentes dans une même phrase — traitez chaque lieu séparément.' }
 ];
 
-class Component extends DCLogic {
-  componentDidMount() {
+class Component {
+  constructor() {
     this.store = this.loadStore();
     this.waitForMount();
   }
@@ -458,10 +451,10 @@ class Component extends DCLogic {
       '<div style="font-weight:700;color:#0E7C86;margin-bottom:4px;">Réponse : ' + answerText + '</div>' +
       '<div style="color:#2B2B2B;opacity:0.9;">' + ex.explain + '</div>';
   }
-
-  renderVals() { return {}; }
 }
 
+new Component();
+})();
 </script>
 </body>
 </html>
