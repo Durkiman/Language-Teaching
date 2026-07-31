@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emotional Vocabulary — Widening Your Bandwidth</title>
+<style>
+  :root{
+    --bg:#F6F4F0;
+    --surface:#FFFFFF;
+    --ink:#2E2B28;
+    --muted:#847E74;
+    --accent:#B0693F;
+    --accent-light:#F3E6DA;
+    --border:#E7E0D6;
+    --soft:#8FAE9B;
+    --medium:#D4924A;
+    --intense:#BD5B4C;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Nunito','DM Sans',sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    padding-bottom:90px;
+  }
+  header{
+    background:var(--surface);
+    border-bottom:1px solid var(--border);
+    padding:18px 20px 0;
+    position:sticky;
+    top:0;
+    z-index:15;
+  }
+  header h1{
+    margin:0 0 4px;
+    font-size:1.15rem;
+    font-weight:800;
+    color:var(--accent);
+  }
+  header p{
+    margin:0 0 12px;
+    color:var(--muted);
+    font-size:0.82rem;
+  }
+  nav{display:flex; gap:4px; overflow-x:auto;}
+  nav button{
+    background:none; border:none; padding:10px 12px;
+    font-family:inherit; font-size:0.82rem; font-weight:700;
+    color:var(--muted); cursor:pointer; white-space:nowrap;
+    border-bottom:3px solid transparent;
+  }
+  nav button.active{color:var(--accent); border-bottom:3px solid var(--accent);}
+  main{max-width:760px; margin:0 auto; padding:20px;}
+  .tab{display:none;}
+  .tab.active{display:block;}
+  section{
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:14px; padding:20px; margin-bottom:16px;
+  }
+  h2{font-size:1.05rem; margin:0 0 6px; color:var(--accent);}
+  .lead{color:var(--muted); font-size:0.88rem; margin-bottom:16px; line-height:1.5;}
+
+  /* concept explainer */
+  .concept-box{
+    background:var(--accent-light);
+    border-radius:10px;
+    padding:16px;
+    font-size:0.9rem;
+    line-height:1.6;
+    margin-bottom:8px;
+  }
+  .concept-box strong{color:var(--accent);}
+
+  /* category grid */
+  .cat-grid{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;}
+  .cat-btn{
+    border:1px solid var(--border);
+    background:var(--surface);
+    color:var(--ink);
+    padding:8px 14px;
+    border-radius:20px;
+    font-weight:700;
+    font-size:0.85rem;
+    cursor:pointer;
+  }
+  .cat-btn.active{background:var(--accent); color:#fff; border-color:var(--accent);}
+
+  /* intensity columns */
+  .intensity-cols{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:10px;
+  }
+  @media (max-width:640px){ .intensity-cols{grid-template-columns:1fr;} }
+  .intensity-col{
+    border-radius:10px;
+    padding:12px;
+    border:1px solid var(--border);
+  }
+  .intensity-col.soft{background:#F0F5F1;}
+  .intensity-col.medium{background:#FBF1E4;}
+  .intensity-col.intense{background:#FAECEA;}
+  .intensity-label{
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    font-weight:800;
+    margin-bottom:8px;
+  }
+  .soft .intensity-label{color:var(--soft);}
+  .medium .intensity-label{color:var(--medium);}
+  .intense .intensity-label{color:var(--intense);}
+  .word-chip{
+    display:inline-block;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:4px 10px;
+    margin:0 4px 6px 0;
+    font-size:0.82rem;
+    cursor:pointer;
+  }
+  .word-chip.saved{
+    background:var(--accent);
+    color:#fff;
+    border-color:var(--accent);
+  }
+
+  /* practice */
+  .practice-card{
+    background:var(--accent-light);
+    border-radius:10px;
+    padding:16px;
+    margin-bottom:14px;
+  }
+  .practice-card .prompt{
+    font-weight:700;
+    font-size:0.95rem;
+    margin-bottom:8px;
+  }
+  textarea{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:8px 10px;
+    font-family:inherit;
+    font-size:0.9rem;
+    min-height:60px;
+  }
+  select{
+    width:100%;
+    padding:8px 10px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    font-family:inherit;
+    font-size:0.9rem;
+    margin-bottom:10px;
+    background:#fff;
+  }
+
+  /* saved words list */
+  .saved-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .saved-empty{
+    color:var(--muted);
+    font-size:0.85rem;
+    font-style:italic;
+  }
+
+  button.action{
+    font-family:inherit;
+    font-weight:700;
+    font-size:0.85rem;
+    padding:10px 16px;
+    border-radius:8px;
+    border:none;
+    cursor:pointer;
+    background:var(--accent);
+    color:#fff;
+    margin-top:8px;
+  }
+
+  .next-back{
+    display:flex; justify-content:space-between; max-width:760px;
+    margin:0 auto; padding:0 20px;
+  }
+  .next-back button{
+    background:var(--accent); color:#fff; border:none; padding:10px 20px;
+    border-radius:8px; font-weight:700; cursor:pointer; font-size:0.88rem;
+  }
+  .next-back button.ghost{background:none; color:var(--accent); border:1px solid var(--accent);}
+</style>
+</head>
+<body>
+
+<div style="display:flex;flex-wrap:wrap;gap:8px;padding:10px 16px;">
+  <a href="../Grammar-book/emotional-language.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Emotional Language</a>
+</div>
+
+<header>
+  <h1>Emotional Vocabulary — Widening Your Bandwidth</h1>
+  <p>Practice at your own pace, in your own time</p>
+  <nav id="tabNav">
+    <button class="active" data-tab="intro">Why This Matters</button>
+    <button data-tab="explore">Explore Words</button>
+    <button data-tab="practice">Practice</button>
+    <button data-tab="mine">My Words</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- INTRO -->
+  <div class="tab active" id="tab-intro">
+    <section>
+      <h2>The Bottleneck</h2>
+      <div class="concept-box">
+        There is so much inside you that wants to be expressed. But when you're speaking a foreign language, that language has a <strong>narrower bandwidth</strong> than your first language — so even when the feeling is big and clear inside you, it gets squeezed through a smaller opening. That's the bottleneck.
+        <br><br>
+        The good news: every word you learn <strong>widens the bottleneck</strong>. The more precise your emotional vocabulary, the more of yourself you can actually get through — and the more confident and complete you'll feel speaking English.
+        <br><br>
+        This isn't about learning "happy" and "sad." It's about learning the shades in between — because your inner life already has those shades. English just needs the words to catch up.
+      </div>
+    </section>
+    <section>
+      <h2>How These Words Are Organized</h2>
+      <div class="lead">Each emotion family has three levels of intensity:</div>
+      <div class="intensity-cols">
+        <div class="intensity-col soft">
+          <div class="intensity-label">Soft</div>
+          A quieter, early version of the feeling.
+        </div>
+        <div class="intensity-col medium">
+          <div class="intensity-label">Medium</div>
+          The feeling in its clear, obvious form.
+        </div>
+        <div class="intensity-col intense">
+          <div class="intensity-label">Intense</div>
+          The feeling at its strongest.
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- EXPLORE -->
+  <div class="tab" id="tab-explore">
+    <section>
+      <h2>Explore by Emotion</h2>
+      <div class="lead">Pick a family, then tap any word to save it to "My Words." Look up ones you don't know — that's the point.</div>
+
+      <div class="cat-grid" id="catGrid">
+        <button class="cat-btn active" onclick="showCategory('anger')">Anger</button>
+        <button class="cat-btn" onclick="showCategory('fear')">Fear</button>
+        <button class="cat-btn" onclick="showCategory('happiness')">Happiness</button>
+        <button class="cat-btn" onclick="showCategory('sadness')">Sadness</button>
+        <button class="cat-btn" onclick="showCategory('shame')">Shame</button>
+        <button class="cat-btn" onclick="showCategory('jealousy')">Jealousy & Envy</button>
+      </div>
+
+      <div id="wordDisplay"></div>
+    </section>
+  </div>
+
+  <!-- PRACTICE -->
+  <div class="tab" id="tab-practice">
+    <section>
+      <h2>Make It Personal</h2>
+      <div class="lead">Real use beats memorizing. Pick a word, then write a real sentence about your own life — not a textbook example.</div>
+
+      <div class="practice-card">
+        <div class="prompt">Think of something that happened this week. What's the most precise word for how you felt?</div>
+        <select id="practiceCategory">
+          <option value="">Choose an emotion family...</option>
+          <option value="anger">Anger</option>
+          <option value="fear">Fear</option>
+          <option value="happiness">Happiness</option>
+          <option value="sadness">Sadness</option>
+          <option value="shame">Shame</option>
+          <option value="jealousy">Jealousy & Envy</option>
+        </select>
+        <textarea id="practiceWord" placeholder="The word I chose is..."></textarea>
+        <textarea id="practiceSentence" placeholder="Here's what happened, using that word..."></textarea>
+      </div>
+
+      <div class="practice-card">
+        <div class="prompt">Try the same situation with two different intensities of the same emotion. How does the word choice change the meaning?</div>
+        <textarea placeholder="Soft version: I felt..."></textarea>
+        <textarea placeholder="Intense version: I felt..."></textarea>
+      </div>
+
+      <button class="action" onclick="savePractice()">Save my answers</button>
+    </section>
+  </div>
+
+  <!-- MY WORDS -->
+  <div class="tab" id="tab-mine">
+    <section>
+      <h2>My Words</h2>
+      <div class="lead">Everything you've saved while exploring. Review these before your next lesson.</div>
+      <div class="saved-list" id="savedList">
+        <div class="saved-empty">Nothing saved yet — go to Explore Words and tap any word.</div>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<div class="next-back">
+  <button class="ghost" onclick="prevTab()">Back</button>
+  <button onclick="nextTab()">Next</button>
+</div>
+
+<script>
+  const tabs = ['intro','explore','practice','mine'];
+  let currentTab = 0;
+
+  function showTab(name){
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-'+name).classList.add('active');
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.querySelector(`nav button[data-tab="${name}"]`).classList.add('active');
+    currentTab = tabs.indexOf(name);
+    if(name === 'mine') renderSaved();
+  }
+  document.querySelectorAll('nav button').forEach(b=>{
+    b.addEventListener('click', ()=> showTab(b.dataset.tab));
+  });
+  function nextTab(){ if(currentTab < tabs.length-1) showTab(tabs[currentTab+1]); }
+  function prevTab(){ if(currentTab > 0) showTab(tabs[currentTab-1]); }
+
+  const emotionData = {
+    anger: {
+      soft: ["Ambivalent","Annoyed","Assertive","Calm","Confident","Crabby","Cranky","Critical","Cross","Detached","Determined","Displeased","Frustrated","Impatient","Independent","Irritated","Protective","Secure","Steady"],
+      medium: ["Affronted","Aggravated","Angry","Antagonized","Apathetic","Arrogant","Autonomous","Bored","Cold","Courageous","Defended","Dignified","Exasperated","Incensed","Indifferent","Indignant","Mad","Offended","Resentful","Sarcastic"],
+      intense: ["Aggressive","Appalled","Belligerent","Bitter","Contemptuous","Disgusted","Fierce","Furious","Hateful","Hostile","Irate","Livid","Menacing","Raging","Ranting","Righteous","Seething","Vengeful","Vicious","Vindictive"]
+    },
+    fear: {
+      soft: ["Alert","Apprehensive","Aware","Careful","Cautious","Concerned","Conscious","Curious","Disquieted","Edgy","Fidgety","Hesitant","Insecure","Leery","Shy","Timid","Uneasy","Watchful"],
+      medium: ["Afraid","Alarmed","Attentive","Distrustful","Disturbed","Fearful","Focused","Jumpy","Rattled","Ready","Shaky","Startled","Suspicious","Unnerved","Unsettled","Wary"],
+      intense: ["Dissociated","Filled with Dread","Frenzied","Horrified","Immobile","Panicked","Paralyzed","Petrified","Phobic","Shocked","Terrorized"]
+    },
+    happiness: {
+      soft: ["Amused","Calm","Comfortable","Encouraged","Engaged","Friendly","Hopeful","Inspired","Jovial","Open","Peaceful","Smiling","Upbeat"],
+      medium: ["Appreciative","Cheerful","Confident","Contented","Delighted","Excited","Fulfilled","Glad","Gleeful","Gratified","Happy","Joyful","Lively","Merry","Optimistic","Playful","Pleased","Proud"],
+      intense: ["Awe-Filled","Blissful","Ecstatic","Elated","Enthralled","Euphoric","Exhilarated","Giddy","Jubilant","Overjoyed","Radiant","Rapturous","Thrilled"]
+    },
+    sadness: {
+      soft: ["Contemplative","Disappointed","Disconnected","Grounded","Low","Regretful","Relaxed","Restful","Wistful"],
+      medium: ["Dejected","Discouraged","Dispirited","Down","Drained","Grieving","Heavy-hearted","Lamenting","Melancholy","Mournful","Relieved","Sad","Sorrowful","Weepy"],
+      intense: ["Anguished","Bereaved","Despairing","Despondent","Forlorn","Grief-Stricken","Heartbroken","Inconsolable","Morose"]
+    },
+    shame: {
+      soft: ["Awkward","Conscientious","Considerate","Discomfited","Flushed","Flustered","Hesitant","Humble","Reserved","Self-Conscious"],
+      medium: ["Abashed","Apologetic","Ashamed","Chagrined","Contrite","Embarrassed","Guilty","Humbled","Intimidated","Regretful","Remorseful","Sheepish","Sorry","Speechless"],
+      intense: ["Belittled","Degraded","Demeaned","Disgraced","Humiliated","Mortified","Shamefaced","Stigmatized"]
+    },
+    jealousy: {
+      soft: ["Concerned","Disbelieving","Insecure","Protective","Trusting","Vulnerable","Wanting"],
+      medium: ["Ambitious","Committed","Covetous","Demanding","Desirous","Devoted","Envious","Guarded","Jealous","Lonely","Loving","Loyal","Motivated","Threatened"],
+      intense: ["Ardent","Avaricious","Fixated","Deprived","Greedy","Green with Envy","Longing","Obsessed","Possessive","Resentful"]
+    }
+  };
+
+  let savedWords = JSON.parse(localStorage.getItem('emotionalVocabSaved') || '[]');
+
+  function showCategory(cat){
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    renderWords(cat);
+  }
+
+  function renderWords(cat){
+    const data = emotionData[cat];
+    const display = document.getElementById('wordDisplay');
+    display.innerHTML = `
+      <div class="intensity-cols">
+        ${['soft','medium','intense'].map(level => `
+          <div class="intensity-col ${level}">
+            <div class="intensity-label">${level}</div>
+            ${data[level].map(w => `<span class="word-chip ${savedWords.includes(w) ? 'saved' : ''}" onclick="toggleSave('${w}', this)">${w}</span>`).join('')}
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  function toggleSave(word, el){
+    const idx = savedWords.indexOf(word);
+    if(idx === -1){
+      savedWords.push(word);
+      el.classList.add('saved');
+    } else {
+      savedWords.splice(idx,1);
+      el.classList.remove('saved');
+    }
+    localStorage.setItem('emotionalVocabSaved', JSON.stringify(savedWords));
+  }
+
+  function renderSaved(){
+    const list = document.getElementById('savedList');
+    if(savedWords.length === 0){
+      list.innerHTML = '<div class="saved-empty">Nothing saved yet — go to Explore Words and tap any word.</div>';
+      return;
+    }
+    list.innerHTML = savedWords.map(w => `<span class="word-chip saved">${w}</span>`).join('');
+  }
+
+  function savePractice(){
+    const data = {
+      category: document.getElementById('practiceCategory').value,
+      word: document.getElementById('practiceWord').value,
+      sentence: document.getElementById('practiceSentence').value,
+      date: new Date().toLocaleDateString()
+    };
+    let entries = JSON.parse(localStorage.getItem('emotionalVocabPractice') || '[]');
+    entries.push(data);
+    localStorage.setItem('emotionalVocabPractice', JSON.stringify(entries));
+    alert('Saved! Bring this to your next lesson.');
+  }
+
+  // init
+  renderWords('anger');
+</script>
+
+</body>
+</html>
