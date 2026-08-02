@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Extended Talk & Pronunciation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F9FB; --surface:#FFFFFF; --ink:#1F2933; --sub:#5C6B7A;
+    --slate:#3D5A80; --slate-light:#E8EDF3; --slate-dark:#2C4260;
+    --clay:#C1694F; --clay-light:#F8E9E4;
+    --line:#E1E7ED; --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); padding-bottom:110px;}
+  h1,h2,h3{font-family:'Sora',sans-serif;}
+  code, .mono{font-family:'JetBrains Mono',monospace;}
+
+  header{background:var(--surface); border-bottom:1px solid var(--line); padding:16px 20px 0 20px; position:sticky; top:0; z-index:50;}
+  h1{font-size:1.25rem; font-weight:800; margin:0 0 14px 0; color:var(--slate-dark); letter-spacing:-0.01em;}
+  .tabs{display:flex; gap:2px; overflow-x:auto;}
+  .tab{
+    flex:0 0 auto; padding:10px 14px; font-weight:700; font-size:0.85rem; color:var(--sub);
+    background:none; border:none; border-bottom:3px solid transparent; cursor:pointer; white-space:nowrap; font-family:'Inter',sans-serif;
+  }
+  .tab.active{color:var(--slate); border-bottom-color:var(--slate);}
+
+  main{max-width:720px; margin:0 auto; padding:20px 16px 40px 16px;}
+  .panel{display:none;}
+  .panel.active{display:block;}
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px; margin-bottom:14px;}
+  .card h2{font-size:1rem; margin:0 0 4px 0; color:var(--ink);}
+  .card .hint{font-size:0.8rem; color:var(--sub); margin:0 0 14px 0; line-height:1.5;}
+
+  /* Write bubble + half-page panel */
+  .write-bubble{
+    position:fixed; bottom:18px; right:18px; background:var(--slate); color:#fff;
+    border-radius:50%; width:52px; height:52px; display:flex; align-items:center; justify-content:center;
+    font-size:1.3rem; cursor:pointer; z-index:200; box-shadow:0 4px 14px rgba(0,0,0,0.2); user-select:none;
+  }
+  .write-panel{
+    display:none; position:fixed; left:0; right:0; bottom:0; height:50vh; background:var(--surface);
+    border-top:1.5px solid var(--line); border-radius:16px 16px 0 0; box-shadow:0 -8px 24px rgba(0,0,0,0.15);
+    z-index:250; padding:16px 18px 18px 18px; overflow-y:auto;
+  }
+  .write-panel.open{display:block;}
+  .write-panel-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;}
+  .write-panel-head h2{margin:0; font-size:1rem;}
+  .write-panel-head .close{background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--sub);}
+
+  /* Job thread log — styled like a running commit log */
+  .thread-log{border-left:2px solid var(--slate-light); padding-left:16px; margin:14px 0;}
+  .thread-entry{position:relative; margin-bottom:14px;}
+  .thread-entry::before{
+    content:''; position:absolute; left:-20.5px; top:5px; width:9px; height:9px; border-radius:50%;
+    background:var(--slate); border:2px solid var(--surface);
+  }
+  .thread-date{font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--slate); font-weight:600;}
+  .thread-text{font-size:0.88rem; margin-top:2px; line-height:1.5;}
+  .thread-empty{color:var(--sub); font-size:0.85rem; font-style:italic;}
+
+  .add-row{display:flex; gap:8px; margin-top:14px;}
+  .add-row input{
+    flex:1; font-family:'Inter',sans-serif; font-size:0.88rem; border:1.5px solid var(--line);
+    border-radius:9px; padding:9px 12px; background:#fff;
+  }
+  .add-row input:focus{outline:none; border-color:var(--slate);}
+  .add-row button{
+    background:var(--slate); color:#fff; border:none; border-radius:9px; padding:0 16px;
+    font-family:'Inter',sans-serif; font-weight:700; font-size:0.85rem; cursor:pointer;
+  }
+  .add-row button:hover{background:var(--slate-dark);}
+
+  .open-space{
+    background:var(--slate-light); border-radius:10px; padding:16px; text-align:center;
+    color:var(--slate-dark); font-weight:600; font-size:0.95rem;
+  }
+
+  /* Topic bank */
+  .topic-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  @media(max-width:520px){.topic-grid{grid-template-columns:1fr;}}
+  .topic-card{
+    border:1.5px solid var(--line); border-radius:11px; padding:13px 14px; cursor:pointer; background:#fff;
+  }
+  .topic-card.selected{border-color:var(--slate); background:var(--slate-light);}
+  .topic-title{font-weight:700; font-size:0.92rem; display:flex; align-items:center; gap:7px;}
+  .topic-body{display:none; margin-top:9px; font-size:0.83rem; line-height:1.6; color:var(--sub);}
+  .topic-card.selected .topic-body{display:block; color:var(--ink);}
+  .topic-body ul{margin:4px 0; padding-left:18px;}
+  .evidence-tag{
+    display:inline-block; margin-top:8px; background:var(--clay-light); color:var(--clay);
+    font-size:0.72rem; font-weight:700; padding:3px 9px; border-radius:100px; font-family:'JetBrains Mono',monospace;
+  }
+
+  /* Pronunciation */
+  .pattern-ref{border:1px solid var(--line); border-radius:10px; padding:0; margin-bottom:14px; overflow:hidden;}
+  .pattern-ref summary{padding:11px 14px; font-weight:700; font-size:0.85rem; cursor:pointer; background:#FAFBFC; color:var(--slate-dark);}
+  .pattern-ref .inner{padding:4px 14px 14px 14px; font-size:0.83rem; line-height:1.6;}
+  .pattern-ref .inner div{margin-bottom:8px;}
+  .pattern-ref b{color:var(--ink);}
+
+  .shadow-entry{border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-bottom:10px; background:#fff;}
+  .shadow-date{font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--slate); font-weight:600;}
+  .shadow-pattern{font-weight:700; font-size:0.88rem; margin:3px 0;}
+  .shadow-phrase{font-size:0.85rem; color:var(--sub); font-style:italic;}
+  .shadow-form{display:flex; flex-direction:column; gap:8px; margin-top:12px;}
+  .shadow-form input{
+    font-family:'Inter',sans-serif; font-size:0.86rem; border:1.5px solid var(--line);
+    border-radius:9px; padding:9px 12px;
+  }
+  .shadow-form input:focus{outline:none; border-color:var(--slate);}
+  .shadow-form button{
+    align-self:flex-start; background:var(--slate); color:#fff; border:none; border-radius:9px;
+    padding:9px 16px; font-family:'Inter',sans-serif; font-weight:700; font-size:0.85rem; cursor:pointer;
+  }
+
+  /* Writing tab */
+  .toolbar{display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap;}
+  .toolbar button{
+    background:#fff; border:1.5px solid var(--line); border-radius:8px; width:34px; height:34px;
+    font-family:'Inter',sans-serif; font-weight:700; font-size:0.9rem; cursor:pointer; color:var(--ink);
+  }
+  .toolbar button:hover{border-color:var(--slate); color:var(--slate);}
+  .editor{
+    min-height:160px; border:1.5px solid var(--line); border-radius:10px; padding:14px;
+    font-size:0.92rem; line-height:1.6; background:#fff;
+  }
+  .editor:focus{outline:none; border-color:var(--slate);}
+  .editor:empty:before{content:attr(data-placeholder); color:#A7B0BC;}
+  .writing-actions{display:flex; gap:8px; margin-top:12px;}
+  .writing-actions button{
+    font-family:'Inter',sans-serif; font-weight:700; font-size:0.82rem; padding:9px 15px;
+    border-radius:9px; border:1.5px solid var(--slate); background:#fff; color:var(--slate); cursor:pointer;
+  }
+  .writing-actions button.filled{background:var(--slate); color:#fff;}
+  .writing-actions button.danger{border-color:var(--clay); color:var(--clay);}
+
+  .entry-log{margin-top:16px;}
+  .entry{border-top:1px solid var(--line); padding:12px 0;}
+  .entry-date{font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--slate); font-weight:600; margin-bottom:4px;}
+  .entry-content{font-size:0.87rem; line-height:1.6;}
+
+  /* Recap */
+  .card-code{
+    display:inline-block; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.78rem;
+    background:var(--slate-light); color:var(--slate-dark); padding:3px 9px; border-radius:6px; margin-bottom:8px;
+  }
+  .cando-toggle{
+    background:none; border:1.5px solid var(--line); border-radius:9px; padding:8px 14px;
+    font-family:'Inter',sans-serif; font-weight:700; font-size:0.82rem; color:var(--sub); cursor:pointer; margin-top:8px;
+  }
+  .cando-body{display:none; margin-top:12px; font-size:0.84rem; line-height:1.7;}
+  .cando-body.open{display:block;}
+  .cando-body b{color:var(--ink);}
+
+  /* Timer + whiteboard */
+  .timer-bubble{
+    position:fixed; bottom:18px; left:18px; background:var(--slate-dark); color:#fff;
+    border-radius:14px; padding:10px 14px; font-weight:800; font-size:0.95rem; font-family:'JetBrains Mono',monospace;
+    cursor:pointer; z-index:200; box-shadow:0 4px 14px rgba(0,0,0,0.18); user-select:none;
+  }
+  .timer-bubble.warn{background:var(--clay);}
+  .whiteboard{
+    position:fixed; bottom:70px; left:18px; width:min(300px,86vw); background:var(--surface);
+    border:1px solid var(--line); border-radius:12px; padding:14px; box-shadow:0 8px 24px rgba(0,0,0,0.15);
+    z-index:200; display:none;
+  }
+  .whiteboard.open{display:block;}
+  .wb-row{display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap;}
+  .wb-row button{
+    background:var(--slate-light); border:none; border-radius:8px; padding:7px 10px;
+    font-family:'Inter',sans-serif; font-weight:700; font-size:0.78rem; cursor:pointer; color:var(--slate-dark);
+  }
+  .wb-row button.start{background:var(--slate); color:#fff;}
+  .whiteboard textarea{
+    width:100%; min-height:70px; border:1.5px solid var(--line); border-radius:8px; padding:8px;
+    font-family:'Inter',sans-serif; font-size:0.82rem; resize:vertical;
+  }
+  .wb-actions{display:flex; gap:6px; margin-top:8px;}
+  .wb-actions button{
+    flex:1; background:#fff; border:1.5px solid var(--line); border-radius:8px; padding:7px;
+    font-size:0.76rem; font-weight:700; color:var(--sub); cursor:pointer;
+  }
+
+  .toast{
+    position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+    background:var(--ink); color:#fff; padding:9px 16px; border-radius:9px;
+    font-size:0.82rem; font-weight:700; opacity:0; pointer-events:none; transition:opacity .2s; z-index:500;
+  }
+  .toast.show{opacity:1;}
+</style>
+</head>
+<body>
+<div style="display:flex;flex-wrap:wrap;gap:8px;padding:10px 16px;">
+  <a href="../Grammar-book/English/polite-requests.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Polite Requests</a>
+  <a href="../Grammar-book/English/modal-verbs.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Modal Verbs</a>
+  <a href="../Grammar-book/English/past-perfect.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Past Perfect</a>
+  <a href="../Grammar-book/English/storytelling-and-narrative-sequencing.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Storytelling & Narrative Sequencing</a>
+  <a href="../Grammar-book/English/linking-words.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Linking Words</a>
+  <a href="../Grammar-book/English/conditionals.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Conditionals</a>
+  <a href="../Grammar-book/English/possibility-and-deduction.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Possibility & Deduction</a>
+</div>
+
+<header>
+  <h1>Extended Talk & Pronunciation</h1>
+  <div class="tabs" id="tabBar">
+    <button class="tab active" data-panel="warmup">Warm-Up</button>
+    <button class="tab" data-panel="topic">Topic</button>
+    <button class="tab" data-panel="pron">Pronunciation</button>
+    <button class="tab" data-panel="recap">Recap</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- WARM-UP -->
+  <section class="panel active" id="panel-warmup">
+    <div class="card">
+      <h2>Catch-up</h2>
+      <div class="open-space">So, what's new?</div>
+    </div>
+
+    <div class="card">
+      <h2>Thread</h2>
+      <p class="hint">A running log, carried across sessions.</p>
+      <div class="thread-log" id="threadLog"></div>
+      <div class="add-row">
+        <input type="text" id="threadInput" placeholder="Add a line to the thread...">
+        <button id="threadAdd">Add</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOPIC -->
+  <section class="panel" id="panel-topic">
+    <div class="card">
+      <h2>Topic bank</h2>
+      <p class="hint">Tap one to open it. Each has a couple of angles and one extended-turn task.</p>
+      <div class="topic-grid" id="topicGrid"></div>
+    </div>
+  </section>
+
+  <!-- PRONUNCIATION -->
+  <section class="panel" id="panel-pron">
+    <div class="card">
+      <h2>Common patterns — quick reference</h2>
+      <details class="pattern-ref">
+        <summary>Spanish-L1 pronunciation patterns</summary>
+        <div class="inner">
+          <div><b>Final consonants</b> — dropped or softened (final -s, -d, -t). Contrast minimal pairs: "cats" vs "cat".</div>
+          <div><b>/b/–/v/ merge</b> — both realized close to Spanish "b". Contrast: "berry" vs "very".</div>
+          <div><b>Vowel reduction</b> — unstressed vowels given full value instead of schwa. E.g. "photograph" vs "phoTOgraphy".</div>
+          <div><b>Word/sentence stress</b> — even stress across syllables instead of one strong peak.</div>
+          <div><b>/h/</b> — often dropped or replaced with a Spanish "j" sound.</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="card">
+      <h2>Shadowing log</h2>
+      <p class="hint">Pull a phrase from what he just said, model it, have him shadow it. Log the pattern, not every slip.</p>
+      <div id="shadowLog"></div>
+      <div class="shadow-form">
+        <input type="text" id="shadowPattern" placeholder="Pattern (e.g. final -s dropped)">
+        <input type="text" id="shadowPhrase" placeholder="Phrase used for shadowing">
+        <button id="shadowAdd">Log entry</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECAP -->
+  <section class="panel" id="panel-recap">
+    <div class="card">
+      <h2>Can-do cards in play</h2>
+
+      <div class="card-code">B2-11</div>
+      <button class="cando-toggle" data-target="cd1">Show card</button>
+      <div class="cando-body" id="cd1">
+        <b>Interrupting, holding the floor & yielding it</b><br>
+        Function: managing complex interaction.<br>
+        Grammar: turn-taking phrases, hedging to hold the floor, signalling readiness to yield.<br>
+        Evidence: handles at least one interruption without losing the thread, and interrupts back appropriately once.
+      </div>
+
+      <div class="card-code" style="margin-top:16px;">B2-01</div>
+      <button class="cando-toggle" data-target="cd2">Show card</button>
+      <div class="cando-body" id="cd2">
+        <b>Extended narrative with evaluation</b><br>
+        Function: narrating with evaluation and comment.<br>
+        Grammar: past perfect continuous; full range of narrative tenses.<br>
+        Evidence: tells a 2–3 minute story including a past perfect continuous clause and two evaluative comments.
+      </div>
+
+      <div class="card-code" style="margin-top:16px;">B2-15</div>
+      <button class="cando-toggle" data-target="cd3">Show card</button>
+      <div class="cando-body" id="cd3">
+        <b>Linking ideas across a longer stretch</b><br>
+        Function: structuring extended discourse.<br>
+        Grammar: varied linking devices beyond and/but/because, sustained over several turns.<br>
+        Evidence: speaks for an extended stretch with ideas clearly linked, not just listed.
+      </div>
+
+      <div class="card-code" style="margin-top:16px;">B2-08 / B2-09</div>
+      <button class="cando-toggle" data-target="cd4">Show card</button>
+      <div class="cando-body" id="cd4">
+        <b>Hypothesising about present & future / Speculating about the past</b><br>
+        Function: speculating and hypothesising.<br>
+        Grammar: present/future conditionals; modal + perfect infinitive for past speculation.<br>
+        Evidence: speculates naturally about an outcome — what he'd do, what might happen, what might have gone differently.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="timer-bubble" id="timerBubble">50:00</div>
+<div class="whiteboard" id="whiteboard">
+  <div class="wb-row">
+    <button data-min="50" class="start">50</button>
+    <button data-min="25">25</button>
+    <button data-min="5">5</button>
+    <button id="startStop">▶</button>
+  </div>
+  <textarea id="wbNotes" placeholder="Quick notes..."></textarea>
+  <div class="wb-actions">
+    <button id="wbCopy">Copy</button>
+    <button id="wbClear">Clear</button>
+  </div>
+</div>
+
+<!-- Write bubble + half-page panel -->
+<div class="write-bubble" id="writeBubble">✍️</div>
+<div class="write-panel" id="writePanel">
+  <div class="write-panel-head">
+    <h2>Writing</h2>
+    <button class="close" id="closeWrite">✕</button>
+  </div>
+  <div class="toolbar">
+    <button data-cmd="bold" title="Bold"><b>B</b></button>
+    <button data-cmd="italic" title="Italic"><i>I</i></button>
+    <button data-cmd="underline" title="Underline"><u>U</u></button>
+    <button data-cmd="insertUnorderedList" title="Bullet list">•</button>
+    <button data-cmd="removeFormat" title="Clear formatting">✕</button>
+  </div>
+  <div class="editor" id="editor" contenteditable="true" data-placeholder="Write here..."></div>
+  <div class="writing-actions">
+    <button class="filled" id="saveEntry">Save entry</button>
+    <button id="copyAll">Copy all entries</button>
+    <button class="danger" id="clearAll">Clear all</button>
+  </div>
+  <div class="entry-log" id="entryLog"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORE_PREFIX = 'alejandro_';
+
+function loadJSON(key, fallback){
+  try{
+    const raw = localStorage.getItem(STORE_PREFIX+key);
+    return raw ? JSON.parse(raw) : fallback;
+  }catch(e){ return fallback; }
+}
+function saveJSON(key, val){
+  try{ localStorage.setItem(STORE_PREFIX+key, JSON.stringify(val)); }catch(e){}
+}
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=> t.classList.remove('show'), 1600);
+}
+function todayStr(){
+  const d = new Date();
+  return d.toISOString().slice(0,10);
+}
+
+// ---------- Tabs ----------
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('panel-'+t.dataset.panel).classList.add('active');
+  });
+});
+
+// ---------- Write bubble ----------
+const writePanel = document.getElementById('writePanel');
+document.getElementById('writeBubble').addEventListener('click', ()=>{
+  writePanel.classList.add('open');
+});
+document.getElementById('closeWrite').addEventListener('click', ()=>{
+  writePanel.classList.remove('open');
+});
+
+// ---------- Job thread ----------
+let thread = loadJSON('thread', []);
+const threadLog = document.getElementById('threadLog');
+function renderThread(){
+  threadLog.innerHTML = '';
+  if(thread.length === 0){
+    threadLog.innerHTML = '<div class="thread-empty">No entries yet — the first one starts the log.</div>';
+    return;
+  }
+  thread.slice().reverse().forEach(item=>{
+    const div = document.createElement('div');
+    div.className = 'thread-entry';
+    div.innerHTML = `<div class="thread-date">${item.date}</div><div class="thread-text"></div>`;
+    div.querySelector('.thread-text').textContent = item.text;
+    threadLog.appendChild(div);
+  });
+}
+renderThread();
+document.getElementById('threadAdd').addEventListener('click', ()=>{
+  const input = document.getElementById('threadInput');
+  const val = input.value.trim();
+  if(!val) return;
+  thread.push({date: todayStr(), text: val});
+  saveJSON('thread', thread);
+  input.value = '';
+  renderThread();
+});
+document.getElementById('threadInput').addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter') document.getElementById('threadAdd').click();
+});
+
+// ---------- Topic bank ----------
+const topics = [
+  {
+    emoji:'✈️', title:'Travel',
+    angles:['A trip that didn\'t go as planned', 'Somewhere he\'d move for work if he had to', 'Belgium vs Spain — daily life differences'],
+    task:'Tell the story of a trip, with at least one evaluative comment on how it turned out.',
+    card:'B2-01'
+  },
+  {
+    emoji:'🧬', title:'Science',
+    angles:['A piece of tech news from this week', 'AI\'s effect on his own field', 'A science topic he\'s curious about but not expert in'],
+    task:'Explain a development and speculate on where it\'s heading.',
+    card:'B2-08'
+  },
+  {
+    emoji:'🏃', title:'Fitness',
+    angles:['His current routine vs a few years ago', 'A goal he\'s working toward', 'Sport in Belgium vs Spain'],
+    task:'Describe how his routine has changed and why, linking causes to results.',
+    card:'B2-02 / B2-15'
+  },
+  {
+    emoji:'🍿', title:'TV / Movies',
+    angles:['Something he\'s watched recently, worth recommending or not', 'A show that got worse/better over time'],
+    task:'Give a recommendation with reasons, and handle a pushback/disagreement on it.',
+    card:'B2-07'
+  },
+  {
+    emoji:'🍕', title:'Food',
+    angles:['Best meal in Ghent so far', 'Spanish food he misses', 'Cooking vs eating out'],
+    task:'Describe a food experience with enough detail that the listener can picture it.',
+    card:'B2-03'
+  },
+  {
+    emoji:'📊', title:'Tech & Work',
+    angles:['A project that\'s stuck with him', 'What "a good team" looks like to him', 'Data-driven decisions — good or overused?'],
+    task:'Take a position and defend it under a bit of pushback.',
+    card:'B2-05'
+  }
+];
+const topicGrid = document.getElementById('topicGrid');
+topics.forEach((t,idx)=>{
+  const card = document.createElement('div');
+  card.className = 'topic-card';
+  const anglesHtml = t.angles.map(a=>`<li></li>`).join('');
+  card.innerHTML = `
+    <div class="topic-title">${t.emoji} ${t.title}</div>
+    <div class="topic-body">
+      <ul></ul>
+      <div class="task"></div>
+      <span class="evidence-tag">${t.card}</span>
+    </div>`;
+  const ul = card.querySelector('ul');
+  t.angles.forEach(a=>{
+    const li = document.createElement('li');
+    li.textContent = a;
+    ul.appendChild(li);
+  });
+  card.querySelector('.task').textContent = t.task;
+  card.addEventListener('click', ()=>{
+    const wasSelected = card.classList.contains('selected');
+    document.querySelectorAll('.topic-card').forEach(c=>c.classList.remove('selected'));
+    if(!wasSelected) card.classList.add('selected');
+  });
+  topicGrid.appendChild(card);
+});
+
+// ---------- Shadowing log ----------
+let shadowEntries = loadJSON('shadow', []);
+const shadowLog = document.getElementById('shadowLog');
+function renderShadow(){
+  shadowLog.innerHTML = '';
+  if(shadowEntries.length === 0){
+    shadowLog.innerHTML = '<div class="thread-empty">No entries logged yet.</div>';
+    return;
+  }
+  shadowEntries.slice().reverse().forEach(e=>{
+    const div = document.createElement('div');
+    div.className = 'shadow-entry';
+    div.innerHTML = `<div class="shadow-date">${e.date}</div><div class="shadow-pattern"></div><div class="shadow-phrase"></div>`;
+    div.querySelector('.shadow-pattern').textContent = e.pattern;
+    div.querySelector('.shadow-phrase').textContent = '"' + e.phrase + '"';
+    shadowLog.appendChild(div);
+  });
+}
+renderShadow();
+document.getElementById('shadowAdd').addEventListener('click', ()=>{
+  const pattern = document.getElementById('shadowPattern').value.trim();
+  const phrase = document.getElementById('shadowPhrase').value.trim();
+  if(!pattern && !phrase) return;
+  shadowEntries.push({date: todayStr(), pattern: pattern || '—', phrase: phrase || '—'});
+  saveJSON('shadow', shadowEntries);
+  document.getElementById('shadowPattern').value = '';
+  document.getElementById('shadowPhrase').value = '';
+  renderShadow();
+});
+
+// ---------- Writing ----------
+document.querySelectorAll('.toolbar button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.getElementById('editor').focus();
+    document.execCommand(b.dataset.cmd, false, null);
+  });
+});
+
+let writingEntries = loadJSON('writing', []);
+const entryLog = document.getElementById('entryLog');
+function renderEntries(){
+  entryLog.innerHTML = '';
+  writingEntries.slice().reverse().forEach(e=>{
+    const div = document.createElement('div');
+    div.className = 'entry';
+    div.innerHTML = `<div class="entry-date">${e.date}</div><div class="entry-content">${e.html}</div>`;
+    entryLog.appendChild(div);
+  });
+}
+renderEntries();
+
+document.getElementById('saveEntry').addEventListener('click', ()=>{
+  const editor = document.getElementById('editor');
+  const html = editor.innerHTML.trim();
+  if(!html){ showToast('Nothing to save'); return; }
+  writingEntries.push({date: todayStr(), html: html});
+  saveJSON('writing', writingEntries);
+  editor.innerHTML = '';
+  renderEntries();
+  showToast('Entry saved');
+});
+
+document.getElementById('copyAll').addEventListener('click', ()=>{
+  const text = writingEntries.map(e=>{
+    const tmp = document.createElement('div');
+    tmp.innerHTML = e.html;
+    return e.date + '\\n' + tmp.textContent + '\\n';
+  }).join('\\n');
+  if(!text){ showToast('No entries to copy'); return; }
+  navigator.clipboard.writeText(text).then(()=> showToast('Copied all entries'))
+    .catch(()=> showToast('Could not copy'));
+});
+
+document.getElementById('clearAll').addEventListener('click', ()=>{
+  if(!confirm('Clear all saved writing entries? This cannot be undone.')) return;
+  writingEntries = [];
+  saveJSON('writing', writingEntries);
+  renderEntries();
+  showToast('Cleared');
+});
+
+// ---------- Recap toggles ----------
+document.querySelectorAll('.cando-toggle').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const target = document.getElementById(btn.dataset.target);
+    target.classList.toggle('open');
+    btn.textContent = target.classList.contains('open') ? 'Hide card' : 'Show card';
+  });
+});
+
+// ---------- Timer / whiteboard ----------
+let totalSeconds = 50*60;
+let timerInterval = null;
+let timerRunning = false;
+const bubble = document.getElementById('timerBubble');
+const whiteboard = document.getElementById('whiteboard');
+
+function pad(n){ return String(n).padStart(2,'0'); }
+function updateDisplay(){
+  const sign = totalSeconds < 0 ? '-' : '';
+  const m = Math.floor(Math.abs(totalSeconds)/60);
+  const s = Math.abs(totalSeconds)%60;
+  bubble.textContent = sign+pad(m)+':'+pad(s);
+  bubble.classList.toggle('warn', totalSeconds <= 30);
+}
+updateDisplay();
+
+bubble.addEventListener('click', ()=> whiteboard.classList.toggle('open'));
+
+document.querySelectorAll('.whiteboard button[data-min]').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    clearInterval(timerInterval);
+    timerRunning = false;
+    document.getElementById('startStop').textContent = '▶';
+    totalSeconds = parseInt(b.dataset.min,10)*60;
+    updateDisplay();
+  });
+});
+document.getElementById('startStop').addEventListener('click', ()=>{
+  if(timerRunning){
+    clearInterval(timerInterval);
+    timerRunning = false;
+    document.getElementById('startStop').textContent = '▶';
+  } else {
+    timerRunning = true;
+    document.getElementById('startStop').textContent = '⏸';
+    timerInterval = setInterval(()=>{ totalSeconds--; updateDisplay(); }, 1000);
+  }
+});
+
+const wbNotes = document.getElementById('wbNotes');
+wbNotes.value = loadJSON('wbnotes', '');
+wbNotes.addEventListener('input', ()=> saveJSON('wbnotes', wbNotes.value));
+document.getElementById('wbCopy').addEventListener('click', ()=>{
+  navigator.clipboard.writeText(wbNotes.value).then(()=> showToast('Copied'));
+});
+document.getElementById('wbClear').addEventListener('click', ()=>{
+  wbNotes.value = '';
+  saveJSON('wbnotes', '');
+});
+</script>
+
+</body>
+</html>
