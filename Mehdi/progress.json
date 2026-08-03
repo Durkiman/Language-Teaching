@@ -2,8 +2,6 @@
   "student": "mehdi",
   "levels": ["B1"],
   "cards": {
-    "B1-19": { "status": "reviewed", "introduced": "2026-07-15", "reviews": ["2026-08-03"], "notes": "Pillar 3.2 — price/timing objection roleplays; must/have to, need to/needn't, ought to. 2026-08-03 review reframed as client-discussion negotiation (price pushback + delivery/timing change); evidence task pending confirmation after session." },
-    "B1-09": { "status": "introduced", "introduced": "2026-08-03", "reviews": [], "notes": "incidental touch — softened disagreement exponents woven into client-discussion roleplay" },
-    "B1-08": { "status": "introduced", "introduced": "2026-08-03", "reviews": [], "notes": "incidental touch — 30-second opinion on which objection was harder to handle" }
+    "B1-19": { "status": "reviewed", "introduced": "2026-07-15", "reviews": ["2026-08-03"], "notes": "Pillar 3.2 — price/timing objection roleplays; must/have to, need to/needn't, ought to. 2026-08-03: session did NOT deliver the newly built 'Client Discussions: Price & Timing' lesson (#10) as planned — instead spent the last ~15 min briefly revisiting lesson #9's grammar tab only (modal verb forms: must/have to, need to/needn't, ought to). No roleplay/functional practice and no evidence task was attempted. Lesson #10 remains fully unplayed — use it in full next session, including the price-pushback and delivery/timing-change roleplays." }
   }
 }
