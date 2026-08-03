@@ -380,8 +380,26 @@
     color: #7A5C10;
     line-height: 1.6;
     margin-top: 12px;
+    display: none;
   }
+  .teacher-note.open { display: block; }
   .teacher-note strong { font-weight: 600; }
+  .teacher-note-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: 1px solid var(--gold);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--gold);
+    cursor: pointer;
+    margin-top: 12px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .teacher-note-toggle:active { transform: scale(0.97); }
 </style>
 </head>
 <body>
@@ -390,7 +408,7 @@
   <div class="header-top">
     <div>
       <h1>Introducing Yourself</h1>
-      <p>Speaking & Vocabulary — Lesson 1</p>
+      <p>Speaking & Vocabulary</p>
     </div>
     <span class="level-badge">A2 – B1</span>
   </div>
@@ -407,8 +425,6 @@
 
 <!-- ══ WARM-UP ══ -->
 <div id="tab-warmup" class="panel active">
-  <div class="timer-box">⏱ 5 min</div>
-
   <div class="card">
     <div class="card-label">Retrieval — Think First</div>
     <h2>What can you say about yourself in English?</h2>
@@ -420,8 +436,9 @@
       <li class="question-item"><span class="q-num">3</span>What do you do in your free time?</li>
       <li class="question-item"><span class="q-num">4</span>Why are you learning English?</li>
     </ul>
-    <div class="tip" style="margin-top:14px">
-      <strong>Teacher note:</strong> Listen without correcting. Note recurring errors silently. The goal is to hear their natural English baseline.
+    <button class="teacher-note-toggle" onclick="toggleNote(this)">👁 Teacher note</button>
+    <div class="teacher-note">
+      <strong>Teacher:</strong> Listen without correcting. Note recurring errors silently. The goal is to hear their natural English baseline.
     </div>
   </div>
 
@@ -433,8 +450,6 @@
 
 <!-- ══ VOCABULARY ══ -->
 <div id="tab-vocab" class="panel">
-  <div class="timer-box">⏱ 10 min</div>
-
   <div class="card">
     <div class="card-label">Key Phrases</div>
     <h2>How to talk about yourself</h2>
@@ -492,8 +507,6 @@
 
 <!-- ══ MODEL TEXT ══ -->
 <div id="tab-reading" class="panel">
-  <div class="timer-box">⏱ 10 min</div>
-
   <div class="card">
     <div class="card-label">Read & Listen</div>
     <h2>Meet Alex</h2>
@@ -523,8 +536,6 @@
 
 <!-- ══ PRACTICE ══ -->
 <div id="tab-practice" class="panel">
-  <div class="timer-box">⏱ 10 min</div>
-
   <div class="card">
     <div class="card-label">Personalise It</div>
     <h2>Now it's your turn</h2>
@@ -557,8 +568,6 @@
 
 <!-- ══ SPEAKING ══ -->
 <div id="tab-speaking" class="panel">
-  <div class="timer-box">⏱ 15 min</div>
-
   <div class="card">
     <div class="card-label">Free Production</div>
     <h2>Say it — no notes</h2>
@@ -598,6 +607,7 @@
       </div>
     </div>
 
+    <button class="teacher-note-toggle" onclick="toggleNote(this)">👁 Teacher note</button>
     <div class="teacher-note">
       <strong>Teacher:</strong> Take notes on errors during free production. Don't interrupt. Bring 2–3 key patterns to the cool-down.
     </div>
@@ -606,8 +616,6 @@
 
 <!-- ══ ASK BACK ══ -->
 <div id="tab-askback" class="panel">
-  <div class="timer-box">⏱ 10 min</div>
-
   <div class="card">
     <div class="card-label">Conversation skill</div>
     <h2>Don't just answer — ask back</h2>
@@ -724,6 +732,7 @@
       </div>
     </div>
 
+    <button class="teacher-note-toggle" onclick="toggleNote(this)">👁 Teacher note</button>
     <div class="teacher-note">
       <strong>Teacher:</strong> Count the questions the student asks during the challenge round. Share the number at the end — "You asked 4 questions — great!" — then model any missed opportunities naturally.
     </div>
@@ -751,6 +760,7 @@
     <div class="tip" style="margin-top:12px">
       <strong>Tip:</strong> Try to write without stopping to translate. Write what you know. You can check vocabulary afterwards.
     </div>
+    <button class="teacher-note-toggle" onclick="toggleNote(this)">👁 Teacher note</button>
     <div class="teacher-note" style="margin-top:10px">
       <strong>Teacher:</strong> Review this at the start of the next session as a retrieval warm-up. Ask them to read it aloud from memory.
     </div>
@@ -999,6 +1009,13 @@
   function toggleSpeaking(header) {
     const body = header.nextElementSibling;
     body.classList.toggle('open');
+  }
+
+  // ── TEACHER NOTE ──
+  function toggleNote(btn) {
+    const note = btn.nextElementSibling;
+    note.classList.toggle('open');
+    btn.textContent = note.classList.contains('open') ? '🙈 Hide teacher note' : '👁 Teacher note';
   }
 
   // ── WRITING TAB STARTERS ──
