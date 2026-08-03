@@ -1,5 +1,24 @@
 {
   "student": "alejandro",
   "levels": ["B2", "C1"],
-  "cards": {}
+  "cards": {
+    "B2-11": {
+      "status": "reviewed",
+      "introduced": null,
+      "reviews": ["2026-08-03"],
+      "notes": "Introduced in lesson #1 (Extended Talk & Pronunciation), date not logged at the time; reinforced as warm-up/incidental in this session."
+    },
+    "B2-12": {
+      "status": "introduced",
+      "introduced": "2026-08-03",
+      "reviews": [],
+      "notes": "evidence task pending confirmation after session"
+    },
+    "B2-15": {
+      "status": "reviewed",
+      "introduced": null,
+      "reviews": ["2026-08-03"],
+      "notes": "Touched incidentally in lesson #1, not logged at the time; light incidental touch again this session."
+    }
+  }
 }
