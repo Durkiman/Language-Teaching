@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Discussions: Price &amp; Timing</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ink:          #0e1520;
+    --deep:         #1c1a2e;
+    --deep-mid:     #2e2a4a;
+    --purple:       #5a3fa8;
+    --purple-light: #ede8ff;
+    --purple-pale:  #f6f4ff;
+    --gold:         #c9963a;
+    --gold-label:   #7a5410;
+    --gold-light:   #fdf3dc;
+    --green:        #2a7c5a;
+    --green-light:  #d6efe1;
+    --teal:         #1a7a6e;
+    --teal-light:   #d4f0ec;
+    --teal-pale:    #edf8f7;
+    --sand:         #f5f4f0;
+    --cream:        #fefcf8;
+    --muted:        #445060;
+    --muted2:       #7a8898;
+    --border:       #ddd8ee;
+    --red-light:    #fde8e8;
+    --red-dark:     #7a1e1e;
+    --orange:       #b85a00;
+    --orange-light: #fff0de;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(--ink); min-height: 100vh; }
+
+  .header { background: var(--deep); padding: 30px 28px 26px; position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: -50px; right: -50px; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(90,63,168,.4) 0%, transparent 70%); }
+  .header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--purple), var(--gold)); }
+  .header-series { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 5vw, 38px); font-weight: 700; color: #f0eeff; line-height: 1.1; }
+  .curric-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); border-radius: 20px; padding: 5px 14px; margin-top: 14px; font-size: 12px; color: rgba(240,238,255,.8); font-weight: 500; }
+
+  .progress-bar { height: 3px; background: #100e20; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--purple), var(--gold)); transition: width .5s ease; }
+
+  .toolrow { display:flex; flex-wrap:wrap; gap:8px; padding:10px 16px; }
+  .tool-link { display:inline-flex; align-items:center; gap:6px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; font-size:12px; font-weight:700; text-decoration:none; padding:6px 12px; border-radius:20px; border:none; cursor:pointer; }
+  .tool-grammar { color:#FFF6D8; background:#0E7C86; }
+  .tool-notes { color: var(--deep); background: var(--gold-light); border: 1.5px solid #e0c060; }
+  .tool-notes.active { background: var(--gold); color: var(--deep); }
+
+  .nav { background: var(--cream); border-bottom: 1px solid var(--border); display: flex; gap: 5px; padding: 12px 18px; overflow-x: auto; scrollbar-width: none; position: sticky; top: 0; z-index: 40; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn { padding: 6px 14px; border-radius: 18px; border: 1.5px solid var(--border); background: transparent; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; white-space: nowrap; transition: all .18s; }
+  .nav-btn.active { background: var(--deep); border-color: var(--deep); color: var(--gold); }
+  .nav-btn.done { background: var(--green-light); border-color: var(--green); color: var(--green); }
+
+  .main { padding: 22px 18px 100px; max-width: 740px; margin: 0 auto; }
+
+  .panel { display: none; animation: fadeUp .35s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+
+  .slabel { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 16px; margin-bottom: 10px; }
+  .sl-warm { background: var(--gold-light); color: var(--gold-label); }
+  .sl-read { background: var(--purple-light); color: var(--purple); }
+  .sl-prac { background: var(--teal-light); color: var(--teal); }
+  .sl-speak { background: var(--green-light); color: var(--green); }
+  .sl-recap { background: var(--gold-light); color: var(--gold-label); }
+
+  .stitle { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--ink); line-height: 1.2; margin-bottom: 6px; }
+  .sdesc { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
+
+  .card { background: var(--cream); border: 1px solid var(--border); border-radius: 14px; padding: 22px; margin-bottom: 16px; }
+  .clabel { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-label); margin-bottom: 14px; }
+
+  .recall { background: white; border: 1.5px solid var(--border); border-radius: 11px; padding: 14px 16px; margin-bottom: 10px; display: flex; gap: 12px; align-items: flex-start; }
+  .rnum { background: var(--deep); color: var(--gold); width: 28px; height: 28px; border-radius: 50%; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .rtext { font-size: 14px; line-height: 1.55; color: var(--ink); }
+  .rhint { font-size: 12px; color: var(--muted2); font-style: italic; margin-top: 4px; }
+  .rtag { display:inline-block; font-size:10px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--purple); background:var(--purple-light); padding:2px 8px; border-radius:8px; margin-bottom:6px; }
+
+  .dialogue { background: white; border-left: 4px solid var(--purple); border-radius: 0 12px 12px 0; padding: 6px 0; margin: 14px 0; overflow: hidden; }
+  .dline { padding: 12px 18px; font-size: 14.5px; line-height: 1.7; color: var(--ink); border-bottom: 1px solid var(--border); }
+  .dline:last-child { border-bottom: none; }
+  .dline.client { background: var(--teal-pale); }
+  .dline.coach { background: var(--purple-pale); }
+  .dspeaker { font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px; }
+  .dline.client .dspeaker { color: var(--teal); }
+  .dline.coach .dspeaker { color: var(--purple); }
+  .hl { padding: 1px 5px; border-radius: 4px; font-weight: 600; cursor: pointer; position: relative; display: inline-block; transition: background .18s; }
+  .dline.client .hl { background: var(--teal-light); color: var(--teal); }
+  .dline.coach .hl { background: var(--purple-light); color: var(--purple); }
+  .hl.open, .hl:hover { background: var(--deep) !important; color: var(--gold) !important; }
+  .hltip { display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: var(--ink); color: #f0eeff; font-size: 12px; padding: 7px 12px; border-radius: 8px; white-space: nowrap; z-index: 20; pointer-events: none; min-width: 210px; text-align: center; line-height: 1.45; }
+  .hltip::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: var(--ink); }
+  .hl.open .hltip { display: block; }
+
+  .rule-card { background: var(--cream); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 16px; overflow: hidden; }
+  .rule-header { display: flex; align-items: center; gap: 12px; padding: 14px 20px; }
+  .rh-must { background: #fff0e0; border-bottom: 1px solid #f0c890; }
+  .rh-need { background: #edf8f7; border-bottom: 1px solid #a8dcd8; }
+  .rh-ought { background: #f0eeff; border-bottom: 1px solid #d0c8f8; }
+  .rule-badge { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; padding: 3px 10px; border-radius: 10px; flex-shrink: 0; }
+  .rb-must { background: var(--orange); color: white; }
+  .rb-need { background: var(--teal); color: white; }
+  .rb-ought { background: var(--purple); color: white; }
+  .rule-headline { font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+  .rule-body { padding: 16px 20px 6px; }
+  .rule-sentence { font-size: 14px; color: var(--muted); font-style: italic; padding: 10px 14px; background: white; border-radius: 8px; border-left: 3px solid var(--border); margin-bottom: 8px; }
+  .rule-sentence strong { color: var(--ink); font-style: normal; }
+
+  .fblock { margin-bottom: 14px; padding: 14px 16px; background: white; border: 1.5px solid var(--border); border-radius: 11px; }
+  .fnum { font-size: 11px; font-weight: 700; color: var(--muted2); margin-bottom: 8px; }
+  .fline { font-size: 15px; line-height: 2.4; color: var(--ink); }
+  .blank { display: inline-block; min-width: 110px; border: none; border-bottom: 2.5px solid var(--gold); padding: 0 6px 2px; margin: 0 3px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: transparent; text-align: center; transition: border-color .18s; }
+  .blank:focus { outline: none; border-color: var(--purple); }
+  .blank.correct { border-color: var(--green); background: var(--green-light); border-radius: 4px 4px 0 0; }
+  .blank.wrong { border-color: #c0392b; background: var(--red-light); border-radius: 4px 4px 0 0; }
+  .fhint { font-size: 11px; color: var(--muted2); font-style: italic; margin-top: 6px; }
+
+  .trans-block { background: white; border: 1.5px solid var(--border); border-radius: 11px; padding: 14px 16px; margin-bottom: 10px; }
+  .trans-problem { font-size: 14px; color: var(--red-dark); font-weight: 500; background: var(--red-light); padding: 8px 12px; border-radius: 8px; margin-bottom: 10px; }
+  .trans-cue { font-size: 11px; color: var(--muted2); font-style: italic; margin-bottom: 8px; }
+  .trans-input { width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 9px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: white; transition: border-color .18s; }
+  .trans-input:focus { outline: none; border-color: var(--purple); }
+  .trans-input.correct { border-color: var(--green); background: var(--green-light); }
+  .trans-input.wrong { border-color: #c0392b; }
+
+  .exchange-card { background: white; border: 1.5px solid var(--border); border-radius: 11px; padding: 14px 16px; margin-bottom: 10px; }
+  .exchange-line { font-size: 14px; color: var(--ink); font-style: italic; background: var(--teal-pale); border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; }
+
+  .discussion-card { border-radius: 14px; overflow: hidden; margin-bottom: 16px; border: 1px solid var(--border); }
+  .disc-header { padding: 12px 20px; display: flex; align-items: center; gap: 12px; }
+  .disc-client { background: var(--teal-pale); border-bottom: 1px solid #b8dcd8; }
+  .disc-coach { background: #f0eeff; border-bottom: 1px solid #d0c8f8; }
+  .disc-badge { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; padding: 3px 10px; border-radius: 10px; flex-shrink: 0; }
+  .db-client { background: var(--teal); color: white; }
+  .db-coach { background: var(--purple); color: white; }
+  .disc-label { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .disc-body { background: var(--cream); padding: 16px 20px; }
+  .disc-line { font-size: 14px; color: var(--ink); line-height: 1.6; font-style: italic; background: white; border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 16px; }
+  .disc-task-list { list-style: none; margin-top: 4px; }
+  .disc-task-list li { padding: 9px 14px; background: white; border: 1.5px solid var(--border); border-left: 4px solid var(--purple); border-radius: 8px; font-size: 14px; color: var(--ink); margin-bottom: 8px; line-height: 1.5; }
+  .disc-task-list li strong { color: var(--purple); }
+
+  .chipwrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .chip { padding: 6px 14px; border: 1.5px solid var(--border); border-radius: 18px; font-size: 13px; color: var(--ink); cursor: pointer; transition: all .18s; background: white; }
+  .chip:hover { background: var(--deep); color: var(--gold); border-color: var(--deep); }
+  .chip.used { background: var(--purple); color: white; border-color: var(--purple); }
+  .tap-hint { font-size: 11px; color: var(--muted2); text-align: center; margin-top: 10px; font-style: italic; }
+
+  .ainput { width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 9px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: white; resize: vertical; min-height: 52px; transition: border-color .18s; }
+  .ainput:focus { outline: none; border-color: var(--purple); }
+
+  .notice { border-radius: 10px; padding: 12px 16px; font-size: 13px; line-height: 1.6; margin-top: 14px; }
+  .n-purple { background: var(--purple-light); color: var(--purple); }
+  .n-gold { background: var(--gold-light); color: var(--gold-label); }
+  .n-green { background: var(--green-light); color: var(--green); }
+  .n-teal { background: var(--teal-light); color: var(--teal); }
+  .n-orange { background: var(--orange-light); color: var(--orange); }
+
+  .teacher-note { display: none; }
+  body.show-notes .teacher-note { display: block; }
+
+  .fb { padding: 12px 15px; border-radius: 10px; font-size: 14px; line-height: 1.6; margin-top: 12px; display: none; }
+  .fb.show { display: block; }
+  .fb-ok { background: var(--green-light); color: var(--green); border: 1px solid #a0d8b8; }
+  .fb-part { background: var(--gold-light); color: var(--gold-label); border: 1px solid #e0c060; }
+
+  .rbox { background: var(--deep); border-radius: 14px; padding: 22px; margin-bottom: 16px; }
+  .rbox .clabel { color: rgba(255,215,100,.8); }
+  .rlist { list-style: none; margin-top: 8px; }
+  .rlist li { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.08); font-size: 14px; color: #c8c0e8; display: flex; gap: 10px; align-items: flex-start; line-height: 1.5; }
+  .rlist li:last-child { border-bottom: none; }
+  .rlist li::before { content: '→'; color: var(--gold); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  .cando-toggle-wrap { text-align: center; margin: 6px 0 16px; }
+  .cando-panel { display: none; background: var(--deep); border-radius: 14px; padding: 22px; margin-bottom: 16px; }
+  .cando-panel.open { display: block; }
+  .cando-code { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: 1.5px; background: var(--gold); color: var(--deep); padding: 3px 10px; border-radius: 8px; margin-bottom: 10px; }
+  .cando-title { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-weight: 700; color: #f0eeff; margin-bottom: 10px; }
+  .cando-row { margin-bottom: 12px; }
+  .cando-k { font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: rgba(255,215,100,.75); margin-bottom: 4px; }
+  .cando-v { font-size: 13.5px; color: #d8d4f0; line-height: 1.6; }
+  .cando-sub { margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.1); }
+
+  .btn { padding: 12px 26px; border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .18s; }
+  .btn-p { background: var(--deep); color: var(--gold); }
+  .btn-p:hover { background: var(--deep-mid); transform: translateY(-1px); }
+  .btn-c { background: var(--gold); color: var(--deep); margin-top: 14px; }
+  .btn-c:hover { opacity: .88; }
+  .btn-o { background: transparent; color: var(--purple); border: 1.5px solid var(--purple); }
+  .btn-o:hover { background: var(--purple-light); }
+  .brow { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  .divider { height: 1px; background: var(--border); margin: 18px 0; }
+
+  #timer-bubble { position: fixed; bottom: 20px; left: 20px; width: 54px; height: 44px; border-radius: 11px; background: var(--deep); border: 2px solid var(--purple); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 900; box-shadow: 0 3px 14px rgba(0,0,0,.3); transition: border-color .3s, transform .15s; user-select: none; }
+  #timer-bubble:hover { transform: scale(1.05); }
+  #timer-bubble.running { border-color: var(--green); }
+  #timer-bubble.warning { border-color: var(--gold); }
+  #timer-bubble.danger { border-color: #e03030; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{box-shadow:0 3px 14px rgba(224,48,48,.3)} 50%{box-shadow:0 3px 20px rgba(224,48,48,.6)} }
+  #timer-display { font-size: 12px; font-weight: 800; color: white; line-height: 1; letter-spacing: .2px; }
+
+  #wb-panel { position: fixed; bottom: 76px; left: 20px; background: var(--deep); border: 1px solid rgba(255,255,255,.15); border-radius: 16px; z-index: 899; width: min(300px, calc(100vw - 40px)); display: none; box-shadow: 0 8px 30px rgba(0,0,0,.4); max-height: 80vh; overflow-y: auto; }
+  #wb-panel.open { display: block; }
+  .wb-section { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .wb-section:last-child { border-bottom: none; }
+  .tp-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,215,100,.7); margin-bottom: 10px; }
+  .tp-presets { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-bottom: 10px; }
+  .tp-preset { padding: 7px 0; border: 1px solid rgba(255,255,255,.15); border-radius: 8px; background: rgba(255,255,255,.06); font-family: 'DM Sans',sans-serif; font-size: 12px; font-weight: 600; color: rgba(255,255,255,.8); cursor: pointer; text-align: center; transition: all .15s; }
+  .tp-preset:hover { background: var(--purple); border-color: var(--purple); color: white; }
+  .tp-btns { display: flex; gap: 6px; }
+  .tp-btn { flex: 1; padding: 8px 0; border: none; border-radius: 8px; font-family: 'DM Sans',sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; transition: all .15s; }
+  .tp-btn.pause { background: var(--gold); color: var(--deep); }
+  .tp-btn.reset { background: rgba(255,255,255,.1); color: rgba(255,255,255,.7); }
+  .tp-btn:hover { opacity: .85; }
+  .stamp-row { display: flex; gap: 6px; margin-bottom: 8px; }
+  .stamp-btn { width: 34px; height: 34px; border: 1px solid rgba(255,255,255,.15); border-radius: 8px; background: rgba(255,255,255,.06); font-size: 15px; cursor: pointer; transition: all .15s; }
+  .stamp-btn:hover { background: rgba(255,255,255,.14); }
+  .corr-input-row { display: flex; gap: 6px; }
+  .corr-input-row input { flex: 1; padding: 7px 10px; border: 1px solid rgba(255,255,255,.2); border-radius: 8px; background: rgba(255,255,255,.08); color: white; font-family: 'DM Sans',sans-serif; font-size: 12px; }
+  .corr-input-row input:focus { outline: none; border-color: var(--purple); }
+  #corr-log { max-height: 140px; overflow-y: auto; margin-top: 10px; }
+  .corr-entry { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 6px 8px; background: rgba(255,255,255,.05); border-radius: 6px; margin-bottom: 5px; font-size: 12px; color: #eef0ff; }
+  .corr-entry button { background: none; border: none; color: rgba(255,255,255,.35); cursor: pointer; font-size: 13px; }
+  .corr-entry button:hover { color: #e08080; }
+  #wb-notes { width: 100%; min-height: 90px; padding: 9px 11px; border: 1px solid rgba(255,255,255,.15); border-radius: 8px; background: rgba(255,255,255,.06); color: #eef0ff; font-family: 'DM Sans',sans-serif; font-size: 12.5px; line-height: 1.55; resize: vertical; }
+  #wb-notes:focus { outline: none; border-color: var(--purple); }
+  #wb-notes::placeholder { color: rgba(255,255,255,.3); }
+  .wb-footer-row { display: flex; gap: 6px; margin-top: 10px; }
+  .wb-copy { flex:1; padding: 8px 0; border: none; border-radius: 8px; background: var(--purple); color: white; font-family: 'DM Sans',sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; }
+  .wb-copy:hover { background: var(--deep-mid); }
+  .wb-clear-btn { padding: 8px 14px; border: 1px solid rgba(255,255,255,.15); border-radius: 8px; background: none; color: rgba(255,255,255,.5); font-family: 'DM Sans',sans-serif; font-size: 12px; cursor: pointer; }
+  .wb-clear-btn:hover { border-color: #e03030; color: #e03030; }
+  .wb-copied { font-size: 11px; color: var(--green); margin-top: 6px; display: none; }
+  .wb-copied.show { display: block; }
+
+  @media (max-width: 520px) {
+    .main { padding: 16px 12px 100px; }
+  }
+</style>
+</head>
+<body>
+<div class="toolrow">
+  <a class="tool-link tool-grammar" href="../Grammar-book/English/modal-verbs.html">📘 Grammar: Modal Verbs</a>
+  <button class="tool-link tool-notes" id="notesToggleBtn" onclick="toggleTeacherNotes()">🧑‍🏫 Teacher notes</button>
+</div>
+
+<div id="timer-bubble" onclick="timerBubbleClick()" title="Timer &amp; whiteboard">
+  <div id="timer-display">50:00</div>
+</div>
+<div id="wb-panel">
+  <div class="wb-section">
+    <div class="tp-label">Timer</div>
+    <div class="tp-presets">
+      <button class="tp-preset" onclick="setTimer(5)">5 min</button>
+      <button class="tp-preset" onclick="setTimer(10)">10 min</button>
+      <button class="tp-preset" onclick="setTimer(15)">15 min</button>
+      <button class="tp-preset" onclick="setTimer(20)">20 min</button>
+      <button class="tp-preset" onclick="setTimer(30)">30 min</button>
+      <button class="tp-preset" onclick="setTimer(50)">50 min</button>
+    </div>
+    <div class="tp-btns">
+      <button class="tp-btn pause" onclick="pauseTimer()" id="btn-pause">⏸ Pause</button>
+      <button class="tp-btn reset" onclick="resetTimer()">↺ Reset</button>
+    </div>
+  </div>
+  <div class="wb-section">
+    <div class="tp-label">Stamps &amp; corrections</div>
+    <div class="stamp-row">
+      <button class="stamp-btn" style="color:#80e0b0;" onclick="stamp('✓')" title="Correct">✓</button>
+      <button class="stamp-btn" style="color:#e08080;" onclick="stamp('✗')" title="Wrong">✗</button>
+      <button class="stamp-btn" style="color:#c8b8f8;" onclick="stamp('→')" title="Reformulate">→</button>
+      <button class="stamp-btn" style="color:#f0c890;" onclick="stamp('★')" title="Great phrase">★</button>
+    </div>
+    <div class="corr-input-row">
+      <input type="text" id="corr-input" placeholder="correction / phrase…" onkeydown="if(event.key==='Enter')stamp('→')">
+    </div>
+    <div id="corr-log"></div>
+  </div>
+  <div class="wb-section">
+    <div class="tp-label">Notes</div>
+    <textarea id="wb-notes" placeholder="Freeform notes for this session…"></textarea>
+    <div class="wb-footer-row">
+      <button class="wb-copy" onclick="copyWB()">📋 Copy all</button>
+      <button class="wb-clear-btn" onclick="clearWB()">Clear</button>
+    </div>
+    <div class="wb-copied" id="wb-copied">Copied to clipboard.</div>
+  </div>
+</div>
+
+<div class="header">
+  <div class="header-series">Business English</div>
+  <h1>Client Discussions: Price &amp; Timing</h1>
+  <div class="curric-badge">📋 Curriculum B1-19 · review</div>
+</div>
+<div class="progress-bar">
+  <div class="progress-fill" id="pFill" style="width:20%"></div>
+</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="goTo(0)">🔥 Warm-up</button>
+  <button class="nav-btn" onclick="goTo(1)">💬 Presentation</button>
+  <button class="nav-btn" onclick="goTo(2)">✏️ Practice</button>
+  <button class="nav-btn" onclick="goTo(3)">🤝 Roleplay</button>
+  <button class="nav-btn" onclick="goTo(4)">📋 Recap</button>
+</div>
+
+<div class="main">
+
+  <div class="panel active" id="panel-0">
+    <span class="slabel sl-warm">Warm-up</span>
+    <div class="stitle">Quick Fire: Must, Need To, Ought To</div>
+    <div class="sdesc">One sentence per prompt, straight away — no pausing to plan. Every prompt is a real moment from a client discussion.</div>
+
+    <div class="card">
+      <div class="clabel">Rapid-fire prompts</div>
+      <div class="recall">
+        <div class="rnum">1</div>
+        <div class="rtext"><span class="rtag">must</span><br>Say something a salesperson <strong>must</strong> always do when a client hesitates.</div>
+      </div>
+      <div class="recall">
+        <div class="rnum">2</div>
+        <div class="rtext"><span class="rtag">have to</span><br>Say something you <strong>have to</strong> check before you send a client a final contract.</div>
+      </div>
+      <div class="recall">
+        <div class="rnum">3</div>
+        <div class="rtext"><span class="rtag">need to</span><br>Say something you <strong>need to</strong> find out about a client's budget before you quote a price.</div>
+      </div>
+      <div class="recall">
+        <div class="rnum">4</div>
+        <div class="rtext"><span class="rtag">needn't</span><br>Say something a client <strong>needn't</strong> worry about once they've signed.</div>
+      </div>
+      <div class="recall">
+        <div class="rnum">5</div>
+        <div class="rtext"><span class="rtag">ought to</span><br>Say what you <strong>ought to</strong> do before you name a final price out loud.</div>
+      </div>
+      <div class="recall">
+        <div class="rnum">6</div>
+        <div class="rtext"><span class="rtag">don't have to</span><br>Say something you <strong>don't have to</strong> do to win this client's business.</div>
+      </div>
+    </div>
+
+    <div class="notice teacher-note n-gold">
+      🧑‍🏫 <strong>Teacher note:</strong> Keep this brisk — one sentence, immediate correction if needed, move on. The goal is re-surfacing B1-19's modal set (must/have to, need to/needn't, ought to) before today's client-discussion skin. Don't let any single prompt run long.
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(1)">Continue to Presentation →</button>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-1">
+    <span class="slabel sl-read">Presentation</span>
+    <div class="stitle">A Client Weighs the Proposal</div>
+    <div class="sdesc">Read the exchange below. Tap the highlighted phrases. Notice the shape: problem → explain → propose → resolve — and how disagreement gets softened, not avoided.</div>
+
+    <div class="card">
+      <div class="clabel">Dialogue — Reviewing the Proposal</div>
+      <div class="dialogue">
+        <div class="dline client">
+          <div class="dspeaker">Client</div>
+          I've looked at the proposal, and honestly, the price is higher than I budgeted for.
+        </div>
+        <div class="dline coach">
+          <div class="dspeaker">Consultant</div>
+          <span class="hl" onclick="this.classList.toggle('open')">I see what you mean, but<span class="hltip">softened disagreement — B1-09 exponent, holds the position politely</span></span> let's look at what's included — the price reflects three months of hands-on support, not just the sessions themselves.
+        </div>
+        <div class="dline client">
+          <div class="dspeaker">Client</div>
+          Still, three months feels like a big commitment to make right now.
+        </div>
+        <div class="dline coach">
+          <div class="dspeaker">Consultant</div>
+          I understand. You <span class="hl" onclick="this.classList.toggle('open')">don't have to<span class="hltip">don't have to = not necessary — absence of obligation</span></span> commit to the full three months today — we <span class="hl" onclick="this.classList.toggle('open')">ought to<span class="hltip">ought to = recommendation, the wise next step</span></span> start with a shorter trial period instead, so you can see the value first.
+        </div>
+        <div class="dline client">
+          <div class="dspeaker">Client</div>
+          That could work. And the start date — you mentioned next Monday? I need more time to prepare internally.
+        </div>
+        <div class="dline coach">
+          <div class="dspeaker">Consultant</div>
+          That's fair. We <span class="hl" onclick="this.classList.toggle('open')">needn't<span class="hltip">needn't = formal "don't need to" — common in British English</span></span> lock the exact date today — we just <span class="hl" onclick="this.classList.toggle('open')">need to<span class="hltip">need to = practical necessity</span></span> agree the scope. I <span class="hl" onclick="this.classList.toggle('open')">have to<span class="hltip">have to = obligation from outside — checking an external calendar</span></span> check my calendar, but I <span class="hl" onclick="this.classList.toggle('open')">ought to<span class="hltip">ought to = recommendation, likely outcome</span></span> be able to offer a two-week window instead.
+        </div>
+        <div class="dline client">
+          <div class="dspeaker">Client</div>
+          <span class="hl" onclick="this.classList.toggle('open')">Well, actually<span class="hltip">softened disagreement — B1-09 exponent, holds a position while staying polite</span></span>, two weeks might still be tight, but let's talk about it.
+        </div>
+        <div class="dline coach">
+          <div class="dspeaker">Consultant</div>
+          Understood — I'll draft two options and we can decide together.
+        </div>
+      </div>
+      <div class="notice n-purple">
+        💡 <strong>Key idea:</strong> A client discussion isn't a fight to win — it's problem, explanation, proposal, resolution. Disagreement gets softened ("I see what you mean, but…", "Well, actually…"), never dropped.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="clabel">Quick Check — Speak Only</div>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="background:white; border:1.5px solid var(--border); border-radius:10px; padding:13px 16px; font-size:14px; color:var(--ink); line-height:1.5;">1. What two things does the client push back on?</div>
+        <div style="background:white; border:1.5px solid var(--border); border-radius:10px; padding:13px 16px; font-size:14px; color:var(--ink); line-height:1.5;">2. What does the consultant propose instead of the full three months?</div>
+        <div style="background:white; border:1.5px solid var(--border); border-radius:10px; padding:13px 16px; font-size:14px; color:var(--ink); line-height:1.5;">3. Find one softened disagreement phrase used by each speaker.</div>
+      </div>
+    </div>
+
+    <div class="notice teacher-note n-teal">
+      🧑‍🏫 <strong>Teacher note:</strong> Highlight that the consultant never fully agrees or fully refuses — resolution comes from proposing a smaller step (trial period, two-week window), not from conceding on price. Point out both B1-09 exponents before moving on.
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(2)">Continue to Practice →</button>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-2">
+    <span class="slabel sl-prac">Controlled Practice</span>
+    <div class="stitle">Put It Into Words</div>
+    <div class="sdesc">Three exercises: choose the right modal, turn a client's problem into a resolution, then practice softening disagreement.</div>
+
+    <div class="card">
+      <div class="clabel">Exercise A · Choose the right modal</div>
+      <div style="font-size:13px; color:var(--muted); margin-bottom:14px;">Fill in with must, have to, need to, needn't, or ought to.</div>
+
+      <div class="fblock"><div class="fnum">1</div><div class="fline">A consultant <input class="blank" id="b1" placeholder="________" size="10"> stay calm when a client pushes back on a proposal.</div><div class="fhint">Internal conviction</div></div>
+      <div class="fblock"><div class="fnum">2</div><div class="fline">You <input class="blank" id="b2" placeholder="________" size="10"> find out what's really behind the client's hesitation.</div><div class="fhint">Practical necessity</div></div>
+      <div class="fblock"><div class="fnum">3</div><div class="fline">You <input class="blank" id="b3" placeholder="________" size="14"> agree to every term today — a smaller first step is fine.</div><div class="fhint">Not necessary</div></div>
+      <div class="fblock"><div class="fnum">4</div><div class="fline">You <input class="blank" id="b4" placeholder="________" size="10"> offer a shorter trial before asking for the full commitment.</div><div class="fhint">Good advice</div></div>
+      <div class="fblock"><div class="fnum">5</div><div class="fline">You <input class="blank" id="b5" placeholder="________" size="10"> check your calendar before you promise a new date.</div><div class="fhint">External obligation</div></div>
+      <div class="fblock"><div class="fnum">6</div><div class="fline">You <input class="blank" id="b6" placeholder="________" size="10"> lock the exact date today — agreeing the scope is enough for now.</div><div class="fhint">Not necessary — formal</div></div>
+
+      <button class="btn btn-c" onclick="checkA()">Check answers ✓</button>
+      <div class="fb" id="fbA"></div>
+    </div>
+
+    <div class="card">
+      <div class="clabel">Exercise B · Problem → Resolution</div>
+      <div style="font-size:13px; color:var(--muted); margin-bottom:14px;">Read the client's problem statement. Write a consultant's response using the modal shown.</div>
+
+      <div class="trans-block">
+        <div class="trans-problem">1. Client: "This is more than we budgeted for this quarter."</div>
+        <div class="trans-cue">Use: don't have to / needn't</div>
+        <input class="trans-input" id="t1" placeholder="Write the consultant's response…">
+      </div>
+      <div class="trans-block">
+        <div class="trans-problem">2. Client: "I want this delivered faster, but I'm worried about quality."</div>
+        <div class="trans-cue">Use: ought to</div>
+        <input class="trans-input" id="t2" placeholder="Write the consultant's response…">
+      </div>
+      <div class="trans-block">
+        <div class="trans-problem">3. Client: "I'm not sure I can sign a twelve-month contract."</div>
+        <div class="trans-cue">Use: need to / have to</div>
+        <input class="trans-input" id="t3" placeholder="Write the consultant's response…">
+      </div>
+
+      <button class="btn btn-c" onclick="checkB()">Check answers ✓</button>
+      <div class="fb" id="fbB"></div>
+    </div>
+
+    <div class="card">
+      <div class="clabel">Exercise C · Softened Disagreement — Paired Exchange</div>
+      <div style="font-size:13px; color:var(--muted); margin-bottom:12px;">Teacher makes a claim about the proposal. Respond out loud with a softened disagreement, then jot your favourite phrase below.</div>
+      <div class="exchange-card">
+        <div class="exchange-line">"Honestly, I think a shorter trial period is a waste of time — you should just commit fully or not at all."</div>
+        <div class="exchange-line">"Two weeks is basically the same as one week — it makes no real difference."</div>
+        <div class="exchange-line">"If the price is fixed, there's really nothing left to discuss."</div>
+      </div>
+      <div class="chipwrap">
+        <span class="chip" onclick="this.classList.toggle('used')">I see what you mean, but…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">Well, actually…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">I understand, however…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">That's true, but…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">I'm sorry, but I think you're wrong</span>
+      </div>
+      <textarea class="ainput" style="margin-top:12px;" placeholder="Which phrase felt most natural to you? Write one full response here." rows="2"></textarea>
+    </div>
+
+    <div class="notice teacher-note n-gold">
+      🧑‍🏫 <strong>Teacher note:</strong> Exercise B answers are open — accept any response that uses the cued modal correctly and logically resolves the stated problem. Exercise C is live/verbal; the textarea is just a landing spot for Mehdi's best phrase, not graded.
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(3)">Continue to Roleplay →</button>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-3">
+    <span class="slabel sl-speak">Free Production · Roleplay</span>
+    <div class="stitle">Negotiate the Deal</div>
+    <div class="sdesc">Two client discussions. For each: state the problem, explain why it matters, propose a resolution, respond to pushback — softening disagreement where it fits.</div>
+
+    <div class="discussion-card">
+      <div class="disc-header disc-client">
+        <span class="disc-badge db-client">Client · Teacher plays this</span>
+        <span class="disc-label">Discussion 1 — Price Pushback</span>
+      </div>
+      <div class="disc-body">
+        <div class="disc-line">"Your proposal looks solid, but the total investment is more than we allocated for this quarter. I need to see this cost differently before I can move forward."</div>
+        <div class="notice teacher-note n-teal" style="margin-top:10px; font-size:12px;">🧑‍🏫 Push back once more after the first response — ask "so are you saying it should just be cheaper?" and make him hold his position without simply lowering the price.</div>
+      </div>
+    </div>
+
+    <div class="discussion-card">
+      <div class="disc-header disc-coach">
+        <span class="disc-badge db-coach">Mehdi · Consultant</span>
+        <span class="disc-label">Your Task — 4 Steps</span>
+      </div>
+      <div class="disc-body">
+        <ul class="disc-task-list">
+          <li><strong>1. Understand</strong> — ask what "more than budgeted" really means for them this quarter.</li>
+          <li><strong>2. Explain</strong> — say why the price reflects the scope, using <em>need to / have to</em>.</li>
+          <li><strong>3. Propose</strong> — offer a resolution: a phased start, a smaller scope, a payment plan — using <em>ought to</em>.</li>
+          <li><strong>4. Respond to pushback</strong> — hold your position calmly, softening with "I see what you mean, but…" rather than backing down.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="discussion-card">
+      <div class="disc-header disc-client">
+        <span class="disc-badge db-client">Client · Teacher plays this</span>
+        <span class="disc-label">Discussion 2 — Delivery / Timing Change</span>
+      </div>
+      <div class="disc-body">
+        <div class="disc-line">"The three-month timeline works for me, but starting next Monday doesn't — I need at least three more weeks before we can kick off."</div>
+        <div class="notice teacher-note n-teal" style="margin-top:10px; font-size:12px;">🧑‍🏫 A calmer objection than Discussion 1 — good contrast. Let him practice proposing a middle-ground date rather than just accepting the delay outright.</div>
+      </div>
+    </div>
+
+    <div class="discussion-card">
+      <div class="disc-header disc-coach">
+        <span class="disc-badge db-coach">Mehdi · Consultant</span>
+        <span class="disc-label">Your Task — Same 4 Steps</span>
+      </div>
+      <div class="disc-body">
+        <ul class="disc-task-list">
+          <li><strong>1. Understand</strong> — what's really behind needing three more weeks?</li>
+          <li><strong>2. Explain</strong> — why a long delay could affect the results or the schedule.</li>
+          <li><strong>3. Propose</strong> — a middle-ground start date, not the full three-week delay.</li>
+          <li><strong>4. Respond to pushback</strong> — accommodate without losing momentum on the project.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="clabel">Phrases to Use — Tap When Used</div>
+      <div class="chipwrap">
+        <span class="chip" onclick="this.classList.toggle('used')">I see what you mean, but…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">Well, actually…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">You don't have to decide today.</span>
+        <span class="chip" onclick="this.classList.toggle('used')">I think we ought to consider…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">What we need is…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">I understand, however…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">Would it help if…?</span>
+      </div>
+      <div class="tap-hint">Tap a phrase to mark it as used</div>
+    </div>
+
+    <div class="notice teacher-note n-gold">
+      🧑‍🏫 <strong>Teacher note:</strong> This is the B1-19 evidence task. Passing both discussions cleanly (problem/reason/resolution/pushback structure, natural modal use) is the signal to move B1-19 toward "solid" — confirm that call after the session, don't mark it in the tool.
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(4)">Continue to Recap →</button>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-4">
+    <span class="slabel sl-recap">Recap</span>
+    <div class="stitle">Wrap Up</div>
+    <div class="sdesc">Takeaway first, then a quick language note and the curriculum card behind today's session.</div>
+
+    <div class="card">
+      <div class="clabel">Takeaway</div>
+      <div style="background:var(--purple-pale); border:1.5px solid #c8b8f8; border-radius:12px; padding:16px 18px; font-size:15px; font-weight:500; color:var(--ink); line-height:1.6;">
+        "What's one thing you'll say differently next time a client pushes back on price or timing?"
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="clabel">Language Note</div>
+      <textarea class="ainput" placeholder="Pattern to watch next session:" rows="2"></textarea>
+    </div>
+
+    <div class="cando-toggle-wrap">
+      <button class="btn btn-o" onclick="toggleCando()" id="candoBtn">📋 Show curriculum card ▾</button>
+    </div>
+    <div class="cando-panel" id="candoPanel">
+      <div class="cando-code">B1-19</div>
+      <div class="cando-title">Problems &amp; non-routine situations</div>
+      <div class="cando-row">
+        <div class="cando-k">Goal</div>
+        <div class="cando-v">Can explain why something is a problem and deal with less routine situations (complaints, changes, obstacles) in shops, travel and services.</div>
+      </div>
+      <div class="cando-row">
+        <div class="cando-k">Grammar focus</div>
+        <div class="cando-v">must/have to · need to / needn't · ought to</div>
+      </div>
+      <div class="cando-row">
+        <div class="cando-k">Evidence task</div>
+        <div class="cando-v">Two escalation roleplays (wrong booking; faulty purchase): state the problem, explain why it matters, propose a resolution, respond to pushback.</div>
+      </div>
+      <div class="cando-sub">
+        <div class="cando-row">
+          <div class="cando-k">Incidental — B1-09</div>
+          <div class="cando-v">Agreeing &amp; disagreeing politely: can agree and disagree with others, including softened disagreement, and hold his/her position in informal discussion.</div>
+        </div>
+        <div class="cando-row">
+          <div class="cando-k">Incidental — B1-08</div>
+          <div class="cando-v">Opinions with reasons: can express personal views and opinions on familiar topics and support them.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rbox">
+      <div class="clabel">📅 Review &amp; Next Steps</div>
+      <ul class="rlist">
+        <li>Next session — free recall: must vs have to vs ought to, 3 example sentences from memory</li>
+        <li>Homework — write your own response to a price pushback, using at least one softened disagreement phrase</li>
+        <li>Curriculum note — B1-19 evidence task attempted: two negotiation roleplays with problem/reason/resolution/pushback structure</li>
+      </ul>
+    </div>
+
+    <div style="text-align:center; padding:18px 0;">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:700; color:var(--ink); margin-bottom:5px;">Session complete. 🤝</div>
+      <div style="font-size:13px; color:var(--muted2);">Proposals weighed. Pushback handled. Confidence built.</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let cur = 0;
+  const total = 5;
+  const btns = document.querySelectorAll('.nav-btn');
+
+  function goTo(i) {
+    document.getElementById('panel-' + cur).classList.remove('active');
+    btns[cur].classList.remove('active');
+    btns[cur].classList.add('done');
+    cur = i;
+    document.getElementById('panel-' + cur).classList.add('active');
+    btns[cur].classList.add('active');
+    btns[cur].classList.remove('done');
+    document.getElementById('pFill').style.width = Math.round(((i + 1) / total) * 100) + '%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('wb-panel').classList.remove('open');
+  }
+
+  function toggleTeacherNotes() {
+    document.body.classList.toggle('show-notes');
+    document.getElementById('notesToggleBtn').classList.toggle('active');
+  }
+
+  function toggleCando() {
+    const panel = document.getElementById('candoPanel');
+    const btn = document.getElementById('candoBtn');
+    panel.classList.toggle('open');
+    btn.textContent = panel.classList.contains('open') ? '📋 Hide curriculum card ▴' : '📋 Show curriculum card ▾';
+  }
+
+  const answersA = {
+    b1: 'must', b2: 'need to', b3: "don't have to",
+    b4: 'ought to', b5: 'have to', b6: "needn't"
+  };
+  function checkA() {
+    let score = 0;
+    const tot = Object.keys(answersA).length;
+    for (const [id, ans] of Object.entries(answersA)) {
+      const el = document.getElementById(id);
+      const val = el.value.trim().toLowerCase();
+      if (val === ans) { el.classList.add('correct'); el.classList.remove('wrong'); score++; }
+      else { el.classList.add('wrong'); el.classList.remove('correct'); }
+    }
+    const fb = document.getElementById('fbA');
+    fb.classList.add('show');
+    fb.className = score === tot ? 'fb fb-ok show' : 'fb fb-part show';
+    fb.innerHTML = score === tot
+      ? '✅ <strong>Perfect — ' + score + '/' + tot + '!</strong> Strong control of obligation and advice forms.'
+      : '⚡ <strong>' + score + '/' + tot + ' correct.</strong> Check the red blanks against the grammar you already know.';
+  }
+
+  function checkB() {
+    const checks = {
+      t1: v => (v.includes("don't have to") || v.includes("needn't")) ,
+      t2: v => v.includes('ought to'),
+      t3: v => v.includes('need to') || v.includes('have to')
+    };
+    let score = 0;
+    const tot = Object.keys(checks).length;
+    for (const [id, fn] of Object.entries(checks)) {
+      const el = document.getElementById(id);
+      const val = el.value.trim().toLowerCase();
+      if (val.length > 0 && fn(val)) { el.classList.add('correct'); el.classList.remove('wrong'); score++; }
+      else { el.classList.add('wrong'); el.classList.remove('correct'); }
+    }
+    const fb = document.getElementById('fbB');
+    fb.classList.add('show');
+    fb.className = score === tot ? 'fb fb-ok show' : 'fb fb-part show';
+    fb.innerHTML = score === tot
+      ? '✅ <strong>All ' + tot + ' use the cued modal!</strong> Now say them out loud with natural intonation.'
+      : '⚡ <strong>' + score + '/' + tot + ' contain the cued modal.</strong> Check each response uses the exact form shown.';
+  }
+
+  let timerSeconds = 50 * 60, timerRunning = false, timerInterval = null;
+  let originalSeconds = 50 * 60, timerStarted = false;
+
+  function fmt(s) { return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0'); }
+
+  function updateTimerDisplay() {
+    document.getElementById('timer-display').textContent = fmt(timerSeconds);
+    const bubble = document.getElementById('timer-bubble');
+    bubble.classList.remove('running','warning','danger');
+    if (timerRunning) {
+      if (timerSeconds <= 60) bubble.classList.add('danger');
+      else if (timerSeconds <= 5*60) bubble.classList.add('warning');
+      else bubble.classList.add('running');
+    }
+  }
+
+  function startTimer() {
+    if (timerRunning) return;
+    timerRunning = true; timerStarted = true;
+    document.getElementById('wb-panel').classList.remove('open');
+    timerInterval = setInterval(() => {
+      if (timerSeconds <= 0) {
+        clearInterval(timerInterval); timerRunning = false; timerStarted = false;
+        document.getElementById('timer-display').textContent = '00:00';
+        document.getElementById('timer-bubble').classList.add('danger');
+        return;
+      }
+      timerSeconds--; updateTimerDisplay();
+    }, 1000);
+    updateTimerDisplay();
+  }
+
+  function pauseTimer() { clearInterval(timerInterval); timerRunning = false; updateTimerDisplay(); }
+  function resetTimer() { pauseTimer(); timerStarted = false; timerSeconds = originalSeconds; updateTimerDisplay(); }
+  function setTimer(min) {
+    pauseTimer(); timerStarted = false;
+    timerSeconds = min * 60; originalSeconds = timerSeconds;
+    updateTimerDisplay();
+    setTimeout(startTimer, 80);
+  }
+  function timerBubbleClick() {
+    if (!timerStarted && !timerRunning) { startTimer(); }
+    else {
+      document.getElementById('wb-panel').classList.toggle('open');
+    }
+  }
+
+  const corrEntries = [];
+  function stamp(symbol) {
+    const input = document.getElementById('corr-input');
+    const text = input.value.trim();
+    const now = new Date();
+    const time = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    corrEntries.unshift({ id: Date.now(), symbol, text: text || '(no note)', time });
+    input.value = '';
+    renderCorrLog();
+  }
+  function renderCorrLog() {
+    const log = document.getElementById('corr-log');
+    log.innerHTML = corrEntries.map(e => `
+      <div class="corr-entry" id="ce-${e.id}">
+        <span>${e.symbol} ${e.text} <span style="opacity:.4; font-size:10px;">${e.time}</span></span>
+        <button onclick="deleteCorr(${e.id})" title="Delete">×</button>
+      </div>`).join('');
+  }
+  function deleteCorr(id) {
+    const idx = corrEntries.findIndex(e => e.id === id);
+    if (idx !== -1) corrEntries.splice(idx, 1);
+    renderCorrLog();
+  }
+
+  function copyWB() {
+    const notes = document.getElementById('wb-notes').value.trim();
+    const corr = corrEntries.slice().reverse().map(e => `${e.symbol} ${e.text} (${e.time})`).join('\n');
+    const combined = [corr ? 'Corrections:\n' + corr : '', notes ? 'Notes:\n' + notes : ''].filter(Boolean).join('\n\n');
+    if (!combined) return;
+    navigator.clipboard.writeText(combined).then(() => {
+      const el = document.getElementById('wb-copied');
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 1800);
+    });
+  }
+  function clearWB() {
+    if (confirm('Clear all notes and corrections?')) {
+      document.getElementById('wb-notes').value = '';
+      corrEntries.length = 0;
+      renderCorrLog();
+    }
+  }
+
+  document.addEventListener('click', e => {
+    const wb = document.getElementById('wb-panel');
+    const tb = document.getElementById('timer-bubble');
+    if (!wb.contains(e.target) && !tb.contains(e.target)) wb.classList.remove('open');
+  });
+</script>
+</body>
+</html>

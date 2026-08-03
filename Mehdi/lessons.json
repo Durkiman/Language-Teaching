@@ -1,5 +1,14 @@
 [
   {
+    "title": "Client Discussions: Price & Timing",
+    "file": "client-discussions-price-timing.html",
+    "goals": {
+      "primary": ["B1-19"],
+      "incidental": ["B1-09", "B1-08"]
+    },
+    "grammar": []
+  },
+  {
     "file": "mehdi-modal-verbs-objections.html",
     "title": "#9 Pillar 3.2 – Handling Objections",
     "goals": {
