@@ -3,6 +3,36 @@
   const FOLDER = document.currentScript.dataset.folder;
   const listEl = document.getElementById('lesson-list');
 
+  async function loadHomework() {
+    const hwListEl = document.getElementById('homework-list');
+    if (!hwListEl) return; // page hasn't been updated with the homework column yet
+
+    try {
+      const res = await fetch(`${REPO_RAW}/${FOLDER}/homework.json`);
+      if (!res.ok) throw new Error();
+      const homework = await res.json();
+
+      if (!homework.length) {
+        hwListEl.innerHTML = '<li><div class="empty-state">No homework yet.</div></li>';
+        return;
+      }
+
+      // newest first
+      hwListEl.innerHTML = homework.slice().reverse().map(hw => `
+        <li>
+          <a href="homework/${hw.file}">
+            <span class="icon">📝</span>
+            ${hw.title}
+            <span class="arrow">→</span>
+          </a>
+        </li>
+      `).join('');
+
+    } catch {
+      hwListEl.innerHTML = '<li><div class="empty-state">Could not load homework right now — try refreshing.</div></li>';
+    }
+  }
+
   async function loadLessons() {
     try {
       const res = await fetch(`${REPO_RAW}/${FOLDER}/lessons.json`);
@@ -52,4 +82,5 @@
   }
 
   loadLessons();
+  loadHomework();
 })();
