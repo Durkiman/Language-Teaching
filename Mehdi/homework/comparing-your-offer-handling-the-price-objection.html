@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comparing Your Offer & Handling the Price Objection</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ink:          #0e1520;
+    --deep:         #1c1a2e;
+    --purple:       #5a3fa8;
+    --purple-light: #ede8ff;
+    --purple-pale:  #f6f4ff;
+    --gold:         #c9963a;
+    --gold-label:   #7a5410;
+    --gold-light:   #fdf3dc;
+    --green:        #2a7c5a;
+    --green-light:  #d6efe1;
+    --teal:         #1a7a6e;
+    --teal-light:   #d4f0ec;
+    --sand:         #f5f4f0;
+    --cream:        #fefcf8;
+    --muted:        #445060;
+    --muted2:       #7a8898;
+    --border:       #ddd8ee;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(--ink); min-height: 100vh; }
+
+  .header { background: var(--deep); padding: 30px 28px 26px; position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: -50px; right: -50px; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(90,63,168,.4) 0%, transparent 70%); }
+  .header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--purple), var(--gold)); }
+  .header-series { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 5vw, 36px); font-weight: 700; color: #f0eeff; line-height: 1.15; position: relative; }
+  .header p.sub { font-size: 13px; color: rgba(240,238,255,.75); margin-top: 10px; line-height: 1.6; position: relative; max-width: 520px; }
+
+  .main { padding: 26px 18px 90px; max-width: 640px; margin: 0 auto; }
+
+  .card { background: var(--cream); border: 1px solid var(--border); border-radius: 14px; padding: 22px; margin-bottom: 18px; }
+  .clabel { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; border-radius: 16px; margin-bottom: 12px; }
+  .cl-compare { background: var(--purple-light); color: var(--purple); }
+  .cl-modal { background: var(--teal-light); color: var(--teal); }
+  .cl-reflect { background: var(--gold-light); color: var(--gold-label); }
+
+  .ctitle { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--ink); line-height: 1.35; margin-bottom: 8px; }
+  .chint { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
+
+  .ainput {
+    width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 9px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: white;
+    resize: vertical; min-height: 56px; transition: border-color .18s;
+  }
+  .ainput:focus { outline: none; border-color: var(--purple); }
+  textarea.ainput { min-height: 110px; }
+
+  .field-label { font-size: 11px; font-weight: 600; color: var(--muted2); margin: 12px 0 6px; }
+  .field-label:first-of-type { margin-top: 0; }
+
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+  .btn {
+    flex: 1; min-width: 180px; padding: 14px 22px; border: none; border-radius: 10px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer;
+    transition: all .18s; text-align: center;
+  }
+  .btn-primary { background: linear-gradient(90deg, var(--purple), #7a5fc8); color: white; }
+  .btn-primary:hover { opacity: .92; transform: translateY(-1px); }
+  .btn-secondary { background: white; border: 1.5px solid var(--border); color: var(--ink); }
+  .btn-secondary:hover { border-color: var(--purple); color: var(--purple); }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--deep); color: var(--gold-light); font-size: 13px; font-weight: 600;
+    padding: 12px 20px; border-radius: 10px; opacity: 0; pointer-events: none;
+    transition: all .25s ease; z-index: 100;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 480px) {
+    .actions { flex-direction: column; }
+    .btn { min-width: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <p class="header-series">Practice before next session</p>
+  <h1>Comparing Your Offer & Handling the Price Objection</h1>
+  <p class="sub">Quick follow-up from today — comparatives/superlatives, plus a light touch on must/have to vs. don't need to.</p>
+</div>
+
+<div class="main">
+
+  <div class="card">
+    <span class="clabel cl-compare">Comparatives</span>
+    <div class="ctitle">Compare your offer to a competitor's</div>
+    <div class="chint">Use "better than", "more + adjective", or "the best" — pick real examples from your business if you can.</div>
+    <div class="field-label">Sentence 1</div>
+    <textarea class="ainput" id="q1a" placeholder="e.g. My service is more flexible than…"></textarea>
+    <div class="field-label">Sentence 2</div>
+    <textarea class="ainput" id="q1b" placeholder="Write your second comparison here…"></textarea>
+  </div>
+
+  <div class="card">
+    <span class="clabel cl-compare">Superlative</span>
+    <div class="ctitle">Your single biggest advantage</div>
+    <div class="chint">One sentence, e.g. "The most important benefit is…"</div>
+    <textarea class="ainput" id="q2" placeholder="Write your superlative sentence here…"></textarea>
+  </div>
+
+  <div class="card">
+    <span class="clabel cl-modal">Modal verbs</span>
+    <div class="ctitle">What a new client has to do</div>
+    <div class="chint">Write one sentence with "must" or "have to", and one with "don't need to" — about starting to work with you.</div>
+    <div class="field-label">must / have to</div>
+    <textarea class="ainput" id="q3a" placeholder="e.g. Clients have to sign a short agreement before we start."></textarea>
+    <div class="field-label">don't need to</div>
+    <textarea class="ainput" id="q3b" placeholder="e.g. You don't need to prepare anything in advance."></textarea>
+  </div>
+
+  <div class="card">
+    <span class="clabel cl-reflect">Reflection</span>
+    <div class="ctitle">Respond to a price objection</div>
+    <div class="chint">A client says: "It's too expensive." Write a short reply (3-4 sentences). Try to use at least one comparison and "ought to" or "should" once.</div>
+    <textarea class="ainput" id="q4" style="min-height:130px" placeholder="Write your reply here…"></textarea>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="sendAnswers()">Send my answers</button>
+    <button class="btn btn-secondary" onclick="copyAnswers()">Copy my answers (or send another way)</button>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="../../assets/config.js"></script>
+<script>
+  function collectAnswers() {
+    const fields = [
+      ['Comparison 1', 'q1a'],
+      ['Comparison 2', 'q1b'],
+      ['Biggest advantage (superlative)', 'q2'],
+      ['must / have to', 'q3a'],
+      ["don't need to", 'q3b'],
+      ['Reply to price objection', 'q4'],
+    ];
+    return fields.map(([label, id]) => {
+      const val = document.getElementById(id).value.trim();
+      return `${label}:\n${val || '(not answered)'}`;
+    }).join('\n\n');
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2600);
+  }
+
+  function sendAnswers() {
+    const body = collectAnswers();
+    const subject = 'Homework — Mehdi — Comparing Your Offer & Handling the Price Objection';
+    const mailto = `mailto:${encodeURIComponent(TEACHER_EMAIL)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
+  }
+
+  function copyAnswers() {
+    const text = collectAnswers();
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('Copied — paste it anywhere you like to send it.');
+    }).catch(() => {
+      showToast('Could not copy automatically — select and copy manually.');
+    });
+  }
+</script>
+
+</body>
+</html>
