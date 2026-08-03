@@ -1,5 +1,24 @@
 {
   "student": "hatice",
   "levels": ["A2", "B1"],
-  "cards": {}
+  "cards": {
+    "B1-01": {
+      "status": "introduced",
+      "introduced": "2026-08-04",
+      "reviews": [],
+      "notes": "Primary focus — STAR-structured workplace narrative (difficult patient) with sequential linkers (later, after that, finally, while, as soon as). Evidence task pending confirmation after session."
+    },
+    "B1-08": {
+      "status": "introduced",
+      "introduced": "2026-08-04",
+      "reviews": [],
+      "notes": "incidental touch — opinion on lesson from this session"
+    },
+    "B1-18": {
+      "status": "introduced",
+      "introduced": "2026-08-04",
+      "reviews": [],
+      "notes": "incidental touch — checking/clarifying during story"
+    }
+  }
 }

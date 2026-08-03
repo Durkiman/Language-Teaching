@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Structured Storytelling — Handling a Difficult Situation at Work</title>
+<style>
+  :root{
+    --bg:#F6F4F0;
+    --surface:#FFFFFF;
+    --ink:#2E2B28;
+    --muted:#847E74;
+    --accent:#B0693F;
+    --accent-light:#F3E6DA;
+    --border:#E7E0D6;
+    --soft:#8FAE9B;
+    --medium:#D4924A;
+    --intense:#BD5B4C;
+    --good:#5B8A6E;
+    --warn:#C08A3E;
+    --bad:#B0554A;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Nunito','DM Sans',sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    padding-bottom:90px;
+  }
+  header{
+    background:var(--surface);
+    border-bottom:1px solid var(--border);
+    padding:18px 20px 0;
+    position:sticky;
+    top:0;
+    z-index:15;
+  }
+  header h1{
+    margin:0 0 12px;
+    font-size:1.15rem;
+    font-weight:800;
+    color:var(--accent);
+  }
+  nav{display:flex; gap:4px; overflow-x:auto;}
+  nav button{
+    background:none; border:none; padding:10px 12px;
+    font-family:inherit; font-size:0.82rem; font-weight:700;
+    color:var(--muted); cursor:pointer; white-space:nowrap;
+    border-bottom:3px solid transparent;
+  }
+  nav button.active{color:var(--accent); border-bottom:3px solid var(--accent);}
+  main{max-width:760px; margin:0 auto; padding:20px;}
+  .tab{display:none;}
+  .tab.active{display:block;}
+  section{
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:14px; padding:20px; margin-bottom:16px;
+  }
+  h2{font-size:1.05rem; margin:0 0 6px; color:var(--accent);}
+  .lead{color:var(--muted); font-size:0.88rem; margin-bottom:16px; line-height:1.5;}
+
+  .concept-box{
+    background:var(--accent-light);
+    border-radius:10px;
+    padding:16px;
+    font-size:0.9rem;
+    line-height:1.6;
+    margin-bottom:8px;
+  }
+  .concept-box strong{color:var(--accent);}
+
+  /* teacher notes toggle */
+  .tnotes-toggle{
+    background:var(--accent-light);
+    border:none;
+    color:var(--accent);
+    font-weight:700;
+    font-size:0.78rem;
+    padding:6px 12px;
+    border-radius:20px;
+    cursor:pointer;
+    margin-bottom:10px;
+  }
+  .tnotes{
+    display:none;
+    background:#FBF9F4;
+    border-left:3px solid var(--warn);
+    padding:10px 12px;
+    font-size:0.82rem;
+    color:#5c5340;
+    border-radius:0 8px 8px 0;
+    margin-bottom:14px;
+  }
+  .tnotes.show{display:block;}
+
+  /* word chips (warm-up) */
+  .word-chip{
+    display:inline-block;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:6px 12px;
+    margin:0 6px 8px 0;
+    font-size:0.85rem;
+    cursor:pointer;
+  }
+  .word-chip.saved{
+    background:var(--accent);
+    color:#fff;
+    border-color:var(--accent);
+  }
+  .chip-hint{color:var(--muted); font-size:0.78rem; margin:6px 0 14px;}
+
+  textarea{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:10px 12px;
+    font-family:inherit;
+    font-size:0.9rem;
+    min-height:70px;
+    resize:vertical;
+  }
+
+  /* practice / model cards */
+  .practice-card{
+    background:var(--accent-light);
+    border-radius:10px;
+    padding:16px;
+    margin-bottom:14px;
+  }
+  .practice-card .prompt{
+    font-weight:700;
+    font-size:0.95rem;
+    margin-bottom:8px;
+  }
+
+  /* model story */
+  .story-block{
+    border-left:3px solid var(--accent);
+    background:#FDFBF8;
+    border-radius:0 10px 10px 0;
+    padding:12px 16px;
+    margin-bottom:10px;
+    font-size:0.92rem;
+    line-height:1.65;
+  }
+  .story-block .stage-label{
+    display:block;
+    font-size:0.7rem;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    font-weight:800;
+    color:var(--accent);
+    margin-bottom:4px;
+  }
+  .linker{
+    background:var(--accent);
+    color:#fff;
+    border-radius:5px;
+    padding:1px 6px;
+    font-weight:700;
+    font-size:0.85em;
+  }
+
+  .linker-bank{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;}
+  .linker-chip{
+    border:1px solid var(--accent);
+    background:#fff;
+    color:var(--accent);
+    padding:6px 12px;
+    border-radius:20px;
+    font-weight:700;
+    font-size:0.82rem;
+  }
+
+  /* reorder exercise */
+  .reorder-list{list-style:none; margin:0 0 12px; padding:0;}
+  .reorder-item{
+    background:#fff;
+    border:1.5px solid var(--border);
+    border-radius:10px;
+    padding:10px 14px;
+    margin-bottom:8px;
+    font-size:0.88rem;
+    cursor:pointer;
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    line-height:1.5;
+  }
+  .reorder-item .order-badge{
+    flex:0 0 auto;
+    width:24px; height:24px;
+    border-radius:50%;
+    background:var(--border);
+    color:var(--muted);
+    font-weight:800;
+    font-size:0.78rem;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .reorder-item.picked{border-color:var(--accent); background:var(--accent-light);}
+  .reorder-item.picked .order-badge{background:var(--accent); color:#fff;}
+  .reorder-actions{display:flex; gap:8px; margin-bottom:8px;}
+
+  /* sentence builder */
+  .sb-row{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:12px 14px;
+    margin-bottom:10px;
+    font-size:0.88rem;
+  }
+  .sb-row select{
+    border:1px solid var(--accent);
+    color:var(--accent);
+    font-weight:700;
+    border-radius:6px;
+    padding:4px 8px;
+    font-family:inherit;
+    font-size:0.85rem;
+  }
+
+  /* free production */
+  .star-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;}
+  @media (max-width:640px){ .star-grid{grid-template-columns:1fr;} }
+  .star-box{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:12px;
+    background:#FDFBF8;
+  }
+  .star-box .star-label{
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    font-weight:800;
+    color:var(--accent);
+    margin-bottom:6px;
+    display:block;
+  }
+  .star-box textarea{min-height:60px; border:none; padding:0; background:none;}
+
+  button.action{
+    font-family:inherit;
+    font-weight:700;
+    font-size:0.85rem;
+    padding:10px 16px;
+    border-radius:8px;
+    border:none;
+    cursor:pointer;
+    background:var(--accent);
+    color:#fff;
+    margin-top:8px;
+  }
+  button.ghost-action{
+    font-family:inherit;
+    font-weight:700;
+    font-size:0.85rem;
+    padding:10px 16px;
+    border-radius:8px;
+    border:1px solid var(--accent);
+    cursor:pointer;
+    background:none;
+    color:var(--accent);
+    margin-top:8px;
+    margin-left:8px;
+  }
+
+  /* recap / can-do card */
+  .card-code{
+    display:inline-block;
+    background:var(--accent);
+    color:#fff;
+    font-weight:800;
+    font-size:0.78rem;
+    padding:4px 10px;
+    border-radius:6px;
+    margin-bottom:8px;
+  }
+  .cando-toggle{
+    background:var(--accent-light);
+    border:none;
+    color:var(--accent);
+    font-weight:700;
+    font-size:0.82rem;
+    padding:8px 14px;
+    border-radius:20px;
+    cursor:pointer;
+    display:block;
+    margin-bottom:10px;
+  }
+  .cando-body{display:none; font-size:0.88rem; line-height:1.7;}
+  .cando-body.show{display:block;}
+  .cando-body b{color:var(--accent);}
+  .cando-field{margin-bottom:8px;}
+  .cando-field .fname{font-weight:800; font-size:0.72rem; text-transform:uppercase; letter-spacing:.04em; color:var(--muted);}
+
+  .next-back{
+    display:flex; justify-content:space-between; max-width:760px;
+    margin:0 auto; padding:0 20px;
+  }
+  .next-back button{
+    background:var(--accent); color:#fff; border:none; padding:10px 20px;
+    border-radius:8px; font-weight:700; cursor:pointer; font-size:0.88rem;
+  }
+  .next-back button.ghost{background:none; color:var(--accent); border:1px solid var(--accent);}
+
+  /* timer bubble + whiteboard */
+  #timerBubble{
+    position:fixed; bottom:18px; left:18px;
+    width:60px; height:60px; border-radius:50%;
+    background:var(--accent); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:13px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.18);
+    cursor:pointer; z-index:200; user-select:none;
+  }
+  #timerBubble.danger{background:var(--bad);}
+  #wbOverlay{position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:flex-end; z-index:400;}
+  #wbOverlay.show{display:flex;}
+  #wbPanel{
+    background:var(--surface); width:100%;
+    border-radius:24px 24px 0 0; padding:20px 18px 28px;
+    max-height:85vh; overflow-y:auto;
+  }
+  #wbPanel h3{margin:0 0 12px; font-size:16px; font-weight:800; color:var(--accent);}
+  .wb-close{float:right; background:none; border:none; font-size:20px; color:var(--muted); cursor:pointer;}
+  .timer-controls{display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap;}
+  .timer-controls button{
+    flex:1; min-width:60px; padding:10px; border-radius:10px;
+    border:2px solid var(--border); background:var(--bg);
+    font-weight:800; font-family:inherit; cursor:pointer;
+  }
+  .stamp-row{display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap;}
+  .stamp-btn{
+    font-size:20px; background:var(--bg); border:2px solid var(--border);
+    border-radius:10px; padding:8px 10px; cursor:pointer;
+  }
+  #correctionLog{
+    background:var(--bg); border-radius:10px; padding:10px;
+    min-height:60px; font-size:13px; margin-bottom:10px; white-space:pre-wrap;
+  }
+  #wbNotes{
+    width:100%; min-height:80px; border:2px solid var(--border);
+    border-radius:10px; padding:10px; font-family:inherit;
+    font-size:13px; margin-bottom:10px; resize:vertical;
+  }
+  .wb-actions{display:flex; gap:8px;}
+  .wb-actions button{
+    flex:1; padding:10px; border-radius:10px; border:none;
+    font-weight:800; font-family:inherit; cursor:pointer;
+  }
+  .wb-copy{background:var(--accent); color:#fff;}
+  .wb-clear{background:#FBE5E4; color:var(--bad);}
+  #emojiOverlay{
+    position:fixed; inset:0; background:rgba(0,0,0,.4);
+    display:none; align-items:center; justify-content:center;
+    z-index:500; font-size:120px;
+  }
+  #emojiOverlay.show{display:flex; animation:zoomIn .5s ease-out;}
+  @keyframes zoomIn{from{transform:scale(.2);opacity:0} to{transform:scale(1);opacity:1}}
+</style>
+</head>
+<body>
+
+<div style="display:flex;flex-wrap:wrap;gap:8px;padding:10px 16px;">
+  <a href="../Grammar-book/English/storytelling-and-narrative-sequencing.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Storytelling & Narrative Sequencing</a>
+  <a href="../Grammar-book/English/past-simple.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Past Simple</a>
+</div>
+
+<header>
+  <h1>Structured Storytelling — Handling a Difficult Situation at Work</h1>
+  <nav id="tabNav">
+    <button class="active" data-tab="warmup">Warm-Up</button>
+    <button data-tab="model">The Model</button>
+    <button data-tab="practice">Practice</button>
+    <button data-tab="yourstory">Your Story</button>
+    <button data-tab="recap">Recap</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- WARM-UP -->
+  <div class="tab active" id="tab-warmup">
+    <section>
+      <h2>Retrieval: The Feeling Words</h2>
+      <div class="lead">Before we build the story, let's warm up the vocabulary you'll need to narrate it with real feeling. Tap any word to save it — then use two or three of them in the sentence below.</div>
+      <button class="tnotes-toggle" onclick="toggleNotes(this)">Teacher notes</button>
+      <div class="tnotes">
+        Quick retrieval from lesson #3 (Emotional Vocabulary). Don't linger — 5 minutes, just enough to prime the words she'll want when narrating a stressful workplace moment. If a word doesn't come, let her reach for it before feeding it.
+      </div>
+
+      <div id="warmupChips">
+        <span class="word-chip" onclick="toggleSave('nervous', this)">nervous</span>
+        <span class="word-chip" onclick="toggleSave('overwhelmed', this)">overwhelmed</span>
+        <span class="word-chip" onclick="toggleSave('reassured', this)">reassured</span>
+        <span class="word-chip" onclick="toggleSave('frustrated', this)">frustrated</span>
+        <span class="word-chip" onclick="toggleSave('relieved', this)">relieved</span>
+        <span class="word-chip" onclick="toggleSave('anxious', this)">anxious</span>
+        <span class="word-chip" onclick="toggleSave('confident', this)">confident</span>
+        <span class="word-chip" onclick="toggleSave('calm', this)">calm</span>
+      </div>
+      <div class="chip-hint">Saved words stay highlighted for the rest of the lesson.</div>
+
+      <div class="practice-card">
+        <div class="prompt">Quick retrieval: describe a patient's emotional state using one of these words.</div>
+        <textarea placeholder="e.g. The patient was overwhelmed because it was her first time at the dentist..."></textarea>
+      </div>
+    </section>
+  </div>
+
+  <!-- MODEL -->
+  <div class="tab" id="tab-model">
+    <section>
+      <h2>A Full Narrative, Step by Step</h2>
+      <div class="lead">Interviewers often ask: <em>"Tell me about a time you handled a difficult situation at work."</em> A strong answer isn't a list of facts — it's a connected story with background, a complication, a resolution, and a point. Listen to this model, then notice the linkers holding it together.</div>
+
+      <div class="story-block">
+        <span class="stage-label">Background</span>
+        A few months ago, I had a patient who was terrified of the dentist. She hadn't been for an examination in over ten years, and she was shaking before I'd even touched anything.
+      </div>
+      <div class="story-block">
+        <span class="stage-label">Complication</span>
+        <span class="linker">While</span> I was explaining the procedure, she suddenly said she wanted to stop and leave. I could see she was completely overwhelmed.
+      </div>
+      <div class="story-block">
+        <span class="stage-label">Resolution</span>
+        So I stopped straight away and just talked to her for a few minutes — no equipment, no pressure. <span class="linker">Later</span>, once she felt calmer, I asked if she wanted to try again, just for one minute. <span class="linker">After that</span>, she agreed to a full check-up. <span class="linker">As soon as</span> it was finished, she looked relieved rather than anxious. <span class="linker">Finally</span>, she booked a follow-up appointment herself — something she said she hadn't done in a decade.
+      </div>
+      <div class="story-block">
+        <span class="stage-label">Point</span>
+        That experience taught me that patience is often more effective than persuasion — and it's a big part of why I believe trust matters as much as technical skill in this job.
+      </div>
+
+      <h2 style="margin-top:22px;">The Linkers You'll Use</h2>
+      <div class="lead">These sequential linkers move a listener through time without you needing to say "and then" five times in a row.</div>
+      <div class="linker-bank">
+        <span class="linker-chip">later</span>
+        <span class="linker-chip">after that</span>
+        <span class="linker-chip">finally</span>
+        <span class="linker-chip">while</span>
+        <span class="linker-chip">as soon as</span>
+      </div>
+
+      <button class="tnotes-toggle" onclick="toggleNotes(this)">Teacher notes</button>
+      <div class="tnotes">
+        Read the model aloud with real pacing/pauses so the structure is audible, not just visible. Elicit the four stages (background / complication / resolution / point) from her before naming them, if time allows. Flag the past simple + past continuous weave ("while I was explaining... she suddenly said") — this is the grammar backbone of B1-01.
+      </div>
+    </section>
+  </div>
+
+  <!-- PRACTICE -->
+  <div class="tab" id="tab-practice">
+    <section>
+      <h2>Reorder the Story</h2>
+      <div class="lead">These sentences are from another STAR-structured story — a mix-up during a busy afternoon at the clinic. Tap them in the order you think they happened.</div>
+
+      <ul class="reorder-list" id="reorderList">
+        <li class="reorder-item" data-correct="3">As soon as I checked the schedule, I realized two patients had been booked for the same time slot.</li>
+        <li class="reorder-item" data-correct="1">It was a Friday afternoon and the clinic was fully booked, back to back, with no gaps.</li>
+        <li class="reorder-item" data-correct="5">Finally, both patients left satisfied, and neither of them even realized there had been a mix-up.</li>
+        <li class="reorder-item" data-correct="2">While I was finishing up with one patient, the receptionist came in looking stressed.</li>
+        <li class="reorder-item" data-correct="4">After that, I asked the receptionist to explain the situation calmly to one patient while I saw the other first.</li>
+      </ul>
+      <div class="reorder-actions">
+        <button class="action" onclick="checkReorder()">Check order</button>
+        <button class="ghost-action" onclick="resetReorder()">Reset</button>
+      </div>
+      <div id="reorderFeedback" style="font-size:0.85rem; font-weight:700;"></div>
+
+      <h2 style="margin-top:22px;">Sentence Building with Linkers</h2>
+      <div class="lead">Choose the linker that fits each gap, then say the full sentence aloud.</div>
+
+      <div class="sb-row">
+        <span>
+          <select><option>later</option><option>while</option><option>as soon as</option><option>finally</option><option>after that</option></select>
+          I saw the patient's name on the schedule, I remembered we'd had a problem with her insurance before.
+        </span>
+      </div>
+      <div class="sb-row">
+        <span>
+          I was reviewing the X-ray,
+          <select><option>while</option><option>later</option><option>as soon as</option><option>finally</option><option>after that</option></select>
+          my colleague knocked and asked for a second opinion.
+        </span>
+      </div>
+      <div class="sb-row">
+        <span>
+          We managed to calm the patient down.
+          <select><option>After that</option><option>While</option><option>As soon as</option><option>Finally</option></select>
+          , the procedure went smoothly with no more issues.
+        </span>
+      </div>
+      <div class="sb-row">
+        <span>
+          <select><option>Finally</option><option>While</option><option>As soon as</option><option>After that</option></select>
+          , after everything, she thanked me and said she'd recommend the clinic to her family.
+        </span>
+      </div>
+    </section>
+  </div>
+
+  <!-- YOUR STORY (free production / evidence task) -->
+  <div class="tab" id="tab-yourstory">
+    <section>
+      <h2>Your Turn</h2>
+      <div class="lead"><strong>"Tell me about a time you handled a difficult situation at work."</strong><br>Plan your own story below using the four stages, then tell it out loud as a connected 2–3 minute narrative — not a list of bullet points. Try to use at least two of the linkers from earlier.</div>
+
+      <div class="star-grid">
+        <div class="star-box">
+          <span class="star-label">Background</span>
+          <textarea placeholder="What was the situation? Who, where, when..."></textarea>
+        </div>
+        <div class="star-box">
+          <span class="star-label">Complication</span>
+          <textarea placeholder="What went wrong or became difficult?"></textarea>
+        </div>
+        <div class="star-box">
+          <span class="star-label">Resolution</span>
+          <textarea placeholder="What did you do, step by step? (use later, after that, as soon as...)"></textarea>
+        </div>
+        <div class="star-box">
+          <span class="star-label">Point</span>
+          <textarea placeholder="What did it show about you, or what did you learn?"></textarea>
+        </div>
+      </div>
+
+      <button class="action" onclick="saveStory()">Save my notes</button>
+
+      <button class="tnotes-toggle" onclick="toggleNotes(this)" style="margin-top:16px;">Teacher notes</button>
+      <div class="tnotes">
+        This is the B1-01 evidence task. Let her plan briefly in the boxes above, then have her tell the full story out loud, unaided, for 2–3 minutes. Afterwards, retell the main events back to her in order to check clarity — that retelling is the actual pass/fail check, not the writing. If she opens with an opinion (B1-08) or needs to check/clarify something mid-story (B1-18), that's a bonus, not a requirement — don't force it.
+      </div>
+    </section>
+  </div>
+
+  <!-- RECAP -->
+  <div class="tab" id="tab-recap">
+    <section>
+      <h2>Can-Do Card in Play</h2>
+      <div class="card-code">B1-01</div>
+      <button class="cando-toggle" onclick="toggleCando(this)">Show card</button>
+      <div class="cando-body">
+        <b>Full narrative</b>
+        <div class="cando-field"><div class="fname">Goal</div>Can tell a story or describe an experience as a connected, structured narrative with background, events and a point.</div>
+        <div class="cando-field"><div class="fname">Grammar focus</div>Past simple + past continuous woven together; past tense responses.</div>
+        <div class="cando-field"><div class="fname">Discourse</div>Sequential linkers extended: later, after that, finally, while, as soon as.</div>
+        <div class="cando-field"><div class="fname">Evidence task</div>Tell a 2–3 minute story with a clear beginning, complication and ending; listener retells the main events in order.</div>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<div class="next-back">
+  <button class="ghost" onclick="prevTab()">Back</button>
+  <button onclick="nextTab()">Next</button>
+</div>
+
+<div id="timerBubble" onclick="openWb()">50:00</div>
+<div id="emojiOverlay" onclick="this.classList.remove('show')"></div>
+
+<div id="wbOverlay" onclick="if(event.target===this)closeWb()">
+  <div id="wbPanel">
+    <button class="wb-close" onclick="closeWb()">✕</button>
+    <h3>⏱ Whiteboard</h3>
+    <div class="timer-controls">
+      <button onclick="setTimerMin(50)">50m</button>
+      <button onclick="setTimerMin(25)">25m</button>
+      <button onclick="setTimerMin(5)">5m</button>
+      <button onclick="toggleRun()" id="runBtn">▶ Start</button>
+      <button onclick="resetTimer()">↺ Reset</button>
+    </div>
+    <h3 style="font-size:14px;">Correction Stamps</h3>
+    <div class="stamp-row">
+      <button class="stamp-btn" onclick="addStamp('✅')">✅</button>
+      <button class="stamp-btn" onclick="addStamp('⭐')">⭐</button>
+      <button class="stamp-btn" onclick="addStamp('🔁 Try again')">🔁</button>
+      <button class="stamp-btn" onclick="addStamp('🗣 Pronunciation')">🗣</button>
+      <button class="stamp-btn" onclick="addStamp('📐 Grammar')">📐</button>
+      <button class="stamp-btn" onclick="addStamp('🔗 Linker')">🔗</button>
+    </div>
+    <div id="correctionLog"></div>
+    <h3 style="font-size:14px;">Notes</h3>
+    <textarea id="wbNotes" placeholder="Notes for this lesson..."></textarea>
+    <div class="wb-actions">
+      <button class="wb-copy" onclick="copyWb()">Copy</button>
+      <button class="wb-clear" onclick="clearWb()">Clear</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const tabs = ['warmup','model','practice','yourstory','recap'];
+  let currentTab = 0;
+
+  function showTab(name){
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-'+name).classList.add('active');
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.querySelector(`nav button[data-tab="${name}"]`).classList.add('active');
+    currentTab = tabs.indexOf(name);
+  }
+  document.querySelectorAll('nav button').forEach(b=>{
+    b.addEventListener('click', ()=> showTab(b.dataset.tab));
+  });
+  function nextTab(){ if(currentTab < tabs.length-1) showTab(tabs[currentTab+1]); }
+  function prevTab(){ if(currentTab > 0) showTab(tabs[currentTab-1]); }
+
+  function toggleNotes(btn){
+    const notes = btn.nextElementSibling;
+    notes.classList.toggle('show');
+  }
+
+  function toggleCando(btn){
+    const body = btn.nextElementSibling;
+    body.classList.toggle('show');
+  }
+
+  // warm-up word chips
+  let savedWords = JSON.parse(localStorage.getItem('haticeStorySaved') || '[]');
+  document.querySelectorAll('#warmupChips .word-chip').forEach(chip=>{
+    if(savedWords.includes(chip.textContent)) chip.classList.add('saved');
+  });
+  function toggleSave(word, el){
+    const idx = savedWords.indexOf(word);
+    if(idx === -1){
+      savedWords.push(word);
+      el.classList.add('saved');
+    } else {
+      savedWords.splice(idx,1);
+      el.classList.remove('saved');
+    }
+    localStorage.setItem('haticeStorySaved', JSON.stringify(savedWords));
+  }
+
+  // reorder exercise
+  let pickOrder = [];
+  document.querySelectorAll('#reorderList .reorder-item').forEach(item=>{
+    const badge = document.createElement('span');
+    badge.className = 'order-badge';
+    badge.textContent = '';
+    item.prepend(badge);
+    item.addEventListener('click', ()=>{
+      const idx = pickOrder.indexOf(item);
+      if(idx === -1){
+        pickOrder.push(item);
+        item.classList.add('picked');
+        badge.textContent = pickOrder.length;
+      } else {
+        pickOrder.splice(idx,1);
+        item.classList.remove('picked');
+        badge.textContent = '';
+        pickOrder.forEach((it,i)=>{ it.querySelector('.order-badge').textContent = i+1; });
+      }
+    });
+  });
+  function checkReorder(){
+    const fb = document.getElementById('reorderFeedback');
+    if(pickOrder.length < 5){
+      fb.style.color = 'var(--warn)';
+      fb.textContent = 'Tap all five sentences in order first.';
+      return;
+    }
+    const correct = pickOrder.every((item,i) => parseInt(item.dataset.correct,10) === i+1);
+    if(correct){
+      fb.style.color = 'var(--good)';
+      fb.textContent = 'Correct order! Well done.';
+    } else {
+      fb.style.color = 'var(--bad)';
+      fb.textContent = 'Not quite the right order yet — try again.';
+    }
+  }
+  function resetReorder(){
+    pickOrder.forEach(item=>{ item.classList.remove('picked'); item.querySelector('.order-badge').textContent=''; });
+    pickOrder = [];
+    document.getElementById('reorderFeedback').textContent = '';
+  }
+
+  function saveStory(){
+    const boxes = document.querySelectorAll('.star-box textarea');
+    const data = {
+      background: boxes[0].value,
+      complication: boxes[1].value,
+      resolution: boxes[2].value,
+      point: boxes[3].value,
+      date: new Date().toLocaleDateString()
+    };
+    localStorage.setItem('haticeStoryNotes', JSON.stringify(data));
+    alert('Saved! Now tell the story out loud.');
+  }
+
+  // ---------- Timer / whiteboard ----------
+  let totalSeconds = 50*60;
+  let isRunning = false;
+  let timerInterval = null;
+
+  function updateTimerDisplay(){
+    const m = Math.floor(totalSeconds/60).toString().padStart(2,'0');
+    const s = (totalSeconds%60).toString().padStart(2,'0');
+    const b = document.getElementById('timerBubble');
+    b.textContent = `${m}:${s}`;
+    b.classList.toggle('danger', isRunning && totalSeconds<=30);
+  }
+  function toggleRun(){
+    isRunning = !isRunning;
+    document.getElementById('runBtn').textContent = isRunning ? '⏸ Pause' : '▶ Start';
+    if(isRunning){
+      timerInterval = setInterval(()=>{
+        totalSeconds--; updateTimerDisplay();
+        if(totalSeconds<=0){ clearInterval(timerInterval); isRunning=false; document.getElementById('runBtn').textContent='▶ Start'; fireEmoji(); }
+      },1000);
+    } else {
+      clearInterval(timerInterval);
+    }
+  }
+  function setTimerMin(min){ totalSeconds = min*60; updateTimerDisplay(); }
+  function resetTimer(){
+    clearInterval(timerInterval); isRunning=false;
+    document.getElementById('runBtn').textContent='▶ Start';
+    totalSeconds = 50*60; updateTimerDisplay();
+  }
+  const faces = ['😀','😎','🤩','😜','🥳','😯','🤓','😼','🙃','😺'];
+  function fireEmoji(){
+    const o = document.getElementById('emojiOverlay');
+    o.textContent = faces[Math.floor(Math.random()*faces.length)];
+    o.classList.add('show');
+  }
+  updateTimerDisplay();
+
+  function openWb(){ document.getElementById('wbOverlay').classList.add('show'); }
+  function closeWb(){ document.getElementById('wbOverlay').classList.remove('show'); }
+  function addStamp(label){
+    const log = document.getElementById('correctionLog');
+    log.textContent += (log.textContent ? '\n' : '') + label;
+  }
+  function copyWb(){
+    const text = document.getElementById('correctionLog').textContent + '\n\n' + document.getElementById('wbNotes').value;
+    navigator.clipboard.writeText(text).catch(()=>{});
+  }
+  function clearWb(){
+    document.getElementById('correctionLog').textContent = '';
+    document.getElementById('wbNotes').value = '';
+  }
+</script>
+
+</body>
+</html>
