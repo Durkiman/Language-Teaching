@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Squad Weekend Plans</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F6F8; --surface:#FFFFFF; --teal:#2A8A8A; --teal-light:#E3F2F2;
+  --ink:#1F2B33; --muted:#6B7A82; --border:#E3E8EB;
+  --orange:#E08A3C; --orange-light:#FFF3E6; --blue:#3E6FB0;
+  --green:#3FA66A; --green-light:#E5F6EC; --red:#D9534F;
+  --shadow:0 2px 8px rgba(31,43,51,.06),0 1px 2px rgba(31,43,51,.04);
+  --shadow-lg:0 8px 24px rgba(31,43,51,.10);
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);padding-bottom:90px;}
+.app-header{background:var(--surface);padding:20px 20px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.app-header h1{margin:0;font-size:22px;font-weight:800;}
+.teacher-toggle-btn{background:var(--surface);border:2px solid var(--muted);color:var(--muted);font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;padding:8px 14px;border-radius:20px;cursor:pointer;white-space:nowrap;}
+.teacher-toggle-btn.on{background:#FFF8E8;border-color:#f0dca0;color:#9a7a2e;}
+.teacher-note{display:none;background:#FFF8E8;border:1px solid #f0dca0;border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:13px;line-height:1.6;color:#5a4620;}
+body.show-teacher .teacher-note{display:block;}
+.teacher-note b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#9a7a2e;margin-bottom:6px;}
+
+.tabbar{position:sticky;top:0;z-index:50;display:flex;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:var(--shadow);-webkit-overflow-scrolling:touch;}
+.tabbar::-webkit-scrollbar{display:none;}
+.tab-btn{flex:0 0 auto;padding:14px 16px;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;}
+.tab-btn.active{color:var(--teal);border-bottom-color:var(--teal);}
+.panel{display:none;padding:18px 16px 30px;max-width:680px;margin:0 auto;}
+.panel.active{display:block;}
+.card{background:var(--surface);border-radius:16px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow);border:1px solid var(--border);}
+.card h2{margin:0 0 10px;font-size:17px;font-weight:800;}
+.card h3{margin:0 0 8px;font-size:14px;font-weight:800;color:var(--teal);}
+.fr{color:var(--blue);font-size:13px;font-style:italic;font-weight:600;margin-top:4px;}
+.nav-buttons{display:flex;justify-content:space-between;margin-top:18px;gap:10px;}
+.btn{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;padding:12px 22px;border-radius:12px;border:none;cursor:pointer;}
+.btn-primary{background:var(--teal);color:#fff;}
+.btn-secondary{background:var(--surface);color:var(--teal);border:2px solid var(--teal);}
+.btn:active{transform:scale(.97);}
+
+.hero-banner{background:linear-gradient(135deg,#2A8A8A 0%,#1f6b6b 100%);border-radius:18px;padding:22px;color:#fff;margin-bottom:14px;}
+.hero-banner h2{color:#fff;margin:0 0 6px;}
+.hero-banner p{margin:0;font-size:14px;opacity:.95;line-height:1.5;}
+
+.model-recap{background:var(--teal-light);border-radius:14px;padding:14px;margin-bottom:14px;font-size:13px;line-height:1.6;}
+.model-recap b{color:var(--teal);}
+
+.chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.chip{background:var(--teal-light);color:var(--teal);border-radius:20px;padding:8px 14px;font-weight:700;font-size:13px;}
+
+.formula-box{background:var(--teal-light);border-radius:12px;padding:14px;text-align:center;font-weight:800;font-size:15px;color:var(--teal);margin-bottom:12px;}
+table.conj{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:10px;}
+table.conj th,table.conj td{border:1px solid var(--border);padding:8px 6px;text-align:left;}
+table.conj th{background:var(--teal-light);font-weight:800;color:var(--teal);}
+
+.dialogue-box{background:var(--bg);border-radius:14px;padding:14px;margin-bottom:12px;}
+.dline{margin-bottom:10px;font-size:14px;line-height:1.5;}
+.dline b{color:var(--teal);}
+.dline .target{background:#FFF3E6;color:var(--orange);font-weight:800;padding:1px 4px;border-radius:4px;}
+
+.exponent-card{border-radius:14px;padding:14px;margin-bottom:10px;background:var(--surface);border:2px solid var(--teal-light);}
+.exponent-card .phrase{font-weight:800;font-size:15px;color:var(--teal);}
+.exponent-card .ex{font-size:13px;color:var(--muted);margin-top:4px;}
+
+.task-prompt{background:var(--orange-light);border-radius:12px;padding:12px;margin-bottom:10px;font-size:13px;}
+.task-prompt b{color:var(--orange);display:block;margin-bottom:4px;}
+input.task-blank{width:100%;border:none;border-bottom:2px solid var(--teal);background:var(--teal-light);font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;padding:8px 10px;border-radius:6px;margin-top:6px;}
+
+.match-wrap{display:flex;gap:10px;margin-top:10px;}
+.match-col{flex:1;display:flex;flex-direction:column;gap:8px;}
+.match-item{background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:10px 12px;font-size:13px;font-weight:700;cursor:pointer;text-align:left;font-family:'Nunito',sans-serif;color:var(--ink);}
+.match-item.selected{border-color:var(--teal);background:var(--teal-light);}
+.match-item.correct{border-color:var(--green);background:var(--green-light);color:#1f6b4a;cursor:default;}
+.match-item.incorrect{border-color:var(--red);background:#FBE5E4;color:#8a2f2c;}
+.match-reset{margin-top:12px;}
+.match-hint{font-size:11px;color:var(--muted);margin-top:8px;}
+
+.option-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px;}
+.option-card{background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:14px 8px;text-align:center;}
+.option-card .emoji{font-size:28px;margin-bottom:6px;}
+.option-card .oname{font-weight:800;font-size:12px;margin-bottom:4px;}
+.option-card .odetail{font-size:11px;color:var(--muted);font-weight:600;}
+
+.speak-card{border-radius:14px;padding:14px;margin-bottom:10px;color:#fff;}
+.speak-card.warmup{background:#7AAFC2;}
+.speak-card.core{background:var(--teal);}
+.speak-card.challenge{background:#B0586B;}
+.speak-card .lvl{font-size:11px;font-weight:800;text-transform:uppercase;opacity:.85;letter-spacing:.5px;}
+.speak-card p{margin:6px 0 0;font-weight:700;font-size:14px;}
+.speak-card .fr{color:#fff;opacity:.85;}
+
+.checklist{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.checklist label{display:flex;align-items:flex-start;gap:8px;font-size:13px;background:var(--bg);border-radius:10px;padding:10px 12px;cursor:pointer;}
+.checklist input{margin-top:2px;width:16px;height:16px;accent-color:var(--teal);flex-shrink:0;}
+
+.recap-toggle-btn{display:block;width:100%;background:var(--teal);color:#fff;border:none;border-radius:12px;padding:14px;font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;cursor:pointer;margin-bottom:14px;}
+.recap-card{display:none;}
+.recap-card.show{display:block;}
+.recap-code{display:inline-block;background:var(--teal);color:#fff;font-weight:800;font-size:12px;padding:4px 10px;border-radius:8px;margin-bottom:10px;}
+.recap-field{margin-bottom:12px;}
+.recap-field b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--teal);margin-bottom:4px;}
+.recap-field span, .recap-field p{font-size:14px;line-height:1.6;margin:0;}
+
+#timerBubble{position:fixed;bottom:18px;left:18px;width:60px;height:60px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;box-shadow:var(--shadow-lg);cursor:pointer;z-index:200;user-select:none;}
+#timerBubble.danger{background:var(--red);}
+#emojiOverlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:500;font-size:120px;}
+#emojiOverlay.show{display:flex;animation:zoomIn .5s ease-out;}
+@keyframes zoomIn{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
+#wbOverlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;z-index:400;}
+#wbOverlay.show{display:flex;}
+#wbPanel{background:var(--surface);width:100%;border-radius:24px 24px 0 0;padding:20px 18px 28px;max-height:85vh;overflow-y:auto;}
+#wbPanel h3{margin:0 0 12px;font-size:16px;font-weight:800;}
+.wb-close{float:right;background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;}
+.timer-controls{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.timer-controls button{flex:1;min-width:60px;padding:10px;border-radius:10px;border:2px solid var(--border);background:var(--bg);font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;}
+.stamp-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.stamp-btn{font-size:20px;background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:8px 10px;cursor:pointer;}
+#correctionLog{background:var(--bg);border-radius:10px;padding:10px;min-height:60px;font-size:13px;margin-bottom:10px;white-space:pre-wrap;}
+#wbNotes{width:100%;min-height:80px;border:2px solid var(--border);border-radius:10px;padding:10px;font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:10px;resize:vertical;}
+.wb-actions{display:flex;gap:8px;}
+.wb-actions button{flex:1;padding:10px;border-radius:10px;border:none;font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;}
+.wb-copy{background:var(--teal);color:#fff;}
+.wb-clear{background:#FBE5E4;color:var(--red);}
+
+@media (max-width:420px){
+  .option-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <h1>⚽🎮 Squad Weekend Plans</h1>
+  <button class="teacher-toggle-btn" id="teacherToggleBtn" onclick="toggleTeacherNotes()">👤 Teacher notes</button>
+</div>
+
+<div class="tabbar" id="tabbar">
+  <button class="tab-btn active" data-tab="warmup">Warm-Up</button>
+  <button class="tab-btn" data-tab="suggest">Suggestions</button>
+  <button class="tab-btn" data-tab="practice">Practice</button>
+  <button class="tab-btn" data-tab="plan">Plan the Weekend</button>
+  <button class="tab-btn" data-tab="recap">Recap</button>
+</div>
+
+<!-- WARM-UP -->
+<div class="panel active" id="warmup">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    Quick retrieval round before moving into suggestions. Ask 3-4 quick questions about last weekend / free time. Keep it fast and verbal — the chips below are just prompts, no need to type anything here. This lightly reviews A1-04 (like/love/hate + verb-ing).
+  </div>
+
+  <div class="hero-banner">
+    <h2>Before we start...</h2>
+    <p>What do you like doing at the weekend? Let's warm up with a quick round!</p>
+    <p class="fr" style="opacity:.9;">Qu'est-ce que tu aimes faire le week-end ? Échauffons-nous avec un tour rapide !</p>
+  </div>
+
+  <div class="card">
+    <h3>Quick round — likes &amp; dislikes</h3>
+    <p class="fr">Tour rapide — j'aime / je n'aime pas</p>
+    <p style="font-size:13px;line-height:1.7;">Answer out loud using <b>love / like / don't mind / hate + verb-ing</b>:</p>
+    <div class="chip-row">
+      <span class="chip">playing Brawl Stars</span>
+      <span class="chip">watching football</span>
+      <span class="chip">playing FIFA</span>
+      <span class="chip">going to the theme park</span>
+      <span class="chip">hanging out with friends</span>
+      <span class="chip">playing outside</span>
+    </div>
+    <div class="model-recap" style="margin-top:14px;">
+      <b>Example:</b> "I love playing Brawl Stars because it's exciting." / "I don't really like watching football on TV, but I love playing it."
+      <p class="fr" style="margin-top:6px;">"J'adore jouer à Brawl Stars parce que c'est excitant." / "Je n'aime pas trop regarder le foot à la télé, mais j'adore y jouer."</p>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <span></span>
+    <button class="btn btn-primary" onclick="goTab('suggest')">Next →</button>
+  </div>
+</div>
+
+<!-- SUGGESTIONS (PRESENTATION) -->
+<div class="panel" id="suggest">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    Read the dialogue aloud together (you take one role, Micha the other), pointing out the highlighted suggestion/invitation phrases. Then walk through the exponent bank. Model both accepting AND politely declining — Micha will need both in the free production roleplay later.
+  </div>
+
+  <div class="card">
+    <h2>Planning a squad session</h2>
+    <p class="fr">Organiser une session avec l'équipe</p>
+    <div class="dialogue-box">
+      <div class="dline"><b>Leo:</b> Hey! <span class="target">Shall we</span> play Brawl Stars tonight?</div>
+      <div class="dline"><b>Micha:</b> Sure, why not! What time?</div>
+      <div class="dline"><b>Leo:</b> Around 6? Or, <span class="target">why don't we</span> watch the match first?</div>
+      <div class="dline"><b>Micha:</b> Good idea! <span class="target">Let's</span> watch it together, then play after.</div>
+      <div class="dline"><b>Leo:</b> Perfect. <span class="target">Do you fancy</span> inviting Sam too?</div>
+      <div class="dline"><b>Micha:</b> Good idea! <span class="target">Would you like to</span> ask him, or should I?</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Making suggestions &amp; invitations</h3>
+    <p class="fr">Faire des suggestions et des invitations</p>
+    <div class="exponent-card">
+      <div class="phrase">Shall we…?</div>
+      <div class="ex">Shall we watch the match together?</div>
+    </div>
+    <div class="exponent-card">
+      <div class="phrase">Let's…</div>
+      <div class="ex">Let's play Brawl Stars tonight!</div>
+    </div>
+    <div class="exponent-card">
+      <div class="phrase">Why don't we…?</div>
+      <div class="ex">Why don't we go to the theme park this weekend?</div>
+    </div>
+    <div class="exponent-card">
+      <div class="phrase">Do you fancy…?</div>
+      <div class="ex">Do you fancy playing FIFA after school?</div>
+    </div>
+    <div class="exponent-card">
+      <div class="phrase">Would you like to…?</div>
+      <div class="ex">Would you like to come to my house on Saturday?</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Responding — accept or decline politely</h3>
+    <p class="fr">Répondre — accepter ou refuser poliment</p>
+    <table class="conj">
+      <tr><th>Accept</th><th>Decline politely</th></tr>
+      <tr><td>Yes, let's!</td><td>Sorry, I can't — I've got homework.</td></tr>
+      <tr><td>Sure, why not!</td><td>I'd rather not, if that's OK.</td></tr>
+      <tr><td>Good idea!</td><td>Maybe another time?</td></tr>
+      <tr><td>I'd love to!</td><td>I'm not really into that, sorry.</td></tr>
+    </table>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('warmup')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('practice')">Next →</button>
+  </div>
+</div>
+
+<!-- CONTROLLED PRACTICE -->
+<div class="panel" id="practice">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    Matching game: Micha taps a suggestion, then taps the response he thinks fits — it turns green if correct, red if not (he can try again). Follow with the sentence-building blanks, checking live; no auto-grading, just talk through each one together.
+  </div>
+
+  <div class="card">
+    <h2>Match it up</h2>
+    <p class="fr">Associe chaque suggestion à la bonne réponse</p>
+    <div class="match-wrap">
+      <div class="match-col" id="matchLeft"></div>
+      <div class="match-col" id="matchRight"></div>
+    </div>
+    <p class="match-hint">Tap a suggestion, then tap the response that fits it.</p>
+    <button class="btn btn-secondary match-reset" onclick="resetMatch()">↺ Reset matching</button>
+  </div>
+
+  <div class="card">
+    <h2>Build the sentence</h2>
+    <p class="fr">Construis la phrase — complète avec le bon mot</p>
+    <div class="task-prompt">
+      <b>1. ___ we invite Alex to the tournament?</b>
+      <input type="text" class="task-blank" placeholder="Shall...">
+    </div>
+    <div class="task-prompt">
+      <b>2. ___ play Brawl Stars after school!</b>
+      <input type="text" class="task-blank" placeholder="Let's...">
+    </div>
+    <div class="task-prompt">
+      <b>3. ___ we watch the match at your house this time?</b>
+      <input type="text" class="task-blank" placeholder="Why don't...">
+    </div>
+    <div class="task-prompt">
+      <b>4. ___ going to the theme park on Saturday?</b>
+      <input type="text" class="task-blank" placeholder="Do you fancy...">
+    </div>
+    <div class="task-prompt">
+      <b>5. ___ come to my house and play FIFA?</b>
+      <input type="text" class="task-blank" placeholder="Would you like to...">
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('suggest')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('plan')">Next →</button>
+  </div>
+</div>
+
+<!-- FREE PRODUCTION -->
+<div class="panel" id="plan">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    This is the A2-12 evidence task. Each side makes two suggestions using different exponents and rejects one politely, then the pair reaches a final consensus. Don't correct mid-roleplay — use the whiteboard stamps/notes to log errors for feedback at the end.
+  </div>
+
+  <div class="card">
+    <h2>Plan the weekend outing</h2>
+    <p class="fr">Organise la sortie du week-end</p>
+    <p style="font-size:13px;line-height:1.7;">You and a friend need to agree on ONE thing to do this weekend. Look at the three options — you each make suggestions, accept or reject them politely, and agree on a final plan together.</p>
+    <p class="fr">Toi et un ami devez vous mettre d'accord sur UNE chose à faire ce week-end. Regarde les trois options — vous faites chacun des suggestions, vous les acceptez ou refusez poliment, et vous vous mettez d'accord sur un plan final.</p>
+
+    <div class="option-grid">
+      <div class="option-card">
+        <div class="emoji">⚽</div>
+        <div class="oname">Football match</div>
+        <div class="odetail">Watch the local derby together</div>
+      </div>
+      <div class="option-card">
+        <div class="emoji">🎮</div>
+        <div class="oname">Brawl Stars tournament</div>
+        <div class="odetail">Enter a squad tournament online</div>
+      </div>
+      <div class="option-card">
+        <div class="emoji">🎢</div>
+        <div class="oname">Theme park</div>
+        <div class="odetail">Spend the day on the rides</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>How to play</h3>
+    <p class="fr">Comment jouer</p>
+    <div class="speak-card warmup">
+      <span class="lvl">Step 1</span>
+      <p>Each person makes TWO suggestions using different phrases (Shall we…? / Let's… / Why don't we…? / Do you fancy…? / Would you like to…?).</p>
+      <p class="fr">Chaque personne fait DEUX suggestions avec des expressions différentes.</p>
+    </div>
+    <div class="speak-card core">
+      <span class="lvl">Step 2</span>
+      <p>React to each suggestion — accept some, but politely reject at least one.</p>
+      <p class="fr">Réagis à chaque suggestion — accepte-en certaines, mais refuse-en au moins une poliment.</p>
+    </div>
+    <div class="speak-card challenge">
+      <span class="lvl">Step 3</span>
+      <p>Agree on ONE final plan together and say when/where you'll meet.</p>
+      <p class="fr">Mettez-vous d'accord sur UN plan final et dites quand/où vous vous retrouverez.</p>
+    </div>
+    <div class="checklist">
+      <label><input type="checkbox"> Made at least 2 different suggestions</label>
+      <label><input type="checkbox"> Politely rejected at least one suggestion</label>
+      <label><input type="checkbox"> Reached a final consensus together</label>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('practice')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('recap')">Next →</button>
+  </div>
+</div>
+
+<!-- RECAP -->
+<div class="panel" id="recap">
+  <div class="card">
+    <h2>Lesson Recap</h2>
+    <p class="fr">Récapitulatif de la leçon</p>
+    <button class="recap-toggle-btn" onclick="toggleRecap()" id="recapBtn">Show can-do card</button>
+    <div class="recap-card" id="recapCard">
+      <div class="recap-code">A2-12 · Suggestions &amp; invitations</div>
+      <div class="recap-field">
+        <b>Goal</b>
+        <p>Can make and respond to suggestions and invitations; can discuss what to do and where to go and arrange to meet.</p>
+      </div>
+      <div class="recap-field">
+        <b>Grammar focus / exponents</b>
+        <span>Shall we…? · Let's… · Why don't we…? · Do you fancy…? · Would you like to…?</span>
+      </div>
+      <div class="recap-field">
+        <b>Evidence task</b>
+        <p>Consensus roleplay: plan an outing from three options; each side makes two suggestions and rejects one politely.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('plan')">← Back</button>
+    <span></span>
+  </div>
+</div>
+
+<div id="timerBubble" onclick="openWb()">50:00</div>
+<div id="emojiOverlay" onclick="this.classList.remove('show')"></div>
+
+<div id="wbOverlay" onclick="if(event.target===this)closeWb()">
+  <div id="wbPanel">
+    <button class="wb-close" onclick="closeWb()">✕</button>
+    <h3>⏱ Whiteboard</h3>
+    <div class="timer-controls">
+      <button onclick="setTimerMin(5)">5m</button>
+      <button onclick="setTimerMin(10)">10m</button>
+      <button onclick="setTimerMin(15)">15m</button>
+      <button onclick="toggleRun()" id="runBtn">▶ Start</button>
+      <button onclick="resetTimer()">↺ Reset</button>
+    </div>
+    <h3 style="font-size:14px;">Correction Stamps</h3>
+    <div class="stamp-row">
+      <button class="stamp-btn" onclick="addStamp('✅')">✅</button>
+      <button class="stamp-btn" onclick="addStamp('⭐')">⭐</button>
+      <button class="stamp-btn" onclick="addStamp('🔁 Try again')">🔁</button>
+      <button class="stamp-btn" onclick="addStamp('🗣 Pronunciation')">🗣</button>
+      <button class="stamp-btn" onclick="addStamp('📐 Grammar')">📐</button>
+    </div>
+    <div id="correctionLog"></div>
+    <h3 style="font-size:14px;">Notes</h3>
+    <textarea id="wbNotes" placeholder="Notes for this lesson..."></textarea>
+    <div class="wb-actions">
+      <button class="wb-copy" onclick="copyWb()">Copy</button>
+      <button class="wb-clear" onclick="clearWb()">Clear</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function goTab(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector(`.tab-btn[data-tab="${id}"]`).classList.add('active');
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('.tab-btn').forEach(btn=>btn.addEventListener('click',()=>goTab(btn.dataset.tab)));
+
+function toggleTeacherNotes(){
+  document.body.classList.toggle('show-teacher');
+  document.getElementById('teacherToggleBtn').classList.toggle('on');
+}
+
+function toggleRecap(){
+  const card=document.getElementById('recapCard');
+  const btn=document.getElementById('recapBtn');
+  card.classList.toggle('show');
+  btn.textContent=card.classList.contains('show')?'Hide can-do card':'Show can-do card';
+}
+
+/* Matching game */
+const MATCH_PAIRS=[
+  {s:"Shall we watch the match together?", r:"Great idea! What time does it start?"},
+  {s:"Let's play Brawl Stars tonight!", r:"Sure, why not! I love that game."},
+  {s:"Why don't we go to the theme park this weekend?", r:"I'd love to! I've never been there."},
+  {s:"Do you fancy playing FIFA after school?", r:"Sorry, I can't — I've got homework."},
+  {s:"Would you like to come to my house on Saturday?", r:"Yes, I'd love to! What time?"}
+];
+let selectedSuggestion=null, matchedCount=0;
+
+function shuffle(arr){
+  const a=arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function buildMatch(){
+  const left=document.getElementById('matchLeft');
+  const right=document.getElementById('matchRight');
+  left.innerHTML='';
+  right.innerHTML='';
+  selectedSuggestion=null;
+  matchedCount=0;
+
+  const leftOrder=shuffle(MATCH_PAIRS.map((p,i)=>i));
+  const rightOrder=shuffle(MATCH_PAIRS.map((p,i)=>i));
+
+  leftOrder.forEach(i=>{
+    const btn=document.createElement('button');
+    btn.className='match-item';
+    btn.textContent=MATCH_PAIRS[i].s;
+    btn.dataset.idx=i;
+    btn.onclick=()=>selectSuggestion(btn,i);
+    left.appendChild(btn);
+  });
+  rightOrder.forEach(i=>{
+    const btn=document.createElement('button');
+    btn.className='match-item';
+    btn.textContent=MATCH_PAIRS[i].r;
+    btn.dataset.idx=i;
+    btn.onclick=()=>selectResponse(btn,i);
+    right.appendChild(btn);
+  });
+}
+
+function selectSuggestion(btn,idx){
+  if(btn.classList.contains('correct')) return;
+  document.querySelectorAll('#matchLeft .match-item').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedSuggestion={btn,idx};
+}
+
+function selectResponse(btn,idx){
+  if(btn.classList.contains('correct')) return;
+  if(!selectedSuggestion) return;
+  if(selectedSuggestion.idx===idx){
+    selectedSuggestion.btn.classList.remove('selected','incorrect');
+    selectedSuggestion.btn.classList.add('correct');
+    btn.classList.remove('incorrect');
+    btn.classList.add('correct');
+    matchedCount++;
+    selectedSuggestion=null;
+  } else {
+    btn.classList.add('incorrect');
+    selectedSuggestion.btn.classList.add('incorrect');
+    setTimeout(()=>{
+      btn.classList.remove('incorrect');
+      if(selectedSuggestion) selectedSuggestion.btn.classList.remove('incorrect','selected');
+    },600);
+  }
+}
+
+function resetMatch(){ buildMatch(); }
+buildMatch();
+
+let totalSeconds=50*60,timerInterval=null,isRunning=false;
+function updateTimerDisplay(){
+  const m=Math.floor(totalSeconds/60).toString().padStart(2,'0');
+  const s=(totalSeconds%60).toString().padStart(2,'0');
+  const b=document.getElementById('timerBubble');
+  b.textContent=`${m}:${s}`;
+  b.classList.toggle('danger',isRunning&&totalSeconds<=30);
+}
+function toggleRun(){
+  isRunning=!isRunning;
+  document.getElementById('runBtn').textContent=isRunning?'⏸ Pause':'▶ Start';
+  if(isRunning){
+    timerInterval=setInterval(()=>{
+      totalSeconds--;updateTimerDisplay();
+      if(totalSeconds<=0){clearInterval(timerInterval);isRunning=false;document.getElementById('runBtn').textContent='▶ Start';fireEmoji();}
+    },1000);
+  } else { clearInterval(timerInterval); }
+}
+function setTimerMin(min){totalSeconds=min*60;updateTimerDisplay();}
+function resetTimer(){clearInterval(timerInterval);isRunning=false;document.getElementById('runBtn').textContent='▶ Start';totalSeconds=50*60;updateTimerDisplay();}
+const faces=['😀','😎','🤩','😜','🥳','😯','🤓','😼','🙃','😺'];
+function fireEmoji(){
+  const o=document.getElementById('emojiOverlay');
+  o.textContent=faces[Math.floor(Math.random()*faces.length)];
+  o.classList.add('show');
+}
+updateTimerDisplay();
+
+function openWb(){document.getElementById('wbOverlay').classList.add('show');}
+function closeWb(){document.getElementById('wbOverlay').classList.remove('show');}
+function addStamp(label){
+  const log=document.getElementById('correctionLog');
+  log.textContent+=(log.textContent?'\n':'')+label;
+}
+function copyWb(){
+  const text=document.getElementById('correctionLog').textContent+'\n\n'+document.getElementById('wbNotes').value;
+  navigator.clipboard.writeText(text).catch(()=>{});
+}
+function clearWb(){document.getElementById('correctionLog').textContent='';document.getElementById('wbNotes').value='';}
+</script>
+</body>
+</html>
