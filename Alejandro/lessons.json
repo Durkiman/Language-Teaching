@@ -1,1 +1,47 @@
-[]
+[
+  {
+    "file": "alejandro-extended-talk-pronunciation.html",
+    "title": "#1 Extended Talk & Pronunciation",
+    "goals": {
+      "primary": [
+        "B2-11"
+      ],
+      "incidental": [
+        "B2-01",
+        "B2-15",
+        "B2-08",
+        "B2-09"
+      ]
+    },
+    "grammar": [
+      {
+        "file": "polite-requests.html",
+        "title": "Polite Requests"
+      },
+      {
+        "file": "modal-verbs.html",
+        "title": "Modal Verbs"
+      },
+      {
+        "file": "past-perfect.html",
+        "title": "Past Perfect"
+      },
+      {
+        "file": "storytelling-and-narrative-sequencing.html",
+        "title": "Storytelling & Narrative Sequencing"
+      },
+      {
+        "file": "linking-words.html",
+        "title": "Linking Words"
+      },
+      {
+        "file": "conditionals.html",
+        "title": "Conditionals"
+      },
+      {
+        "file": "possibility-and-deduction.html",
+        "title": "Possibility & Deduction"
+      }
+    ]
+  }
+]
