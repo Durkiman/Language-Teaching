@@ -21,7 +21,7 @@
     min-height: 100vh;
   }
   .page {
-    max-width: 680px;
+    max-width: 700px;
     margin: 0 auto;
     padding: 60px 32px 100px;
   }
@@ -59,14 +59,55 @@
     width: 48px;
     height: 2px;
     background: var(--gold);
-    margin: 24px 0 36px;
+    margin: 24px 0 28px;
   }
+
+  /* jump nav */
+  .jump-nav {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    background: var(--cream);
+    padding: 12px 0 18px;
+    margin-bottom: 8px;
+  }
+  .jump-nav a {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #999;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1.5px solid var(--warm);
+    background: rgba(245,240,232,0.9);
+    backdrop-filter: blur(4px);
+    white-space: nowrap;
+  }
+  .jump-nav a:hover { color: var(--terra); border-color: var(--terra); }
+
   .card {
     background: white;
     border-radius: 16px;
     padding: 28px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.06);
     margin-bottom: 18px;
+    scroll-margin-top: 64px;
+  }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .section-num {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--gold);
   }
   .section-label {
     font-size: 11px;
@@ -74,7 +115,11 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--terra);
-    margin-bottom: 16px;
+  }
+  .section-sub {
+    font-size: 12px;
+    color: #999;
+    margin: -12px 0 18px;
   }
   .field { margin-bottom: 16px; }
   .field:last-child { margin-bottom: 0; }
@@ -85,7 +130,8 @@
     color: #555;
     margin-bottom: 6px;
   }
-  input[type="text"], input[type="date"], textarea, select {
+  .hint { font-weight: 400; color: #aaa; font-size: 11.5px; }
+  input[type="text"], input[type="date"], input[type="email"], textarea, select {
     width: 100%;
     font-family: 'DM Sans', sans-serif;
     font-size: 14px;
@@ -97,11 +143,12 @@
     outline: none;
     transition: border-color 0.2s ease;
   }
-  input[type="text"]:focus, input[type="date"]:focus, textarea:focus, select:focus {
+  input[type="text"]:focus, input[type="date"]:focus, input[type="email"]:focus, textarea:focus, select:focus {
     border-color: var(--gold);
   }
   textarea { resize: vertical; min-height: 64px; font-family: 'DM Sans', sans-serif; }
   .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
   .chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
   .chip {
     font-size: 12.5px;
@@ -119,6 +166,45 @@
     border-color: var(--terra);
     color: white;
   }
+
+  /* skill rating rows */
+  .skill-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--cream);
+  }
+  .skill-row:last-child { border-bottom: none; }
+  .skill-name { font-size: 13.5px; font-weight: 500; color: var(--ink); flex-shrink: 0; width: 120px; }
+  .rating { display: flex; gap: 5px; }
+  .rating .dot {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1.5px solid var(--warm);
+    background: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: #bbb;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .rating .dot.selected {
+    background: var(--terra);
+    border-color: var(--terra);
+    color: white;
+  }
+  .rating-scale-label {
+    font-size: 10.5px;
+    color: #bbb;
+    margin-top: 6px;
+  }
+
   .actions {
     display: flex;
     gap: 12px;
@@ -157,7 +243,8 @@
   }
   @media (max-width: 560px) {
     .page { padding: 40px 20px 80px; }
-    .row { grid-template-columns: 1fr; }
+    .row, .row3 { grid-template-columns: 1fr; }
+    .skill-name { width: 100px; font-size: 12.5px; }
   }
 </style>
 </head>
@@ -169,8 +256,19 @@
   <p class="tagline">Fill this in live during the first lesson. It autosaves in this browser and generates a clean summary you can paste into your notes.</p>
   <div class="divider"></div>
 
-  <div class="card">
-    <div class="section-label">Basics</div>
+  <nav class="jump-nav">
+    <a href="#sec-basics">Basics</a>
+    <a href="#sec-skills">Skills</a>
+    <a href="#sec-history">History</a>
+    <a href="#sec-goals">Goals</a>
+    <a href="#sec-content">Content</a>
+    <a href="#sec-logistics">Logistics</a>
+    <a href="#sec-feedback">Feedback style</a>
+    <a href="#sec-notes">Notes &amp; plan</a>
+  </nav>
+
+  <div class="card" id="sec-basics">
+    <div class="section-head"><span class="section-num">01</span><span class="section-label">Basics</span></div>
     <div class="row">
       <div class="field">
         <label for="f-name">Student name</label>
@@ -183,6 +281,16 @@
     </div>
     <div class="row">
       <div class="field">
+        <label for="f-email">Email / contact</label>
+        <input type="email" id="f-email" placeholder="e.g. name@email.com">
+      </div>
+      <div class="field">
+        <label for="f-timezone">Location / timezone</label>
+        <input type="text" id="f-timezone" placeholder="e.g. Antwerp, CET">
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
         <label for="f-native">Native language(s)</label>
         <input type="text" id="f-native" placeholder="e.g. Dutch">
       </div>
@@ -191,12 +299,16 @@
         <input type="text" id="f-target" placeholder="e.g. English">
       </div>
     </div>
+    <div class="field">
+      <label for="f-other-langs">Other languages spoken <span class="hint">(and rough level)</span></label>
+      <input type="text" id="f-other-langs" placeholder="e.g. French (B2), German (A2)">
+    </div>
   </div>
 
-  <div class="card">
-    <div class="section-label">Level &amp; background</div>
+  <div class="card" id="sec-skills">
+    <div class="section-head"><span class="section-num">02</span><span class="section-label">Level &amp; skill self-assessment</span></div>
     <div class="field">
-      <label>Self-assessed level</label>
+      <label>Overall self-assessed level</label>
       <div class="chip-group" id="chip-level">
         <div class="chip" data-val="A1">A1</div>
         <div class="chip" data-val="A2">A2</div>
@@ -208,33 +320,98 @@
       </div>
     </div>
     <div class="field">
-      <label for="f-history">Prior learning experience</label>
-      <textarea id="f-history" placeholder="School, apps, courses, immersion, how long ago, what stuck / didn't"></textarea>
+      <label>Skill-by-skill rating <span class="hint">(1 = weak, 5 = strong — your read as teacher)</span></label>
+      <div id="skill-ratings"></div>
+      <div class="rating-scale-label">1 · · · · 5</div>
     </div>
     <div class="field">
-      <label for="f-observed">Observed level (your read from today's conversation)</label>
+      <label for="f-observed">Overall observed level <span class="hint">(from today's conversation)</span></label>
       <input type="text" id="f-observed" placeholder="e.g. solid A2, hesitant on past tense">
     </div>
   </div>
 
-  <div class="card">
-    <div class="section-label">Goals &amp; motivation</div>
+  <div class="card" id="sec-history">
+    <div class="section-head"><span class="section-num">03</span><span class="section-label">Learning history</span></div>
+    <div class="field">
+      <label for="f-history">Prior learning experience</label>
+      <textarea id="f-history" placeholder="School, apps, courses, immersion, how long ago, what stuck / didn't"></textarea>
+    </div>
+    <div class="field">
+      <label for="f-tools-used">Apps / resources already used</label>
+      <input type="text" id="f-tools-used" placeholder="e.g. Duolingo, Babbel, night school">
+    </div>
+    <div class="row">
+      <div class="field">
+        <label for="f-strengths">Strengths observed today</label>
+        <textarea id="f-strengths" placeholder="e.g. good vocabulary, confident speaking"></textarea>
+      </div>
+      <div class="field">
+        <label for="f-gaps">Gaps / recurring errors observed</label>
+        <textarea id="f-gaps" placeholder="e.g. article use, past tense forms, pronunciation of th"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="sec-goals">
+    <div class="section-head"><span class="section-num">04</span><span class="section-label">Goals &amp; motivation</span></div>
     <div class="field">
       <label for="f-why">Why are they learning this language?</label>
       <textarea id="f-why" placeholder="Work, relocation, family, travel, exam, personal interest…"></textarea>
     </div>
     <div class="field">
+      <label for="f-success">What does success look like to them?</label>
+      <textarea id="f-success" placeholder="e.g. handle client calls confidently, order food without anxiety"></textarea>
+    </div>
+    <div class="field">
       <label for="f-goal">Concrete goal / deadline (if any)</label>
       <input type="text" id="f-goal" placeholder="e.g. B1 by June for a job interview">
     </div>
-    <div class="field">
-      <label for="f-topics">Topics / contexts they care about</label>
-      <input type="text" id="f-topics" placeholder="e.g. work meetings, small talk, kids' school">
+    <div class="row3">
+      <div class="field">
+        <label for="f-exam-name">Exam target</label>
+        <input type="text" id="f-exam-name" placeholder="e.g. IELTS, Cambridge">
+      </div>
+      <div class="field">
+        <label for="f-exam-score">Target score</label>
+        <input type="text" id="f-exam-score" placeholder="e.g. 6.5">
+      </div>
+      <div class="field">
+        <label for="f-exam-date">Exam date</label>
+        <input type="date" id="f-exam-date">
+      </div>
     </div>
   </div>
 
-  <div class="card">
-    <div class="section-label">Logistics &amp; style</div>
+  <div class="card" id="sec-content">
+    <div class="section-head"><span class="section-num">05</span><span class="section-label">Content &amp; interests</span></div>
+    <div class="field">
+      <label for="f-topics">Topics / contexts they care about</label>
+      <textarea id="f-topics" placeholder="e.g. work meetings, small talk, kids' school"></textarea>
+    </div>
+    <div class="field">
+      <label for="f-profession">Profession / industry <span class="hint">(for domain vocabulary)</span></label>
+      <input type="text" id="f-profession" placeholder="e.g. logistics manager">
+    </div>
+    <div class="field">
+      <label for="f-interests">Hobbies &amp; personal interests</label>
+      <input type="text" id="f-interests" placeholder="e.g. football, cooking, hiking">
+    </div>
+    <div class="field">
+      <label>Content they already consume in this language</label>
+      <div class="chip-group" id="chip-content">
+        <div class="chip" data-val="News">News</div>
+        <div class="chip" data-val="TV/Film">TV/Film</div>
+        <div class="chip" data-val="Podcasts">Podcasts</div>
+        <div class="chip" data-val="Books">Books</div>
+        <div class="chip" data-val="Music">Music</div>
+        <div class="chip" data-val="Social media">Social media</div>
+        <div class="chip" data-val="None yet">None yet</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="sec-logistics">
+    <div class="section-head"><span class="section-num">06</span><span class="section-label">Logistics</span></div>
     <div class="row">
       <div class="field">
         <label for="f-freq">Frequency / availability</label>
@@ -246,6 +423,35 @@
       </div>
     </div>
     <div class="field">
+      <label>Platform</label>
+      <div class="chip-group" id="chip-platform">
+        <div class="chip" data-val="Zoom">Zoom</div>
+        <div class="chip" data-val="Google Meet">Google Meet</div>
+        <div class="chip" data-val="In-person">In-person</div>
+        <div class="chip" data-val="Phone">Phone</div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Materials preference</label>
+      <div class="chip-group" id="chip-materials">
+        <div class="chip" data-val="Digital only">Digital only</div>
+        <div class="chip" data-val="Print/PDF">Print/PDF</div>
+        <div class="chip" data-val="Mixed">Mixed</div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Homework willingness</label>
+      <div class="chip-group" id="chip-homework">
+        <div class="chip" data-val="Yes, wants homework">Yes, wants homework</div>
+        <div class="chip" data-val="Light only">Light only</div>
+        <div class="chip" data-val="Prefers none">Prefers none</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="sec-feedback">
+    <div class="section-head"><span class="section-num">07</span><span class="section-label">Learning &amp; feedback style</span></div>
+    <div class="field">
       <label>Learning style leaning</label>
       <div class="chip-group" id="chip-style">
         <div class="chip" data-val="Conversation-heavy">Conversation-heavy</div>
@@ -255,12 +461,37 @@
         <div class="chip" data-val="Needs lots of repetition">Needs lots of repetition</div>
       </div>
     </div>
+    <div class="field">
+      <label>Correction preference</label>
+      <div class="chip-group" id="chip-correction">
+        <div class="chip" data-val="Correct immediately">Correct immediately</div>
+        <div class="chip" data-val="Correct at natural pauses">Correct at natural pauses</div>
+        <div class="chip" data-val="End-of-sentence only">End-of-sentence only</div>
+        <div class="chip" data-val="Written notes, not interrupted">Written notes, not interrupted</div>
+        <div class="chip" data-val="Don't over-correct — confidence first">Don't over-correct — confidence first</div>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <div class="section-label">Notes</div>
+  <div class="card" id="sec-notes">
+    <div class="section-head"><span class="section-num">08</span><span class="section-label">Notes &amp; next steps</span></div>
     <div class="field">
-      <textarea id="f-notes" style="min-height:100px" placeholder="Anything else — personality, sensitivities, quick wins for next lesson…"></textarea>
+      <label for="f-notes">General notes <span class="hint">(personality, sensitivities, anything else)</span></label>
+      <textarea id="f-notes" style="min-height:90px" placeholder="e.g. anxious about speaking, very motivated, prefers humor"></textarea>
+    </div>
+    <div class="field">
+      <label for="f-plan">Recommended starting point / plan for next lesson</label>
+      <textarea id="f-plan" style="min-height:90px" placeholder="e.g. start at Pillar 1.1, review present simple, build work-vocab list"></textarea>
+    </div>
+    <div class="field">
+      <label>Follow-up actions</label>
+      <div class="chip-group" id="chip-followup">
+        <div class="chip" data-val="Register in hub">Register in hub</div>
+        <div class="chip" data-val="Send curriculum link">Send curriculum link</div>
+        <div class="chip" data-val="Schedule recurring lesson">Schedule recurring lesson</div>
+        <div class="chip" data-val="Send welcome email">Send welcome email</div>
+        <div class="chip" data-val="Build first lesson tool">Build first lesson tool</div>
+      </div>
     </div>
   </div>
 
@@ -273,9 +504,33 @@
 </div>
 
 <script>
-  const fieldIds = ['f-name','f-date','f-native','f-target','f-history','f-observed','f-why','f-goal','f-topics','f-freq','f-length','f-notes'];
-  const chipGroups = ['chip-level','chip-style'];
-  const STORAGE_KEY = 'lt_intake_draft_v1';
+  const fieldIds = [
+    'f-name','f-date','f-email','f-timezone','f-native','f-target','f-other-langs',
+    'f-observed',
+    'f-history','f-tools-used','f-strengths','f-gaps',
+    'f-why','f-success','f-goal','f-exam-name','f-exam-score','f-exam-date',
+    'f-topics','f-profession','f-interests',
+    'f-freq','f-length',
+    'f-notes','f-plan'
+  ];
+  const chipGroups = ['chip-level','chip-content','chip-platform','chip-materials','chip-homework','chip-style','chip-correction','chip-followup'];
+  const skills = ['Speaking','Listening','Reading','Writing','Grammar','Pronunciation'];
+  const STORAGE_KEY = 'lt_intake_draft_v2';
+
+  // build skill rating rows
+  const skillWrap = document.getElementById('skill-ratings');
+  skills.forEach(skill => {
+    const key = 'skill-' + skill.toLowerCase();
+    const row = document.createElement('div');
+    row.className = 'skill-row';
+    row.innerHTML = `
+      <span class="skill-name">${skill}</span>
+      <div class="rating" data-skill="${key}">
+        ${[1,2,3,4,5].map(n => `<div class="dot" data-val="${n}">${n}</div>`).join('')}
+      </div>
+    `;
+    skillWrap.appendChild(row);
+  });
 
   function getState() {
     const state = {};
@@ -283,13 +538,17 @@
     chipGroups.forEach(g => {
       state[g] = [...document.querySelectorAll(`#${g} .chip.selected`)].map(c => c.dataset.val);
     });
+    skills.forEach(skill => {
+      const key = 'skill-' + skill.toLowerCase();
+      const selected = document.querySelector(`.rating[data-skill="${key}"] .dot.selected`);
+      state[key] = selected ? selected.dataset.val : '';
+    });
     return state;
   }
 
   function save() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(getState()));
-    const status = document.getElementById('save-status');
-    status.textContent = 'Saved ' + new Date().toLocaleTimeString();
+    document.getElementById('save-status').textContent = 'Saved ' + new Date().toLocaleTimeString();
   }
 
   function load() {
@@ -302,6 +561,14 @@
         const chip = document.querySelector(`#${g} .chip[data-val="${CSS.escape(val)}"]`);
         if (chip) chip.classList.add('selected');
       });
+    });
+    skills.forEach(skill => {
+      const key = 'skill-' + skill.toLowerCase();
+      const val = state[key];
+      if (val) {
+        const dot = document.querySelector(`.rating[data-skill="${key}"] .dot[data-val="${val}"]`);
+        if (dot) dot.classList.add('selected');
+      }
     });
   }
 
@@ -316,35 +583,81 @@
     });
   });
 
+  document.querySelectorAll('.rating').forEach(rating => {
+    rating.querySelectorAll('.dot').forEach(dot => {
+      dot.addEventListener('click', () => {
+        const alreadySelected = dot.classList.contains('selected');
+        rating.querySelectorAll('.dot').forEach(d => d.classList.remove('selected'));
+        if (!alreadySelected) dot.classList.add('selected');
+        save();
+      });
+    });
+  });
+
   document.getElementById('clear-btn').addEventListener('click', () => {
     if (!confirm('Clear the whole form? This cannot be undone.')) return;
     localStorage.removeItem(STORAGE_KEY);
     fieldIds.forEach(id => document.getElementById(id).value = '');
-    document.querySelectorAll('.chip.selected').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('.chip.selected, .dot.selected').forEach(c => c.classList.remove('selected'));
     document.getElementById('summary-out').style.display = 'none';
     document.getElementById('save-status').textContent = 'Cleared.';
   });
 
   document.getElementById('copy-btn').addEventListener('click', async () => {
     const s = getState();
+    const skillLines = skills.map(skill => {
+      const key = 'skill-' + skill.toLowerCase();
+      return `  ${skill}: ${s[key] || '—'}`;
+    });
     const lines = [
       `INTAKE — ${s['f-name'] || 'Unnamed student'} (${s['f-date'] || 'no date'})`,
       ``,
+      `— BASICS —`,
+      `Contact: ${s['f-email'] || '—'}`,
+      `Location / timezone: ${s['f-timezone'] || '—'}`,
       `Native language(s): ${s['f-native'] || '—'}`,
       `Target language: ${s['f-target'] || '—'}`,
+      `Other languages: ${s['f-other-langs'] || '—'}`,
+      ``,
+      `— LEVEL & SKILLS —`,
       `Self-assessed level: ${(s['chip-level'] || []).join(', ') || '—'}`,
       `Observed level: ${s['f-observed'] || '—'}`,
-      `Prior learning experience: ${s['f-history'] || '—'}`,
+      `Skill ratings (1-5):`,
+      ...skillLines,
       ``,
+      `— LEARNING HISTORY —`,
+      `Prior experience: ${s['f-history'] || '—'}`,
+      `Apps/resources used: ${s['f-tools-used'] || '—'}`,
+      `Strengths observed: ${s['f-strengths'] || '—'}`,
+      `Gaps observed: ${s['f-gaps'] || '—'}`,
+      ``,
+      `— GOALS & MOTIVATION —`,
       `Why learning: ${s['f-why'] || '—'}`,
+      `Success looks like: ${s['f-success'] || '—'}`,
       `Goal / deadline: ${s['f-goal'] || '—'}`,
-      `Topics of interest: ${s['f-topics'] || '—'}`,
+      `Exam target: ${s['f-exam-name'] || '—'} ${s['f-exam-score'] ? '(target ' + s['f-exam-score'] + ')' : ''} ${s['f-exam-date'] ? 'on ' + s['f-exam-date'] : ''}`.trim(),
       ``,
+      `— CONTENT & INTERESTS —`,
+      `Topics of interest: ${s['f-topics'] || '—'}`,
+      `Profession/industry: ${s['f-profession'] || '—'}`,
+      `Hobbies: ${s['f-interests'] || '—'}`,
+      `Content already consumed: ${(s['chip-content'] || []).join(', ') || '—'}`,
+      ``,
+      `— LOGISTICS —`,
       `Frequency / availability: ${s['f-freq'] || '—'}`,
       `Preferred session length: ${s['f-length'] || '—'}`,
-      `Learning style: ${(s['chip-style'] || []).join(', ') || '—'}`,
+      `Platform: ${(s['chip-platform'] || []).join(', ') || '—'}`,
+      `Materials preference: ${(s['chip-materials'] || []).join(', ') || '—'}`,
+      `Homework willingness: ${(s['chip-homework'] || []).join(', ') || '—'}`,
       ``,
+      `— LEARNING & FEEDBACK STYLE —`,
+      `Learning style: ${(s['chip-style'] || []).join(', ') || '—'}`,
+      `Correction preference: ${(s['chip-correction'] || []).join(', ') || '—'}`,
+      ``,
+      `— NOTES & NEXT STEPS —`,
       `Notes: ${s['f-notes'] || '—'}`,
+      `Plan for next lesson: ${s['f-plan'] || '—'}`,
+      `Follow-up actions: ${(s['chip-followup'] || []).join(', ') || '—'}`,
     ];
     const text = lines.join('\n');
     const out = document.getElementById('summary-out');
