@@ -31,8 +31,22 @@
     gap: 12px;
   }
 
-  .browse-grid.pills {
-    grid-template-columns: repeat(auto-fill, minmax(120px, max-content));
+  .pill-category { margin-bottom: 28px; }
+  .pill-category:last-child { margin-bottom: 0; }
+
+  .pill-category-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 12px;
+  }
+
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
   .browse-card {
@@ -106,6 +120,16 @@
 
   document.getElementById('backLink').href = folder ? `../${folder}/index.html` : '../index.html';
 
+  // Mirrors the category sections in Grammar-book/English/index.html
+  const GRAMMAR_CATEGORIES = [
+    { label: '⏱️ Verb Tenses', files: ['to-be','there-is-there-are','present-simple','present-continuous','past-simple','past-continuous','past-perfect','present-perfect-vs-past-simple','present-perfect-continuous','going-to-future','future-with-will','future-perfect-and-continuous','used-to-and-would'] },
+    { label: '🧩 Sentence Structure', files: ['question-formation','reported-speech','relative-clauses','passive-voice','conditionals','wish-and-if-only','modal-verbs','have-got','possibility-and-deduction','purpose-clauses','gerunds-and-infinitives','linking-words'] },
+    { label: '🔤 Nouns, Articles & Modifiers', files: ['articles','countable-and-uncountable-nouns','possessive-adjectives-and-pronouns','comparatives-and-superlatives','demonstrative-adjectives','ed-ing-adjectives','emotional-language','adverbs-of-frequency','prepositions-of-place','prepositions-of-time','telling-time','phrasal-verbs'] },
+    { label: '🗣️ Communication Skills', files: ['asking-better-questions','polite-requests','giving-and-following-instructions','reformulation-practice','roleplay-scaffolds','storytelling-and-narrative-sequencing'] },
+  ];
+  const FILE_TO_CATEGORY = new Map();
+  GRAMMAR_CATEGORIES.forEach(cat => cat.files.forEach(f => FILE_TO_CATEGORY.set(f + '.html', cat.label)));
+
   const TYPE_META = {
     lessons:  { heading: 'lessons',      empty: 'No lessons yet — check back after your next session!' },
     homework: { heading: 'homework',     empty: 'No homework yet.' },
@@ -140,7 +164,7 @@
             if (!seen.has(g.file)) seen.set(g.file, g.title);
           });
         });
-        renderPills([...seen].map(([file, title]) => ({ title, href: `${SITE_BASE}/Grammar-book/English/${file}` })));
+        renderPillsByCategory([...seen].map(([file, title]) => ({ file, title, href: `${SITE_BASE}/Grammar-book/English/${file}` })));
       }
     } catch {
       contentEl.innerHTML = '<div class="empty-state">Could not load right now — try refreshing.</div>';
@@ -166,14 +190,36 @@
     `).join('')}</div>`;
   }
 
-  function renderPills(items) {
+  function renderPillsByCategory(items) {
     if (!items.length) {
       contentEl.innerHTML = `<div class="empty-state">${meta.empty}</div>`;
       return;
     }
-    contentEl.innerHTML = `<div class="browse-grid pills">${items.map(i => `
-      <a class="browse-pill" href="${i.href}">${i.title}</a>
-    `).join('')}</div>`;
+
+    // Group by category, preserving each category's declared order and,
+    // within a category, the recency order already present in `items`.
+    const grouped = new Map(); // label -> items[]
+    const other = [];
+    items.forEach(item => {
+      const label = FILE_TO_CATEGORY.get(item.file);
+      if (!label) { other.push(item); return; }
+      if (!grouped.has(label)) grouped.set(label, []);
+      grouped.get(label).push(item);
+    });
+
+    const sections = GRAMMAR_CATEGORIES
+      .map(cat => ({ label: cat.label, items: grouped.get(cat.label) || [] }))
+      .filter(s => s.items.length);
+    if (other.length) sections.push({ label: '📌 Other', items: other });
+
+    contentEl.innerHTML = sections.map(s => `
+      <div class="pill-category">
+        <p class="pill-category-label">${s.label}</p>
+        <div class="pill-row">
+          ${s.items.map(i => `<a class="browse-pill" href="${i.href}">${i.title}</a>`).join('')}
+        </div>
+      </div>
+    `).join('');
   }
 })();
 </script>
