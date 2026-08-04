@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>General Tools — Durim's Language Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --cream: #f5f0e8;
+    --warm: #e8ddd0;
+    --gold: #c9a84c;
+    --terra: #c4714a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+  }
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 60px 32px 80px;
+  }
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .tagline {
+    margin-top: 14px;
+    font-size: 14px;
+    font-weight: 300;
+    color: #666;
+    max-width: 460px;
+    line-height: 1.7;
+  }
+  .divider {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    margin: 24px 0 40px;
+  }
+  .back-link {
+    display: inline-block;
+    margin-bottom: 28px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #999;
+    text-decoration: none;
+  }
+  .back-link:hover { color: var(--terra); }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 18px;
+  }
+  .tool-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    text-decoration: none;
+    color: var(--ink);
+    display: block;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .tool-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  }
+  .tool-emoji { font-size: 26px; display: block; margin-bottom: 12px; }
+  .tool-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin-bottom: 6px;
+  }
+  .tool-desc { font-size: 13px; color: #888; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="page">
+  <a class="back-link" href="../index.html">← Back to studio</a>
+  <p class="eyebrow">Language Studio</p>
+  <h1>General <em style="font-style:italic;color:var(--terra);">Tools</em></h1>
+  <p class="tagline">Utilities that aren't tied to one student — used across lessons, onboarding, and planning.</p>
+  <div class="divider"></div>
+
+  <div class="grid">
+    <a class="tool-card" href="intake-form.html">
+      <span class="tool-emoji">📝</span>
+      <div class="tool-name">New Student Intake</div>
+      <div class="tool-desc">First-lesson needs assessment — goals, level, availability, interests.</div>
+    </a>
+  </div>
+</div>
+</body>
+</html>
