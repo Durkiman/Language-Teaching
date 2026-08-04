@@ -341,6 +341,17 @@ h1 em {
 .car-prev { left: -6px; }
 .car-next { right: 10px; }
 
+.see-all {
+  display: block;
+  text-align: right;
+  margin-top: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+.see-all:hover { text-decoration: underline; }
+
 .footer-note {
   margin-top: 48px;
   padding-top: 24px;

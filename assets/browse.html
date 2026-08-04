@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Browse — Language Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="student.css">
+<style>
+  :root {
+    --accent: #5b8fa8;
+    --accent-light: #ddeef5;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #999;
+    text-decoration: none;
+    margin-bottom: 24px;
+    transition: color 0.2s ease;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .browse-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+  }
+
+  .browse-grid.pills {
+    grid-template-columns: repeat(auto-fill, minmax(120px, max-content));
+  }
+
+  .browse-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    background: white;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--ink);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border-left: 3px solid var(--accent);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+  }
+  .browse-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    color: var(--accent);
+  }
+  .browse-card-icon { font-size: 18px; }
+  .browse-card-title { font-size: 14px; font-weight: 500; line-height: 1.4; }
+
+  .browse-pill {
+    display: inline-flex;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 10px 16px;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .browse-pill:hover { background: var(--accent); color: white; }
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+<div class="page">
+
+  <a class="back-link" id="backLink" href="#">← Back to hub</a>
+
+  <header>
+    <p class="eyebrow">Language Studio · Durim</p>
+    <h1 id="pageTitle">Loading…</h1>
+    <div class="divider"></div>
+  </header>
+
+  <div id="browseContent">
+    <div class="loading-state"><div class="spinner"></div> Loading…</div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  const REPO_RAW = 'https://raw.githubusercontent.com/Durkiman/Language-Teaching/main';
+  const SITE_BASE = 'https://durkiman.github.io/Language-Teaching';
+
+  const params = new URLSearchParams(window.location.search);
+  const folder = params.get('folder');
+  const type = params.get('type'); // 'lessons' | 'homework' | 'grammar'
+  const accent = params.get('accent');
+  const accentLight = params.get('accent2');
+
+  if (accent) document.documentElement.style.setProperty('--accent', '#' + accent);
+  if (accentLight) document.documentElement.style.setProperty('--accent-light', '#' + accentLight);
+
+  document.getElementById('backLink').href = folder ? `../${folder}/index.html` : '../index.html';
+
+  const TYPE_META = {
+    lessons:  { heading: 'lessons',      empty: 'No lessons yet — check back after your next session!' },
+    homework: { heading: 'homework',     empty: 'No homework yet.' },
+    grammar:  { heading: 'grammar book', empty: 'No grammar pages yet.' },
+  };
+
+  const titleEl = document.getElementById('pageTitle');
+  const contentEl = document.getElementById('browseContent');
+  const meta = TYPE_META[type];
+
+  if (!folder || !meta) {
+    titleEl.textContent = 'Not found';
+    contentEl.innerHTML = '<div class="empty-state">This link looks incomplete — go back and try again.</div>';
+  } else {
+    titleEl.innerHTML = `All <em>${meta.heading}</em>`;
+    load();
+  }
+
+  async function load() {
+    try {
+      if (type === 'lessons') {
+        const lessons = await fetchJSON(`${folder}/lessons.json`);
+        renderGrid(lessons.map(l => ({ title: l.title, href: `${SITE_BASE}/${folder}/${l.file}` })), '📄');
+      } else if (type === 'homework') {
+        const homework = (await fetchJSON(`${folder}/homework.json`)).slice().reverse();
+        renderGrid(homework.map(h => ({ title: h.title, href: `${SITE_BASE}/${folder}/homework/${h.file}` })), '📝');
+      } else if (type === 'grammar') {
+        const lessons = await fetchJSON(`${folder}/lessons.json`);
+        const seen = new Map();
+        lessons.forEach(lesson => {
+          (lesson.grammar || []).forEach(g => {
+            if (!seen.has(g.file)) seen.set(g.file, g.title);
+          });
+        });
+        renderPills([...seen].map(([file, title]) => ({ title, href: `${SITE_BASE}/Grammar-book/English/${file}` })));
+      }
+    } catch {
+      contentEl.innerHTML = '<div class="empty-state">Could not load right now — try refreshing.</div>';
+    }
+  }
+
+  async function fetchJSON(path) {
+    const res = await fetch(`${REPO_RAW}/${path}`);
+    if (!res.ok) throw new Error();
+    return res.json();
+  }
+
+  function renderGrid(items, icon) {
+    if (!items.length) {
+      contentEl.innerHTML = `<div class="empty-state">${meta.empty}</div>`;
+      return;
+    }
+    contentEl.innerHTML = `<div class="browse-grid">${items.map(i => `
+      <a class="browse-card" href="${i.href}">
+        <span class="browse-card-icon">${icon}</span>
+        <span class="browse-card-title">${i.title}</span>
+      </a>
+    `).join('')}</div>`;
+  }
+
+  function renderPills(items) {
+    if (!items.length) {
+      contentEl.innerHTML = `<div class="empty-state">${meta.empty}</div>`;
+      return;
+    }
+    contentEl.innerHTML = `<div class="browse-grid pills">${items.map(i => `
+      <a class="browse-pill" href="${i.href}">${i.title}</a>
+    `).join('')}</div>`;
+  }
+})();
+</script>
+
+</body>
+</html>

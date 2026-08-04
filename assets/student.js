@@ -146,6 +146,19 @@
     carEl.querySelectorAll('.car-arrow').forEach(b => b.style.display = 'none');
   }
 
+  function setupSeeAllLinks() {
+    const root = getComputedStyle(document.documentElement);
+    const accent = root.getPropertyValue('--accent').trim().replace('#', '');
+    const accentLight = root.getPropertyValue('--accent-light').trim().replace('#', '');
+    const linkFor = type => `../assets/browse.html?folder=${encodeURIComponent(FOLDER)}&type=${type}&accent=${accent}&accent2=${accentLight}`;
+
+    const map = { 'lesson-see-all': 'lessons', 'grammar-see-all': 'grammar', 'homework-see-all': 'homework' };
+    Object.entries(map).forEach(([id, type]) => {
+      const el = document.getElementById(id);
+      if (el) el.href = linkFor(type);
+    });
+  }
+
   async function loadLessonsCarousel() {
     const heroEl = document.getElementById('lesson-hero');
     if (!heroEl) return; // page hasn't been migrated to the hero+carousel layout yet
@@ -258,6 +271,7 @@
 
   loadLessons();
   loadHomework();
+  setupSeeAllLinks();
   loadLessonsCarousel();
   loadHomeworkCarousel();
 })();
