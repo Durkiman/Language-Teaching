@@ -66,6 +66,22 @@
   .dline .speaker{font-weight:800; color:var(--navy-dark); font-family:'Lora',serif; font-size:0.8rem; text-transform:uppercase; letter-spacing:.02em; margin-right:6px;}
   .dline mark{background:var(--gold-pale); color:#8A6A2F; font-weight:700; padding:1px 5px; border-radius:5px;}
 
+  /* Current affairs */
+  .fact-tag{display:inline-block; background:var(--gold-pale); color:#8A6A2F; font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.03em; padding:3px 8px; border-radius:6px; margin-bottom:8px;}
+  .fact-tag.fact-rust{background:#F3E0DA; color:#8A4632;}
+  .current-affairs-card p{font-size:0.87rem; line-height:1.65; color:var(--ink); margin:0 0 12px;}
+  .current-affairs-card p:last-of-type{margin-bottom:0;}
+  .pull-quote{background:#FBF3EC; border-left:3px solid #C08A5E; border-radius:8px; padding:11px 14px; font-size:0.85rem; line-height:1.55; color:#6B4A32; margin:12px 0; font-family:'Lora',serif; font-style:italic;}
+  .pull-quote b{font-style:normal;}
+  abbr.gloss{text-decoration:underline dotted; text-decoration-color:var(--gold); cursor:help; font-style:normal;}
+
+  /* Media review */
+  .media-card{border:1px solid var(--line); border-radius:10px; padding:14px 16px; background:#FBFAF7; margin-bottom:12px;}
+  .media-card .title{font-family:'Lora',serif; font-weight:600; font-size:0.95rem; color:var(--navy-dark); margin-bottom:4px;}
+  .media-card .meta{font-size:0.74rem; color:var(--ink-soft); margin-bottom:8px; text-transform:uppercase; letter-spacing:.02em;}
+  .media-card p{font-size:0.87rem; line-height:1.6; color:var(--ink); margin:6px 0;}
+  .media-card mark{background:var(--gold-pale); color:#8A6A2F; font-weight:700; padding:1px 5px; border-radius:5px;}
+
   /* Practice items */
   .practice-item{border:1.5px solid var(--line); border-radius:10px; padding:13px 14px; margin-bottom:10px;}
   .practice-item .ctx{font-size:0.78rem; color:var(--ink-soft); margin-bottom:8px; line-height:1.5;}
@@ -258,6 +274,40 @@
         <div class="dline"><span class="speaker">Receptionist</span>That's fair — I'll move you tomorrow and refund tonight's difference.</div>
       </div>
     </div>
+
+    <div class="card current-affairs-card">
+      <h2>In the news right now</h2>
+      <span class="fact-tag fact-rust">Ongoing · August 2026</span>
+      <p>This isn't just a roleplay problem — it's happening in Europe right now. Airline and airport staff strikes are threatening to disrupt travel across the continent this August, after earlier walkouts in Germany already caused hundreds of cancellations and knock-on delays. Pay and scheduling disputes are still unresolved at several airlines, so more disruption is possible if talks break down again.</p>
+      <div class="pull-quote">If your flight from an EU airport — or into the EU on an EU airline — is cancelled or delayed by more than 3 hours because of a strike, you could be entitled to up to <b>€600 compensation</b> under EC 261, plus rerouting or a refund.</div>
+      <p>So a call like the one you just heard isn't far-fetched — it's the kind of conversation thousands of travellers are actually having this month.</p>
+      <button class="teacher-toggle" data-target="tn2b">🔒 Teacher notes</button>
+      <div class="teacher-body" id="tn2b">
+        Real, current story — good for making the roleplay feel less like an exercise and more like something he could genuinely need. Ask if he's ever been affected by a strike or major delay; if so, let that become the basis for one of the roleplay scenarios instead of the scripted ones.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Reviewing what you've watched</h2>
+      <p class="hint">A different skill, same theme: summarising a film or show and giving your opinion on it (B1-10). Travel-gone-wrong stories make good material either way.</p>
+      <div class="exponent-list">
+        <div class="exponent-item"><span class="num">1</span><span class="txt">It was set in…</span></div>
+        <div class="exponent-item"><span class="num">2</span><span class="txt">It was about…</span></div>
+        <div class="exponent-item"><span class="num">3</span><span class="txt">It had a happy ending</span></div>
+        <div class="exponent-item"><span class="num">4</span><span class="txt">If you like X you'll like this</span></div>
+      </div>
+      <div class="media-card">
+        <div class="title">Model review — The Terminal (2004)</div>
+        <div class="meta">Tom Hanks · comedy-drama</div>
+        <p><mark>It was set in</mark> a New York airport, almost entirely inside the terminal building. <mark>It was about</mark> a man whose passport stops being valid mid-flight because of a coup back home — so he can't enter the US, and can't fly home either. He ends up living in the terminal for months, dealing with one bureaucratic problem after another.</p>
+        <p><mark>It had a happy ending</mark> — he finally gets to leave and do the one thing he came to New York for. <mark>If you like</mark> stories about someone calmly solving problem after problem, <mark>you'll like this</mark>.</p>
+      </div>
+      <p class="hint">Your turn: think of a film, show, or series where someone deals with a travel problem going wrong — a flight, a hotel, a lost passport, a strike. Give a short spoken review using the exponents above.</p>
+      <button class="teacher-toggle" data-target="tn2c">🔒 Teacher notes</button>
+      <div class="teacher-body" id="tn2c">
+        B1-10 incidental — don't push for the full 90-second evidence-task version today, just a natural minute of talk. If he draws a blank on travel-themed media, let him review anything he's watched recently; the exponents are the point, not the topic. Good bridge back into "and has anything like that ever nearly happened to you?" before moving to Practice.
+      </div>
+    </div>
   </section>
 
   <!-- PRACTICE -->
@@ -390,6 +440,15 @@
         Function: expressing opinions.<br>
         Exponents: I think…, I don't think…, In my opinion…<br>
         Touched in the warm-up discussion about trip disasters and how to complain well — not the lesson's main focus.
+      </div>
+
+      <div class="card-code" style="margin-top:16px;">B1-10 — incidental</div>
+      <button class="cando-toggle" data-target="cd4">Show card</button>
+      <div class="cando-body" id="cd4">
+        <b>Reviewing & recommending</b><br>
+        Function: talking about films and books.<br>
+        Exponents: It was set in…, It was about…, It had a happy ending, If you like X you'll like this.<br>
+        Touched in the Presentation tab via a model review of The Terminal, then his own short spoken review of a travel-gone-wrong film or show — not the full 90-second evidence task today.
       </div>
     </div>
   </section>
