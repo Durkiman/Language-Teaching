@@ -49,25 +49,43 @@
     </a>
   </div>
 
-  <div class="hub-columns">
-    <section class="hub-column">
-      <p class="lessons-label">Your lessons</p>
-      <ul class="lesson-list" id="lesson-list">
-        <li><div class="loading-state"><div class="spinner"></div> Loading your lessons…</div></li>
-      </ul>
-    </section>
-    <section class="hub-column">
-      <p class="lessons-label">Your grammar book</p>
-      <div class="grammar-links" id="grammar-book-list">
-        <div class="loading-state"><div class="spinner"></div> Loading…</div>
-      </div>
-    </section>
-    <section class="hub-column">
-      <p class="lessons-label">Your homework</p>
-      <ul class="lesson-list" id="homework-list">
-        <li><div class="loading-state"><div class="spinner"></div> Loading your homework…</div></li>
-      </ul>
-    </section>
+  <div class="hub-section">
+    <p class="lessons-label">Your lessons</p>
+    <div id="lesson-hero">
+      <div class="loading-state"><div class="spinner"></div> Loading…</div>
+    </div>
+    <div class="carousel-wrap" id="lesson-carousel">
+      <button class="car-arrow car-prev" aria-label="Scroll left">‹</button>
+      <div class="car-track"></div>
+      <button class="car-arrow car-next" aria-label="Scroll right">›</button>
+    </div>
+    <a class="see-all" id="lesson-see-all">See all lessons →</a>
+  </div>
+
+  <div class="hub-section">
+    <p class="lessons-label">Your grammar book</p>
+    <div id="grammar-hero">
+      <div class="loading-state"><div class="spinner"></div> Loading…</div>
+    </div>
+    <div class="carousel-wrap" id="grammar-carousel">
+      <button class="car-arrow car-prev" aria-label="Scroll left">‹</button>
+      <div class="car-track"></div>
+      <button class="car-arrow car-next" aria-label="Scroll right">›</button>
+    </div>
+    <a class="see-all" id="grammar-see-all">See full grammar book →</a>
+  </div>
+
+  <div class="hub-section">
+    <p class="lessons-label">Your homework</p>
+    <div id="homework-hero">
+      <div class="loading-state"><div class="spinner"></div> Loading…</div>
+    </div>
+    <div class="carousel-wrap" id="homework-carousel">
+      <button class="car-arrow car-prev" aria-label="Scroll left">‹</button>
+      <div class="car-track"></div>
+      <button class="car-arrow car-next" aria-label="Scroll right">›</button>
+    </div>
+    <a class="see-all" id="homework-see-all">See all homework →</a>
   </div>
 
   <div class="footer-note">Made with care by Durim · Open each lesson directly in your browser</div>
