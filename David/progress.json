@@ -1,0 +1,15 @@
+{
+  "student": "david",
+  "levels": ["A2", "B1"],
+  "cards": {},
+  "intake": {
+    "date": "2026-08-04",
+    "native_language": "Dutch",
+    "target_language": "English",
+    "profession": "Watchmaker; buys and sells gold; runs an Instagram page for the business",
+    "strengths": "Confident speaker",
+    "gaps": ["Tense accuracy", "Vocabulary range", "Pronunciation"],
+    "motivation": "Very motivated; also works with another language teacher and wants to improve",
+    "plan_notes": "Wants to work on tenses, but several grammar points need review/refresh generally"
+  }
+}
