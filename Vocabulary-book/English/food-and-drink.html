@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./doc-page.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&amp;family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&amp;display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print {
+      #answerToggleBtn { display: none !important; }
+    }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
+  </style>
+</head>
+<body>
+<doc-page size="letter" margin="0.7in">
+
+  <div slot="header" style="display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px;border-bottom:3px solid #0E7C86;">
+
+  </div>
+
+  <div slot="footer" style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #DDD8CC;font-size:10.5px;color:#9A9483;font-family:'Nunito',sans-serif;">
+    <span>© Food &amp; Drink</span>
+    <span>ESL Vocabulary Book</span>
+  </div>
+
+  <!-- ============ TITLE BLOCK ============ -->
+  <div style="text-align:center;padding:8px 0 22px;">
+    <div style="display:inline-block;background:#0E7C86;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Durim's ESL Vocabulary Book: A1</div>
+    <h1 style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:44px;color:#1B4B4F;margin:16px 0 4px;line-height:1.05;">Food &amp; Drink</h1>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:600;font-size:22px;color:#F2994A;margin-bottom:10px;">16 core words</div>
+  </div>
+
+  <!-- ============ SECTION 1: WORD BANK ============ -->
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:6px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;">📖 1. Word Bank</h2>
+
+  <table style="width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:13.5px;">
+    <thead>
+      <tr style="background:#0E7C86;color:#fff;font-family:'Baloo 2',sans-serif;">
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Word</th>
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Type</th>
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Meaning</th>
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">apple</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a round fruit, often red or green</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">I eat an <strong>apple</strong> every day.</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">bread</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a food made from baked flour and water</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">She buys fresh <strong>bread</strong> every morning.</td></tr>
+      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">cheese</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a solid food made from milk</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Can I have some <strong>cheese</strong> on my sandwich?</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">chicken</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">meat from a chicken</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">We had <strong>chicken</strong> and rice for dinner.</td></tr>
+      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">coffee</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a hot drink made from roasted beans</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">He drinks <strong>coffee</strong> every morning.</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">egg</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">an oval food laid by a hen</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">I usually eat an <strong>egg</strong> for breakfast.</td></tr>
+      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">fish</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">an animal that lives in water, eaten as food</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">They eat <strong>fish</strong> on Fridays.</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">juice</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a drink made from fruit</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Would you like some orange <strong>juice</strong>?</td></tr>
+      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">meat</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">food from an animal's body</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">She doesn't eat <strong>meat</strong>.</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">milk</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a white drink from cows</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Do you take <strong>milk</strong> in your tea?</td></tr>
+      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">rice</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">small white or brown grains, cooked as food</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">We cook <strong>rice</strong> almost every day.</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">salad</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a cold mix of vegetables</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">I'll have a <strong>salad</strong>, please.</td></tr>
+      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">soup</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a liquid food often made with vegetables or meat</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">This <strong>soup</strong> is very hot.</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">tea</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a hot drink made from leaves and hot water</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">She always drinks <strong>tea</strong> in the afternoon.</td></tr>
+      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">vegetable</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a plant food, like a carrot or a potato</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Carrots are my favourite <strong>vegetable</strong>.</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">water</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a clear liquid we drink</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Can I have a glass of <strong>water</strong>?</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ============ SECTION 2: PRACTICE ============ -->
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:30px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">✏️ 2. Practice</h2>
+
+  <div style="background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A1</div>
+  <div style="margin:0 0 22px;">
+    <p style="font-size:14px;color:#5C4A00;margin:0 0 8px;"><strong>Ex.1</strong> Choose the correct word.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;padding-left:20px;margin:0;">
+      <li>I like to drink orange <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">juice</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">soup</button></span> in the morning.</li>
+      <li>Can you pass me the <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">tea</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">bread</button></span>, please?</li>
+      <li>She has a <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">chicken</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">water</button></span> sandwich for lunch.</li>
+      <li>We need <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">milk</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">eggs</button></span> to make a cake.</li>
+      <li>This <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">soup</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">cheese</button></span> is too hot to eat right now.</li>
+      <li>My father drinks <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">coffee</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">rice</button></span> every morning.</li>
+    </ol>
+  </div>
+
+  <div style="background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A1</div>
+  <div style="margin:0 0 22px;">
+    <p style="font-size:14px;color:#5C4A00;margin:0 0 8px;"><strong>Ex.2</strong> Match each word to its meaning.</p>
+    <ol style="font-size:14.5px;line-height:2.4;color:#2B2B2B;padding-left:20px;margin:0;">
+      <li>apple <select class="iq-select" onchange="checkSelect(this,'a round fruit')"><option value="">choose…</option><option value="a round fruit">a round fruit</option><option value="a hot drink">a hot drink</option><option value="a clear liquid">a clear liquid</option></select></li>
+      <li>water <select class="iq-select" onchange="checkSelect(this,'a clear liquid')"><option value="">choose…</option><option value="a round fruit">a round fruit</option><option value="a hot drink">a hot drink</option><option value="a clear liquid">a clear liquid</option></select></li>
+      <li>tea <select class="iq-select" onchange="checkSelect(this,'a hot drink')"><option value="">choose…</option><option value="a round fruit">a round fruit</option><option value="a hot drink">a hot drink</option><option value="a clear liquid">a clear liquid</option></select></li>
+      <li>vegetable <select class="iq-select" onchange="checkSelect(this,'a plant food')"><option value="">choose…</option><option value="a plant food">a plant food</option><option value="an animal from water">an animal from water</option><option value="a white drink">a white drink</option></select></li>
+      <li>fish <select class="iq-select" onchange="checkSelect(this,'an animal from water')"><option value="">choose…</option><option value="a plant food">a plant food</option><option value="an animal from water">an animal from water</option><option value="a white drink">a white drink</option></select></li>
+      <li>milk <select class="iq-select" onchange="checkSelect(this,'a white drink')"><option value="">choose…</option><option value="a plant food">a plant food</option><option value="an animal from water">an animal from water</option><option value="a white drink">a white drink</option></select></li>
+    </ol>
+  </div>
+
+  <div style="background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A2</div>
+  <div style="margin:0 0 22px;">
+    <p style="font-size:14px;color:#5C4A00;margin:0 0 8px;"><strong>Ex.3</strong> Complete the sentence with the correct word from the word bank.</p>
+    <ol style="font-size:14.5px;line-height:2.4;color:#2B2B2B;padding-left:20px;margin:0;">
+      <li>I'll have a <input class="iq-input" id="ex3-1" placeholder="word"> of vegetables to start, please.</li>
+      <li>Could you put some <input class="iq-input" id="ex3-2" placeholder="word"> on my pasta?</li>
+      <li>He doesn't eat <input class="iq-input" id="ex3-3" placeholder="word"> — he's a vegetarian.</li>
+      <li>We had <input class="iq-input" id="ex3-4" placeholder="word"> and beans for dinner last night.</li>
+      <li>Can I have a glass of <input class="iq-input" id="ex3-5" placeholder="word">? I'm thirsty.</li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
+  </div>
+
+  <div style="background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A2</div>
+  <div style="margin:0 0 10px;">
+    <p style="font-size:14px;color:#5C4A00;margin:0 0 8px;"><strong>Ex.4</strong> Write one full sentence using each word.</p>
+    <ol style="font-size:14.5px;line-height:2.2;color:#2B2B2B;padding-left:20px;margin:0;">
+      <li>cheese — <input class="iq-input iq-input-wide" placeholder="write your sentence…"></li>
+      <li>soup — <input class="iq-input iq-input-wide" placeholder="write your sentence…"></li>
+      <li>juice — <input class="iq-input iq-input-wide" placeholder="write your sentence…"></li>
+    </ol>
+  </div>
+
+  <!-- ============ ANSWER KEY ============ -->
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
+    <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:0;white-space:nowrap;">🔑 Answer Key</h2>
+    <button id="answerToggleBtn" style="flex:0 0 auto;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#fff;background:#8B5FE0;border:none;border-radius:999px;padding:8px 18px;cursor:pointer;white-space:nowrap;">🙈 Hide Answer Key</button>
+  </div>
+  <p style="font-size:12.5px;color:#9A9483;margin:0 0 14px;">Tip: click "Hide Answer Key" above before printing a copy for students — the button itself never prints.</p>
+
+  <div id="answer-key" style="display:block;">
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.1</strong> 1. juice 2. bread 3. chicken 4. eggs 5. soup 6. coffee<br>
+      <strong>Ex.2</strong> apple–a round fruit, water–a clear liquid, tea–a hot drink, vegetable–a plant food, fish–an animal from water, milk–a white drink<br>
+      <strong>Ex.3</strong> 1. salad 2. cheese 3. meat 4. rice 5. water<br>
+      <strong>Ex.4</strong> Open answer — check the target word is used correctly in a full sentence.
+    </div>
+  </div>
+
+</doc-page>
+
+<script>
+(function () {
+  var btn = document.getElementById('answerToggleBtn');
+  var key = document.getElementById('answer-key');
+  btn.addEventListener('click', function () {
+    var showing = key.style.display !== 'none';
+    key.style.display = showing ? 'none' : 'block';
+    btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
+  });
+})();
+
+/* ── Interactive exercises ── */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['salad'] },
+    { accept: ['cheese'] },
+    { accept: ['meat'] },
+    { accept: ['rice'] },
+    { accept: ['water'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
+</script>
+</body>
+</html>
