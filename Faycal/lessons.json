@@ -24,7 +24,21 @@
       "primary": [
         "B1-21"
       ]
-    }
+    },
+    "grammar": [
+      {
+        "file": "going-to-future.html",
+        "title": "Going to Future"
+      },
+      {
+        "file": "future-with-will.html",
+        "title": "Future with Will"
+      },
+      {
+        "file": "future-perfect-and-continuous.html",
+        "title": "Future Perfect & Continuous"
+      }
+    ]
   },
   {
     "file": "faycal-meetings-vocabulary-turn-taking.html",
