@@ -1,5 +1,23 @@
 [
   {
+    "file": "trip-gone-wrong.html",
+    "title": "#3 Trip Gone Wrong",
+    "goals": {
+      "primary": ["B1-19"],
+      "incidental": ["B2-11", "B1-08"]
+    },
+    "grammar": [
+      {
+        "file": "modal-verbs.html",
+        "title": "Modal Verbs"
+      },
+      {
+        "file": "polite-requests.html",
+        "title": "Polite Requests"
+      }
+    ]
+  },
+  {
     "file": "faycal-albania-culture-future-plans.html",
     "title": "#2 Albania — Culture & Future Plans",
     "goals": {

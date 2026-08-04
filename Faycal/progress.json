@@ -1,5 +1,24 @@
 {
   "student": "faycal",
   "levels": ["B1", "B2"],
-  "cards": {}
+  "cards": {
+    "B1-19": {
+      "status": "introduced",
+      "introduced": "2026-08-04",
+      "reviews": [],
+      "notes": "Primary focus — explaining a problem & requesting resolution, travel-complaint roleplays (wrong booking; faulty purchase). Evidence task pending confirmation after session."
+    },
+    "B2-11": {
+      "status": "reviewed",
+      "introduced": null,
+      "reviews": ["2026-08-04"],
+      "notes": "Introduced in lesson #1 (Meetings — Vocabulary & Turn-Taking), date not logged at the time; backfilled here. Touched incidentally again in this session if the interlocutor talks over him mid-roleplay."
+    },
+    "B1-08": {
+      "status": "introduced",
+      "introduced": "2026-08-04",
+      "reviews": [],
+      "notes": "incidental touch — opinion warm-up on trip disasters and complaining well."
+    }
+  }
 }
