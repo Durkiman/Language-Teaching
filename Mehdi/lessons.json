@@ -6,7 +6,12 @@
       "primary": ["B1-19"],
       "incidental": ["B1-09", "B1-08"]
     },
-    "grammar": []
+    "grammar": [
+      {
+        "file": "modal-verbs.html",
+        "title": "Modal Verbs"
+      }
+    ]
   },
   {
     "file": "mehdi-modal-verbs-objections.html",

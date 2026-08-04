@@ -2,7 +2,17 @@
   {
     "title": "#4 Structured Storytelling — Handling a Difficult Situation at Work",
     "file": "structured-storytelling-workplace-challenges.html",
-    "goals": { "primary": ["B1-01"], "incidental": ["B1-08", "B1-18"] }
+    "goals": { "primary": ["B1-01"], "incidental": ["B1-08", "B1-18"] },
+    "grammar": [
+      {
+        "file": "past-simple.html",
+        "title": "Past Simple"
+      },
+      {
+        "file": "storytelling-and-narrative-sequencing.html",
+        "title": "Storytelling & Narrative Sequencing"
+      }
+    ]
   },
   {
     "title": "#3 Emotional Vocabulary — Widening Your Bandwidth",
