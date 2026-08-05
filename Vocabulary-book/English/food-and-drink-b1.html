@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./doc-page.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&amp;family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&amp;display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print {
+      #answerToggleBtn { display: none !important; }
+      .vc-study-block { display: none !important; }
+    }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display: none !important; }
+      .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; }
+    }
+  </style>
+</head>
+<body>
+<doc-page size="letter" margin="0.7in">
+
+  <div slot="header" style="display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px;border-bottom:3px solid #0E7C86;">
+
+  </div>
+
+  <div slot="footer" style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #DDD8CC;font-size:10.5px;color:#9A9483;font-family:'Nunito',sans-serif;">
+    <span>© Food &amp; Drink · B1</span>
+    <span>ESL Vocabulary Book</span>
+  </div>
+
+  <!-- ============ TITLE BLOCK ============ -->
+  <div style="text-align:center;padding:8px 0 22px;">
+    <div style="display:inline-block;background:#4C7BF5;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Durim's ESL Vocabulary Book: B1</div>
+    <h1 style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:44px;color:#1B4B4F;margin:16px 0 4px;line-height:1.05;">Food &amp; Drink</h1>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:600;font-size:22px;color:#F2994A;margin-bottom:10px;">Cooking & Preparation · 16 words</div>
+    <div style="font-size:12.5px;color:#9A9483;">
+      <a href="index.html" style="color:#0E7C86;text-decoration:none;">← Back to Food &amp; Drink levels</a>
+    </div>
+  </div>
+
+  <!-- ============ SECTION 1: WORD BANK ============ -->
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:6px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;">📖 1. Word Bank</h2>
+
+  <table style="width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:13.5px;">
+    <thead>
+      <tr style="background:#0E7C86;color:#fff;font-family:'Baloo 2',sans-serif;">
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Word</th>
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Type</th>
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Meaning</th>
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="word-boil" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">boil<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/bɔɪl/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">to cook in very hot, bubbling water</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Boil the pasta for ten minutes.</td></tr>
+      <tr id="word-fry" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">fry<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/fraɪ/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">to cook in hot oil</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">He fried the eggs in butter.</td></tr>
+      <tr id="word-grill" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">grill<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ɡrɪl/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">to cook using direct heat from below or above</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">We <strong>grill</strong>ed chicken for the barbecue.</td></tr>
+      <tr id="word-roast" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">roast<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/rəʊst/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">to cook food in an oven with dry heat</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Mum is <strong>roast</strong>ing a chicken for Sunday lunch.</td></tr>
+      <tr id="word-marinate" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">marinate<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈmær.ɪ.neɪt/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">to leave food in a sauce before cooking</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Marinate the meat overnight for more flavour.</td></tr>
+      <tr id="word-season" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">season<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈsiː.zən/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">to add salt, pepper, or spices</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Season the soup with salt and pepper.</td></tr>
+      <tr id="word-leftovers" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">leftovers<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈleftˌəʊ.vəz/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">food that remains after a meal</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">We had the <strong>leftovers</strong> for lunch the next day.</td></tr>
+      <tr id="word-portion" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">portion<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈpɔː.ʃən/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">the amount of food served to one person</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">That's a big <strong>portion</strong> for one person!</td></tr>
+      <tr id="word-diet" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">diet<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈdaɪ.ət/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">the food someone usually eats</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">A healthy <strong>diet</strong> includes lots of vegetables.</td></tr>
+      <tr id="word-organic" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">organic<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ɔːˈɡæn.ɪk/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">grown without artificial chemicals</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">We buy <strong>organic</strong> fruit when we can.</td></tr>
+      <tr id="word-homemade" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">homemade<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˌhəʊmˈmeɪd/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">made at home, not bought</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">This is <strong>homemade</strong> bread — I baked it myself.</td></tr>
+      <tr id="word-takeaway" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">takeaway<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈteɪk.ə.weɪ/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a meal bought at a restaurant to eat elsewhere</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Let's order a <strong>takeaway</strong> tonight.</td></tr>
+      <tr id="word-starter" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">starter<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈstɑː.tər/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">the first small dish of a meal</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">I'll have soup as a <strong>starter</strong>.</td></tr>
+      <tr id="word-main-course" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">main course<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/meɪn kɔːs/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">the biggest dish of a meal</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">For the <strong>main course</strong>, I chose the fish.</td></tr>
+      <tr id="word-stale" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">stale<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/steɪl/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">no longer fresh</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">The bread has gone <strong>stale</strong>.</td></tr>
+      <tr id="word-stir-fry" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">stir-fry<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈstɜː.fraɪ/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">to cook quickly in a little oil while stirring</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Stir-fry the vegetables for five minutes.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ============ SECTION 2: STUDY CARDS ============ -->
+  <div class="vc-study-block">
+    <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:30px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">🗂️ 2. Study Cards</h2>
+    <p style="font-size:13.5px;color:#5C4A00;margin:0 0 16px;">Flip through the deck on-screen with a student. Progress is saved in this browser — cards you know move further out; cards you miss come back sooner.</p>
+    <div id="vocab-cards-root"></div>
+  </div>
+
+  <!-- ============ SECTION 3: PRACTICE ============ -->
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:30px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">✏️ 3. Practice</h2>
+
+  <div style="background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B1</div>
+  <div style="margin:0 0 22px;">
+    <p style="font-size:14px;color:#5C4A00;margin:0 0 8px;"><strong>Ex.1</strong> Read the meaning. Write the word — no options this time.</p>
+    <ol style="font-size:14.5px;line-height:2.4;color:#2B2B2B;padding-left:20px;margin:0;">
+      <li>to cook in very hot, bubbling water → <input class="iq-input" id="ex1-1" placeholder="word"></li>
+      <li>to cook in hot oil → <input class="iq-input" id="ex1-2" placeholder="word"></li>
+      <li>to leave food in a sauce before cooking → <input class="iq-input" id="ex1-3" placeholder="word"></li>
+      <li>food that remains after a meal → <input class="iq-input" id="ex1-4" placeholder="word"></li>
+      <li>the amount of food served to one person → <input class="iq-input" id="ex1-5" placeholder="word"></li>
+      <li>no longer fresh → <input class="iq-input" id="ex1-6" placeholder="word"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex1')">✓ Check</button><span class="iq-fb" id="ex1-fb"></span>
+  </div>
+
+  <div style="background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B1</div>
+  <div style="margin:0 0 22px;">
+    <p style="font-size:14px;color:#5C4A00;margin:0 0 8px;"><strong>Ex.2</strong> Complete the sentence with the correct word from the word bank.</p>
+    <ol style="font-size:14.5px;line-height:2.4;color:#2B2B2B;padding-left:20px;margin:0;">
+      <li>We <input class="iq-input" id="ex2-1" placeholder="word"> chicken for the barbecue.</li>
+      <li>Mum is <input class="iq-input" id="ex2-2" placeholder="word"> a chicken for Sunday lunch.</li>
+      <li><input class="iq-input" id="ex2-3" placeholder="word"> the soup with salt and pepper.</li>
+      <li>A healthy <input class="iq-input" id="ex2-4" placeholder="word"> includes lots of vegetables.</li>
+      <li>This is <input class="iq-input" id="ex2-5" placeholder="word"> bread — I baked it myself.</li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex2')">✓ Check</button><span class="iq-fb" id="ex2-fb"></span>
+  </div>
+
+  <div style="background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B1</div>
+  <div style="margin:0 0 22px;">
+    <p style="font-size:14px;color:#5C4A00;margin:0 0 8px;"><strong>Ex.3</strong> Write one sentence that uses <em>both</em> words together.</p>
+    <ol style="font-size:14.5px;line-height:2.2;color:#2B2B2B;padding-left:20px;margin:0;">
+      <li>organic + homemade — <input class="iq-input iq-input-wide" id="ex3-1" placeholder="write your sentence…"></li>
+      <li>takeaway + starter — <input class="iq-input iq-input-wide" id="ex3-2" placeholder="write your sentence…"></li>
+      <li>main course + portion — <input class="iq-input iq-input-wide" id="ex3-3" placeholder="write your sentence…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkPairBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
+  </div>
+
+  <div style="background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 10px;">B1</div>
+  <div style="margin:0 0 10px;">
+    <p style="font-size:14px;color:#5C4A00;margin:0 0 8px;"><strong>Ex.4</strong> Write a short recipe introduction (3–4 sentences) for a dish you know how to cook. Use at least <strong>4 words</strong> from the word bank.</p>
+    <textarea class="iq-input iq-input-wide" style="min-height:100px;width:100%;box-sizing:border-box;padding:10px 12px;resize:vertical;" placeholder="Write your answer here…"></textarea>
+  </div>
+
+  <!-- ============ ANSWER KEY ============ -->
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
+    <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:0;white-space:nowrap;">🔑 Answer Key</h2>
+    <button id="answerToggleBtn" style="flex:0 0 auto;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#fff;background:#8B5FE0;border:none;border-radius:999px;padding:8px 18px;cursor:pointer;white-space:nowrap;">🙈 Hide Answer Key</button>
+  </div>
+  <p style="font-size:12.5px;color:#9A9483;margin:0 0 14px;">Tip: click "Hide Answer Key" above before printing a copy for students — the button itself never prints.</p>
+
+  <div id="answer-key" style="display:block;">
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.1</strong> 1. boil 2. fry 3. marinate 4. leftovers 5. portion 6. stale<br>
+      <strong>Ex.2</strong> 1. grilled 2. roasting 3. season 4. diet 5. homemade<br>
+      <strong>Ex.3</strong> Open answer — check both target words appear and the sentence makes sense.<br>
+      <strong>Ex.4</strong> Open answer — check for 4+ word-bank words and coherent, connected sentences.
+    </div>
+  </div>
+
+</doc-page>
+
+<script src="../vocab-cards.js"></script>
+<script>
+VocabCards.init(document.getElementById('vocab-cards-root'), {
+  deckId: 'food-and-drink-b1',
+  words: [
+    { term: 'boil', ipa: '/bɔɪl/', meaning: 'to cook in very hot, bubbling water', example: 'Boil the pasta for ten minutes.' },
+    { term: 'fry', ipa: '/fraɪ/', meaning: 'to cook in hot oil', example: 'He fried the eggs in butter.' },
+    { term: 'grill', ipa: '/ɡrɪl/', meaning: 'to cook using direct heat from below or above', example: 'We grilled chicken for the barbecue.' },
+    { term: 'roast', ipa: '/rəʊst/', meaning: 'to cook food in an oven with dry heat', example: 'Mum is roasting a chicken for Sunday lunch.' },
+    { term: 'marinate', ipa: '/ˈmær.ɪ.neɪt/', meaning: 'to leave food in a sauce before cooking', example: 'Marinate the meat overnight for more flavour.' },
+    { term: 'season', ipa: '/ˈsiː.zən/', meaning: 'to add salt, pepper, or spices', example: 'Season the soup with salt and pepper.' },
+    { term: 'leftovers', ipa: '/ˈleftˌəʊ.vəz/', meaning: 'food that remains after a meal', example: 'We had the leftovers for lunch the next day.' },
+    { term: 'portion', ipa: '/ˈpɔː.ʃən/', meaning: 'the amount of food served to one person', example: 'That\'s a big portion for one person!' },
+    { term: 'diet', ipa: '/ˈdaɪ.ət/', meaning: 'the food someone usually eats', example: 'A healthy diet includes lots of vegetables.' },
+    { term: 'organic', ipa: '/ɔːˈɡæn.ɪk/', meaning: 'grown without artificial chemicals', example: 'We buy organic fruit when we can.' },
+    { term: 'homemade', ipa: '/ˌhəʊmˈmeɪd/', meaning: 'made at home, not bought', example: 'This is homemade bread — I baked it myself.' },
+    { term: 'takeaway', ipa: '/ˈteɪk.ə.weɪ/', meaning: 'a meal bought at a restaurant to eat elsewhere', example: 'Let\'s order a takeaway tonight.' },
+    { term: 'starter', ipa: '/ˈstɑː.tər/', meaning: 'the first small dish of a meal', example: 'I\'ll have soup as a starter.' },
+    { term: 'main course', ipa: '/meɪn kɔːs/', meaning: 'the biggest dish of a meal', example: 'For the main course, I chose the fish.' },
+    { term: 'stale', ipa: '/steɪl/', meaning: 'no longer fresh', example: 'The bread has gone stale.' },
+    { term: 'stir-fry', ipa: '/ˈstɜː.fraɪ/', meaning: 'to cook quickly in a little oil while stirring', example: 'Stir-fry the vegetables for five minutes.' }
+  ]
+});
+</script>
+
+<script>
+(function () {
+  var btn = document.getElementById('answerToggleBtn');
+  var key = document.getElementById('answer-key');
+  btn.addEventListener('click', function () {
+    var showing = key.style.display !== 'none';
+    key.style.display = showing ? 'none' : 'block';
+    btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
+  });
+})();
+
+/* ── Interactive exercises ── */
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex1: { type: 'exact', items: [
+    { accept: ['boil'] },
+    { accept: ['fry'] },
+    { accept: ['marinate'] },
+    { accept: ['leftovers'] },
+    { accept: ['portion'] },
+    { accept: ['stale'] }
+  ]},
+  ex2: { type: 'exact', items: [
+    { accept: ['grilled'] },
+    { accept: ['roasting'] },
+    { accept: ['season'] },
+    { accept: ['diet'] },
+    { accept: ['homemade'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var field = document.getElementById(id + '-' + (i + 1));
+    if (!field) return;
+    var val = iqNormalize(field.value);
+    var ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    field.classList.remove('iq-correct', 'iq-wrong');
+    field.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
+
+var IQ_PAIRS = {
+  ex3: [
+    ['organic', 'homemade'],
+    ['takeaway', 'starter'],
+    ['main course', 'portion']
+  ]
+};
+
+function checkPairBlock(id) {
+  var pairs = IQ_PAIRS[id];
+  if (!pairs) return;
+  var correctCount = 0;
+  pairs.forEach(function (pair, i) {
+    var field = document.getElementById(id + '-' + (i + 1));
+    if (!field) return;
+    var val = iqNormalize(field.value);
+    var ok = val.length > 0 && pair.every(function (word) { return val.indexOf(word) !== -1; });
+    field.classList.remove('iq-correct', 'iq-wrong');
+    field.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + pairs.length + ' used both words';
+}
+</script>
+</body>
+</html>

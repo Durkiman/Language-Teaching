@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./doc-page.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&amp;family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&amp;display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print {
+      #answerToggleBtn { display: none !important; }
+      .vc-study-block { display: none !important; }
+    }
+
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+
+    @media print {
+      .iq-check-btn, .iq-fb { display: none !important; }
+      .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; }
+    }
+  </style>
+</head>
+<body>
+<doc-page size="letter" margin="0.7in">
+
+  <div slot="header" style="display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px;border-bottom:3px solid #0E7C86;">
+
+  </div>
+
+  <div slot="footer" style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #DDD8CC;font-size:10.5px;color:#9A9483;font-family:'Nunito',sans-serif;">
+    <span>© Food &amp; Drink · C2</span>
+    <span>ESL Vocabulary Book</span>
+  </div>
+
+  <!-- ============ TITLE BLOCK ============ -->
+  <div style="text-align:center;padding:8px 0 22px;">
+    <div style="display:inline-block;background:#E8555F;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Durim's ESL Vocabulary Book: C2</div>
+    <h1 style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:44px;color:#1B4B4F;margin:16px 0 4px;line-height:1.05;">Food &amp; Drink</h1>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:600;font-size:22px;color:#F2994A;margin-bottom:10px;">Advanced & Idiomatic · 16 words</div>
+    <div style="font-size:12.5px;color:#9A9483;">
+      <a href="index.html" style="color:#0E7C86;text-decoration:none;">← Back to Food &amp; Drink levels</a>
+    </div>
+  </div>
+
+  <!-- ============ SECTION 1: WORD BANK ============ -->
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:6px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;">📖 1. Word Bank</h2>
+
+  <table style="width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:13.5px;">
+    <thead>
+      <tr style="background:#0E7C86;color:#fff;font-family:'Baloo 2',sans-serif;">
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Word</th>
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Type</th>
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Meaning</th>
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="word-gourmand" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">gourmand<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈɡʊə.mɒnd/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a person who loves eating, sometimes excessively</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">He's a <strong>gourmand</strong> who always orders too much.</td></tr>
+      <tr id="word-gustatory" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">gustatory<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈɡʌs.tə.tər.i/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">relating to the sense of taste</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">The dish provided an intense <strong>gustatory</strong> experience.</td></tr>
+      <tr id="word-tantalizing" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">tantalizing<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈtæn.tə.laɪ.zɪŋ/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">extremely tempting or appealing</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">The <strong>tantalizing</strong> smell drew everyone to the kitchen.</td></tr>
+      <tr id="word-pungent" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">pungent<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈpʌn.dʒənt/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">having a very strong, sharp smell or taste</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">The <strong>pungent</strong> smell of garlic filled the room.</td></tr>
+      <tr id="word-insipid" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">insipid<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ɪnˈsɪp.ɪd/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">lacking flavour or interest</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">The soup was watery and <strong>insipid</strong>.</td></tr>
+      <tr id="word-victuals" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">victuals<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈvɪt.əlz/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">food or provisions</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">They stocked up on <strong>victuals</strong> for the journey.</td></tr>
+      <tr id="word-larder" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">larder<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈlɑː.dər/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a room or cupboard for storing food</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">The <strong>larder</strong> was full of preserves and jars.</td></tr>
+      <tr id="word-provender" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">provender<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈprɒv.ɪn.dər/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">food, especially stored supplies or animal feed</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">The farm kept <strong>provender</strong> for the winter.</td></tr>
+      <tr id="word-glut" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">glut<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ɡlʌt/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">an excessive supply of something</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">There was a <strong>glut</strong> of apples this year.</td></tr>
+      <tr id="word-hors-d-oeuvre" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">hors d'oeuvre<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ɔːˈdɜːv/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a small dish served before the main meal</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">They served <strong>hors d'oeuvre</strong>s before dinner.</td></tr>
+      <tr id="word-comestible" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">comestible<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/kəˈmes.tɪ.bəl/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">fit to be eaten</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">The market sold a wide variety of <strong>comestible</strong>s.</td></tr>
+      <tr id="word-epicurean" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">epicurean<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˌep.ɪ.kjʊəˈriː.ən/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">devoted to sensual, especially culinary, pleasure</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Their trip to France was an <strong>epicurean</strong> adventure.</td></tr>
+      <tr id="word-gastronome" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">gastronome<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈɡæs.trə.nəʊm/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a person with expert knowledge of food and drink</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">The restaurant was recommended by a famous <strong>gastronome</strong>.</td></tr>
+      <tr id="word-sate" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">sate<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/seɪt/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">to satisfy a desire or appetite fully</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">One slice was enough to <strong>sate</strong> his hunger.</td></tr>
+      <tr id="word-surfeit" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">surfeit<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈsɜː.fɪt/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">an excessive amount of something</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">A <strong>surfeit</strong> of rich food made him feel ill.</td></tr>
+      <tr id="word-savour" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">savour<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈseɪ.vər/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">to enjoy food slowly, appreciating its taste</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">She <strong>savour</strong>ed every bite of the cake.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ============ SECTION 2: STUDY CARDS ============ -->
+  <div class="vc-study-block">
+    <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:30px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">🗂️ 2. Study Cards</h2>
+    <p style="font-size:13.5px;color:#5C4A00;margin:0 0 16px;">Flip through the deck on-screen with a student. Progress is saved in this browser — cards you know move further out; cards you miss come back sooner.</p>
+    <div id="vocab-cards-root"></div>
+  </div>
+
+  <!-- ============ SECTION 3: PRACTICE ============ -->
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:30px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">✏️ 3. Practice</h2>
+
+  <div style="background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">C2</div>
+  <div style="margin:0 0 22px;">
+    <p style="font-size:14px;color:#5C4A00;margin:0 0 8px;"><strong>Ex.1</strong> Read the meaning. Write the word — no options this time.</p>
+    <ol style="font-size:14.5px;line-height:2.4;color:#2B2B2B;padding-left:20px;margin:0;">
+      <li>a person who loves eating, sometimes excessively → <input class="iq-input" id="ex1-1" placeholder="word"></li>
+      <li>relating to the sense of taste → <input class="iq-input" id="ex1-2" placeholder="word"></li>
+      <li>extremely tempting or appealing → <input class="iq-input" id="ex1-3" placeholder="word"></li>
+      <li>having a very strong, sharp smell or taste → <input class="iq-input" id="ex1-4" placeholder="word"></li>
+      <li>lacking flavour or interest → <input class="iq-input" id="ex1-5" placeholder="word"></li>
+      <li>food or provisions → <input class="iq-input" id="ex1-6" placeholder="word"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex1')">✓ Check</button><span class="iq-fb" id="ex1-fb"></span>
+  </div>
+
+  <div style="background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">C2</div>
+  <div style="margin:0 0 22px;">
+    <p style="font-size:14px;color:#5C4A00;margin:0 0 8px;"><strong>Ex.2</strong> Complete the sentence with the correct word from the word bank.</p>
+    <ol style="font-size:14.5px;line-height:2.4;color:#2B2B2B;padding-left:20px;margin:0;">
+      <li>The <input class="iq-input" id="ex2-1" placeholder="word"> was full of preserves and jars.</li>
+      <li>There was a <input class="iq-input" id="ex2-2" placeholder="word"> of apples this year.</li>
+      <li>They served <input class="iq-input" id="ex2-3" placeholder="word">s before dinner.</li>
+      <li>One slice was enough to <input class="iq-input" id="ex2-4" placeholder="word"> his hunger.</li>
+      <li>She <input class="iq-input" id="ex2-5" placeholder="word"> every bite of the cake.</li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex2')">✓ Check</button><span class="iq-fb" id="ex2-fb"></span>
+  </div>
+
+  <div style="background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">C2</div>
+  <div style="margin:0 0 22px;">
+    <p style="font-size:14px;color:#5C4A00;margin:0 0 8px;"><strong>Ex.3</strong> Write one sentence that uses <em>both</em> words together.</p>
+    <ol style="font-size:14.5px;line-height:2.2;color:#2B2B2B;padding-left:20px;margin:0;">
+      <li>epicurean + gastronome — <input class="iq-input iq-input-wide" id="ex3-1" placeholder="write your sentence…"></li>
+      <li>surfeit + glut — <input class="iq-input iq-input-wide" id="ex3-2" placeholder="write your sentence…"></li>
+      <li>comestible + provender — <input class="iq-input iq-input-wide" id="ex3-3" placeholder="write your sentence…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkPairBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
+  </div>
+
+  <div style="background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 10px;">C2</div>
+  <div style="margin:0 0 10px;">
+    <p style="font-size:14px;color:#5C4A00;margin:0 0 8px;"><strong>Ex.4</strong> Write a short, richly descriptive paragraph (3–4 sentences) about an indulgent meal, using at least <strong>4 words</strong> from the word bank.</p>
+    <textarea class="iq-input iq-input-wide" style="min-height:100px;width:100%;box-sizing:border-box;padding:10px 12px;resize:vertical;" placeholder="Write your answer here…"></textarea>
+  </div>
+
+  <!-- ============ ANSWER KEY ============ -->
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
+    <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:0;white-space:nowrap;">🔑 Answer Key</h2>
+    <button id="answerToggleBtn" style="flex:0 0 auto;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#fff;background:#8B5FE0;border:none;border-radius:999px;padding:8px 18px;cursor:pointer;white-space:nowrap;">🙈 Hide Answer Key</button>
+  </div>
+  <p style="font-size:12.5px;color:#9A9483;margin:0 0 14px;">Tip: click "Hide Answer Key" above before printing a copy for students — the button itself never prints.</p>
+
+  <div id="answer-key" style="display:block;">
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.1</strong> 1. gourmand 2. gustatory 3. tantalizing 4. pungent 5. insipid 6. victuals<br>
+      <strong>Ex.2</strong> 1. larder 2. glut 3. hors d'oeuvre 4. sate 5. savoured<br>
+      <strong>Ex.3</strong> Open answer — check both target words appear and the sentence makes sense.<br>
+      <strong>Ex.4</strong> Open answer — check for 4+ word-bank words and coherent, connected sentences.
+    </div>
+  </div>
+
+</doc-page>
+
+<script src="../vocab-cards.js"></script>
+<script>
+VocabCards.init(document.getElementById('vocab-cards-root'), {
+  deckId: 'food-and-drink-c2',
+  words: [
+    { term: 'gourmand', ipa: '/ˈɡʊə.mɒnd/', meaning: 'a person who loves eating, sometimes excessively', example: 'He\'s a gourmand who always orders too much.' },
+    { term: 'gustatory', ipa: '/ˈɡʌs.tə.tər.i/', meaning: 'relating to the sense of taste', example: 'The dish provided an intense gustatory experience.' },
+    { term: 'tantalizing', ipa: '/ˈtæn.tə.laɪ.zɪŋ/', meaning: 'extremely tempting or appealing', example: 'The tantalizing smell drew everyone to the kitchen.' },
+    { term: 'pungent', ipa: '/ˈpʌn.dʒənt/', meaning: 'having a very strong, sharp smell or taste', example: 'The pungent smell of garlic filled the room.' },
+    { term: 'insipid', ipa: '/ɪnˈsɪp.ɪd/', meaning: 'lacking flavour or interest', example: 'The soup was watery and insipid.' },
+    { term: 'victuals', ipa: '/ˈvɪt.əlz/', meaning: 'food or provisions', example: 'They stocked up on victuals for the journey.' },
+    { term: 'larder', ipa: '/ˈlɑː.dər/', meaning: 'a room or cupboard for storing food', example: 'The larder was full of preserves and jars.' },
+    { term: 'provender', ipa: '/ˈprɒv.ɪn.dər/', meaning: 'food, especially stored supplies or animal feed', example: 'The farm kept provender for the winter.' },
+    { term: 'glut', ipa: '/ɡlʌt/', meaning: 'an excessive supply of something', example: 'There was a glut of apples this year.' },
+    { term: 'hors d\'oeuvre', ipa: '/ɔːˈdɜːv/', meaning: 'a small dish served before the main meal', example: 'They served hors d\'oeuvres before dinner.' },
+    { term: 'comestible', ipa: '/kəˈmes.tɪ.bəl/', meaning: 'fit to be eaten', example: 'The market sold a wide variety of comestibles.' },
+    { term: 'epicurean', ipa: '/ˌep.ɪ.kjʊəˈriː.ən/', meaning: 'devoted to sensual, especially culinary, pleasure', example: 'Their trip to France was an epicurean adventure.' },
+    { term: 'gastronome', ipa: '/ˈɡæs.trə.nəʊm/', meaning: 'a person with expert knowledge of food and drink', example: 'The restaurant was recommended by a famous gastronome.' },
+    { term: 'sate', ipa: '/seɪt/', meaning: 'to satisfy a desire or appetite fully', example: 'One slice was enough to sate his hunger.' },
+    { term: 'surfeit', ipa: '/ˈsɜː.fɪt/', meaning: 'an excessive amount of something', example: 'A surfeit of rich food made him feel ill.' },
+    { term: 'savour', ipa: '/ˈseɪ.vər/', meaning: 'to enjoy food slowly, appreciating its taste', example: 'She savoured every bite of the cake.' }
+  ]
+});
+</script>
+
+<script>
+(function () {
+  var btn = document.getElementById('answerToggleBtn');
+  var key = document.getElementById('answer-key');
+  btn.addEventListener('click', function () {
+    var showing = key.style.display !== 'none';
+    key.style.display = showing ? 'none' : 'block';
+    btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
+  });
+})();
+
+/* ── Interactive exercises ── */
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex1: { type: 'exact', items: [
+    { accept: ['gourmand'] },
+    { accept: ['gustatory'] },
+    { accept: ['tantalizing'] },
+    { accept: ['pungent'] },
+    { accept: ['insipid'] },
+    { accept: ['victuals'] }
+  ]},
+  ex2: { type: 'exact', items: [
+    { accept: ['larder'] },
+    { accept: ['glut'] },
+    { accept: ['hors d'oeuvre'] },
+    { accept: ['sate'] },
+    { accept: ['savoured'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var field = document.getElementById(id + '-' + (i + 1));
+    if (!field) return;
+    var val = iqNormalize(field.value);
+    var ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    field.classList.remove('iq-correct', 'iq-wrong');
+    field.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
+
+var IQ_PAIRS = {
+  ex3: [
+    ['epicurean', 'gastronome'],
+    ['surfeit', 'glut'],
+    ['comestible', 'provender']
+  ]
+};
+
+function checkPairBlock(id) {
+  var pairs = IQ_PAIRS[id];
+  if (!pairs) return;
+  var correctCount = 0;
+  pairs.forEach(function (pair, i) {
+    var field = document.getElementById(id + '-' + (i + 1));
+    if (!field) return;
+    var val = iqNormalize(field.value);
+    var ok = val.length > 0 && pair.every(function (word) { return val.indexOf(word) !== -1; });
+    field.classList.remove('iq-correct', 'iq-wrong');
+    field.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + pairs.length + ' used both words';
+}
+</script>
+</body>
+</html>

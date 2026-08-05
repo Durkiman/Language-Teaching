@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Search — Vocabulary Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+  a { color: #0E7C86; }
+
+  #search-input {
+    width: 100%; box-sizing: border-box; font-family: 'Nunito', sans-serif; font-size: 17px; font-weight: 700;
+    padding: 14px 18px; border-radius: 14px; border: 2px solid #DCEEE2; background: #fff; color: #1B4B4F;
+  }
+  #search-input:focus { outline: none; border-color: #0E7C86; }
+
+  .level-badge {
+    font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 11px; color: #fff;
+    border-radius: 6px; padding: 3px 9px; display: inline-block; white-space: nowrap;
+  }
+
+  .result-row {
+    display: flex; align-items: center; gap: 14px; background: #fff; border: 2px solid #DCEEE2;
+    border-radius: 12px; padding: 12px 16px; margin-bottom: 8px; text-decoration: none;
+  }
+  .result-row:hover { border-color: #0E7C86; }
+  .result-term { font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 16px; color: #1B4B4F; min-width: 110px; }
+  .result-ipa { font-size: 13px; color: #0E7C86; min-width: 90px; }
+  .result-meaning { font-size: 13.5px; color: #2B2B2B; flex: 1; }
+  .result-meta { font-size: 12px; color: #9A9483; white-space: nowrap; }
+
+  #empty-state, #no-results { text-align: center; color: #9A9483; font-size: 14px; padding: 40px 0; }
+</style>
+</head>
+<body>
+
+<div style="max-width:760px;margin:0 auto;padding:48px 32px 96px;">
+
+  <div style="margin-bottom:16px;">
+    <a href="index.html" style="font-size:13px;color:#9A9483;text-decoration:none;">← Vocabulary Book</a>
+  </div>
+
+  <div style="text-align:center;padding:8px 0 28px;">
+    <div style="display:inline-block;background:#0E7C86;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Search</div>
+    <h1 style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:38px;color:#1B4B4F;margin:16px 0 8px;line-height:1.05;">Find a word</h1>
+    <div style="font-family:'Nunito',sans-serif;font-weight:600;font-size:15px;color:#5C4A00;">Search across every theme and level. Click a result to jump straight to it.</div>
+  </div>
+
+  <input id="search-input" type="text" placeholder="Type a word or part of its meaning…" autofocus>
+
+  <div id="results" style="margin-top:20px;"></div>
+
+</div>
+
+<script src="vocab-index.js"></script>
+<script>
+(function () {
+  var input = document.getElementById('search-input');
+  var results = document.getElementById('results');
+  var index = window.VOCAB_INDEX || [];
+
+  var LEVEL_COLOR = { A1: '#4CAF7D', A2: '#3AA6A6', B1: '#4C7BF5', B2: '#8B5FE0', C1: '#F2994A', C2: '#E8555F' };
+
+  function render(query) {
+    results.innerHTML = '';
+    var q = query.trim().toLowerCase();
+
+    if (!q) {
+      results.innerHTML = '<div id="empty-state">Start typing to search ' + index.length + ' words across the book.</div>';
+      return;
+    }
+
+    var matches = index.filter(function (w) {
+      return w.term.toLowerCase().indexOf(q) !== -1 || w.meaning.toLowerCase().indexOf(q) !== -1;
+    });
+
+    // exact/starts-with term matches first, then substring term matches, then meaning-only matches
+    matches.sort(function (a, b) {
+      function rank(w) {
+        var t = w.term.toLowerCase();
+        if (t === q) return 0;
+        if (t.indexOf(q) === 0) return 1;
+        if (t.indexOf(q) !== -1) return 2;
+        return 3;
+      }
+      return rank(a) - rank(b);
+    });
+
+    if (!matches.length) {
+      results.innerHTML = '<div id="no-results">No words found for "' + query + '".</div>';
+      return;
+    }
+
+    matches.slice(0, 60).forEach(function (w) {
+      var row = document.createElement('a');
+      row.className = 'result-row';
+      row.href = w.url;
+      var color = LEVEL_COLOR[w.level] || '#9A9483';
+      row.innerHTML =
+        '<span class="level-badge" style="background:' + color + ';">' + w.level + '</span>' +
+        '<span class="result-term">' + w.term + '</span>' +
+        '<span class="result-ipa">' + (w.ipa || '') + '</span>' +
+        '<span class="result-meaning">' + w.meaning + '</span>' +
+        '<span class="result-meta">' + w.language + ' · ' + w.theme + '</span>';
+      results.appendChild(row);
+    });
+  }
+
+  input.addEventListener('input', function () { render(input.value); });
+  render('');
+})();
+</script>
+</body>
+</html>

@@ -13,13 +13,6 @@
       .vc-study-block { display: none !important; }
     }
 
-    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
-    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
-    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
-    .iq-mc-btn:disabled { cursor:default; }
-    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
-    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
-
     .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
     .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
     .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
@@ -30,8 +23,8 @@
     .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
 
     @media print {
-      .iq-check-btn, .iq-fb { display:none !important; }
-      .iq-mc-btn, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+      .iq-check-btn, .iq-fb { display: none !important; }
+      .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; }
     }
   </style>
 </head>
@@ -43,15 +36,18 @@
   </div>
 
   <div slot="footer" style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #DDD8CC;font-size:10.5px;color:#9A9483;font-family:'Nunito',sans-serif;">
-    <span>© Food &amp; Drink</span>
+    <span>© Food &amp; Drink · A1</span>
     <span>ESL Vocabulary Book</span>
   </div>
 
   <!-- ============ TITLE BLOCK ============ -->
   <div style="text-align:center;padding:8px 0 22px;">
-    <div style="display:inline-block;background:#0E7C86;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Durim's ESL Vocabulary Book: A1</div>
+    <div style="display:inline-block;background:#4CAF7D;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Durim's ESL Vocabulary Book: A1</div>
     <h1 style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:44px;color:#1B4B4F;margin:16px 0 4px;line-height:1.05;">Food &amp; Drink</h1>
-    <div style="font-family:'Baloo 2',sans-serif;font-weight:600;font-size:22px;color:#F2994A;margin-bottom:10px;">16 core words</div>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:600;font-size:22px;color:#F2994A;margin-bottom:10px;">Core Foods & Drinks · 16 words</div>
+    <div style="font-size:12.5px;color:#9A9483;">
+      <a href="index.html" style="color:#0E7C86;text-decoration:none;">← Back to Food &amp; Drink levels</a>
+    </div>
   </div>
 
   <!-- ============ SECTION 1: WORD BANK ============ -->
@@ -67,22 +63,22 @@
       </tr>
     </thead>
     <tbody>
-      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">apple<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈæp.əl/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a round fruit, often red or green</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">I eat an <strong>apple</strong> every day.</td></tr>
-      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">bread<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/bred/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a food made from baked flour and water</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">She buys fresh <strong>bread</strong> every morning.</td></tr>
-      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">cheese<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/tʃiːz/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a solid food made from milk</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Can I have some <strong>cheese</strong> on my sandwich?</td></tr>
-      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">chicken<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈtʃɪk.ɪn/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">meat from a chicken</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">We had <strong>chicken</strong> and rice for dinner.</td></tr>
-      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">coffee<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈkɒf.i/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a hot drink made from roasted beans</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">He drinks <strong>coffee</strong> every morning.</td></tr>
-      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">egg<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/eɡ/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">an oval food laid by a hen</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">I usually eat an <strong>egg</strong> for breakfast.</td></tr>
-      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">fish<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/fɪʃ/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">an animal that lives in water, eaten as food</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">They eat <strong>fish</strong> on Fridays.</td></tr>
-      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">juice<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/dʒuːs/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a drink made from fruit</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Would you like some orange <strong>juice</strong>?</td></tr>
-      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">meat<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/miːt/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">food from an animal's body</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">She doesn't eat <strong>meat</strong>.</td></tr>
-      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">milk<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/mɪlk/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a white drink from cows</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Do you take <strong>milk</strong> in your tea?</td></tr>
-      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">rice<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/raɪs/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">small white or brown grains, cooked as food</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">We cook <strong>rice</strong> almost every day.</td></tr>
-      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">salad<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈsæl.əd/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a cold mix of vegetables</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">I'll have a <strong>salad</strong>, please.</td></tr>
-      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">soup<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/suːp/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a liquid food often made with vegetables or meat</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">This <strong>soup</strong> is very hot.</td></tr>
-      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">tea<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/tiː/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a hot drink made from leaves and hot water</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">She always drinks <strong>tea</strong> in the afternoon.</td></tr>
-      <tr style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">vegetable<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈvedʒ.tə.bəl/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a plant food, like a carrot or a potato</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Carrots are my favourite <strong>vegetable</strong>.</td></tr>
-      <tr style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">water<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈwɔː.tər/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a clear liquid we drink</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Can I have a glass of <strong>water</strong>?</td></tr>
+      <tr id="word-apple" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">apple<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈæp.əl/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a round fruit, often red or green</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">I eat an <strong>apple</strong> every day.</td></tr>
+      <tr id="word-bread" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">bread<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/bred/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a food made from baked flour and water</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">She buys fresh <strong>bread</strong> every morning.</td></tr>
+      <tr id="word-cheese" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">cheese<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/tʃiːz/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a solid food made from milk</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Can I have some <strong>cheese</strong> on my sandwich?</td></tr>
+      <tr id="word-chicken" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">chicken<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈtʃɪk.ɪn/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">meat from a chicken</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">We had <strong>chicken</strong> and rice for dinner.</td></tr>
+      <tr id="word-coffee" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">coffee<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈkɒf.i/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a hot drink made from roasted beans</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">He drinks <strong>coffee</strong> every morning.</td></tr>
+      <tr id="word-egg" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">egg<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/eɡ/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">an oval food laid by a hen</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">I usually eat an <strong>egg</strong> for breakfast.</td></tr>
+      <tr id="word-fish" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">fish<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/fɪʃ/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">an animal that lives in water, eaten as food</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">They eat <strong>fish</strong> on Fridays.</td></tr>
+      <tr id="word-juice" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">juice<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/dʒuːs/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a drink made from fruit</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Would you like some orange <strong>juice</strong>?</td></tr>
+      <tr id="word-meat" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">meat<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/miːt/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">food from an animal's body</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">She doesn't eat <strong>meat</strong>.</td></tr>
+      <tr id="word-milk" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">milk<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/mɪlk/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a white drink from cows</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Do you take <strong>milk</strong> in your tea?</td></tr>
+      <tr id="word-rice" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">rice<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/raɪs/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">small white or brown grains, cooked as food</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">We cook <strong>rice</strong> almost every day.</td></tr>
+      <tr id="word-salad" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">salad<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈsæl.əd/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a cold mix of vegetables</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">I'll have a <strong>salad</strong>, please.</td></tr>
+      <tr id="word-soup" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">soup<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/suːp/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a liquid food often made with vegetables or meat</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">This <strong>soup</strong> is very hot.</td></tr>
+      <tr id="word-tea" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">tea<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/tiː/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a hot drink made from leaves and hot water</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">She always drinks <strong>tea</strong> in the afternoon.</td></tr>
+      <tr id="word-vegetable" style="background:#fff;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">vegetable<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈvedʒ.tə.bəl/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a plant food, like a carrot or a potato</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Carrots are my favourite <strong>vegetable</strong>.</td></tr>
+      <tr id="word-water" style="background:#FBF9F3;"><td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">water<br><span style="font-weight:400;color:#9A9483;font-size:12px;">/ˈwɔː.tər/</span></td><td style="padding:8px 10px;border:1px solid #E4E4E4;">noun</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">a clear liquid we drink</td><td style="padding:8px 10px;border:1px solid #E4E4E4;">Can I have a glass of <strong>water</strong>?</td></tr>
     </tbody>
   </table>
 
@@ -110,7 +106,7 @@
     <button class="iq-check-btn" onclick="checkBlock('ex1')">✓ Check</button><span class="iq-fb" id="ex1-fb"></span>
   </div>
 
-  <div style="background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A1</div>
+  <div style="background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A1</div>
   <div style="margin:0 0 22px;">
     <p style="font-size:14px;color:#5C4A00;margin:0 0 8px;"><strong>Ex.2</strong> Complete the sentence with the correct word from the word bank.</p>
     <ol style="font-size:14.5px;line-height:2.4;color:#2B2B2B;padding-left:20px;margin:0;">
@@ -123,7 +119,7 @@
     <button class="iq-check-btn" onclick="checkBlock('ex2')">✓ Check</button><span class="iq-fb" id="ex2-fb"></span>
   </div>
 
-  <div style="background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A2</div>
+  <div style="background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A1</div>
   <div style="margin:0 0 22px;">
     <p style="font-size:14px;color:#5C4A00;margin:0 0 8px;"><strong>Ex.3</strong> Write one sentence that uses <em>both</em> words together.</p>
     <ol style="font-size:14.5px;line-height:2.2;color:#2B2B2B;padding-left:20px;margin:0;">
@@ -134,7 +130,7 @@
     <button class="iq-check-btn" onclick="checkPairBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
   </div>
 
-  <div style="background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 10px;">A2</div>
+  <div style="background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 10px;">A1</div>
   <div style="margin:0 0 10px;">
     <p style="font-size:14px;color:#5C4A00;margin:0 0 8px;"><strong>Ex.4</strong> Describe what you usually eat for breakfast. Write 3–4 sentences and use at least <strong>4 words</strong> from the word bank.</p>
     <textarea class="iq-input iq-input-wide" style="min-height:100px;width:100%;box-sizing:border-box;padding:10px 12px;resize:vertical;" placeholder="Write your answer here…"></textarea>
@@ -161,7 +157,7 @@
 <script src="../vocab-cards.js"></script>
 <script>
 VocabCards.init(document.getElementById('vocab-cards-root'), {
-  deckId: 'food-and-drink',
+  deckId: 'food-and-drink-a1',
   words: [
     { term: 'apple', ipa: '/ˈæp.əl/', meaning: 'a round fruit, often red or green', example: 'I eat an apple every day.' },
     { term: 'bread', ipa: '/bred/', meaning: 'a food made from baked flour and water', example: 'She buys fresh bread every morning.' },
@@ -171,10 +167,10 @@ VocabCards.init(document.getElementById('vocab-cards-root'), {
     { term: 'egg', ipa: '/eɡ/', meaning: 'an oval food laid by a hen', example: 'I usually eat an egg for breakfast.' },
     { term: 'fish', ipa: '/fɪʃ/', meaning: 'an animal that lives in water, eaten as food', example: 'They eat fish on Fridays.' },
     { term: 'juice', ipa: '/dʒuːs/', meaning: 'a drink made from fruit', example: 'Would you like some orange juice?' },
-    { term: 'meat', ipa: '/miːt/', meaning: "food from an animal's body", example: "She doesn't eat meat." },
+    { term: 'meat', ipa: '/miːt/', meaning: 'food from an animal\'s body', example: 'She doesn\'t eat meat.' },
     { term: 'milk', ipa: '/mɪlk/', meaning: 'a white drink from cows', example: 'Do you take milk in your tea?' },
     { term: 'rice', ipa: '/raɪs/', meaning: 'small white or brown grains, cooked as food', example: 'We cook rice almost every day.' },
-    { term: 'salad', ipa: '/ˈsæl.əd/', meaning: 'a cold mix of vegetables', example: "I'll have a salad, please." },
+    { term: 'salad', ipa: '/ˈsæl.əd/', meaning: 'a cold mix of vegetables', example: 'I\'ll have a salad, please.' },
     { term: 'soup', ipa: '/suːp/', meaning: 'a liquid food often made with vegetables or meat', example: 'This soup is very hot.' },
     { term: 'tea', ipa: '/tiː/', meaning: 'a hot drink made from leaves and hot water', example: 'She always drinks tea in the afternoon.' },
     { term: 'vegetable', ipa: '/ˈvedʒ.tə.bəl/', meaning: 'a plant food, like a carrot or a potato', example: 'Carrots are my favourite vegetable.' },
@@ -195,18 +191,6 @@ VocabCards.init(document.getElementById('vocab-cards-root'), {
 })();
 
 /* ── Interactive exercises ── */
-function pickOption(btn) {
-  var group = btn.closest('.iq-mc-group');
-  Array.from(group.children).forEach(function (b) { b.disabled = true; });
-  if (btn.dataset.correct === 'true') {
-    btn.classList.add('iq-correct');
-  } else {
-    btn.classList.add('iq-wrong');
-    var right = group.querySelector('[data-correct="true"]');
-    if (right) right.classList.add('iq-correct');
-  }
-}
-
 function iqNormalize(s) {
   return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
 }
