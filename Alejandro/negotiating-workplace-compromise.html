@@ -79,6 +79,31 @@
 
   .scramble{font-family:'JetBrains Mono',monospace; font-size:0.85rem; letter-spacing:.02em; color:var(--ink); background:#FAFBFC; border:1px dashed var(--line); border-radius:8px; padding:9px 11px; margin-bottom:8px;}
 
+  /* Practice engine (auto-checked) */
+  .ex-card{border:1.5px solid var(--line); border-radius:10px; padding:13px 14px; margin-bottom:10px;}
+  .ex-card .q{font-size:0.9rem; line-height:1.6; margin-bottom:10px;}
+  .gapfill-row{display:flex; gap:8px; margin-top:4px; flex-wrap:wrap; align-items:center;}
+  input.gap-input{
+    flex:1; min-width:130px; border:1.5px solid var(--line); border-radius:8px; padding:9px 11px;
+    font-family:'Inter',sans-serif; font-size:0.85rem; background:#fff; color:var(--ink);
+  }
+  input.gap-input:focus{outline:none; border-color:var(--slate);}
+  input.gap-input.correct{border-color:#5C8A6A; background:#EAF2EC;}
+  input.gap-input.incorrect{border-color:var(--clay); background:var(--clay-light);}
+  .mini-btn{
+    border:none; border-radius:8px; padding:9px 13px; font-size:0.78rem; font-weight:700; cursor:pointer;
+    background:var(--slate); color:#fff; white-space:nowrap; font-family:'Inter',sans-serif;
+  }
+  .mini-btn.outline{background:none; border:1.5px solid var(--line); color:var(--sub);}
+  .ex-feedback{font-size:0.78rem; margin-top:6px; min-height:16px; font-weight:600;}
+  .ex-feedback.ok{color:#5C8A6A;}
+  .ex-feedback.no{color:var(--clay);}
+  .progress-pill{
+    display:inline-block; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.74rem;
+    background:var(--slate-light); color:var(--slate-dark); padding:3px 10px; border-radius:100px; margin-bottom:12px;
+  }
+  .progress-pill.done{background:#DCEBE0; color:#5C8A6A;}
+
   /* Roleplay */
   .scenario-box{border:1.5px solid var(--clay); background:var(--clay-light); border-radius:10px; padding:14px; font-size:0.88rem; line-height:1.65; color:var(--ink);}
   .scenario-box b{color:var(--clay);}
@@ -93,6 +118,67 @@
   }
   .checklist input{width:17px; height:17px; accent-color:var(--slate); flex:0 0 auto;}
   .checklist label.checked{border-color:var(--slate); background:var(--slate-light);}
+
+  .evidence-status{
+    display:inline-flex; align-items:center; gap:6px; margin-top:12px; padding:6px 12px; border-radius:100px;
+    background:var(--slate-light); color:var(--slate-dark); font-size:0.78rem; font-weight:700; font-family:'JetBrains Mono',monospace;
+  }
+  .evidence-status.met{background:#DCEBE0; color:#5C8A6A;}
+  .curveball-btn{
+    display:inline-flex; align-items:center; gap:6px; margin-top:12px; margin-left:8px; background:none;
+    border:1.5px dashed var(--slate); color:var(--slate); border-radius:9px; padding:7px 13px;
+    font-family:'Inter',sans-serif; font-weight:700; font-size:0.78rem; cursor:pointer;
+  }
+  .curveball-box{
+    display:none; margin-top:10px; background:var(--clay-light); border-left:3px solid var(--clay); border-radius:8px;
+    padding:10px 13px; font-size:0.86rem; line-height:1.55; color:#7A4635; font-family:'Sora',sans-serif; font-style:italic;
+  }
+  .curveball-box.show{display:block;}
+
+  /* Session summary */
+  .summary-box{border:1.5px solid var(--slate); border-radius:10px; padding:14px 16px; background:var(--slate-light);}
+  .summary-line{font-size:0.85rem; line-height:1.7; color:var(--slate-dark); margin:0 0 4px;}
+  .summary-line b{color:var(--ink);}
+  .summary-actions{display:flex; gap:8px; margin-top:12px;}
+
+  /* Write bubble + half-page panel */
+  .write-bubble{
+    position:fixed; bottom:18px; left:102px; background:var(--clay); color:#fff;
+    border-radius:50%; width:52px; height:52px; display:flex; align-items:center; justify-content:center;
+    font-size:1.3rem; cursor:pointer; z-index:200; box-shadow:0 4px 14px rgba(0,0,0,0.2); user-select:none;
+  }
+  .write-panel{
+    display:none; position:fixed; left:0; right:0; bottom:0; height:50vh; background:var(--surface);
+    border-top:1.5px solid var(--line); border-radius:16px 16px 0 0; box-shadow:0 -8px 24px rgba(0,0,0,0.15);
+    z-index:250; padding:16px 18px 18px 18px; overflow-y:auto;
+  }
+  .write-panel.open{display:block;}
+  .write-panel-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;}
+  .write-panel-head h2{margin:0; font-size:1rem;}
+  .write-panel-head .close{background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--sub);}
+  .toolbar{display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap;}
+  .toolbar button{
+    background:#fff; border:1.5px solid var(--line); border-radius:8px; width:34px; height:34px;
+    font-family:'Inter',sans-serif; font-weight:700; font-size:0.9rem; cursor:pointer; color:var(--ink);
+  }
+  .toolbar button:hover{border-color:var(--slate); color:var(--slate);}
+  .editor{
+    min-height:140px; border:1.5px solid var(--line); border-radius:10px; padding:14px;
+    font-size:0.92rem; line-height:1.6; background:#fff;
+  }
+  .editor:focus{outline:none; border-color:var(--slate);}
+  .editor:empty:before{content:attr(data-placeholder); color:#A7B0BC;}
+  .writing-actions{display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;}
+  .writing-actions button{
+    font-family:'Inter',sans-serif; font-weight:700; font-size:0.82rem; padding:9px 15px;
+    border-radius:9px; border:1.5px solid var(--slate); background:#fff; color:var(--slate); cursor:pointer;
+  }
+  .writing-actions button.filled{background:var(--slate); color:#fff;}
+  .writing-actions button.danger{border-color:var(--clay); color:var(--clay);}
+  .entry-log{margin-top:16px;}
+  .entry{border-top:1px solid var(--line); padding:12px 0;}
+  .entry-date{font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--slate); font-weight:600; margin-bottom:4px;}
+  .entry-content{font-size:0.87rem; line-height:1.6;}
 
   /* Thread / outcome log (shared pattern) */
   .thread-log{border-left:2px solid var(--slate-light); padding-left:16px; margin:14px 0;}
@@ -274,52 +360,16 @@
   <section class="panel" id="panel-practice">
     <div class="card">
       <h2>Gap-fill: conflicting priorities</h2>
-      <p class="hint">Read the context, fill the blank with a negotiation exponent, then check.</p>
-
-      <div class="practice-item">
-        <div class="ctx">Your client wants a lower price, but you can't cut the materials.</div>
-        <div class="sentence">"<span class="blank">______</span> we keep the current materials but adjust the timeline instead?"</div>
-        <button class="reveal" data-target="r1">Show answer</button>
-        <div class="reveal-body" id="r1"><b>What if</b> we keep the current materials but adjust the timeline instead?</div>
-      </div>
-
-      <div class="practice-item">
-        <div class="ctx">Your manager wants the report by Friday; you need more data first.</div>
-        <div class="sentence">"I <span class="blank">______</span> agree to Friday <span class="blank">______</span> I get the numbers by Wednesday."</div>
-        <button class="reveal" data-target="r2">Show answer</button>
-        <div class="reveal-body" id="r2">I <b>could</b> agree to Friday <b>if</b> I get the numbers by Wednesday.</div>
-      </div>
-
-      <div class="practice-item">
-        <div class="ctx">Your team wants remote Fridays; the company wants full in-office days.</div>
-        <div class="sentence">"That <span class="blank">______</span> for me, <span class="blank">______</span> we're all in for key meetings."</div>
-        <button class="reveal" data-target="r3">Show answer</button>
-        <div class="reveal-body" id="r3">That <b>works</b> for me, <b>as long as</b> we're all in for key meetings.</div>
-      </div>
-
-      <div class="practice-item">
-        <div class="ctx">You want a $10k budget for the project; finance offers $6k.</div>
-        <div class="sentence">"<span class="blank">______</span> — how about $8k?"</div>
-        <button class="reveal" data-target="r4">Show answer</button>
-        <div class="reveal-body" id="r4"><b>Let's meet halfway</b> — how about $8k?</div>
-      </div>
+      <p class="hint">Type the missing word(s), then check. Stuck? Tap reveal.</p>
+      <div class="progress-pill" id="gapProgress">0 / 4 correct</div>
+      <div id="gapContainer"></div>
     </div>
 
     <div class="card">
       <h2>Sentence-building</h2>
-      <p class="hint">Unscramble each set into one natural sentence.</p>
-
-      <div class="practice-item">
-        <div class="scramble">if / the launch date / I / agree to / could / stays the same / the extra features / drop</div>
-        <button class="reveal" data-target="r5">Show answer</button>
-        <div class="reveal-body" id="r5">I could agree to drop the extra features if the launch date stays the same.</div>
-      </div>
-
-      <div class="practice-item">
-        <div class="scramble">we / cut the scope / what if / instead of / the deadline / moving</div>
-        <button class="reveal" data-target="r6">Show answer</button>
-        <div class="reveal-body" id="r6">What if we cut the scope instead of moving the deadline?</div>
-      </div>
+      <p class="hint">Type the words in the right order to make one natural sentence, then check.</p>
+      <div class="progress-pill" id="scrambleProgress">0 / 2 correct</div>
+      <div id="scrambleContainer"></div>
 
       <button class="teacher-toggle" data-target="tn3">🔒 Teacher notes</button>
       <div class="teacher-body" id="tn3">
@@ -335,7 +385,9 @@
       <div class="scenario-box">
         <b>Scenario:</b> You're the project lead. The client wants the launch moved up by two weeks <i>and</i> wants two extra features added before launch. Negotiate a deadline, scope, or budget compromise with your "client" (your teacher). Reach one concrete, specific agreed outcome — a date, a scope list, or a number.
       </div>
-      <span class="evidence-tag">Evidence task — B2-12</span>
+      <span class="evidence-status" id="evStatus">0 / 3 exponents · no outcome yet</span>
+      <button class="curveball-btn" data-pool="client" data-target="curveball1">🎲 Throw a curveball</button>
+      <div class="curveball-box" id="curveball1"></div>
       <p class="hint" style="margin-top:12px;">Negotiate a scenario with conflicting priorities to a concrete compromise, using at least three negotiation exponents.</p>
     </div>
 
@@ -363,6 +415,15 @@
 
   <!-- RECAP -->
   <section class="panel" id="panel-recap">
+    <div class="card">
+      <h2>Session summary</h2>
+      <p class="hint">Auto-compiled from what's been ticked and logged in this session — updates live, ready to copy into your notes.</p>
+      <div class="summary-box" id="summaryBox"></div>
+      <div class="summary-actions">
+        <button class="mini-btn" id="summaryCopy">📋 Copy summary</button>
+      </div>
+    </div>
+
     <div class="card">
       <h2>Can-do cards in play</h2>
 
@@ -422,6 +483,29 @@
   </div>
 </div>
 
+<!-- Write bubble + half-page panel -->
+<div class="write-bubble" id="writeBubble">✍️</div>
+<div class="write-panel" id="writePanel">
+  <div class="write-panel-head">
+    <h2>Writing</h2>
+    <button class="close" id="closeWrite">✕</button>
+  </div>
+  <div class="toolbar">
+    <button data-cmd="bold" title="Bold"><b>B</b></button>
+    <button data-cmd="italic" title="Italic"><i>I</i></button>
+    <button data-cmd="underline" title="Underline"><u>U</u></button>
+    <button data-cmd="insertUnorderedList" title="Bullet list">•</button>
+    <button data-cmd="removeFormat" title="Clear formatting">✕</button>
+  </div>
+  <div class="editor" id="editor" contenteditable="true" data-placeholder="Write here — a phrase from the negotiation, a note on a mistake, anything worth keeping..."></div>
+  <div class="writing-actions">
+    <button class="filled" id="saveEntry">Save entry</button>
+    <button id="exportAll">⬇ Export as file</button>
+    <button class="danger" id="clearWriting">Clear all</button>
+  </div>
+  <div class="entry-log" id="entryLog"></div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -470,12 +554,158 @@ document.querySelectorAll('.teacher-toggle').forEach(btn=>{
   });
 });
 
-// ---------- Reveal answers ----------
-document.querySelectorAll('.reveal').forEach(btn=>{
+// ---------- Practice: gap-fill (auto-checked, multi-blank) ----------
+const gapData = [
+  {ctx:"Your client wants a lower price, but you can't cut the materials.", parts:['', ' we keep the current materials but adjust the timeline instead?'], answers:[['what if']]},
+  {ctx:'Your manager wants the report by Friday; you need more data first.', parts:['I ', ' agree to Friday ', ' I get the numbers by Wednesday.'], answers:[['could','can'], ['if']]},
+  {ctx:'Your team wants remote Fridays; the company wants full in-office days.', parts:['That ', ' for me, ', " we're all in for key meetings."], answers:[['works'], ['as long as']]},
+  {ctx:'You want a $10k budget for the project; finance offers $6k.', parts:['', ' — how about $8k?'], answers:[["let's meet halfway",'lets meet halfway']]}
+];
+const gapContainer = document.getElementById('gapContainer');
+let gapCorrect = loadJSON('gapCorrect', {});
+function updateGapProgress(){
+  const count = Object.values(gapCorrect).filter(Boolean).length;
+  const pill = document.getElementById('gapProgress');
+  pill.textContent = count+' / '+gapData.length+' correct';
+  pill.classList.toggle('done', count === gapData.length);
+}
+gapData.forEach((item,gi)=>{
+  const wrap = document.createElement('div');
+  wrap.className = 'ex-card';
+  let inner = `<p class="q">${item.ctx}</p><div class="gapfill-row">"`;
+  item.parts.forEach((part, pi)=>{
+    inner += `<span>${part}</span>`;
+    if(pi < item.parts.length - 1){
+      inner += `<input type="text" class="gap-input" data-gi="${gi}" data-bi="${pi}">`;
+    }
+  });
+  inner += `"</div><div class="gapfill-row"><button class="mini-btn" data-check="${gi}">Check</button><button class="mini-btn outline" data-reveal="${gi}">Reveal</button></div><div class="ex-feedback" id="gapFeedback${gi}"></div>`;
+  wrap.innerHTML = inner;
+  gapContainer.appendChild(wrap);
+  if(gapCorrect[gi]){
+    const inputs = wrap.querySelectorAll('.gap-input');
+    inputs.forEach((input,bi)=>{ input.value = item.answers[bi][0]; input.classList.add('correct'); });
+    const fb = document.getElementById('gapFeedback'+gi);
+    fb.textContent = 'Correct — nice.'; fb.className = 'ex-feedback ok';
+  }
+});
+updateGapProgress();
+gapContainer.addEventListener('click', (e)=>{
+  if(e.target.dataset.check !== undefined){
+    const gi = parseInt(e.target.dataset.check);
+    const inputs = gapContainer.querySelectorAll(`.gap-input[data-gi="${gi}"]`);
+    const fb = document.getElementById('gapFeedback'+gi);
+    let allCorrect = true;
+    inputs.forEach((input, bi)=>{
+      const val = input.value.trim().toLowerCase().replace(/[.,!?']/g,'');
+      const normalizedAnswers = gapData[gi].answers[bi].map(a=>a.toLowerCase().replace(/[.,!?']/g,''));
+      const ok = normalizedAnswers.includes(val);
+      input.classList.toggle('correct', ok);
+      input.classList.toggle('incorrect', !ok);
+      if(!ok) allCorrect = false;
+    });
+    if(allCorrect){
+      fb.textContent = 'Correct — nice.'; fb.className = 'ex-feedback ok';
+      gapCorrect[gi] = true; saveJSON('gapCorrect', gapCorrect); updateGapProgress();
+    } else {
+      fb.textContent = 'Not quite — try again, or tap Reveal.'; fb.className = 'ex-feedback no';
+    }
+  }
+  if(e.target.dataset.reveal !== undefined){
+    const gi = parseInt(e.target.dataset.reveal);
+    const inputs = gapContainer.querySelectorAll(`.gap-input[data-gi="${gi}"]`);
+    inputs.forEach((input,bi)=>{
+      input.value = gapData[gi].answers[bi][0];
+      input.classList.add('correct'); input.classList.remove('incorrect');
+    });
+    const fb = document.getElementById('gapFeedback'+gi);
+    fb.textContent = 'Revealed.'; fb.className = 'ex-feedback ok';
+  }
+});
+
+// ---------- Practice: sentence-building (auto-checked) ----------
+const scrambleData = [
+  {words:'if / the launch date / I / agree to / could / stays the same / the extra features / drop', answer:'I could agree to drop the extra features if the launch date stays the same.'},
+  {words:'we / cut the scope / what if / instead of / the deadline / moving', answer:'What if we cut the scope instead of moving the deadline?'}
+];
+const scrambleContainer = document.getElementById('scrambleContainer');
+let scrambleCorrect = loadJSON('scrambleCorrect', {});
+function normalizeSentence(s){
+  return s.toLowerCase().replace(/[.,!?]/g,'').replace(/\s+/g,' ').trim();
+}
+function updateScrambleProgress(){
+  const count = Object.values(scrambleCorrect).filter(Boolean).length;
+  const pill = document.getElementById('scrambleProgress');
+  pill.textContent = count+' / '+scrambleData.length+' correct';
+  pill.classList.toggle('done', count === scrambleData.length);
+}
+scrambleData.forEach((item,si)=>{
+  const wrap = document.createElement('div');
+  wrap.className = 'ex-card';
+  wrap.innerHTML = `<div class="scramble">${item.words}</div>
+    <div class="gapfill-row">
+      <input type="text" class="gap-input" data-si="${si}" placeholder="Type the full sentence…">
+    </div>
+    <div class="gapfill-row">
+      <button class="mini-btn" data-scheck="${si}">Check</button>
+      <button class="mini-btn outline" data-sreveal="${si}">Reveal</button>
+    </div>
+    <div class="ex-feedback" id="scrambleFeedback${si}"></div>`;
+  scrambleContainer.appendChild(wrap);
+  if(scrambleCorrect[si]){
+    const input = wrap.querySelector('.gap-input');
+    input.value = item.answer;
+    input.classList.add('correct');
+    const fb = document.getElementById('scrambleFeedback'+si);
+    fb.textContent = 'Correct — nice.'; fb.className = 'ex-feedback ok';
+  }
+});
+updateScrambleProgress();
+scrambleContainer.addEventListener('click', (e)=>{
+  if(e.target.dataset.scheck !== undefined){
+    const si = parseInt(e.target.dataset.scheck);
+    const input = scrambleContainer.querySelector(`.gap-input[data-si="${si}"]`);
+    const val = normalizeSentence(input.value);
+    const fb = document.getElementById('scrambleFeedback'+si);
+    if(val === normalizeSentence(scrambleData[si].answer)){
+      input.classList.add('correct'); input.classList.remove('incorrect');
+      fb.textContent = 'Correct — nice.'; fb.className = 'ex-feedback ok';
+      scrambleCorrect[si] = true; saveJSON('scrambleCorrect', scrambleCorrect); updateScrambleProgress();
+    } else {
+      input.classList.add('incorrect'); input.classList.remove('correct');
+      fb.textContent = 'Not quite — try again, or tap Reveal.'; fb.className = 'ex-feedback no';
+    }
+  }
+  if(e.target.dataset.sreveal !== undefined){
+    const si = parseInt(e.target.dataset.sreveal);
+    const input = scrambleContainer.querySelector(`.gap-input[data-si="${si}"]`);
+    input.value = scrambleData[si].answer;
+    input.classList.add('correct'); input.classList.remove('incorrect');
+    const fb = document.getElementById('scrambleFeedback'+si);
+    fb.textContent = 'Revealed.'; fb.className = 'ex-feedback ok';
+  }
+});
+
+// ---------- Roleplay: curveball generator ----------
+const curveballPools = {
+  client: [
+    "Actually, my boss wants it live even sooner — end of next week.",
+    "We can't move the budget, but we could give you an extra developer for two weeks.",
+    "I need this agreed in writing today, not next week.",
+    "What if the deadline stays exactly the same, but we quietly drop scope instead?",
+    "Sorry, the extra features are non-negotiable — they're already announced publicly."
+  ]
+};
+let lastCurveball = {};
+document.querySelectorAll('.curveball-btn').forEach(btn=>{
   btn.addEventListener('click', ()=>{
-    const target = document.getElementById(btn.dataset.target);
-    target.classList.toggle('open');
-    btn.textContent = target.classList.contains('open') ? 'Hide answer' : 'Show answer';
+    const pool = curveballPools[btn.dataset.pool];
+    let idx;
+    do{ idx = Math.floor(Math.random()*pool.length); } while(pool.length>1 && idx===lastCurveball[btn.dataset.pool]);
+    lastCurveball[btn.dataset.pool] = idx;
+    const box = document.getElementById(btn.dataset.target);
+    box.textContent = pool[idx];
+    box.classList.add('show');
   });
 });
 
@@ -498,6 +728,8 @@ document.querySelectorAll('#expChecklist input').forEach(cb=>{
     expState[key] = cb.checked;
     saveJSON('expChecklist', expState);
     cb.closest('label').classList.toggle('checked', cb.checked);
+    updateEvidenceStatus();
+    renderSummary();
   });
 });
 
@@ -527,6 +759,8 @@ document.getElementById('outcomeAdd').addEventListener('click', ()=>{
   saveJSON('outcomeLog', outcomes);
   input.value = '';
   renderOutcomes();
+  updateEvidenceStatus();
+  renderSummary();
 });
 document.getElementById('outcomeInput').addEventListener('keydown', (e)=>{
   if(e.key === 'Enter') document.getElementById('outcomeAdd').click();
@@ -593,12 +827,13 @@ document.querySelectorAll('.stamp').forEach(btn=>{
     corrections.push({time: nowTime(), text: btn.dataset.stamp});
     saveJSON('corrections', corrections);
     renderCorrections();
+    renderSummary();
   });
 });
 
 const wbNotes = document.getElementById('wbNotes');
 wbNotes.value = loadJSON('wbnotes', '');
-wbNotes.addEventListener('input', ()=> saveJSON('wbnotes', wbNotes.value));
+wbNotes.addEventListener('input', ()=>{ saveJSON('wbnotes', wbNotes.value); renderSummary(); });
 
 document.getElementById('wbCopy').addEventListener('click', ()=>{
   const stampText = corrections.map(c=> c.time+' '+c.text).join('\\n');
@@ -613,6 +848,117 @@ document.getElementById('wbClear').addEventListener('click', ()=>{
   saveJSON('corrections', []);
   renderCorrections();
   showToast('Cleared');
+  renderSummary();
+});
+
+// ---------- Roleplay: evidence-task status ----------
+function updateEvidenceStatus(){
+  const count = Object.values(expState).filter(Boolean).length;
+  const hasOutcome = outcomes.length > 0;
+  const badge = document.getElementById('evStatus');
+  const met = count >= 3 && hasOutcome;
+  badge.classList.toggle('met', met);
+  badge.textContent = met ? '✅ Evidence task met' : count+' / 3 exponents · '+(hasOutcome ? 'outcome logged' : 'no outcome yet');
+}
+updateEvidenceStatus();
+
+// ---------- Write bubble ----------
+const writePanel = document.getElementById('writePanel');
+document.getElementById('writeBubble').addEventListener('click', ()=>{
+  writePanel.classList.add('open');
+});
+document.getElementById('closeWrite').addEventListener('click', ()=>{
+  writePanel.classList.remove('open');
+});
+document.querySelectorAll('.toolbar button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.getElementById('editor').focus();
+    document.execCommand(b.dataset.cmd, false, null);
+  });
+});
+
+let writingEntries = loadJSON('writing', []);
+const entryLog = document.getElementById('entryLog');
+function renderEntries(){
+  entryLog.innerHTML = '';
+  writingEntries.slice().reverse().forEach(e=>{
+    const div = document.createElement('div');
+    div.className = 'entry';
+    div.innerHTML = `<div class="entry-date">${e.date}</div><div class="entry-content">${e.html}</div>`;
+    entryLog.appendChild(div);
+  });
+}
+renderEntries();
+
+document.getElementById('saveEntry').addEventListener('click', ()=>{
+  const editor = document.getElementById('editor');
+  const html = editor.innerHTML.trim();
+  if(!html){ showToast('Nothing to save'); return; }
+  writingEntries.push({date: todayStr(), html: html});
+  saveJSON('writing', writingEntries);
+  editor.innerHTML = '';
+  renderEntries();
+  showToast('Entry saved');
+});
+
+document.getElementById('exportAll').addEventListener('click', ()=>{
+  if(writingEntries.length === 0){ showToast('No entries to export'); return; }
+  const text = writingEntries.map(e=>{
+    const tmp = document.createElement('div');
+    tmp.innerHTML = e.html;
+    return e.date + '\n' + tmp.textContent + '\n';
+  }).join('\n');
+  const blob = new Blob([text], {type:'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'alejandro-negotiating-compromise-notes.txt';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('Exported');
+});
+
+document.getElementById('clearWriting').addEventListener('click', ()=>{
+  if(!confirm('Clear all saved writing entries? This cannot be undone.')) return;
+  writingEntries = [];
+  saveJSON('writing', writingEntries);
+  renderEntries();
+  showToast('Cleared');
+});
+
+// ---------- Session summary (Recap) ----------
+const expLabels = {
+  'what-if': "What if we…?",
+  'could-agree': "I could agree to that if…",
+  'works-for-me': "That works for me, as long as…",
+  'meet-halfway': "Let's meet halfway"
+};
+function renderSummary(){
+  const box = document.getElementById('summaryBox');
+  if(!box) return;
+  const lines = [];
+  lines.push(`<div class="summary-line"><b>Date:</b> ${todayStr()}</div>`);
+
+  const usedExponents = Object.keys(expState).filter(k=>expState[k]).map(k=>expLabels[k]||k);
+  lines.push(`<div class="summary-line"><b>Exponents used:</b> ${usedExponents.length ? usedExponents.join(', ') : 'none ticked yet'}</div>`);
+
+  const met = usedExponents.length >= 3 && outcomes.length > 0;
+  lines.push(`<div class="summary-line"><b>B2-12 evidence task:</b> ${usedExponents.length}/3 exponents · ${outcomes.length>0 ? 'outcome logged' : 'no outcome yet'} · ${met ? '✅ met' : 'not yet met'}</div>`);
+
+  lines.push(`<div class="summary-line"><b>Agreed outcomes:</b> ${outcomes.length ? outcomes.map(o=>o.text).join('; ') : 'none yet'}</div>`);
+
+  lines.push(`<div class="summary-line"><b>Whiteboard stamps:</b> ${corrections.length ? corrections.map(c=>c.time+' '+c.text).join('; ') : 'none yet'}</div>`);
+
+  lines.push(`<div class="summary-line"><b>Notes:</b> ${wbNotes.value.trim() ? wbNotes.value.trim() : 'none'}</div>`);
+
+  box.innerHTML = lines.join('');
+}
+renderSummary();
+document.getElementById('summaryCopy').addEventListener('click', ()=>{
+  const text = document.getElementById('summaryBox').innerText;
+  navigator.clipboard.writeText(text).then(()=> showToast('Copied')).catch(()=> showToast('Could not copy'));
 });
 </script>
 
