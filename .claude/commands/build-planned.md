@@ -24,6 +24,7 @@ For each remaining draft:
    - No filler subtitle under the header
    - Recap tab with a toggle revealing the can-do card (code, function, grammar focus, evidence task) from the draft
    - Floating 50-minute timer bubble (bottom-left) opening a whiteboard panel (timer controls, stamps, correction display, notes, copy/clear)
+   - Writing bubble (mandatory on every lesson tool): include `<link rel="stylesheet" href="../assets/write-bubble.css">` in `<head>` and `<script src="../assets/write-bubble.js"></script>` before `</body>` (adjust relative path to the file's folder depth). This is a shared, self-injecting widget — a tab on the right edge of the screen that opens a writing panel with a Save button (keeps entries in localStorage) and an Export button (downloads entries as a `.txt` file). No other markup or wiring needed; don't duplicate its HTML/CSS/JS inline.
    - Apply the student's specific design system (colors, fonts, tab set) — match their existing tools' look exactly
 4. Save the file into `{student}/` using a descriptive filename derived from the topic (kebab-case, no dates or student names in the filename).
 

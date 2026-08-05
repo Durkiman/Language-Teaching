@@ -6,6 +6,7 @@
 <title>Negotiating a Compromise</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/write-bubble.css">
 <style>
   :root{
     --bg:#F7F9FB; --surface:#FFFFFF; --ink:#1F2933; --sub:#5C6B7A;
@@ -141,44 +142,6 @@
   .summary-line b{color:var(--ink);}
   .summary-actions{display:flex; gap:8px; margin-top:12px;}
 
-  /* Write bubble + half-page panel */
-  .write-bubble{
-    position:fixed; bottom:18px; left:102px; background:var(--clay); color:#fff;
-    border-radius:50%; width:52px; height:52px; display:flex; align-items:center; justify-content:center;
-    font-size:1.3rem; cursor:pointer; z-index:200; box-shadow:0 4px 14px rgba(0,0,0,0.2); user-select:none;
-  }
-  .write-panel{
-    display:none; position:fixed; left:0; right:0; bottom:0; height:50vh; background:var(--surface);
-    border-top:1.5px solid var(--line); border-radius:16px 16px 0 0; box-shadow:0 -8px 24px rgba(0,0,0,0.15);
-    z-index:250; padding:16px 18px 18px 18px; overflow-y:auto;
-  }
-  .write-panel.open{display:block;}
-  .write-panel-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;}
-  .write-panel-head h2{margin:0; font-size:1rem;}
-  .write-panel-head .close{background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--sub);}
-  .toolbar{display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap;}
-  .toolbar button{
-    background:#fff; border:1.5px solid var(--line); border-radius:8px; width:34px; height:34px;
-    font-family:'Inter',sans-serif; font-weight:700; font-size:0.9rem; cursor:pointer; color:var(--ink);
-  }
-  .toolbar button:hover{border-color:var(--slate); color:var(--slate);}
-  .editor{
-    min-height:140px; border:1.5px solid var(--line); border-radius:10px; padding:14px;
-    font-size:0.92rem; line-height:1.6; background:#fff;
-  }
-  .editor:focus{outline:none; border-color:var(--slate);}
-  .editor:empty:before{content:attr(data-placeholder); color:#A7B0BC;}
-  .writing-actions{display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;}
-  .writing-actions button{
-    font-family:'Inter',sans-serif; font-weight:700; font-size:0.82rem; padding:9px 15px;
-    border-radius:9px; border:1.5px solid var(--slate); background:#fff; color:var(--slate); cursor:pointer;
-  }
-  .writing-actions button.filled{background:var(--slate); color:#fff;}
-  .writing-actions button.danger{border-color:var(--clay); color:var(--clay);}
-  .entry-log{margin-top:16px;}
-  .entry{border-top:1px solid var(--line); padding:12px 0;}
-  .entry-date{font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--slate); font-weight:600; margin-bottom:4px;}
-  .entry-content{font-size:0.87rem; line-height:1.6;}
 
   /* Thread / outcome log (shared pattern) */
   .thread-log{border-left:2px solid var(--slate-light); padding-left:16px; margin:14px 0;}
@@ -481,29 +444,6 @@
     <button id="wbCopy">Copy</button>
     <button id="wbClear">Clear</button>
   </div>
-</div>
-
-<!-- Write bubble + half-page panel -->
-<div class="write-bubble" id="writeBubble">✍️</div>
-<div class="write-panel" id="writePanel">
-  <div class="write-panel-head">
-    <h2>Writing</h2>
-    <button class="close" id="closeWrite">✕</button>
-  </div>
-  <div class="toolbar">
-    <button data-cmd="bold" title="Bold"><b>B</b></button>
-    <button data-cmd="italic" title="Italic"><i>I</i></button>
-    <button data-cmd="underline" title="Underline"><u>U</u></button>
-    <button data-cmd="insertUnorderedList" title="Bullet list">•</button>
-    <button data-cmd="removeFormat" title="Clear formatting">✕</button>
-  </div>
-  <div class="editor" id="editor" contenteditable="true" data-placeholder="Write here — a phrase from the negotiation, a note on a mistake, anything worth keeping..."></div>
-  <div class="writing-actions">
-    <button class="filled" id="saveEntry">Save entry</button>
-    <button id="exportAll">⬇ Export as file</button>
-    <button class="danger" id="clearWriting">Clear all</button>
-  </div>
-  <div class="entry-log" id="entryLog"></div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -862,72 +802,6 @@ function updateEvidenceStatus(){
 }
 updateEvidenceStatus();
 
-// ---------- Write bubble ----------
-const writePanel = document.getElementById('writePanel');
-document.getElementById('writeBubble').addEventListener('click', ()=>{
-  writePanel.classList.add('open');
-});
-document.getElementById('closeWrite').addEventListener('click', ()=>{
-  writePanel.classList.remove('open');
-});
-document.querySelectorAll('.toolbar button').forEach(b=>{
-  b.addEventListener('click', ()=>{
-    document.getElementById('editor').focus();
-    document.execCommand(b.dataset.cmd, false, null);
-  });
-});
-
-let writingEntries = loadJSON('writing', []);
-const entryLog = document.getElementById('entryLog');
-function renderEntries(){
-  entryLog.innerHTML = '';
-  writingEntries.slice().reverse().forEach(e=>{
-    const div = document.createElement('div');
-    div.className = 'entry';
-    div.innerHTML = `<div class="entry-date">${e.date}</div><div class="entry-content">${e.html}</div>`;
-    entryLog.appendChild(div);
-  });
-}
-renderEntries();
-
-document.getElementById('saveEntry').addEventListener('click', ()=>{
-  const editor = document.getElementById('editor');
-  const html = editor.innerHTML.trim();
-  if(!html){ showToast('Nothing to save'); return; }
-  writingEntries.push({date: todayStr(), html: html});
-  saveJSON('writing', writingEntries);
-  editor.innerHTML = '';
-  renderEntries();
-  showToast('Entry saved');
-});
-
-document.getElementById('exportAll').addEventListener('click', ()=>{
-  if(writingEntries.length === 0){ showToast('No entries to export'); return; }
-  const text = writingEntries.map(e=>{
-    const tmp = document.createElement('div');
-    tmp.innerHTML = e.html;
-    return e.date + '\n' + tmp.textContent + '\n';
-  }).join('\n');
-  const blob = new Blob([text], {type:'text/plain'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'alejandro-negotiating-compromise-notes.txt';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-  showToast('Exported');
-});
-
-document.getElementById('clearWriting').addEventListener('click', ()=>{
-  if(!confirm('Clear all saved writing entries? This cannot be undone.')) return;
-  writingEntries = [];
-  saveJSON('writing', writingEntries);
-  renderEntries();
-  showToast('Cleared');
-});
-
 // ---------- Session summary (Recap) ----------
 const expLabels = {
   'what-if': "What if we…?",
@@ -961,6 +835,7 @@ document.getElementById('summaryCopy').addEventListener('click', ()=>{
   navigator.clipboard.writeText(text).then(()=> showToast('Copied')).catch(()=> showToast('Could not copy'));
 });
 </script>
+<script src="../assets/write-bubble.js"></script>
 
 </body>
 </html>

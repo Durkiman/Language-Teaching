@@ -1,0 +1,68 @@
+/* Shared writing bubble widget — right-edge tab that opens a writing panel.
+   Include write-bubble.css + write-bubble.js on any lesson/tool page; the
+   widget builds its own DOM, so no HTML markup is needed in the page. */
+
+.wb-tab{
+  position:fixed; right:0; top:50%; transform:translateY(-50%);
+  background:var(--slate,#3D5A80); color:#fff;
+  width:44px; height:88px; border-radius:12px 0 0 12px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.25rem; cursor:pointer; z-index:200;
+  box-shadow:0 4px 14px rgba(0,0,0,0.2); user-select:none;
+  writing-mode:vertical-rl;
+  transition:width .15s ease;
+}
+.wb-tab:hover{ width:50px; }
+
+.wb-panel{
+  display:none; position:fixed; right:0; top:0; bottom:0; width:min(400px,92vw);
+  background:var(--surface,#fff); border-left:1.5px solid var(--line,#E1E7ED);
+  box-shadow:-8px 0 24px rgba(0,0,0,0.15); z-index:250;
+  padding:18px; overflow-y:auto;
+}
+.wb-panel.open{ display:block; }
+
+.wb-overlay{
+  display:none; position:fixed; inset:0; background:rgba(0,0,0,0.25); z-index:240;
+}
+.wb-overlay.open{ display:block; }
+
+.wb-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.wb-head h2{ margin:0; font-size:1rem; color:var(--ink,#1F2933); font-family:inherit; }
+.wb-head .wb-close{ background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--sub,#5C6B7A); line-height:1; }
+
+.wb-toolbar{ display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap; }
+.wb-toolbar button{
+  border:1px solid var(--line,#E1E7ED); background:var(--surface,#fff); color:var(--ink,#1F2933);
+  border-radius:8px; padding:4px 9px; font-size:0.85rem; cursor:pointer;
+}
+.wb-toolbar button:hover{ border-color:var(--slate,#3D5A80); color:var(--slate,#3D5A80); }
+
+.wb-editor{
+  min-height:140px; border:1.5px solid var(--line,#E1E7ED); border-radius:var(--radius,14px);
+  padding:10px 12px; font-size:0.9rem; line-height:1.6; color:var(--ink,#1F2933);
+  background:var(--surface,#fff);
+}
+.wb-editor:focus{ outline:none; border-color:var(--slate,#3D5A80); }
+.wb-editor:empty:before{ content:attr(data-placeholder); color:#A7B0BC; }
+
+.wb-actions{ display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+.wb-actions button{
+  border:1px solid var(--line,#E1E7ED); background:var(--surface,#fff); color:var(--ink,#1F2933);
+  border-radius:8px; padding:7px 12px; font-size:0.85rem; cursor:pointer;
+}
+.wb-actions button.wb-filled{ background:var(--slate,#3D5A80); border-color:var(--slate,#3D5A80); color:#fff; }
+.wb-actions button.wb-danger{ border-color:var(--clay,#C1694F); color:var(--clay,#C1694F); }
+
+.wb-log{ margin-top:16px; }
+.wb-entry{ border-top:1px solid var(--line,#E1E7ED); padding:12px 0; }
+.wb-entry-date{ font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--slate,#3D5A80); font-weight:600; margin-bottom:4px; }
+.wb-entry-content{ font-size:0.87rem; line-height:1.6; color:var(--ink,#1F2933); }
+
+.wb-toast{
+  position:fixed; left:50%; bottom:24px; transform:translate(-50%,20px);
+  background:var(--ink,#1F2933); color:#fff; padding:8px 16px; border-radius:8px;
+  font-size:0.85rem; opacity:0; pointer-events:none; transition:opacity .2s ease, transform .2s ease;
+  z-index:300;
+}
+.wb-toast.show{ opacity:1; transform:translate(-50%,0); }
