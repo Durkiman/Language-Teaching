@@ -1,5 +1,24 @@
 {
   "student": "angelique",
   "levels": ["A1", "A2"],
-  "cards": {}
+  "cards": {
+    "A1-05": {
+      "status": "introduced",
+      "introduced": "2026-08-06",
+      "reviews": [],
+      "notes": "Primary focus — daily wellness routine in simple present (morning ritual/meditation/evening wind-down), reusing chakra/energy vocab. Card pick was inferred from lesson history, not tracked data (progress.json was empty before this lesson) — worth confirming level/prior coverage with Durim. Evidence task pending confirmation after session."
+    },
+    "A1-06": {
+      "status": "introduced",
+      "introduced": "2026-08-06",
+      "reviews": [],
+      "notes": "incidental touch — present continuous warm-up contrast ('what are you doing right now') before routine language"
+    },
+    "A1-04": {
+      "status": "introduced",
+      "introduced": "2026-08-06",
+      "reviews": [],
+      "notes": "incidental touch — likes/dislikes line added to her spoken routine description"
+    }
+  }
 }

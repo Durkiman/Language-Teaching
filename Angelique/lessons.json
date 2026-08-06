@@ -1,5 +1,16 @@
 [
   {
+    "title": "#4 Daily Wellness Routine",
+    "file": "angelique-daily-wellness-routine.html",
+    "grammar": [
+      {
+        "file": "present-simple.html",
+        "title": "Present Simple"
+      }
+    ],
+    "goals": { "primary": ["A1-05"], "incidental": ["A1-06", "A1-04"] }
+  },
+  {
     "file": "angelique-question-formation-personal-info.html",
     "title": "#3 Personal Information",
     "grammar": [
