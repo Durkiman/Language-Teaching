@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ghent University Interview Prep — Know Your Institution</title>
+<link rel="stylesheet" href="../assets/write-bubble.css">
+<style>
+  :root{
+    --bg:#F5F3F7;
+    --surface:#FFFFFF;
+    --ink:#2B2A33;
+    --muted:#7A7686;
+    --accent:#5B6EAE;
+    --accent-light:#E9EBF7;
+    --border:#E1DEEB;
+    --good:#5B8A6E;
+    --warn:#C08A3E;
+    --bad:#B0554A;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Nunito', 'DM Sans', sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    padding-bottom:90px;
+  }
+  header{
+    background:var(--surface);
+    border-bottom:1px solid var(--border);
+    padding:16px 20px 0;
+    position:sticky;
+    top:0;
+    z-index:15;
+  }
+  header h1{
+    margin:0 0 12px;
+    font-size:1.15rem;
+    font-weight:800;
+    color:var(--accent);
+  }
+  nav{
+    display:flex;
+    gap:4px;
+    overflow-x:auto;
+    padding-bottom:0;
+  }
+  nav button{
+    background:none;
+    border:none;
+    padding:10px 14px;
+    font-family:inherit;
+    font-size:0.85rem;
+    font-weight:700;
+    color:var(--muted);
+    cursor:pointer;
+    white-space:nowrap;
+    border-bottom:3px solid transparent;
+  }
+  nav button.active{
+    color:var(--accent);
+    border-bottom:3px solid var(--accent);
+  }
+  main{
+    max-width:760px;
+    margin:0 auto;
+    padding:20px;
+  }
+  .tab{display:none;}
+  .tab.active{display:block;}
+  section{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:16px;
+  }
+  h2{
+    font-size:1.05rem;
+    margin:0 0 6px;
+    color:var(--accent);
+  }
+  .lead{
+    color:var(--muted);
+    font-size:0.88rem;
+    margin-bottom:16px;
+  }
+
+  .tnotes-toggle{
+    background:var(--accent-light);
+    border:none;
+    color:var(--accent);
+    font-weight:700;
+    font-size:0.78rem;
+    padding:6px 12px;
+    border-radius:20px;
+    cursor:pointer;
+    margin-bottom:10px;
+  }
+  .tnotes{
+    display:none;
+    background:#FBF9F4;
+    border-left:3px solid var(--warn);
+    padding:10px 12px;
+    font-size:0.82rem;
+    color:#5c5340;
+    border-radius:0 8px 8px 0;
+    margin-bottom:14px;
+  }
+  .tnotes.show{display:block;}
+
+  .q-card{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:10px;
+    background:#FDFCFF;
+  }
+  .q-card .qtext{
+    font-weight:700;
+    font-size:0.98rem;
+    margin-bottom:4px;
+  }
+  .q-card .qtag{
+    display:inline-block;
+    font-size:0.68rem;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    color:#fff;
+    background:var(--accent);
+    padding:2px 8px;
+    border-radius:10px;
+    margin-bottom:8px;
+  }
+  .q-card .qtag.curveball{background:var(--bad);}
+
+  .phrase-card{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:0;
+    margin-bottom:10px;
+    overflow:hidden;
+    cursor:pointer;
+    background:#FDFCFF;
+  }
+  .phrase-front{
+    padding:14px 16px;
+    font-weight:700;
+    font-size:0.98rem;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .phrase-front .icon{color:var(--accent); font-size:1.1rem;}
+  .phrase-back{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.3s ease;
+    background:var(--accent-light);
+  }
+  .phrase-card.open .phrase-back{max-height:260px;}
+  .phrase-back-inner{
+    padding:12px 16px 14px;
+    font-size:0.88rem;
+    color:#40395c;
+  }
+  .phrase-back-inner .example{font-style:italic; margin-top:6px;}
+
+  .structure-flow{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:16px;
+  }
+  .structure-step{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    background:var(--accent-light);
+    border-radius:10px;
+    padding:12px 14px;
+  }
+  .structure-step .num{
+    background:var(--accent);
+    color:#fff;
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    font-size:0.85rem;
+    flex-shrink:0;
+  }
+  .structure-step .label{font-weight:700; font-size:0.92rem;}
+  .structure-step .desc{font-size:0.82rem; color:var(--muted); margin-top:2px;}
+  .practice-box{
+    border:1px dashed var(--border);
+    border-radius:10px;
+    padding:14px;
+    margin-top:10px;
+  }
+  .practice-box label{
+    display:block;
+    font-size:0.78rem;
+    font-weight:700;
+    color:var(--accent);
+    margin-bottom:4px;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+  }
+  textarea, input[type=text]{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:8px 10px;
+    font-family:inherit;
+    font-size:0.9rem;
+    min-height:44px;
+    margin-bottom:10px;
+  }
+  input[type=text]{min-height:unset;}
+
+  .recovery-card{
+    background:var(--accent-light);
+    border-radius:10px;
+    padding:12px 14px;
+    margin-bottom:8px;
+    font-size:0.92rem;
+  }
+  .recovery-card .situation{
+    font-size:0.75rem;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:.03em;
+    margin-bottom:4px;
+  }
+
+  /* fact cards */
+  .fact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-bottom:18px;
+  }
+  @media (max-width:600px){ .fact-grid{grid-template-columns:1fr;} }
+  .fact-card{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:12px 14px;
+    background:#FDFCFF;
+  }
+  .fact-card .fact-label{
+    font-size:0.68rem;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    color:var(--accent);
+    font-weight:800;
+    margin-bottom:6px;
+  }
+  .fact-card .fact-body{font-size:0.85rem; line-height:1.45;}
+
+  /* quiz */
+  .quiz-item{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:12px;
+    background:#FDFCFF;
+  }
+  .quiz-item .qz-q{font-weight:700; font-size:0.94rem; margin-bottom:10px;}
+  .qz-opts{display:flex; flex-direction:column; gap:6px;}
+  .qz-opts button{
+    text-align:left;
+    background:var(--surface);
+    border:1px solid var(--border);
+    padding:8px 12px;
+    border-radius:8px;
+    font-family:inherit;
+    font-size:0.85rem;
+    cursor:pointer;
+  }
+  .qz-opts button.correct{background:#E5F0E8; border-color:var(--good); color:#355c41;}
+  .qz-opts button.incorrect{background:#FBEDE9; border-color:var(--bad); color:#6b352b;}
+  .qz-opts button:disabled{cursor:default;}
+  .qz-explain{
+    display:none;
+    margin-top:8px;
+    font-size:0.82rem;
+    color:var(--muted);
+    padding-top:8px;
+    border-top:1px dashed var(--border);
+  }
+  .qz-explain.show{display:block;}
+  .quiz-score{
+    text-align:center;
+    font-weight:800;
+    color:var(--accent);
+    font-size:1rem;
+    padding:12px;
+    background:var(--accent-light);
+    border-radius:10px;
+  }
+
+  .mock-btns{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;}
+  .mock-btns button{
+    background:var(--surface);
+    border:1px solid var(--accent);
+    color:var(--accent);
+    font-weight:700;
+    font-size:0.82rem;
+    padding:8px 14px;
+    border-radius:20px;
+    cursor:pointer;
+  }
+  .mock-btns button.active{background:var(--accent); color:#fff;}
+  .mock-display{
+    background:var(--accent-light);
+    border-radius:10px;
+    padding:18px;
+    font-size:1.03rem;
+    font-weight:700;
+    text-align:center;
+    min-height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:10px;
+  }
+
+  .timer-bubble{
+    position:fixed;
+    bottom:20px;
+    left:20px;
+    background:var(--accent);
+    color:#fff;
+    border-radius:50px;
+    padding:10px 18px;
+    font-weight:700;
+    font-size:0.95rem;
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    cursor:pointer;
+    z-index:20;
+    user-select:none;
+  }
+  .timer-bubble.running{background:var(--bad);}
+
+  .next-back{
+    display:flex;
+    justify-content:space-between;
+    max-width:760px;
+    margin:0 auto;
+    padding:0 20px;
+  }
+  .next-back button{
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    font-weight:700;
+    cursor:pointer;
+    font-size:0.88rem;
+  }
+  .next-back button.ghost{
+    background:none;
+    color:var(--accent);
+    border:1px solid var(--accent);
+  }
+</style>
+</head>
+<body>
+
+<div style="display:flex;flex-wrap:wrap;gap:8px;padding:10px 16px;">
+  <a href="../Grammar-book/English/present-perfect-vs-past-simple.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Present Perfect vs Past Simple</a>
+  <a href="../Grammar-book/English/conditionals.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Conditionals</a>
+</div>
+
+<header>
+  <h1>Ghent University Interview Prep — Know Your Institution</h1>
+  <nav id="tabNav">
+    <button class="active" data-tab="warmup">Warm-Up</button>
+    <button data-tab="knowghent">Know Ghent</button>
+    <button data-tab="phrases">Phrase Bank</button>
+    <button data-tab="structure">Structure</button>
+    <button data-tab="mock">Mock Round</button>
+  </nav>
+</header>
+
+<div class="timer-bubble" id="timerBubble" onclick="toggleTimer()">50:00</div>
+
+<main>
+
+  <!-- WARM-UP -->
+  <div class="tab active" id="tab-warmup">
+    <section>
+      <h2>Diagnostic Mock Round</h2>
+      <div class="lead">Ask these cold, no prep. This role is an <strong>AAP</strong> position (assistant academic staff) — she'll be doing PhD research <em>and</em> teaching duties at the same time, so listen for whether she can speak to both halves, not just the research side.</div>
+      <button class="tnotes-toggle" onclick="toggleNotes(this)">Teacher notes</button>
+      <div class="tnotes">
+        Watch for: does she have any concrete Ghent-specific detail at all right now, or is it generic "good university" language? Does she distinguish research motivation from teaching motivation, or collapse them into one vague answer? This diagnostic sets the bar for what "Know Ghent" and the phrase bank need to fix.
+      </div>
+
+      <div class="q-card">
+        <span class="qtag">Familiar</span>
+        <div class="qtext">Why did you apply for this position at Ghent University?</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag">Familiar</span>
+        <div class="qtext">What do you know about our faculty and its research?</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag">Familiar</span>
+        <div class="qtext">Why do you want to combine PhD research with teaching?</div>
+      </div>
+      <div class="q-card">
+        <span class="qtag curveball">Curveball</span>
+        <div class="qtext">This role is half research, half teaching first-year students — if the two ever pulled you in different directions in the same week, how would you handle it?</div>
+      </div>
+
+      <div class="practice-box" style="margin-top:16px;">
+        <label>Quick read after the round</label>
+        <div class="mock-btns" data-group="diagBlock">
+          <button onclick="rate(this)">No Ghent-specific detail yet</button>
+          <button onclick="rate(this)">Research answer strong, teaching answer weak</button>
+          <button onclick="rate(this)">Both sound generic / rehearsed</button>
+          <button onclick="rate(this)">Freezes on the curveball</button>
+        </div>
+        <textarea id="diagNotes" placeholder="Anything specific worth remembering for next session..."></textarea>
+      </div>
+    </section>
+  </div>
+
+  <!-- KNOW GHENT -->
+  <div class="tab" id="tab-knowghent">
+    <section>
+      <h2>Facts Worth Naming in the Room</h2>
+      <div class="lead">Generic praise ("it's a great university") sounds the same from every candidate. These specifics let her sound like she actually researched the place.</div>
+
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fact-label">Identity</div>
+          <div class="fact-body">Founded 1817 — the first Dutch-speaking university in Belgium. Motto: <em>"Durf Denken"</em> ("Dare to Think"). A pluralist university: not tied to any religion or ideology, open to all.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">International profile</div>
+          <div class="fact-body">~41,000 students, over 6,000 international students from 130+ countries — a strongly international, multilingual environment.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Standing</div>
+          <div class="fact-body">QS World Rankings 2026: #162 globally, up from #169 the year before. #2 in Belgium, just behind KU Leuven.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Research reputation</div>
+          <div class="fact-body">Affiliated with several major scientists, including Peter Piot (co-discoverer of the Ebola virus, global HIV/AIDS researcher) and Marc Van Montagu (plant biotechnology pioneer) — a strong evidence-based research culture.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Where dentistry sits</div>
+          <div class="fact-body">Dentistry is part of the Faculty of Medicine and Health Sciences, spread across 10 departments — dental training is embedded in a larger medical/clinical research environment, not siloed.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Dental specialty strength</div>
+          <div class="fact-body">Ghent has a well-regarded, EFP-accredited postgraduate program in Periodontology &amp; Oral Implantology — clinically oriented, evidence-based, research-linked training.</div>
+        </div>
+      </div>
+
+      <h2>Quick Check</h2>
+      <div class="lead">Answer from memory first — check afterward, not before.</div>
+      <div id="quizWrap"></div>
+      <div class="quiz-score" id="quizScore" style="display:none;"></div>
+    </section>
+  </div>
+
+  <!-- PHRASE BANK -->
+  <div class="tab" id="tab-phrases">
+    <section>
+      <h2>Core Phrase Bank</h2>
+      <div class="lead">Tap a card to reveal how to use it. Have her repeat and personalize each one out loud immediately, plugging in a real Ghent fact from the previous tab.</div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>What draws me to Ghent University specifically is...</span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Use for "why this university / why here" — always follow with one concrete detail, not a general compliment.<br>
+          <span class="example">"What draws me to Ghent University specifically is the way dentistry sits inside a larger, research-driven Faculty of Medicine and Health Sciences."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>What appeals to me about this position is the combination of...</span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Use to show she understands this is a dual role (research + teaching), not just a PhD.<br>
+          <span class="example">"What appeals to me about this position is the combination of carrying out my own research and teaching students who are just starting out — I want both, not just one."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>I've always found that teaching something helps me...</span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Grammar: present perfect (have/has + past participle) — links a pattern from her past to who she is now, rather than reporting one finished event.<br>
+          <span class="example">"I've always found that teaching something helps me understand it more deeply myself."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>One thing I respect about Ghent's approach is...</span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Use to compliment the institution with substance — plug in a real fact (evidence-based training, international student body, research culture).<br>
+          <span class="example">"One thing I respect about Ghent's approach is how clinically and evidence-based the postgraduate dental training is."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>If my research and teaching schedules ever conflicted, I would...</span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Grammar: second conditional — for the "how would you balance research and teaching" curveball.<br>
+          <span class="example">"If my research and teaching schedules ever conflicted, I would prioritize by deadline and communicate early with my supervisor."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>As someone who moves between English and Dutch daily, I...</span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Use to turn her bilingual/multilingual daily reality into a strength, fitting Ghent's international, multilingual student body.<br>
+          <span class="example">"As someone who moves between English and Dutch daily, I'm used to adapting how I explain things depending on who's in front of me — which matters when teaching a mixed classroom."</span>
+        </div></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- STRUCTURE -->
+  <div class="tab" id="tab-structure">
+    <section>
+      <h2>The Answer Frame: Claim → Reason → Example</h2>
+      <div class="lead">Same shape as before, now loaded with Ghent-specific content instead of generic material.</div>
+
+      <div class="structure-flow">
+        <div class="structure-step">
+          <div class="num">1</div>
+          <div>
+            <div class="label">Claim</div>
+            <div class="desc">Say your main point in one short sentence.</div>
+          </div>
+        </div>
+        <div class="structure-step">
+          <div class="num">2</div>
+          <div>
+            <div class="label">Reason</div>
+            <div class="desc">Explain why, in one sentence.</div>
+          </div>
+        </div>
+        <div class="structure-step">
+          <div class="num">3</div>
+          <div>
+            <div class="label">Example</div>
+            <div class="desc">Give one short, concrete detail — ideally something specific to Ghent.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="recovery-card" style="margin-bottom:16px;">
+        <div class="situation">Grammar focus — second conditional for "how would you handle..." questions</div>
+        <strong>If + past simple, ... + would + base verb</strong><br>
+        <span class="example">"If research and teaching ever competed for my time, I would plan the week around fixed deadlines first."</span><br>
+        <span class="example">"If I didn't know how to answer a student's question, I would say so honestly and follow up."</span>
+      </div>
+
+      <div class="practice-box" style="margin-bottom:16px;">
+        <label>Grammar practice — finish with a second conditional</label>
+        <textarea placeholder="If a student struggled to understand something in class, I..."></textarea>
+        <textarea placeholder="If my supervisor and my teaching schedule clashed, I..."></textarea>
+      </div>
+
+      <div class="recovery-card" style="margin-bottom:16px;">
+        <div class="situation">Worked example — "Why Ghent University?"</div>
+        <strong>Claim:</strong> "I want to do my PhD at Ghent because it fits both what I want to research and how I want to grow as a teacher."<br>
+        <strong>Reason:</strong> "The Faculty of Medicine and Health Sciences puts dentistry inside a much larger, evidence-based research environment, which is exactly the kind of rigor I want around me."<br>
+        <strong>Example:</strong> "For example, the postgraduate program in periodontology and implantology is internationally accredited and clinically oriented — that combination of research and real clinical practice is rare."
+      </div>
+
+      <div class="recovery-card" style="margin-bottom:16px;">
+        <div class="situation">Worked example — "Why do you want to combine research and teaching?"</div>
+        <strong>Claim:</strong> "I want this role specifically because it's both, not one or the other."<br>
+        <strong>Reason:</strong> "Teaching forces me to explain ideas simply, which sharpens my own understanding for the research side."<br>
+        <strong>Example:</strong> "For example, when I've explained a clinical concept to someone less experienced, I've often noticed gaps in my own reasoning that I then had to fix."
+      </div>
+
+      <div class="practice-box">
+        <label>Practice: "What do you know about our faculty?"</label>
+        <textarea placeholder="Claim..."></textarea>
+        <textarea placeholder="Reason..."></textarea>
+        <textarea placeholder="Example... (use a real fact from Know Ghent)"></textarea>
+      </div>
+
+      <div class="practice-box">
+        <label>Practice: balancing research and teaching (curveball)</label>
+        <textarea placeholder="Claim..."></textarea>
+        <textarea placeholder="Reason..."></textarea>
+        <textarea placeholder="Example..."></textarea>
+      </div>
+    </section>
+  </div>
+
+  <!-- MOCK ROUND -->
+  <div class="tab" id="tab-mock">
+    <section>
+      <h2>Mock Interview — Round 2</h2>
+      <div class="lead">Same territory as the warm-up, now armed with real facts and structure. Compare the difference out loud after — press "Curveball" for a random surprise question each time.</div>
+
+      <div class="mock-btns" id="mockBtns">
+        <button onclick="showMock(this, 0)">1</button>
+        <button onclick="showMock(this, 1)">2</button>
+        <button onclick="showMock(this, 2)">3</button>
+        <button onclick="showMock(this, 3)">4</button>
+        <button onclick="showRandomCurveball(this)">🎲 Curveball</button>
+      </div>
+      <div class="mock-display" id="mockDisplay">Tap a number, or roll a curveball</div>
+
+      <div class="practice-box" style="margin-top:16px;">
+        <label>How did that feel compared to round 1?</label>
+        <div class="mock-btns" data-group="selfRating">
+          <button onclick="rate(this)">Much better</button>
+          <button onclick="rate(this)">A little better</button>
+          <button onclick="rate(this)">About the same</button>
+        </div>
+        <textarea id="mockNotes" placeholder="What still needs work before the real interview..."></textarea>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<div class="next-back">
+  <button class="ghost" onclick="prevTab()">Back</button>
+  <button onclick="nextTab()">Next</button>
+</div>
+
+<script>
+  const tabs = ['warmup','knowghent','phrases','structure','mock'];
+  let currentTab = 0;
+
+  function showTab(name){
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-'+name).classList.add('active');
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.querySelector(`nav button[data-tab="${name}"]`).classList.add('active');
+    currentTab = tabs.indexOf(name);
+  }
+  document.querySelectorAll('nav button').forEach(b=>{
+    b.addEventListener('click', ()=> showTab(b.dataset.tab));
+  });
+  function nextTab(){ if(currentTab < tabs.length-1) showTab(tabs[currentTab+1]); }
+  function prevTab(){ if(currentTab > 0) showTab(tabs[currentTab-1]); }
+
+  function toggleNotes(btn){
+    const notes = btn.nextElementSibling;
+    notes.classList.toggle('show');
+  }
+
+  function togglePhrase(card){
+    card.classList.toggle('open');
+  }
+
+  function rate(btn){
+    const group = btn.parentElement;
+    [...group.children].forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  // ---- Quiz (auto-checked) ----
+  const quizData = [
+    {
+      q: "What year was Ghent University founded, and what was significant about it?",
+      opts: ["1817 — the first Dutch-speaking university in Belgium", "1965 — a newly founded technical institute", "1817 — a French-only university"],
+      correct: 0,
+      explain: "Founded in 1817, it was the first university in Belgium to teach in Dutch."
+    },
+    {
+      q: "Which faculty is dentistry part of at Ghent University?",
+      opts: ["A separate, standalone Dental Institute", "The Faculty of Medicine and Health Sciences", "The Faculty of Sciences"],
+      correct: 1,
+      explain: "Dentistry sits inside the Faculty of Medicine and Health Sciences, alongside 9 other departments — embedded in a broader medical/research environment."
+    },
+    {
+      q: "Roughly how many international students study at Ghent University?",
+      opts: ["About 500", "Over 6,000, from 130+ countries", "Fewer than 100"],
+      correct: 1,
+      explain: "Ghent has over 6,000 international students from more than 130 countries — a strongly international campus."
+    },
+    {
+      q: "What kind of dental postgraduate program is Ghent especially known for?",
+      opts: ["Periodontology & Oral Implantology (EFP-accredited)", "Orthodontics only", "It has no postgraduate dental programs"],
+      correct: 0,
+      explain: "Ghent runs a well-regarded, internationally accredited postgraduate program in Periodontology and Oral Implantology."
+    },
+    {
+      q: "What type of academic position is this — the one combining PhD research with teaching duties?",
+      opts: ["ZAP (senior professorial staff)", "AAP (assistant academic staff)", "ATP (administrative staff)"],
+      correct: 1,
+      explain: "AAP (Assisterend Academisch Personeel) is Belgium's structure for staff who do a PhD while also holding teaching duties — different from senior ZAP professorial roles."
+    }
+  ];
+
+  let quizScore = 0;
+  let quizAnswered = 0;
+
+  function buildQuiz(){
+    const wrap = document.getElementById('quizWrap');
+    quizData.forEach((item, qi) => {
+      const div = document.createElement('div');
+      div.className = 'quiz-item';
+      div.innerHTML = `<div class="qz-q">${qi+1}. ${item.q}</div>
+        <div class="qz-opts">
+          ${item.opts.map((o,oi)=>`<button onclick="answerQuiz(${qi},${oi},this)">${o}</button>`).join('')}
+        </div>
+        <div class="qz-explain" id="explain-${qi}">${item.explain}</div>`;
+      wrap.appendChild(div);
+    });
+  }
+
+  function answerQuiz(qi, oi, btn){
+    const item = quizData[qi];
+    const opts = btn.parentElement.querySelectorAll('button');
+    if(opts[0].disabled) return; // already answered
+    opts.forEach((b,i) => {
+      b.disabled = true;
+      if(i === item.correct) b.classList.add('correct');
+      else if(i === oi) b.classList.add('incorrect');
+    });
+    document.getElementById('explain-'+qi).classList.add('show');
+    quizAnswered++;
+    if(oi === item.correct) quizScore++;
+    if(quizAnswered === quizData.length){
+      const scoreEl = document.getElementById('quizScore');
+      scoreEl.style.display = 'block';
+      scoreEl.textContent = `Score: ${quizScore} / ${quizData.length}`;
+    }
+  }
+  buildQuiz();
+
+  // mock round questions
+  const mockQuestions = [
+    "Why did you apply for this position at Ghent University?",
+    "What do you know about our faculty and its research?",
+    "Why do you want to combine PhD research with teaching?",
+    "Tell me about a time you had to explain something complex to someone else."
+  ];
+  const curveballs = [
+    "If your teaching load suddenly doubled during exam week, what would you do?",
+    "How would you handle a student who disagreed with your feedback in front of the class?",
+    "What would you do if your research results contradicted what you expected to find?",
+    "If you had to choose between finishing a research deadline and preparing for a class, how would you decide?",
+    "A colleague suggests a shortcut that isn't fully evidence-based — how do you respond?"
+  ];
+  function showMock(btn, i){
+    document.querySelectorAll('#mockBtns button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('mockDisplay').textContent = mockQuestions[i];
+  }
+  function showRandomCurveball(btn){
+    document.querySelectorAll('#mockBtns button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const pick = curveballs[Math.floor(Math.random()*curveballs.length)];
+    document.getElementById('mockDisplay').textContent = pick;
+  }
+
+  // timer
+  let seconds = 50*60;
+  let running = false;
+  let interval = null;
+  const bubble = document.getElementById('timerBubble');
+  function formatTime(s){
+    const m = Math.floor(s/60);
+    const sec = s%60;
+    return `${m}:${sec.toString().padStart(2,'0')}`;
+  }
+  function toggleTimer(){
+    if(running){
+      clearInterval(interval);
+      running = false;
+      bubble.classList.remove('running');
+    } else {
+      running = true;
+      bubble.classList.add('running');
+      interval = setInterval(()=>{
+        if(seconds > 0){
+          seconds--;
+          bubble.textContent = formatTime(seconds);
+        } else {
+          clearInterval(interval);
+          bubble.textContent = "Time's up";
+        }
+      }, 1000);
+    }
+  }
+</script>
+
+<script src="../assets/write-bubble.js"></script>
+
+</body>
+</html>

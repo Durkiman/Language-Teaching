@@ -1,5 +1,19 @@
 [
   {
+    "title": "#5 Ghent University Interview Prep — Know Your Institution",
+    "file": "ghent-university-interview-prep.html",
+    "grammar": [
+      {
+        "file": "present-perfect-vs-past-simple.html",
+        "title": "Present Perfect vs. Past Simple"
+      },
+      {
+        "file": "conditionals.html",
+        "title": "Conditionals"
+      }
+    ]
+  },
+  {
     "title": "#4 Structured Storytelling — Handling a Difficult Situation at Work",
     "file": "structured-storytelling-workplace-challenges.html",
     "goals": { "primary": ["B1-01"], "incidental": ["B1-08", "B1-18"] },
