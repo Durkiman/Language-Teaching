@@ -26,6 +26,7 @@
     --olive: #7a8a3f;
     --slate: #3D5A80;
     --copper: #a8763e;
+    --berry: #a8447a;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -156,6 +157,7 @@
   .student-card.faycal::before   { background: var(--olive); }
   .student-card.alejandro::before { background: var(--slate); }
   .student-card.david::before    { background: var(--copper); }
+  .student-card.yoonhee::before  { background: var(--berry); }
 
   .card-emoji { font-size: 28px; margin-bottom: 14px; display: block; }
 
@@ -186,6 +188,7 @@
   .student-card.faycal   .card-level { color: var(--olive); }
   .student-card.alejandro .card-level { color: var(--slate); }
   .student-card.david    .card-level { color: var(--copper); }
+  .student-card.yoonhee  .card-level { color: var(--berry); }
 
   .card-desc {
     font-size: 13px;
@@ -241,6 +244,7 @@
   .student-card.faycal   .lesson-list li a:hover { background: #eef0d6; color: var(--olive); }
   .student-card.alejandro .lesson-list li a:hover { background: #dbe4ee; color: var(--slate); }
   .student-card.david    .lesson-list li a:hover { background: #f2e6d4; color: var(--copper); }
+  .student-card.yoonhee  .lesson-list li a:hover { background: #f3dcec; color: var(--berry); }
 
   .lesson-list li a .icon { font-size: 13px; flex-shrink: 0; }
 
@@ -270,6 +274,7 @@
   .student-card.faycal   .see-all { color: var(--olive); }
   .student-card.alejandro .see-all { color: var(--slate); }
   .student-card.david    .see-all { color: var(--copper); }
+  .student-card.yoonhee  .see-all { color: var(--berry); }
 
   .see-all:hover { gap: 10px; }
 
@@ -631,6 +636,18 @@
       </details>
     </div>
 
+    <div class="student-card yoonhee">
+      <span class="card-emoji">🧳</span>
+      <div class="card-name">Yoonhee</div>
+      <div class="card-level">Intermediate · English</div>
+      <p class="card-desc">Building fluency and confidence for studying design in Belgium.</p>
+      <details class="lessons-toggle">
+        <summary><span id="lessons-count-yoonhee">Loading…</span></summary>
+        <ul class="lesson-list" id="lessons-yoonhee"></ul>
+        <div id="meta-yoonhee"></div>
+      </details>
+    </div>
+
   </div>
 
   <div class="footer-note">
@@ -657,6 +674,7 @@
     { id: 'faycal',    folder: 'Faycal'    },
     { id: 'alejandro', folder: 'Alejandro' },
     { id: 'david',     folder: 'David'     },
+    { id: 'yoonhee',   folder: 'Yoonhee'   },
   ];
 
   async function loadLessons(student) {

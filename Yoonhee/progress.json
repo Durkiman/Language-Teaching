@@ -1,0 +1,28 @@
+{
+  "student": "yoonhee",
+  "levels": ["B1"],
+  "cards": {
+    "B1-08": {
+      "status": "introduced",
+      "introduced": "2026-08-07",
+      "reviews": [],
+      "notes": "evidence task pending confirmation after session"
+    },
+    "B1-17": {
+      "status": "introduced",
+      "introduced": "2026-08-07",
+      "reviews": [],
+      "notes": "evidence task pending confirmation after session"
+    }
+  },
+  "intake": {
+    "date": "2026-08-07",
+    "native_language": "Korean",
+    "target_language": "English",
+    "profession": "Prospective interior/spatial design student — planning to study in Belgium",
+    "strengths": "Confident speaker; learned English at an Australian language school; strong listening, reading, and pronunciation",
+    "gaps": ["Fluency", "Speaking without hesitation"],
+    "motivation": "Wants to study interior/spatial design in Belgium; success looks like expressing thoughts comfortably and without hesitation",
+    "plan_notes": "Conversation-heavy sessions, 1x/week (50 min), wants immediate correction and homework every time. Interested in travel, Belgian and other cultures, and outdoor activities (hiking, walking, cycling). First lesson: Belgian culture overview + speaking practice."
+  }
+}

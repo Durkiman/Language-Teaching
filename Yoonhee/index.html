@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yoonhee – Language Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/student.css">
+<style>
+  :root {
+    --accent: #a8447a;
+    --accent-light: #f3e0ec;
+  }
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+<div class="page">
+
+  <header>
+    <p class="eyebrow">Language Studio · Durim</p>
+    <h1>Hi, <em>Yoonhee</em>.</h1>
+    <div class="divider"></div>
+    <p class="tagline">Your English lessons, ready when you are.</p>
+  </header>
+
+  <div class="hub-columns">
+    <section class="hub-column">
+      <p class="lessons-label">Your lessons</p>
+      <ul class="lesson-list" id="lesson-list">
+        <li><div class="loading-state"><div class="spinner"></div> Loading your lessons…</div></li>
+      </ul>
+    </section>
+    <section class="hub-column">
+      <p class="lessons-label">Your grammar book</p>
+      <div class="grammar-links" id="grammar-book-list">
+        <div class="loading-state"><div class="spinner"></div> Loading…</div>
+      </div>
+    </section>
+    <section class="hub-column">
+      <p class="lessons-label">Your homework</p>
+      <ul class="lesson-list" id="homework-list">
+        <li><div class="loading-state"><div class="spinner"></div> Loading your homework…</div></li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="footer-note">Made with care by Durim · Open each lesson directly in your browser</div>
+
+</div>
+
+<script src="../assets/student.js" data-folder="Yoonhee"></script>
+</body>
+</html>

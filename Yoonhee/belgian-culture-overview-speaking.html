@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belgian Culture: First Impressions</title>
+<link rel="stylesheet" href="../assets/write-bubble.css">
+<style>
+  :root{
+    --bg:#FAF6F9;
+    --card:#FFFFFF;
+    --ink:#2C2530;
+    --ink-soft:#7A7182;
+    --berry:#a8447a;
+    --berry-pale:#f3e0ec;
+    --gold:#c9a84c;
+    --gold-pale:#f6efdc;
+    --line:#E7DFE6;
+    --good:#5B8A6E;
+    --bad:#B0554A;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Inter','DM Sans',sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    padding-bottom:100px;
+  }
+  header{
+    background:var(--card);
+    border-bottom:1px solid var(--line);
+    padding:16px 20px 0;
+    position:sticky;
+    top:0;
+    z-index:15;
+  }
+  header h1{
+    margin:0 0 12px;
+    font-size:1.2rem;
+    font-weight:800;
+    color:var(--berry);
+  }
+  nav{
+    display:flex;
+    gap:4px;
+    overflow-x:auto;
+  }
+  nav button{
+    background:none;
+    border:none;
+    padding:10px 14px;
+    font-family:inherit;
+    font-size:0.85rem;
+    font-weight:700;
+    color:var(--ink-soft);
+    cursor:pointer;
+    white-space:nowrap;
+    border-bottom:3px solid transparent;
+  }
+  nav button.active{
+    color:var(--berry);
+    border-bottom:3px solid var(--berry);
+  }
+  main{
+    max-width:760px;
+    margin:0 auto;
+    padding:20px;
+  }
+  .tab{display:none;}
+  .tab.active{display:block;}
+  section{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:16px;
+  }
+  h2{
+    font-size:1.05rem;
+    margin:0 0 6px;
+    color:var(--berry);
+  }
+  .lead{
+    color:var(--ink-soft);
+    font-size:0.88rem;
+    margin-bottom:16px;
+  }
+
+  .tnotes-toggle{
+    background:var(--berry-pale);
+    border:none;
+    color:var(--berry);
+    font-weight:700;
+    font-size:0.78rem;
+    padding:6px 12px;
+    border-radius:20px;
+    cursor:pointer;
+    margin-bottom:10px;
+  }
+  .tnotes{
+    display:none;
+    background:#FBF9F4;
+    border-left:3px solid var(--gold);
+    padding:10px 12px;
+    font-size:0.82rem;
+    color:#5c5340;
+    border-radius:0 8px 8px 0;
+    margin-bottom:14px;
+  }
+  .tnotes.show{display:block;}
+
+  /* fact cards */
+  .fact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-bottom:18px;
+  }
+  @media (max-width:600px){ .fact-grid{grid-template-columns:1fr;} }
+  .fact-card{
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px 14px;
+    background:#FDFBFD;
+  }
+  .fact-card .fact-label{
+    font-size:0.68rem;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    color:var(--berry);
+    font-weight:800;
+    margin-bottom:6px;
+  }
+  .fact-card .fact-body{font-size:0.85rem; line-height:1.45;}
+
+  /* quiz */
+  .quiz-item{
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:12px;
+    background:#FDFBFD;
+  }
+  .quiz-item .qz-q{font-weight:700; font-size:0.94rem; margin-bottom:10px;}
+  .qz-opts{display:flex; flex-direction:column; gap:6px;}
+  .qz-opts button{
+    text-align:left;
+    background:var(--card);
+    border:1px solid var(--line);
+    padding:8px 12px;
+    border-radius:8px;
+    font-family:inherit;
+    font-size:0.85rem;
+    cursor:pointer;
+  }
+  .qz-opts button.correct{background:#E5F0E8; border-color:var(--good); color:#355c41;}
+  .qz-opts button.incorrect{background:#FBEDE9; border-color:var(--bad); color:#6b352b;}
+  .qz-opts button:disabled{cursor:default;}
+  .qz-explain{
+    display:none;
+    margin-top:8px;
+    font-size:0.82rem;
+    color:var(--ink-soft);
+    padding-top:8px;
+    border-top:1px dashed var(--line);
+  }
+  .qz-explain.show{display:block;}
+  .quiz-score{
+    text-align:center;
+    font-weight:800;
+    color:var(--berry);
+    font-size:1rem;
+    padding:12px;
+    background:var(--berry-pale);
+    border-radius:10px;
+  }
+
+  /* phrase cards */
+  .phrase-card{
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:0;
+    margin-bottom:10px;
+    overflow:hidden;
+    cursor:pointer;
+    background:#FDFBFD;
+  }
+  .phrase-front{
+    padding:14px 16px;
+    font-weight:700;
+    font-size:0.96rem;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .phrase-front .icon{color:var(--berry); font-size:1.1rem;}
+  .phrase-back{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.3s ease;
+    background:var(--berry-pale);
+  }
+  .phrase-card.open .phrase-back{max-height:220px;}
+  .phrase-back-inner{
+    padding:12px 16px 14px;
+    font-size:0.88rem;
+    color:#4a2d40;
+  }
+  .phrase-back-inner .example{font-style:italic; margin-top:6px;}
+
+  .tag-row{display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 4px;}
+  .tag-row .tag{
+    background:var(--gold-pale); color:#8A6A2F; font-size:0.72rem; font-weight:700;
+    padding:4px 10px; border-radius:14px;
+  }
+
+  /* structure / practice */
+  .structure-flow{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:16px;
+  }
+  .structure-step{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    background:var(--berry-pale);
+    border-radius:10px;
+    padding:12px 14px;
+  }
+  .structure-step .num{
+    background:var(--berry);
+    color:#fff;
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    font-size:0.85rem;
+    flex-shrink:0;
+  }
+  .structure-step .label{font-weight:700; font-size:0.92rem;}
+  .structure-step .desc{font-size:0.82rem; color:var(--ink-soft); margin-top:2px;}
+
+  .practice-box{
+    border:1px dashed var(--line);
+    border-radius:10px;
+    padding:14px;
+    margin-top:10px;
+    margin-bottom:14px;
+  }
+  .practice-box label{
+    display:block;
+    font-size:0.78rem;
+    font-weight:700;
+    color:var(--berry);
+    margin-bottom:4px;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+  }
+  textarea, input[type=text]{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:8px 10px;
+    font-family:inherit;
+    font-size:0.9rem;
+    min-height:44px;
+    margin-bottom:10px;
+  }
+
+  /* topic roulette */
+  .roulette-btns{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;}
+  .roulette-btns button{
+    background:var(--card);
+    border:1px solid var(--berry);
+    color:var(--berry);
+    font-weight:700;
+    font-size:0.82rem;
+    padding:8px 14px;
+    border-radius:20px;
+    cursor:pointer;
+  }
+  .roulette-btns button.active{background:var(--berry); color:#fff;}
+  .roulette-display{
+    background:var(--berry-pale);
+    border-radius:10px;
+    padding:18px;
+    font-size:1.02rem;
+    font-weight:700;
+    text-align:center;
+    min-height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:10px;
+  }
+
+  /* marker tracker */
+  .marker-tracker{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:12px;
+  }
+  .marker-tracker button{
+    background:var(--card);
+    border:1.5px solid var(--line);
+    border-radius:20px;
+    padding:8px 12px;
+    font-family:inherit;
+    font-size:0.78rem;
+    font-weight:700;
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
+  .marker-tracker button.used{background:var(--good); border-color:var(--good); color:#fff;}
+  .marker-count{
+    text-align:center;
+    font-size:0.85rem;
+    font-weight:700;
+    color:var(--berry);
+    margin-bottom:14px;
+  }
+
+  /* recap / can-do */
+  .cando-toggle{
+    background:none; border:1.5px solid var(--line); border-radius:9px; padding:8px 14px;
+    font-family:inherit; font-weight:700; font-size:0.82rem; color:var(--ink-soft); cursor:pointer; margin-top:8px;
+  }
+  .cando-body{display:none; margin-top:12px; font-size:0.84rem; line-height:1.7;}
+  .cando-body.open{display:block;}
+  .cando-body b{color:var(--ink);}
+  .cando-badge{
+    display:inline-block; font-size:0.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.04em;
+    background:var(--berry-pale); color:var(--berry); padding:3px 9px; border-radius:6px; margin-bottom:8px;
+  }
+
+  /* timer + whiteboard */
+  .timer-bubble{
+    position:fixed; bottom:18px; left:18px; background:var(--berry); color:#fff;
+    border-radius:14px; padding:10px 14px; font-weight:800; font-size:0.95rem; font-family:'JetBrains Mono',monospace;
+    cursor:pointer; z-index:200; box-shadow:0 4px 14px rgba(0,0,0,0.18); user-select:none;
+  }
+  .timer-bubble.warn{background:var(--bad);}
+  .whiteboard{
+    position:fixed; bottom:70px; left:18px; width:min(310px,88vw); background:var(--card);
+    border:1px solid var(--line); border-radius:12px; padding:14px; box-shadow:0 8px 24px rgba(0,0,0,0.15);
+    z-index:200; display:none; max-height:75vh; overflow-y:auto;
+  }
+  .whiteboard.open{display:block;}
+  .whiteboard h3{font-size:0.82rem; margin:12px 0 6px 0; color:var(--berry);}
+  .whiteboard h3:first-child{margin-top:0;}
+  .wb-row{display:flex; gap:6px; margin-bottom:6px; flex-wrap:wrap;}
+  .wb-row button{
+    background:var(--berry-pale); border:none; border-radius:8px; padding:7px 10px;
+    font-family:inherit; font-weight:700; font-size:0.78rem; cursor:pointer; color:var(--berry);
+  }
+  .wb-row button.start{background:var(--berry); color:#fff;}
+  .wb-row button.reset{background:#fff; border:1.5px solid var(--line); color:var(--ink-soft);}
+  .wb-row button.stamp{background:var(--gold-pale); color:#8A6A2F;}
+  .whiteboard textarea{
+    width:100%; min-height:60px; border:1.5px solid var(--line); border-radius:8px; padding:8px;
+    font-family:inherit; font-size:0.82rem; resize:vertical;
+  }
+  .wb-corrections{border:1px solid var(--line); border-radius:8px; padding:8px; min-height:34px; margin-bottom:8px; background:#FBFAF7;}
+  .wb-correction-entry{font-size:0.78rem; padding:3px 0; border-bottom:1px dashed var(--line); color:var(--ink);}
+  .wb-correction-entry:last-child{border-bottom:none;}
+  .wb-correction-entry .t{font-family:'JetBrains Mono',monospace; color:var(--berry); font-weight:600; margin-right:6px;}
+  .wb-empty{font-size:0.78rem; color:var(--ink-soft); font-style:italic;}
+  .wb-actions{display:flex; gap:6px; margin-top:8px;}
+  .wb-actions button{
+    flex:1; background:#fff; border:1.5px solid var(--line); border-radius:8px; padding:7px;
+    font-size:0.76rem; font-weight:700; color:var(--ink-soft); cursor:pointer;
+  }
+
+  .next-back{
+    display:flex;
+    justify-content:space-between;
+    max-width:760px;
+    margin:0 auto;
+    padding:0 20px;
+  }
+  .next-back button{
+    background:var(--berry);
+    color:#fff;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    font-weight:700;
+    cursor:pointer;
+    font-size:0.88rem;
+  }
+  .next-back button.ghost{
+    background:none;
+    color:var(--berry);
+    border:1px solid var(--berry);
+  }
+
+  .toast{
+    position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+    background:var(--ink); color:#fff; padding:8px 16px; border-radius:20px;
+    font-size:0.8rem; opacity:0; pointer-events:none; transition:opacity 0.25s ease; z-index:300;
+  }
+  .toast.show{opacity:1;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Belgian Culture: First Impressions</h1>
+  <nav id="tabNav">
+    <button class="active" data-tab="warmup">Warm-Up</button>
+    <button data-tab="knowbelgium">Know Belgium</button>
+    <button data-tab="phrases">Phrase Bank</button>
+    <button data-tab="speaking">Speaking Practice</button>
+    <button data-tab="recap">Recap</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- WARM-UP -->
+  <div class="tab active" id="tab-warmup">
+    <section>
+      <h2>Before We Start</h2>
+      <div class="lead">Ask these cold, no prep — this sets the baseline for how she talks about culture right now.</div>
+      <button class="tnotes-toggle" onclick="toggleNotes(this)">Teacher notes</button>
+      <div class="tnotes">
+        Listen for: does she support opinions with a reason and an example, or just a bare claim ("Belgium is nice")? Does she hesitate a lot, or self-correct mid-sentence? This is the diagnostic for B1-08 (opinions with reasons) — the phrase bank and speaking practice tabs are built to fix exactly what's missing here.
+      </div>
+
+      <div class="fact-card" style="margin-bottom:10px;">
+        <div class="fact-label">Warm-up question</div>
+        <div class="fact-body">What do you already know about Belgium — even small things you've heard or seen?</div>
+      </div>
+      <div class="fact-card" style="margin-bottom:10px;">
+        <div class="fact-label">Warm-up question</div>
+        <div class="fact-body">What's one thing about Korean culture you think a Belgian person would find surprising?</div>
+      </div>
+      <div class="fact-card" style="margin-bottom:16px;">
+        <div class="fact-label">Warm-up question</div>
+        <div class="fact-body">When you imagine studying abroad, what part of adjusting to a new culture worries you most?</div>
+      </div>
+
+      <div class="practice-box">
+        <label>Quick read after the warm-up</label>
+        <div class="roulette-btns" data-group="diagBlock">
+          <button onclick="rate(this)">Opinions, but no reasons yet</button>
+          <button onclick="rate(this)">Good reasons, a lot of hesitation</button>
+          <button onclick="rate(this)">Fluent, just needs vocabulary</button>
+        </div>
+        <textarea id="diagNotes" placeholder="Anything specific worth remembering for next session..."></textarea>
+      </div>
+    </section>
+  </div>
+
+  <!-- KNOW BELGIUM -->
+  <div class="tab" id="tab-knowbelgium">
+    <section>
+      <h2>Belgium in Six Facts</h2>
+      <div class="lead">Read each card out loud, then react to it in your own words before moving to the next.</div>
+
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fact-label">Languages</div>
+          <div class="fact-body">Belgium has three official languages: Dutch (Flanders, north), French (Wallonia, south), and German (a small eastern region). Brussels is officially bilingual (Dutch/French).</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Food</div>
+          <div class="fact-body">Famous for fries (eaten with mayonnaise, not ketchup), waffles, chocolate, and beer — Belgium has over 1,500 beer varieties and a centuries-old brewing tradition, including Trappist monastery beers.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Directness</div>
+          <div class="fact-body">Belgians tend to be polite but fairly direct and understated — modesty is valued, and loud self-promotion is often seen as impolite.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Punctuality & small talk</div>
+          <div class="fact-body">Being on time matters, especially in Flanders. Small talk before business is common but usually brief — weather, travel, or a quick personal check-in.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Design & architecture</div>
+          <div class="fact-body">Belgium has a strong design and architecture scene — Art Nouveau started partly in Brussels (Victor Horta), and Belgian designers are internationally respected in fashion and interiors.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Regional identity</div>
+          <div class="fact-body">Flemish (Dutch-speaking) and Walloon (French-speaking) communities have distinct identities, and regional pride is common — it's not one uniform "Belgian culture."</div>
+        </div>
+      </div>
+
+      <h2>Quick Check</h2>
+      <div class="lead">Answer from memory first — check afterward, not before.</div>
+      <div id="quizWrap"></div>
+      <div class="quiz-score" id="quizScore" style="display:none;"></div>
+    </section>
+  </div>
+
+  <!-- PHRASE BANK -->
+  <div class="tab" id="tab-phrases">
+    <section>
+      <h2>Giving an Opinion With a Reason</h2>
+      <div class="lead">Tap a card to reveal how to use it. Say each one out loud with a real opinion about Belgium.</div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>In my opinion, ... because ...</span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          The basic claim + reason shape. Always add "because" — a bare opinion sounds unfinished at B1.<br>
+          <span class="example">"In my opinion, Belgian design culture is really strong because they take craftsmanship seriously."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>What surprises me most is...</span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Great for reacting to new cultural facts — sounds natural and personal.<br>
+          <span class="example">"What surprises me most is that Belgium has three official languages — that's very different from Korea."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>One thing I'd like to experience is...</span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Ties opinion to a future goal — useful when talking about studying abroad.<br>
+          <span class="example">"One thing I'd like to experience is the local design scene, especially in Brussels or Antwerp."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>Compared to Korea, ... seems ...</span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Comparative structure for culture-contrast talk.<br>
+          <span class="example">"Compared to Korea, small talk in Belgium seems much shorter and more to the point."</span>
+        </div></div>
+      </div>
+
+      <h2 style="margin-top:22px;">Keeping the Conversation Going</h2>
+      <div class="lead">Natural spoken markers — use these to interrupt politely, change topic, or come back to something.</div>
+      <div class="tag-row">
+        <span class="tag">Sorry to interrupt, but...</span>
+        <span class="tag">Could I just say something?</span>
+        <span class="tag">By the way...</span>
+        <span class="tag">Anyway, as I was saying...</span>
+        <span class="tag">What were we talking about?</span>
+        <span class="tag">Right. / Really? / I know how you feel.</span>
+      </div>
+    </section>
+  </div>
+
+  <!-- SPEAKING PRACTICE -->
+  <div class="tab" id="tab-speaking">
+    <section>
+      <h2>The Answer Frame: Claim → Reason → Example</h2>
+      <div class="lead">Same shape every time — say your point, explain why, then give a concrete example.</div>
+
+      <div class="structure-flow">
+        <div class="structure-step">
+          <div class="num">1</div>
+          <div>
+            <div class="label">Claim</div>
+            <div class="desc">Say your main opinion in one short sentence.</div>
+          </div>
+        </div>
+        <div class="structure-step">
+          <div class="num">2</div>
+          <div>
+            <div class="label">Reason</div>
+            <div class="desc">Give two distinct reasons why, not just one.</div>
+          </div>
+        </div>
+        <div class="structure-step">
+          <div class="num">3</div>
+          <div>
+            <div class="label">Example</div>
+            <div class="desc">Add one specific, concrete example.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-box">
+        <label>Practice: "What surprised you most about Belgian culture today?"</label>
+        <textarea placeholder="Claim..."></textarea>
+        <textarea placeholder="Reason 1..."></textarea>
+        <textarea placeholder="Reason 2..."></textarea>
+        <textarea placeholder="Example..."></textarea>
+      </div>
+
+      <h2>Topic Roulette</h2>
+      <div class="lead">Press a number for a one-minute opinion topic. Use claim → two reasons → example — aim for a full minute without stopping.</div>
+      <div class="roulette-btns" id="rouletteBtns">
+        <button onclick="showTopic(this, 0)">1</button>
+        <button onclick="showTopic(this, 1)">2</button>
+        <button onclick="showTopic(this, 2)">3</button>
+        <button onclick="showTopic(this, 3)">4</button>
+        <button onclick="showTopic(this, 4)">5</button>
+        <button onclick="showRandomTopic(this)">🎲 Random</button>
+      </div>
+      <div class="roulette-display" id="topicDisplay">Press a number, or roll a random topic</div>
+
+      <h2 style="margin-top:20px;">Marker Tracker</h2>
+      <div class="lead">During your one-minute answers or free chat, tap a marker each time you actually use it out loud.</div>
+      <div class="marker-tracker" id="markerTracker">
+        <button data-marker="Sorry to interrupt, but...">Sorry to interrupt, but...</button>
+        <button data-marker="Could I just say something?">Could I just say something?</button>
+        <button data-marker="By the way...">By the way...</button>
+        <button data-marker="Anyway, as I was saying...">Anyway, as I was saying...</button>
+        <button data-marker="What were we talking about?">What were we talking about?</button>
+        <button data-marker="Right. / Really? / I know how you feel.">Right. / Really? / I know how you feel.</button>
+      </div>
+      <div class="marker-count" id="markerCount">0 / 6 markers used</div>
+
+      <div class="practice-box">
+        <label>How did that feel?</label>
+        <div class="roulette-btns" data-group="selfRating">
+          <button onclick="rate(this)">Confident, kept talking</button>
+          <button onclick="rate(this)">A few pauses, but recovered</button>
+          <button onclick="rate(this)">Ran out of things to say</button>
+        </div>
+        <textarea id="speakingNotes" placeholder="What to focus on next time..."></textarea>
+      </div>
+    </section>
+  </div>
+
+  <!-- RECAP -->
+  <div class="tab" id="tab-recap">
+    <section>
+      <h2>Session Recap</h2>
+      <div class="lead">What today's session was building toward.</div>
+      <button class="cando-toggle" onclick="toggleCando(this)">Show can-do focus</button>
+      <div class="cando-body">
+        <span class="cando-badge">B1-08 — Primary</span><br>
+        <b>Opinions with reasons.</b> Can express personal views and opinions on familiar topics and support them.<br>
+        <b>Exponents:</b> I think… / I don't think… / In my opinion…<br>
+        <b>Evidence task:</b> A one-minute opinion on a familiar topic with two distinct supporting reasons and one example — this is exactly what the Topic Roulette drills.<br><br>
+        <span class="cando-badge">B1-17 — Incidental</span><br>
+        <b>Keeping the conversation alive.</b> Can interrupt politely, change the topic, return to a dropped topic, and keep a conversation flowing with natural spoken markers.<br>
+        <b>Evidence task:</b> A five-minute genuine conversation using at least four informal markers — tracked live with the Marker Tracker above.
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<div class="next-back">
+  <button class="ghost" onclick="prevTab()">Back</button>
+  <button onclick="nextTab()">Next</button>
+</div>
+
+<div class="timer-bubble" id="timerBubble">50:00</div>
+<div class="whiteboard" id="whiteboard">
+  <h3>Timer</h3>
+  <div class="wb-row">
+    <button id="startPause" class="start">▶ Start</button>
+    <button id="resetTimer" class="reset">Reset</button>
+  </div>
+
+  <h3>Stamps</h3>
+  <div class="wb-row">
+    <button class="stamp" data-stamp="👍 Good opinion + reasons">👍 Good opinion</button>
+    <button class="stamp" data-stamp="🔁 Try again">🔁 Try again</button>
+    <button class="stamp" data-stamp="🗣️ New phrase used">🗣️ New phrase</button>
+    <button class="stamp" data-stamp="✅ Kept talking a full minute">✅ Full minute</button>
+  </div>
+  <div class="wb-corrections" id="wbCorrections"></div>
+
+  <h3>Notes</h3>
+  <textarea id="wbNotes" placeholder="Quick corrections / notes..."></textarea>
+  <div class="wb-actions">
+    <button id="wbCopy">Copy</button>
+    <button id="wbClear">Clear</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ---------- Tabs ----------
+  const tabs = ['warmup','knowbelgium','phrases','speaking','recap'];
+  let currentTab = 0;
+  function showTab(name){
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-'+name).classList.add('active');
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.querySelector(`nav button[data-tab="${name}"]`).classList.add('active');
+    currentTab = tabs.indexOf(name);
+  }
+  document.querySelectorAll('nav button').forEach(b=>{
+    b.addEventListener('click', ()=> showTab(b.dataset.tab));
+  });
+  function nextTab(){ if(currentTab < tabs.length-1) showTab(tabs[currentTab+1]); }
+  function prevTab(){ if(currentTab > 0) showTab(tabs[currentTab-1]); }
+
+  function toggleNotes(btn){
+    btn.nextElementSibling.classList.toggle('show');
+  }
+  function togglePhrase(card){
+    card.classList.toggle('open');
+  }
+  function toggleCando(btn){
+    btn.nextElementSibling.classList.toggle('open');
+  }
+  function rate(btn){
+    const group = btn.parentElement;
+    [...group.children].forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  // ---------- Quiz (auto-checked) ----------
+  const quizData = [
+    {
+      q: "How many official languages does Belgium have?",
+      opts: ["One", "Three — Dutch, French, and German", "Five"],
+      correct: 1,
+      explain: "Dutch (Flanders), French (Wallonia), and German (a small eastern region) are all official. Brussels is officially bilingual Dutch/French."
+    },
+    {
+      q: "What do Belgians typically eat fries with?",
+      opts: ["Ketchup", "Mayonnaise", "Nothing — always plain"],
+      correct: 1,
+      explain: "Mayonnaise is the classic accompaniment, though many other sauces exist too."
+    },
+    {
+      q: "Which artistic movement partly started in Brussels?",
+      opts: ["Art Nouveau", "Cubism", "Impressionism"],
+      correct: 0,
+      explain: "Architect Victor Horta helped pioneer Art Nouveau in Brussels — relevant to Belgium's strong design and architecture reputation."
+    },
+    {
+      q: "How would you describe typical Belgian communication style?",
+      opts: ["Loud and highly promotional", "Polite but fairly direct and modest", "Extremely formal and indirect"],
+      correct: 1,
+      explain: "Belgians tend to value modesty and directness together — polite, but not overly indirect or self-promoting."
+    }
+  ];
+  let quizScore = 0;
+  let quizAnswered = 0;
+  function buildQuiz(){
+    const wrap = document.getElementById('quizWrap');
+    quizData.forEach((item, qi) => {
+      const div = document.createElement('div');
+      div.className = 'quiz-item';
+      div.innerHTML = `<div class="qz-q">${qi+1}. ${item.q}</div>
+        <div class="qz-opts">
+          ${item.opts.map((o,oi)=>`<button onclick="answerQuiz(${qi},${oi},this)">${o}</button>`).join('')}
+        </div>
+        <div class="qz-explain" id="explain-${qi}">${item.explain}</div>`;
+      wrap.appendChild(div);
+    });
+  }
+  function answerQuiz(qi, oi, btn){
+    const item = quizData[qi];
+    const opts = btn.parentElement.querySelectorAll('button');
+    if(opts[0].disabled) return;
+    opts.forEach((b,i) => {
+      b.disabled = true;
+      if(i === item.correct) b.classList.add('correct');
+      else if(i === oi) b.classList.add('incorrect');
+    });
+    document.getElementById('explain-'+qi).classList.add('show');
+    quizAnswered++;
+    if(oi === item.correct) quizScore++;
+    if(quizAnswered === quizData.length){
+      const scoreEl = document.getElementById('quizScore');
+      scoreEl.style.display = 'block';
+      scoreEl.textContent = `Score: ${quizScore} / ${quizData.length}`;
+    }
+  }
+  buildQuiz();
+
+  // ---------- Topic roulette ----------
+  const topics = [
+    "Is it better to visit a country before moving there, or just go and adapt?",
+    "What's more important when studying abroad: language skills or cultural understanding?",
+    "Should students try to keep their own traditions abroad, or fully adopt local ones?",
+    "Is small talk important, or a waste of time?",
+    "What's one Korean custom you'd want to explain to a Belgian friend?"
+  ];
+  function showTopic(btn, i){
+    document.querySelectorAll('#rouletteBtns button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('topicDisplay').textContent = topics[i];
+  }
+  function showRandomTopic(btn){
+    document.querySelectorAll('#rouletteBtns button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const pick = topics[Math.floor(Math.random()*topics.length)];
+    document.getElementById('topicDisplay').textContent = pick;
+  }
+
+  // ---------- Marker tracker ----------
+  const markerCountEl = document.getElementById('markerCount');
+  document.querySelectorAll('#markerTracker button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      btn.classList.toggle('used');
+      const used = document.querySelectorAll('#markerTracker button.used').length;
+      markerCountEl.textContent = `${used} / 6 markers used`;
+    });
+  });
+
+  // ---------- Timer / whiteboard ----------
+  function loadJSON(key, fallback){
+    try{ const v = localStorage.getItem('yoonhee-belgian-'+key); return v ? JSON.parse(v) : fallback; }
+    catch(e){ return fallback; }
+  }
+  function saveJSON(key, value){
+    localStorage.setItem('yoonhee-belgian-'+key, JSON.stringify(value));
+  }
+  function nowTime(){
+    const d = new Date();
+    return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+  }
+  function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(()=> t.classList.remove('show'), 1500);
+  }
+
+  let totalSeconds = 50*60;
+  let timerInterval = null;
+  let timerRunning = false;
+  const bubble = document.getElementById('timerBubble');
+  const whiteboard = document.getElementById('whiteboard');
+
+  function pad(n){ return String(n).padStart(2,'0'); }
+  function updateDisplay(){
+    const sign = totalSeconds < 0 ? '-' : '';
+    const m = Math.floor(Math.abs(totalSeconds)/60);
+    const s = Math.abs(totalSeconds)%60;
+    bubble.textContent = sign+pad(m)+':'+pad(s);
+    bubble.classList.toggle('warn', totalSeconds <= 30);
+  }
+  updateDisplay();
+
+  bubble.addEventListener('click', ()=> whiteboard.classList.toggle('open'));
+
+  document.getElementById('startPause').addEventListener('click', function(){
+    if(timerRunning){
+      clearInterval(timerInterval);
+      timerRunning = false;
+      this.textContent = '▶ Start';
+    } else {
+      timerRunning = true;
+      this.textContent = '⏸ Pause';
+      timerInterval = setInterval(()=>{ totalSeconds--; updateDisplay(); }, 1000);
+    }
+  });
+  document.getElementById('resetTimer').addEventListener('click', ()=>{
+    clearInterval(timerInterval);
+    timerRunning = false;
+    document.getElementById('startPause').textContent = '▶ Start';
+    totalSeconds = 50*60;
+    updateDisplay();
+  });
+
+  let corrections = loadJSON('corrections', []);
+  const wbCorrections = document.getElementById('wbCorrections');
+  function renderCorrections(){
+    wbCorrections.innerHTML = '';
+    if(corrections.length === 0){
+      wbCorrections.innerHTML = '<div class="wb-empty">No stamps yet.</div>';
+      return;
+    }
+    corrections.slice().reverse().forEach(c=>{
+      const div = document.createElement('div');
+      div.className = 'wb-correction-entry';
+      div.innerHTML = `<span class="t">${c.time}</span>`;
+      div.appendChild(document.createTextNode(c.text));
+      wbCorrections.appendChild(div);
+    });
+  }
+  renderCorrections();
+  document.querySelectorAll('.stamp').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      corrections.push({time: nowTime(), text: btn.dataset.stamp});
+      saveJSON('corrections', corrections);
+      renderCorrections();
+    });
+  });
+
+  const wbNotes = document.getElementById('wbNotes');
+  wbNotes.value = loadJSON('wbnotes', '');
+  wbNotes.addEventListener('input', ()=>{ saveJSON('wbnotes', wbNotes.value); });
+
+  document.getElementById('wbCopy').addEventListener('click', ()=>{
+    const stampText = corrections.map(c=> c.time+' '+c.text).join('\n');
+    const combined = (stampText ? stampText+'\n\n' : '') + wbNotes.value;
+    navigator.clipboard.writeText(combined).then(()=> showToast('Copied')).catch(()=> showToast('Could not copy'));
+  });
+  document.getElementById('wbClear').addEventListener('click', ()=>{
+    if(!confirm('Clear timer notes and stamps? This cannot be undone.')) return;
+    wbNotes.value = '';
+    saveJSON('wbnotes', '');
+    corrections = [];
+    saveJSON('corrections', []);
+    renderCorrections();
+    showToast('Cleared');
+  });
+</script>
+
+<script src="../assets/write-bubble.js"></script>
+
+</body>
+</html>
