@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Setting the Price & the Time</title>
+<link rel="stylesheet" href="../assets/write-bubble.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ink:          #0e1520;
+    --deep:         #1c1a2e;
+    --deep-mid:     #2e2a4a;
+    --purple:       #5a3fa8;
+    --purple-light: #ede8ff;
+    --purple-pale:  #f6f4ff;
+    --gold:         #c9963a;
+    --gold-label:   #7a5410;
+    --gold-light:   #fdf3dc;
+    --green:        #2a7c5a;
+    --green-light:  #d6efe1;
+    --teal:         #1a7a6e;
+    --teal-light:   #d4f0ec;
+    --teal-pale:    #edf8f7;
+    --sand:         #f5f4f0;
+    --cream:        #fefcf8;
+    --muted:        #445060;
+    --muted2:       #7a8898;
+    --border:       #ddd8ee;
+    --red-light:    #fde8e8;
+    --red-dark:     #7a1e1e;
+    --orange:       #b85a00;
+    --orange-light: #fff0de;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(--ink); min-height: 100vh; }
+
+  .header { background: var(--deep); padding: 30px 28px 26px; position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: -50px; right: -50px; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(90,63,168,.4) 0%, transparent 70%); }
+  .header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--purple), var(--gold)); }
+  .header-series { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 5vw, 38px); font-weight: 700; color: #f0eeff; line-height: 1.1; }
+
+  .toolrow { display:flex; flex-wrap:wrap; gap:8px; padding:10px 16px; }
+  .tool-link { display:inline-flex; align-items:center; gap:6px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; font-size:12px; font-weight:700; text-decoration:none; padding:6px 12px; border-radius:20px; border:none; cursor:pointer; }
+  .tool-grammar { color:#FFF6D8; background:#0E7C86; }
+  .tool-notes { color: var(--deep); background: var(--gold-light); border: 1.5px solid #e0c060; }
+  .tool-notes.active { background: var(--gold); color: var(--deep); }
+
+  .nav { background: var(--cream); border-bottom: 1px solid var(--border); display: flex; gap: 5px; padding: 12px 18px; overflow-x: auto; scrollbar-width: none; position: sticky; top: 0; z-index: 40; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn { padding: 6px 14px; border-radius: 18px; border: 1.5px solid var(--border); background: transparent; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; white-space: nowrap; transition: all .18s; }
+  .nav-btn.active { background: var(--deep); border-color: var(--deep); color: var(--gold); }
+  .nav-btn.done { background: var(--green-light); border-color: var(--green); color: var(--green); }
+
+  .main { padding: 22px 18px 100px; max-width: 740px; margin: 0 auto; }
+
+  .panel { display: none; animation: fadeUp .35s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+
+  .slabel { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 16px; margin-bottom: 10px; }
+  .sl-warm { background: var(--gold-light); color: var(--gold-label); }
+  .sl-read { background: var(--purple-light); color: var(--purple); }
+  .sl-prac { background: var(--teal-light); color: var(--teal); }
+  .sl-speak { background: var(--green-light); color: var(--green); }
+  .sl-recap { background: var(--gold-light); color: var(--gold-label); }
+
+  .stitle { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--ink); line-height: 1.2; margin-bottom: 6px; }
+  .sdesc { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
+
+  .card { background: var(--cream); border: 1px solid var(--border); border-radius: 14px; padding: 22px; margin-bottom: 16px; }
+  .clabel { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-label); margin-bottom: 14px; }
+
+  .recall { background: white; border: 1.5px solid var(--border); border-radius: 11px; padding: 14px 16px; margin-bottom: 10px; display: flex; gap: 12px; align-items: flex-start; }
+  .rnum { background: var(--deep); color: var(--gold); width: 28px; height: 28px; border-radius: 50%; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .rtext { font-size: 14px; line-height: 1.55; color: var(--ink); }
+  .rtag { display:inline-block; font-size:10px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--purple); background:var(--purple-light); padding:2px 8px; border-radius:8px; margin-bottom:6px; }
+
+  .dialogue { background: white; border-left: 4px solid var(--purple); border-radius: 0 12px 12px 0; padding: 6px 0; margin: 14px 0; overflow: hidden; }
+  .dline { padding: 12px 18px; font-size: 14.5px; line-height: 1.7; color: var(--ink); border-bottom: 1px solid var(--border); }
+  .dline:last-child { border-bottom: none; }
+  .dline.client { background: var(--teal-pale); }
+  .dline.coach { background: var(--purple-pale); }
+  .dspeaker { font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px; }
+  .dline.client .dspeaker { color: var(--teal); }
+  .dline.coach .dspeaker { color: var(--purple); }
+  .hl { padding: 1px 5px; border-radius: 4px; font-weight: 600; cursor: pointer; position: relative; display: inline-block; transition: background .18s; }
+  .dline.client .hl { background: var(--teal-light); color: var(--teal); }
+  .dline.coach .hl { background: var(--purple-light); color: var(--purple); }
+  .hl.open, .hl:hover { background: var(--deep) !important; color: var(--gold) !important; }
+  .hltip { display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: var(--ink); color: #f0eeff; font-size: 12px; padding: 7px 12px; border-radius: 8px; white-space: nowrap; z-index: 20; pointer-events: none; min-width: 210px; text-align: center; line-height: 1.45; }
+  .hltip::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: var(--ink); }
+  .hl.open .hltip { display: block; }
+
+  .fblock { margin-bottom: 14px; padding: 14px 16px; background: white; border: 1.5px solid var(--border); border-radius: 11px; }
+  .fnum { font-size: 11px; font-weight: 700; color: var(--muted2); margin-bottom: 8px; }
+  .fline { font-size: 15px; line-height: 2.4; color: var(--ink); }
+  .blank { display: inline-block; min-width: 110px; border: none; border-bottom: 2.5px solid var(--gold); padding: 0 6px 2px; margin: 0 3px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: transparent; text-align: center; transition: border-color .18s; }
+  .blank:focus { outline: none; border-color: var(--purple); }
+  .blank.correct { border-color: var(--green); background: var(--green-light); border-radius: 4px 4px 0 0; }
+  .blank.wrong { border-color: #c0392b; background: var(--red-light); border-radius: 4px 4px 0 0; }
+  .fhint { font-size: 11px; color: var(--muted2); font-style: italic; margin-top: 6px; }
+
+  .discussion-card { border-radius: 14px; overflow: hidden; margin-bottom: 16px; border: 1px solid var(--border); }
+  .disc-header { padding: 12px 20px; display: flex; align-items: center; gap: 12px; }
+  .disc-client { background: var(--teal-pale); border-bottom: 1px solid #b8dcd8; }
+  .disc-coach { background: #f0eeff; border-bottom: 1px solid #d0c8f8; }
+  .disc-badge { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; padding: 3px 10px; border-radius: 10px; flex-shrink: 0; }
+  .db-client { background: var(--teal); color: white; }
+  .db-coach { background: var(--purple); color: white; }
+  .disc-label { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .disc-body { background: var(--cream); padding: 16px 20px; }
+  .disc-line { font-size: 14px; color: var(--ink); line-height: 1.6; font-style: italic; background: white; border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 16px; }
+  .disc-task-list { list-style: none; margin-top: 4px; }
+  .disc-task-list li { padding: 9px 14px; background: white; border: 1.5px solid var(--border); border-left: 4px solid var(--purple); border-radius: 8px; font-size: 14px; color: var(--ink); margin-bottom: 8px; line-height: 1.5; }
+  .disc-task-list li strong { color: var(--purple); }
+
+  .chipwrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .chip { padding: 6px 14px; border: 1.5px solid var(--border); border-radius: 18px; font-size: 13px; color: var(--ink); cursor: pointer; transition: all .18s; background: white; }
+  .chip:hover { background: var(--deep); color: var(--gold); border-color: var(--deep); }
+  .chip.used { background: var(--purple); color: white; border-color: var(--purple); }
+  .tap-hint { font-size: 11px; color: var(--muted2); text-align: center; margin-top: 10px; font-style: italic; }
+
+  .ainput { width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 9px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: white; resize: vertical; min-height: 52px; transition: border-color .18s; }
+  .ainput:focus { outline: none; border-color: var(--purple); }
+
+  .notice { border-radius: 10px; padding: 12px 16px; font-size: 13px; line-height: 1.6; margin-top: 14px; }
+  .n-purple { background: var(--purple-light); color: var(--purple); }
+  .n-gold { background: var(--gold-light); color: var(--gold-label); }
+  .n-teal { background: var(--teal-light); color: var(--teal); }
+
+  .teacher-note { display: none; }
+  body.show-notes .teacher-note { display: block; }
+
+  .fb { padding: 12px 15px; border-radius: 10px; font-size: 14px; line-height: 1.6; margin-top: 12px; display: none; }
+  .fb.show { display: block; }
+  .fb-ok { background: var(--green-light); color: var(--green); border: 1px solid #a0d8b8; }
+  .fb-part { background: var(--gold-light); color: var(--gold-label); border: 1px solid #e0c060; }
+
+  .rbox { background: var(--deep); border-radius: 14px; padding: 22px; margin-bottom: 16px; }
+  .rbox .clabel { color: rgba(255,215,100,.8); }
+  .rlist { list-style: none; margin-top: 8px; }
+  .rlist li { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.08); font-size: 14px; color: #c8c0e8; display: flex; gap: 10px; align-items: flex-start; line-height: 1.5; }
+  .rlist li:last-child { border-bottom: none; }
+  .rlist li::before { content: '→'; color: var(--gold); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  .cando-toggle-wrap { text-align: center; margin: 6px 0 16px; }
+  .cando-panel { display: none; background: var(--deep); border-radius: 14px; padding: 22px; margin-bottom: 16px; }
+  .cando-panel.open { display: block; }
+  .cando-code { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: 1.5px; background: var(--gold); color: var(--deep); padding: 3px 10px; border-radius: 8px; margin-bottom: 10px; }
+  .cando-title { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-weight: 700; color: #f0eeff; margin-bottom: 10px; }
+  .cando-row { margin-bottom: 12px; }
+  .cando-k { font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: rgba(255,215,100,.75); margin-bottom: 4px; }
+  .cando-v { font-size: 13.5px; color: #d8d4f0; line-height: 1.6; }
+  .cando-sub { margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.1); }
+
+  .btn { padding: 12px 26px; border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .18s; }
+  .btn-p { background: var(--deep); color: var(--gold); }
+  .btn-p:hover { background: var(--deep-mid); transform: translateY(-1px); }
+  .btn-c { background: var(--gold); color: var(--deep); margin-top: 14px; }
+  .btn-c:hover { opacity: .88; }
+  .btn-o { background: transparent; color: var(--purple); border: 1.5px solid var(--purple); }
+  .btn-o:hover { background: var(--purple-light); }
+  .brow { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+
+  #timer-bubble { position: fixed; bottom: 20px; left: 20px; width: 54px; height: 44px; border-radius: 11px; background: var(--deep); border: 2px solid var(--purple); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 900; box-shadow: 0 3px 14px rgba(0,0,0,.3); transition: border-color .3s, transform .15s; user-select: none; }
+  #timer-bubble:hover { transform: scale(1.05); }
+  #timer-bubble.running { border-color: var(--green); }
+  #timer-bubble.warning { border-color: var(--gold); }
+  #timer-bubble.danger { border-color: #e03030; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{box-shadow:0 3px 14px rgba(224,48,48,.3)} 50%{box-shadow:0 3px 20px rgba(224,48,48,.6)} }
+  #timer-display { font-size: 12px; font-weight: 800; color: white; line-height: 1; letter-spacing: .2px; }
+
+  #wb-panel { position: fixed; bottom: 76px; left: 20px; background: var(--deep); border: 1px solid rgba(255,255,255,.15); border-radius: 16px; z-index: 899; width: min(300px, calc(100vw - 40px)); display: none; box-shadow: 0 8px 30px rgba(0,0,0,.4); max-height: 80vh; overflow-y: auto; }
+  #wb-panel.open { display: block; }
+  .wb-section { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .wb-section:last-child { border-bottom: none; }
+  .tp-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,215,100,.7); margin-bottom: 10px; }
+  .tp-presets { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-bottom: 10px; }
+  .tp-preset { padding: 7px 0; border: 1px solid rgba(255,255,255,.15); border-radius: 8px; background: rgba(255,255,255,.06); font-family: 'DM Sans',sans-serif; font-size: 12px; font-weight: 600; color: rgba(255,255,255,.8); cursor: pointer; text-align: center; transition: all .15s; }
+  .tp-preset:hover { background: var(--purple); border-color: var(--purple); color: white; }
+  .tp-btns { display: flex; gap: 6px; }
+  .tp-btn { flex: 1; padding: 8px 0; border: none; border-radius: 8px; font-family: 'DM Sans',sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; transition: all .15s; }
+  .tp-btn.pause { background: var(--gold); color: var(--deep); }
+  .tp-btn.reset { background: rgba(255,255,255,.1); color: rgba(255,255,255,.7); }
+  .tp-btn:hover { opacity: .85; }
+  .stamp-row { display: flex; gap: 6px; margin-bottom: 8px; }
+  .stamp-btn { width: 34px; height: 34px; border: 1px solid rgba(255,255,255,.15); border-radius: 8px; background: rgba(255,255,255,.06); font-size: 15px; cursor: pointer; transition: all .15s; }
+  .stamp-btn:hover { background: rgba(255,255,255,.14); }
+  .corr-input-row { display: flex; gap: 6px; }
+  .corr-input-row input { flex: 1; padding: 7px 10px; border: 1px solid rgba(255,255,255,.2); border-radius: 8px; background: rgba(255,255,255,.08); color: white; font-family: 'DM Sans',sans-serif; font-size: 12px; }
+  .corr-input-row input:focus { outline: none; border-color: var(--purple); }
+  #corr-log { max-height: 140px; overflow-y: auto; margin-top: 10px; }
+  .corr-entry { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 6px 8px; background: rgba(255,255,255,.05); border-radius: 6px; margin-bottom: 5px; font-size: 12px; color: #eef0ff; }
+  .corr-entry button { background: none; border: none; color: rgba(255,255,255,.35); cursor: pointer; font-size: 13px; }
+  .corr-entry button:hover { color: #e08080; }
+  #wb-notes { width: 100%; min-height: 90px; padding: 9px 11px; border: 1px solid rgba(255,255,255,.15); border-radius: 8px; background: rgba(255,255,255,.06); color: #eef0ff; font-family: 'DM Sans',sans-serif; font-size: 12.5px; line-height: 1.55; resize: vertical; }
+  #wb-notes:focus { outline: none; border-color: var(--purple); }
+  #wb-notes::placeholder { color: rgba(255,255,255,.3); }
+  .wb-footer-row { display: flex; gap: 6px; margin-top: 10px; }
+  .wb-copy { flex:1; padding: 8px 0; border: none; border-radius: 8px; background: var(--purple); color: white; font-family: 'DM Sans',sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; }
+  .wb-copy:hover { background: var(--deep-mid); }
+  .wb-clear-btn { padding: 8px 14px; border: 1px solid rgba(255,255,255,.15); border-radius: 8px; background: none; color: rgba(255,255,255,.5); font-family: 'DM Sans',sans-serif; font-size: 12px; cursor: pointer; }
+  .wb-clear-btn:hover { border-color: #e03030; color: #e03030; }
+  .wb-copied { font-size: 11px; color: var(--green); margin-top: 6px; display: none; }
+  .wb-copied.show { display: block; }
+
+  @media (max-width: 520px) {
+    .main { padding: 16px 12px 100px; }
+  }
+</style>
+</head>
+<body>
+<div class="toolrow">
+  <a class="tool-link tool-grammar" href="../Grammar-book/English/modal-verbs.html">📘 Grammar: Modal Verbs</a>
+  <button class="tool-link tool-notes" id="notesToggleBtn" onclick="toggleTeacherNotes()">🧑‍🏫 Teacher notes</button>
+</div>
+
+<div id="timer-bubble" onclick="timerBubbleClick()" title="Timer &amp; whiteboard">
+  <div id="timer-display">50:00</div>
+</div>
+<div id="wb-panel">
+  <div class="wb-section">
+    <div class="tp-label">Timer</div>
+    <div class="tp-presets">
+      <button class="tp-preset" onclick="setTimer(5)">5 min</button>
+      <button class="tp-preset" onclick="setTimer(10)">10 min</button>
+      <button class="tp-preset" onclick="setTimer(15)">15 min</button>
+      <button class="tp-preset" onclick="setTimer(20)">20 min</button>
+      <button class="tp-preset" onclick="setTimer(30)">30 min</button>
+      <button class="tp-preset" onclick="setTimer(50)">50 min</button>
+    </div>
+    <div class="tp-btns">
+      <button class="tp-btn pause" onclick="pauseTimer()" id="btn-pause">⏸ Pause</button>
+      <button class="tp-btn reset" onclick="resetTimer()">↺ Reset</button>
+    </div>
+  </div>
+  <div class="wb-section">
+    <div class="tp-label">Stamps &amp; corrections</div>
+    <div class="stamp-row">
+      <button class="stamp-btn" style="color:#80e0b0;" onclick="stamp('✓')" title="Correct">✓</button>
+      <button class="stamp-btn" style="color:#e08080;" onclick="stamp('✗')" title="Wrong">✗</button>
+      <button class="stamp-btn" style="color:#c8b8f8;" onclick="stamp('→')" title="Reformulate">→</button>
+      <button class="stamp-btn" style="color:#f0c890;" onclick="stamp('★')" title="Great phrase">★</button>
+    </div>
+    <div class="corr-input-row">
+      <input type="text" id="corr-input" placeholder="correction / phrase…" onkeydown="if(event.key==='Enter')stamp('→')">
+    </div>
+    <div id="corr-log"></div>
+  </div>
+  <div class="wb-section">
+    <div class="tp-label">Notes</div>
+    <textarea id="wb-notes" placeholder="Freeform notes for this session…"></textarea>
+    <div class="wb-footer-row">
+      <button class="wb-copy" onclick="copyWB()">📋 Copy all</button>
+      <button class="wb-clear-btn" onclick="clearWB()">Clear</button>
+    </div>
+    <div class="wb-copied" id="wb-copied">Copied to clipboard.</div>
+  </div>
+</div>
+
+<div class="header">
+  <div class="header-series">Business English</div>
+  <h1>Setting the Price &amp; the Time</h1>
+</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="goTo(0)">🔥 Warm-up</button>
+  <button class="nav-btn" onclick="goTo(1)">💬 Model</button>
+  <button class="nav-btn" onclick="goTo(2)">✏️ Toolkit</button>
+  <button class="nav-btn" onclick="goTo(3)">🤝 Negotiate</button>
+  <button class="nav-btn" onclick="goTo(4)">📋 Recap</button>
+</div>
+
+<div class="main">
+
+  <div class="panel active" id="panel-0">
+    <span class="slabel sl-warm">Warm-up</span>
+    <div class="stitle">Quick Fire: Must, Have To, Need To</div>
+    <div class="sdesc">One sentence per prompt, straight away — no pausing to plan. Every prompt is a real moment from setting a price or a meeting time with a client.</div>
+
+    <div class="card">
+      <div class="clabel">Rapid-fire prompts</div>
+      <div class="recall">
+        <div class="rnum">1</div>
+        <div class="rtext"><span class="rtag">must</span><br>Say something a consultant <strong>must</strong> always do before naming a price out loud.</div>
+      </div>
+      <div class="recall">
+        <div class="rnum">2</div>
+        <div class="rtext"><span class="rtag">have to</span><br>Say something you <strong>have to</strong> check before you confirm a meeting time.</div>
+      </div>
+      <div class="recall">
+        <div class="rnum">3</div>
+        <div class="rtext"><span class="rtag">need to</span><br>Say something you <strong>need to</strong> find out about a client's schedule before proposing a time.</div>
+      </div>
+      <div class="recall">
+        <div class="rnum">4</div>
+        <div class="rtext"><span class="rtag">needn't</span><br>Say something a client <strong>needn't</strong> worry about once a price is agreed.</div>
+      </div>
+      <div class="recall">
+        <div class="rnum">5</div>
+        <div class="rtext"><span class="rtag">don't have to</span><br>Say something you <strong>don't have to</strong> do to close this deal.</div>
+      </div>
+    </div>
+
+    <div class="notice teacher-note n-gold">
+      🧑‍🏫 <strong>Teacher note:</strong> Keep this brisk — one sentence, immediate correction if needed, move on. Re-surface must / have to / need to / needn't only — no "ought to" today, it's being retired from Mehdi's active modal set as too formal/archaic for spoken use. If it slips out, gently redirect to "should" or "the best move is to…" instead.
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(1)">Continue to Model →</button>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-1">
+    <span class="slabel sl-read">Model</span>
+    <div class="stitle">Two Numbers on the Table: Price and Date</div>
+    <div class="sdesc">Read the exchange below. Tap the highlighted phrases. Notice the shape: propose → justify → invite pushback → hold or adjust — for both the price and the meeting time.</div>
+
+    <div class="card">
+      <div class="clabel">Dialogue — Proposing Price &amp; a Meeting Time</div>
+      <div class="dialogue">
+        <div class="dline coach">
+          <div class="dspeaker">Consultant</div>
+          So, based on what we discussed, I'd propose €4,500 for the full package. <span class="hl" onclick="this.classList.toggle('open')">That reflects<span class="hltip">signals the reasoning behind a number, not just stating it</span></span> three months of hands-on support, not just the sessions themselves.
+        </div>
+        <div class="dline client">
+          <div class="dspeaker">Client</div>
+          That's higher than I expected, honestly. Is there any flexibility there?
+        </div>
+        <div class="dline coach">
+          <div class="dspeaker">Consultant</div>
+          <span class="hl" onclick="this.classList.toggle('open')">I hear you<span class="hltip">softened disagreement — B1-09 exponent, holds the position politely</span></span>, and I <span class="hl" onclick="this.classList.toggle('open')">have to<span class="hltip">have to = obligation from outside — the price is fixed by scope, not personal choice</span></span> keep the scope as it is at that price — but you <span class="hl" onclick="this.classList.toggle('open')">don't have to<span class="hltip">don't have to = not necessary — flexibility offered without lowering the price</span></span> pay it all upfront. We could split it over three months instead.
+        </div>
+        <div class="dline client">
+          <div class="dspeaker">Client</div>
+          That helps. Okay — and when could we actually start?
+        </div>
+        <div class="dline coach">
+          <div class="dspeaker">Consultant</div>
+          I <span class="hl" onclick="this.classList.toggle('open')">need to<span class="hltip">need to = practical necessity, checking a real constraint</span></span> check my calendar, but I could offer next Wednesday at 10am, or the following Monday if you'd prefer more prep time.
+        </div>
+        <div class="dline client">
+          <div class="dspeaker">Client</div>
+          Wednesday's actually tight for us — could we do the Monday instead?
+        </div>
+        <div class="dline coach">
+          <div class="dspeaker">Consultant</div>
+          Of course — Monday works. We <span class="hl" onclick="this.classList.toggle('open')">needn't<span class="hltip">needn't = formal "don't need to" — common in British English</span></span> lock the exact hour today, just the day — I'll send two time options by email.
+        </div>
+        <div class="dline client">
+          <div class="dspeaker">Client</div>
+          <span class="hl" onclick="this.classList.toggle('open')">That works for me<span class="hltip">a clean, natural way to close a negotiation point — worth reusing</span></span>. Let's go with the payment plan and Monday.
+        </div>
+      </div>
+      <div class="notice n-purple">
+        💡 <strong>Key idea:</strong> Price and time are separate negotiations that often move together — flexibility on one (payment plan) can offset firmness on the other (fixed scope). Propose a number confidently, then invite pushback rather than avoiding it.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="clabel">Quick Check — Speak Only</div>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="background:white; border:1.5px solid var(--border); border-radius:10px; padding:13px 16px; font-size:14px; color:var(--ink); line-height:1.5;">1. What stays fixed, and what becomes flexible, in the price negotiation?</div>
+        <div style="background:white; border:1.5px solid var(--border); border-radius:10px; padding:13px 16px; font-size:14px; color:var(--ink); line-height:1.5;">2. How does the consultant handle the client rejecting the first proposed date?</div>
+        <div style="background:white; border:1.5px solid var(--border); border-radius:10px; padding:13px 16px; font-size:14px; color:var(--ink); line-height:1.5;">3. Find one phrase used to close/confirm an agreement.</div>
+      </div>
+    </div>
+
+    <div class="notice teacher-note n-teal">
+      🧑‍🏫 <strong>Teacher note:</strong> Point out that "have to" here justifies firmness on scope/price, while "don't have to" opens flexibility on payment structure — the same modal pair doing two different jobs in one exchange. Keep this tab brief; the real work happens in Negotiate.
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(2)">Continue to Toolkit →</button>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-2">
+    <span class="slabel sl-prac">Toolkit</span>
+    <div class="stitle">Load the Phrases You'll Need</div>
+    <div class="sdesc">One short exercise to lock the modal forms, then straight into the live negotiations — this session is built for speaking, not for filling forms.</div>
+
+    <div class="card">
+      <div class="clabel">Exercise · Choose the right modal</div>
+      <div style="font-size:13px; color:var(--muted); margin-bottom:14px;">Fill in with must, have to, need to, needn't, or don't have to. (No "ought to" — it's not in today's toolkit.)</div>
+
+      <div class="fblock"><div class="fnum">1</div><div class="fline">A consultant <input class="blank" id="b1" placeholder="________" size="10"> sound confident when naming a price, even under pressure.</div><div class="fhint">Internal conviction</div></div>
+      <div class="fblock"><div class="fnum">2</div><div class="fline">You <input class="blank" id="b2" placeholder="________" size="10"> find out what date actually works before proposing one.</div><div class="fhint">Practical necessity</div></div>
+      <div class="fblock"><div class="fnum">3</div><div class="fline">A client <input class="blank" id="b3" placeholder="________" size="14"> pay everything upfront — a payment plan is fine.</div><div class="fhint">Not necessary</div></div>
+      <div class="fblock"><div class="fnum">4</div><div class="fline">You <input class="blank" id="b4" placeholder="________" size="10"> check your calendar before confirming any date out loud.</div><div class="fhint">External obligation</div></div>
+      <div class="fblock"><div class="fnum">5</div><div class="fline">You <input class="blank" id="b5" placeholder="________" size="10"> lock the exact hour today — the day is enough for now.</div><div class="fhint">Not necessary — formal</div></div>
+
+      <button class="btn btn-c" onclick="checkA()">Check answers ✓</button>
+      <div class="fb" id="fbA"></div>
+    </div>
+
+    <div class="card">
+      <div class="clabel">Phrases for the negotiation ahead</div>
+      <div class="chipwrap">
+        <span class="chip">I'd propose…</span>
+        <span class="chip">That reflects…</span>
+        <span class="chip">I hear you, but…</span>
+        <span class="chip">You don't have to… we could…</span>
+        <span class="chip">I need to check…</span>
+        <span class="chip">We needn't decide that today.</span>
+        <span class="chip">Would [X] work for you?</span>
+        <span class="chip">That works for me.</span>
+      </div>
+      <div class="tap-hint">Read these aloud once before moving on — you'll need them live next.</div>
+    </div>
+
+    <div class="notice teacher-note n-gold">
+      🧑‍🏫 <strong>Teacher note:</strong> Don't linger here — the exercise is a quick retrieval check, not the focus of the session. Move to Negotiate as soon as Mehdi is confident with the five gaps and has read the chips aloud once.
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(3)">Continue to Negotiate →</button>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-3">
+    <span class="slabel sl-speak">Free Production · Live Negotiation</span>
+    <div class="stitle">Set the Price. Set the Time.</div>
+    <div class="sdesc">Two full negotiations, back to back. For each: propose a number/date, justify it, invite pushback, then hold firm or adjust — using must / have to / need to / needn't / don't have to. No "ought to."</div>
+
+    <div class="discussion-card">
+      <div class="disc-header disc-client">
+        <span class="disc-badge db-client">Client · Teacher plays this</span>
+        <span class="disc-label">Negotiation 1 — Price</span>
+      </div>
+      <div class="disc-body">
+        <div class="disc-line">"Before we go further — what's this actually going to cost me, and can we do better on the number?"</div>
+        <div class="notice teacher-note n-teal" style="margin-top:10px; font-size:12px;">🧑‍🏫 Let him propose a real number first. Push back once ("that's still more than I hoped") and make him hold the price while offering flexibility elsewhere (payment terms, phased scope) instead of just discounting.</div>
+      </div>
+    </div>
+
+    <div class="discussion-card">
+      <div class="disc-header disc-coach">
+        <span class="disc-badge db-coach">Mehdi · Consultant</span>
+        <span class="disc-label">Your Task — 4 Steps</span>
+      </div>
+      <div class="disc-body">
+        <ul class="disc-task-list">
+          <li><strong>1. Propose</strong> — name a specific price out loud, with confidence.</li>
+          <li><strong>2. Justify</strong> — say why it's set at that level, using <em>have to / need to</em>.</li>
+          <li><strong>3. Invite pushback</strong> — ask directly if the number works for them.</li>
+          <li><strong>4. Hold or adjust</strong> — if they push back, offer flexibility on structure (payment plan, phasing) using <em>don't have to / needn't</em> — without simply lowering the price.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="discussion-card">
+      <div class="disc-header disc-client">
+        <span class="disc-badge db-client">Client · Teacher plays this</span>
+        <span class="disc-label">Negotiation 2 — Meeting Time</span>
+      </div>
+      <div class="disc-body">
+        <div class="disc-line">"Okay, I think we're close on price. Now — when can we actually meet to sign this off?"</div>
+        <div class="notice teacher-note n-teal" style="margin-top:10px; font-size:12px;">🧑‍🏫 Give him a real scheduling conflict once his first date is proposed ("that week doesn't work for me at all"), so he has to genuinely re-propose rather than just repeat the first offer.</div>
+      </div>
+    </div>
+
+    <div class="discussion-card">
+      <div class="disc-header disc-coach">
+        <span class="disc-badge db-coach">Mehdi · Consultant</span>
+        <span class="disc-label">Your Task — Same 4 Steps</span>
+      </div>
+      <div class="disc-body">
+        <ul class="disc-task-list">
+          <li><strong>1. Propose</strong> — a specific day and time.</li>
+          <li><strong>2. Justify</strong> — briefly say why, using <em>need to / have to</em> (checking calendar, respecting a deadline).</li>
+          <li><strong>3. Invite pushback</strong> — ask if that time actually works.</li>
+          <li><strong>4. Hold or adjust</strong> — if it doesn't, propose a genuine alternative using <em>needn't</em> to show what doesn't need deciding yet (e.g. exact hour).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="clabel">Phrases to Use — Tap When Used</div>
+      <div class="chipwrap">
+        <span class="chip" onclick="this.classList.toggle('used')">I'd propose…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">That reflects…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">I hear you, but…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">You don't have to… we could…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">I need to check…</span>
+        <span class="chip" onclick="this.classList.toggle('used')">We needn't decide that today.</span>
+        <span class="chip" onclick="this.classList.toggle('used')">Would [X] work for you?</span>
+        <span class="chip" onclick="this.classList.toggle('used')">That works for me.</span>
+      </div>
+      <div class="tap-hint">Tap a phrase to mark it as used</div>
+    </div>
+
+    <div class="notice teacher-note n-gold">
+      🧑‍🏫 <strong>Teacher note:</strong> This is the B1-19 evidence task, adapted from the standard "problem/reason/resolution/pushback" shape to a price-and-time negotiation skin. Passing both negotiations cleanly (propose/justify/invite pushback/hold-or-adjust structure, natural modal use, zero "ought to") is the signal to move B1-19 toward "solid" — confirm that call after the session, don't mark it in the tool.
+    </div>
+
+    <div class="brow">
+      <button class="btn btn-p" onclick="goTo(4)">Continue to Recap →</button>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-4">
+    <span class="slabel sl-recap">Recap</span>
+    <div class="stitle">Wrap Up</div>
+    <div class="sdesc">Takeaway first, then a quick language note and the curriculum card behind today's session.</div>
+
+    <div class="card">
+      <div class="clabel">Takeaway</div>
+      <div style="background:var(--purple-pale); border:1.5px solid #c8b8f8; border-radius:12px; padding:16px 18px; font-size:15px; font-weight:500; color:var(--ink); line-height:1.6;">
+        "What's one number or one date you'll propose more confidently next time?"
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="clabel">Language Note</div>
+      <textarea class="ainput" placeholder="Pattern to watch next session:" rows="2"></textarea>
+    </div>
+
+    <div class="cando-toggle-wrap">
+      <button class="btn btn-o" onclick="toggleCando()" id="candoBtn">📋 Show curriculum card ▾</button>
+    </div>
+    <div class="cando-panel" id="candoPanel">
+      <div class="cando-code">B1-19</div>
+      <div class="cando-title">Problems &amp; non-routine situations</div>
+      <div class="cando-row">
+        <div class="cando-k">Goal</div>
+        <div class="cando-v">Can explain why something is a problem and deal with less routine situations (complaints, changes, obstacles) in shops, travel and services.</div>
+      </div>
+      <div class="cando-row">
+        <div class="cando-k">Grammar focus</div>
+        <div class="cando-v">must / have to · need to / needn't · don't have to (no "ought to" — dropped from Mehdi's active set as archaic for spoken English)</div>
+      </div>
+      <div class="cando-row">
+        <div class="cando-k">Evidence task</div>
+        <div class="cando-v">Two negotiations (price; meeting time): propose, justify, invite pushback, hold or adjust.</div>
+      </div>
+      <div class="cando-sub">
+        <div class="cando-row">
+          <div class="cando-k">Incidental — B1-09</div>
+          <div class="cando-v">Agreeing &amp; disagreeing politely: can agree and disagree with others, including softened disagreement, and hold his/her position in informal discussion.</div>
+        </div>
+        <div class="cando-row">
+          <div class="cando-k">Incidental — B1-08</div>
+          <div class="cando-v">Opinions with reasons: can express personal views and opinions on familiar topics and support them.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rbox">
+      <div class="clabel">📅 Review &amp; Next Steps</div>
+      <ul class="rlist">
+        <li>Next session — free recall: must vs have to vs need to, 3 example sentences from memory</li>
+        <li>Homework — write your own price-and-time proposal email using at least one modal from today, no "ought to"</li>
+        <li>Curriculum note — B1-19 evidence task attempted: two live negotiations (price, meeting time) with propose/justify/invite pushback/hold-or-adjust structure</li>
+      </ul>
+    </div>
+
+    <div style="text-align:center; padding:18px 0;">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:700; color:var(--ink); margin-bottom:5px;">Session complete. 🤝</div>
+      <div style="font-size:13px; color:var(--muted2);">Numbers proposed. Dates confirmed. Confidence built.</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let cur = 0;
+  const total = 5;
+  const btns = document.querySelectorAll('.nav-btn');
+
+  function goTo(i) {
+    document.getElementById('panel-' + cur).classList.remove('active');
+    btns[cur].classList.remove('active');
+    btns[cur].classList.add('done');
+    cur = i;
+    document.getElementById('panel-' + cur).classList.add('active');
+    btns[cur].classList.add('active');
+    btns[cur].classList.remove('done');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('wb-panel').classList.remove('open');
+  }
+
+  function toggleTeacherNotes() {
+    document.body.classList.toggle('show-notes');
+    document.getElementById('notesToggleBtn').classList.toggle('active');
+  }
+
+  function toggleCando() {
+    const panel = document.getElementById('candoPanel');
+    const btn = document.getElementById('candoBtn');
+    panel.classList.toggle('open');
+    btn.textContent = panel.classList.contains('open') ? '📋 Hide curriculum card ▴' : '📋 Show curriculum card ▾';
+  }
+
+  const answersA = {
+    b1: 'must', b2: 'need to', b3: "doesn't have to",
+    b4: 'have to', b5: "needn't"
+  };
+  function checkA() {
+    let score = 0;
+    const tot = Object.keys(answersA).length;
+    for (const [id, ans] of Object.entries(answersA)) {
+      const el = document.getElementById(id);
+      const val = el.value.trim().toLowerCase();
+      if (val === ans) { el.classList.add('correct'); el.classList.remove('wrong'); score++; }
+      else { el.classList.add('wrong'); el.classList.remove('correct'); }
+    }
+    const fb = document.getElementById('fbA');
+    fb.classList.add('show');
+    fb.className = score === tot ? 'fb fb-ok show' : 'fb fb-part show';
+    fb.innerHTML = score === tot
+      ? '✅ <strong>Perfect — ' + score + '/' + tot + '!</strong> Straight into the live negotiations.'
+      : '⚡ <strong>' + score + '/' + tot + ' correct.</strong> Check the red blanks, then head into the live negotiations.';
+  }
+
+  let timerSeconds = 50 * 60, timerRunning = false, timerInterval = null;
+  let originalSeconds = 50 * 60, timerStarted = false;
+
+  function fmt(s) { return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0'); }
+
+  function updateTimerDisplay() {
+    document.getElementById('timer-display').textContent = fmt(timerSeconds);
+    const bubble = document.getElementById('timer-bubble');
+    bubble.classList.remove('running','warning','danger');
+    if (timerRunning) {
+      if (timerSeconds <= 60) bubble.classList.add('danger');
+      else if (timerSeconds <= 5*60) bubble.classList.add('warning');
+      else bubble.classList.add('running');
+    }
+  }
+
+  function startTimer() {
+    if (timerRunning) return;
+    timerRunning = true; timerStarted = true;
+    document.getElementById('wb-panel').classList.remove('open');
+    timerInterval = setInterval(() => {
+      if (timerSeconds <= 0) {
+        clearInterval(timerInterval); timerRunning = false; timerStarted = false;
+        document.getElementById('timer-display').textContent = '00:00';
+        document.getElementById('timer-bubble').classList.add('danger');
+        return;
+      }
+      timerSeconds--; updateTimerDisplay();
+    }, 1000);
+    updateTimerDisplay();
+  }
+
+  function pauseTimer() { clearInterval(timerInterval); timerRunning = false; updateTimerDisplay(); }
+  function resetTimer() { pauseTimer(); timerStarted = false; timerSeconds = originalSeconds; updateTimerDisplay(); }
+  function setTimer(min) {
+    pauseTimer(); timerStarted = false;
+    timerSeconds = min * 60; originalSeconds = timerSeconds;
+    updateTimerDisplay();
+    setTimeout(startTimer, 80);
+  }
+  function timerBubbleClick() {
+    if (!timerStarted && !timerRunning) { startTimer(); }
+    else {
+      document.getElementById('wb-panel').classList.toggle('open');
+    }
+  }
+
+  const corrEntries = [];
+  function stamp(symbol) {
+    const input = document.getElementById('corr-input');
+    const text = input.value.trim();
+    const now = new Date();
+    const time = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    corrEntries.unshift({ id: Date.now(), symbol, text: text || '(no note)', time });
+    input.value = '';
+    renderCorrLog();
+  }
+  function renderCorrLog() {
+    const log = document.getElementById('corr-log');
+    log.innerHTML = corrEntries.map(e => `
+      <div class="corr-entry" id="ce-${e.id}">
+        <span>${e.symbol} ${e.text} <span style="opacity:.4; font-size:10px;">${e.time}</span></span>
+        <button onclick="deleteCorr(${e.id})" title="Delete">×</button>
+      </div>`).join('');
+  }
+  function deleteCorr(id) {
+    const idx = corrEntries.findIndex(e => e.id === id);
+    if (idx !== -1) corrEntries.splice(idx, 1);
+    renderCorrLog();
+  }
+
+  function copyWB() {
+    const notes = document.getElementById('wb-notes').value.trim();
+    const corr = corrEntries.slice().reverse().map(e => `${e.symbol} ${e.text} (${e.time})`).join('\n');
+    const combined = [corr ? 'Corrections:\n' + corr : '', notes ? 'Notes:\n' + notes : ''].filter(Boolean).join('\n\n');
+    if (!combined) return;
+    navigator.clipboard.writeText(combined).then(() => {
+      const el = document.getElementById('wb-copied');
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 1800);
+    });
+  }
+  function clearWB() {
+    if (confirm('Clear all notes and corrections?')) {
+      document.getElementById('wb-notes').value = '';
+      corrEntries.length = 0;
+      renderCorrLog();
+    }
+  }
+
+  document.addEventListener('click', e => {
+    const wb = document.getElementById('wb-panel');
+    const tb = document.getElementById('timer-bubble');
+    if (!wb.contains(e.target) && !tb.contains(e.target)) wb.classList.remove('open');
+  });
+</script>
+
+<script src="../assets/write-bubble.js"></script>
+</body>
+</html>

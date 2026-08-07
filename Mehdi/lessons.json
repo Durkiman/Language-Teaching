@@ -1,10 +1,34 @@
 [
   {
+    "title": "#11 Setting the Price & the Time",
+    "file": "mehdi-price-timing-negotiation.html",
+    "goals": {
+      "primary": [
+        "B1-19"
+      ],
+      "incidental": [
+        "B1-09",
+        "B1-08"
+      ]
+    },
+    "grammar": [
+      {
+        "file": "modal-verbs.html",
+        "title": "Modal Verbs"
+      }
+    ]
+  },
+  {
     "title": "#10 Client Discussions: Price & Timing",
     "file": "client-discussions-price-timing.html",
     "goals": {
-      "primary": ["B1-19"],
-      "incidental": ["B1-09", "B1-08"]
+      "primary": [
+        "B1-19"
+      ],
+      "incidental": [
+        "B1-09",
+        "B1-08"
+      ]
     },
     "grammar": [
       {
@@ -15,7 +39,7 @@
   },
   {
     "file": "mehdi-modal-verbs-objections.html",
-    "title": "#9 Pillar 3.2 – Handling Objections",
+    "title": "#9 Pillar 3.2 \u2013 Handling Objections",
     "goals": {
       "primary": [
         "B1-19"
@@ -49,7 +73,7 @@
   },
   {
     "file": "mehdi-comparatives-marketing-message.html",
-    "title": "#6 Pillar 2.2 – Marketing Message",
+    "title": "#6 Pillar 2.2 \u2013 Marketing Message",
     "grammar": [
       {
         "file": "comparatives-and-superlatives.html",
@@ -59,7 +83,7 @@
   },
   {
     "file": "mehdi-comparatives-marketing-overview.html",
-    "title": "#5 Pillar 2.1 – Marketing",
+    "title": "#5 Pillar 2.1 \u2013 Marketing",
     "grammar": [
       {
         "file": "comparatives-and-superlatives.html",
@@ -69,12 +93,12 @@
   },
   {
     "file": "mehdi-connectors-value-summary.html",
-    "title": "#4 Pillar 1.2 – Value Summary",
+    "title": "#4 Pillar 1.2 \u2013 Value Summary",
     "grammar": []
   },
   {
     "file": "mehdi-business-vocabulary-value-creation.html",
-    "title": "#3 Pillar 1.1 – Value Creation",
+    "title": "#3 Pillar 1.1 \u2013 Value Creation",
     "grammar": []
   },
   {

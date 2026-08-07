@@ -2,6 +2,6 @@
   "student": "mehdi",
   "levels": ["B1"],
   "cards": {
-    "B1-19": { "status": "reviewed", "introduced": "2026-07-15", "reviews": ["2026-08-03"], "notes": "Pillar 3.2 — price/timing objection roleplays; must/have to, need to/needn't, ought to. 2026-08-03: session did NOT deliver the newly built 'Client Discussions: Price & Timing' lesson (#10) as planned — instead spent the last ~15 min briefly revisiting lesson #9's grammar tab only (modal verb forms: must/have to, need to/needn't, ought to). No roleplay/functional practice and no evidence task was attempted. Lesson #10 remains fully unplayed — use it in full next session, including the price-pushback and delivery/timing-change roleplays." }
+    "B1-19": { "status": "reviewed", "introduced": "2026-07-15", "reviews": ["2026-08-03", "2026-08-07"], "notes": "Pillar 3.2 — price/timing negotiation roleplays; must/have to, need to/needn't, don't have to (\"ought to\" dropped from active set — archaic for spoken English). Lesson #10 ('Client Discussions: Price & Timing') was built but never played and is being retired unused. Lesson #11 ('Setting the Price & the Time') replaces it with the same real-world scenario (price + meeting-time negotiation) as a speaking-heavy evidence-task attempt — confirm pass/fail after the session to decide on 'solid'." }
   }
 }
