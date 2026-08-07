@@ -2,8 +2,8 @@
   "student": "thomas",
   "levels": ["B1"],
   "cards": {
-    "B1-01": { "status": "reviewed", "introduced": null, "reviews": ["2026-08-07"], "notes": "Lesson 2: Past Simple for storytelling. Reviewed incidentally in Lesson 5 (album history/first-heard narrative)." },
+    "B1-01": { "status": "reviewed", "introduced": null, "reviews": ["2026-08-07"], "notes": "Lesson 2: Past Simple for storytelling. Reviewed incidentally in Lesson 5 (album history/first-heard narrative). Consolidated well in the Lesson 5 session itself — Durim reports a good, solid session on past simple, no flagged errors." },
     "B1-08": { "status": "reviewed", "introduced": null, "reviews": ["2026-08-07"], "notes": "Incidental via Lesson 1 sub-genre discussion — verify with evidence task before trusting. Reviewed incidentally in Lesson 5 (album opinions)." },
-    "B1-10": { "status": "introduced", "introduced": "2026-08-07", "reviews": [], "notes": "Lesson 5: James Blake discussion + model presentation on \"Trying Times\"; Thomas prepares his own album presentation for next session. Evidence task pending confirmation after that session." }
+    "B1-10": { "status": "introduced", "introduced": "2026-08-07", "reviews": [], "notes": "Lesson 5: James Blake discussion + model presentation on \"Trying Times\"; read through the lesson material but ran out of time for Thomas's own presentation, so the evidence task hasn't happened yet. Postponed: prep session Monday (listening + presentation prep), Thomas presents his own album Thursday. Still introduced, not reviewed, until that presentation happens." }
   }
 }
