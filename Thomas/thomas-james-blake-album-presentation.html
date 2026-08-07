@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>James Blake & Album Presentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/write-bubble.css">
+<style>
+  :root {
+    --bg: #0a0a0f; --surface: #13131a; --surface2: #1c1c27; --border: #2a2a3a;
+    --accent: #7c3aed; --accent2: #a855f7; --pulse: #e879f9;
+    --text: #e8e8f0; --muted: #8888aa; --green: #22c55e; --red: #ef4444; --amber: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Space Grotesk', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 60px; }
+
+  header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 0; }
+  .eq-bars { display: flex; align-items: flex-end; gap: 3px; height: 24px; margin-right: 12px; }
+  .eq-bar { width: 4px; background: var(--accent2); border-radius: 2px; animation: eq 0.8s ease-in-out infinite alternate; }
+  .eq-bar:nth-child(1){height:40%;animation-delay:0s} .eq-bar:nth-child(2){height:80%;animation-delay:.15s}
+  .eq-bar:nth-child(3){height:55%;animation-delay:.3s} .eq-bar:nth-child(4){height:95%;animation-delay:.1s}
+  .eq-bar:nth-child(5){height:65%;animation-delay:.25s}
+  @keyframes eq { from{transform:scaleY(0.3)} to{transform:scaleY(1)} }
+  header h1 { font-family:'Space Mono',monospace; font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; flex:1; padding:16px 0; }
+  header h1 span { color:var(--accent2); }
+  .tabs { display:flex; gap:2px; overflow-x:auto; scrollbar-width:none; padding:0 2px; }
+  .tabs::-webkit-scrollbar{display:none}
+  .tab { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; padding:18px 11px; cursor:pointer; color:var(--muted); border-bottom:2px solid transparent; white-space:nowrap; transition:all 0.2s; background:none; border-top:none; border-left:none; border-right:none; font-weight:700; }
+  .tab:hover{color:var(--text)} .tab.active{color:var(--accent2);border-bottom-color:var(--accent2)}
+
+  .panel{display:none;padding:24px 20px 40px;max-width:700px;margin:0 auto}
+  .panel.active{display:block}
+  .label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent2);margin-bottom:8px}
+  h2{font-size:24px;font-weight:700;line-height:1.2;margin-bottom:14px}
+  p{font-size:16px;line-height:1.7;color:var(--muted);margin-bottom:14px}
+
+  /* GOAL TOGGLE (teacher notes) */
+  .goal-wrap{max-width:700px;margin:0 auto;padding:10px 20px 0;}
+  .goal-toggle{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-family:'Space Mono',monospace;font-size:11px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:0.06em;}
+  .goal-toggle:hover{border-color:var(--accent2);color:var(--accent2)}
+  .goal-panel{display:none;margin-top:10px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;font-size:13px;line-height:1.7;color:var(--muted)}
+  .goal-panel.open{display:block}
+  .goal-code{font-family:'Space Mono',monospace;font-weight:700;color:var(--accent2);font-size:11px;letter-spacing:0.05em;margin-bottom:4px}
+  .goal-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px}
+  .goal-row{margin-bottom:6px}
+  .goal-row strong{color:var(--text)}
+
+  .warmup-prompt{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--accent2);border-radius:8px;padding:18px;margin-bottom:12px}
+  .warmup-prompt .question{font-size:17px;font-weight:600;color:var(--text);margin-bottom:6px}
+  .warmup-prompt .hint{font-size:13px;color:var(--muted)}
+
+  .reading-text{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px;font-size:16px;line-height:1.9;color:#c8c8e0}
+  .reading-text p{color:#c8c8e0;margin-bottom:14px}
+  .reading-text p:last-child{margin-bottom:0}
+
+  .exercise-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:14px}
+  .q-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--accent2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px}
+  .question-text{font-size:16px;color:var(--text);margin-bottom:14px;line-height:1.65}
+  .gap-input{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:9px 12px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:15px;width:100%;margin-bottom:10px;transition:border-color 0.2s}
+  .gap-input:focus{outline:none;border-color:var(--accent2)}
+  .gap-input.correct{border-color:var(--green);background:rgba(34,197,94,0.08)}
+  .gap-input.wrong{border-color:var(--red);background:rgba(239,68,68,0.08)}
+  .btn-row{display:flex;gap:8px;flex-wrap:wrap}
+  .check-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:9px 18px;border-radius:7px;font-family:'Space Grotesk',sans-serif;font-size:14px;cursor:pointer;transition:all 0.2s}
+  .check-btn:hover{border-color:var(--accent2);color:var(--accent2)}
+  .feedback-text{font-size:14px;margin-top:10px;display:none} .feedback-text.show{display:block}
+  .feedback-text.correct{color:var(--green)} .feedback-text.wrong{color:var(--red)}
+
+  .divider{height:1px;background:var(--border);margin:22px 0}
+
+  .nav-row{display:flex;justify-content:space-between;margin-top:32px}
+  .nav-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:11px 22px;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s}
+  .nav-btn:hover{border-color:var(--accent2);color:var(--accent2)} .nav-btn:disabled{opacity:0.3;cursor:default}
+
+  /* MODEL PRESENTATION */
+  .model-card{background:linear-gradient(135deg, rgba(124,58,237,0.13), rgba(232,121,249,0.08));border:1px solid rgba(168,85,247,0.3);border-radius:12px;padding:24px;margin-bottom:18px}
+  .model-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--pulse);background:rgba(232,121,249,0.1);border:1px solid rgba(232,121,249,0.3);border-radius:16px;padding:5px 14px;margin-bottom:14px}
+  .model-block{margin-bottom:16px}
+  .model-block:last-child{margin-bottom:0}
+  .model-block-label{font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent2);margin-bottom:6px}
+  .model-block-text{font-size:16px;color:var(--text);line-height:1.65}
+
+  .chunk-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .chunk{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:8px 14px;font-size:13px;color:var(--text);cursor:default}
+
+  /* PLANNER */
+  .plan-field{margin-bottom:16px}
+  .plan-field label{display:block;font-size:12px;color:var(--accent2);font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
+  .plan-hint{font-size:12px;color:var(--muted);margin-bottom:6px;font-style:italic}
+  .plan-input{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:10px 12px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:15px;width:100%;transition:border-color 0.2s}
+  .plan-input:focus{outline:none;border-color:var(--accent2)}
+  textarea.plan-input{resize:vertical;min-height:70px;font-family:'Space Grotesk',sans-serif;line-height:1.5}
+
+  .save-row{display:flex;align-items:center;gap:10px;margin-top:6px}
+  .save-btn{background:var(--accent);color:white;border:none;border-radius:8px;padding:11px 20px;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;cursor:pointer}
+  .save-btn:hover{background:var(--accent2)}
+  .save-status{font-size:13px;color:var(--green);display:none}
+  .save-status.show{display:inline}
+
+  .checklist{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+  .check-pill{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer}
+  .check-pill .box{width:20px;height:20px;border-radius:5px;border:2px solid var(--border);flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff}
+  .check-pill.checked{border-color:var(--accent2);background:rgba(168,85,247,0.08)}
+  .check-pill.checked .box{background:var(--accent2);border-color:var(--accent2)}
+  .check-pill .plabel{font-size:14px;color:var(--text)}
+
+  /* RECAP TAB */
+  .recap-toggle{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:11px 20px;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:14px}
+  .recap-toggle:hover{border-color:var(--accent2);color:var(--accent2)}
+  .can-do-card{display:none;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px}
+  .can-do-card.open{display:block}
+  .cd-code{font-family:'Space Mono',monospace;font-size:11px;color:var(--accent2);letter-spacing:0.06em;margin-bottom:6px}
+  .cd-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:12px}
+  .cd-row{font-size:14px;color:var(--muted);margin-bottom:8px;line-height:1.6}
+  .cd-row strong{color:var(--text)}
+
+  #timer-fab{position:fixed;bottom:24px;left:24px;background:var(--surface);border:1px solid var(--border);border-radius:30px;padding:10px 16px;font-family:'Space Mono',monospace;font-size:14px;color:var(--muted);cursor:pointer;z-index:200;transition:all 0.2s;display:flex;align-items:center;gap:8px}
+  #timer-fab:hover{border-color:var(--accent2);color:var(--text)}
+  #timer-fab.running{color:var(--accent2);border-color:var(--accent2)} #timer-fab.urgent{color:var(--red);border-color:var(--red)}
+  #timer-panel{position:fixed;bottom:80px;left:24px;width:280px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;z-index:200;display:none;box-shadow:0 10px 30px rgba(0,0,0,0.4)}
+  #timer-panel.open{display:block}
+  .tp-title{font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent2);margin-bottom:10px}
+  .tp-time{font-family:'Space Mono',monospace;font-size:28px;color:var(--text);margin-bottom:10px}
+  .tp-btns{display:flex;gap:8px;margin-bottom:12px}
+  .tp-btn{flex:1;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px;cursor:pointer}
+  .tp-btn:hover{border-color:var(--accent2)}
+  #tp-notes{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:8px 10px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:13px;resize:vertical;min-height:60px}
+  #overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:150} #overlay.show{display:block}
+</style>
+</head>
+<body>
+
+<div style="display:flex;flex-wrap:wrap;gap:8px;padding:10px 16px;">
+  <a href="../Grammar-book/English/present-simple.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Present Simple</a>
+</div>
+
+<header>
+  <div class="eq-bars"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>
+  <h1>James Blake <span>& Album Presentation</span></h1>
+  <nav class="tabs">
+    <button class="tab active" onclick="switchTab(0)">Warm-Up</button>
+    <button class="tab" onclick="switchTab(1)">James Blake</button>
+    <button class="tab" onclick="switchTab(2)">Model</button>
+    <button class="tab" onclick="switchTab(3)">Your Presentation</button>
+    <button class="tab" onclick="switchTab(4)">Recap</button>
+  </nav>
+</header>
+
+<div class="goal-wrap">
+  <button class="goal-toggle" onclick="toggleGoal()">📋 Learning goal (teacher)</button>
+  <div class="goal-panel" id="goalPanel">
+    <div class="goal-code">B1-10</div>
+    <div class="goal-title">Reviewing & recommending</div>
+    <div class="goal-row"><strong>Can-do:</strong> Can summarise a film, book, show or piece of media and give an opinion about it with a recommendation.</div>
+    <div class="goal-row"><strong>Skin:</strong> an album — James Blake, "Trying Times"</div>
+    <div class="goal-row"><strong>Incidental review:</strong> B1-08 opinions with reasons (introduced L1, techno discussion); B1-01 past simple narrative (introduced L2-3) shows up naturally in "how the album was made / when I first heard it"</div>
+    <div class="goal-row"><strong>Grammar:</strong> phrasal verbs woven into discussion language (grow on you, stand out, build up), reviewing L4's festival set</div>
+    <div class="goal-row"><strong>Evidence:</strong> 90-second spoken review of an album he genuinely likes — what it is, what it's about/sounds like, what worked, who should listen to it — then answers two follow-up detail questions live.</div>
+    <div class="goal-row"><strong>Session plan:</strong> Durim models the task first with his own presentation on James Blake's "Trying Times," then Thomas plans his own album to present at the next session.</div>
+  </div>
+</div>
+
+<!-- PANEL 0: WARM-UP -->
+<div class="panel active" id="panel-0">
+  <div class="label">Warm-Up</div>
+  <h2>What have you been listening to?</h2>
+  <p>Just talk — no need for exact words yet.</p>
+
+  <div class="warmup-prompt">
+    <div class="question">What's an album or artist you've had on repeat recently? Why does it grow on you?</div>
+    <div class="hint">"Grow on you" — a phrasal verb for something you like more and more over time.</div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" disabled>← Back</button>
+    <button class="nav-btn" onclick="switchTab(1)">James Blake →</button>
+  </div>
+</div>
+
+<!-- PANEL 1: JAMES BLAKE -->
+<div class="panel" id="panel-1">
+  <div class="label">James Blake</div>
+  <h2>Who is he?</h2>
+  <p>Read through, then we'll talk about it. The highlighted chunks are phrasal verbs worth reusing later.</p>
+
+  <div class="reading-text">
+    <p>James Blake is an English singer, producer and songwriter from London. He first <strong>came up</strong> in the early 2010s, mixing minimal electronic production, dubstep-influenced bass, and soulful, often fragile vocals. His sound is hard to pin down — it <strong>draws on</strong> soul, gospel, and electronic music at once, and critics still <strong>struggle to sum up</strong> exactly what genre he belongs to.</p>
+
+    <p>Blake's albums usually <strong>build up</strong> slowly rather than hitting you immediately — the production is spacious, sometimes almost silent, and the emotion tends to <strong>creep in</strong> gradually rather than all at once. He's known for close collaborations with other artists too; over the years he has <strong>teamed up</strong> with names like Frank Ocean, Travis Scott, and Bon Iver.</p>
+
+    <p>One thing that <strong>stands out</strong> about his music is how personal it feels — many of his songs deal with anxiety, heartbreak, and self-doubt, and he doesn't <strong>shy away from</strong> sounding vulnerable. That honesty is a big part of why fans <strong>keep coming back</strong> to his records.</p>
+  </div>
+
+  <div class="exercise-card">
+    <div class="q-label">Talk it through</div>
+    <div class="question-text">Had you heard of James Blake before today? Based on the reading, does this sound like music you'd get into?</div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="switchTab(0)">← Back</button>
+    <button class="nav-btn" onclick="switchTab(2)">Model →</button>
+  </div>
+</div>
+
+<!-- PANEL 2: MODEL PRESENTATION -->
+<div class="panel" id="panel-2">
+  <div class="label">Model</div>
+  <h2>Watch how it's done.</h2>
+  <p>Your teacher presents an album he really likes, following this structure. Listen for how each part connects to the next — you'll build your own version of this on the next tab.</p>
+
+  <div class="model-card">
+    <div class="model-tag">🎙️ Teacher presentation</div>
+
+    <div class="model-block">
+      <div class="model-block-label">1 · What it is</div>
+      <div class="model-block-text">"I want to talk about an album called <em>Trying Times</em> by James Blake."</div>
+    </div>
+    <div class="model-block">
+      <div class="model-block-label">2 · What it's about / sounds like</div>
+      <div class="model-block-text">"It's about... [mood, themes, sound]. The production really draws on..."</div>
+    </div>
+    <div class="model-block">
+      <div class="model-block-label">3 · What worked for me</div>
+      <div class="model-block-text">"What stood out for me was... My favourite track is... because..."</div>
+    </div>
+    <div class="model-block">
+      <div class="model-block-label">4 · Who should listen</div>
+      <div class="model-block-text">"If you like [similar artist/genre], you'll probably like this. I'd recommend it to..."</div>
+    </div>
+  </div>
+
+  <p class="q-label" style="margin-bottom:10px;">Useful chunks from the model</p>
+  <div class="chunk-list">
+    <div class="chunk">I want to talk about...</div>
+    <div class="chunk">It's about...</div>
+    <div class="chunk">The production draws on...</div>
+    <div class="chunk">What stood out for me was...</div>
+    <div class="chunk">My favourite track is... because...</div>
+    <div class="chunk">If you like X, you'll like this</div>
+    <div class="chunk">I'd recommend it to...</div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="q-label">After watching</div>
+    <div class="question-text">Ask your teacher two follow-up questions about the album, the way you'll be asked about yours later.</div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="switchTab(1)">← Back</button>
+    <button class="nav-btn" onclick="switchTab(3)">Your Presentation →</button>
+  </div>
+</div>
+
+<!-- PANEL 3: YOUR PRESENTATION -->
+<div class="panel" id="panel-3">
+  <div class="label">Your Presentation</div>
+  <h2>Plan yours for next time.</h2>
+  <p>Pick a real album you genuinely like. Fill this in now as notes — next session you'll present it live, following the same structure as the model.</p>
+
+  <div class="exercise-card">
+    <div class="plan-field">
+      <label>Album & artist</label>
+      <input class="plan-input" id="p-album" placeholder="e.g. ...">
+    </div>
+    <div class="plan-field">
+      <label>What it's about / what it sounds like</label>
+      <div class="plan-hint">"It's about... The production draws on..."</div>
+      <textarea class="plan-input" id="p-about"></textarea>
+    </div>
+    <div class="plan-field">
+      <label>What stood out for you — favourite track and why</label>
+      <div class="plan-hint">"What stood out for me was... My favourite track is... because..."</div>
+      <textarea class="plan-input" id="p-favourite"></textarea>
+    </div>
+    <div class="plan-field">
+      <label>Who you'd recommend it to</label>
+      <div class="plan-hint">"If you like X, you'll like this. I'd recommend it to..."</div>
+      <textarea class="plan-input" id="p-recommend"></textarea>
+    </div>
+
+    <div class="save-row">
+      <button class="save-btn" onclick="savePlan()">Save notes</button>
+      <span class="save-status" id="saveStatus">✓ Saved</span>
+    </div>
+  </div>
+
+  <div class="q-label" style="margin-bottom:10px;">Before next session, make sure you can:</div>
+  <div class="checklist" id="prep-checklist">
+    <div class="check-pill" onclick="this.classList.toggle('checked')"><span class="box">✓</span><span class="plabel">Say the album and artist name clearly</span></div>
+    <div class="check-pill" onclick="this.classList.toggle('checked')"><span class="box">✓</span><span class="plabel">Describe the sound/mood in 2-3 sentences</span></div>
+    <div class="check-pill" onclick="this.classList.toggle('checked')"><span class="box">✓</span><span class="plabel">Name a favourite track and explain why</span></div>
+    <div class="check-pill" onclick="this.classList.toggle('checked')"><span class="box">✓</span><span class="plabel">End with a recommendation ("if you like X...")</span></div>
+    <div class="check-pill" onclick="this.classList.toggle('checked')"><span class="box">✓</span><span class="plabel">Be ready to answer two questions about it, unscripted</span></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="switchTab(2)">← Back</button>
+    <button class="nav-btn" onclick="switchTab(4)">Recap →</button>
+  </div>
+</div>
+
+<!-- PANEL 4: RECAP -->
+<div class="panel" id="panel-4">
+  <div class="label">Recap</div>
+  <h2>Today, in short.</h2>
+  <p>Tap below to see what today's session was actually working on.</p>
+
+  <button class="recap-toggle" onclick="toggleCanDo()">📖 Show can-do card</button>
+  <div class="can-do-card" id="canDoCard">
+    <div class="cd-code">B1-10 · Reviewing & recommending</div>
+    <div class="cd-title">Can summarise a piece of media and give an opinion with a recommendation</div>
+    <div class="cd-row"><strong>Function:</strong> talking about an album — what it is, what it's about, what worked, who should hear it</div>
+    <div class="cd-row"><strong>Grammar/lexis:</strong> phrasal verbs (grow on, draw on, stand out, build up...), review of B1-08 opinions with reasons</div>
+    <div class="cd-row"><strong>Evidence task:</strong> 90-second spoken review of an album you genuinely like, then answer two unscripted follow-up questions — this is what next session's presentation will be.</div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="switchTab(3)">← Back</button>
+    <button class="nav-btn" disabled>Done ✓</button>
+  </div>
+</div>
+
+<!-- TIMER FAB -->
+<button id="timer-fab" onclick="toggleTimer()"><span>⏱</span><span id="timer-display">50:00</span></button>
+<div id="timer-panel">
+  <div class="tp-title">Session Timer</div>
+  <div class="tp-time" id="tp-time">50:00</div>
+  <div class="tp-btns">
+    <button class="tp-btn" onclick="startPauseTimer()" id="tp-startpause">Start</button>
+    <button class="tp-btn" onclick="resetTimer()">Reset</button>
+  </div>
+  <div class="tp-title">Notes</div>
+  <textarea id="tp-notes" placeholder="Reformulations, notes for next session..."></textarea>
+</div>
+
+<!-- OVERLAY -->
+<div id="overlay" onclick="closeTimerPanel()"></div>
+
+<script>
+// TABS
+const tabs = document.querySelectorAll('.tab');
+const panels = document.querySelectorAll('.panel');
+function switchTab(i) {
+  tabs.forEach((t,idx) => t.classList.toggle('active', idx===i));
+  panels.forEach((p,idx) => p.classList.toggle('active', idx===i));
+  window.scrollTo(0,0);
+}
+
+// GOAL TOGGLE
+function toggleGoal(){ document.getElementById('goalPanel').classList.toggle('open'); }
+
+// RECAP TOGGLE
+function toggleCanDo(){ document.getElementById('canDoCard').classList.toggle('open'); }
+
+// PRESENTATION PLANNER — autosave to localStorage
+const PLAN_KEY = 'thomas_album_presentation_plan';
+function loadPlan(){
+  try{
+    const raw = localStorage.getItem(PLAN_KEY);
+    if(!raw) return;
+    const data = JSON.parse(raw);
+    ['p-album','p-about','p-favourite','p-recommend'].forEach(id=>{
+      if(data[id] !== undefined) document.getElementById(id).value = data[id];
+    });
+  }catch(e){}
+}
+function savePlan(){
+  const data = {};
+  ['p-album','p-about','p-favourite','p-recommend'].forEach(id=>{
+    data[id] = document.getElementById(id).value;
+  });
+  try{ localStorage.setItem(PLAN_KEY, JSON.stringify(data)); }catch(e){}
+  const status = document.getElementById('saveStatus');
+  status.classList.add('show');
+  setTimeout(()=> status.classList.remove('show'), 2000);
+}
+loadPlan();
+
+// TIMER
+let timerSeconds = 50 * 60, timerInterval = null, timerRunning = false, panelOpen = false;
+function formatTime(s) { return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`; }
+function toggleTimer() {
+  panelOpen = !panelOpen;
+  document.getElementById('timer-panel').classList.toggle('open', panelOpen);
+  document.getElementById('overlay').classList.toggle('show', panelOpen);
+}
+function closeTimerPanel(){
+  panelOpen = false;
+  document.getElementById('timer-panel').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
+function startPauseTimer(){
+  const fab = document.getElementById('timer-fab');
+  const btn = document.getElementById('tp-startpause');
+  if (!timerRunning) {
+    timerRunning = true; fab.classList.add('running'); btn.textContent = 'Pause';
+    timerInterval = setInterval(() => {
+      timerSeconds--;
+      const t = formatTime(Math.max(timerSeconds,0));
+      document.getElementById('timer-display').textContent = t;
+      document.getElementById('tp-time').textContent = t;
+      if (timerSeconds <= 300) { fab.classList.remove('running'); fab.classList.add('urgent'); }
+      if (timerSeconds <= 0) { clearInterval(timerInterval); timerRunning = false; btn.textContent = 'Start'; }
+    }, 1000);
+  } else {
+    clearInterval(timerInterval); timerRunning = false;
+    fab.classList.remove('running'); btn.textContent = 'Start';
+  }
+}
+function resetTimer(){
+  clearInterval(timerInterval); timerRunning = false;
+  timerSeconds = 50*60;
+  const fab = document.getElementById('timer-fab');
+  fab.classList.remove('running','urgent');
+  document.getElementById('timer-display').textContent = '50:00';
+  document.getElementById('tp-time').textContent = '50:00';
+  document.getElementById('tp-startpause').textContent = 'Start';
+}
+</script>
+
+<script src="../assets/write-bubble.js"></script>
+</body>
+</html>

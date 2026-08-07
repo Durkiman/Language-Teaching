@@ -2,7 +2,8 @@
   "student": "thomas",
   "levels": ["B1"],
   "cards": {
-    "B1-01": { "status": "introduced", "introduced": null, "reviews": [], "notes": "Lesson 2: Past Simple for storytelling" },
-    "B1-08": { "status": "introduced", "introduced": null, "reviews": [], "notes": "Incidental via Lesson 1 sub-genre discussion — verify with evidence task before trusting" }
+    "B1-01": { "status": "reviewed", "introduced": null, "reviews": ["2026-08-07"], "notes": "Lesson 2: Past Simple for storytelling. Reviewed incidentally in Lesson 5 (album history/first-heard narrative)." },
+    "B1-08": { "status": "reviewed", "introduced": null, "reviews": ["2026-08-07"], "notes": "Incidental via Lesson 1 sub-genre discussion — verify with evidence task before trusting. Reviewed incidentally in Lesson 5 (album opinions)." },
+    "B1-10": { "status": "introduced", "introduced": "2026-08-07", "reviews": [], "notes": "Lesson 5: James Blake discussion + model presentation on \"Trying Times\"; Thomas prepares his own album presentation for next session. Evidence task pending confirmation after that session." }
   }
 }
