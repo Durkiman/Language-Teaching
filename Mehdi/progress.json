@@ -2,6 +2,6 @@
   "student": "mehdi",
   "levels": ["B1"],
   "cards": {
-    "B1-19": { "status": "reviewed", "introduced": "2026-07-15", "reviews": ["2026-08-03", "2026-08-07"], "notes": "Pillar 3.2 — price/timing negotiation roleplays; must/have to, need to/needn't, don't have to (\"ought to\" dropped from active set — archaic for spoken English). Lesson #10 ('Client Discussions: Price & Timing') was built but never played and is being retired unused. Lesson #11 ('Setting the Price & the Time') replaces it with the same real-world scenario (price + meeting-time negotiation) as a speaking-heavy evidence-task attempt — confirm pass/fail after the session to decide on 'solid'." }
+    "B1-19": { "status": "reviewed", "introduced": "2026-07-15", "reviews": ["2026-08-03", "2026-08-07"], "notes": "Pillar 3.2 — price/timing negotiation roleplays; must/have to, need to/needn't, don't have to (\"ought to\" dropped from active set — archaic for spoken English). Lesson #10 ('Client Discussions: Price & Timing') was built but never played and is being retired unused. Lesson #11 ('Setting the Price & the Time') 2026-08-07: too difficult — Mehdi was out of his depth for most of the session, evidence-task roleplays not passed. Not solid. Next lesson needs to simplify this material (lighter scenario, more scaffolding/model language before free roleplay) rather than repeat as-is. Homework assigned: practice the lesson's dialogue with an AI conversation partner before next session." }
   }
 }
