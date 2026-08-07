@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Oral Practice Prompt Builder — Durim's Language Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --cream: #f5f0e8;
+    --warm: #e8ddd0;
+    --gold: #c9a84c;
+    --terra: #c4714a;
+    --good: #5B8A6E;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+  }
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 60px 32px 100px;
+  }
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  h1 em { font-style: italic; color: var(--terra); }
+  .tagline {
+    margin-top: 14px;
+    font-size: 14px;
+    font-weight: 300;
+    color: #666;
+    max-width: 520px;
+    line-height: 1.7;
+  }
+  .divider {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    margin: 24px 0 40px;
+  }
+  .back-link {
+    display: inline-block;
+    margin-bottom: 28px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #999;
+    text-decoration: none;
+  }
+  .back-link:hover { color: var(--terra); }
+
+  .panel {
+    background: white;
+    border-radius: 16px;
+    padding: 28px 28px 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    margin-bottom: 24px;
+  }
+  .panel h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .panel .hint {
+    font-size: 12.5px;
+    color: #888;
+    margin-bottom: 18px;
+    line-height: 1.6;
+  }
+
+  .field { margin-bottom: 18px; }
+  .field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--terra);
+    margin-bottom: 8px;
+  }
+  .field select, .field input[type=text] {
+    width: 100%;
+    border: 1.5px solid var(--warm);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    background: #FDFCFA;
+  }
+  .field select:focus, .field input[type=text]:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+  .field .desc {
+    font-size: 12px;
+    color: #999;
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip-row button {
+    background: var(--cream);
+    border: 1.5px solid var(--warm);
+    border-radius: 20px;
+    padding: 7px 14px;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .chip-row button.active {
+    background: var(--terra);
+    border-color: var(--terra);
+    color: #fff;
+  }
+
+  .output-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .output-label span {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--terra);
+  }
+  .copy-btn {
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .copy-btn.copied { background: var(--good); }
+  .output-box {
+    background: #FBF9F4;
+    border: 1.5px solid var(--warm);
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    color: var(--ink);
+  }
+
+  .followup-panel { margin-top: 8px; }
+
+  .steps {
+    counter-reset: step;
+    margin-top: 4px;
+  }
+  .steps li {
+    list-style: none;
+    counter-increment: step;
+    position: relative;
+    padding-left: 34px;
+    margin-bottom: 12px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #444;
+  }
+  .steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: #fff;
+    font-weight: 700;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <a class="back-link" href="index.html">← Back to General Tools</a>
+  <p class="eyebrow">Language Studio · General Tools</p>
+  <h1>AI Oral <em>Practice</em> Prompts</h1>
+  <p class="tagline">Build a ready-to-copy ChatGPT Voice Mode prompt for a student's speaking homework — pick their level and the kind of practice, fill in the topic, and copy the result straight into a message to them.</p>
+  <div class="divider"></div>
+
+  <div class="panel">
+    <h2>1. Build the prompt</h2>
+    <div class="hint">This generates a prompt written <em>to the student</em> — copy it as-is into WhatsApp/email along with the steps below.</div>
+
+    <div class="field">
+      <label>Student level</label>
+      <select id="level">
+        <option value="A1">A1 — Beginner</option>
+        <option value="A2">A2 — Elementary</option>
+        <option value="B1" selected>B1 — Intermediate</option>
+        <option value="B2">B2 — Upper-Intermediate</option>
+        <option value="C1">C1 — Advanced</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Practice type</label>
+      <div class="chip-row" id="typeChips">
+        <button class="active" data-type="roleplay">Roleplay a real situation</button>
+        <button data-type="opinion">Give opinions / debate</button>
+        <button data-type="interview">Interview practice</button>
+        <button data-type="describe">Describe & explain</button>
+        <button data-type="freechat">Free conversation</button>
+      </div>
+    </div>
+
+    <div class="field" id="topicField">
+      <label>Topic / scenario</label>
+      <input type="text" id="topic" placeholder="e.g. negotiating a price with a client, or Belgian culture">
+      <div class="desc" id="topicDesc"></div>
+    </div>
+
+    <div class="field">
+      <label>Correction style</label>
+      <div class="chip-row" id="correctionChips">
+        <button class="active" data-correction="brief">Correct briefly, in the moment</button>
+        <button data-correction="end">Wait, then correct at the end</button>
+        <button data-correction="none">Don't correct — fluency only</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Session length</label>
+      <div class="chip-row" id="lengthChips">
+        <button data-length="5">5 minutes</button>
+        <button class="active" data-length="10">10 minutes</button>
+        <button data-length="15">15 minutes</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="output-label">
+      <span>Prompt for the student to paste into ChatGPT</span>
+      <button class="copy-btn" id="copyMain">Copy</button>
+    </div>
+    <div class="output-box" id="mainOutput"></div>
+  </div>
+
+  <div class="panel followup-panel">
+    <div class="output-label">
+      <span>Follow-up prompt (send after the practice)</span>
+      <button class="copy-btn" id="copyFollowup">Copy</button>
+    </div>
+    <div class="output-box" id="followupOutput"></div>
+  </div>
+
+  <div class="panel">
+    <h2>2. What to send the student</h2>
+    <div class="hint">Send both prompts together with these steps — this is the whole homework instruction.</div>
+    <ol class="steps">
+      <li>Open ChatGPT on your phone or computer and switch on <strong>Voice Mode</strong> (the headphones/soundwave icon).</li>
+      <li>Paste the first prompt below and speak your reply out loud — don't type.</li>
+      <li>Keep the conversation going for the full time. If you don't understand something, ask it to repeat or explain in simpler words — that's allowed.</li>
+      <li>When you're done, paste the second prompt to get quick feedback on how you did.</li>
+      <li>Bring anything that felt hard to our next lesson.</li>
+    </ol>
+  </div>
+</div>
+
+<script>
+  const levelLabels = { A1:'A1 (beginner)', A2:'A2 (elementary)', B1:'B1 (intermediate)', B2:'B2 (upper-intermediate)', C1:'C1 (advanced)' };
+
+  const typeConfig = {
+    roleplay: {
+      placeholder: 'e.g. negotiating a price with a client, checking in at a hotel, resolving a delivery problem',
+      desc: 'A specific real-world situation — the more concrete, the better the practice.',
+      build: (level, topic, minutes) =>
+        `I'm a ${levelLabels[level]} English learner. I want to practice speaking through a roleplay.\n\nScenario: ${topic || '[describe the situation]'}.\n\nPlease play the other person in this scenario and stay in character. Start the conversation, keep it natural and realistic, and don't break character to explain things unless I ask you to. Keep the conversation going for about ${minutes} minutes.`
+    },
+    opinion: {
+      placeholder: 'e.g. tourism: good or bad?, should students choose their own subjects?',
+      desc: 'A topic with two clear sides works best for opinion/debate practice.',
+      build: (level, topic, minutes) =>
+        `I'm a ${levelLabels[level]} English learner. I want to practice giving opinions and debating out loud.\n\nTopic: ${topic || '[describe the topic]'}.\n\nAsk me for my opinion, then respectfully challenge it and ask me to defend it with reasons and examples. Push back at least twice during the conversation. Keep this going for about ${minutes} minutes.`
+    },
+    interview: {
+      placeholder: 'e.g. university admissions interview for interior design, a job interview',
+      desc: 'Name the specific interview so the questions match reality.',
+      build: (level, topic, minutes) =>
+        `I'm a ${levelLabels[level]} English learner preparing for a real interview.\n\nInterview type: ${topic || '[describe the interview]'}.\n\nPlay the interviewer. Ask me realistic questions one at a time, including at least one unexpected/curveball question, and wait for my full answer before moving on. Keep this going for about ${minutes} minutes.`
+    },
+    describe: {
+      placeholder: 'e.g. describe your hometown, explain how to cook your favorite dish',
+      desc: 'A describe/explain task — good for building longer, uninterrupted turns.',
+      build: (level, topic, minutes) =>
+        `I'm a ${levelLabels[level]} English learner. I want to practice describing and explaining things out loud in longer turns.\n\nTask: ${topic || '[describe the task]'}.\n\nAsk me to explain it in detail, then ask 2-3 natural follow-up questions to keep me talking. Keep this going for about ${minutes} minutes.`
+    },
+    freechat: {
+      placeholder: 'e.g. Belgian culture, weekend plans, a book or show I like',
+      desc: 'A loose topic to anchor an open conversation.',
+      build: (level, topic, minutes) =>
+        `I'm a ${levelLabels[level]} English learner. Let's have a natural, free-flowing conversation.\n\nTopic to start with: ${topic || '[describe the topic]'} — feel free to follow where the conversation naturally goes from there.\n\nKeep this going for about ${minutes} minutes.`
+    }
+  };
+
+  const correctionText = {
+    brief: 'When I make a grammar or pronunciation mistake, correct me briefly right in the moment, then continue the conversation.',
+    end: "Don't correct me while we're talking — save any corrections for the end, after we finish.",
+    none: "Don't correct my grammar or pronunciation at all during this — I just want to practice speaking without stopping."
+  };
+
+  let state = { level:'B1', type:'roleplay', correction:'brief', length:'10' };
+
+  function q(id){ return document.getElementById(id); }
+
+  function render(){
+    const cfg = typeConfig[state.type];
+    q('topic').placeholder = cfg.placeholder;
+    q('topicDesc').textContent = cfg.desc;
+    const topic = q('topic').value.trim();
+    const main = cfg.build(state.level, topic, state.length) + '\n\n' + correctionText[state.correction];
+    q('mainOutput').textContent = main;
+
+    q('followupOutput').textContent =
+      `That's the end of the practice. Please score my clarity, grammar, and fluency each out of 10, and tell me the two biggest things I should work on before my next English lesson.`;
+  }
+
+  document.querySelectorAll('#typeChips button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('#typeChips button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      state.type = btn.dataset.type;
+      render();
+    });
+  });
+  document.querySelectorAll('#correctionChips button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('#correctionChips button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      state.correction = btn.dataset.correction;
+      render();
+    });
+  });
+  document.querySelectorAll('#lengthChips button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('#lengthChips button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      state.length = btn.dataset.length;
+      render();
+    });
+  });
+  q('level').addEventListener('change', (e)=>{ state.level = e.target.value; render(); });
+  q('topic').addEventListener('input', render);
+
+  function copyBox(outputId, btnId){
+    const text = q(outputId).textContent;
+    navigator.clipboard.writeText(text).then(()=>{
+      const btn = q(btnId);
+      const original = btn.textContent;
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(()=>{ btn.textContent = original; btn.classList.remove('copied'); }, 1500);
+    });
+  }
+  q('copyMain').addEventListener('click', ()=> copyBox('mainOutput','copyMain'));
+  q('copyFollowup').addEventListener('click', ()=> copyBox('followupOutput','copyFollowup'));
+
+  render();
+</script>
+</body>
+</html>
