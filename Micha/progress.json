@@ -11,8 +11,9 @@
     "A2-11": { "status": "introduced", "introduced": null, "reviews": [], "notes": "Going-to predictions done; will vs going to not yet contrasted" },
     "A2-20": { "status": "introduced", "introduced": null, "reviews": [], "notes": "Comparatives + superlatives covered" },
     "A1-09": { "status": "introduced", "introduced": null, "reviews": [], "notes": "Guess the Player lesson (#17) — can/can't for ability, football skills" },
-    "A2-02": { "status": "reviewed", "introduced": null, "reviews": ["2026-08-03"], "notes": "World Cup MVPs (#16); recycled in Guess the Player (#17)" },
-    "A1-04": { "status": "reviewed", "introduced": "2026-07-22", "reviews": ["2026-08-03"], "notes": "Trip-prep lesson (#18) — like/love/hate + verb-ing, food & hobbies" },
-    "A2-12": { "status": "introduced", "introduced": "2026-08-03", "reviews": [], "notes": "Squad Weekend Plans lesson — suggestions/invitations, football/Brawl Stars/theme park skin; evidence task pending confirmation after session." }
+    "A2-12": { "status": "introduced", "introduced": "2026-08-03", "reviews": [], "notes": "Squad Weekend Plans lesson — suggestions/invitations, football/Brawl Stars/theme park skin; evidence task pending confirmation after session." },
+    "A2-13": { "status": "introduced", "introduced": "2026-08-14", "reviews": [], "notes": "Game Shop Live Chat lesson (#23) — requests & offers, branching chat-simulator format; evidence task pending confirmation after session." },
+    "A1-04": { "status": "reviewed", "introduced": "2026-07-22", "reviews": ["2026-08-03", "2026-08-14"], "notes": "Trip-prep lesson (#18) — like/love/hate + verb-ing, food & hobbies; verbal warm-up touch in #23." },
+    "A2-02": { "status": "reviewed", "introduced": null, "reviews": ["2026-08-03", "2026-08-14"], "notes": "World Cup MVPs (#16); recycled in Guess the Player (#17); verbal warm-up touch in #23." }
   }
 }

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Game Shop Live Chat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/write-bubble.css">
+<style>
+:root{
+  --bg:#F4F6F8; --surface:#FFFFFF; --teal:#2A8A8A; --teal-light:#E3F2F2;
+  --ink:#1F2B33; --muted:#6B7A82; --border:#E3E8EB;
+  --orange:#E08A3C; --orange-light:#FFF3E6; --blue:#3E6FB0;
+  --green:#3FA66A; --green-light:#E5F6EC; --red:#D9534F;
+  --shadow:0 2px 8px rgba(31,43,51,.06),0 1px 2px rgba(31,43,51,.04);
+  --shadow-lg:0 8px 24px rgba(31,43,51,.10);
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);padding-bottom:90px;}
+.app-header{background:var(--surface);padding:20px 20px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.app-header h1{margin:0;font-size:22px;font-weight:800;}
+.teacher-toggle-btn{background:var(--surface);border:2px solid var(--muted);color:var(--muted);font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;padding:8px 14px;border-radius:20px;cursor:pointer;white-space:nowrap;}
+.teacher-toggle-btn.on{background:#FFF8E8;border-color:#f0dca0;color:#9a7a2e;}
+.teacher-note{display:none;background:#FFF8E8;border:1px solid #f0dca0;border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:13px;line-height:1.6;color:#5a4620;}
+body.show-teacher .teacher-note{display:block;}
+.teacher-note b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#9a7a2e;margin-bottom:6px;}
+
+.tabbar{position:sticky;top:0;z-index:50;display:flex;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:var(--shadow);-webkit-overflow-scrolling:touch;}
+.tabbar::-webkit-scrollbar{display:none;}
+.tab-btn{flex:0 0 auto;padding:14px 16px;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;}
+.tab-btn.active{color:var(--teal);border-bottom-color:var(--teal);}
+.panel{display:none;padding:18px 16px 30px;max-width:680px;margin:0 auto;}
+.panel.active{display:block;}
+.card{background:var(--surface);border-radius:16px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow);border:1px solid var(--border);}
+.card h2{margin:0 0 10px;font-size:17px;font-weight:800;}
+.card h3{margin:0 0 8px;font-size:14px;font-weight:800;color:var(--teal);}
+.fr{color:var(--blue);font-size:13px;font-style:italic;font-weight:600;margin-top:4px;}
+.nav-buttons{display:flex;justify-content:space-between;margin-top:18px;gap:10px;}
+.btn{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;padding:12px 22px;border-radius:12px;border:none;cursor:pointer;}
+.btn-primary{background:var(--teal);color:#fff;}
+.btn-secondary{background:var(--surface);color:var(--teal);border:2px solid var(--teal);}
+.btn:active{transform:scale(.97);}
+.btn:disabled{opacity:.4;cursor:default;}
+
+.hero-banner{background:linear-gradient(135deg,#2A8A8A 0%,#1f6b6b 100%);border-radius:18px;padding:22px;color:#fff;margin-bottom:14px;}
+.hero-banner h2{color:#fff;margin:0 0 6px;}
+.hero-banner p{margin:0;font-size:14px;opacity:.95;line-height:1.5;}
+.hero-banner p.fr{color:#fff;opacity:.85;font-weight:500;}
+
+.model-recap{background:var(--teal-light);border-radius:14px;padding:14px;margin-bottom:14px;font-size:13px;line-height:1.6;}
+.model-recap b{color:var(--teal);}
+
+.chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.chip{background:var(--teal-light);color:var(--teal);border-radius:20px;padding:8px 14px;font-weight:700;font-size:13px;}
+
+.exponent-card{border-radius:14px;padding:14px;margin-bottom:10px;background:var(--surface);border:2px solid var(--teal-light);}
+.exponent-card .phrase{font-weight:800;font-size:15px;color:var(--teal);}
+.exponent-card .ex{font-size:13px;color:var(--muted);margin-top:4px;}
+.exponent-card .tag{display:inline-block;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;background:var(--orange-light);color:var(--orange);padding:2px 8px;border-radius:8px;margin-bottom:6px;}
+
+/* Chat simulator */
+.chat-window{background:var(--bg);border-radius:16px;padding:14px;margin-bottom:14px;min-height:120px;}
+.msg{max-width:85%;padding:10px 14px;border-radius:14px;margin-bottom:10px;font-size:14px;line-height:1.5;}
+.msg.shop{background:var(--surface);border:1px solid var(--border);border-bottom-left-radius:4px;}
+.msg.shop .who{font-size:11px;font-weight:800;color:var(--teal);display:block;margin-bottom:3px;}
+.msg.player{background:var(--teal);color:#fff;margin-left:auto;border-bottom-right-radius:4px;}
+.msg.player .who{font-size:11px;font-weight:800;color:#dff5f5;display:block;margin-bottom:3px;}
+
+.chat-choices{display:flex;flex-direction:column;gap:8px;}
+.choice-btn{text-align:left;background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:10px 12px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer;}
+.choice-btn.correct{border-color:var(--green);background:var(--green-light);color:#1f6b4a;}
+.choice-btn.incorrect{border-color:var(--red);background:#FBE5E4;color:#8a2f2c;}
+.choice-btn:disabled{cursor:default;}
+
+.chat-input-row{display:flex;gap:8px;margin-top:4px;}
+.chat-input-row input{flex:1;border:2px solid var(--border);border-radius:12px;padding:10px 12px;font-family:'Nunito',sans-serif;font-size:14px;}
+.chat-input-row input.correct{border-color:var(--green);background:var(--green-light);}
+.chat-input-row button{background:var(--teal);color:#fff;border:none;border-radius:12px;padding:10px 16px;font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;}
+.chat-feedback{font-size:12px;margin-top:8px;padding:8px 10px;border-radius:10px;display:none;}
+.chat-feedback.show{display:block;}
+.chat-feedback.good{background:var(--green-light);color:#1f6b4a;}
+.chat-feedback.hint{background:var(--orange-light);color:#7a4a10;}
+.chat-progress{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:10px;}
+
+.checklist{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.checklist label{display:flex;align-items:flex-start;gap:8px;font-size:13px;background:var(--bg);border-radius:10px;padding:10px 12px;cursor:pointer;}
+.checklist input{margin-top:2px;width:16px;height:16px;accent-color:var(--teal);flex-shrink:0;}
+
+.recap-toggle-btn{display:block;width:100%;background:var(--teal);color:#fff;border:none;border-radius:12px;padding:14px;font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;cursor:pointer;margin-bottom:14px;}
+.recap-card{display:none;}
+.recap-card.show{display:block;}
+.recap-code{display:inline-block;background:var(--teal);color:#fff;font-weight:800;font-size:12px;padding:4px 10px;border-radius:8px;margin-bottom:10px;}
+.recap-field{margin-bottom:12px;}
+.recap-field b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--teal);margin-bottom:4px;}
+.recap-field span, .recap-field p{font-size:14px;line-height:1.6;margin:0;}
+
+#timerBubble{position:fixed;bottom:18px;left:18px;width:60px;height:60px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;box-shadow:var(--shadow-lg);cursor:pointer;z-index:200;user-select:none;}
+#timerBubble.danger{background:var(--red);}
+#emojiOverlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:500;font-size:120px;}
+#emojiOverlay.show{display:flex;animation:zoomIn .5s ease-out;}
+@keyframes zoomIn{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
+#wbOverlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;z-index:400;}
+#wbOverlay.show{display:flex;}
+#wbPanel{background:var(--surface);width:100%;border-radius:24px 24px 0 0;padding:20px 18px 28px;max-height:85vh;overflow-y:auto;}
+#wbPanel h3{margin:0 0 12px;font-size:16px;font-weight:800;}
+.wb-close{float:right;background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;}
+.timer-controls{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.timer-controls button{flex:1;min-width:60px;padding:10px;border-radius:10px;border:2px solid var(--border);background:var(--bg);font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;}
+.stamp-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.stamp-btn{font-size:20px;background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:8px 10px;cursor:pointer;}
+#correctionLog{background:var(--bg);border-radius:10px;padding:10px;min-height:60px;font-size:13px;margin-bottom:10px;white-space:pre-wrap;}
+#wbNotes{width:100%;min-height:80px;border:2px solid var(--border);border-radius:10px;padding:10px;font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:10px;resize:vertical;}
+.wb-actions{display:flex;gap:8px;}
+.wb-actions button{flex:1;padding:10px;border-radius:10px;border:none;font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;}
+.wb-copy{background:var(--teal);color:#fff;}
+.wb-clear{background:#FBE5E4;color:var(--red);}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <h1>🎮🛒 Game Shop Live Chat</h1>
+  <button class="teacher-toggle-btn" id="teacherToggleBtn" onclick="toggleTeacherNotes()">👤 Teacher notes</button>
+</div>
+
+<div class="tabbar" id="tabbar">
+  <button class="tab-btn active" data-tab="warmup">Warm-Up</button>
+  <button class="tab-btn" data-tab="learn">Asking &amp; Offering</button>
+  <button class="tab-btn" data-tab="chat">Live Chat</button>
+  <button class="tab-btn" data-tab="recap">Recap</button>
+</div>
+
+<!-- WARM-UP -->
+<div class="panel active" id="warmup">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    Short, verbal-only warm-up — no typing. Micha's tired today, so keep this fast: 3-4 quick spoken questions recycling A1-04 (likes/dislikes) and A2-02 (describing people). Don't linger here.
+  </div>
+
+  <div class="hero-banner">
+    <h2>Quick chat before we start</h2>
+    <p>Answer out loud — no writing needed here!</p>
+    <p class="fr">Réponds à l'oral — pas besoin d'écrire ici !</p>
+  </div>
+
+  <div class="card">
+    <h3>Talk it out</h3>
+    <p class="fr">Discutons</p>
+    <div class="chip-row">
+      <span class="chip">What games do you like playing?</span>
+      <span class="chip">Describe your favourite Brawl Stars character</span>
+      <span class="chip">What does your best friend look like?</span>
+      <span class="chip">Do you like shopping online?</span>
+    </div>
+    <div class="model-recap" style="margin-top:14px;">
+      <b>Example:</b> "I love playing Brawl Stars because it's fast." / "My friend has short brown hair and he's really funny."
+      <p class="fr" style="margin-top:6px;">"J'adore jouer à Brawl Stars parce que c'est rapide." / "Mon ami a les cheveux courts et bruns et il est très drôle."</p>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <span></span>
+    <button class="btn btn-primary" onclick="goTab('learn')">Next →</button>
+  </div>
+</div>
+
+<!-- PRESENTATION -->
+<div class="panel" id="learn">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    Quick presentation only — keep it light. Point out the three patterns and read the one example each. Don't drill grammar here; the chat simulator on the next tab is where he actually uses it.
+  </div>
+
+  <div class="card">
+    <h2>Requests &amp; offers</h2>
+    <p class="fr">Demandes et offres</p>
+    <p style="font-size:13px;line-height:1.7;">When you want something politely, or you want to help someone, use these:</p>
+
+    <div class="exponent-card">
+      <span class="tag">Asking for something</span>
+      <div class="phrase">Can I / Could I…?</div>
+      <div class="ex">Can I have a receipt? · Could I get a discount?</div>
+    </div>
+    <div class="exponent-card">
+      <span class="tag">Asking someone to do something</span>
+      <div class="phrase">Could you…? / Would you mind…?</div>
+      <div class="ex">Could you check the price? · Would you mind holding it for me?</div>
+    </div>
+    <div class="exponent-card">
+      <span class="tag">Offering to help</span>
+      <div class="phrase">Shall I…? / Would you like me to…?</div>
+      <div class="ex">Shall I wrap it for you? · Would you like me to send a confirmation email?</div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('warmup')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('chat')">Next →</button>
+  </div>
+</div>
+
+<!-- CHAT SIMULATOR (controlled -> free production) -->
+<div class="panel" id="chat">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    This is the A2-13 evidence task, done as a live chat. First 4 turns are multiple choice (auto-checked, green/red). From turn 5 Micha types his own requests/offers — the tool gives a soft check (looks for can/could/would you mind/shall I) but talk through each reply together rather than relying only on the auto-check. Don't correct mid-flow; use the whiteboard for notes.
+  </div>
+
+  <div class="card">
+    <h2>LevelUp Games — Live Chat</h2>
+    <p class="fr">Discussion en direct avec le magasin de jeux vidéo</p>
+    <p style="font-size:13px;line-height:1.7;">You're chatting with the shop assistant to buy the Ultra Legendary Leon skin. Reply to keep the conversation going!</p>
+    <div class="chat-progress" id="chatProgress">Turn 1 of 8</div>
+    <div class="chat-window" id="chatWindow"></div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('learn')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('recap')">Next →</button>
+  </div>
+</div>
+
+<!-- RECAP -->
+<div class="panel" id="recap">
+  <div class="card">
+    <h2>Lesson Recap</h2>
+    <p class="fr">Récapitulatif de la leçon</p>
+    <button class="recap-toggle-btn" onclick="toggleRecap()" id="recapBtn">Show can-do card</button>
+    <div class="recap-card" id="recapCard">
+      <div class="recap-code">A2-13 · Requests &amp; offers</div>
+      <div class="recap-field">
+        <b>Goal</b>
+        <p>Can make simple requests for things and actions, and can offer to do something for someone else, using common polite forms.</p>
+      </div>
+      <div class="recap-field">
+        <b>Grammar focus / exponents</b>
+        <span>Can I…? · Could I…? · Could you…? · Would you mind…? · Shall I…? · Would you like me to…?</span>
+      </div>
+      <div class="recap-field">
+        <b>Evidence task</b>
+        <p>Live-chat simulator with a game shop: Micha requests information/help and responds to an offer, producing his own requests and offers in the open-text turns.</p>
+      </div>
+    </div>
+    <div class="checklist">
+      <label><input type="checkbox"> Made at least one request with Can/Could</label>
+      <label><input type="checkbox"> Made at least one polite request with Would you mind</label>
+      <label><input type="checkbox"> Made or accepted an offer</label>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('chat')">← Back</button>
+    <span></span>
+  </div>
+</div>
+
+<div id="timerBubble" onclick="openWb()">50:00</div>
+<div id="emojiOverlay" onclick="this.classList.remove('show')"></div>
+
+<div id="wbOverlay" onclick="if(event.target===this)closeWb()">
+  <div id="wbPanel">
+    <button class="wb-close" onclick="closeWb()">✕</button>
+    <h3>⏱ Whiteboard</h3>
+    <div class="timer-controls">
+      <button onclick="setTimerMin(5)">5m</button>
+      <button onclick="setTimerMin(10)">10m</button>
+      <button onclick="setTimerMin(15)">15m</button>
+      <button onclick="toggleRun()" id="runBtn">▶ Start</button>
+      <button onclick="resetTimer()">↺ Reset</button>
+    </div>
+    <h3 style="font-size:14px;">Correction Stamps</h3>
+    <div class="stamp-row">
+      <button class="stamp-btn" onclick="addStamp('✅')">✅</button>
+      <button class="stamp-btn" onclick="addStamp('⭐')">⭐</button>
+      <button class="stamp-btn" onclick="addStamp('🔁 Try again')">🔁</button>
+      <button class="stamp-btn" onclick="addStamp('🗣 Pronunciation')">🗣</button>
+      <button class="stamp-btn" onclick="addStamp('📐 Grammar')">📐</button>
+    </div>
+    <div id="correctionLog"></div>
+    <h3 style="font-size:14px;">Notes</h3>
+    <textarea id="wbNotes" placeholder="Notes for this lesson..."></textarea>
+    <div class="wb-actions">
+      <button class="wb-copy" onclick="copyWb()">Copy</button>
+      <button class="wb-clear" onclick="clearWb()">Clear</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function goTab(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector(`.tab-btn[data-tab="${id}"]`).classList.add('active');
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('.tab-btn').forEach(btn=>btn.addEventListener('click',()=>goTab(btn.dataset.tab)));
+
+function toggleTeacherNotes(){
+  document.body.classList.toggle('show-teacher');
+  document.getElementById('teacherToggleBtn').classList.toggle('on');
+}
+
+function toggleRecap(){
+  const card=document.getElementById('recapCard');
+  const btn=document.getElementById('recapBtn');
+  card.classList.toggle('show');
+  btn.textContent=card.classList.contains('show')?'Hide can-do card':'Show can-do card';
+}
+
+/* Chat simulator */
+const CHAT_STEPS=[
+  {
+    shop:"Hi! Welcome to LevelUp Games chat. How can I help today?",
+    type:"choice",
+    options:[
+      "Could you check if you have the Ultra Legendary Leon skin in stock?",
+      "I want the Leon skin.",
+      "Give me the skin now."
+    ],
+    correct:0
+  },
+  {
+    shop:"Yes, we have it! It's €12.99. Would you like to reserve it?",
+    type:"choice",
+    options:[
+      "Can I pay with PayPal?",
+      "I want PayPal.",
+      "PayPal now, please."
+    ],
+    correct:0
+  },
+  {
+    shop:"Sure! Would you like a gift wrap for it?",
+    type:"choice",
+    options:[
+      "Yes please, that would be great, thank you!",
+      "Wrap it.",
+      "No wrap."
+    ],
+    correct:0
+  },
+  {
+    shop:"Great choice! One more thing — could you confirm your username?",
+    type:"choice",
+    options:[
+      "Of course, it's MichaGamer26.",
+      "Why do you need it?",
+      "No."
+    ],
+    correct:0
+  },
+  {
+    shop:"Perfect, thanks! Is there anything else I can help you with?",
+    type:"text",
+    placeholder:"Ask if they have any discount codes today...",
+    check:["can i","could i","do you have"]
+  },
+  {
+    shop:"We don't have any codes today, sorry! But I can offer you 10% off your next order — would that help?",
+    type:"text",
+    placeholder:"Accept the offer politely...",
+    check:["yes","that would","great","thank"]
+  },
+  {
+    shop:"Great! Would you mind leaving a review after your purchase?",
+    type:"text",
+    placeholder:"Reply to the request...",
+    check:["sure","of course","no problem","yes","i will","i'll"]
+  },
+  {
+    shop:"Thanks so much! Enjoy the skin, and shall I send a confirmation email to finish up?",
+    type:"text",
+    placeholder:"Make one more request or offer to end the chat...",
+    check:["can i","could i","could you","would you mind","shall i","would you like","yes","please"]
+  }
+];
+let chatStep=0;
+
+function renderChat(){
+  const win=document.getElementById('chatWindow');
+  document.getElementById('chatProgress').textContent=`Turn ${Math.min(chatStep+1,CHAT_STEPS.length)} of ${CHAT_STEPS.length}`;
+  if(chatStep>=CHAT_STEPS.length){
+    win.innerHTML+=`<div class="msg shop"><span class="who">LevelUp Games</span>That's everything — thanks for chatting, see you next time! 🎮</div>`;
+    return;
+  }
+  const step=CHAT_STEPS[chatStep];
+  const shopMsg=document.createElement('div');
+  shopMsg.className='msg shop';
+  shopMsg.innerHTML=`<span class="who">LevelUp Games</span>${step.shop}`;
+  win.appendChild(shopMsg);
+
+  const controls=document.createElement('div');
+  controls.id='chatControls';
+
+  if(step.type==='choice'){
+    controls.className='chat-choices';
+    step.options.forEach((opt,i)=>{
+      const b=document.createElement('button');
+      b.className='choice-btn';
+      b.textContent=opt;
+      b.onclick=()=>answerChoice(i,b,controls);
+      controls.appendChild(b);
+    });
+  } else {
+    controls.innerHTML=`
+      <div class="chat-input-row">
+        <input type="text" id="chatTextInput" placeholder="${step.placeholder}">
+        <button onclick="answerText()">Send</button>
+      </div>
+      <div class="chat-feedback" id="chatFeedback"></div>
+    `;
+  }
+  win.appendChild(controls);
+  win.scrollTop=win.scrollHeight;
+}
+
+function answerChoice(i,btn,controls){
+  const step=CHAT_STEPS[chatStep];
+  const allBtns=controls.querySelectorAll('.choice-btn');
+  allBtns.forEach(b=>b.disabled=true);
+  if(i===step.correct){
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('incorrect');
+    allBtns[step.correct].classList.add('correct');
+  }
+  const win=document.getElementById('chatWindow');
+  const playerMsg=document.createElement('div');
+  playerMsg.className='msg player';
+  playerMsg.innerHTML=`<span class="who">You</span>${step.options[step.correct]}`;
+  win.appendChild(playerMsg);
+  setTimeout(()=>{ chatStep++; renderChat(); },700);
+}
+
+function answerText(){
+  const step=CHAT_STEPS[chatStep];
+  const input=document.getElementById('chatTextInput');
+  const feedback=document.getElementById('chatFeedback');
+  const val=input.value.trim();
+  if(!val) return;
+  const lower=val.toLowerCase();
+  const hit=step.check.some(k=>lower.includes(k));
+  input.disabled=true;
+  input.classList.toggle('correct',hit);
+  feedback.classList.add('show');
+  feedback.className='chat-feedback show '+(hit?'good':'hint');
+  feedback.textContent=hit?'Nice — that sounds polite and natural! ✅':'Good try — talk it through with your teacher, then continue.';
+
+  const win=document.getElementById('chatWindow');
+  const playerMsg=document.createElement('div');
+  playerMsg.className='msg player';
+  playerMsg.innerHTML=`<span class="who">You</span>${val}`;
+  win.appendChild(playerMsg);
+
+  const nextBtn=document.createElement('button');
+  nextBtn.className='btn btn-primary';
+  nextBtn.style.marginTop='10px';
+  nextBtn.textContent='Continue →';
+  nextBtn.onclick=()=>{ chatStep++; renderChat(); };
+  win.appendChild(nextBtn);
+  win.scrollTop=win.scrollHeight;
+}
+renderChat();
+
+let totalSeconds=50*60,timerInterval=null,isRunning=false;
+function updateTimerDisplay(){
+  const m=Math.floor(totalSeconds/60).toString().padStart(2,'0');
+  const s=(totalSeconds%60).toString().padStart(2,'0');
+  const b=document.getElementById('timerBubble');
+  b.textContent=`${m}:${s}`;
+  b.classList.toggle('danger',isRunning&&totalSeconds<=30);
+}
+function toggleRun(){
+  isRunning=!isRunning;
+  document.getElementById('runBtn').textContent=isRunning?'⏸ Pause':'▶ Start';
+  if(isRunning){
+    timerInterval=setInterval(()=>{
+      totalSeconds--;updateTimerDisplay();
+      if(totalSeconds<=0){clearInterval(timerInterval);isRunning=false;document.getElementById('runBtn').textContent='▶ Start';fireEmoji();}
+    },1000);
+  } else { clearInterval(timerInterval); }
+}
+function setTimerMin(min){totalSeconds=min*60;updateTimerDisplay();}
+function resetTimer(){clearInterval(timerInterval);isRunning=false;document.getElementById('runBtn').textContent='▶ Start';totalSeconds=50*60;updateTimerDisplay();}
+const faces=['😀','😎','🤩','😜','🥳','😯','🤓','😼','🙃','😺'];
+function fireEmoji(){
+  const o=document.getElementById('emojiOverlay');
+  o.textContent=faces[Math.floor(Math.random()*faces.length)];
+  o.classList.add('show');
+}
+updateTimerDisplay();
+
+function openWb(){document.getElementById('wbOverlay').classList.add('show');}
+function closeWb(){document.getElementById('wbOverlay').classList.remove('show');}
+function addStamp(label){
+  const log=document.getElementById('correctionLog');
+  log.textContent+=(log.textContent?'\n':'')+label;
+}
+function copyWb(){
+  const text=document.getElementById('correctionLog').textContent+'\n\n'+document.getElementById('wbNotes').value;
+  navigator.clipboard.writeText(text).catch(()=>{});
+}
+function clearWb(){document.getElementById('correctionLog').textContent='';document.getElementById('wbNotes').value='';}
+</script>
+
+<script src="../assets/write-bubble.js"></script>
+</body>
+</html>

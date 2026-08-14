@@ -1,5 +1,19 @@
 [
   {
+    "file": "game-shop-live-chat.html",
+    "title": "#23 Game Shop Live Chat",
+    "goals": {
+      "primary": [
+        "A2-13"
+      ],
+      "incidental": [
+        "A1-04",
+        "A2-02"
+      ]
+    },
+    "grammar": []
+  },
+  {
     "file": "suggestions-invitations-weekend-plans.html",
     "title": "#22 Squad Weekend Plans",
     "goals": {
