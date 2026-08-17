@@ -1,5 +1,27 @@
 [
   {
+    "file": "freeze-frame-past-continuous.html",
+    "title": "#24 Freeze Frame — Goku vs Freeza",
+    "goals": {
+      "primary": [
+        "A2-07"
+      ],
+      "incidental": [
+        "A2-06"
+      ]
+    },
+    "grammar": [
+      {
+        "file": "past-continuous.html",
+        "title": "Past Continuous"
+      },
+      {
+        "file": "past-simple.html",
+        "title": "Past Simple"
+      }
+    ]
+  },
+  {
     "file": "game-shop-live-chat.html",
     "title": "#23 Game Shop Live Chat",
     "goals": {
