@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview Prep — Full Review</title>
+<link rel="stylesheet" href="../assets/write-bubble.css">
+<style>
+  :root{
+    --bg:#F5F3F7;
+    --surface:#FFFFFF;
+    --ink:#2B2A33;
+    --muted:#7A7686;
+    --accent:#5B6EAE;
+    --accent-light:#E9EBF7;
+    --border:#E1DEEB;
+    --good:#5B8A6E;
+    --warn:#C08A3E;
+    --bad:#B0554A;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Nunito', 'DM Sans', sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    padding-bottom:90px;
+  }
+  header{
+    background:var(--surface);
+    border-bottom:1px solid var(--border);
+    padding:16px 20px 0;
+    position:sticky;
+    top:0;
+    z-index:15;
+  }
+  header h1{
+    margin:0 0 12px;
+    font-size:1.15rem;
+    font-weight:800;
+    color:var(--accent);
+  }
+  nav{
+    display:flex;
+    gap:4px;
+    overflow-x:auto;
+    padding-bottom:0;
+  }
+  nav button{
+    background:none;
+    border:none;
+    padding:10px 14px;
+    font-family:inherit;
+    font-size:0.85rem;
+    font-weight:700;
+    color:var(--muted);
+    cursor:pointer;
+    white-space:nowrap;
+    border-bottom:3px solid transparent;
+  }
+  nav button.active{
+    color:var(--accent);
+    border-bottom:3px solid var(--accent);
+  }
+  main{
+    max-width:760px;
+    margin:0 auto;
+    padding:20px;
+  }
+  .tab{display:none;}
+  .tab.active{display:block;}
+  section{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:16px;
+  }
+  h2{
+    font-size:1.05rem;
+    margin:0 0 6px;
+    color:var(--accent);
+  }
+  h3{
+    font-size:0.92rem;
+    margin:18px 0 8px;
+    color:var(--ink);
+  }
+  .lead{
+    color:var(--muted);
+    font-size:0.88rem;
+    margin-bottom:16px;
+  }
+
+  .tnotes-toggle{
+    background:var(--accent-light);
+    border:none;
+    color:var(--accent);
+    font-weight:700;
+    font-size:0.78rem;
+    padding:6px 12px;
+    border-radius:20px;
+    cursor:pointer;
+    margin-bottom:10px;
+  }
+  .tnotes{
+    display:none;
+    background:#FBF9F4;
+    border-left:3px solid var(--warn);
+    padding:10px 12px;
+    font-size:0.82rem;
+    color:#5c5340;
+    border-radius:0 8px 8px 0;
+    margin-bottom:14px;
+  }
+  .tnotes.show{display:block;}
+
+  /* journey / card map */
+  .journey-step{
+    border:1px solid var(--border);
+    border-radius:10px;
+    margin-bottom:10px;
+    overflow:hidden;
+    background:#FDFCFF;
+  }
+  .journey-head{
+    padding:12px 14px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    cursor:pointer;
+  }
+  .journey-head .jtitle{font-weight:700; font-size:0.94rem;}
+  .journey-head .jsub{font-size:0.75rem; color:var(--muted); margin-top:2px;}
+  .journey-head .icon{color:var(--accent); font-size:1rem; flex-shrink:0; margin-left:10px;}
+  .journey-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.3s ease;
+    background:var(--accent-light);
+  }
+  .journey-step.open .journey-body{max-height:400px;}
+  .journey-body-inner{padding:4px 14px 14px; font-size:0.85rem; line-height:1.5; color:#40395c;}
+  .journey-body-inner .cando{
+    display:inline-block;
+    font-size:0.68rem;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    color:#fff;
+    background:var(--accent);
+    padding:2px 8px;
+    border-radius:10px;
+    margin:6px 6px 0 0;
+  }
+
+  .phrase-card{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:0;
+    margin-bottom:10px;
+    overflow:hidden;
+    cursor:pointer;
+    background:#FDFCFF;
+  }
+  .phrase-front{
+    padding:14px 16px;
+    font-weight:700;
+    font-size:0.96rem;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .phrase-front .icon{color:var(--accent); font-size:1.1rem;}
+  .phrase-front .src{font-size:0.68rem; color:var(--muted); font-weight:600; display:block; margin-top:2px;}
+  .phrase-back{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.3s ease;
+    background:var(--accent-light);
+  }
+  .phrase-card.open .phrase-back{max-height:260px;}
+  .phrase-back-inner{
+    padding:12px 16px 14px;
+    font-size:0.87rem;
+    color:#40395c;
+  }
+  .phrase-back-inner .example{font-style:italic; margin-top:6px;}
+
+  .recovery-card{
+    background:var(--accent-light);
+    border-radius:10px;
+    padding:12px 14px;
+    margin-bottom:10px;
+    font-size:0.9rem;
+  }
+  .recovery-card .situation{
+    font-size:0.75rem;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:.03em;
+    margin-bottom:4px;
+  }
+
+  .linker{
+    color:var(--accent);
+    font-weight:800;
+  }
+  .linker-bank{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;}
+  .linker-chip{
+    background:var(--accent-light);
+    color:var(--accent);
+    font-weight:700;
+    font-size:0.8rem;
+    padding:5px 12px;
+    border-radius:16px;
+  }
+
+  .practice-box{
+    border:1px dashed var(--border);
+    border-radius:10px;
+    padding:14px;
+    margin-top:10px;
+  }
+  .practice-box label{
+    display:block;
+    font-size:0.78rem;
+    font-weight:700;
+    color:var(--accent);
+    margin-bottom:4px;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+  }
+  textarea, input[type=text]{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:8px 10px;
+    font-family:inherit;
+    font-size:0.9rem;
+    min-height:44px;
+    margin-bottom:10px;
+  }
+  input[type=text]{min-height:unset;}
+
+  .mock-btns{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;}
+  .mock-btns button{
+    background:var(--surface);
+    border:1px solid var(--accent);
+    color:var(--accent);
+    font-weight:700;
+    font-size:0.82rem;
+    padding:8px 14px;
+    border-radius:20px;
+    cursor:pointer;
+  }
+  .mock-btns button.active{background:var(--accent); color:#fff;}
+  .mock-display{
+    background:var(--accent-light);
+    border-radius:10px;
+    padding:18px;
+    font-size:1.03rem;
+    font-weight:700;
+    text-align:center;
+    min-height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:6px;
+  }
+  .mock-tag{
+    text-align:center;
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    color:var(--muted);
+    margin-bottom:14px;
+  }
+
+  .timer-bubble{
+    position:fixed;
+    bottom:20px;
+    left:20px;
+    background:var(--accent);
+    color:#fff;
+    border-radius:50px;
+    padding:10px 18px;
+    font-weight:700;
+    font-size:0.95rem;
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    cursor:pointer;
+    z-index:20;
+    user-select:none;
+  }
+  .timer-bubble.running{background:var(--bad);}
+
+  .next-back{
+    display:flex;
+    justify-content:space-between;
+    max-width:760px;
+    margin:0 auto;
+    padding:0 20px;
+  }
+  .next-back button{
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    font-weight:700;
+    cursor:pointer;
+    font-size:0.88rem;
+  }
+  .next-back button.ghost{
+    background:none;
+    color:var(--accent);
+    border:1px solid var(--accent);
+  }
+</style>
+</head>
+<body>
+
+<div style="display:flex;flex-wrap:wrap;gap:8px;padding:10px 16px;">
+  <a href="../Grammar-book/English/present-perfect-vs-past-simple.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Present Perfect vs Past Simple</a>
+  <a href="../Grammar-book/English/conditionals.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Conditionals</a>
+  <a href="../Grammar-book/English/storytelling-and-narrative-sequencing.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Storytelling & Sequencing</a>
+</div>
+
+<header>
+  <h1>Interview Prep — Full Review</h1>
+  <nav id="tabNav">
+    <button class="active" data-tab="journey">The Journey</button>
+    <button data-tab="phrases">Master Phrase Bank</button>
+    <button data-tab="grammar">Grammar Refresher</button>
+    <button data-tab="mock">Full Mock Round</button>
+  </nav>
+</header>
+
+<div class="timer-bubble" id="timerBubble" onclick="toggleTimer()">50:00</div>
+
+<main>
+
+  <!-- THE JOURNEY -->
+  <div class="tab active" id="tab-journey">
+    <section>
+      <h2>Everything Covered So Far</h2>
+      <div class="lead">Five sessions, one goal. Tap any step to see what it built. Use this as a map, not a script — jump anywhere and pull the thread she needs most right now.</div>
+      <button class="tnotes-toggle" onclick="toggleNotes(this)">Teacher notes</button>
+      <div class="tnotes">
+        This session is a full, open recap ahead of the real interview — not new material. Watch across all of it for: concrete Ghent-specific detail (not generic praise), stable present perfect vs past simple, comfortable second conditional under pressure, natural checking/clarifying language, and whether her storytelling answers actually have a shape (background → complication → resolution → point) rather than a flat list. Some of what's covered together here goes beyond what's in any single lesson file — bring in anything else discussed live that isn't captured below.
+      </div>
+
+      <div class="journey-step" onclick="toggleJourney(this)">
+        <div class="journey-head">
+          <div><div class="jtitle">1 · Interview Foundations</div><div class="jsub">Motivation, structure & recovery</div></div>
+          <span class="icon">▾</span>
+        </div>
+        <div class="journey-body"><div class="journey-body-inner">
+          Built the base answer frame — <strong>Claim → Reason → Example</strong> — and a first phrase bank for motivation ("What really motivates me is..."), background ("My background is in..., and along the way I..."), and hypotheticals ("If that happened, my first step would be to..."). Also covered recovery language for when she blanks or loses a word mid-answer.
+          <div><span class="cando">Structured answers</span><span class="cando">Recovery language</span></div>
+        </div></div>
+      </div>
+
+      <div class="journey-step" onclick="toggleJourney(this)">
+        <div class="journey-head">
+          <div><div class="jtitle">2 · Reactivation & Fluency</div><div class="jsub">Speaking warm-up to interview talk</div></div>
+          <span class="icon">▾</span>
+        </div>
+        <div class="journey-body"><div class="journey-body-inner">
+          Free-talk retrieval questions (typical day, life in Ghent, moving between Turkish/Dutch/English) used as a bridge into interview-shaped versions of the same stories. Introduced the can-do target: <em>can describe personal motivations and past experiences in a structured way, and respond to unexpected follow-up questions with basic coherence, in an interview or professional context.</em>
+          <div><span class="cando">Free talk → interview talk</span><span class="cando">Unexpected follow-ups</span></div>
+        </div></div>
+      </div>
+
+      <div class="journey-step" onclick="toggleJourney(this)">
+        <div class="journey-head">
+          <div><div class="jtitle">3 · Emotional Vocabulary</div><div class="jsub">Widening the bandwidth</div></div>
+          <span class="icon">▾</span>
+        </div>
+        <div class="journey-body"><div class="journey-body-inner">
+          The "bottleneck" idea: a foreign language has a narrower bandwidth than a first language, so precise emotional vocabulary matters — every word learned widens what she can actually get across. Worked through emotion words organized by category and personalized which ones actually apply to her.
+          <div><span class="cando">Precision vocabulary</span><span class="cando">Self-expression under pressure</span></div>
+        </div></div>
+      </div>
+
+      <div class="journey-step" onclick="toggleJourney(this)">
+        <div class="journey-head">
+          <div><div class="jtitle">4 · Structured Storytelling</div><div class="jsub">Handling a difficult situation at work</div></div>
+          <span class="icon">▾</span>
+        </div>
+        <div class="journey-body"><div class="journey-body-inner">
+          A full narrative model (an anxious patient, calmed and brought back for a full check-up) built around sequential linkers: <span class="linker">while</span>, <span class="linker">later</span>, <span class="linker">after that</span>, <span class="linker">as soon as</span>, <span class="linker">finally</span>. The key reframe: a strong "tell me about a time..." answer is a connected story with background, complication, resolution, and a point — not a list of facts.
+          <div><span class="cando">Full narrative (B1-01)</span><span class="cando">Sequential linkers</span></div>
+        </div></div>
+      </div>
+
+      <div class="journey-step" onclick="toggleJourney(this)">
+        <div class="journey-head">
+          <div><div class="jtitle">5 · Ghent University — Know Your Institution</div><div class="jsub">Turning generic praise into specifics</div></div>
+          <span class="icon">▾</span>
+        </div>
+        <div class="journey-body"><div class="journey-body-inner">
+          Real, nameable facts about Ghent (founded 1817, ~41,000 students, 6,000+ international, QS #162 globally, dentistry inside the Faculty of Medicine and Health Sciences, EFP-accredited Periodontology & Oral Implantology program) plus a Ghent-loaded phrase bank and the AAP role's dual research+teaching shape — including the second-conditional curveball on balancing the two.
+          <div><span class="cando">Institution-specific detail</span><span class="cando">Second conditional (curveballs)</span></div>
+        </div></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- MASTER PHRASE BANK -->
+  <div class="tab" id="tab-phrases">
+    <section>
+      <h2>Master Phrase Bank</h2>
+      <div class="lead">The best lines from every session, in one place. Tap to reveal how to use it — have her personalize each one out loud with something real, not the example as-is.</div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>What really motivates me is...<span class="src">Session 1 · Foundations</span></span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Opens a motivation answer with a feeling, not a fact.<br>
+          <span class="example">"What really motivates me is helping people feel comfortable, even when they're afraid of the dentist."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>If that happened, my first step would be to...<span class="src">Session 1 · Foundations</span></span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Second conditional opener for any "what would you do if..." question.<br>
+          <span class="example">"If that happened, my first step would be to stay calm and explain each step to the patient."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>My background is in..., and along the way I...<span class="src">Session 1 · Foundations</span></span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          A background answer that doesn't just list facts — it shows a discovery.<br>
+          <span class="example">"My background is in dental studies, and along the way I discovered how much I enjoy working directly with patients."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>I've always found that...<span class="src">Session 5 · Ghent</span></span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Present perfect — links a lifelong pattern to who she is now, not one finished event.<br>
+          <span class="example">"I've always found that teaching something helps me understand it more deeply myself."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>What draws me to [Ghent / this position] specifically is...<span class="src">Session 1 &amp; 5</span></span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Works for both "why this place" and "why this role" — always follow with one concrete, nameable detail.<br>
+          <span class="example">"What draws me to Ghent University specifically is the way dentistry sits inside a larger, research-driven Faculty of Medicine and Health Sciences."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>What appeals to me about this position is the combination of...<span class="src">Session 5 · Ghent</span></span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Shows she understands this is a dual role — research and teaching — not just a PhD.<br>
+          <span class="example">"What appeals to me about this position is the combination of carrying out my own research and teaching students who are just starting out."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>If my research and teaching schedules ever conflicted, I would...<span class="src">Session 5 · Ghent</span></span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Second conditional, aimed squarely at the "how would you balance research and teaching" curveball.<br>
+          <span class="example">"If my research and teaching schedules ever conflicted, I would prioritize by deadline and communicate early with my supervisor."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>As someone who moves between English and Dutch daily, I...<span class="src">Session 5 · Ghent</span></span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Turns her multilingual daily reality into a strength that fits Ghent's international student body.<br>
+          <span class="example">"As someone who moves between English and Dutch daily, I'm used to adapting how I explain things depending on who's in front of me."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>Sorry, could you say that a different way?<span class="src">Checking &amp; clarifying</span></span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          For a question she genuinely doesn't follow — natural, not panicked.<br>
+          <span class="example">"Sorry, could you say that a different way? I want to make sure I answer the right question."</span>
+        </div></div>
+      </div>
+
+      <div class="phrase-card" onclick="togglePhrase(this)">
+        <div class="phrase-front"><span>While I was explaining..., she suddenly...<span class="src">Session 4 · Storytelling</span></span><span class="icon">▾</span></div>
+        <div class="phrase-back"><div class="phrase-back-inner">
+          Sets a background scene (past continuous) that a sudden event then interrupts (past simple) — the shape every "tell me about a time..." story needs.<br>
+          <span class="example">"While I was explaining the procedure, she suddenly said she wanted to stop and leave."</span>
+        </div></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- GRAMMAR REFRESHER -->
+  <div class="tab" id="tab-grammar">
+    <section>
+      <h2>The Three Structures That Carry Every Answer</h2>
+      <div class="lead">Not new material — a fast refresh of the grammar that's shown up in every session.</div>
+
+      <h3>1 · Second conditional — for "what would you do if..."</h3>
+      <div class="recovery-card">
+        <div class="situation">Formula</div>
+        <strong>If + past simple, ... + would + base verb</strong><br>
+        <span class="example">"If a patient was/were anxious, I would explain each step slowly."</span><br>
+        <span class="example">"If my research and teaching schedules ever conflicted, I would prioritize by deadline."</span>
+      </div>
+      <div class="practice-box">
+        <label>Quick practice</label>
+        <textarea placeholder="If a student struggled to understand something in class, I..."></textarea>
+        <textarea placeholder="If I didn't know the answer to a question, I..."></textarea>
+      </div>
+
+      <h3>2 · Present perfect vs past simple</h3>
+      <div class="recovery-card">
+        <div class="situation">The difference</div>
+        Present perfect (have/has + past participle) links a pattern from the past to who she is <em>now</em>. Past simple reports one finished event, done and closed.<br>
+        <span class="example">Pattern → now: "I've always found that teaching something helps me understand it more deeply."</span><br>
+        <span class="example">One finished event: "Last year, I decided to apply for this position."</span>
+      </div>
+      <div class="practice-box">
+        <label>Quick practice — choose the right tense</label>
+        <textarea placeholder="Something you've always noticed about yourself (present perfect)..."></textarea>
+        <textarea placeholder="One specific moment that changed your mind about something (past simple)..."></textarea>
+      </div>
+
+      <h3>3 · Sequential linkers — for connected stories</h3>
+      <div class="linker-bank">
+        <span class="linker-chip">while</span>
+        <span class="linker-chip">later</span>
+        <span class="linker-chip">after that</span>
+        <span class="linker-chip">as soon as</span>
+        <span class="linker-chip">finally</span>
+      </div>
+      <div class="recovery-card">
+        <div class="situation">Model — the shape of a good story</div>
+        "<span class="linker">While</span> I was explaining the procedure, she suddenly said she wanted to stop. So I stopped straight away. <span class="linker">Later</span>, once she felt calmer, I asked if she wanted to try again. <span class="linker">After that</span>, she agreed to a full check-up. <span class="linker">As soon as</span> it was finished, she looked relieved. <span class="linker">Finally</span>, she booked a follow-up herself."
+      </div>
+      <div class="practice-box">
+        <label>Plan your own story — background → complication → resolution → point</label>
+        <textarea placeholder="Background: what was happening..."></textarea>
+        <textarea placeholder="Complication: what suddenly went wrong or changed..."></textarea>
+        <textarea placeholder="Resolution: what you did about it, using at least one linker..."></textarea>
+        <textarea placeholder="Point: what it shows about how you work..."></textarea>
+      </div>
+    </section>
+  </div>
+
+  <!-- FULL MOCK ROUND -->
+  <div class="tab" id="tab-mock">
+    <section>
+      <h2>Full Mock Interview</h2>
+      <div class="lead">Every question type from every session, shuffled together — the closest thing to the real room. Press a category or roll a random curveball.</div>
+
+      <div class="mock-btns" id="mockCatBtns">
+        <button onclick="showCategory(this,'familiar')">Familiar</button>
+        <button onclick="showCategory(this,'story')">Story prompt</button>
+        <button onclick="showCategory(this,'ghent')">Ghent-specific</button>
+        <button onclick="showRandomCurveball(this)">🎲 Curveball</button>
+      </div>
+      <div class="mock-display" id="mockDisplay">Pick a category, or roll a curveball</div>
+      <div class="mock-tag" id="mockTag"></div>
+
+      <div class="practice-box" style="margin-top:6px;">
+        <label>Self-check after each round</label>
+        <div class="mock-btns" data-group="selfRating">
+          <button onclick="rate(this)">Confident &amp; specific</button>
+          <button onclick="rate(this)">Okay, but generic</button>
+          <button onclick="rate(this)">Froze or lost structure</button>
+        </div>
+        <textarea id="mockNotes" placeholder="What still needs work before the real interview..."></textarea>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<div class="next-back">
+  <button class="ghost" onclick="prevTab()">Back</button>
+  <button onclick="nextTab()">Next</button>
+</div>
+
+<script>
+  const tabs = ['journey','phrases','grammar','mock'];
+  let currentTab = 0;
+
+  function showTab(name){
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-'+name).classList.add('active');
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.querySelector(`nav button[data-tab="${name}"]`).classList.add('active');
+    currentTab = tabs.indexOf(name);
+  }
+  document.querySelectorAll('nav button').forEach(b=>{
+    b.addEventListener('click', ()=> showTab(b.dataset.tab));
+  });
+  function nextTab(){ if(currentTab < tabs.length-1) showTab(tabs[currentTab+1]); }
+  function prevTab(){ if(currentTab > 0) showTab(tabs[currentTab-1]); }
+
+  function toggleNotes(btn){
+    const notes = btn.nextElementSibling;
+    notes.classList.toggle('show');
+  }
+
+  function toggleJourney(step){
+    step.classList.toggle('open');
+  }
+
+  function togglePhrase(card){
+    card.classList.toggle('open');
+  }
+
+  function rate(btn){
+    const group = btn.parentElement;
+    [...group.children].forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  // ---- Full mock round: pooled from every session ----
+  const mockBank = {
+    familiar: [
+      "Why did you apply for this position at Ghent University?",
+      "Why dentistry?",
+      "Tell me about your background.",
+      "What do you know about our faculty and its research?",
+      "Why do you want to combine PhD research with teaching?",
+      "What's something you'd like to improve about yourself professionally?",
+      "Where do you see yourself in a few years?"
+    ],
+    story: [
+      "Tell me about a time you handled a difficult situation at work.",
+      "Tell me about a time a patient or teacher surprised you.",
+      "Tell me about a moment you felt proud of something you did in your studies or work.",
+      "Tell me about a time something didn't go as planned — and what you did next.",
+      "Tell me about the moment you decided to apply for this position."
+    ],
+    ghent: [
+      "What draws you to Ghent University specifically?",
+      "This role is half research, half teaching first-year students — if the two ever pulled you in different directions in the same week, how would you handle it?",
+      "What do you know about where dentistry sits within the university?",
+      "How do you feel about working in such an international, multilingual environment?"
+    ]
+  };
+  const curveballs = [
+    "What would you do if a patient was very anxious or difficult?",
+    "If your teaching load suddenly doubled during exam week, what would you do?",
+    "How would you handle a student who disagreed with your feedback in front of the class?",
+    "What would you do if your research results contradicted what you expected to find?",
+    "A colleague suggests a shortcut that isn't fully evidence-based — how do you respond?",
+    "Sorry, could you say that a different way? [practice asking this back, naturally]",
+    "Is there a difference between how you speak Turkish, Dutch, and English — do you feel like a different person in each?"
+  ];
+
+  function showCategory(btn, cat){
+    document.querySelectorAll('#mockCatBtns button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const pool = mockBank[cat];
+    const pick = pool[Math.floor(Math.random()*pool.length)];
+    document.getElementById('mockDisplay').textContent = pick;
+    const labels = {familiar:'Familiar', story:'Story prompt', ghent:'Ghent-specific'};
+    document.getElementById('mockTag').textContent = labels[cat];
+  }
+  function showRandomCurveball(btn){
+    document.querySelectorAll('#mockCatBtns button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const pick = curveballs[Math.floor(Math.random()*curveballs.length)];
+    document.getElementById('mockDisplay').textContent = pick;
+    document.getElementById('mockTag').textContent = 'Curveball';
+  }
+
+  // timer
+  let seconds = 50*60;
+  let running = false;
+  let interval = null;
+  const bubble = document.getElementById('timerBubble');
+  function formatTime(s){
+    const m = Math.floor(s/60);
+    const sec = s%60;
+    return `${m}:${sec.toString().padStart(2,'0')}`;
+  }
+  function toggleTimer(){
+    if(running){
+      clearInterval(interval);
+      running = false;
+      bubble.classList.remove('running');
+    } else {
+      running = true;
+      bubble.classList.add('running');
+      interval = setInterval(()=>{
+        if(seconds > 0){
+          seconds--;
+          bubble.textContent = formatTime(seconds);
+        } else {
+          clearInterval(interval);
+          bubble.textContent = "Time's up";
+        }
+      }, 1000);
+    }
+  }
+</script>
+
+<script src="../assets/write-bubble.js"></script>
+
+</body>
+</html>
