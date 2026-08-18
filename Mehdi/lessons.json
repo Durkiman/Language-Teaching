@@ -1,5 +1,21 @@
 [
   {
+    "title": "#12 Entrepreneurial Mindset",
+    "file": "mehdi-entrepreneurial-mindset.html",
+    "goals": {
+      "primary": [
+        "B1-19"
+      ],
+      "incidental": []
+    },
+    "grammar": [
+      {
+        "file": "modal-verbs.html",
+        "title": "Modal Verbs"
+      }
+    ]
+  },
+  {
     "title": "#11 Setting the Price & the Time",
     "file": "mehdi-price-timing-negotiation.html",
     "goals": {
