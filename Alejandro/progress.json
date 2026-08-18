@@ -9,8 +9,14 @@
       "notes": "Introduced in lesson #1 (Extended Talk & Pronunciation), date not logged at the time; reinforced as warm-up/incidental in this session."
     },
     "B2-12": {
-      "status": "introduced",
+      "status": "reviewed",
       "introduced": "2026-08-03",
+      "reviews": ["2026-08-18"],
+      "notes": "evidence task pending confirmation after session; lightly reactivated as warm-up incidental in lesson #3"
+    },
+    "B2-13": {
+      "status": "introduced",
+      "introduced": "2026-08-18",
       "reviews": [],
       "notes": "evidence task pending confirmation after session"
     },

@@ -1,5 +1,13 @@
 [
   {
+    "title": "#3 The Trip That Went Wrong",
+    "file": "trip-gone-wrong.html",
+    "goals": {
+      "primary": ["B2-13"],
+      "incidental": ["B2-12"]
+    }
+  },
+  {
     "title": "#2 Negotiating a Compromise",
     "file": "negotiating-workplace-compromise.html",
     "goals": {

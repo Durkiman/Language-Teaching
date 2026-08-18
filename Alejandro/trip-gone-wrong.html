@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Trip That Went Wrong</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/write-bubble.css">
+<style>
+  :root{
+    --bg:#F7F9FB; --surface:#FFFFFF; --ink:#1F2933; --sub:#5C6B7A;
+    --slate:#3D5A80; --slate-light:#E8EDF3; --slate-dark:#2C4260;
+    --clay:#C1694F; --clay-light:#F8E9E4;
+    --line:#E1E7ED; --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); padding-bottom:110px;}
+  h1,h2,h3{font-family:'Sora',sans-serif;}
+  code, .mono{font-family:'JetBrains Mono',monospace;}
+
+  header{background:var(--surface); border-bottom:1px solid var(--line); padding:16px 20px 0 20px; position:sticky; top:0; z-index:50;}
+  h1{font-size:1.25rem; font-weight:800; margin:0 0 14px 0; color:var(--slate-dark); letter-spacing:-0.01em;}
+  .tabs{display:flex; gap:2px; overflow-x:auto;}
+  .tab{
+    flex:0 0 auto; padding:10px 14px; font-weight:700; font-size:0.85rem; color:var(--sub);
+    background:none; border:none; border-bottom:3px solid transparent; cursor:pointer; white-space:nowrap; font-family:'Inter',sans-serif;
+  }
+  .tab.active{color:var(--slate); border-bottom-color:var(--slate);}
+
+  main{max-width:720px; margin:0 auto; padding:20px 16px 40px 16px;}
+  .panel{display:none;}
+  .panel.active{display:block;}
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px; margin-bottom:14px;}
+  .card h2{font-size:1rem; margin:0 0 4px 0; color:var(--ink);}
+  .card .hint{font-size:0.8rem; color:var(--sub); margin:0 0 14px 0; line-height:1.5;}
+
+  .open-space{
+    background:var(--slate-light); border-radius:10px; padding:16px; text-align:center;
+    color:var(--slate-dark); font-weight:600; font-size:0.95rem;
+  }
+
+  /* Marker reference */
+  .marker-grid{display:grid; grid-template-columns:1fr; gap:10px;}
+  .marker-group{border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;}
+  .marker-group .label{font-weight:700; font-size:0.82rem; color:var(--slate-dark); margin-bottom:6px;}
+  .marker-group .phrase{
+    display:inline-block; background:var(--slate-light); color:var(--slate-dark); font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem; font-weight:600; padding:4px 9px; border-radius:7px; margin:3px 4px 0 0;
+  }
+
+  /* Exponent list */
+  .exponent-list{display:flex; flex-direction:column; gap:8px; margin-bottom:4px;}
+  .exponent-item{
+    border:1.5px solid var(--line); border-radius:10px; padding:11px 14px; display:flex; align-items:center; gap:10px;
+  }
+  .exponent-item .num{
+    flex:0 0 auto; width:22px; height:22px; border-radius:50%; background:var(--clay); color:#fff;
+    font-size:0.72rem; font-weight:800; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace;
+  }
+  .exponent-item .txt{font-weight:700; font-size:0.9rem; color:var(--ink); font-family:'JetBrains Mono',monospace;}
+
+  /* Dialogue */
+  .dialogue{border:1px solid var(--line); border-radius:10px; padding:14px; background:#FAFBFC;}
+  .dline{margin-bottom:10px; font-size:0.88rem; line-height:1.6;}
+  .dline:last-child{margin-bottom:0;}
+  .dline .speaker{font-weight:800; color:var(--slate-dark); font-family:'Sora',sans-serif; font-size:0.8rem; text-transform:uppercase; letter-spacing:.02em; margin-right:6px;}
+  .dline mark{background:var(--clay-light); color:var(--clay); font-weight:700; padding:1px 5px; border-radius:5px;}
+
+  /* Practice items */
+  .practice-item{border:1.5px solid var(--line); border-radius:10px; padding:13px 14px; margin-bottom:10px;}
+  .practice-item .ctx{font-size:0.78rem; color:var(--sub); margin-bottom:8px; line-height:1.5;}
+  .practice-item .sentence{font-size:0.92rem; font-weight:600; line-height:1.6; margin-bottom:8px;}
+  .practice-item .blank{
+    display:inline-block; min-width:70px; border-bottom:2px dashed var(--slate); text-align:center;
+  }
+  .reveal{border:none; background:none; padding:0; color:var(--slate); font-family:'Inter',sans-serif; font-weight:700; font-size:0.78rem; cursor:pointer;}
+  .reveal-body{display:none; margin-top:8px; font-size:0.83rem; color:var(--slate-dark); background:var(--slate-light); border-radius:8px; padding:8px 10px;}
+  .reveal-body.open{display:block;}
+
+  .scramble{font-family:'JetBrains Mono',monospace; font-size:0.85rem; letter-spacing:.02em; color:var(--ink); background:#FAFBFC; border:1px dashed var(--line); border-radius:8px; padding:9px 11px; margin-bottom:8px;}
+
+  /* Practice engine (auto-checked) */
+  .ex-card{border:1.5px solid var(--line); border-radius:10px; padding:13px 14px; margin-bottom:10px;}
+  .ex-card .q{font-size:0.9rem; line-height:1.6; margin-bottom:10px;}
+  .gapfill-row{display:flex; gap:8px; margin-top:4px; flex-wrap:wrap; align-items:center;}
+  input.gap-input{
+    flex:1; min-width:130px; border:1.5px solid var(--line); border-radius:8px; padding:9px 11px;
+    font-family:'Inter',sans-serif; font-size:0.85rem; background:#fff; color:var(--ink);
+  }
+  input.gap-input:focus{outline:none; border-color:var(--slate);}
+  input.gap-input.correct{border-color:#5C8A6A; background:#EAF2EC;}
+  input.gap-input.incorrect{border-color:var(--clay); background:var(--clay-light);}
+  .mini-btn{
+    border:none; border-radius:8px; padding:9px 13px; font-size:0.78rem; font-weight:700; cursor:pointer;
+    background:var(--slate); color:#fff; white-space:nowrap; font-family:'Inter',sans-serif;
+  }
+  .mini-btn.outline{background:none; border:1.5px solid var(--line); color:var(--sub);}
+  .ex-feedback{font-size:0.78rem; margin-top:6px; min-height:16px; font-weight:600;}
+  .ex-feedback.ok{color:#5C8A6A;}
+  .ex-feedback.no{color:var(--clay);}
+  .progress-pill{
+    display:inline-block; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.74rem;
+    background:var(--slate-light); color:var(--slate-dark); padding:3px 10px; border-radius:100px; margin-bottom:12px;
+  }
+  .progress-pill.done{background:#DCEBE0; color:#5C8A6A;}
+
+  /* Storytelling */
+  .scenario-box{border:1.5px solid var(--clay); background:var(--clay-light); border-radius:10px; padding:14px; font-size:0.88rem; line-height:1.65; color:var(--ink);}
+  .scenario-box b{color:var(--clay);}
+  .evidence-tag{
+    display:inline-block; margin-top:10px; background:var(--slate-light); color:var(--slate-dark);
+    font-size:0.72rem; font-weight:700; padding:3px 9px; border-radius:100px; font-family:'JetBrains Mono',monospace;
+  }
+  .checklist{display:flex; flex-direction:column; gap:8px; margin-top:6px;}
+  .checklist label{
+    display:flex; align-items:center; gap:9px; font-size:0.86rem; font-weight:600; padding:9px 11px;
+    border:1.5px solid var(--line); border-radius:9px; cursor:pointer;
+  }
+  .checklist input{width:17px; height:17px; accent-color:var(--slate); flex:0 0 auto;}
+  .checklist label.checked{border-color:var(--slate); background:var(--slate-light);}
+
+  .evidence-status{
+    display:inline-flex; align-items:center; gap:6px; margin-top:12px; padding:6px 12px; border-radius:100px;
+    background:var(--slate-light); color:var(--slate-dark); font-size:0.78rem; font-weight:700; font-family:'JetBrains Mono',monospace;
+  }
+  .evidence-status.met{background:#DCEBE0; color:#5C8A6A;}
+  .curveball-btn{
+    display:inline-flex; align-items:center; gap:6px; margin-top:12px; margin-left:8px; background:none;
+    border:1.5px dashed var(--slate); color:var(--slate); border-radius:9px; padding:7px 13px;
+    font-family:'Inter',sans-serif; font-weight:700; font-size:0.78rem; cursor:pointer;
+  }
+  .curveball-box{
+    display:none; margin-top:10px; background:var(--clay-light); border-left:3px solid var(--clay); border-radius:8px;
+    padding:10px 13px; font-size:0.86rem; line-height:1.55; color:#7A4635; font-family:'Sora',sans-serif; font-style:italic;
+  }
+  .curveball-box.show{display:block;}
+
+  /* Session summary */
+  .summary-box{border:1.5px solid var(--slate); border-radius:10px; padding:14px 16px; background:var(--slate-light);}
+  .summary-line{font-size:0.85rem; line-height:1.7; color:var(--slate-dark); margin:0 0 4px;}
+  .summary-line b{color:var(--ink);}
+  .summary-actions{display:flex; gap:8px; margin-top:12px;}
+
+
+  /* Thread / outcome log (shared pattern) */
+  .thread-log{border-left:2px solid var(--slate-light); padding-left:16px; margin:14px 0;}
+  .thread-entry{position:relative; margin-bottom:14px;}
+  .thread-entry::before{
+    content:''; position:absolute; left:-20.5px; top:5px; width:9px; height:9px; border-radius:50%;
+    background:var(--slate); border:2px solid var(--surface);
+  }
+  .thread-date{font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--slate); font-weight:600;}
+  .thread-text{font-size:0.88rem; margin-top:2px; line-height:1.5;}
+  .thread-empty{color:var(--sub); font-size:0.85rem; font-style:italic;}
+
+  .add-row{display:flex; gap:8px; margin-top:14px;}
+  .add-row input{
+    flex:1; font-family:'Inter',sans-serif; font-size:0.88rem; border:1.5px solid var(--line);
+    border-radius:9px; padding:9px 12px; background:#fff;
+  }
+  .add-row input:focus{outline:none; border-color:var(--slate);}
+  .add-row button{
+    background:var(--slate); color:#fff; border:none; border-radius:9px; padding:0 16px;
+    font-family:'Inter',sans-serif; font-weight:700; font-size:0.85rem; cursor:pointer;
+  }
+  .add-row button:hover{background:var(--slate-dark);}
+
+  /* Teacher notes toggle */
+  .teacher-toggle{
+    background:none; border:1.5px dashed var(--clay); color:var(--clay); border-radius:9px; padding:7px 13px;
+    font-family:'Inter',sans-serif; font-weight:700; font-size:0.78rem; cursor:pointer; margin-top:10px;
+  }
+  .teacher-body{display:none; margin-top:10px; font-size:0.82rem; line-height:1.6; color:var(--sub); background:var(--bg); border-radius:8px; padding:10px 12px; border:1px solid var(--line);}
+  .teacher-body.open{display:block;}
+
+  /* Recap */
+  .card-code{
+    display:inline-block; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.78rem;
+    background:var(--slate-light); color:var(--slate-dark); padding:3px 9px; border-radius:6px; margin-bottom:8px;
+  }
+  .cando-toggle{
+    background:none; border:1.5px solid var(--line); border-radius:9px; padding:8px 14px;
+    font-family:'Inter',sans-serif; font-weight:700; font-size:0.82rem; color:var(--sub); cursor:pointer; margin-top:8px;
+  }
+  .cando-body{display:none; margin-top:12px; font-size:0.84rem; line-height:1.7;}
+  .cando-body.open{display:block;}
+  .cando-body b{color:var(--ink);}
+
+  /* Timer + whiteboard */
+  .timer-bubble{
+    position:fixed; bottom:18px; left:18px; background:var(--slate-dark); color:#fff;
+    border-radius:14px; padding:10px 14px; font-weight:800; font-size:0.95rem; font-family:'JetBrains Mono',monospace;
+    cursor:pointer; z-index:200; box-shadow:0 4px 14px rgba(0,0,0,0.18); user-select:none;
+  }
+  .timer-bubble.warn{background:var(--clay);}
+  .whiteboard{
+    position:fixed; bottom:70px; left:18px; width:min(310px,88vw); background:var(--surface);
+    border:1px solid var(--line); border-radius:12px; padding:14px; box-shadow:0 8px 24px rgba(0,0,0,0.15);
+    z-index:200; display:none; max-height:75vh; overflow-y:auto;
+  }
+  .whiteboard.open{display:block;}
+  .whiteboard h3{font-size:0.82rem; margin:12px 0 6px 0; color:var(--slate-dark);}
+  .whiteboard h3:first-child{margin-top:0;}
+  .wb-row{display:flex; gap:6px; margin-bottom:6px; flex-wrap:wrap;}
+  .wb-row button{
+    background:var(--slate-light); border:none; border-radius:8px; padding:7px 10px;
+    font-family:'Inter',sans-serif; font-weight:700; font-size:0.78rem; cursor:pointer; color:var(--slate-dark);
+  }
+  .wb-row button.start{background:var(--slate); color:#fff;}
+  .wb-row button.reset{background:#fff; border:1.5px solid var(--line); color:var(--sub);}
+  .wb-row button.stamp{background:var(--clay-light); color:var(--clay);}
+  .whiteboard textarea{
+    width:100%; min-height:60px; border:1.5px solid var(--line); border-radius:8px; padding:8px;
+    font-family:'Inter',sans-serif; font-size:0.82rem; resize:vertical;
+  }
+  .wb-corrections{border:1px solid var(--line); border-radius:8px; padding:8px; min-height:34px; margin-bottom:8px; background:#FAFBFC;}
+  .wb-correction-entry{font-size:0.78rem; padding:3px 0; border-bottom:1px dashed var(--line); color:var(--ink);}
+  .wb-correction-entry:last-child{border-bottom:none;}
+  .wb-correction-entry .t{font-family:'JetBrains Mono',monospace; color:var(--slate); font-weight:600; margin-right:6px;}
+  .wb-empty{font-size:0.78rem; color:var(--sub); font-style:italic;}
+  .wb-actions{display:flex; gap:6px; margin-top:8px;}
+  .wb-actions button{
+    flex:1; background:#fff; border:1.5px solid var(--line); border-radius:8px; padding:7px;
+    font-size:0.76rem; font-weight:700; color:var(--sub); cursor:pointer;
+  }
+
+  .toast{
+    position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+    background:var(--ink); color:#fff; padding:9px 16px; border-radius:9px;
+    font-size:0.82rem; font-weight:700; opacity:0; pointer-events:none; transition:opacity .2s; z-index:500;
+  }
+  .toast.show{opacity:1;}
+</style>
+</head>
+<body>
+<div style="display:flex;flex-wrap:wrap;gap:8px;padding:10px 16px;">
+  <a href="../Grammar-book/English/storytelling-and-narrative-sequencing.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Narrative Sequencing</a>
+  <a href="../Grammar-book/English/past-continuous.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Past Continuous</a>
+  <a href="../Grammar-book/English/past-perfect.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Past Perfect</a>
+  <a href="../Grammar-book/English/linking-words.html" style="display:inline-flex;align-items:center;gap:6px;color:#FFF6D8;background:#0E7C86;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 12px;border-radius:20px;">📘 Grammar: Linking Words</a>
+</div>
+
+<header>
+  <h1>The Trip That Went Wrong</h1>
+  <div class="tabs" id="tabBar">
+    <button class="tab active" data-panel="warmup">Warm-Up</button>
+    <button class="tab" data-panel="present">Presentation</button>
+    <button class="tab" data-panel="practice">Practice</button>
+    <button class="tab" data-panel="story">Storytelling</button>
+    <button class="tab" data-panel="recap">Recap</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- WARM-UP -->
+  <section class="panel active" id="panel-warmup">
+    <div class="card">
+      <h2>Quick negotiation recap</h2>
+      <div class="open-space">Negotiate one thing with me right now — no prep, no script.</div>
+      <p class="hint" style="margin-top:12px;">Give Alejandro a tiny conflicting-priorities prompt (e.g. "I want to leave early, you want to finish the report") and have him negotiate it live using at least one B2-12 exponent (What if we…? / That works for me, as long as…). One minute, no more — this is a warm-up, not the main event.</p>
+      <button class="teacher-toggle" data-target="tn1">🔒 Teacher notes</button>
+      <div class="teacher-body" id="tn1">
+        This lightly reactivates B2-12 (still unconfirmed from lesson #2) without spending a full block on it. Don't correct — just note whether an exponent surfaces naturally, then move on.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Think of a trip</h2>
+      <p class="hint">Before we start talking properly — think of one trip (yours or someone else's) where something didn't go to plan. A delay, a wrong turn, lost luggage, a cancelled booking, a detour. Doesn't have to be dramatic.</p>
+      <div class="open-space">One sentence to start: "So there was this one time…"</div>
+    </div>
+  </section>
+
+  <!-- PRESENTATION -->
+  <section class="panel" id="panel-present">
+    <div class="card">
+      <h2>Staying in the story when it gets interrupted</h2>
+      <p class="hint">Fixed phrases for absorbing a question or twist mid-story without losing the thread — this is the actual target language for today, not grammar.</p>
+      <div class="exponent-list">
+        <div class="exponent-item"><span class="num">1</span><span class="txt">Actually, that's exactly what happened next —</span></div>
+        <div class="exponent-item"><span class="num">2</span><span class="txt">Good question — let me think… yeah, so</span></div>
+        <div class="exponent-item"><span class="num">3</span><span class="txt">Where was I? Oh right —</span></div>
+        <div class="exponent-item"><span class="num">4</span><span class="txt">Well, if that had happened, I probably would have…</span></div>
+      </div>
+      <button class="teacher-toggle" data-target="tn2">🔒 Teacher notes</button>
+      <div class="teacher-body" id="tn2">
+        Drill these as recovery tools, not fillers — the point is that a good storyteller can take a real question ("how did you feel?"), a redirect question ("what if you'd missed it completely?"), or a genuine interruption and fold it back into the story instead of freezing or restarting from scratch. Model the contrast: someone who stalls / switches to Spanish vs. someone who says "good question — let me think" and keeps going.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Model story: the cancelled flight</h2>
+      <p class="hint">Read through once. Notice how the narrator absorbs each interruption instead of stopping.</p>
+      <div class="dialogue">
+        <div class="dline"><span class="speaker">Narrator</span>So I was at the gate, completely relaxed, when suddenly they announced the flight was cancelled. Just like that.</div>
+        <div class="dline"><span class="speaker">Listener</span>Wait — how did you even find out?</div>
+        <div class="dline"><span class="speaker">Narrator</span><mark>Good question — let me think</mark>… yeah, so it was actually the woman next to me who saw it on the board first.</div>
+        <div class="dline"><span class="speaker">Listener</span>What if you'd already checked your bag in?</div>
+        <div class="dline"><span class="speaker">Narrator</span><mark>Well, if that had happened,</mark> I probably would have been stuck at the counter for hours — but luckily I hadn't yet.</div>
+        <div class="dline"><span class="speaker">Listener</span>Okay, so what did you do?</div>
+        <div class="dline"><span class="speaker">Narrator</span><mark>Actually, that's exactly what happened next</mark> — I ran straight to the rebooking desk before the queue got long.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRACTICE -->
+  <section class="panel" id="panel-practice">
+    <div class="card">
+      <h2>Gap-fill: narrative sequencing</h2>
+      <p class="hint">Type the missing word(s), then check. Stuck? Tap reveal.</p>
+      <div class="progress-pill" id="gapProgress">0 / 4 correct</div>
+      <div id="gapContainer"></div>
+    </div>
+
+    <div class="card">
+      <h2>Sentence-building: staying in the story</h2>
+      <p class="hint">Type the words in the right order to make one natural sentence, then check.</p>
+      <div class="progress-pill" id="scrambleProgress">0 / 2 correct</div>
+      <div id="scrambleContainer"></div>
+
+      <button class="teacher-toggle" data-target="tn3">🔒 Teacher notes</button>
+      <div class="teacher-body" id="tn3">
+        If these go quickly, do two rapid oral rounds: give Alejandro a one-line travel anecdote starter, then interrupt him mid-answer with a "what if…?" or "how did you feel?" question and see if he uses one of the four recovery exponents without stalling. No prep, no script — this is the bridge into the Storytelling tab.
+      </div>
+    </div>
+  </section>
+
+  <!-- STORYTELLING -->
+  <section class="panel" id="panel-story">
+    <div class="card">
+      <h2>Tell your trip story</h2>
+      <div class="scenario-box">
+        <b>Task:</b> Tell a trip story — real or invented — where something went off-script (a delay, a lost booking, a wrong turn, a missed connection). Talk for as long as it takes to tell it properly. I'll interrupt with questions and twists along the way — the goal is to absorb them and keep the story moving, not to stop and restart.
+      </div>
+      <span class="evidence-status" id="evStatus">0 / 3 phrases · no completed story yet</span>
+      <button class="curveball-btn" data-pool="story" data-target="curveball1">🎲 Throw a twist question</button>
+      <div class="curveball-box" id="curveball1"></div>
+      <p class="hint" style="margin-top:12px;">Evidence task: respond fluently to an unplanned question or twist mid-story, without switching to Spanish or breaking down.</p>
+    </div>
+
+    <div class="card">
+      <h2>Recovery phrases used</h2>
+      <p class="hint">Tick these live as you hear them — need at least 3 for the evidence task to pass.</p>
+      <div class="checklist" id="expChecklist">
+        <label><input type="checkbox" data-exp="exactly-what-happened"> Actually, that's exactly what happened next —</label>
+        <label><input type="checkbox" data-exp="let-me-think"> Good question — let me think… yeah, so</label>
+        <label><input type="checkbox" data-exp="where-was-i"> Where was I? Oh right —</label>
+        <label><input type="checkbox" data-exp="would-have"> Well, if that had happened, I probably would have…</label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Story log</h2>
+      <p class="hint">Log a one-line summary of each story told — carried across sessions.</p>
+      <div class="thread-log" id="outcomeLog"></div>
+      <div class="add-row">
+        <input type="text" id="outcomeInput" placeholder="e.g. Missed connection in Madrid, rerouted through Lisbon">
+        <button id="outcomeAdd">Add</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECAP -->
+  <section class="panel" id="panel-recap">
+    <div class="card">
+      <h2>Session summary</h2>
+      <p class="hint">Auto-compiled from what's been ticked and logged in this session — updates live, ready to copy into your notes.</p>
+      <div class="summary-box" id="summaryBox"></div>
+      <div class="summary-actions">
+        <button class="mini-btn" id="summaryCopy">📋 Copy summary</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Can-do cards in play</h2>
+
+      <div class="card-code">B2-13 — primary</div>
+      <button class="cando-toggle" data-target="cd1">Show card</button>
+      <div class="cando-body" id="cd1">
+        <b>Dealing with the unexpected</b><br>
+        Function: responding fluently to unpredictable turns in a conversation.<br>
+        Grammar focus: no new structure — narrative past tenses (past simple / continuous / perfect) carry the story, and four fixed recovery phrases handle the interruptions (Actually, that's exactly what happened next —; Good question — let me think…; Where was I? Oh right —; Well, if that had happened, I probably would have…).<br>
+        Evidence: respond fluently when the interlocutor introduces an unplanned complication mid-story, adapting without switching to L1 or breaking down.
+      </div>
+
+      <div class="card-code" style="margin-top:16px;">B2-12 — incidental</div>
+      <button class="cando-toggle" data-target="cd2">Show card</button>
+      <div class="cando-body" id="cd2">
+        <b>Negotiating & reaching compromise</b><br>
+        Function: negotiating; proposing and reaching compromise.<br>
+        Exponents: What if we…?, I could agree to that if…, That works for me, as long as…, Let's meet halfway.<br>
+        Evidence: negotiate a scenario with conflicting priorities to a concrete compromise, using at least three negotiation exponents. Still unconfirmed from lesson #2 — lightly reactivated in today's warm-up only.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="timer-bubble" id="timerBubble">50:00</div>
+<div class="whiteboard" id="whiteboard">
+  <h3>Timer</h3>
+  <div class="wb-row">
+    <button id="startPause" class="start">▶ Start</button>
+    <button id="resetTimer" class="reset">Reset</button>
+  </div>
+
+  <h3>Stamps</h3>
+  <div class="wb-row">
+    <button class="stamp" data-stamp="👍 Absorbed the twist smoothly">👍 Absorbed the twist</button>
+    <button class="stamp" data-stamp="🔁 Story stalled — retry">🔁 Story stalled</button>
+    <button class="stamp" data-stamp="🗣️ New recovery phrase used">🗣️ New phrase</button>
+    <button class="stamp" data-stamp="✅ Story completed">✅ Story completed</button>
+  </div>
+  <div class="wb-corrections" id="wbCorrections"></div>
+
+  <h3>Notes</h3>
+  <textarea id="wbNotes" placeholder="Quick corrections / notes..."></textarea>
+  <div class="wb-actions">
+    <button id="wbCopy">Copy</button>
+    <button id="wbClear">Clear</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORE_PREFIX = 'alejandro_tripwrong_';
+
+function loadJSON(key, fallback){
+  try{
+    const raw = localStorage.getItem(STORE_PREFIX+key);
+    return raw ? JSON.parse(raw) : fallback;
+  }catch(e){ return fallback; }
+}
+function saveJSON(key, val){
+  try{ localStorage.setItem(STORE_PREFIX+key, JSON.stringify(val)); }catch(e){}
+}
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=> t.classList.remove('show'), 1600);
+}
+function todayStr(){
+  const d = new Date();
+  return d.toISOString().slice(0,10);
+}
+function nowTime(){
+  const d = new Date();
+  return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+}
+
+// ---------- Tabs ----------
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('panel-'+t.dataset.panel).classList.add('active');
+  });
+});
+
+// ---------- Teacher notes toggles ----------
+document.querySelectorAll('.teacher-toggle').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const target = document.getElementById(btn.dataset.target);
+    target.classList.toggle('open');
+    btn.textContent = target.classList.contains('open') ? '🔒 Hide teacher notes' : '🔒 Teacher notes';
+  });
+});
+
+// ---------- Practice: gap-fill (auto-checked, multi-blank) ----------
+const gapData = [
+  {ctx:"Describing what was happening in the background when the twist hit.", parts:['We ', ' for the gate when they suddenly announced the cancellation.'], answers:[['were waiting','were heading']]},
+  {ctx:'Describing something completed before the main story event.', parts:['By the time we reached the desk, the last two seats ', ' already ', '.'], answers:[['had'], ['gone','been taken']]},
+  {ctx:'Recovering after a genuine interruption mid-story.', parts:['', ' — let me think… yeah, so we ended up taking a night train instead.'], answers:[['good question']]},
+  {ctx:'Responding to a hypothetical "what if" twist about the past.', parts:['If we ', ' the earlier train, we ', ' the connection.'], answers:[["had taken","had caught"], ["would have made","would have caught"]]}
+];
+const gapContainer = document.getElementById('gapContainer');
+let gapCorrect = loadJSON('gapCorrect', {});
+function updateGapProgress(){
+  const count = Object.values(gapCorrect).filter(Boolean).length;
+  const pill = document.getElementById('gapProgress');
+  pill.textContent = count+' / '+gapData.length+' correct';
+  pill.classList.toggle('done', count === gapData.length);
+}
+gapData.forEach((item,gi)=>{
+  const wrap = document.createElement('div');
+  wrap.className = 'ex-card';
+  let inner = `<p class="q">${item.ctx}</p><div class="gapfill-row">"`;
+  item.parts.forEach((part, pi)=>{
+    inner += `<span>${part}</span>`;
+    if(pi < item.parts.length - 1){
+      inner += `<input type="text" class="gap-input" data-gi="${gi}" data-bi="${pi}">`;
+    }
+  });
+  inner += `"</div><div class="gapfill-row"><button class="mini-btn" data-check="${gi}">Check</button><button class="mini-btn outline" data-reveal="${gi}">Reveal</button></div><div class="ex-feedback" id="gapFeedback${gi}"></div>`;
+  wrap.innerHTML = inner;
+  gapContainer.appendChild(wrap);
+  if(gapCorrect[gi]){
+    const inputs = wrap.querySelectorAll('.gap-input');
+    inputs.forEach((input,bi)=>{ input.value = item.answers[bi][0]; input.classList.add('correct'); });
+    const fb = document.getElementById('gapFeedback'+gi);
+    fb.textContent = 'Correct — nice.'; fb.className = 'ex-feedback ok';
+  }
+});
+updateGapProgress();
+gapContainer.addEventListener('click', (e)=>{
+  if(e.target.dataset.check !== undefined){
+    const gi = parseInt(e.target.dataset.check);
+    const inputs = gapContainer.querySelectorAll(`.gap-input[data-gi="${gi}"]`);
+    const fb = document.getElementById('gapFeedback'+gi);
+    let allCorrect = true;
+    inputs.forEach((input, bi)=>{
+      const val = input.value.trim().toLowerCase().replace(/[.,!?']/g,'');
+      const normalizedAnswers = gapData[gi].answers[bi].map(a=>a.toLowerCase().replace(/[.,!?']/g,''));
+      const ok = normalizedAnswers.includes(val);
+      input.classList.toggle('correct', ok);
+      input.classList.toggle('incorrect', !ok);
+      if(!ok) allCorrect = false;
+    });
+    if(allCorrect){
+      fb.textContent = 'Correct — nice.'; fb.className = 'ex-feedback ok';
+      gapCorrect[gi] = true; saveJSON('gapCorrect', gapCorrect); updateGapProgress();
+    } else {
+      fb.textContent = 'Not quite — try again, or tap Reveal.'; fb.className = 'ex-feedback no';
+    }
+  }
+  if(e.target.dataset.reveal !== undefined){
+    const gi = parseInt(e.target.dataset.reveal);
+    const inputs = gapContainer.querySelectorAll(`.gap-input[data-gi="${gi}"]`);
+    inputs.forEach((input,bi)=>{
+      input.value = gapData[gi].answers[bi][0];
+      input.classList.add('correct'); input.classList.remove('incorrect');
+    });
+    const fb = document.getElementById('gapFeedback'+gi);
+    fb.textContent = 'Revealed.'; fb.className = 'ex-feedback ok';
+  }
+});
+
+// ---------- Practice: sentence-building (auto-checked) ----------
+const scrambleData = [
+  {words:'happened next / that\'s exactly / actually / what / — I ran to the rebooking desk', answer:"Actually, that's exactly what happened next — I ran to the rebooking desk."},
+  {words:'if / probably / that had happened / would have / I / missed the whole trip', answer:'If that had happened, I probably would have missed the whole trip.'}
+];
+const scrambleContainer = document.getElementById('scrambleContainer');
+let scrambleCorrect = loadJSON('scrambleCorrect', {});
+function normalizeSentence(s){
+  return s.toLowerCase().replace(/[.,!?]/g,'').replace(/\s+/g,' ').trim();
+}
+function updateScrambleProgress(){
+  const count = Object.values(scrambleCorrect).filter(Boolean).length;
+  const pill = document.getElementById('scrambleProgress');
+  pill.textContent = count+' / '+scrambleData.length+' correct';
+  pill.classList.toggle('done', count === scrambleData.length);
+}
+scrambleData.forEach((item,si)=>{
+  const wrap = document.createElement('div');
+  wrap.className = 'ex-card';
+  wrap.innerHTML = `<div class="scramble">${item.words}</div>
+    <div class="gapfill-row">
+      <input type="text" class="gap-input" data-si="${si}" placeholder="Type the full sentence…">
+    </div>
+    <div class="gapfill-row">
+      <button class="mini-btn" data-scheck="${si}">Check</button>
+      <button class="mini-btn outline" data-sreveal="${si}">Reveal</button>
+    </div>
+    <div class="ex-feedback" id="scrambleFeedback${si}"></div>`;
+  scrambleContainer.appendChild(wrap);
+  if(scrambleCorrect[si]){
+    const input = wrap.querySelector('.gap-input');
+    input.value = item.answer;
+    input.classList.add('correct');
+    const fb = document.getElementById('scrambleFeedback'+si);
+    fb.textContent = 'Correct — nice.'; fb.className = 'ex-feedback ok';
+  }
+});
+updateScrambleProgress();
+scrambleContainer.addEventListener('click', (e)=>{
+  if(e.target.dataset.scheck !== undefined){
+    const si = parseInt(e.target.dataset.scheck);
+    const input = scrambleContainer.querySelector(`.gap-input[data-si="${si}"]`);
+    const val = normalizeSentence(input.value);
+    const fb = document.getElementById('scrambleFeedback'+si);
+    if(val === normalizeSentence(scrambleData[si].answer)){
+      input.classList.add('correct'); input.classList.remove('incorrect');
+      fb.textContent = 'Correct — nice.'; fb.className = 'ex-feedback ok';
+      scrambleCorrect[si] = true; saveJSON('scrambleCorrect', scrambleCorrect); updateScrambleProgress();
+    } else {
+      input.classList.add('incorrect'); input.classList.remove('correct');
+      fb.textContent = 'Not quite — try again, or tap Reveal.'; fb.className = 'ex-feedback no';
+    }
+  }
+  if(e.target.dataset.sreveal !== undefined){
+    const si = parseInt(e.target.dataset.sreveal);
+    const input = scrambleContainer.querySelector(`.gap-input[data-si="${si}"]`);
+    input.value = scrambleData[si].answer;
+    input.classList.add('correct'); input.classList.remove('incorrect');
+    const fb = document.getElementById('scrambleFeedback'+si);
+    fb.textContent = 'Revealed.'; fb.className = 'ex-feedback ok';
+  }
+});
+
+// ---------- Storytelling: twist-question generator ----------
+const curveballPools = {
+  story: [
+    "Wait — how did you feel in that exact moment?",
+    "What if you'd already checked your bag in when it happened?",
+    "Hang on, did anyone else react badly?",
+    "So what happened right after that?",
+    "Why didn't you just call and sort it out over the phone?",
+    "What if it had happened on the way back instead?"
+  ]
+};
+let lastCurveball = {};
+document.querySelectorAll('.curveball-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const pool = curveballPools[btn.dataset.pool];
+    let idx;
+    do{ idx = Math.floor(Math.random()*pool.length); } while(pool.length>1 && idx===lastCurveball[btn.dataset.pool]);
+    lastCurveball[btn.dataset.pool] = idx;
+    const box = document.getElementById(btn.dataset.target);
+    box.textContent = pool[idx];
+    box.classList.add('show');
+  });
+});
+
+// ---------- Recap toggles ----------
+document.querySelectorAll('.cando-toggle').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const target = document.getElementById(btn.dataset.target);
+    target.classList.toggle('open');
+    btn.textContent = target.classList.contains('open') ? 'Hide card' : 'Show card';
+  });
+});
+
+// ---------- Recovery-phrase checklist ----------
+let expState = loadJSON('expChecklist', {});
+document.querySelectorAll('#expChecklist input').forEach(cb=>{
+  const key = cb.dataset.exp;
+  cb.checked = !!expState[key];
+  if(cb.checked) cb.closest('label').classList.add('checked');
+  cb.addEventListener('change', ()=>{
+    expState[key] = cb.checked;
+    saveJSON('expChecklist', expState);
+    cb.closest('label').classList.toggle('checked', cb.checked);
+    updateEvidenceStatus();
+    renderSummary();
+  });
+});
+
+// ---------- Story log ----------
+let outcomes = loadJSON('outcomeLog', []);
+const outcomeLog = document.getElementById('outcomeLog');
+function renderOutcomes(){
+  outcomeLog.innerHTML = '';
+  if(outcomes.length === 0){
+    outcomeLog.innerHTML = '<div class="thread-empty">No stories logged yet.</div>';
+    return;
+  }
+  outcomes.slice().reverse().forEach(item=>{
+    const div = document.createElement('div');
+    div.className = 'thread-entry';
+    div.innerHTML = `<div class="thread-date">${item.date}</div><div class="thread-text"></div>`;
+    div.querySelector('.thread-text').textContent = item.text;
+    outcomeLog.appendChild(div);
+  });
+}
+renderOutcomes();
+document.getElementById('outcomeAdd').addEventListener('click', ()=>{
+  const input = document.getElementById('outcomeInput');
+  const val = input.value.trim();
+  if(!val) return;
+  outcomes.push({date: todayStr(), text: val});
+  saveJSON('outcomeLog', outcomes);
+  input.value = '';
+  renderOutcomes();
+  updateEvidenceStatus();
+  renderSummary();
+});
+document.getElementById('outcomeInput').addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter') document.getElementById('outcomeAdd').click();
+});
+
+// ---------- Timer / whiteboard ----------
+let totalSeconds = 50*60;
+let timerInterval = null;
+let timerRunning = false;
+const bubble = document.getElementById('timerBubble');
+const whiteboard = document.getElementById('whiteboard');
+
+function pad(n){ return String(n).padStart(2,'0'); }
+function updateDisplay(){
+  const sign = totalSeconds < 0 ? '-' : '';
+  const m = Math.floor(Math.abs(totalSeconds)/60);
+  const s = Math.abs(totalSeconds)%60;
+  bubble.textContent = sign+pad(m)+':'+pad(s);
+  bubble.classList.toggle('warn', totalSeconds <= 30);
+}
+updateDisplay();
+
+bubble.addEventListener('click', ()=> whiteboard.classList.toggle('open'));
+
+document.getElementById('startPause').addEventListener('click', function(){
+  if(timerRunning){
+    clearInterval(timerInterval);
+    timerRunning = false;
+    this.textContent = '▶ Start';
+  } else {
+    timerRunning = true;
+    this.textContent = '⏸ Pause';
+    timerInterval = setInterval(()=>{ totalSeconds--; updateDisplay(); }, 1000);
+  }
+});
+document.getElementById('resetTimer').addEventListener('click', ()=>{
+  clearInterval(timerInterval);
+  timerRunning = false;
+  document.getElementById('startPause').textContent = '▶ Start';
+  totalSeconds = 50*60;
+  updateDisplay();
+});
+
+// ---------- Stamps / correction display ----------
+let corrections = loadJSON('corrections', []);
+const wbCorrections = document.getElementById('wbCorrections');
+function renderCorrections(){
+  wbCorrections.innerHTML = '';
+  if(corrections.length === 0){
+    wbCorrections.innerHTML = '<div class="wb-empty">No stamps yet.</div>';
+    return;
+  }
+  corrections.slice().reverse().forEach(c=>{
+    const div = document.createElement('div');
+    div.className = 'wb-correction-entry';
+    div.innerHTML = `<span class="t">${c.time}</span>`;
+    div.appendChild(document.createTextNode(c.text));
+    wbCorrections.appendChild(div);
+  });
+}
+renderCorrections();
+document.querySelectorAll('.stamp').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    corrections.push({time: nowTime(), text: btn.dataset.stamp});
+    saveJSON('corrections', corrections);
+    renderCorrections();
+    renderSummary();
+  });
+});
+
+const wbNotes = document.getElementById('wbNotes');
+wbNotes.value = loadJSON('wbnotes', '');
+wbNotes.addEventListener('input', ()=>{ saveJSON('wbnotes', wbNotes.value); renderSummary(); });
+
+document.getElementById('wbCopy').addEventListener('click', ()=>{
+  const stampText = corrections.map(c=> c.time+' '+c.text).join('\\n');
+  const combined = (stampText ? stampText+'\\n\\n' : '') + wbNotes.value;
+  navigator.clipboard.writeText(combined).then(()=> showToast('Copied')).catch(()=> showToast('Could not copy'));
+});
+document.getElementById('wbClear').addEventListener('click', ()=>{
+  if(!confirm('Clear timer notes and stamps? This cannot be undone.')) return;
+  wbNotes.value = '';
+  saveJSON('wbnotes', '');
+  corrections = [];
+  saveJSON('corrections', []);
+  renderCorrections();
+  showToast('Cleared');
+  renderSummary();
+});
+
+// ---------- Storytelling: evidence-task status ----------
+function updateEvidenceStatus(){
+  const count = Object.values(expState).filter(Boolean).length;
+  const hasStory = outcomes.length > 0;
+  const badge = document.getElementById('evStatus');
+  const met = count >= 3 && hasStory;
+  badge.classList.toggle('met', met);
+  badge.textContent = met ? '✅ Evidence task met' : count+' / 3 phrases · '+(hasStory ? 'story logged' : 'no completed story yet');
+}
+updateEvidenceStatus();
+
+// ---------- Session summary (Recap) ----------
+const expLabels = {
+  'exactly-what-happened': "Actually, that's exactly what happened next —",
+  'let-me-think': "Good question — let me think… yeah, so",
+  'where-was-i': "Where was I? Oh right —",
+  'would-have': "Well, if that had happened, I probably would have…"
+};
+function renderSummary(){
+  const box = document.getElementById('summaryBox');
+  if(!box) return;
+  const lines = [];
+  lines.push(`<div class="summary-line"><b>Date:</b> ${todayStr()}</div>`);
+
+  const usedExponents = Object.keys(expState).filter(k=>expState[k]).map(k=>expLabels[k]||k);
+  lines.push(`<div class="summary-line"><b>Recovery phrases used:</b> ${usedExponents.length ? usedExponents.join(', ') : 'none ticked yet'}</div>`);
+
+  const met = usedExponents.length >= 3 && outcomes.length > 0;
+  lines.push(`<div class="summary-line"><b>B2-13 evidence task:</b> ${usedExponents.length}/3 phrases · ${outcomes.length>0 ? 'story logged' : 'no story yet'} · ${met ? '✅ met' : 'not yet met'}</div>`);
+
+  lines.push(`<div class="summary-line"><b>Stories told:</b> ${outcomes.length ? outcomes.map(o=>o.text).join('; ') : 'none yet'}</div>`);
+
+  lines.push(`<div class="summary-line"><b>Whiteboard stamps:</b> ${corrections.length ? corrections.map(c=>c.time+' '+c.text).join('; ') : 'none yet'}</div>`);
+
+  lines.push(`<div class="summary-line"><b>Notes:</b> ${wbNotes.value.trim() ? wbNotes.value.trim() : 'none'}</div>`);
+
+  box.innerHTML = lines.join('');
+}
+renderSummary();
+document.getElementById('summaryCopy').addEventListener('click', ()=>{
+  const text = document.getElementById('summaryBox').innerText;
+  navigator.clipboard.writeText(text).then(()=> showToast('Copied')).catch(()=> showToast('Could not copy'));
+});
+</script>
+<script src="../assets/write-bubble.js"></script>
+
+</body>
+</html>
