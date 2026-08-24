@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./doc-page.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #F4F1EA; font-family: 'Nunito', sans-serif; }
+    @media print {
+      #answerToggleBtn { display: none !important; }
+    }
+
+    .iq-mc-group { display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle; margin:2px 0; }
+    .iq-mc-btn { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 10px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; cursor:pointer; }
+    .iq-mc-btn:hover:not(:disabled) { border-color:#0E7C86; }
+    .iq-mc-btn:disabled { cursor:default; }
+    .iq-mc-btn.iq-correct { background:#E4F8ED; border-color:#2D7A3A; color:#1E5C2C; }
+    .iq-mc-btn.iq-wrong { background:#FDE8E8; border-color:#B83A1A; color:#7A2A10; text-decoration:line-through; }
+    .iq-select { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:3px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; margin-left:8px; }
+    .iq-select.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-select.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input { font-family:'Nunito',sans-serif; font-size:13.5px; font-weight:700; padding:4px 8px; border-radius:6px; border:1.5px solid #C9C2AE; background:#fff; color:#2B2B2B; min-width:120px; }
+    .iq-input.iq-correct { border-color:#2D7A3A; background:#E4F8ED; }
+    .iq-input.iq-wrong { border-color:#B83A1A; background:#FDE8E8; }
+    .iq-input-wide { min-width:260px; width:100%; max-width:480px; }
+    .iq-check-btn { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:12.5px; color:#fff; background:#0E7C86; border:none; border-radius:20px; padding:7px 16px; cursor:pointer; margin-top:10px; }
+    .iq-check-btn:hover { background:#0A5F67; }
+    .iq-fb { font-family:'Nunito',sans-serif; font-weight:700; font-size:12.5px; color:#0E7C86; margin-left:10px; }
+    .iq-open-textarea { width:100%; min-height:110px; font-family:'Nunito',sans-serif; font-size:14px; border:1.5px solid #C9C2AE; border-radius:8px; padding:10px 12px; margin-top:10px; resize:vertical; box-sizing:border-box; }
+    @media print {
+      .iq-check-btn, .iq-fb { display:none !important; }
+      .iq-mc-btn, .iq-select, .iq-input { border-color:#999 !important; background:#fff !important; color:#2B2B2B !important; text-decoration:none !important; }
+    }
+  </style>
+</head>
+<body>
+<doc-page size="letter" margin="0.7in">
+
+  <div slot="header" style="display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px;border-bottom:3px solid #0E7C86;">
+  </div>
+
+  <div slot="footer" style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #DDD8CC;font-size:10.5px;color:#9A9483;font-family:'Nunito',sans-serif;">
+    <span>© Irregular Verbs</span>
+    <span>ESL Grammar Workbook</span>
+  </div>
+
+  <!-- ============ TITLE BLOCK ============ -->
+  <div style="text-align:center;padding:8px 0 22px;">
+    <div style="display:inline-block;background:#0E7C86;color:#FFF6D8;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;padding:6px 18px;border-radius:999px;text-transform:uppercase;">Durim's ESL Grammar Workbook: A1–C2</div>
+    <h1 style="font-family:'Baloo 2',sans-serif;font-weight:800;font-size:44px;color:#1B4B4F;margin:16px 0 4px;line-height:1.05;">Irregular Verbs</h1>
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:600;font-size:22px;color:#F2994A;margin-bottom:10px;">Base, Past Simple &amp; Past Participle Forms</div>
+  </div>
+
+  <!-- ============ SECTION 1: EXPLANATION ============ -->
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:6px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;">📘 1. Understanding the Rule</h2>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:18px;color:#1B4B4F;margin:18px 0 8px;">Three forms of every verb</h3>
+  <p style="font-size:15px;line-height:1.65;color:#2B2B2B;margin:0 0 10px;">Every English verb has three key forms: the <strong>base form</strong>, the <strong>past simple</strong>, and the <strong>past participle</strong>. Regular verbs follow a predictable rule — add <em>-ed</em> for both the past simple and the past participle. Irregular verbs don't: each of the three forms has to be learned individually, and the past simple and past participle are often different words.</p>
+
+  <table style="width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:14px;">
+    <thead>
+      <tr style="background:#0E7C86;color:#fff;font-family:'Baloo 2',sans-serif;">
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Base</th>
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Past Simple</th>
+        <th style="padding:8px 10px;text-align:left;border:1px solid #0E7C86;">Past Participle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#fff;">
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">work <em>(regular)</em></td>
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;">work<strong>ed</strong></td>
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;">work<strong>ed</strong> <em>(same form)</em></td>
+      </tr>
+      <tr style="background:#FBF9F3;">
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">go <em>(irregular)</em></td>
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;"><strong>went</strong></td>
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;"><strong>gone</strong> <em>(different form)</em></td>
+      </tr>
+      <tr style="background:#fff;">
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;font-weight:700;">buy <em>(irregular)</em></td>
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;"><strong>bought</strong></td>
+        <td style="padding:8px 10px;border:1px solid #E4E4E4;"><strong>bought</strong> <em>(same form)</em></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="background:#EAF2FF;border:2px solid #C7DBFF;border-radius:12px;padding:14px 16px;margin:0 0 18px;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;color:#1B4B4F;margin-bottom:10px;">⚡ Three irregular patterns</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;">
+        <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#4C7BF5;margin-bottom:4px;">All three the same</div>
+        <p style="font-size:13.5px;line-height:1.6;color:#2B2B2B;margin:0;font-style:italic;">cut → cut → cut<br/>put → put → put</p>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;">
+        <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#F2994A;margin-bottom:4px;">Past &amp; participle match</div>
+        <p style="font-size:13.5px;line-height:1.6;color:#2B2B2B;margin:0;font-style:italic;">buy → bought → bought<br/>think → thought → thought</p>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;">
+        <div style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#8B5FE0;margin-bottom:4px;">All three different</div>
+        <p style="font-size:13.5px;line-height:1.6;color:#2B2B2B;margin:0;font-style:italic;">go → went → gone<br/>speak → spoke → spoken</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:18px;color:#1B4B4F;margin:18px 0 8px;">Which form do I actually need?</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
+    <div style="background:#EAF2FF;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>✅ Base form</strong><br/>after did/didn't, modals, to<br/>Did she <strong>go</strong>? / I can <strong>go</strong>.</div>
+    <div style="background:#F0EAFE;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>🕓 Past simple</strong><br/>a finished action alone<br/>She <strong>went</strong> home at six.</div>
+    <div style="background:#FFE9E4;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>🔗 Past participle</strong><br/>only with have/has/had or be<br/>She <strong>has gone</strong> home.</div>
+    <div style="background:#E4F8ED;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#1B4B4F;"><strong>🚫 Never</strong><br/>past simple after did/have<br/>"Did she <strong>went</strong>?" is wrong.</div>
+  </div>
+
+  <div style="background:#FFF6D8;border:2px dashed #F2C94C;border-radius:12px;padding:14px 16px;margin:0 0 20px;font-size:14px;color:#5C4A00;">
+    <strong>No shortcut:</strong> there is no reliable spelling rule for irregular forms — many past participles end in <em>-en</em> (eaten, broken, written) or <em>-n</em> (known, grown, flown), but plenty don't (bought, brought, made, said). They have to be memorised, ideally in the full base–past–participle triplet, not in isolation.
+  </div>
+
+  <!-- ============ SECTION 2: REFERENCE TABLES ============ -->
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:30px 0 12px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">📊 2. Reference Tables</h2>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Common irregular verbs</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#F2994A;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #F2994A;">Base</th><th style="padding:7px 10px;text-align:left;border:1px solid #F2994A;">Past Simple</th><th style="padding:7px 10px;text-align:left;border:1px solid #F2994A;">Past Participle</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">go</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">went</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">gone</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">eat</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">ate</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">eaten</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">see</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">saw</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">seen</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">take</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">took</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">taken</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">write</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">wrote</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">written</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">break</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">broke</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">broken</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">speak</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">spoke</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">spoken</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">buy</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">bought</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">bought</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">bring</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">brought</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">brought</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">think</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">thought</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">thought</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">cut</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">cut</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">cut</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">come</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">came</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">come</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">know</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">knew</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">known</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">give</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">gave</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">given</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">forget</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">forgot</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">forgotten</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">run</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">ran</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">run</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">drive</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">drove</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">driven</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:12.5px;color:#9A9483;margin:0 0 16px;">Want to practise how the past participle is used in real sentences — present perfect, past perfect, passive voice? See the companion <strong>Past Participles</strong> page.</p>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">did / didn't at a glance</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13.5px;">
+    <thead><tr style="background:#8B5FE0;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Use</th><th style="padding:7px 10px;text-align:left;border:1px solid #8B5FE0;">Note</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Questions</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">Did + subject + base verb (never past form) — Did you <strong>go</strong>?</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">Negatives</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">didn't + base verb (never past form) — She didn't <strong>eat</strong>.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Baloo 2',sans-serif;font-size:17px;color:#1B4B4F;margin:14px 0 8px;">Typical "regularizing" mistakes</h3>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 20px;font-size:13.5px;">
+    <thead><tr style="background:#4C7BF5;color:#fff;"><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Mistake</th><th style="padding:7px 10px;text-align:left;border:1px solid #4C7BF5;">Correction</th></tr></thead>
+    <tbody>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">I goed to the shop.</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">I <strong>went</strong> to the shop.</td></tr>
+      <tr style="background:#FBF9F3;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">She buyed a car.</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">She <strong>bought</strong> a car.</td></tr>
+      <tr style="background:#fff;"><td style="padding:7px 10px;border:1px solid #E4E4E4;">He thinked about it.</td><td style="padding:7px 10px;border:1px solid #E4E4E4;">He <strong>thought</strong> about it.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ============ SECTION 3: EXERCISES ============ -->
+  <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:24px 0 6px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">✏️ 3. Practice Exercises</h2>
+  <p style="font-size:13.5px;color:#9A9483;margin:0 0 16px;">18 exercises across all six CEFR levels — three per level, increasing in difficulty. Answers on the last page.</p>
+
+  <!-- ===== A1 ===== -->
+  <div style="display:inline-block;background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:10px 0 10px;">LEVEL A1 · Beginner</div>
+
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 1 — Multiple choice: pick the correct past simple form.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>I <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">goed</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">went</button></span> to school yesterday.</li>
+      <li>She <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">ate</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">eated</button></span> breakfast at 8.</li>
+      <li>They <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">buyed</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">bought</button></span> a new phone.</li>
+      <li>He <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">saw</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">seed</button></span> the film last week.</li>
+      <li>We <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">took</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">taked</button></span> a taxi home.</li>
+      <li>You <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">writed</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">wrote</button></span> a great letter.</li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 2 — Matching: match each base verb (1–6) to its past simple form (a–f).</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:14.5px;color:#2B2B2B;line-height:2;">
+      <div>1. break <select class="iq-select" onchange="checkSelect(this,'c')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>a. spoke</div>
+      <div>2. speak <select class="iq-select" onchange="checkSelect(this,'a')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>b. gave</div>
+      <div>3. give <select class="iq-select" onchange="checkSelect(this,'b')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>c. broke</div>
+      <div>4. know <select class="iq-select" onchange="checkSelect(this,'f')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>d. came</div>
+      <div>5. come <select class="iq-select" onchange="checkSelect(this,'d')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>e. forgot</div>
+      <div>6. forget <select class="iq-select" onchange="checkSelect(this,'e')"><option value="">–</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option><option value="e">e</option><option value="f">f</option></select></div><div>f. knew</div>
+    </div>
+  </div>
+
+  <div style="border:2px solid #DCEEE2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FAFCFB;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 3 — Fill in the blank: put the verb in brackets into the past simple.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Yesterday, I <input class="iq-input" id="ex3-1"> (see) my old friend.</li>
+      <li>She <input class="iq-input" id="ex3-2"> (take) the bus to work.</li>
+      <li>We <input class="iq-input" id="ex3-3"> (eat) pizza for dinner.</li>
+      <li>He <input class="iq-input" id="ex3-4"> (buy) new shoes.</li>
+      <li>They <input class="iq-input" id="ex3-5"> (come) home late.</li>
+      <li>I <input class="iq-input" id="ex3-6"> (write) a postcard.</li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex3')">✓ Check</button><span class="iq-fb" id="ex3-fb"></span>
+  </div>
+
+  <!-- ===== A2 ===== -->
+  <div style="display:inline-block;background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL A2 · Elementary</div>
+
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 4 — True or false? Read, then mark T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#EFF9F9;border-radius:10px;padding:10px 14px;margin:0 0 10px;">Last weekend, Mark drove to the countryside with his dog. He took a long walk, saw some deer, and gave his dog some water by a stream. On the way home, he broke his sunglasses when he dropped his bag. He didn't buy new ones, but he thought about it. He came home tired but happy.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Mark drove to the countryside. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>He saw some deer. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>He broke his phone. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>He bought new sunglasses. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>He came home tired. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 5 — Write negatives (1–2) and questions (3–5) using did/didn't + base form.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>I (not/see) the message. → <input class="iq-input iq-input-wide" id="ex5-1" placeholder="type the sentence…"></li>
+      <li>She (not/buy) milk. → <input class="iq-input iq-input-wide" id="ex5-2" placeholder="type the sentence…"></li>
+      <li><input class="iq-input" id="ex5-3" style="min-width:70px;"> they <input class="iq-input" id="ex5-4" style="min-width:70px;"> (come) on time?</li>
+      <li><input class="iq-input" id="ex5-5" style="min-width:70px;"> he <input class="iq-input" id="ex5-6" style="min-width:70px;"> (write) the report?</li>
+      <li><input class="iq-input" id="ex5-7" style="min-width:70px;"> you <input class="iq-input" id="ex5-8" style="min-width:70px;"> (eat) yet?</li>
+      <li>We (not/take) any photos. → <input class="iq-input iq-input-wide" id="ex5-9" placeholder="type the sentence…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex5')">✓ Check</button><span class="iq-fb" id="ex5-fb"></span>
+  </div>
+
+  <div style="border:2px solid #D9EFEF;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FDFD;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 6 — Reorder the words to make correct sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>saw / she / film / a / yesterday / good <input class="iq-input iq-input-wide" id="ex6-1" placeholder="type the sentence…"></li>
+      <li>not / he / school / go / to / did <input class="iq-input iq-input-wide" id="ex6-2" placeholder="type the sentence…"></li>
+      <li>arrive / did / when / you / ? <input class="iq-input iq-input-wide" id="ex6-3" placeholder="type the sentence…"></li>
+      <li>bought / we / car / a / new / last month <input class="iq-input iq-input-wide" id="ex6-4" placeholder="type the sentence…"></li>
+      <li>didn't / me / they / call <input class="iq-input iq-input-wide" id="ex6-5" placeholder="type the sentence…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex6')">✓ Check</button><span class="iq-fb" id="ex6-fb"></span>
+  </div>
+
+  <!-- ===== B1 ===== -->
+  <div style="display:inline-block;background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B1 · Intermediate</div>
+
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 7 — Find and correct the "regularizing" mistake in each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>I goed to the party last night. <input class="iq-input iq-input-wide" id="ex7-1" placeholder="write the correction…"></li>
+      <li>She thinked it was a great idea. <input class="iq-input iq-input-wide" id="ex7-2" placeholder="write the correction…"></li>
+      <li>Did you writed the essay? <input class="iq-input iq-input-wide" id="ex7-3" placeholder="write the correction…"></li>
+      <li>He buyed a new laptop. <input class="iq-input iq-input-wide" id="ex7-4" placeholder="write the correction…"></li>
+      <li>They breaked the machine. <input class="iq-input iq-input-wide" id="ex7-5" placeholder="write the correction…"></li>
+      <li>We eated at that restaurant. <input class="iq-input iq-input-wide" id="ex7-6" placeholder="write the correction…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex7')">✓ Check</button><span class="iq-fb" id="ex7-fb"></span>
+  </div>
+
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 8 — Give all three forms (base, past simple, past participle) of each verb.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>speak → <input class="iq-input" id="ex8-1" style="min-width:80px;"> → <input class="iq-input" id="ex8-2" style="min-width:80px;"></li>
+      <li>drive → <input class="iq-input" id="ex8-3" style="min-width:80px;"> → <input class="iq-input" id="ex8-4" style="min-width:80px;"></li>
+      <li>choose → <input class="iq-input" id="ex8-5" style="min-width:80px;"> → <input class="iq-input" id="ex8-6" style="min-width:80px;"></li>
+      <li>begin → <input class="iq-input" id="ex8-7" style="min-width:80px;"> → <input class="iq-input" id="ex8-8" style="min-width:80px;"></li>
+      <li>grow → <input class="iq-input" id="ex8-9" style="min-width:80px;"> → <input class="iq-input" id="ex8-10" style="min-width:80px;"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex8')">✓ Check</button><span class="iq-fb" id="ex8-fb"></span>
+  </div>
+
+  <div style="border:2px solid #DCE5FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#F9FAFE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 9 — Multiple choice: which form fits the gap?</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>Did she ___ the letter? <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) write</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) wrote</button></span></li>
+      <li>He ___ to Spain last year. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) went</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) go</button></span></li>
+      <li>I can ___ you tomorrow. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) see</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) saw</button></span></li>
+      <li>They didn't ___ the plan. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) know</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) knew</button></span></li>
+      <li>We ___ the museum on Saturday. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) visited</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) visit</button></span></li>
+      <li>She wants to ___ her keys. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) find</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) found</button></span></li>
+    </ol>
+  </div>
+
+  <!-- ===== B2 ===== -->
+  <div style="display:inline-block;background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL B2 · Upper-Intermediate</div>
+
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 10 — Read, then mark each statement T or F.</div>
+    <p style="font-size:14px;line-height:1.7;color:#2B2B2B;background:#F3EEFD;border-radius:10px;padding:10px 14px;margin:0 0 10px;">After the storm, the town council chose a new site for the bridge. Engineers ran several tests, drove to the location twice, and grew increasingly confident in the design. They spoke to local residents, who gave mixed feedback. In the end, the council began construction earlier than planned, once the funding came through.</p>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The council chose a new bridge site after a storm. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Engineers visited the site only once. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Residents gave mixed feedback. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+      <li>Construction began later than planned. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">False</button></span></li>
+      <li>Funding arrived before construction began. <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">True</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">False</button></span></li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 11 — Find and correct the (subtler) mistake in each sentence.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>She drived to the coast every summer as a child. <input class="iq-input iq-input-wide" id="ex11-1" placeholder="write the correction…"></li>
+      <li>Did they chose the venue themselves? <input class="iq-input iq-input-wide" id="ex11-2" placeholder="write the correction…"></li>
+      <li>He runned the whole marathon without stopping. <input class="iq-input iq-input-wide" id="ex11-3" placeholder="write the correction…"></li>
+      <li>The company growed rapidly last decade. <input class="iq-input iq-input-wide" id="ex11-4" placeholder="write the correction…"></li>
+      <li>We begined the project in March. <input class="iq-input iq-input-wide" id="ex11-5" placeholder="write the correction…"></li>
+      <li>She didn't chose that option in the end. <input class="iq-input iq-input-wide" id="ex11-6" placeholder="write the correction…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex11')">✓ Check</button><span class="iq-fb" id="ex11-fb"></span>
+  </div>
+
+  <div style="border:2px solid #E9E0FB;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FBF9FE;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 12 — Guided writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">Write 5–7 sentences describing a memorable day, entirely in the <strong>past simple</strong>. Include at least five different irregular verbs from the reference table above.</p>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
+  </div>
+
+  <!-- ===== C1 ===== -->
+  <div style="display:inline-block;background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;break-before:page;">LEVEL C1 · Advanced</div>
+
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 13 — Rewrite each sentence in a more formal register, keeping the same tense.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The team totally messed up and lost the contract. <input class="iq-input iq-input-wide" id="ex13-1" placeholder="rewrite formally…"></li>
+      <li>She kind of freaked out and ran off. <input class="iq-input iq-input-wide" id="ex13-2" placeholder="rewrite formally…"></li>
+      <li>They just bailed and never came back. <input class="iq-input iq-input-wide" id="ex13-3" placeholder="rewrite formally…"></li>
+      <li>He blew off the deadline and didn't say why. <input class="iq-input iq-input-wide" id="ex13-4" placeholder="rewrite formally…"></li>
+      <li>I sort of forgot the whole meeting happened. <input class="iq-input iq-input-wide" id="ex13-5" placeholder="rewrite formally…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex13')">✓ Check</button><span class="iq-fb" id="ex13-fb"></span>
+  </div>
+
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 14 — Multiple choice: base, past simple, or past participle?</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>"She insisted that he ___ the truth." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) tell (base, subjunctive)</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) told</button></span></li>
+      <li>"By the time we arrived, she had already ___." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) left (participle)</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) leaved</button></span></li>
+      <li>"He ___ his mind after the discussion." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) changed (past simple)</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) change</button></span></li>
+      <li>"Let it ___ known that we objected." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) be (base, after let)</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) been</button></span></li>
+      <li>"The results, once ___, surprised everyone." → <span class="iq-mc-group"><button class="iq-mc-btn" data-correct="true" onclick="pickOption(this)">a) known (participle clause)</button><button class="iq-mc-btn" data-correct="false" onclick="pickOption(this)">b) knew</button></span></li>
+    </ol>
+  </div>
+
+  <div style="border:2px solid #FBE6D2;border-radius:14px;padding:16px 18px;margin:0 0 18px;background:#FFFAF4;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 15 — Correct the mistakes in these complex sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>She insisted that she never breaked the agreement. <input class="iq-input iq-input-wide" id="ex15-1" placeholder="write the correction…"></li>
+      <li>Despite the risks, the board choosed to proceed. <input class="iq-input iq-input-wide" id="ex15-2" placeholder="write the correction…"></li>
+      <li>He runned the company for over a decade. <input class="iq-input iq-input-wide" id="ex15-3" placeholder="write the correction…"></li>
+      <li>The evidence growed stronger as the trial continued. <input class="iq-input iq-input-wide" id="ex15-4" placeholder="write the correction…"></li>
+      <li>They begined negotiations before the deadline. <input class="iq-input iq-input-wide" id="ex15-5" placeholder="write the correction…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex15')">✓ Check</button><span class="iq-fb" id="ex15-fb"></span>
+  </div>
+
+  <!-- ===== C2 ===== -->
+  <div style="display:inline-block;background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;padding:5px 16px;border-radius:8px;margin:6px 0 10px;">LEVEL C2 · Proficiency</div>
+
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 16 — Open writing.</div>
+    <p style="font-size:14.5px;line-height:1.7;color:#2B2B2B;margin:0;">In 80–120 words, write a brief formal account of a historical or organisational event, using the <strong>past simple</strong> throughout and including at least six different irregular verbs.</p>
+    <textarea class="iq-open-textarea" placeholder="Write your answer here — self-check against the answer key below."></textarea>
+  </div>
+
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 14px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 17 — Reorder into formal, complex sentences.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>negotiations / concluded / abruptly / the <input class="iq-input iq-input-wide" id="ex17-1" placeholder="type the sentence…"></li>
+      <li>announcement / stocks / following / plummeted / the <input class="iq-input iq-input-wide" id="ex17-2" placeholder="type the sentence…"></li>
+      <li>committee / its / reversed / decision / earlier / the <input class="iq-input iq-input-wide" id="ex17-3" placeholder="type the sentence…"></li>
+      <li>pressure / minister / resigned / mounting / under / the <input class="iq-input iq-input-wide" id="ex17-4" placeholder="type the sentence…"></li>
+      <li>evidence / inquiry / emerged / during / new / the <input class="iq-input iq-input-wide" id="ex17-5" placeholder="type the sentence…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex17')">✓ Check</button><span class="iq-fb" id="ex17-fb"></span>
+  </div>
+
+  <div style="border:2px solid #FADADD;border-radius:14px;padding:16px 18px;margin:0 0 8px;background:#FFF9FA;break-inside:avoid;">
+    <div style="font-family:'Baloo 2',sans-serif;font-weight:700;color:#1B4B4F;margin-bottom:8px;">Exercise 18 — Correct the nuanced errors.</div>
+    <ol style="font-size:14.5px;line-height:2;color:#2B2B2B;margin:0;padding-left:20px;">
+      <li>The firm growed its revenue significantly that year. <input class="iq-input iq-input-wide" id="ex18-1" placeholder="write the correction…"></li>
+      <li>She swore she never chose to leak the report. <input class="iq-input iq-input-wide" id="ex18-2" placeholder="write the correction (or 'correct' if none needed)…"></li>
+      <li>The board runned the review process internally. <input class="iq-input iq-input-wide" id="ex18-3" placeholder="write the correction…"></li>
+      <li>He driven to the summit before the weather turned. <input class="iq-input iq-input-wide" id="ex18-4" placeholder="write the correction…"></li>
+      <li>The talks begined promisingly but stalled quickly. <input class="iq-input iq-input-wide" id="ex18-5" placeholder="write the correction…"></li>
+    </ol>
+    <button class="iq-check-btn" onclick="checkBlock('ex18')">✓ Check</button><span class="iq-fb" id="ex18-fb"></span>
+  </div>
+
+  <!-- ============ ANSWER KEY ============ -->
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin:32px 0 8px;border-bottom:3px solid #FFE29A;padding-bottom:6px;break-before:page;">
+    <h2 style="font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:700;color:#0E7C86;display:flex;align-items:center;gap:10px;margin:0;white-space:nowrap;">🔑 Answer Key</h2>
+    <button id="answerToggleBtn" style="flex:0 0 auto;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:13px;color:#fff;background:#8B5FE0;border:none;border-radius:999px;padding:8px 18px;cursor:pointer;white-space:nowrap;">🙈 Hide Answer Key</button>
+  </div>
+  <p style="font-size:12.5px;color:#9A9483;margin:0 0 14px;">Tip: click "Hide Answer Key" above before printing a copy for students — the button itself never prints.</p>
+
+  <div id="answer-key" style="display:block;">
+
+    <div style="background:#4CAF7D;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.1</strong> 1. went 2. ate 3. bought 4. saw 5. took 6. wrote<br/>
+      <strong>Ex.2</strong> 1–c, 2–a, 3–b, 4–f, 5–d, 6–e<br/>
+      <strong>Ex.3</strong> 1. saw 2. took 3. ate 4. bought 5. came 6. wrote
+    </div>
+
+    <div style="background:#3AA6A6;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">A2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.4</strong> 1. T 2. T 3. F 4. F 5. T<br/>
+      <strong>Ex.5</strong> 1. I didn't see the message. 2. She didn't buy milk. 3. Did they come on time? 4. Did he write the report? 5. Did you eat yet? 6. We didn't take any photos.<br/>
+      <strong>Ex.6</strong> 1. She saw a good film yesterday. 2. He did not go to school. 3. When did you arrive? 4. We bought a new car last month. 5. They didn't call me.
+    </div>
+
+    <div style="background:#4C7BF5;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.7</strong> 1. I went to the party last night. 2. She thought it was a great idea. 3. Did you write the essay? 4. He bought a new laptop. 5. They broke the machine. 6. We ate at that restaurant.<br/>
+      <strong>Ex.8</strong> 1. speak, spoke, spoken 2. drive, drove, driven 3. choose, chose, chosen 4. begin, began, begun 5. grow, grew, grown<br/>
+      <strong>Ex.9</strong> 1–a 2–a 3–a 4–a 5–a 6–a
+    </div>
+
+    <div style="background:#8B5FE0;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">B2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.10</strong> 1. T 2. F 3. T 4. F 5. T<br/>
+      <strong>Ex.11</strong> 1. She drove to the coast every summer as a child. 2. Did they choose the venue themselves? 3. He ran the whole marathon without stopping. 4. The company grew rapidly last decade. 5. We began the project in March. 6. She didn't choose that option in the end.<br/>
+      <strong>Ex.12</strong> Open answer — check consistent past simple and at least five correctly-formed irregular verbs.
+    </div>
+
+    <div style="background:#F2994A;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 8px;">C1</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 12px;">
+      <strong>Ex.13</strong> Sample answers (accept close equivalents): 1. The team seriously mishandled the situation and lost the contract. 2. She was quite alarmed and left hurriedly. 3. They abandoned the project and never returned. 4. He missed the deadline without explanation. 5. I largely forgot the meeting had taken place.<br/>
+      <strong>Ex.14</strong> 1–a 2–a 3–a 4–a 5–a<br/>
+      <strong>Ex.15</strong> 1. …she never broke the agreement. 2. …the board chose to proceed. 3. He ran the company for over a decade. 4. The evidence grew stronger… 5. They began negotiations before the deadline.
+    </div>
+
+    <div style="background:#E8555F;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;padding:5px 14px;border-radius:8px;display:inline-block;margin:6px 0 4px;">C2</div>
+    <div style="font-size:13.5px;line-height:1.8;color:#2B2B2B;margin:0 0 4px;">
+      <strong>Ex.16</strong> Open answer — check consistent past simple in a formal register with at least six correctly-formed irregular verbs.<br/>
+      <strong>Ex.17</strong> 1. The negotiations concluded abruptly. 2. Following the announcement, stocks plummeted. 3. The committee reversed its earlier decision. 4. The minister resigned under mounting pressure. 5. New evidence emerged during the inquiry.<br/>
+      <strong>Ex.18</strong> 1. The firm grew its revenue significantly that year. 2. (correct as is — no change needed). 3. The board ran the review process internally. 4. He drove to the summit before the weather turned. 5. The talks began promisingly but stalled quickly.
+    </div>
+
+  </div>
+
+</doc-page>
+
+<script>
+(function () {
+  var btn = document.getElementById('answerToggleBtn');
+  var key = document.getElementById('answer-key');
+  btn.addEventListener('click', function () {
+    var showing = key.style.display !== 'none';
+    key.style.display = showing ? 'none' : 'block';
+    btn.textContent = showing ? '👁️ Show Answer Key' : '🙈 Hide Answer Key';
+  });
+})();
+
+/* ── Interactive exercises ── */
+function pickOption(btn) {
+  var group = btn.closest('.iq-mc-group');
+  Array.from(group.children).forEach(function (b) { b.disabled = true; });
+  if (btn.dataset.correct === 'true') {
+    btn.classList.add('iq-correct');
+  } else {
+    btn.classList.add('iq-wrong');
+    var right = group.querySelector('[data-correct="true"]');
+    if (right) right.classList.add('iq-correct');
+  }
+}
+
+function checkSelect(sel, correct) {
+  sel.classList.remove('iq-correct', 'iq-wrong');
+  if (!sel.value) return;
+  sel.classList.add(sel.value === correct ? 'iq-correct' : 'iq-wrong');
+}
+
+function iqNormalize(s) {
+  return (s || '').toLowerCase().replace(/[.!?;:,"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+var IQ_ANSWERS = {
+  ex3: { type: 'exact', items: [
+    { accept: ['saw'] },
+    { accept: ['took'] },
+    { accept: ['ate'] },
+    { accept: ['bought'] },
+    { accept: ['came'] },
+    { accept: ['wrote'] }
+  ]},
+  ex5: { type: 'exact', items: [
+    { accept: ["i didn't see the message", 'i did not see the message'] },
+    { accept: ["she didn't buy milk", 'she did not buy milk'] },
+    { accept: ['did'] },
+    { accept: ['come'] },
+    { accept: ['did'] },
+    { accept: ['write'] },
+    { accept: ['did'] },
+    { accept: ['eat'] },
+    { accept: ["we didn't take any photos", 'we did not take any photos'] }
+  ]},
+  ex6: { type: 'lenient', items: [
+    { accept: ['she saw a good film yesterday'] },
+    { accept: ['he did not go to school', "he didn't go to school"] },
+    { accept: ['when did you arrive'] },
+    { accept: ['we bought a new car last month'] },
+    { accept: ["they didn't call me", 'they did not call me'] }
+  ]},
+  ex7: { type: 'lenient', items: [
+    { accept: ['went to the party'] },
+    { accept: ['thought it was a great idea'] },
+    { accept: ['did you write the essay'] },
+    { accept: ['bought a new laptop'] },
+    { accept: ['broke the machine'] },
+    { accept: ['ate at that restaurant'] }
+  ]},
+  ex8: { type: 'exact', items: [
+    { accept: ['spoke'] }, { accept: ['spoken'] },
+    { accept: ['drove'] }, { accept: ['driven'] },
+    { accept: ['chose'] }, { accept: ['chosen'] },
+    { accept: ['began'] }, { accept: ['begun'] },
+    { accept: ['grew'] }, { accept: ['grown'] }
+  ]},
+  ex11: { type: 'lenient', items: [
+    { accept: ['drove to the coast'] },
+    { accept: ['did they choose the venue'] },
+    { accept: ['he ran the whole marathon'] },
+    { accept: ['the company grew rapidly'] },
+    { accept: ['we began the project'] },
+    { accept: ["didn't choose that option", 'did not choose that option'] }
+  ]},
+  ex13: { type: 'lenient', items: [
+    { accept: ['mishandled the situation'] },
+    { accept: ['alarmed and left'] },
+    { accept: ['abandoned the project'] },
+    { accept: ['missed the deadline'] },
+    { accept: ['forgot the meeting'] }
+  ]},
+  ex15: { type: 'lenient', items: [
+    { accept: ['she never broke the agreement'] },
+    { accept: ['the board chose to proceed'] },
+    { accept: ['he ran the company'] },
+    { accept: ['the evidence grew stronger'] },
+    { accept: ['they began negotiations'] }
+  ]},
+  ex17: { type: 'lenient', items: [
+    { accept: ['the negotiations concluded abruptly'] },
+    { accept: ['following the announcement, stocks plummeted', 'following the announcement stocks plummeted'] },
+    { accept: ['the committee reversed its earlier decision'] },
+    { accept: ['the minister resigned under mounting pressure'] },
+    { accept: ['new evidence emerged during the inquiry'] }
+  ]},
+  ex18: { type: 'lenient', items: [
+    { accept: ['grew its revenue'] },
+    { accept: ['no change', 'correct as is', 'she swore she never chose to leak the report'] },
+    { accept: ['the board ran the review process'] },
+    { accept: ['he drove to the summit'] },
+    { accept: ['the talks began promisingly'] }
+  ]}
+};
+
+function checkBlock(id) {
+  var cfg = IQ_ANSWERS[id];
+  if (!cfg) return;
+  var correctCount = 0;
+  cfg.items.forEach(function (item, i) {
+    var el = document.getElementById(id + '-' + (i + 1));
+    if (!el) return;
+    var val = iqNormalize(el.value);
+    var ok;
+    if (cfg.type === 'exact') {
+      ok = item.accept.some(function (a) { return iqNormalize(a) === val; });
+    } else {
+      ok = val.length > 0 && item.accept.some(function (a) { return val.indexOf(iqNormalize(a)) !== -1; });
+    }
+    el.classList.remove('iq-correct', 'iq-wrong');
+    el.classList.add(ok ? 'iq-correct' : 'iq-wrong');
+    if (ok) correctCount++;
+  });
+  var fb = document.getElementById(id + '-fb');
+  if (fb) fb.textContent = correctCount + ' / ' + cfg.items.length + ' correct';
+}
+</script>
+</body>
+</html>
