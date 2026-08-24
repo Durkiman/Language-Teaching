@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>The Trophy Heist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/write-bubble.css">
+<style>
+:root{
+  --bg:#F4F6F8; --surface:#FFFFFF; --teal:#2A8A8A; --teal-light:#E3F2F2;
+  --ink:#1F2B33; --muted:#6B7A82; --border:#E3E8EB;
+  --orange:#E08A3C; --orange-light:#FFF3E6; --blue:#3E6FB0;
+  --green:#3FA66A; --green-light:#E5F6EC; --red:#D9534F;
+  --gold:#C9A227; --gold-light:#FBF3DA;
+  --shadow:0 2px 8px rgba(31,43,51,.06),0 1px 2px rgba(31,43,51,.04);
+  --shadow-lg:0 8px 24px rgba(31,43,51,.10);
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);padding-bottom:90px;}
+.app-header{background:var(--surface);padding:20px 20px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.app-header h1{margin:0;font-size:22px;font-weight:800;}
+.teacher-toggle-btn{background:var(--surface);border:2px solid var(--muted);color:var(--muted);font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;padding:8px 14px;border-radius:20px;cursor:pointer;white-space:nowrap;}
+.teacher-toggle-btn.on{background:#FFF8E8;border-color:#f0dca0;color:#9a7a2e;}
+.teacher-note{display:none;background:#FFF8E8;border:1px solid #f0dca0;border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:13px;line-height:1.6;color:#5a4620;}
+body.show-teacher .teacher-note{display:block;}
+.teacher-note b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#9a7a2e;margin-bottom:6px;}
+
+.tabbar{position:sticky;top:0;z-index:50;display:flex;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:var(--shadow);-webkit-overflow-scrolling:touch;}
+.tabbar::-webkit-scrollbar{display:none;}
+.tab-btn{flex:0 0 auto;padding:14px 16px;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;}
+.tab-btn.active{color:var(--teal);border-bottom-color:var(--teal);}
+.panel{display:none;padding:18px 16px 30px;max-width:680px;margin:0 auto;}
+.panel.active{display:block;}
+.card{background:var(--surface);border-radius:16px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow);border:1px solid var(--border);}
+.card h2{margin:0 0 10px;font-size:17px;font-weight:800;}
+.card h3{margin:0 0 8px;font-size:14px;font-weight:800;color:var(--teal);}
+.fr{color:var(--blue);font-size:13px;font-style:italic;font-weight:600;margin-top:4px;}
+.tag{display:inline-block;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;}
+.tag.easy{background:var(--green-light);color:var(--green);}
+.tag.medium{background:var(--orange-light);color:var(--orange);}
+.tag.hard{background:#FBE5E4;color:var(--red);}
+.nav-buttons{display:flex;justify-content:space-between;margin-top:18px;gap:10px;}
+.btn{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;padding:12px 22px;border-radius:12px;border:none;cursor:pointer;}
+.btn-primary{background:var(--teal);color:#fff;}
+.btn-secondary{background:var(--surface);color:var(--teal);border:2px solid var(--teal);}
+.btn:active{transform:scale(.97);}
+.btn:disabled{opacity:.4;cursor:default;}
+
+.hero-banner{background:linear-gradient(135deg,#1F2B33 0%,#10222B 100%);border-radius:18px;padding:22px;color:#fff;margin-bottom:14px;}
+.hero-banner h2{color:var(--gold);margin:0 0 6px;}
+.hero-banner p{margin:0;font-size:14px;opacity:.95;line-height:1.5;}
+.hero-banner p.fr{color:#cfe3e3;opacity:.9;}
+
+.vocab-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.vocab-card{background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .2s;min-height:64px;display:flex;align-items:center;justify-content:center;}
+.vocab-card .en{font-weight:800;font-size:15px;}
+.vocab-card .fr-word{font-size:13px;color:var(--blue);font-style:italic;display:none;font-weight:700;}
+.vocab-card.revealed .fr-word{display:block;}
+.vocab-card.revealed .en{font-size:13px;color:var(--muted);}
+.vocab-card.mastered{background:var(--green);border-color:var(--green);}
+.vocab-card.mastered .en,.vocab-card.mastered .fr-word{color:#fff;}
+
+.suspect-card{background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px;}
+.suspect-card .name{font-weight:800;font-size:14px;color:var(--teal);}
+.suspect-card .role{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;}
+.suspect-card .alibi{font-size:14px;line-height:1.6;margin-top:6px;}
+.suspect-card .alibi b{color:var(--gold);}
+
+.formula-box{background:var(--teal-light);border-radius:12px;padding:14px;text-align:center;font-weight:800;font-size:15px;color:var(--teal);margin-bottom:12px;}
+.rule-box{background:var(--teal-light);border-radius:12px;padding:12px;font-size:13px;margin-bottom:10px;}
+.rule-box b{color:var(--teal);}
+.tip-box{background:var(--gold-light);border-radius:12px;padding:12px;font-size:13px;margin-bottom:10px;}
+
+.ex-card{margin-bottom:16px;}
+.hint-row{display:flex;gap:8px;margin:8px 0;flex-wrap:wrap;}
+.hint-chip{font-size:12px;background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:5px 10px;cursor:pointer;font-weight:700;}
+.hint-text{display:none;font-size:13px;background:#FFF8E8;border-radius:8px;padding:8px 10px;margin-top:6px;}
+.hint-text.shown{display:block;}
+input.blank{border:none;border-bottom:2px solid var(--teal);background:var(--teal-light);font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;padding:4px 8px;width:170px;border-radius:4px;}
+.mc-options{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+.mc-opt{padding:10px 14px;border:2px solid var(--border);border-radius:10px;font-weight:700;cursor:pointer;font-size:14px;}
+.mc-opt.correct{background:var(--green-light);border-color:var(--green);}
+.mc-opt.wrong{background:#FBE5E4;border-color:var(--red);}
+
+/* Interrogation chat */
+.chat-window{background:var(--bg);border-radius:16px;padding:14px;margin-bottom:14px;min-height:120px;}
+.msg{max-width:88%;padding:10px 14px;border-radius:14px;margin-bottom:10px;font-size:14px;line-height:1.5;}
+.msg.suspect{background:var(--surface);border:1px solid var(--border);border-bottom-left-radius:4px;}
+.msg.suspect .who{font-size:11px;font-weight:800;color:var(--red);display:block;margin-bottom:3px;}
+.msg.detective{background:var(--teal);color:#fff;margin-left:auto;border-bottom-right-radius:4px;}
+.msg.detective .who{font-size:11px;font-weight:800;color:#dff5f5;display:block;margin-bottom:3px;}
+.chat-choices{display:flex;flex-direction:column;gap:8px;}
+.choice-btn{text-align:left;background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:10px 12px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer;}
+.choice-btn.correct{border-color:var(--green);background:var(--green-light);color:#1f6b4a;}
+.choice-btn.incorrect{border-color:var(--red);background:#FBE5E4;color:#8a2f2c;}
+.choice-btn:disabled{cursor:default;}
+.chat-input-row{display:flex;gap:8px;margin-top:4px;}
+.chat-input-row input{flex:1;border:2px solid var(--border);border-radius:12px;padding:10px 12px;font-family:'Nunito',sans-serif;font-size:14px;}
+.chat-input-row input.correct{border-color:var(--green);background:var(--green-light);}
+.chat-input-row button{background:var(--teal);color:#fff;border:none;border-radius:12px;padding:10px 16px;font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;}
+.chat-feedback{font-size:12px;margin-top:8px;padding:8px 10px;border-radius:10px;display:none;}
+.chat-feedback.show{display:block;}
+.chat-feedback.good{background:var(--green-light);color:#1f6b4a;}
+.chat-feedback.hint{background:var(--orange-light);color:#7a4a10;}
+.chat-progress{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:10px;}
+
+/* Clue board */
+.clue-card{background:#10222B;border-radius:14px;padding:14px;margin-bottom:10px;color:#fff;}
+.clue-card .clue-label{font-size:11px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.clue-card p{margin:0;font-size:14px;line-height:1.6;}
+
+.accuse-options{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.accuse-opt{padding:12px 14px;border:2px solid var(--border);border-radius:12px;font-weight:800;cursor:pointer;font-size:14px;background:var(--surface);}
+.accuse-opt.correct{background:var(--green-light);border-color:var(--green);color:#1f6b4a;}
+.accuse-opt.wrong{background:#FBE5E4;border-color:var(--red);color:#8a2f2c;}
+.case-closed{display:none;background:var(--gold-light);border:2px solid var(--gold);border-radius:14px;padding:14px;margin-top:12px;font-size:13px;line-height:1.6;}
+.case-closed.show{display:block;}
+.case-closed b{color:#8a6d10;}
+
+.recap-toggle-btn{display:block;width:100%;background:var(--teal);color:#fff;border:none;border-radius:12px;padding:14px;font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;cursor:pointer;margin-bottom:14px;}
+.recap-card{display:none;}
+.recap-card.show{display:block;}
+.recap-code{display:inline-block;background:var(--teal);color:#fff;font-weight:800;font-size:12px;padding:4px 10px;border-radius:8px;margin-bottom:10px;}
+.recap-field{margin-bottom:12px;}
+.recap-field b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--teal);margin-bottom:4px;}
+.recap-field span, .recap-field p{font-size:14px;line-height:1.6;margin:0;}
+.checklist{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.checklist label{display:flex;align-items:flex-start;gap:8px;font-size:13px;background:var(--bg);border-radius:10px;padding:10px 12px;cursor:pointer;}
+.checklist input{margin-top:2px;width:16px;height:16px;accent-color:var(--teal);flex-shrink:0;}
+
+#timerBubble{position:fixed;bottom:18px;left:18px;width:60px;height:60px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;box-shadow:var(--shadow-lg);cursor:pointer;z-index:200;user-select:none;}
+#timerBubble.danger{background:var(--red);}
+#emojiOverlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:500;font-size:120px;}
+#emojiOverlay.show{display:flex;animation:zoomIn .5s ease-out;}
+@keyframes zoomIn{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
+#wbOverlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;z-index:400;}
+#wbOverlay.show{display:flex;}
+#wbPanel{background:var(--surface);width:100%;border-radius:24px 24px 0 0;padding:20px 18px 28px;max-height:85vh;overflow-y:auto;}
+#wbPanel h3{margin:0 0 12px;font-size:16px;font-weight:800;}
+.wb-close{float:right;background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;}
+.timer-controls{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.timer-controls button{flex:1;min-width:60px;padding:10px;border-radius:10px;border:2px solid var(--border);background:var(--bg);font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;}
+.stamp-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.stamp-btn{font-size:20px;background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:8px 10px;cursor:pointer;}
+#correctionLog{background:var(--bg);border-radius:10px;padding:10px;min-height:60px;font-size:13px;margin-bottom:10px;white-space:pre-wrap;}
+#wbNotes{width:100%;min-height:80px;border:2px solid var(--border);border-radius:10px;padding:10px;font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:10px;resize:vertical;}
+.wb-actions{display:flex;gap:8px;}
+.wb-actions button{flex:1;padding:10px;border-radius:10px;border:none;font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;}
+.wb-copy{background:var(--teal);color:#fff;}
+.wb-clear{background:#FBE5E4;color:var(--red);}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <h1>🏆🔍 The Trophy Heist</h1>
+  <button class="teacher-toggle-btn" id="teacherToggleBtn" onclick="toggleTeacherNotes()">👤 Teacher notes</button>
+</div>
+
+<div class="tabbar" id="tabbar">
+  <button class="tab-btn active" data-tab="warmup">Warm-Up</button>
+  <button class="tab-btn" data-tab="case">Case File</button>
+  <button class="tab-btn" data-tab="grammar">Grammar</button>
+  <button class="tab-btn" data-tab="interrogate">Interrogate</button>
+  <button class="tab-btn" data-tab="solve">Solve It</button>
+  <button class="tab-btn" data-tab="recap">Recap</button>
+</div>
+
+<!-- WARM-UP -->
+<div class="panel active" id="warmup">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    Review, not intro — A2-07 (past continuous vs past simple) was introduced 2026-08-17 (Freeze Frame, Goku vs Freeza). This is recycling with a new football/detective theme. Quick verbal warm-up, then straight into the case.
+  </div>
+
+  <div class="hero-banner">
+    <h2>🚨 Emergency Briefing</h2>
+    <p>Detective, before you open the case file — warm up your memory out loud.</p>
+    <p class="fr">Détective, avant d'ouvrir le dossier — réchauffe ta mémoire à l'oral.</p>
+  </div>
+
+  <div class="card">
+    <h3>Quick Recall</h3>
+    <p class="fr">Réponds à l'oral, pas besoin d'écrire ici</p>
+    <p style="font-weight:700;margin-top:10px;">1. What were you doing at exactly 9pm last night?</p>
+    <p class="fr" style="margin:2px 0 12px;">Que faisais-tu exactement à 21h hier soir ?</p>
+    <p style="font-weight:700;">2. Tell me one thing that happened to you yesterday — one action, one moment.</p>
+    <p class="fr" style="margin:2px 0 12px;">Raconte une chose qui t'est arrivée hier — une action, un instant précis.</p>
+    <p style="font-weight:700;">3. Finish this out loud: "I was playing football when suddenly..."</p>
+    <p class="fr" style="margin:2px 0;">Termine à l'oral : "Je jouais au foot quand soudain..."</p>
+  </div>
+
+  <div class="nav-buttons">
+    <span></span>
+    <button class="btn btn-primary" onclick="goTab('case')">Open the case file →</button>
+  </div>
+</div>
+
+<!-- CASE FILE -->
+<div class="panel" id="case">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    Set the scene, read the vocab together, then read the three static alibis. Diego (security guard) is deliberately left for the live Interrogate tab — his story is the one with the contradiction.
+  </div>
+
+  <div class="hero-banner">
+    <h2>The World Cup Final — Half-Time</h2>
+    <p>At 9:15pm, during half-time of the World Cup Final, the stadium lights went out for two minutes. When they came back on, the World Cup trophy had disappeared from the trophy room. Four people were backstage that night. You are the detective — read their alibis.</p>
+    <p class="fr">À 21h15, pendant la mi-temps de la finale de la Coupe du Monde, les lumières du stade se sont éteintes pendant deux minutes. Quand elles se sont rallumées, le trophée avait disparu. Quatre personnes étaient dans les coulisses ce soir-là. Tu es le détective — lis leurs alibis.</p>
+  </div>
+
+  <div class="card">
+    <h3>Vocabulary — tap to reveal</h3>
+    <p class="fr" style="margin-bottom:10px;">Tape une fois → traduction · Tape deux fois → vert (maîtrisé) · Tape trois fois → réinitialise</p>
+    <div class="vocab-grid" id="vocabGrid">
+      <div class="vocab-card"><span class="en">suspect</span><span class="fr-word">le suspect</span></div>
+      <div class="vocab-card"><span class="en">alibi</span><span class="fr-word">l'alibi</span></div>
+      <div class="vocab-card"><span class="en">evidence</span><span class="fr-word">la preuve</span></div>
+      <div class="vocab-card"><span class="en">witness</span><span class="fr-word">le témoin</span></div>
+      <div class="vocab-card"><span class="en">guilty</span><span class="fr-word">coupable</span></div>
+      <div class="vocab-card"><span class="en">innocent</span><span class="fr-word">innocent</span></div>
+      <div class="vocab-card"><span class="en">to disappear</span><span class="fr-word">disparaître</span></div>
+      <div class="vocab-card"><span class="en">to lie</span><span class="fr-word">mentir</span></div>
+      <div class="vocab-card"><span class="en">security camera</span><span class="fr-word">caméra de sécurité</span></div>
+      <div class="vocab-card"><span class="en">to notice</span><span class="fr-word">remarquer</span></div>
+      <div class="vocab-card"><span class="en">suspicious</span><span class="fr-word">suspect (adj.)</span></div>
+      <div class="vocab-card"><span class="en">to confess</span><span class="fr-word">avouer</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🗂 The Suspects</h3>
+    <div class="suspect-card">
+      <div class="name">Marco</div>
+      <div class="role">Team Captain</div>
+      <div class="alibi">"I <b>was warming up</b> in the tunnel with the team <b>when</b> the lights suddenly <b>went</b> out."</div>
+    </div>
+    <div class="suspect-card">
+      <div class="name">Elena</div>
+      <div class="role">Coach</div>
+      <div class="alibi">"I <b>was giving</b> an interview to a journalist <b>when</b> the alarm <b>started</b> ringing."</div>
+    </div>
+    <div class="suspect-card">
+      <div class="name">Leo</div>
+      <div class="role">Team Mascot</div>
+      <div class="alibi">"I <b>was taking</b> selfies with fans in the stadium <b>when</b> the trophy <b>disappeared</b>."</div>
+    </div>
+    <div class="suspect-card" style="border-color:var(--red);">
+      <div class="name">Diego</div>
+      <div class="role">Security Guard</div>
+      <div class="alibi">"I <b>was watching</b> the cameras all night. I didn't see anything." <span style="color:var(--red);font-weight:800;">— you'll question him yourself next.</span></div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('warmup')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('grammar')">Next →</button>
+  </div>
+</div>
+
+<!-- GRAMMAR -->
+<div class="panel" id="grammar">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    Quick review only — this was already fully taught in the Freeze Frame lesson. Just re-anchor the formula and the when/while rule before the interrogation, don't re-teach from scratch.
+  </div>
+
+  <div class="card">
+    <h2>Quick Review</h2>
+    <p class="fr">Petit rappel</p>
+    <div class="formula-box">was/were + verb-ing = the long action (the alibi)</div>
+    <div class="formula-box">past simple = the short, sudden event</div>
+    <div class="rule-box"><b>An alibi is a long action interrupted by a short event:</b><br>"I <b>was watching</b> the cameras <b>when</b> the lights <b>went</b> out."</div>
+    <div class="tip-box">
+      <b>🔎 Detective tip:</b> A good alibi uses <b>was/were + -ing</b> for what the suspect claims they were doing. Evidence and facts use <b>past simple</b> — real actions that really happened. If a suspect's "-ing" story doesn't match the past simple facts... someone is lying!
+      <p class="fr" style="margin-top:4px;">Un bon alibi utilise "was/were + -ing" pour l'action prétendue. Les preuves utilisent le passé simple — des faits réels. Si l'histoire ne correspond pas aux faits... quelqu'un ment !</p>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('case')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('interrogate')">Question Diego →</button>
+  </div>
+</div>
+
+<!-- INTERROGATE -->
+<div class="panel" id="interrogate">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    This is the A2-07 evidence task, live. First 2 turns are multiple choice (auto-checked green/red, forces correct was/were + -ing grammar). Last 2 turns are free-typed — soft-check looks for was/were+ing or when/while/past-simple markers. Talk through each reply live rather than trusting the auto-check alone; the point is Micha producing both forms under a bit of pressure.
+  </div>
+
+  <div class="card">
+    <h2>🎙 Interrogation Room — Diego</h2>
+    <p class="fr">Salle d'interrogatoire — Diego</p>
+    <p style="font-size:13px;line-height:1.7;">You're questioning Diego, the security guard. His alibi has a hole in it — find it!</p>
+    <div class="chat-progress" id="chatProgress">Turn 1 of 4</div>
+    <div class="chat-window" id="chatWindow"></div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('grammar')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('solve')">Solve the case →</button>
+  </div>
+</div>
+
+<!-- SOLVE IT -->
+<div class="panel" id="solve">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    First the two grammar exercises (auto-checked), then the clue board, then the final accusation (MC — picks the correct suspect using the grammar logic from the clues) and the auto-check accusation sentence.
+  </div>
+
+  <div class="card">
+    <h2>Fix the Statements</h2>
+    <p class="fr">Corrige les déclarations</p>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag easy">Easy</span>
+    <p style="font-weight:700;">1. Fill in the blank: Marco ___ ___ (warm up) in the tunnel when the lights went out.</p>
+    <input type="text" class="blank" id="ex1" placeholder="...">
+    <button class="btn btn-secondary" style="margin-top:8px;padding:8px 16px;font-size:12px;" onclick="checkFill('ex1',['was warming up'],'fb1')">Check</button>
+    <div id="fb1" style="margin-top:6px;font-size:13px;"></div>
+    <div class="hint-row"><span class="hint-chip" onclick="this.parentElement.nextElementSibling.classList.toggle('shown')">🇫🇷 French hint</span></div>
+    <div class="hint-text">Marco s'échauffait dans le tunnel quand les lumières se sont éteintes.</div>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag easy">Easy</span>
+    <p style="font-weight:700;">2. Choose the correct sentence about Elena:</p>
+    <div class="mc-options">
+      <div class="mc-opt" onclick="checkMC(this,false)">Elena was give an interview when the alarm rang.</div>
+      <div class="mc-opt" onclick="checkMC(this,true)">Elena was giving an interview when the alarm rang.</div>
+      <div class="mc-opt" onclick="checkMC(this,false)">Elena gave an interview when the alarm was ringing.</div>
+    </div>
+  </div>
+
+  <div class="card ex-card">
+    <span class="tag medium">Medium</span>
+    <p style="font-weight:700;">3. Rewrite using "while": "Leo was taking selfies when the trophy disappeared."</p>
+    <input type="text" class="blank" style="width:100%;" id="ex3" placeholder="The trophy disappeared while...">
+    <button class="btn btn-secondary" style="margin-top:8px;padding:8px 16px;font-size:12px;" onclick="checkFill('ex3',['the trophy disappeared while leo was taking selfies'],'fb3')">Check</button>
+    <div id="fb3" style="margin-top:6px;font-size:13px;"></div>
+  </div>
+
+  <div class="card">
+    <h2>📋 The Clue Board</h2>
+    <p class="fr">Le tableau des indices — lis attentivement</p>
+    <div class="clue-card"><div class="clue-label">Clue A</div><p>The stadium lights went out at exactly 9:15pm for two minutes.</p></div>
+    <div class="clue-card"><div class="clue-label">Clue B</div><p>The security camera log shows Diego <b>left</b> his post at 9:14pm and <b>came back</b> at 9:20pm.</p></div>
+    <div class="clue-card"><div class="clue-label">Clue C</div><p>A witness saw someone in a security uniform near the trophy room at 9:16pm.</p></div>
+    <div class="clue-card"><div class="clue-label">Clue D</div><p>The trophy room door was opened with a security key card at 9:16pm.</p></div>
+  </div>
+
+  <div class="card">
+    <h2>🚨 Make the Accusation</h2>
+    <p class="fr">Fais ton accusation</p>
+    <p style="font-weight:700;margin-bottom:6px;">Who is lying about their alibi?</p>
+    <div class="accuse-options" id="accuseOptions">
+      <div class="accuse-opt" onclick="accuse(this,false)">Marco — his story doesn't match Clue A.</div>
+      <div class="accuse-opt" onclick="accuse(this,false)">Elena — her story doesn't match Clue C.</div>
+      <div class="accuse-opt" onclick="accuse(this,true)">Diego — his story doesn't match Clue B.</div>
+      <div class="accuse-opt" onclick="accuse(this,false)">Leo — his story doesn't match Clue D.</div>
+    </div>
+    <div class="case-closed" id="caseClosed">
+      <b>🏆 Case closed!</b> Diego said he <b>was watching</b> the cameras all night. But Clue B proves he <b>left</b> his post at 9:14pm and <b>came back</b> at 9:20pm — exactly when the trophy disappeared! His alibi (the "-ing" story) doesn't match the facts (past simple). Diego is the thief.
+      <p style="margin-top:10px;font-weight:700;">Now write your own accusation sentence:</p>
+      <input type="text" class="blank" style="width:100%;margin-top:6px;" id="accuseInput" placeholder="Diego said he was... but really he...">
+      <button class="btn btn-secondary" style="margin-top:8px;padding:8px 16px;font-size:12px;" onclick="checkAccuseSentence()">Check my sentence</button>
+      <div id="fbAccuse" style="margin-top:6px;font-size:13px;"></div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('interrogate')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('recap')">Next →</button>
+  </div>
+</div>
+
+<!-- RECAP -->
+<div class="panel" id="recap">
+  <div class="card">
+    <h2>Lesson Recap</h2>
+    <p class="fr">Récapitulatif de la leçon</p>
+    <button class="recap-toggle-btn" onclick="toggleRecap()" id="recapBtn">Show can-do card</button>
+    <div class="recap-card" id="recapCard">
+      <div class="recap-code">A2-07 · Past Continuous vs Past Simple (review)</div>
+      <div class="recap-field">
+        <b>Goal</b>
+        <p>Can describe a long, ongoing past action interrupted by a short, sudden past event, using was/were + -ing with when/while and the past simple.</p>
+      </div>
+      <div class="recap-field">
+        <b>Grammar focus / exponents</b>
+        <span>was/were + verb-ing · when / while · past simple (regular &amp; irregular)</span>
+      </div>
+      <div class="recap-field">
+        <b>Evidence task</b>
+        <p>Live interrogation of Diego (chat simulator) + written accusation sentence, correctly contrasting his claimed continuous alibi with the past-simple facts.</p>
+      </div>
+    </div>
+    <div class="checklist">
+      <label><input type="checkbox"> Used "was/were + -ing" correctly at least twice</label>
+      <label><input type="checkbox"> Used "when" or "while" to connect two past actions</label>
+      <label><input type="checkbox"> Solved the case and explained why, using both tenses</label>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('solve')">← Back</button>
+    <span></span>
+  </div>
+</div>
+
+<div id="timerBubble" onclick="openWb()">50:00</div>
+<div id="emojiOverlay" onclick="this.classList.remove('show')"></div>
+
+<div id="wbOverlay" onclick="if(event.target===this)closeWb()">
+  <div id="wbPanel">
+    <button class="wb-close" onclick="closeWb()">✕</button>
+    <h3>⏱ Whiteboard</h3>
+    <div class="timer-controls">
+      <button onclick="setTimerMin(5)">5m</button>
+      <button onclick="setTimerMin(10)">10m</button>
+      <button onclick="setTimerMin(15)">15m</button>
+      <button onclick="toggleRun()" id="runBtn">▶ Start</button>
+      <button onclick="resetTimer()">↺ Reset</button>
+    </div>
+    <h3 style="font-size:14px;">Correction Stamps</h3>
+    <div class="stamp-row">
+      <button class="stamp-btn" onclick="addStamp('✅')">✅</button>
+      <button class="stamp-btn" onclick="addStamp('⭐')">⭐</button>
+      <button class="stamp-btn" onclick="addStamp('🔁 Try again')">🔁</button>
+      <button class="stamp-btn" onclick="addStamp('🗣 Pronunciation')">🗣</button>
+      <button class="stamp-btn" onclick="addStamp('📐 Grammar')">📐</button>
+    </div>
+    <div id="correctionLog"></div>
+    <h3 style="font-size:14px;">Notes</h3>
+    <textarea id="wbNotes" placeholder="Notes for this lesson..."></textarea>
+    <div class="wb-actions">
+      <button class="wb-copy" onclick="copyWb()">Copy</button>
+      <button class="wb-clear" onclick="clearWb()">Clear</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function goTab(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector(`.tab-btn[data-tab="${id}"]`).classList.add('active');
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('.tab-btn').forEach(btn=>btn.addEventListener('click',()=>goTab(btn.dataset.tab)));
+
+function toggleTeacherNotes(){
+  document.body.classList.toggle('show-teacher');
+  document.getElementById('teacherToggleBtn').classList.toggle('on');
+}
+
+function toggleRecap(){
+  const card=document.getElementById('recapCard');
+  const btn=document.getElementById('recapBtn');
+  card.classList.toggle('show');
+  btn.textContent=card.classList.contains('show')?'Hide can-do card':'Show can-do card';
+}
+
+document.querySelectorAll('.vocab-card').forEach(card=>{
+  let state=0;
+  card.addEventListener('click',()=>{
+    state=(state+1)%3;
+    if(state===1){card.classList.add('revealed');card.classList.remove('mastered');}
+    else if(state===2){card.classList.add('mastered');}
+    else{card.classList.remove('revealed','mastered');}
+  });
+});
+
+function checkMC(el,correct){
+  el.parentElement.querySelectorAll('.mc-opt').forEach(s=>s.classList.remove('correct','wrong'));
+  el.classList.add(correct?'correct':'wrong');
+}
+
+function checkFill(inputId,answers,fbId){
+  const val=document.getElementById(inputId).value.trim().toLowerCase().replace(/\s+/g,' ');
+  const fb=document.getElementById(fbId);
+  const hit=answers.some(a=>val===a || val.includes(a));
+  fb.textContent=hit?'✅ Correct!':'❌ Not quite — try again, or ask your teacher for a hint.';
+  fb.style.color=hit?'#1f6b4a':'#8a2f2c';
+}
+
+/* Interrogation chat */
+const CHAT_STEPS=[
+  {
+    suspect:"Interrogation Room — Diego sits down, arms crossed.",
+    isNarration:true
+  },
+  {
+    suspect:"So, Detective. What do you want to know?",
+    type:"choice",
+    options:[
+      "What were you doing when the lights went out?",
+      "What you doing when lights go out?",
+      "What did you were doing when the lights went out?"
+    ],
+    correct:0
+  },
+  {
+    suspect:"I already told you — I was watching the cameras. Nothing happened.",
+    type:"choice",
+    options:[
+      "So you was watching the cameras the whole time, yes?",
+      "So you were watching the cameras the whole time, correct?",
+      "So you watching the cameras the whole time?"
+    ],
+    correct:1
+  },
+  {
+    suspect:"Yes! I never left my chair. Not once.",
+    type:"text",
+    placeholder:"Use 'but' + Clue B to challenge him (past simple: left, came back)...",
+    check:["but","left","came back","camera","footage"]
+  },
+  {
+    suspect:"...Okay, fine! I left for a few minutes. But I didn't take the trophy, I swear!",
+    type:"text",
+    placeholder:"Ask him what he WAS doing while he was away (was/were + -ing)...",
+    check:["was","were"]
+  }
+];
+let chatStep=0;
+
+function renderChat(){
+  const win=document.getElementById('chatWindow');
+  const totalReal=CHAT_STEPS.filter(s=>!s.isNarration).length;
+  const doneReal=CHAT_STEPS.slice(0,chatStep).filter(s=>!s.isNarration).length;
+  document.getElementById('chatProgress').textContent=`Turn ${Math.min(doneReal+1,totalReal)} of ${totalReal}`;
+  if(chatStep>=CHAT_STEPS.length){
+    win.innerHTML+=`<div class="msg suspect"><span class="who">Diego</span>Alright, alright — take me to the trophy room. I'll show you where I hid it. 🏆</div>`;
+    return;
+  }
+  const step=CHAT_STEPS[chatStep];
+  const suspectMsg=document.createElement('div');
+  suspectMsg.className='msg suspect';
+  suspectMsg.innerHTML=`<span class="who">Diego</span>${step.suspect}`;
+  win.appendChild(suspectMsg);
+
+  if(step.isNarration){
+    const nextBtn=document.createElement('button');
+    nextBtn.className='btn btn-primary';
+    nextBtn.style.marginTop='10px';
+    nextBtn.textContent='Begin questioning →';
+    nextBtn.onclick=()=>{ chatStep++; renderChat(); };
+    win.appendChild(nextBtn);
+    win.scrollTop=win.scrollHeight;
+    return;
+  }
+
+  const controls=document.createElement('div');
+  controls.id='chatControls';
+
+  if(step.type==='choice'){
+    controls.className='chat-choices';
+    step.options.forEach((opt,i)=>{
+      const b=document.createElement('button');
+      b.className='choice-btn';
+      b.textContent=opt;
+      b.onclick=()=>answerChoice(i,b,controls);
+      controls.appendChild(b);
+    });
+  } else {
+    controls.innerHTML=`
+      <div class="chat-input-row">
+        <input type="text" id="chatTextInput" placeholder="${step.placeholder}">
+        <button onclick="answerText()">Ask</button>
+      </div>
+      <div class="chat-feedback" id="chatFeedback"></div>
+    `;
+  }
+  win.appendChild(controls);
+  win.scrollTop=win.scrollHeight;
+}
+
+function answerChoice(i,btn,controls){
+  const step=CHAT_STEPS[chatStep];
+  const allBtns=controls.querySelectorAll('.choice-btn');
+  allBtns.forEach(b=>b.disabled=true);
+  if(i===step.correct){
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('incorrect');
+    allBtns[step.correct].classList.add('correct');
+  }
+  const win=document.getElementById('chatWindow');
+  const detectiveMsg=document.createElement('div');
+  detectiveMsg.className='msg detective';
+  detectiveMsg.innerHTML=`<span class="who">You</span>${step.options[step.correct]}`;
+  win.appendChild(detectiveMsg);
+  setTimeout(()=>{ chatStep++; renderChat(); },700);
+}
+
+function answerText(){
+  const step=CHAT_STEPS[chatStep];
+  const input=document.getElementById('chatTextInput');
+  const feedback=document.getElementById('chatFeedback');
+  const val=input.value.trim();
+  if(!val) return;
+  const lower=val.toLowerCase();
+  const hit=step.check.some(k=>lower.includes(k));
+  input.disabled=true;
+  input.classList.toggle('correct',hit);
+  feedback.classList.add('show');
+  feedback.className='chat-feedback show '+(hit?'good':'hint');
+  feedback.textContent=hit?'Nice detective work! ✅':'Good try — talk it through with your teacher, then continue.';
+
+  const win=document.getElementById('chatWindow');
+  const detectiveMsg=document.createElement('div');
+  detectiveMsg.className='msg detective';
+  detectiveMsg.innerHTML=`<span class="who">You</span>${val}`;
+  win.appendChild(detectiveMsg);
+
+  const nextBtn=document.createElement('button');
+  nextBtn.className='btn btn-primary';
+  nextBtn.style.marginTop='10px';
+  nextBtn.textContent='Continue →';
+  nextBtn.onclick=()=>{ chatStep++; renderChat(); };
+  win.appendChild(nextBtn);
+  win.scrollTop=win.scrollHeight;
+}
+renderChat();
+
+/* Accusation */
+function accuse(el,correct){
+  document.querySelectorAll('.accuse-opt').forEach(o=>{o.classList.remove('correct','wrong');o.style.pointerEvents='none';});
+  el.classList.add(correct?'correct':'wrong');
+  if(correct){
+    document.getElementById('caseClosed').classList.add('show');
+  } else {
+    document.querySelectorAll('.accuse-opt')[2].classList.add('correct');
+    setTimeout(()=>{document.querySelectorAll('.accuse-opt').forEach(o=>o.style.pointerEvents='auto');},1200);
+  }
+}
+function checkAccuseSentence(){
+  const val=document.getElementById('accuseInput').value.trim().toLowerCase();
+  const fb=document.getElementById('fbAccuse');
+  const hasContinuous=/\b(was|were)\s+\w+ing\b/.test(val);
+  const hasSimplePast=/\b(left|came|went|was|were|watched|took|hid)\b/.test(val);
+  const hit=hasContinuous&&(val.includes('but')||val.includes('really')||val.includes('actually'));
+  fb.textContent=hit?'✅ Great accusation — nice mix of "was/were + -ing" and the real facts!':'Try adding "was/were + -ing" for his claim, and "but" + what really happened.';
+  fb.style.color=hit?'#1f6b4a':'#8a4a10';
+}
+
+let totalSeconds=50*60,timerInterval=null,isRunning=false;
+function updateTimerDisplay(){
+  const m=Math.floor(totalSeconds/60).toString().padStart(2,'0');
+  const s=(totalSeconds%60).toString().padStart(2,'0');
+  const b=document.getElementById('timerBubble');
+  b.textContent=`${m}:${s}`;
+  b.classList.toggle('danger',isRunning&&totalSeconds<=30);
+}
+function toggleRun(){
+  isRunning=!isRunning;
+  document.getElementById('runBtn').textContent=isRunning?'⏸ Pause':'▶ Start';
+  if(isRunning){
+    timerInterval=setInterval(()=>{
+      totalSeconds--;updateTimerDisplay();
+      if(totalSeconds<=0){clearInterval(timerInterval);isRunning=false;document.getElementById('runBtn').textContent='▶ Start';fireEmoji();}
+    },1000);
+  } else { clearInterval(timerInterval); }
+}
+function setTimerMin(min){totalSeconds=min*60;updateTimerDisplay();}
+function resetTimer(){clearInterval(timerInterval);isRunning=false;document.getElementById('runBtn').textContent='▶ Start';totalSeconds=50*60;updateTimerDisplay();}
+const faces=['🕵️','🔍','🚨','🏆','🎯','🧐','😼','🔦','⭐','🥳'];
+function fireEmoji(){
+  const o=document.getElementById('emojiOverlay');
+  o.textContent=faces[Math.floor(Math.random()*faces.length)];
+  o.classList.add('show');
+}
+updateTimerDisplay();
+
+function openWb(){document.getElementById('wbOverlay').classList.add('show');}
+function closeWb(){document.getElementById('wbOverlay').classList.remove('show');}
+function addStamp(label){
+  const log=document.getElementById('correctionLog');
+  log.textContent+=(log.textContent?'\n':'')+label;
+}
+function copyWb(){
+  const text=document.getElementById('correctionLog').textContent+'\n\n'+document.getElementById('wbNotes').value;
+  navigator.clipboard.writeText(text).catch(()=>{});
+}
+function clearWb(){document.getElementById('correctionLog').textContent='';document.getElementById('wbNotes').value='';}
+</script>
+
+<script src="../assets/write-bubble.js"></script>
+</body>
+</html>

@@ -1,5 +1,24 @@
 [
   {
+    "file": "trophy-heist-past-continuous-simple.html",
+    "title": "#25 The Trophy Heist",
+    "goals": {
+      "primary": [
+        "A2-07"
+      ]
+    },
+    "grammar": [
+      {
+        "file": "past-continuous.html",
+        "title": "Past Continuous"
+      },
+      {
+        "file": "past-simple.html",
+        "title": "Past Simple"
+      }
+    ]
+  },
+  {
     "file": "freeze-frame-past-continuous.html",
     "title": "#24 Freeze Frame — Goku vs Freeza",
     "goals": {
