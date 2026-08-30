@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Back to School</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/write-bubble.css">
+<style>
+:root{
+  --bg:#F4F6F8; --surface:#FFFFFF; --teal:#2A8A8A; --teal-light:#E3F2F2;
+  --ink:#1F2B33; --muted:#6B7A82; --border:#E3E8EB;
+  --orange:#E08A3C; --orange-light:#FFF3E6; --blue:#3E6FB0;
+  --green:#3FA66A; --green-light:#E5F6EC; --red:#D9534F;
+  --shadow:0 2px 8px rgba(31,43,51,.06),0 1px 2px rgba(31,43,51,.04);
+  --shadow-lg:0 8px 24px rgba(31,43,51,.10);
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);padding-bottom:90px;}
+.app-header{background:var(--surface);padding:20px 20px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.app-header h1{margin:0;font-size:22px;font-weight:800;}
+.teacher-toggle-btn{background:var(--surface);border:2px solid var(--muted);color:var(--muted);font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;padding:8px 14px;border-radius:20px;cursor:pointer;white-space:nowrap;}
+.teacher-toggle-btn.on{background:#FFF8E8;border-color:#f0dca0;color:#9a7a2e;}
+.teacher-note{display:none;background:#FFF8E8;border:1px solid #f0dca0;border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:13px;line-height:1.6;color:#5a4620;}
+body.show-teacher .teacher-note{display:block;}
+.teacher-note b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#9a7a2e;margin-bottom:6px;}
+
+.tabbar{position:sticky;top:0;z-index:50;display:flex;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:var(--shadow);-webkit-overflow-scrolling:touch;}
+.tabbar::-webkit-scrollbar{display:none;}
+.tab-btn{flex:0 0 auto;padding:14px 16px;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;}
+.tab-btn.active{color:var(--teal);border-bottom-color:var(--teal);}
+.panel{display:none;padding:18px 16px 30px;max-width:680px;margin:0 auto;}
+.panel.active{display:block;}
+.card{background:var(--surface);border-radius:16px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow);border:1px solid var(--border);}
+.card h2{margin:0 0 10px;font-size:17px;font-weight:800;}
+.card h3{margin:0 0 8px;font-size:14px;font-weight:800;color:var(--teal);}
+.fr{color:var(--blue);font-size:13px;font-style:italic;font-weight:600;margin-top:4px;}
+.nav-buttons{display:flex;justify-content:space-between;margin-top:18px;gap:10px;}
+.btn{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;padding:12px 22px;border-radius:12px;border:none;cursor:pointer;}
+.btn-primary{background:var(--teal);color:#fff;}
+.btn-secondary{background:var(--surface);color:var(--teal);border:2px solid var(--teal);}
+.btn:active{transform:scale(.97);}
+.btn:disabled{opacity:.4;cursor:default;}
+
+.hero-banner{background:linear-gradient(135deg,#2A8A8A 0%,#1f6b6b 100%);border-radius:18px;padding:22px;color:#fff;margin-bottom:14px;}
+.hero-banner h2{color:#fff;margin:0 0 6px;}
+.hero-banner p{margin:0;font-size:14px;opacity:.95;line-height:1.5;}
+.hero-banner p.fr{color:#fff;opacity:.85;font-weight:500;}
+
+.chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.chip{background:var(--teal-light);color:var(--teal);border-radius:20px;padding:8px 14px;font-weight:700;font-size:13px;}
+
+.model-recap{background:var(--teal-light);border-radius:14px;padding:14px;margin-top:14px;font-size:13px;line-height:1.6;}
+.model-recap b{color:var(--teal);}
+
+/* Vocab cards */
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:10px;}
+.vocab-card{background:var(--bg);border:2px solid var(--border);border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;user-select:none;transition:all .2s;min-height:74px;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.vocab-card .en{font-weight:800;font-size:14px;}
+.vocab-card .en .emoji{display:block;font-size:20px;margin-bottom:4px;}
+.vocab-card .fr-word{font-size:12px;color:var(--blue);font-weight:700;margin-top:4px;display:none;}
+.vocab-card.revealed .fr-word{display:block;}
+.vocab-card.mastered{background:var(--green-light);border-color:var(--green);}
+.vocab-card.mastered .fr-word{display:block;color:#1f6b4a;}
+.vocab-hint{font-size:12px;color:var(--muted);margin-top:8px;}
+
+/* Grammar */
+.rule-box{background:var(--teal-light);border-radius:10px;padding:14px;margin:10px 0;font-weight:800;text-align:center;font-size:15px;color:var(--teal);}
+.example-list{list-style:none;padding:0;margin:10px 0;}
+.example-list li{padding:8px 10px;border-left:3px solid var(--teal);background:var(--bg);border-radius:6px;margin-bottom:6px;font-size:14px;}
+.mistake-box{background:#FBE5E4;border:1px dashed var(--red);border-radius:10px;padding:10px 14px;margin-top:12px;font-size:13px;color:#8a2f2c;}
+.mistake-box b{color:var(--red);}
+
+/* Exercises */
+.ex-card{background:var(--surface);border-radius:14px;box-shadow:var(--shadow);border:1px solid var(--border);padding:16px;margin-bottom:12px;}
+.diff{font-size:11px;font-weight:800;text-transform:uppercase;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:8px;}
+.diff.easy{background:var(--green-light);color:#1f6b4a;}
+.diff.medium{background:var(--orange-light);color:#7a4a10;}
+.diff.hard{background:#FBE5E4;color:#8a2f2c;}
+.ex-q{font-weight:700;font-size:14.5px;margin-bottom:10px;line-height:1.6;}
+.ex-input{border:2px solid var(--border);border-radius:8px;padding:7px 10px;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;width:170px;}
+.ex-input:focus{outline:none;border-color:var(--teal);}
+.mc-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+.mc-btn{background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:7px 14px;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;cursor:pointer;}
+.mc-btn.correct{background:var(--green-light);border-color:var(--green);color:#1f6b4a;}
+.mc-btn.wrong{background:#FBE5E4;border-color:var(--red);color:#8a2f2c;}
+.check-btn{margin-top:10px;background:var(--teal);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-weight:700;font-size:12.5px;cursor:pointer;}
+.fb{font-size:13px;font-weight:700;margin-top:6px;display:none;}
+.fb.show{display:block;}
+.fb.ok{color:var(--green);}
+.fb.no{color:var(--red);}
+
+/* Survey simulator */
+.survey-progress{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:6px;}
+.evidence-bar{background:var(--bg);border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:12.5px;}
+.evidence-bar .row{display:flex;justify-content:space-between;margin-bottom:4px;}
+.evidence-bar b{color:var(--teal);}
+.progress-track{background:var(--border);border-radius:20px;height:8px;overflow:hidden;margin-top:4px;}
+.progress-fill{background:var(--teal);height:100%;width:0%;transition:width .3s;}
+.progress-fill.ing{background:var(--orange);}
+.chat-window{background:var(--bg);border-radius:16px;padding:14px;margin-bottom:14px;min-height:120px;}
+.msg{max-width:85%;padding:10px 14px;border-radius:14px;margin-bottom:10px;font-size:14px;line-height:1.5;}
+.msg.friend{background:var(--surface);border:1px solid var(--border);border-bottom-left-radius:4px;}
+.msg.friend .who{font-size:11px;font-weight:800;color:var(--teal);display:block;margin-bottom:3px;}
+.msg.player{background:var(--teal);color:#fff;margin-left:auto;border-bottom-right-radius:4px;}
+.msg.player .who{font-size:11px;font-weight:800;color:#dff5f5;display:block;margin-bottom:3px;}
+.chat-input-row{display:flex;gap:8px;margin-top:4px;}
+.chat-input-row input{flex:1;border:2px solid var(--border);border-radius:12px;padding:10px 12px;font-family:'Nunito',sans-serif;font-size:14px;}
+.chat-input-row input.correct{border-color:var(--green);background:var(--green-light);}
+.chat-input-row button{background:var(--teal);color:#fff;border:none;border-radius:12px;padding:10px 16px;font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;}
+.chat-feedback{font-size:12px;margin-top:8px;padding:8px 10px;border-radius:10px;display:none;}
+.chat-feedback.show{display:block;}
+.chat-feedback.good{background:var(--green-light);color:#1f6b4a;}
+.chat-feedback.hint{background:var(--orange-light);color:#7a4a10;}
+.survey-done{text-align:center;padding:20px 0;}
+.survey-done .big{font-size:40px;}
+
+/* Recap */
+.recap-toggle-btn{display:block;width:100%;background:var(--teal);color:#fff;border:none;border-radius:12px;padding:14px;font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;cursor:pointer;margin-bottom:14px;}
+.recap-card{display:none;}
+.recap-card.show{display:block;}
+.recap-code{display:inline-block;background:var(--teal);color:#fff;font-weight:800;font-size:12px;padding:4px 10px;border-radius:8px;margin-bottom:10px;}
+.recap-field{margin-bottom:12px;}
+.recap-field b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--teal);margin-bottom:4px;}
+.recap-field span, .recap-field p{font-size:14px;line-height:1.6;margin:0;}
+.summary-box{background:var(--bg);border-radius:10px;padding:12px;margin-top:10px;font-size:13px;line-height:1.7;}
+.summary-box .tag{display:inline-block;background:var(--teal-light);color:var(--teal);border-radius:8px;padding:2px 8px;font-weight:800;font-size:11px;margin:2px 3px 2px 0;}
+
+#timerBubble{position:fixed;bottom:18px;left:18px;width:60px;height:60px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;box-shadow:var(--shadow-lg);cursor:pointer;z-index:200;user-select:none;}
+#timerBubble.danger{background:var(--red);}
+#emojiOverlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:500;font-size:120px;}
+#emojiOverlay.show{display:flex;animation:zoomIn .5s ease-out;}
+@keyframes zoomIn{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
+#wbOverlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;z-index:400;}
+#wbOverlay.show{display:flex;}
+#wbPanel{background:var(--surface);width:100%;border-radius:24px 24px 0 0;padding:20px 18px 28px;max-height:85vh;overflow-y:auto;}
+#wbPanel h3{margin:0 0 12px;font-size:16px;font-weight:800;}
+.wb-close{float:right;background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;}
+.timer-controls{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.timer-controls button{flex:1;min-width:60px;padding:10px;border-radius:10px;border:2px solid var(--border);background:var(--bg);font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;}
+.stamp-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.stamp-btn{font-size:20px;background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:8px 10px;cursor:pointer;}
+#correctionLog{background:var(--bg);border-radius:10px;padding:10px;min-height:60px;font-size:13px;margin-bottom:10px;white-space:pre-wrap;}
+#wbNotes{width:100%;min-height:80px;border:2px solid var(--border);border-radius:10px;padding:10px;font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:10px;resize:vertical;}
+.wb-actions{display:flex;gap:8px;}
+.wb-actions button{flex:1;padding:10px;border-radius:10px;border:none;font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;}
+.wb-copy{background:var(--teal);color:#fff;}
+.wb-clear{background:#FBE5E4;color:var(--red);}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <h1>🎒 Back to School</h1>
+  <button class="teacher-toggle-btn" id="teacherToggleBtn" onclick="toggleTeacherNotes()">👤 Teacher notes</button>
+</div>
+
+<div class="tabbar" id="tabbar">
+  <button class="tab-btn active" data-tab="warmup">Warm-Up</button>
+  <button class="tab-btn" data-tab="vocab">Subjects</button>
+  <button class="tab-btn" data-tab="grammar">Grammar &amp; Practice</button>
+  <button class="tab-btn" data-tab="survey">Survey</button>
+  <button class="tab-btn" data-tab="recap">Recap</button>
+</div>
+
+<!-- WARM-UP -->
+<div class="panel active" id="warmup">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    New school term theme, recycling A1-04 (like/love/hate + verb-ing) with new lexis (school subjects) instead of food/hobbies. Verbal-only warm-up, no typing yet — quick chat about starting school again.
+  </div>
+
+  <div class="hero-banner">
+    <h2>New term, new timetable!</h2>
+    <p>Answer out loud — no writing needed here!</p>
+    <p class="fr">Réponds à l'oral — pas besoin d'écrire ici !</p>
+  </div>
+
+  <div class="card">
+    <h3>Talk it out</h3>
+    <p class="fr">Discutons</p>
+    <div class="chip-row">
+      <span class="chip">Are you happy to go back to school?</span>
+      <span class="chip">What time do your classes start?</span>
+      <span class="chip">Do you have a favourite subject already?</span>
+      <span class="chip">How many subjects do you study this year?</span>
+    </div>
+    <div class="model-recap">
+      <b>Example:</b> "I'm happy — I like seeing my friends again." / "My classes start at 8:30."
+      <p class="fr" style="margin-top:6px;">"Je suis content — j'aime bien revoir mes amis." / "Mes cours commencent à 8h30."</p>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <span></span>
+    <button class="btn btn-primary" onclick="goTab('vocab')">Next →</button>
+  </div>
+</div>
+
+<!-- VOCAB -->
+<div class="panel" id="vocab">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    Pre-teach these 12 subjects before the grammar/practice tab — he'll need them to build his own like/love/hate sentences later. Tap once = French, tap again = mastered ✓, tap again = reset.
+  </div>
+  <div class="card">
+    <h2>School subjects</h2>
+    <p class="fr">Les matières scolaires</p>
+    <p class="vocab-hint">Tap a card to see the French, tap again once you know it by heart.</p>
+    <div class="vocab-grid" id="subjectGrid"></div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('warmup')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('grammar')">Next →</button>
+  </div>
+</div>
+
+<!-- GRAMMAR & PRACTICE -->
+<div class="panel" id="grammar">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    A1-04 review — he's seen like/love/hate + verb-ing before (trip-prep lesson #18). This is quick recap, not first teaching. Move fast to the exercises.
+  </div>
+  <div class="card">
+    <h2>like / love / hate + subject or verb-ing</h2>
+    <p class="fr">aimer bien / adorer / détester + matière ou verbe en -ing</p>
+    <div class="rule-box">Subject + like/love/hate + noun<br>or<br>Subject + like/love/hate + verb-ing</div>
+    <ul class="example-list">
+      <li>I <b>love Science</b>. <span class="fr">🇫🇷 J'adore les sciences.</span></li>
+      <li>He <b>likes doing experiments</b>. <span class="fr">🇫🇷 Il aime bien faire des expériences.</span></li>
+      <li>They <b>hate writing</b> essays. <span class="fr">🇫🇷 Ils détestent écrire des dissertations.</span></li>
+      <li>She <b>doesn't like Maths</b>. <span class="fr">🇫🇷 Elle n'aime pas les maths.</span></li>
+    </ul>
+    <div class="mistake-box"><b>⚠ Common mistake:</b> Don't add "to" — say <b>"I like studying"</b>, not "I like to studying".</div>
+  </div>
+
+  <div class="ex-card">
+    <span class="diff easy">Easy</span>
+    <div class="ex-q">1. I love ___ (paint) in Art class.</div>
+    <input class="ex-input" id="ex1" placeholder="type here">
+    <button class="check-btn" onclick="checkFill('ex1','painting','fb1')">Check</button>
+    <div class="fb" id="fb1"></div>
+  </div>
+
+  <div class="ex-card">
+    <span class="diff easy">Easy</span>
+    <div class="ex-q">2. He hates ___ (do) homework for Maths.</div>
+    <input class="ex-input" id="ex2" placeholder="type here">
+    <button class="check-btn" onclick="checkFill('ex2','doing','fb2')">Check</button>
+    <div class="fb" id="fb2"></div>
+  </div>
+
+  <div class="ex-card">
+    <span class="diff medium">Medium</span>
+    <div class="ex-q">3. Choose the correct sentence:</div>
+    <div class="mc-row">
+      <button class="mc-btn" onclick="checkMC(this,false)">I like play football at PE.</button>
+      <button class="mc-btn" onclick="checkMC(this,true)">I like playing football at PE.</button>
+      <button class="mc-btn" onclick="checkMC(this,false)">I likes playing football at PE.</button>
+    </div>
+  </div>
+
+  <div class="ex-card">
+    <span class="diff medium">Medium</span>
+    <div class="ex-q">4. We love ___ (learn) about the past in History.</div>
+    <input class="ex-input" id="ex4" placeholder="type here">
+    <button class="check-btn" onclick="checkFill('ex4','learning','fb4')">Check</button>
+    <div class="fb" id="fb4"></div>
+  </div>
+
+  <div class="ex-card">
+    <span class="diff hard">Hard</span>
+    <div class="ex-q">5. Find and fix the mistake: "I like to studying Science."</div>
+    <input class="ex-input" style="width:260px;" id="ex5" placeholder="type the correct sentence">
+    <button class="check-btn" onclick="checkFill('ex5','i like studying science','fb5')">Check</button>
+    <div class="fb" id="fb5"></div>
+  </div>
+
+  <div class="ex-card">
+    <span class="diff hard">Hard</span>
+    <div class="ex-q">6. Choose the correct form: "She doesn't like ___ (write) essays for English."</div>
+    <div class="mc-row">
+      <button class="mc-btn" onclick="checkMC(this,false)">to write</button>
+      <button class="mc-btn" onclick="checkMC(this,true)">writing</button>
+      <button class="mc-btn" onclick="checkMC(this,false)">writes</button>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('vocab')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('survey')">Next →</button>
+  </div>
+</div>
+
+<!-- SURVEY (evidence task) -->
+<div class="panel" id="survey">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    A1-04 evidence task: six true like/dislike sentences about subjects, at least three using verb-ing. Léo (chatbot friend) asks about a different subject each turn — Micha types a full sentence. Soft-check looks for like/love/hate/don't like/hate and separately flags any "-ing" word to track the verb-ing count. Talk through each answer together rather than relying only on the auto-check; the bar below is just to keep the target visible.
+  </div>
+  <div class="card">
+    <h2>Léo's timetable survey</h2>
+    <p class="fr">Le sondage de Léo sur l'emploi du temps</p>
+    <p style="font-size:13px;line-height:1.7;">Your friend Léo wants to know what you think of your new timetable. Answer with a full sentence each time!</p>
+    <div class="evidence-bar">
+      <div class="row"><span>Sentences with like/love/hate</span><b id="countSentences">0 / 6</b></div>
+      <div class="progress-track"><div class="progress-fill" id="barSentences"></div></div>
+      <div class="row" style="margin-top:8px;"><span>Sentences with verb-ing</span><b id="countIng">0 / 3</b></div>
+      <div class="progress-track"><div class="progress-fill ing" id="barIng"></div></div>
+    </div>
+    <div class="survey-progress" id="surveyProgress">Question 1 of 6</div>
+    <div class="chat-window" id="chatWindow"></div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('grammar')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('recap')">Next →</button>
+  </div>
+</div>
+
+<!-- RECAP -->
+<div class="panel" id="recap">
+  <div class="card">
+    <h2>Lesson Recap</h2>
+    <p class="fr">Récapitulatif de la leçon</p>
+    <button class="recap-toggle-btn" onclick="toggleRecap()" id="recapBtn">Show can-do card</button>
+    <div class="recap-card" id="recapCard">
+      <div class="recap-code">A1-04 · Likes &amp; Dislikes (review)</div>
+      <div class="recap-field">
+        <b>Goal</b>
+        <p>Can say what he/she likes, loves and hates.</p>
+      </div>
+      <div class="recap-field">
+        <b>Grammar focus</b>
+        <span>like / love / hate + noun · like / love / hate + verb-ing</span>
+      </div>
+      <div class="recap-field">
+        <b>Evidence task</b>
+        <p>Six true like/dislike sentences about school subjects, at least three with verb + -ing, produced in Léo's timetable survey.</p>
+      </div>
+    </div>
+    <div class="summary-box" id="sessionSummary">Complete the survey tab to see your session summary here.</div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('survey')">← Back</button>
+    <span></span>
+  </div>
+</div>
+
+<div id="timerBubble" onclick="openWb()">50:00</div>
+<div id="emojiOverlay" onclick="this.classList.remove('show')"></div>
+
+<div id="wbOverlay" onclick="if(event.target===this)closeWb()">
+  <div id="wbPanel">
+    <button class="wb-close" onclick="closeWb()">✕</button>
+    <h3>⏱ Whiteboard</h3>
+    <div class="timer-controls">
+      <button onclick="setTimerMin(5)">5m</button>
+      <button onclick="setTimerMin(10)">10m</button>
+      <button onclick="setTimerMin(15)">15m</button>
+      <button onclick="toggleRun()" id="runBtn">▶ Start</button>
+      <button onclick="resetTimer()">↺ Reset</button>
+    </div>
+    <h3 style="font-size:14px;">Correction Stamps</h3>
+    <div class="stamp-row">
+      <button class="stamp-btn" onclick="addStamp('✅')">✅</button>
+      <button class="stamp-btn" onclick="addStamp('⭐')">⭐</button>
+      <button class="stamp-btn" onclick="addStamp('🔁 Try again')">🔁</button>
+      <button class="stamp-btn" onclick="addStamp('🗣 Pronunciation')">🗣</button>
+      <button class="stamp-btn" onclick="addStamp('📐 Grammar')">📐</button>
+    </div>
+    <div id="correctionLog"></div>
+    <h3 style="font-size:14px;">Notes</h3>
+    <textarea id="wbNotes" placeholder="Notes for this lesson..."></textarea>
+    <div class="wb-actions">
+      <button class="wb-copy" onclick="copyWb()">Copy</button>
+      <button class="wb-clear" onclick="clearWb()">Clear</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function goTab(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector(`.tab-btn[data-tab="${id}"]`).classList.add('active');
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('.tab-btn').forEach(btn=>btn.addEventListener('click',()=>goTab(btn.dataset.tab)));
+
+function toggleTeacherNotes(){
+  document.body.classList.toggle('show-teacher');
+  document.getElementById('teacherToggleBtn').classList.toggle('on');
+}
+
+function toggleRecap(){
+  const card=document.getElementById('recapCard');
+  const btn=document.getElementById('recapBtn');
+  card.classList.toggle('show');
+  btn.textContent=card.classList.contains('show')?'Hide can-do card':'Show can-do card';
+}
+
+/* Vocab cards */
+const subjects=[
+  ['📐','Maths','les maths'],
+  ['🔬','Science','les sciences'],
+  ['🇬🇧','English','l’anglais'],
+  ['🇫🇷','French','le français'],
+  ['🎨','Art','les arts plastiques'],
+  ['🎵','Music','la musique'],
+  ['⚽','PE','le sport / l’EPS'],
+  ['🏛','History','l’histoire'],
+  ['🌍','Geography','la géographie'],
+  ['💻','IT','l’informatique'],
+  ['🧪','Chemistry','la chimie'],
+  ['📖','Literature','la littérature']
+];
+function buildGrid(list, gridId){
+  const grid=document.getElementById(gridId);
+  list.forEach(([emoji,en,fr])=>{
+    const card=document.createElement('div');
+    card.className='vocab-card';
+    card.dataset.state='0';
+    card.innerHTML=`<div class="en"><span class="emoji">${emoji}</span>${en}</div><div class="fr-word">${fr}</div>`;
+    card.addEventListener('click',()=>{
+      let s=(parseInt(card.dataset.state)+1)%3;
+      card.dataset.state=s;
+      card.classList.remove('revealed','mastered');
+      if(s===1) card.classList.add('revealed');
+      if(s===2) card.classList.add('mastered');
+    });
+    grid.appendChild(card);
+  });
+}
+buildGrid(subjects,'subjectGrid');
+
+/* Exercises */
+function checkFill(inputId, answer, fbId){
+  const val=document.getElementById(inputId).value.trim().toLowerCase().replace(/\.$/, '');
+  const fb=document.getElementById(fbId);
+  fb.classList.add('show');
+  if(val===answer){
+    fb.textContent='✓ Correct!';
+    fb.className='fb show ok';
+  } else {
+    fb.textContent='✗ Try again.';
+    fb.className='fb show no';
+  }
+}
+function checkMC(btn, isCorrect){
+  const row=btn.parentElement;
+  row.querySelectorAll('.mc-btn').forEach(b=>b.classList.remove('correct','wrong'));
+  btn.classList.add(isCorrect?'correct':'wrong');
+}
+
+/* Survey simulator (evidence task) */
+const SURVEY_STEPS=[
+  {friend:"Hey! First question — what do you think of Maths this year? 📐", placeholder:"I... Maths."},
+  {friend:"Nice! And what about Science? 🔬", placeholder:"I... Science."},
+  {friend:"Cool. Tell me something you like or hate doing in PE. ⚽", placeholder:"I... playing/running/..."},
+  {friend:"What about English or French — any favourite? 🇬🇧🇫🇷", placeholder:"I... English/French."},
+  {friend:"Do you enjoy anything in Art or Music? 🎨🎵", placeholder:"I... drawing/singing/..."},
+  {friend:"Last one — History, Geography or IT: pick one and tell me your opinion! 🏛🌍💻", placeholder:"I... History/Geography/IT."}
+];
+let surveyStep=0;
+let sentenceCount=0;
+let ingCount=0;
+
+function updateEvidenceBar(){
+  document.getElementById('countSentences').textContent=`${sentenceCount} / 6`;
+  document.getElementById('countIng').textContent=`${ingCount} / 3`;
+  document.getElementById('barSentences').style.width=Math.min(sentenceCount/6*100,100)+'%';
+  document.getElementById('barIng').style.width=Math.min(ingCount/3*100,100)+'%';
+}
+
+function renderSurvey(){
+  const win=document.getElementById('chatWindow');
+  document.getElementById('surveyProgress').textContent=`Question ${Math.min(surveyStep+1,SURVEY_STEPS.length)} of ${SURVEY_STEPS.length}`;
+  if(surveyStep>=SURVEY_STEPS.length){
+    win.innerHTML+=`<div class="survey-done"><div class="big">🎉</div><p style="font-weight:800;">Survey complete! Check your evidence bar above, then head to the Recap tab.</p></div>`;
+    renderSummary();
+    return;
+  }
+  const step=SURVEY_STEPS[surveyStep];
+  const friendMsg=document.createElement('div');
+  friendMsg.className='msg friend';
+  friendMsg.innerHTML=`<span class="who">Léo</span>${step.friend}`;
+  win.appendChild(friendMsg);
+
+  const controls=document.createElement('div');
+  controls.id='surveyControls';
+  controls.innerHTML=`
+    <div class="chat-input-row">
+      <input type="text" id="surveyTextInput" placeholder="${step.placeholder}">
+      <button onclick="answerSurvey()">Send</button>
+    </div>
+    <div class="chat-feedback" id="surveyFeedback"></div>
+  `;
+  win.appendChild(controls);
+  win.scrollTop=win.scrollHeight;
+  document.getElementById('surveyTextInput').focus();
+}
+
+function answerSurvey(){
+  const input=document.getElementById('surveyTextInput');
+  const feedback=document.getElementById('surveyFeedback');
+  const val=input.value.trim();
+  if(!val) return;
+  const lower=val.toLowerCase();
+  const hasOpinion=['like','love','hate','enjoy'].some(k=>lower.includes(k));
+  const hasIng=/\b\w+ing\b/.test(lower);
+  input.disabled=true;
+  input.classList.toggle('correct',hasOpinion);
+  feedback.classList.add('show');
+
+  if(hasOpinion){
+    sentenceCount++;
+    if(hasIng) ingCount++;
+    feedback.className='chat-feedback show good';
+    feedback.textContent=hasIng?'Great — like/love/hate AND verb-ing! ✅':'Nice — that counts as an opinion sentence! ✅';
+  } else {
+    feedback.className='chat-feedback show hint';
+    feedback.textContent='Try using like, love, hate or enjoy in your sentence — talk it through with your teacher.';
+  }
+  updateEvidenceBar();
+
+  const win=document.getElementById('chatWindow');
+  const playerMsg=document.createElement('div');
+  playerMsg.className='msg player';
+  playerMsg.innerHTML=`<span class="who">You</span>${val}`;
+  win.appendChild(playerMsg);
+  surveyAnswers.push(val);
+
+  const nextBtn=document.createElement('button');
+  nextBtn.className='btn btn-primary';
+  nextBtn.style.marginTop='10px';
+  nextBtn.textContent='Continue →';
+  nextBtn.onclick=()=>{ surveyStep++; renderSurvey(); };
+  win.appendChild(nextBtn);
+  win.scrollTop=win.scrollHeight;
+}
+
+let surveyAnswers=[];
+function renderSummary(){
+  const box=document.getElementById('sessionSummary');
+  if(surveyAnswers.length===0){
+    box.textContent='Complete the survey tab to see your session summary here.';
+    return;
+  }
+  box.innerHTML=`
+    <b>Session summary</b><br>
+    <span class="tag">${sentenceCount}/6 opinion sentences</span>
+    <span class="tag">${ingCount}/3 with verb-ing</span>
+    <div style="margin-top:8px;">${surveyAnswers.map(a=>'• '+a).join('<br>')}</div>
+  `;
+}
+renderSurvey();
+
+let totalSeconds=50*60,timerInterval=null,isRunning=false;
+function updateTimerDisplay(){
+  const m=Math.floor(totalSeconds/60).toString().padStart(2,'0');
+  const s=(totalSeconds%60).toString().padStart(2,'0');
+  const b=document.getElementById('timerBubble');
+  b.textContent=`${m}:${s}`;
+  b.classList.toggle('danger',isRunning&&totalSeconds<=30);
+}
+function toggleRun(){
+  isRunning=!isRunning;
+  document.getElementById('runBtn').textContent=isRunning?'⏸ Pause':'▶ Start';
+  if(isRunning){
+    timerInterval=setInterval(()=>{
+      totalSeconds--;updateTimerDisplay();
+      if(totalSeconds<=0){clearInterval(timerInterval);isRunning=false;document.getElementById('runBtn').textContent='▶ Start';fireEmoji();}
+    },1000);
+  } else { clearInterval(timerInterval); }
+}
+function setTimerMin(min){totalSeconds=min*60;updateTimerDisplay();}
+function resetTimer(){clearInterval(timerInterval);isRunning=false;document.getElementById('runBtn').textContent='▶ Start';totalSeconds=50*60;updateTimerDisplay();}
+const faces=['😀','😎','🤩','😜','🥳','😯','🤓','😼','🙃','😺'];
+function fireEmoji(){
+  const o=document.getElementById('emojiOverlay');
+  o.textContent=faces[Math.floor(Math.random()*faces.length)];
+  o.classList.add('show');
+}
+updateTimerDisplay();
+updateEvidenceBar();
+
+function openWb(){document.getElementById('wbOverlay').classList.add('show');}
+function closeWb(){document.getElementById('wbOverlay').classList.remove('show');}
+function addStamp(label){
+  const log=document.getElementById('correctionLog');
+  log.textContent+=(log.textContent?'\n':'')+label;
+}
+function copyWb(){
+  const text=document.getElementById('correctionLog').textContent+'\n\n'+document.getElementById('wbNotes').value;
+  navigator.clipboard.writeText(text).catch(()=>{});
+}
+function clearWb(){document.getElementById('correctionLog').textContent='';document.getElementById('wbNotes').value='';}
+</script>
+
+<script src="../assets/write-bubble.js"></script>
+</body>
+</html>
