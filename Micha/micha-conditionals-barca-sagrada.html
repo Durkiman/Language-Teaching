@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Barça &amp; La Sagrada Família</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/write-bubble.css">
+<style>
+:root{
+  --bg:#F4F6F8; --surface:#FFFFFF; --teal:#A50044; --teal-light:#F7E5EC;
+  --blue:#004D98; --blue-light:#E3EBF5;
+  --ink:#1F2B33; --muted:#6B7A82; --border:#E3E8EB;
+  --orange:#E08A3C; --orange-light:#FFF3E6;
+  --green:#3FA66A; --green-light:#E5F6EC; --red:#D9534F;
+  --shadow:0 2px 8px rgba(31,43,51,.06),0 1px 2px rgba(31,43,51,.04);
+  --shadow-lg:0 8px 24px rgba(31,43,51,.10);
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);padding-bottom:90px;}
+.app-header{background:var(--surface);padding:20px 20px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.app-header h1{margin:0;font-size:21px;font-weight:800;}
+.teacher-toggle-btn{background:var(--surface);border:2px solid var(--muted);color:var(--muted);font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;padding:8px 14px;border-radius:20px;cursor:pointer;white-space:nowrap;}
+.teacher-toggle-btn.on{background:#FFF8E8;border-color:#f0dca0;color:#9a7a2e;}
+.teacher-note{display:none;background:#FFF8E8;border:1px solid #f0dca0;border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:13px;line-height:1.6;color:#5a4620;}
+body.show-teacher .teacher-note{display:block;}
+.teacher-note b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#9a7a2e;margin-bottom:6px;}
+
+.tabbar{position:sticky;top:0;z-index:50;display:flex;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:var(--shadow);-webkit-overflow-scrolling:touch;}
+.tabbar::-webkit-scrollbar{display:none;}
+.tab-btn{flex:0 0 auto;padding:14px 16px;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;}
+.tab-btn.active{color:var(--teal);border-bottom-color:var(--teal);}
+.panel{display:none;padding:18px 16px 30px;max-width:680px;margin:0 auto;}
+.panel.active{display:block;}
+.card{background:var(--surface);border-radius:16px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow);border:1px solid var(--border);}
+.card h2{margin:0 0 10px;font-size:17px;font-weight:800;}
+.card h3{margin:0 0 8px;font-size:14px;font-weight:800;color:var(--teal);}
+.fr{color:#3E6FB0;font-size:13px;font-style:italic;font-weight:600;margin-top:4px;}
+.nav-buttons{display:flex;justify-content:space-between;margin-top:18px;gap:10px;}
+.btn{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;padding:12px 22px;border-radius:12px;border:none;cursor:pointer;}
+.btn-primary{background:var(--teal);color:#fff;}
+.btn-secondary{background:var(--surface);color:var(--teal);border:2px solid var(--teal);}
+.btn:active{transform:scale(.97);}
+.btn:disabled{opacity:.4;cursor:default;}
+
+.hero-banner{background:linear-gradient(135deg,var(--blue) 0%,var(--teal) 100%);border-radius:18px;padding:22px;color:#fff;margin-bottom:14px;}
+.hero-banner h2{color:#fff;margin:0 0 6px;}
+.hero-banner p{margin:0;font-size:14px;opacity:.95;line-height:1.5;}
+.hero-banner p.fr{color:#fff;opacity:.85;font-weight:500;}
+
+.chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.chip{background:var(--teal-light);color:var(--teal);border-radius:20px;padding:8px 14px;font-weight:700;font-size:13px;}
+
+.model-recap{background:var(--teal-light);border-radius:14px;padding:14px;margin-top:14px;font-size:13px;line-height:1.6;}
+.model-recap b{color:var(--teal);}
+
+/* Reading sights */
+.sight-card{background:var(--surface);border-radius:16px;box-shadow:var(--shadow);border:1px solid var(--border);padding:16px;margin-bottom:14px;}
+.sight-card .head{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.sight-card .emoji{font-size:26px;}
+.sight-card h3{margin:0;font-size:15.5px;}
+.sight-card p{font-size:14px;line-height:1.7;margin:0 0 6px;}
+.sight-card .vocab{display:inline-block;background:var(--teal-light);color:var(--teal);border-radius:6px;padding:1px 6px;font-weight:800;}
+.sight-card .vocab.b{background:var(--blue-light);color:var(--blue);}
+.sight-card .fr-mini{font-size:12px;color:#3E6FB0;font-style:italic;margin:0;}
+.read-progress{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:10px;}
+
+/* Grammar */
+.rule-box{background:var(--teal-light);border-radius:10px;padding:14px;margin:10px 0;font-weight:800;text-align:center;font-size:15px;color:var(--teal);}
+.example-list{list-style:none;padding:0;margin:10px 0;}
+.example-list li{padding:8px 10px;border-left:3px solid var(--teal);background:var(--bg);border-radius:6px;margin-bottom:6px;font-size:14px;}
+.mistake-box{background:#FBE5E4;border:1px dashed var(--red);border-radius:10px;padding:10px 14px;margin-top:12px;font-size:13px;color:#8a2f2c;}
+.mistake-box b{color:var(--red);}
+
+/* Exercises */
+.ex-card{background:var(--surface);border-radius:14px;box-shadow:var(--shadow);border:1px solid var(--border);padding:16px;margin-bottom:12px;}
+.diff{font-size:11px;font-weight:800;text-transform:uppercase;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:8px;}
+.diff.easy{background:var(--green-light);color:#1f6b4a;}
+.diff.medium{background:var(--orange-light);color:#7a4a10;}
+.diff.hard{background:#FBE5E4;color:#8a2f2c;}
+.ex-q{font-weight:700;font-size:14.5px;margin-bottom:6px;line-height:1.6;}
+.ex-tip{font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.5;}
+.ex-tip b{color:var(--teal);}
+.ex-fr{font-size:12px;color:#3E6FB0;font-style:italic;margin-bottom:10px;}
+.ex-input{border:2px solid var(--border);border-radius:8px;padding:7px 10px;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;width:150px;}
+.ex-input.wide{width:100%;max-width:320px;}
+.ex-input:focus{outline:none;border-color:var(--teal);}
+.mc-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+.mc-btn{background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:7px 14px;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;cursor:pointer;}
+.mc-btn.correct{background:var(--green-light);border-color:var(--green);color:#1f6b4a;}
+.mc-btn.wrong{background:#FBE5E4;border-color:var(--red);color:#8a2f2c;}
+.check-btn{margin-top:10px;background:var(--teal);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-weight:700;font-size:12.5px;cursor:pointer;}
+.fb{font-size:13px;font-weight:700;margin-top:6px;display:none;}
+.fb.show{display:block;}
+.fb.ok{color:var(--green);}
+.fb.no{color:var(--red);}
+
+/* Score bar */
+.score-bar{background:var(--bg);border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:12.5px;display:flex;justify-content:space-between;align-items:center;}
+.score-bar b{color:var(--teal);}
+
+/* Chat simulator */
+.evidence-bar{background:var(--bg);border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:12.5px;}
+.evidence-bar .row{display:flex;justify-content:space-between;margin-bottom:4px;}
+.evidence-bar b{color:var(--teal);}
+.progress-track{background:var(--border);border-radius:20px;height:8px;overflow:hidden;margin-top:4px;}
+.progress-fill{background:var(--teal);height:100%;width:0%;transition:width .3s;}
+.chat-window{background:var(--bg);border-radius:16px;padding:14px;margin-bottom:14px;min-height:120px;}
+.msg{max-width:85%;padding:10px 14px;border-radius:14px;margin-bottom:10px;font-size:14px;line-height:1.5;}
+.msg.friend{background:var(--surface);border:1px solid var(--border);border-bottom-left-radius:4px;}
+.msg.friend .who{font-size:11px;font-weight:800;color:var(--teal);display:block;margin-bottom:3px;}
+.msg.player{background:var(--teal);color:#fff;margin-left:auto;border-bottom-right-radius:4px;}
+.msg.player .who{font-size:11px;font-weight:800;color:#ffd7e6;display:block;margin-bottom:3px;}
+.chat-input-row{display:flex;gap:8px;margin-top:4px;}
+.chat-input-row input{flex:1;border:2px solid var(--border);border-radius:12px;padding:10px 12px;font-family:'Nunito',sans-serif;font-size:14px;}
+.chat-input-row input.correct{border-color:var(--green);background:var(--green-light);}
+.chat-input-row button{background:var(--teal);color:#fff;border:none;border-radius:12px;padding:10px 16px;font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;}
+.chat-feedback{font-size:12px;margin-top:8px;padding:8px 10px;border-radius:10px;display:none;}
+.chat-feedback.show{display:block;}
+.chat-feedback.good{background:var(--green-light);color:#1f6b4a;}
+.chat-feedback.hint{background:var(--orange-light);color:#7a4a10;}
+.survey-done{text-align:center;padding:20px 0;}
+.survey-done .big{font-size:40px;}
+
+/* Recap */
+.recap-toggle-btn{display:block;width:100%;background:var(--teal);color:#fff;border:none;border-radius:12px;padding:14px;font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;cursor:pointer;margin-bottom:14px;}
+.recap-card{display:none;}
+.recap-card.show{display:block;}
+.recap-code{display:inline-block;background:var(--teal);color:#fff;font-weight:800;font-size:12px;padding:4px 10px;border-radius:8px;margin-bottom:10px;}
+.recap-field{margin-bottom:12px;}
+.recap-field b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--teal);margin-bottom:4px;}
+.recap-field span, .recap-field p{font-size:14px;line-height:1.6;margin:0;}
+.summary-box{background:var(--bg);border-radius:10px;padding:12px;margin-top:10px;font-size:13px;line-height:1.7;}
+.summary-box .tag{display:inline-block;background:var(--teal-light);color:var(--teal);border-radius:8px;padding:2px 8px;font-weight:800;font-size:11px;margin:2px 3px 2px 0;}
+
+#timerBubble{position:fixed;bottom:18px;left:18px;width:60px;height:60px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;box-shadow:var(--shadow-lg);cursor:pointer;z-index:200;user-select:none;}
+#timerBubble.danger{background:var(--red);}
+#emojiOverlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:500;font-size:120px;}
+#emojiOverlay.show{display:flex;animation:zoomIn .5s ease-out;}
+@keyframes zoomIn{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
+#wbOverlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;z-index:400;}
+#wbOverlay.show{display:flex;}
+#wbPanel{background:var(--surface);width:100%;border-radius:24px 24px 0 0;padding:20px 18px 28px;max-height:85vh;overflow-y:auto;}
+#wbPanel h3{margin:0 0 12px;font-size:16px;font-weight:800;}
+.wb-close{float:right;background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;}
+.timer-controls{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.timer-controls button{flex:1;min-width:60px;padding:10px;border-radius:10px;border:2px solid var(--border);background:var(--bg);font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;}
+.stamp-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.stamp-btn{font-size:20px;background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:8px 10px;cursor:pointer;}
+#correctionLog{background:var(--bg);border-radius:10px;padding:10px;min-height:60px;font-size:13px;margin-bottom:10px;white-space:pre-wrap;}
+#wbNotes{width:100%;min-height:80px;border:2px solid var(--border);border-radius:10px;padding:10px;font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:10px;resize:vertical;}
+.wb-actions{display:flex;gap:8px;}
+.wb-actions button{flex:1;padding:10px;border-radius:10px;border:none;font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;}
+.wb-copy{background:var(--teal);color:#fff;}
+.wb-clear{background:#FBE5E4;color:var(--red);}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <h1>⚽ Barça &amp; ⛪ La Sagrada Família</h1>
+  <button class="teacher-toggle-btn" id="teacherToggleBtn" onclick="toggleTeacherNotes()">👤 Teacher notes</button>
+</div>
+
+<div class="tabbar" id="tabbar">
+  <button class="tab-btn active" data-tab="warmup">Warm-Up</button>
+  <button class="tab-btn" data-tab="reading">Reading</button>
+  <button class="tab-btn" data-tab="check">Check</button>
+  <button class="tab-btn" data-tab="practice">Practice</button>
+  <button class="tab-btn" data-tab="talk">Talk It Out</button>
+  <button class="tab-btn" data-tab="recap">Recap</button>
+</div>
+
+<!-- WARM-UP -->
+<div class="panel active" id="warmup">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    New can-do card: A2-19 (zero &amp; first conditional). Verbal warm-up only — activate what Micha already knows about Barça and Gaudí before reading. If he doesn't know Gaudí, that's fine, the reading introduces him.
+  </div>
+
+  <div class="hero-banner">
+    <h2>Two icons, one city: Barcelona</h2>
+    <p>Answer out loud — no writing needed here!</p>
+    <p class="fr">Réponds à l'oral — pas besoin d'écrire ici !</p>
+  </div>
+
+  <div class="card">
+    <h3>Talk it out</h3>
+    <p class="fr">Discutons</p>
+    <div class="chip-row">
+      <span class="chip">Do you know FC Barcelona's colours?</span>
+      <span class="chip">Have you heard the name Gaudí before?</span>
+      <span class="chip">What's your favourite football stadium?</span>
+      <span class="chip">What does "under construction" mean?</span>
+    </div>
+    <div class="model-recap">
+      <b>Example:</b> "I think Barça plays in blue and red." / "No, I don't know who Gaudí is." / "Under construction means the building isn't finished yet."
+      <p class="fr" style="margin-top:6px;">"Je pense que le Barça joue en bleu et rouge." / "Non, je ne sais pas qui est Gaudí." / "'Under construction' veut dire que le bâtiment n'est pas encore fini."</p>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <span></span>
+    <button class="btn btn-primary" onclick="goTab('reading')">Next →</button>
+  </div>
+</div>
+
+<!-- READING -->
+<div class="panel" id="reading">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    Two short paragraphs, A2-level. Read aloud together, check vocab, then move to Check. Both texts share a "still not finished" thread — this sets up the conditional grammar in Practice (if you visit now, you will still see building work).
+  </div>
+  <div class="card">
+    <h2>Barcelona's two unfinished icons</h2>
+    <p class="fr">Les deux icônes inachevées de Barcelone</p>
+    <p class="read-progress">Barcelona has two very famous places. They're both huge, both loved by millions of visitors — and both are <span class="vocab">still under construction</span>, even today!</p>
+  </div>
+
+  <div class="sight-card">
+    <div class="head"><span class="emoji">⚽</span><h3>FC Barcelona: the Blaugrana</h3></div>
+    <p>FC Barcelona — everyone calls it <span class="vocab b">Barça</span> — is one of the most famous football clubs in the world. Fans <span class="vocab b">founded</span> the club in 1899, and the players still wear the same colours today: blue and dark red. People call these colours "<span class="vocab b">blaugrana</span>". Barça's stadium, <span class="vocab b">Camp Nou</span>, is currently being rebuilt. Right now it holds about 62,000 fans, but soon it will hold 105,000 — more than any other stadium in Europe!</p>
+    <p class="fr-mini">Le Barça (les couleurs "blaugrana" = bleu et grenat) joue au Camp Nou, actuellement en reconstruction.</p>
+  </div>
+
+  <div class="sight-card">
+    <div class="head"><span class="emoji">⛪</span><h3>La Sagrada Família: Gaudí's masterpiece</h3></div>
+    <p>The architect Antoni Gaudí started building this enormous church in 1882 — more than 140 years ago! In February 2026, workers finally finished the highest tower, the <span class="vocab">Tower of Jesus Christ</span>. At 172.5 metres, La Sagrada Família is now the tallest church in the world. But it still isn't 100% finished: some parts, like the <span class="vocab">Glory Façade</span>, won't be ready until around 2034.</p>
+    <p class="fr-mini">L'architecte Gaudí a commencé la Sagrada Família en 1882. La tour centrale est enfin terminée (2026), mais le bâtiment entier ne sera pas fini avant 2034 environ.</p>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('warmup')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('check')">Next →</button>
+  </div>
+</div>
+
+<!-- CHECK -->
+<div class="panel" id="check">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    Auto-scored comprehension check, all based directly on the reading. Talk through wrong answers together rather than moving straight on.
+  </div>
+  <div class="card">
+    <h2>Comprehension check</h2>
+    <p class="fr">Vérification de la compréhension</p>
+    <div class="score-bar"><span>Score</span><b id="scoreDisplay">0 / 6</b></div>
+  </div>
+
+  <div class="ex-card">
+    <span class="diff easy">Easy</span>
+    <div class="ex-q">1. True or false: FC Barcelona was founded in 1899.</div>
+    <div class="mc-row">
+      <button class="mc-btn" onclick="checkScored(this,true)">True</button>
+      <button class="mc-btn" onclick="checkScored(this,false)">False</button>
+    </div>
+  </div>
+
+  <div class="ex-card">
+    <span class="diff easy">Easy</span>
+    <div class="ex-q">2. Who designed La Sagrada Família?</div>
+    <div class="mc-row">
+      <button class="mc-btn" onclick="checkScored(this,false)">Pablo Picasso</button>
+      <button class="mc-btn" onclick="checkScored(this,true)">Antoni Gaudí</button>
+      <button class="mc-btn" onclick="checkScored(this,false)">Lionel Messi</button>
+    </div>
+  </div>
+
+  <div class="ex-card">
+    <span class="diff easy">Easy</span>
+    <div class="ex-q">3. What colours does FC Barcelona play in?</div>
+    <div class="mc-row">
+      <button class="mc-btn" onclick="checkScored(this,false)">Red and yellow</button>
+      <button class="mc-btn" onclick="checkScored(this,true)">Blue and dark red</button>
+      <button class="mc-btn" onclick="checkScored(this,false)">Green and white</button>
+    </div>
+  </div>
+
+  <div class="ex-card">
+    <span class="diff medium">Medium</span>
+    <div class="ex-q">4. About how long ago did work start on La Sagrada Família?</div>
+    <div class="mc-row">
+      <button class="mc-btn" onclick="checkScored(this,false)">About 10 years ago</button>
+      <button class="mc-btn" onclick="checkScored(this,false)">About 40 years ago</button>
+      <button class="mc-btn" onclick="checkScored(this,true)">More than 140 years ago</button>
+    </div>
+  </div>
+
+  <div class="ex-card">
+    <span class="diff medium">Medium</span>
+    <div class="ex-q">5. True or false: Camp Nou is already 100% finished.</div>
+    <div class="mc-row">
+      <button class="mc-btn" onclick="checkScored(this,false)">True</button>
+      <button class="mc-btn" onclick="checkScored(this,true)">False</button>
+    </div>
+  </div>
+
+  <div class="ex-card">
+    <span class="diff hard">Hard</span>
+    <div class="ex-q">6. What's the nickname for FC Barcelona's blue and dark red colours? (one word from the text)</div>
+    <input class="ex-input" style="width:200px;" id="ex6" placeholder="type here">
+    <button class="check-btn" onclick="checkFillScored('ex6',['blaugrana'],'fb6')">Check</button>
+    <div class="fb" id="fb6"></div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('reading')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('practice')">Next →</button>
+  </div>
+</div>
+
+<!-- PRACTICE (grammar: zero & first conditional) -->
+<div class="panel" id="practice">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    A2-19 core teaching. Zero conditional = general truths/facts (present + present). First conditional = real future consequences (present + will). Both texts give natural examples: "If you visit Camp Nou now, you see building work" (zero, still true today) vs "If Camp Nou finishes in 2027, it will be the biggest stadium in Europe" (first, a real future result). Watch for the classic mistake: "will" in the if-clause.
+  </div>
+  <div class="card">
+    <h2>Zero &amp; first conditional</h2>
+    <p class="fr">Conditionnel zéro et premier conditionnel</p>
+
+    <div class="rule-box">If + present simple, ... present simple <br><span style="font-size:12px;font-weight:700;">(a fact — always true)</span></div>
+    <ul class="example-list">
+      <li>If you visit the Sagrada Família today, you <b>see</b> cranes and building work.</li>
+      <li>If it's hot in Barcelona, people <b>go</b> to the beach.</li>
+    </ul>
+
+    <div class="rule-box" style="background:var(--blue-light);color:var(--blue);">If + present simple, ... will + verb <br><span style="font-size:12px;font-weight:700;">(a likely future result)</span></div>
+    <ul class="example-list">
+      <li>If Barça <b>win</b> on Saturday, the fans <b>will celebrate</b> on La Rambla.</li>
+      <li>If Camp Nou <b>finishes</b> in 2027, it <b>will be</b> the biggest stadium in Europe.</li>
+    </ul>
+
+    <div class="mistake-box"><b>Common mistake:</b> Don't use "will" after "if". ✗ <i>If you will go to Barcelona...</i> → ✓ <i>If you go to Barcelona, you will...</i></div>
+    <p class="fr" style="margin-top:10px;">Après "if", on n'utilise jamais "will" — seulement le présent simple.</p>
+  </div>
+
+  <div class="ex-card">
+    <span class="diff easy">Easy</span>
+    <div class="ex-q">1. If you go to the Sagrada Família today, you ___ construction cranes.</div>
+    <div class="ex-tip">💡 A fact that's true right now — zero conditional.</div>
+    <div class="mc-row">
+      <button class="mc-btn" onclick="checkScored(this,true)">see</button>
+      <button class="mc-btn" onclick="checkScored(this,false)">will see</button>
+      <button class="mc-btn" onclick="checkScored(this,false)">saw</button>
+    </div>
+  </div>
+
+  <div class="ex-card">
+    <span class="diff easy">Easy</span>
+    <div class="ex-q">2. If Barça win the match on Saturday, the fans ___ very happy.</div>
+    <div class="ex-tip">💡 A likely result in the future — first conditional.</div>
+    <div class="mc-row">
+      <button class="mc-btn" onclick="checkScored(this,false)">are</button>
+      <button class="mc-btn" onclick="checkScored(this,true)">will be</button>
+      <button class="mc-btn" onclick="checkScored(this,false)">were</button>
+    </div>
+  </div>
+
+  <div class="ex-card">
+    <span class="diff medium">Medium</span>
+    <div class="ex-q">3. If it ___ (rain) in Barcelona, people usually ___ (go) to a museum instead of the beach.</div>
+    <div class="ex-tip">💡 Both parts present simple — this is a general habit, not one specific future event.</div>
+    <div class="ex-fr">🇫🇷 Une habitude générale, pas un événement précis.</div>
+    <input class="ex-input" id="ex3" placeholder="rains / go">
+    <button class="check-btn" onclick="checkFillScored('ex3',['rains, people usually go','rains, people go','rains people usually go','rains people go'],'fb3')">Check</button>
+    <div class="fb" id="fb3"></div>
+  </div>
+
+  <div class="ex-card">
+    <span class="diff medium">Medium</span>
+    <div class="ex-q">4. If you ___ (visit) Camp Nou this year, you ___ (not/see) the finished 105,000-seat stadium yet.</div>
+    <div class="ex-tip">💡 A real, likely situation this year — first conditional.</div>
+    <div class="ex-fr">🇫🇷 Utilise "will not" ou "won't" pour la négation.</div>
+    <input class="ex-input wide" id="ex4" placeholder="visit / won't see">
+    <button class="check-btn" onclick="checkFillScored('ex4',['visit, you won','visit you won','visit, you will not see','visit you will not see'],'fb4')">Check</button>
+    <div class="fb" id="fb4"></div>
+  </div>
+
+  <div class="ex-card">
+    <span class="diff hard">Hard</span>
+    <div class="ex-q">5. Write your own sentence: If I go to Barcelona, I ___.</div>
+    <div class="ex-tip">💡 Your own real plan — use "will" + verb.</div>
+    <div class="ex-fr">🇫🇷 Ton idée personnelle, avec "will".</div>
+    <input class="ex-input wide" id="ex5" placeholder="type your full sentence">
+    <button class="check-btn" onclick="checkFillScored('ex5',['will'],'fb5')">Check</button>
+    <div class="fb" id="fb5"></div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('check')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('talk')">Next →</button>
+  </div>
+</div>
+
+<!-- TALK IT OUT (evidence task) -->
+<div class="panel" id="talk">
+  <div class="teacher-note">
+    <b>Teacher note</b>
+    A2-19 evidence task: four conditional sentences (mostly first conditional, real future plans) about an imagined trip to Barcelona. Soft-check looks for "if" + "will" (or a present-simple pair for a zero-conditional answer). Talk through each one together — the bar is just to keep the target visible.
+  </div>
+  <div class="card">
+    <h2>Max is planning a trip with you</h2>
+    <p class="fr">Max planifie un voyage avec toi</p>
+    <p style="font-size:13px;line-height:1.7;">Answer with a full conditional sentence — start with <b>"If..."</b> and use <b>will</b> for your real plan!</p>
+    <div class="model-recap">
+      <b>Example:</b> "If I go to Barcelona, I will visit Camp Nou first." / "If it's match day, I will wear a Barça shirt."
+      <p class="fr" style="margin-top:6px;">"Si je vais à Barcelone, je visiterai d'abord le Camp Nou." / "Si c'est un jour de match, je porterai un maillot du Barça."</p>
+    </div>
+    <div class="evidence-bar">
+      <div class="row"><span>Conditional sentences given</span><b id="countReasons">0 / 4</b></div>
+      <div class="progress-track"><div class="progress-fill" id="barReasons"></div></div>
+    </div>
+    <div class="survey-progress" id="surveyProgress" style="font-size:12px;color:var(--muted);font-weight:700;margin-bottom:6px;">Question 1 of 4</div>
+    <div class="chat-window" id="chatWindow"></div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('practice')">← Back</button>
+    <button class="btn btn-primary" onclick="goTab('recap')">Next →</button>
+  </div>
+</div>
+
+<!-- RECAP -->
+<div class="panel" id="recap">
+  <div class="card">
+    <h2>Lesson Recap</h2>
+    <p class="fr">Récapitulatif de la leçon</p>
+    <button class="recap-toggle-btn" onclick="toggleRecap()" id="recapBtn">Show can-do card</button>
+    <div class="recap-card" id="recapCard">
+      <div class="recap-code">A2-19 · Real conditions &amp; consequences</div>
+      <div class="recap-field">
+        <b>Goal</b>
+        <p>Can express general truths and likely future consequences.</p>
+      </div>
+      <div class="recap-field">
+        <b>Grammar focus</b>
+        <span>Zero conditional (if + present, present) · First conditional (if + present, will + verb)</span>
+      </div>
+      <div class="recap-field">
+        <b>Evidence task</b>
+        <p>Four conditional sentences about a real or imagined trip to Barcelona, correctly using "if" with will (or present simple for general facts).</p>
+      </div>
+    </div>
+    <div class="summary-box" id="sessionSummary">Complete the Talk It Out tab to see your session summary here.</div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTab('talk')">← Back</button>
+    <span></span>
+  </div>
+</div>
+
+<div id="timerBubble" onclick="openWb()">50:00</div>
+<div id="emojiOverlay" onclick="this.classList.remove('show')"></div>
+
+<div id="wbOverlay" onclick="if(event.target===this)closeWb()">
+  <div id="wbPanel">
+    <button class="wb-close" onclick="closeWb()">✕</button>
+    <h3>⏱ Whiteboard</h3>
+    <div class="timer-controls">
+      <button onclick="setTimerMin(5)">5m</button>
+      <button onclick="setTimerMin(10)">10m</button>
+      <button onclick="setTimerMin(15)">15m</button>
+      <button onclick="toggleRun()" id="runBtn">▶ Start</button>
+      <button onclick="resetTimer()">↺ Reset</button>
+    </div>
+    <h3 style="font-size:14px;">Correction Stamps</h3>
+    <div class="stamp-row">
+      <button class="stamp-btn" onclick="addStamp('✅')">✅</button>
+      <button class="stamp-btn" onclick="addStamp('⭐')">⭐</button>
+      <button class="stamp-btn" onclick="addStamp('🔁 Try again')">🔁</button>
+      <button class="stamp-btn" onclick="addStamp('🗣 Pronunciation')">🗣</button>
+      <button class="stamp-btn" onclick="addStamp('📐 Grammar')">📐</button>
+    </div>
+    <div id="correctionLog"></div>
+    <h3 style="font-size:14px;">Notes</h3>
+    <textarea id="wbNotes" placeholder="Notes for this lesson..."></textarea>
+    <div class="wb-actions">
+      <button class="wb-copy" onclick="copyWb()">Copy</button>
+      <button class="wb-clear" onclick="clearWb()">Clear</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function goTab(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector(`.tab-btn[data-tab="${id}"]`).classList.add('active');
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('.tab-btn').forEach(btn=>btn.addEventListener('click',()=>goTab(btn.dataset.tab)));
+
+function toggleTeacherNotes(){
+  document.body.classList.toggle('show-teacher');
+  document.getElementById('teacherToggleBtn').classList.toggle('on');
+}
+
+function toggleRecap(){
+  const card=document.getElementById('recapCard');
+  const btn=document.getElementById('recapBtn');
+  card.classList.toggle('show');
+  btn.textContent=card.classList.contains('show')?'Hide can-do card':'Show can-do card';
+}
+
+/* Comprehension check + Practice (shared scoring) */
+let score=0;
+function updateScore(){document.getElementById('scoreDisplay').textContent=`${score} / 6`;}
+function checkScored(btn, isCorrect){
+  const row=btn.parentElement;
+  if(row.dataset.answered==='1') return;
+  row.dataset.answered='1';
+  row.querySelectorAll('.mc-btn').forEach(b=>b.disabled=true);
+  btn.classList.add(isCorrect?'correct':'wrong');
+  if(isCorrect && row.closest('#check')){score++; updateScore();}
+}
+function checkFillScored(inputId, answers, fbId){
+  const input=document.getElementById(inputId);
+  const val=input.value.trim().toLowerCase().replace(/\.$/, '');
+  const fb=document.getElementById(fbId);
+  fb.classList.add('show');
+  const ok=answers.some(a=>val.includes(a));
+  if(ok && input.dataset.scored!=='1'){
+    input.dataset.scored='1';
+    if(input.closest('#check')){score++; updateScore();}
+  }
+  if(ok){
+    fb.textContent='✓ Correct!';
+    fb.className='fb show ok';
+  } else {
+    fb.textContent='✗ Try again — talk it through with your teacher.';
+    fb.className='fb show no';
+  }
+}
+updateScore();
+
+/* Talk It Out chat simulator (evidence task) */
+const TALK_STEPS=[
+  {friend:"If you only have one day in Barcelona, will you go to Camp Nou or the Sagrada Família first? What will you do? ⚽⛪", placeholder:"If I..., I will..."},
+  {friend:"Imagine it's a Barça match day. If you go to Camp Nou, what will you wear? 🔵🔴", placeholder:"If I go..., I will wear..."},
+  {friend:"If you have extra time after the match, what will you visit next? 🗺️", placeholder:"If I have..., I will..."},
+  {friend:"Camp Nou will finish one day (105,000 seats!). If you visit then, what will be different? 🏟️", placeholder:"If I visit then..., ..."}
+];
+let talkStep=0;
+let reasonCount=0;
+
+function updateEvidenceBar(){
+  document.getElementById('countReasons').textContent=`${reasonCount} / 4`;
+  document.getElementById('barReasons').style.width=Math.min(reasonCount/4*100,100)+'%';
+}
+
+function renderTalk(){
+  const win=document.getElementById('chatWindow');
+  document.getElementById('surveyProgress').textContent=`Question ${Math.min(talkStep+1,TALK_STEPS.length)} of ${TALK_STEPS.length}`;
+  if(talkStep>=TALK_STEPS.length){
+    win.innerHTML+=`<div class="survey-done"><div class="big">🎉</div><p style="font-weight:800;">All done! Check your evidence bar above, then head to the Recap tab.</p></div>`;
+    renderSummary();
+    return;
+  }
+  const step=TALK_STEPS[talkStep];
+  const friendMsg=document.createElement('div');
+  friendMsg.className='msg friend';
+  friendMsg.innerHTML=`<span class="who">Max</span>${step.friend}`;
+  win.appendChild(friendMsg);
+
+  const controls=document.createElement('div');
+  controls.id='talkControls';
+  controls.innerHTML=`
+    <div class="chat-input-row">
+      <input type="text" id="talkTextInput" placeholder="${step.placeholder}">
+      <button onclick="answerTalk()">Send</button>
+    </div>
+    <div class="chat-feedback" id="talkFeedback"></div>
+  `;
+  win.appendChild(controls);
+  win.scrollTop=win.scrollHeight;
+  document.getElementById('talkTextInput').focus();
+}
+
+function answerTalk(){
+  const input=document.getElementById('talkTextInput');
+  const feedback=document.getElementById('talkFeedback');
+  const val=input.value.trim();
+  if(!val) return;
+  const lower=val.toLowerCase();
+  const hasIf=/\bif\b/.test(lower);
+  const hasResult=/\bwill\b|\bwon'?t\b/.test(lower) || /\bif\s+\w+\s+\w+s\b/.test(lower);
+  const hasReason=hasIf && hasResult;
+  input.disabled=true;
+  input.classList.toggle('correct',hasReason);
+  feedback.classList.add('show');
+
+  if(hasReason){
+    reasonCount++;
+    feedback.className='chat-feedback show good';
+    feedback.textContent="Great — that's a real conditional sentence! ✅";
+  } else {
+    feedback.className='chat-feedback show hint';
+    feedback.textContent='Try starting with "If..." and add "will" for your result — talk it through with your teacher.';
+  }
+  updateEvidenceBar();
+
+  const win=document.getElementById('chatWindow');
+  const playerMsg=document.createElement('div');
+  playerMsg.className='msg player';
+  playerMsg.innerHTML=`<span class="who">You</span>${val}`;
+  win.appendChild(playerMsg);
+  talkAnswers.push(val);
+
+  const nextBtn=document.createElement('button');
+  nextBtn.className='btn btn-primary';
+  nextBtn.style.marginTop='10px';
+  nextBtn.textContent='Continue →';
+  nextBtn.onclick=()=>{ talkStep++; renderTalk(); };
+  win.appendChild(nextBtn);
+  win.scrollTop=win.scrollHeight;
+}
+
+let talkAnswers=[];
+function renderSummary(){
+  const box=document.getElementById('sessionSummary');
+  if(talkAnswers.length===0){
+    box.textContent='Complete the Talk It Out tab to see your session summary here.';
+    return;
+  }
+  box.innerHTML=`
+    <b>Session summary</b><br>
+    <span class="tag">${reasonCount}/4 conditional sentences</span>
+    <span class="tag">Comprehension score: ${score}/6</span>
+    <div style="margin-top:8px;">${talkAnswers.map(a=>'• '+a).join('<br>')}</div>
+  `;
+}
+renderTalk();
+
+let totalSeconds=50*60,timerInterval=null,isRunning=false;
+function updateTimerDisplay(){
+  const m=Math.floor(totalSeconds/60).toString().padStart(2,'0');
+  const s=(totalSeconds%60).toString().padStart(2,'0');
+  const b=document.getElementById('timerBubble');
+  b.textContent=`${m}:${s}`;
+  b.classList.toggle('danger',isRunning&&totalSeconds<=30);
+}
+function toggleRun(){
+  isRunning=!isRunning;
+  document.getElementById('runBtn').textContent=isRunning?'⏸ Pause':'▶ Start';
+  if(isRunning){
+    timerInterval=setInterval(()=>{
+      totalSeconds--;updateTimerDisplay();
+      if(totalSeconds<=0){clearInterval(timerInterval);isRunning=false;document.getElementById('runBtn').textContent='▶ Start';fireEmoji();}
+    },1000);
+  } else { clearInterval(timerInterval); }
+}
+function setTimerMin(min){totalSeconds=min*60;updateTimerDisplay();}
+function resetTimer(){clearInterval(timerInterval);isRunning=false;document.getElementById('runBtn').textContent='▶ Start';totalSeconds=50*60;updateTimerDisplay();}
+const faces=['😀','😎','🤩','😜','🥳','😯','🤓','😼','🙃','😺'];
+function fireEmoji(){
+  const o=document.getElementById('emojiOverlay');
+  o.textContent=faces[Math.floor(Math.random()*faces.length)];
+  o.classList.add('show');
+}
+updateTimerDisplay();
+updateEvidenceBar();
+
+function openWb(){document.getElementById('wbOverlay').classList.add('show');}
+function closeWb(){document.getElementById('wbOverlay').classList.remove('show');}
+function addStamp(label){
+  const log=document.getElementById('correctionLog');
+  log.textContent+=(log.textContent?'\n':'')+label;
+}
+function copyWb(){
+  const text=document.getElementById('correctionLog').textContent+'\n\n'+document.getElementById('wbNotes').value;
+  navigator.clipboard.writeText(text).catch(()=>{});
+}
+function clearWb(){document.getElementById('correctionLog').textContent='';document.getElementById('wbNotes').value='';}
+</script>
+
+<script src="../assets/write-bubble.js"></script>
+</body>
+</html>
