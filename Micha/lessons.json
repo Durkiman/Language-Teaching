@@ -1,5 +1,20 @@
 [
   {
+    "file": "micha-barcelona-city-trip.html",
+    "title": "#27 Barcelona City Trip",
+    "goals": {
+      "primary": [
+        "A2-18"
+      ]
+    },
+    "grammar": [
+      {
+        "file": "purpose-clauses.html",
+        "title": "Purpose Clauses"
+      }
+    ]
+  },
+  {
     "file": "back-to-school-subjects.html",
     "title": "#26 Back to School",
     "goals": {
