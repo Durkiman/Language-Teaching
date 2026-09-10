@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Carl Cox: Reinventing the Set</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600&display=swap');
+
+  :root{
+    --bg:#14171F;
+    --surface:#1D212B;
+    --surface-raised:#242938;
+    --line:#333A4A;
+    --ink:#EDE9E1;
+    --ink-dim:#9CA2B4;
+    --accent:#F2994A;
+    --accent-dim:#7A5636;
+    --rose:#D97BA0;
+  }
+
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.55;
+    padding-bottom:90px;
+  }
+
+  header.hero{
+    position:relative;
+    padding:36px 20px 26px;
+    background:
+      radial-gradient(120% 140% at 15% -10%, rgba(242,153,74,0.18), transparent 55%),
+      var(--bg);
+    border-bottom:1px solid var(--line);
+  }
+  header.hero h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-style:italic;
+    font-size:clamp(28px,7vw,40px);
+    margin:0 0 6px;
+    letter-spacing:-0.01em;
+  }
+  header.hero p.sub{
+    margin:0;
+    color:var(--ink-dim);
+    font-size:15px;
+    max-width:60ch;
+  }
+
+  nav.tabs{
+    display:flex;
+    gap:4px;
+    overflow-x:auto;
+    padding:10px 14px;
+    background:var(--surface);
+    border-bottom:1px solid var(--line);
+    position:sticky;
+    top:0;
+    z-index:20;
+    scrollbar-width:none;
+  }
+  nav.tabs::-webkit-scrollbar{display:none;}
+  nav.tabs button{
+    flex:0 0 auto;
+    background:none;
+    border:none;
+    color:var(--ink-dim);
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    font-weight:500;
+    padding:9px 14px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:background .15s, color .15s;
+    white-space:nowrap;
+  }
+  nav.tabs button.active{
+    background:var(--surface-raised);
+    color:var(--accent);
+  }
+
+  main{
+    max-width:640px;
+    margin:0 auto;
+    padding:24px 20px 20px;
+  }
+  section.tab{display:none;}
+  section.tab.active{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+
+  h2.section-title{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:22px;
+    margin:0 0 4px;
+  }
+  p.section-lead{
+    color:var(--ink-dim);
+    font-size:14.5px;
+    margin:0 0 20px;
+  }
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:14px;
+  }
+
+  .prompt-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px;}
+  .prompt-list li{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:3px solid var(--accent);
+    border-radius:10px;
+    padding:13px 15px;
+    font-size:15.5px;
+  }
+  .prompt-list li.rose{border-left-color:var(--rose);}
+
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px; margin:4px 0 16px;}
+  .chip{
+    background:var(--surface-raised);
+    border:1px solid var(--line);
+    color:var(--ink);
+    font-size:14px;
+    padding:9px 13px;
+    border-radius:999px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .chip.on{background:var(--accent-dim); border-color:var(--accent); color:var(--accent);}
+
+  .reveal{
+    display:none;
+    background:var(--surface-raised);
+    border:1px dashed var(--line);
+    border-radius:10px;
+    padding:13px 15px;
+    font-size:14.5px;
+    color:var(--ink-dim);
+    margin-top:-4px;
+    margin-bottom:14px;
+  }
+  .reveal.show{display:block;}
+
+  .link-out{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    background:linear-gradient(135deg, var(--accent-dim), var(--surface-raised));
+    border:1px solid var(--accent);
+    border-radius:12px;
+    padding:16px 18px;
+    text-decoration:none;
+    color:var(--ink);
+    margin-bottom:18px;
+  }
+  .link-out .txt strong{display:block; font-size:15.5px; margin-bottom:2px;}
+  .link-out .txt span{font-size:13px; color:var(--ink-dim);}
+  .link-out .arrow{font-size:20px; color:var(--accent); flex:0 0 auto;}
+
+  .hero-img{
+    width:100%;
+    border-radius:12px;
+    display:block;
+    margin-bottom:6px;
+    filter:saturate(1.05);
+  }
+  .img-credit{
+    font-size:11.5px;
+    color:var(--ink-dim);
+    margin:0 0 20px;
+  }
+
+  .glossary{display:flex; flex-direction:column; gap:8px; margin-bottom:18px;}
+  .gloss-item{
+    display:flex;
+    gap:10px;
+    font-size:14.5px;
+    padding:10px 12px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:10px;
+  }
+  .gloss-item .term{color:var(--accent); font-weight:600; flex:0 0 auto; min-width:130px;}
+
+  details.notes{
+    margin-top:22px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+  }
+  details.notes summary{
+    cursor:pointer;
+    padding:11px 15px;
+    font-size:13.5px;
+    color:var(--ink-dim);
+    background:var(--surface);
+    list-style:none;
+  }
+  details.notes summary::-webkit-details-marker{display:none;}
+  details.notes summary::before{content:"Teacher notes  ►  "; color:var(--accent);}
+  details.notes .inner{
+    padding:14px 15px 16px;
+    background:var(--surface);
+    border-top:1px solid var(--line);
+    font-size:13.5px;
+    color:var(--ink-dim);
+  }
+  details.notes .inner ul{margin:6px 0 0; padding-left:18px;}
+  details.notes .inner li{margin-bottom:5px;}
+
+  .escalate{counter-reset:none; display:flex; flex-direction:column; gap:10px;}
+  .escalate .lvl{
+    font-size:11.5px;
+    color:var(--rose);
+    margin-bottom:3px;
+    font-weight:600;
+  }
+
+  .can-do-card{
+    background:var(--surface-raised);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 15px;
+    font-size:13.5px;
+    color:var(--ink-dim);
+    margin-top:8px;
+  }
+  .can-do-card .code{color:var(--accent); font-weight:600; font-family:'Inter',sans-serif;}
+  .can-do-card dt{color:var(--ink); font-weight:500; margin-top:8px;}
+  .can-do-card dd{margin:2px 0 0;}
+
+  /* timer bubble */
+  #timerBubble{
+    position:fixed;
+    left:16px;
+    bottom:16px;
+    width:56px;
+    height:56px;
+    border-radius:14px;
+    background:var(--surface-raised);
+    border:1px solid var(--accent);
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:13px;
+    cursor:pointer;
+    z-index:50;
+    box-shadow:0 6px 18px rgba(0,0,0,0.35);
+    user-select:none;
+  }
+  #timerBubble.running{border-color:var(--rose); color:var(--rose);}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>Carl Cox: Reinventing the Set</h1>
+  <p class="sub">A conversation session built around Carl Cox — his current Ibiza residency, and forty years of staying relevant in a fast-moving scene.</p>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="warmup">Warm-up</button>
+  <button class="tab-btn" data-tab="brainstorm">Brainstorm</button>
+  <button class="tab-btn" data-tab="reading">Reading</button>
+  <button class="tab-btn" data-tab="discussion">Discussion</button>
+  <button class="tab-btn" data-tab="reinvention">Reinvention</button>
+  <button class="tab-btn" data-tab="recap">Recap</button>
+</nav>
+
+<main>
+
+  <!-- WARM-UP -->
+  <section class="tab active" id="warmup">
+    <h2 class="section-title">Open talk</h2>
+    <p class="section-lead">General opener, not yet about Carl Cox. Just get him talking.</p>
+    <ul class="prompt-list">
+      <li>What's something that's caught your attention this week — news, music, anything?</li>
+      <li>Has anything changed in your routine lately, work or otherwise?</li>
+      <li>What have you been listening to recently?</li>
+    </ul>
+  </section>
+
+  <!-- BRAINSTORM -->
+  <section class="tab" id="brainstorm">
+    <h2 class="section-title">Brainstorm: Carl Cox</h2>
+    <p class="section-lead">Free recall before any input. Tap a category if he stalls — it reveals a nudge, don't show it upfront.</p>
+    <div class="chip-row">
+      <div class="chip" data-target="n1">His sound</div>
+      <div class="chip" data-target="n2">His career</div>
+      <div class="chip" data-target="n3">Ibiza &amp; clubs</div>
+      <div class="chip" data-target="n4">The wider scene</div>
+    </div>
+    <div class="reveal" id="n1">What genre is he known for? What does his sound actually feel like — describe it as if to someone who's never heard techno.</div>
+    <div class="reveal" id="n2">How long do you think he's been doing this? What do you know about how he started?</div>
+    <div class="reveal" id="n3">Why is Ibiza such a big deal for this kind of music? What's a residency, and why would a DJ want one?</div>
+    <div class="reveal" id="n4">Who else belongs in the same world as Carl Cox? What's changed in electronic music since he started?</div>
+  </section>
+
+  <!-- READING -->
+  <section class="tab" id="reading">
+    <h2 class="section-title">The article</h2>
+    <p class="section-lead">Read the real piece — DJ Mag's report on his 2026 Ibiza residency.</p>
+
+    <img class="hero-img" src="https://live.staticflickr.com/3203/2711051503_ff9cfde773_o.jpg" alt="Carl Cox performing at Tomorrowland">
+    <p class="img-credit">Carl Cox, Tomorrowland 2008 — Wikimedia Commons, CC BY-SA 2.0</p>
+
+    <a class="link-out" href="https://djmag.com/news/carl-cox-announces-unvrs-ibiza-2026-residency" target="_blank" rel="noopener">
+      <span class="txt">
+        <strong>Carl Cox announces [UNVRS] Ibiza 2026 residency</strong>
+        <span>DJ Mag — open the article</span>
+      </span>
+      <span class="arrow">→</span>
+    </a>
+
+    <p class="section-lead" style="margin-bottom:8px;">Before reading, skim for these three things:</p>
+    <ul class="prompt-list">
+      <li>How many dates is he playing, and over what period?</li>
+      <li>What does he say his involvement in clubland is meant to leave behind?</li>
+      <li>Which venue is it, and what's notable about its size?</li>
+    </ul>
+
+    <p class="section-lead" style="margin:20px 0 8px;">Useful language from the piece:</p>
+    <div class="glossary">
+      <div class="gloss-item"><span class="term">residency</span><span>a recurring booking at the same venue over a season</span></div>
+      <div class="gloss-item"><span class="term">the White Isle</span><span>a nickname for Ibiza</span></div>
+      <div class="gloss-item"><span class="term">to leave a legacy</span><span>to leave something lasting behind you</span></div>
+      <div class="gloss-item"><span class="term">line-up</span><span>the list of artists performing at an event</span></div>
+      <div class="gloss-item"><span class="term">to pick up where you left off</span><span>to continue something after a pause</span></div>
+    </div>
+
+    <details class="notes">
+      <summary></summary>
+      <div class="inner">
+        Article is linked, not reproduced in the tool (copyright). If he'd rather listen than read, the DJ Mag piece also links out to an audio mix — worth mentioning if reading drags.
+      </div>
+    </details>
+
+    <h2 class="section-title" style="margin-top:28px;">Background: the reinvention</h2>
+    <p class="section-lead">For the Reinvention discussion — a summary, not the source text, from a longer EDM.com feature.</p>
+    <div class="card">
+      <p style="margin:0 0 10px; font-size:14.5px;">Cox released his first live album, <em>Electronic Generations</em>, after decades known purely as a DJ. The idea had sat dormant since the start of his career — he'd always wanted to perform original material live, outside of DJ sets, but only acted on it after the pause forced by COVID-19. He now frames it as a shift in identity, not just a side project: performing as a live artist alongside his DJ work, rather than being defined by one role.</p>
+    </div>
+    <a class="link-out" href="https://edm.com/features/carl-cox-interview-electronic-generations-album/" target="_blank" rel="noopener" style="margin-bottom:18px;">
+      <span class="txt">
+        <strong>40 Years Later, Carl Cox Is Just Getting Started</strong>
+        <span>EDM.com — open the full feature</span>
+      </span>
+      <span class="arrow">→</span>
+    </a>
+  </section>
+
+  <!-- DISCUSSION -->
+  <section class="tab" id="discussion">
+    <h2 class="section-title">Discussing the article</h2>
+    <p class="section-lead">Comprehension first, then his reaction.</p>
+    <ul class="prompt-list">
+      <li>Summarise what the residency actually involves, in your own words.</li>
+      <li>He says he wants his time in clubland to "leave a legacy." What do you think he means by that, specifically?</li>
+      <li class="rose">Does 16 dates over a season sound demanding to you, or fairly relaxed for someone at his level?</li>
+      <li class="rose">Would you go to a residency like this if you were in Ibiza? Why or why not?</li>
+      <li class="rose">What do you make of a 20,000-capacity club existing for this kind of music — does that surprise you?</li>
+    </ul>
+  </section>
+
+  <!-- REINVENTION -->
+  <section class="tab" id="reinvention">
+    <h2 class="section-title">Reinventing yourself</h2>
+    <p class="section-lead">Carl Cox has been doing this for over 40 years — and recently repositioned himself from "DJ Carl Cox" to "Carl Cox, the artist," with his first live album. Use that as the hinge.</p>
+
+    <div class="escalate">
+      <div>
+        <div class="lvl">Reaction</div>
+        <div class="prompt-list"><li>What do you think it takes to stay relevant in a scene for four decades?</li></div>
+      </div>
+      <div>
+        <div class="lvl">Personal stance</div>
+        <div class="prompt-list"><li>Have you ever had to reinvent something about how you work or what you do? What pushed you to do it?</li></div>
+      </div>
+      <div>
+        <div class="lvl">Counterargument</div>
+        <div class="prompt-list"><li>Some would say reinventing yourself this late is a risk — you could alienate the people who liked you the way you were. Is that fair?</li></div>
+      </div>
+      <div>
+        <div class="lvl">Hypothetical</div>
+        <div class="prompt-list"><li>If you'd built a reputation doing one thing for 40 years, what would make you change it — and what wouldn't?</li></div>
+      </div>
+    </div>
+
+    <details class="notes">
+      <summary></summary>
+      <div class="inner">
+        Live "upgrade the sentence" targets to plant if the moment arises — precision register, not idiom:
+        <ul>
+          <li><strong>reinvent yourself</strong> — vs. "change what you do"</li>
+          <li><strong>stay relevant</strong> — vs. "still be liked"</li>
+          <li><strong>double down on (something)</strong> — vs. "do more of"</li>
+          <li><strong>come full circle</strong> — for the DJ→artist→DJ arc</li>
+          <li><strong>push the boundaries of (something)</strong> — vs. "try new things"</li>
+        </ul>
+        Background if he asks for more: Cox's first live album, <em>Electronic Generations</em>, marked a shift from DJing to performing original material as a live artist — his own words were "I'm not DJ Carl Cox anymore. I'm Carl Cox, the artist."
+      </div>
+    </details>
+  </section>
+
+  <!-- RECAP -->
+  <section class="tab" id="recap">
+    <h2 class="section-title">Recap</h2>
+    <p class="section-lead">Session summary for your own records.</p>
+    <details class="notes" open>
+      <summary></summary>
+      <div class="inner">
+        <div class="can-do-card">
+          <span class="code">CONV-B2-INTEREST</span>
+          <dl>
+            <dt>Function</dt>
+            <dd>Sustain extended, unscripted opinion-based discourse on a personal-interest topic; handle a counterargument without losing the thread.</dd>
+            <dt>Grammar focus (incidental)</dt>
+            <dd>Hedging and discourse markers; hypothetical conditionals ("if you'd built... what would make you...").</dd>
+            <dt>Evidence task</dt>
+            <dd>Produces a 3+ turn extended argument in the Reinvention section, including at least one response to a counterargument.</dd>
+          </dl>
+        </div>
+      </div>
+    </details>
+  </section>
+
+</main>
+
+<div id="timerBubble">50:00</div>
+
+<script>
+  var tabs = document.querySelectorAll(".tab-btn");
+  var panels = document.querySelectorAll(".tab");
+  tabs.forEach(function(btn){
+    btn.addEventListener("click", function(){
+      tabs.forEach(function(b){ b.classList.remove("active"); });
+      panels.forEach(function(p){ p.classList.remove("active"); });
+      btn.classList.add("active");
+      document.getElementById(btn.dataset.tab).classList.add("active");
+    });
+  });
+
+  var chips = document.querySelectorAll(".chip");
+  chips.forEach(function(chip){
+    chip.addEventListener("click", function(){
+      var target = document.getElementById(chip.dataset.target);
+      chip.classList.toggle("on");
+      target.classList.toggle("show");
+    });
+  });
+
+  // Timer bubble: 50 min countdown, starts on first tap
+  var bubble = document.getElementById("timerBubble");
+  var totalSeconds = 50 * 60;
+  var remaining = totalSeconds;
+  var running = false;
+  var intervalId = null;
+
+  function formatTime(s){
+    var m = Math.floor(s / 60);
+    var sec = s % 60;
+    return (m < 10 ? "0" + m : m) + ":" + (sec < 10 ? "0" + sec : sec);
+  }
+
+  function tick(){
+    if(remaining > 0){
+      remaining -= 1;
+      bubble.textContent = formatTime(remaining);
+    } else {
+      clearInterval(intervalId);
+    }
+  }
+
+  bubble.addEventListener("click", function(){
+    if(!running){
+      running = true;
+      bubble.classList.add("running");
+      intervalId = setInterval(tick, 1000);
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,5 +1,12 @@
 [
   {
+    "title": "#4 Carl Cox: Reinventing the Set",
+    "file": "carl-cox-reinvention.html",
+    "goals": {
+      "primary": ["CONV-B2-INTEREST"]
+    }
+  },
+  {
     "title": "#3 The Trip That Went Wrong",
     "file": "trip-gone-wrong.html",
     "goals": {
