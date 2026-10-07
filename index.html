@@ -360,6 +360,34 @@
 
   .resource-btn .btn-icon { font-size: 16px; }
 
+  .archive { margin-bottom: 48px; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards; }
+  .archive-btn {
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: white;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #888;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    border: 1.5px solid var(--warm);
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .archive-btn::-webkit-details-marker { display: none; }
+  .archive-btn:hover, .archive[open] .archive-btn { border-color: var(--gold); color: var(--ink); }
+  .archive-count {
+    font-size: 11px;
+    background: var(--warm);
+    border-radius: 999px;
+    padding: 1px 8px;
+  }
+  .archive-grid { margin-top: 20px; margin-bottom: 0; }
+  .archive-grid .student-card { filter: saturate(0.6); }
+
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(18px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -509,18 +537,6 @@
       </details>
     </div>
 
-    <div class="student-card mehdi">
-      <span class="card-emoji">💼</span>
-      <div class="card-name">Mehdi</div>
-      <div class="card-level">Pre-Intermediate · English</div>
-      <p class="card-desc">Business English & professional communication.</p>
-      <details class="lessons-toggle">
-        <summary><span id="lessons-count-mehdi">Loading…</span></summary>
-        <ul class="lesson-list" id="lessons-mehdi"></ul>
-        <div id="meta-mehdi"></div>
-      </details>
-    </div>
-
     <div class="student-card mel">
       <span class="card-emoji">🌿</span>
       <div class="card-name">Mel</div>
@@ -569,18 +585,6 @@
       </details>
     </div>
 
-    <div class="student-card faycal">
-      <span class="card-emoji">🧭</span>
-      <div class="card-name">Fayçal</div>
-      <div class="card-level">Intermediate · English</div>
-      <p class="card-desc">Strengthening fluency from B1 towards B2.</p>
-      <details class="lessons-toggle">
-        <summary><span id="lessons-count-faycal">Loading…</span></summary>
-        <ul class="lesson-list" id="lessons-faycal"></ul>
-        <div id="meta-faycal"></div>
-      </details>
-    </div>
-
     <div class="student-card alejandro">
       <span class="card-emoji">🖥️</span>
       <div class="card-name">Alejandro</div>
@@ -620,6 +624,49 @@
 
   </div>
 
+  <details class="archive">
+    <summary class="archive-btn">🗄️ Archived students <span class="archive-count">3</span></summary>
+    <div class="grid archive-grid">
+
+    <div class="student-card mehdi">
+      <span class="card-emoji">💼</span>
+      <div class="card-name">Mehdi</div>
+      <div class="card-level">Pre-Intermediate · English</div>
+      <p class="card-desc">Business English & professional communication.</p>
+      <details class="lessons-toggle">
+        <summary><span id="lessons-count-mehdi">Loading…</span></summary>
+        <ul class="lesson-list" id="lessons-mehdi"></ul>
+        <div id="meta-mehdi"></div>
+      </details>
+    </div>
+
+    <div class="student-card faycal">
+      <span class="card-emoji">🧭</span>
+      <div class="card-name">Fayçal</div>
+      <div class="card-level">Intermediate · English</div>
+      <p class="card-desc">Strengthening fluency from B1 towards B2.</p>
+      <details class="lessons-toggle">
+        <summary><span id="lessons-count-faycal">Loading…</span></summary>
+        <ul class="lesson-list" id="lessons-faycal"></ul>
+        <div id="meta-faycal"></div>
+      </details>
+    </div>
+
+    <div class="student-card hatice">
+      <span class="card-emoji">🌺</span>
+      <div class="card-name">Hatice</div>
+      <div class="card-level">Pre-Intermediate · English</div>
+      <p class="card-desc">Building confidence from A2 towards B1.</p>
+      <details class="lessons-toggle">
+        <summary><span id="lessons-count-hatice">Loading…</span></summary>
+        <ul class="lesson-list" id="lessons-hatice"></ul>
+        <div id="meta-hatice"></div>
+      </details>
+    </div>
+
+    </div>
+  </details>
+
   <div class="footer-note">
     <p>Made with care by <strong>Durim</strong> · Tools open directly in your browser · No account needed</p>
     <p style="margin-top: 8px;"><a href="dashboard.html" style="color: var(--terra);">View progress dashboard →</a></p>
@@ -642,6 +689,8 @@
     { id: 'alejandro', folder: 'Alejandro' },
     { id: 'david',     folder: 'David'     },
     { id: 'nikola',    folder: 'Nikola'    },
+    // archived
+    { id: 'hatice',    folder: 'Hatice'    },
   ];
 
   async function loadLessons(student) {
