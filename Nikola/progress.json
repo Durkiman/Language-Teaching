@@ -1,0 +1,15 @@
+{
+  "student": "nikola",
+  "levels": ["A2", "B1"],
+  "cards": {},
+  "intake": {
+    "date": null,
+    "native_language": "Polish",
+    "target_language": "English",
+    "profession": "Secondary school student at an English-speaking school in Brussels; also speaks French",
+    "strengths": "Daily exposure to English through school, TV, film and social media; self-rated listening and reading 4/5",
+    "gaps": ["Grammar", "Writing", "Fluency and expression", "Speaking confidence"],
+    "motivation": "Scored 5/10 in English last year; aiming for 7/10 at the December exams",
+    "plan_notes": "50-min lessons. Conversation-heavy with structured grammar; don't over-correct, confidence first. Homework every time, digital materials only. Hints on cards in English only. Also wants help with reading comprehension in Economics. Interests: war games, riding and upgrading his scooter. First lesson is a pure diagnostic session; levels are provisional until then."
+  }
+}
