@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Starting point</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#232A24;--surface:#2D352D;--raise:#353F35;--line:#475244;
+  --text:#ECE9DD;--muted:#A9AE9E;--brass:#D2B76A;--go:#8FC25B;--amber:#E39A4B;
+  --cond:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:calc(60px + env(safe-area-inset-top,0px))}
+body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.55 var(--body);padding-bottom:calc(90px + env(safe-area-inset-bottom,0px))}
+button{font:inherit}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+
+header{max-width:760px;margin:0 auto;padding:calc(22px + env(safe-area-inset-top,0px)) 18px 6px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+h1{font:700 2.5rem/1 var(--cond);margin:0;letter-spacing:.01em}
+#tBtn{background:none;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:6px 12px;font-size:.9rem;cursor:pointer}
+body.t-on #tBtn{border-color:var(--brass);color:var(--brass)}
+
+.tabs{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.tabs-in{max-width:760px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;padding:0 12px;scrollbar-width:none}
+.tabs-in::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);font:600 1.12rem var(--cond);padding:12px 10px 9px;cursor:pointer}
+.tab.on{color:var(--text);border-bottom-color:var(--brass)}
+
+main{max-width:760px;margin:0 auto;padding:0 18px}
+section{display:none;padding-top:18px}
+section.on{display:block}
+h2{font:600 1.9rem/1.1 var(--cond);margin:6px 0 8px}
+h3{font:600 1.25rem/1.2 var(--cond);margin:0 0 6px}
+.lead{color:var(--muted);margin:0 0 16px;max-width:62ch}
+
+.prompt{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.prompt .lab{color:var(--brass);font:600 .95rem var(--cond);margin-bottom:4px}
+.prompt p{margin:0;font-size:1.12rem}
+
+/* battery */
+.bat{display:flex;gap:3px;padding:5px;border:2px solid var(--line);border-radius:8px;position:relative;margin:6px 10px 18px 0}
+.bat::after{content:"";position:absolute;right:-9px;top:50%;transform:translateY(-50%);width:6px;height:16px;background:var(--line);border-radius:0 3px 3px 0}
+.cell{flex:1;height:20px;border-radius:2px;background:#283028;transition:background .25s}
+.cell.ok{background:var(--go)}
+.cell.miss{background:var(--amber);opacity:.75}
+.cell.skip{background:#687064}
+.cell.cur{box-shadow:inset 0 0 0 2px var(--brass)}
+
+.gcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 18px}
+.gmeta{color:var(--muted);font-size:.9rem;margin-bottom:8px}
+.gq{font-size:1.25rem;line-height:1.5;margin:0 0 14px}
+.blank{display:inline-block;min-width:4.5em;border-bottom:2px solid var(--brass);text-align:center;color:var(--brass);padding:0 4px}
+.base{color:var(--muted);font-size:1rem}
+.opt{display:block;width:100%;text-align:left;padding:12px 14px;margin:8px 0;background:var(--raise);border:1px solid var(--line);color:var(--text);border-radius:10px;cursor:pointer;min-height:48px}
+.opt:hover:not(:disabled){border-color:var(--brass)}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--go);background:rgba(143,194,91,.16)}
+.opt.wrong{border-color:var(--amber);background:rgba(227,154,75,.13)}
+.gaprow{display:flex;gap:8px;flex-wrap:wrap}
+input[type=text],textarea{width:100%;background:#1E241F;border:1px solid var(--line);color:var(--text);border-radius:10px;padding:11px 13px;font:inherit}
+.gaprow input{flex:1;min-width:160px}
+textarea{resize:vertical;line-height:1.5}
+.btn{background:var(--brass);color:#1E241F;border:0;border-radius:10px;padding:11px 18px;font-weight:600;cursor:pointer;min-height:46px}
+.btn:disabled{opacity:.45;cursor:default}
+.ghost{background:none;border:1px solid var(--line);color:var(--muted);border-radius:10px;padding:9px 14px;cursor:pointer;margin-top:10px}
+.fb{margin:14px 0 4px;font-weight:600}
+.fb.ok{color:var(--go)}
+.fb.miss{color:var(--amber)}
+.tip{margin:4px 0 14px;color:var(--muted)}
+.done{text-align:center;padding:12px 0}
+.big{font:700 3.2rem/1 var(--cond);margin:0 0 6px;color:var(--go)}
+
+/* reading */
+.article{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px}
+.article p{margin:0 0 14px;max-width:68ch}
+.article .src{font-size:.85rem;color:var(--muted);margin:0}
+figure{margin:0 0 16px}
+figure img{width:100%;max-width:100%;height:auto;border-radius:8px;display:block}
+figcaption{font-size:.8rem;color:var(--muted);margin-top:6px}
+.rq{border-top:1px solid var(--line);padding:16px 0 4px}
+.rq:first-child{border-top:0}
+.rq .q{margin:0 0 6px;font-weight:500}
+.row3{display:flex;gap:8px;flex-wrap:wrap}
+.row3 .opt{flex:1 1 30%;text-align:center;min-width:90px}
+
+/* listening */
+.drow{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:12px 0}
+.drow .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.dres{margin-top:10px;line-height:1.8}
+.w-hit{color:var(--go)}
+.w-miss{color:var(--amber);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+.pct{color:var(--muted);font-size:.9rem;margin-left:6px}
+
+/* writing */
+.tasks{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.task{background:var(--raise);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:left;color:var(--text);cursor:pointer}
+.task.on{border-color:var(--brass);background:rgba(210,183,106,.1)}
+.task b{display:block;font:600 1.15rem var(--cond);margin-bottom:2px}
+.task span{color:var(--muted);font-size:.9rem}
+.starters{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chip{background:var(--raise);border:1px solid var(--line);color:var(--text);border-radius:999px;padding:7px 13px;cursor:pointer;font-size:.95rem}
+.chip.on{border-color:var(--brass);color:var(--brass)}
+.wc{color:var(--muted);font-size:.9rem;margin-top:6px}
+
+/* teacher */
+.tnote{display:none;border:1px dashed var(--brass);border-radius:10px;padding:14px 16px;margin:18px 0;background:rgba(210,183,106,.06);font-size:.95rem}
+body.t-on .tnote{display:block}
+.tnote h4{margin:0 0 6px;font:600 1.05rem var(--cond);color:var(--brass)}
+.tnote ul{margin:6px 0;padding-left:20px}
+.tnote ol{margin:6px 0;padding-left:20px}
+.tnote textarea{margin-top:8px;font-size:.95rem}
+.ttable{width:100%;border-collapse:collapse;font-size:.88rem}
+.ttable td,.ttable th{text-align:left;padding:5px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+.tscroll{overflow-x:auto}
+.rub{display:flex;align-items:center;gap:6px;margin:6px 0;flex-wrap:wrap}
+.rub span{min-width:110px}
+.rub .chip{padding:4px 11px}
+.lvl{display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:center;margin:10px 0}
+select{background:#1E241F;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font:inherit}
+.cards{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.cards span{border:1px solid var(--brass);color:var(--brass);border-radius:6px;padding:2px 8px;font-size:.88rem}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.danger{border-color:var(--amber);color:var(--amber)}
+
+.recap-list{list-style:none;padding:0;margin:0}
+.recap-list li{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line)}
+.recap-list li span:last-child{color:var(--muted)}
+details{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-top:18px}
+summary{cursor:pointer;color:var(--muted)}
+details dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:10px 0 4px;font-size:.92rem}
+details dt{color:var(--muted)}
+details dd{margin:0}
+
+/* timer */
+#timer{position:fixed;left:calc(14px + env(safe-area-inset-left,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));width:70px;height:42px;border-radius:10px;background:var(--surface);border:1px solid var(--line);color:var(--text);font:600 1.2rem var(--cond);z-index:50;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.35);touch-action:manipulation;user-select:none;-webkit-user-select:none}
+#timer.run{border-color:var(--go)}
+#timer.paused{opacity:.7}
+#timer.over{border-color:var(--amber);color:var(--amber);animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.45}}
+@media (max-width:520px){h1{font-size:2.1rem}.tasks{grid-template-columns:1fr}.gq{font-size:1.12rem}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Starting point</h1>
+  <button id="tBtn" aria-pressed="false">Notes</button>
+</header>
+
+<nav class="tabs"><div class="tabs-in" id="tabs">
+  <button class="tab" data-tab="warm">Warm-up</button>
+  <button class="tab" data-tab="grammar">Grammar</button>
+  <button class="tab" data-tab="listen">Listening</button>
+  <button class="tab" data-tab="read">Reading</button>
+  <button class="tab" data-tab="talk">Talk</button>
+  <button class="tab" data-tab="write">Writing</button>
+  <button class="tab" data-tab="recap">Recap</button>
+</div></nav>
+
+<main>
+
+<!-- WARM-UP -->
+<section id="warm">
+  <h2>This week</h2>
+  <p class="lead">No right or wrong answers here. Just talk.</p>
+  <div class="prompt"><div class="lab">It's Friday</div><p>What's the plan for this weekend?</p></div>
+  <div class="prompt"><div class="lab">Teach me</div><p>What are you playing at the moment? Explain it to me like I've never played a game.</p></div>
+  <div class="prompt"><div class="lab">Your scooter</div><p>What have you upgraded so far, and what's next?</p></div>
+  <div class="tnote">
+    <h4>Teacher notes</h4>
+    <p>Comfort first. He's shy: no corrections, lots of nods and genuine follow-ups. The game question is an expertise flip, so play the clueless one and let him explain.</p>
+    <ul>
+      <li>Weekend plan: going to / present continuous / will (A2-10)</li>
+      <li>Game: present simple, 3rd person -s, linking (A2-01)</li>
+      <li>Scooter: present perfect vs past simple when he gives details (A2-09, B1-04)</li>
+      <li>Polish L1 watch: dropped or random articles, missing 3rd person -s, word order in questions, "make" vs "do"</li>
+      <li>Note fluency too: pauses, fillers, does he switch to French when stuck?</li>
+    </ul>
+    <textarea id="nWarm" rows="3" placeholder="What I noticed"></textarea>
+  </div>
+</section>
+
+<!-- GRAMMAR -->
+<section id="grammar">
+  <h2>Grammar run</h2>
+  <p class="lead">Choose or type the answer. If you're not sure, say so. That helps me as much as a right answer.</p>
+  <div class="bat" id="bat" aria-hidden="true"></div>
+  <div class="gcard" id="gCard"></div>
+  <div class="tnote">
+    <h4>Teacher notes</h4>
+    <p>Items climb from A2 to B1 (school-exam staples). Don't explain mid-run unless he's stuck emotionally; the tip after each answer is enough. Stop early if the B1 block is clearly out of reach.</p>
+    <div class="tscroll" id="gT"></div>
+  </div>
+</section>
+
+<!-- LISTENING -->
+<section id="listen">
+  <h2>Dictation</h2>
+  <p class="lead">I'll read each sentence twice. Write exactly what you hear, then press Check.</p>
+  <div id="dList"></div>
+  <div class="tnote">
+    <h4>Teacher notes: read these</h4>
+    <p>Natural speed, read twice, short pause between readings. Don't slow down on the hard ones; contractions stay contracted.</p>
+    <ol id="dT"></ol>
+  </div>
+</section>
+
+<!-- READING -->
+<section id="read">
+  <h2>Goodbye, shared e-scooters</h2>
+  <p class="lead">Read the article, then answer the questions below it.</p>
+  <article class="article">
+    <figure>
+      <img src="https://api.brusselstimes.com/wp-content/uploads/2026/08/f76a79fe-belgaimage-1826200761-1024x683.jpg" alt="Shared scooters and bikes parked on a Brussels street" loading="lazy" onerror="this.closest('figure').remove()">
+      <figcaption>Brussels, August 2026. Photo: Belga / Nicolas Maeterlinck</figcaption>
+    </figure>
+    <p>Shared e-scooters arrived in Brussels in 2018. The idea was simple: you opened an app, found a scooter near you, rode it across the city and left it almost anywhere. A lot of people loved it. In 2025, nearly 800,000 people used them for almost 10 million trips.</p>
+    <p>But the problems grew fast. Scooters were left in the middle of pavements, and the number of accidents went up. In 2025, 666 people were injured in e-scooter accidents in Brussels, 26% more than the year before. When riders fall, they are more likely than cyclists to hurt their head or face. The city tried drop-off zones, an automatic speed limit (20 km/h everywhere, 8 km/h in the pedestrian zone) and an identity check in the app. None of it really solved the problem.</p>
+    <p>In June 2026, the Brussels government decided to ban shared e-scooters from 1 January 2027. In the end, they disappeared even sooner, and not because of the accidents. Back in 2023, the city had decided to allow only two scooter operators, Bolt and Dott. Lime, a company that did not get a licence, took that decision to court. This summer, the Council of State agreed with Lime. However, it did not give Lime a licence. Instead, it cancelled the licences of the other operators, and they were told to take their scooters off the streets by 1 September.</p>
+    <p>Not everyone is happy. Bolt says its scooters had become an essential part of how people get around the city, and that people often confuse them with private e-scooters, which have no company checking them. Some experts also ask who loses the most. Studies show that people who use shared scooters are, on average, slightly less educated and less likely to have a driving licence than people who use shared bikes. That is why one mobility professor called the ban "not socially neutral". Brussels is not alone: Paris, Madrid and Prague have already removed their shared scooters.</p>
+    <p class="src">Based on reporting by The Brussels Times (August 2026) and Euronews (June 2026).</p>
+  </article>
+  <div id="rQs" style="margin-top:18px"></div>
+  <div class="tnote">
+    <h4>Teacher notes</h4>
+    <p>Paragraphs climb A2 → B1 → B1+ → B2. Q1–4 are detail, Q5–7 need understanding of the court story, Q8–9 are inference and "not given", which matches the style of his school tests.</p>
+    <p><b>Pronunciation:</b> before the questions, ask him to read paragraph 1 aloud. Tap what you hear:</p>
+    <div class="starters" id="pFlags"></div>
+    <p id="rScore"></p>
+  </div>
+</section>
+
+<!-- TALK -->
+<section id="talk">
+  <h2>Your turn to talk</h2>
+  <p class="lead">Take your time. Short answers are fine to start with.</p>
+  <div class="prompt"><div class="lab">Warm-up</div><p>Have you ever used a shared e-scooter in Brussels? What was it like?</p></div>
+  <div class="prompt"><div class="lab">Story</div><p>Tell me about a time something went wrong: on your scooter, in a game, anywhere.</p></div>
+  <div class="prompt"><div class="lab">Opinion</div><p>Was the ban a good idea? Try to convince me.</p></div>
+  <div class="prompt"><div class="lab">Challenge</div><p>If you were in charge of transport in Brussels for a year, what would you change for people your age?</p></div>
+  <div class="tnote">
+    <h4>Teacher notes</h4>
+    <ul>
+      <li>Warm-up: does he switch from present perfect to past simple for details? (A2-09 / B1-04)</li>
+      <li>Story: past simple + past continuous, sequencing linkers, can you follow it? (A2-06, A2-07, B1-01)</li>
+      <li>Opinion: reasons, because/so/however, on the other hand (B1-08, B1-11)</li>
+      <li>Challenge: second conditional unprompted? Range of vocabulary. (B1-12)</li>
+      <li>If he dries up, push back gently on his opinion: disagreeing gives him something to answer.</li>
+    </ul>
+    <textarea id="nTalk" rows="3" placeholder="Errors, range, fluency"></textarea>
+  </div>
+</section>
+
+<!-- WRITING -->
+<section id="write">
+  <h2>Write it down</h2>
+  <p class="lead">Pick one task. Tap a sentence starter if you want help getting going.</p>
+  <div class="tasks">
+    <button class="task" data-task="A"><b>My scooter</b><span>60–80 words</span></button>
+    <button class="task" data-task="B"><b>The ban</b><span>80–120 words</span></button>
+  </div>
+  <div id="wBox"></div>
+  <div class="tnote">
+    <h4>Teacher notes</h4>
+    <p>Task A is A2 (describe, present perfect, going to). Task B is B1 (opinion, reasons, linkers). Note which one he picks. If time runs out, it becomes homework.</p>
+    <div id="wRub"></div>
+  </div>
+</section>
+
+<!-- RECAP -->
+<section id="recap">
+  <h2>Done for today</h2>
+  <p class="lead">Here's what you covered. Thanks for working so hard.</p>
+  <ul class="recap-list" id="recapList"></ul>
+  <div class="tnote">
+    <h4>Results</h4>
+    <div id="res"></div>
+    <div class="lvl">
+      <label for="lvSpeak">Speaking</label><select id="lvSpeak" data-lv="speak"></select>
+      <label for="lvPron">Pronunciation</label><select id="lvPron" data-lv="pron"></select>
+      <label for="lvWrite">Writing</label><select id="lvWrite" data-lv="write"></select>
+      <label for="lvAll">Overall</label><select id="lvAll" data-lv="all"></select>
+    </div>
+    <textarea id="nRecap" rows="3" placeholder="Strengths, gaps, plan"></textarea>
+    <div class="actions">
+      <button class="btn" id="copyBtn">Copy summary</button>
+      <button class="ghost danger" id="resetBtn" style="margin-top:0">Clear all answers</button>
+    </div>
+  </div>
+  <details>
+    <summary>Can-do card</summary>
+    <dl>
+      <dt>Card</dt><dd>DIAG</dd>
+      <dt>Function</dt><dd>Placement across A2 and B1</dd>
+      <dt>Grammar</dt><dd>Tense and structure sweep (22 items)</dd>
+      <dt>Evidence</dt><dd>Grammar run, dictation, reading set, one writing task and four speaking prompts completed</dd>
+    </dl>
+  </details>
+</section>
+
+</main>
+
+<button id="timer" aria-label="Lesson timer">50:00</button>
+
+<script>
+(function(){
+"use strict";
+
+var KEY = "nikola_diag_v1";
+var LEVELS = ["—","A1","A2-","A2","A2+","B1-","B1","B1+","B2"];
+
+var G = [
+  {a:"Present simple",c:"A2-01",b:"A2",t:"gap",q:"My brother ___ war games every evening.",h:"play",ans:["plays"],tip:"He / she / it: add -s in the present simple."},
+  {a:"Present continuous",c:"A2-01",b:"A2",t:"mc",q:"Look! Someone ___ my scooter!",o:["takes","is taking","take","took"],ans:"is taking",tip:"\"Look!\" means it's happening now: am / is / are + -ing."},
+  {a:"Articles",c:"A2-04",b:"A2",t:"mc",q:"I watched ___ amazing video about scooter batteries.",o:["a","an","the","—"],ans:"an",tip:"First time you mention something: a / an. Before a vowel sound: an."},
+  {a:"Past simple",c:"A2-06",b:"A2",t:"gap",q:"Last Saturday I ___ new tyres for my scooter.",h:"buy",ans:["bought"],tip:"buy → bought (irregular)."},
+  {a:"Past questions",c:"A2-06",b:"A2",t:"mc",q:"___ you finish your homework yesterday?",o:["Do","Did","Were","Have"],ans:"Did",tip:"Past simple question: Did + subject + base verb."},
+  {a:"Comparatives",c:"A2-20",b:"A2",t:"gap",q:"This battery is ___ than the old one.",h:"good",ans:["better"],tip:"good → better → the best."},
+  {a:"Past continuous",c:"A2-07",b:"A2",t:"mc",q:"I ___ home when my chain broke.",o:["rode","was riding","am riding","have ridden"],ans:"was riding",tip:"Longer background action (was / were + -ing), interrupted by a short one (past simple)."},
+  {a:"Will / going to",c:"A2-11",b:"A2",t:"mc",q:"Look at those black clouds. It ___ rain.",o:["will","is going to","rains","is raining"],ans:"is going to",tip:"You can see the evidence now: going to."},
+  {a:"Articles",c:"A2-04",b:"A2",t:"mc",q:"I usually go to school by ___ bus.",o:["a","the","—"],ans:"—",tip:"by bus, by train, by car: no article."},
+  {a:"Obligation",c:"A2-15",b:"A2",t:"mc",q:"There's no school tomorrow, so I ___ get up early.",o:["mustn't","don't have to","haven't to","can't"],ans:"don't have to",tip:"don't have to = it's not necessary. mustn't = it's not allowed."},
+  {a:"Verb + -ing",c:"A2-05",b:"A2",t:"mc",q:"I'm thinking about ___ a new battery.",o:["buy","to buy","buying","bought"],ans:"buying",tip:"After a preposition (about, of, at, for): verb + -ing."},
+  {a:"Present perfect (experience)",c:"A2-09",b:"A2",t:"gap",q:"Have you ever ___ a motorbike?",h:"ride",ans:["ridden"],tip:"ride → rode → ridden. have + past participle."},
+  {a:"First conditional",c:"A2-19",b:"A2",t:"mc",q:"If it rains tomorrow, I ___ the tram.",o:["take","will take","would take","took"],ans:"will take",tip:"Real possibility: If + present, will + verb."},
+  {a:"Used to",c:"A2-08",b:"A2",t:"mc",q:"When I was ten, I ___ play Minecraft every day.",o:["use to","used to","was used to","am used to"],ans:"used to",tip:"used to + verb = a past habit that isn't true now."},
+  {a:"Present perfect vs past simple",c:"B1-04",b:"B1",t:"mc",q:"I ___ this game since I was twelve.",o:["play","played","have played","am playing"],ans:"have played",tip:"since / for + something still true now: present perfect."},
+  {a:"Present perfect vs past simple",c:"B1-04",b:"B1",t:"mc",q:"I ___ my scooter two years ago.",o:["have bought","bought","had bought","buy"],ans:"bought",tip:"Finished time (ago, last year, in 2024): past simple."},
+  {a:"Passive",c:"B1-07",b:"B1",t:"gap",q:"The new update ___ last week.",h:"release",ans:["was released"],tip:"Past passive: was / were + past participle."},
+  {a:"Relative clauses",c:null,b:"B1",t:"mc",q:"That's the guy ___ fixed my brakes.",o:["which","who","where","whose"],ans:"who",tip:"who for people, which for things, where for places."},
+  {a:"Past perfect",c:"B1-02",b:"B1",t:"mc",q:"I couldn't log in because I ___ my password.",o:["forget","have forgotten","had forgotten","was forgetting"],ans:"had forgotten",tip:"Forgetting happened before the moment in the past: had + past participle."},
+  {a:"Second conditional",c:"B1-12",b:"B1",t:"gap",q:"If I ___ more money, I would buy a faster scooter.",h:"have",ans:["had"],tip:"Imaginary situation: If + past, would + verb."},
+  {a:"Reported speech",c:"B1-06",b:"B1",t:"mc",q:"My teacher said: \"I will check your homework.\" → My teacher said she ___ check my homework.",o:["will","would","is going","had"],ans:"would",tip:"Reported speech moves one step back: will → would."},
+  {a:"Third conditional",c:"B1-13",b:"B1",t:"mc",q:"If I had studied more, I ___ a better grade.",o:["would get","will get","would have got","had got"],ans:"would have got",tip:"A past that didn't happen: If + had + past participle, would have + past participle."}
+];
+
+var TF = ["True","False","Not given"];
+var R = [
+  {q:"When did shared e-scooters first arrive in Brussels?",o:["2016","2018","2022","2026"],ans:1},
+  {q:"In the pedestrian zone, the scooters were limited to 8 km/h.",o:TF,ans:0},
+  {q:"How many people were injured in e-scooter accidents in Brussels in 2025?",o:["26","666","800,000","10 million"],ans:1},
+  {q:"When they fall, e-scooter riders are more likely to hurt their head or face than cyclists.",o:TF,ans:0},
+  {q:"Why did the scooters disappear earlier than the government planned?",o:["Because accidents kept going up","Because a court cancelled the operators' licences","Because residents voted against them","Because Bolt and Dott decided to leave"],ans:1},
+  {q:"After the court case, Lime got a licence to run scooters in Brussels.",o:TF,ans:1},
+  {q:"In paragraph 3, an \"operator\" is…",o:["a person who rides a scooter","a company that runs the scooter service","a judge at the court","a type of licence"],ans:1},
+  {q:"Why did one professor say the ban is \"not socially neutral\"?",o:["It affects some groups of people more than others","It costs the city a lot of money","It is bad for the environment","It was decided too quickly"],ans:0},
+  {q:"Bolt is planning to leave Belgium completely.",o:TF,ans:2}
+];
+
+var D = [
+  "I ride my scooter to school every day.",
+  "We were playing online when the internet stopped working.",
+  "Have you ever thought about building your own computer?",
+  "If the battery had been charged, I wouldn't have been late.",
+  "The new rules, which were introduced last year, haven't changed much."
+];
+
+var PF = ["th /θ ð/","w → v","final devoicing (bad → bat)","short vs long vowels","-ed endings","word stress","h dropped","rolled r","flat intonation"];
+
+var W = {
+  A:{title:"My scooter",prompt:"Describe your scooter: what it's like, what you've changed on it, and what you want to upgrade next.",min:60,max:80,
+     st:["My scooter is a…","The best upgrade I've done so far is…","It's made of…","Next, I'm going to…"]},
+  B:{title:"The ban",prompt:"Write a comment for a news website: was banning shared e-scooters in Brussels a good idea? Give your opinion and two reasons.",min:80,max:120,
+     st:["In my opinion,…","First of all,…","On the other hand,…","To sum up,…"]}
+};
+var RUB = ["Task","Range","Accuracy","Organisation","Spelling"];
+
+/* ---------- state ---------- */
+function blank(){
+  return {tab:"warm",gi:0,gres:[],r:{},dtx:["","","","",""],dsc:[null,null,null,null,null],
+          wtask:null,wtx:{A:"",B:""},rub:{},pf:[],lv:{},notes:{warm:"",talk:"",recap:""}};
+}
+function load(){
+  var s = blank();
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(raw){ var o = JSON.parse(raw); for(var k in o){ if(Object.prototype.hasOwnProperty.call(s,k)) s[k]=o[k]; } }
+  }catch(e){}
+  return s;
+}
+var st = load();
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){} }
+
+function $(s){ return document.querySelector(s); }
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];}); }
+function norm(s){ return String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/\s+/g," ").trim().replace(/[.!?]+$/,""); }
+
+/* ---------- tabs ---------- */
+function showTab(id){
+  st.tab = id; save();
+  document.querySelectorAll(".tab").forEach(function(b){ b.classList.toggle("on", b.dataset.tab===id); });
+  document.querySelectorAll("section").forEach(function(s){ s.classList.toggle("on", s.id===id); });
+  if(id==="recap") renderRecap();
+  window.scrollTo(0,0);
+}
+$("#tabs").addEventListener("click",function(e){ var b=e.target.closest(".tab"); if(b) showTab(b.dataset.tab); });
+document.addEventListener("click",function(e){ var g=e.target.closest("[data-go]"); if(g) showTab(g.dataset.go); });
+
+/* ---------- teacher mode ---------- */
+$("#tBtn").addEventListener("click",function(){
+  var on = document.body.classList.toggle("t-on");
+  this.setAttribute("aria-pressed", on ? "true" : "false");
+  if(on && st.tab==="recap") renderRecap();
+});
+
+/* ---------- notes ---------- */
+[["#nWarm","warm"],["#nTalk","talk"],["#nRecap","recap"]].forEach(function(p){
+  var el = $(p[0]); el.value = st.notes[p[1]] || "";
+  el.addEventListener("input",function(){ st.notes[p[1]] = el.value; save(); });
+});
+
+/* ---------- grammar ---------- */
+function renderBat(){
+  var h = "";
+  for(var k=0;k<G.length;k++){
+    var r = st.gres[k], c = "cell";
+    if(r){ c += r.ok ? " ok" : (r.skip ? " skip" : " miss"); }
+    if(k===st.gi) c += " cur";
+    h += "<div class=\"" + c + "\"></div>";
+  }
+  $("#bat").innerHTML = h;
+}
+function renderG(){
+  renderBat(); renderGT();
+  var box = $("#gCard"), i = st.gi;
+  if(i >= G.length){
+    var ok = st.gres.filter(function(r){ return r && r.ok; }).length;
+    box.innerHTML = "<div class=\"done\"><p class=\"big\">" + ok + " / " + G.length + "</p><p>Grammar run complete. Good work.</p><button class=\"btn\" data-go=\"listen\">Next: Listening</button></div>";
+    return;
+  }
+  var it = G[i], r = st.gres[i];
+  var shown = r ? esc(r.skip ? "?" : r.given) : "&nbsp;";
+  var q = esc(it.q).replace("___", "<span class=\"blank\">" + shown + "</span>");
+  if(it.t==="gap") q += " <span class=\"base\">(" + esc(it.h) + ")</span>";
+  var h = "<div class=\"gmeta\">Question " + (i+1) + " of " + G.length + "</div><p class=\"gq\">" + q + "</p>";
+  var right = it.t==="mc" ? it.ans : it.ans[0];
+  if(it.t==="mc"){
+    h += "<div>";
+    it.o.forEach(function(o,k){
+      var cls = "opt";
+      if(r){ if(o===it.ans) cls += " right"; else if(!r.skip && o===r.given) cls += " wrong"; }
+      h += "<button class=\"" + cls + "\" data-k=\"" + k + "\"" + (r ? " disabled" : "") + ">" + esc(o) + "</button>";
+    });
+    h += "</div>";
+  } else {
+    h += "<div class=\"gaprow\"><input type=\"text\" id=\"gIn\" autocomplete=\"off\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\" aria-label=\"Your answer\"" +
+         (r ? " disabled value=\"" + esc(r.skip ? "" : r.given) + "\"" : "") + "><button class=\"btn\" id=\"gCheck\"" + (r ? " disabled" : "") + ">Check</button></div>";
+  }
+  if(r){
+    if(r.ok) h += "<p class=\"fb ok\">✓ Correct.</p>";
+    else if(r.skip) h += "<p class=\"fb\">No problem. The answer is <b>" + esc(right) + "</b>.</p>";
+    else h += "<p class=\"fb miss\">The answer is <b>" + esc(right) + "</b>.</p>";
+    h += "<p class=\"tip\">💡 " + esc(it.tip) + "</p><button class=\"btn\" id=\"gNext\">" + (i===G.length-1 ? "Finish" : "Next") + "</button>";
+  } else {
+    h += "<button class=\"ghost\" id=\"gSkip\">Not sure</button>";
+  }
+  box.innerHTML = h;
+  var inp = $("#gIn");
+  if(inp && !r){
+    inp.addEventListener("keydown",function(e){ if(e.key==="Enter" && inp.value.trim()) answerG(inp.value,false); });
+    if(st.tab==="grammar") inp.focus();
+  }
+}
+function answerG(given, skip){
+  var it = G[st.gi];
+  var ok = false;
+  if(!skip){ ok = it.t==="mc" ? given===it.ans : it.ans.map(norm).indexOf(norm(given)) > -1; }
+  st.gres[st.gi] = {given: skip ? "" : String(given).trim(), ok: ok, skip: !!skip};
+  save(); renderG();
+}
+$("#gCard").addEventListener("click",function(e){
+  var it = G[st.gi];
+  var o = e.target.closest(".opt");
+  if(o && !o.disabled){ answerG(it.o[+o.dataset.k], false); return; }
+  if(e.target.id==="gCheck"){ var v = $("#gIn").value; if(v.trim()) answerG(v,false); return; }
+  if(e.target.id==="gSkip"){ answerG("",true); return; }
+  if(e.target.id==="gNext"){ st.gi++; save(); renderG(); }
+});
+function renderGT(){
+  var h = "<table class=\"ttable\"><tr><th>#</th><th>Area</th><th>Card</th><th>Answer</th></tr>";
+  G.forEach(function(it,k){
+    var r = st.gres[k], res = "";
+    if(r) res = r.ok ? "✓ " + esc(r.given) : (r.skip ? "not sure" : "✗ " + esc(r.given));
+    h += "<tr><td>" + (k+1) + "</td><td>" + esc(it.a) + "</td><td>" + (it.c || "—") + "</td><td>" + res + "</td></tr>";
+  });
+  $("#gT").innerHTML = h + "</table>";
+}
+
+/* ---------- listening ---------- */
+function toks(s){ return s.toLowerCase().replace(/[’‘]/g,"'").replace(/[^a-z0-9' ]+/g," ").split(/\s+/).filter(Boolean); }
+function diff(orig, typed){
+  var disp = orig.split(" ");
+  var a = disp.map(function(w){ return toks(w).join(""); });
+  var b = toks(typed), n = a.length, m = b.length, i, j;
+  var dp = [];
+  for(i=0;i<=n;i++){ dp.push(new Array(m+1).fill(0)); }
+  for(i=n-1;i>=0;i--){ for(j=m-1;j>=0;j--){ dp[i][j] = a[i]===b[j] ? dp[i+1][j+1]+1 : Math.max(dp[i+1][j], dp[i][j+1]); } }
+  var hit = new Array(n).fill(false); i=0; j=0;
+  while(i<n && j<m){
+    if(a[i]===b[j]){ hit[i]=true; i++; j++; }
+    else if(dp[i+1][j] >= dp[i][j+1]) i++; else j++;
+  }
+  var html = disp.map(function(w,k){ return "<span class=\"" + (hit[k] ? "w-hit" : "w-miss") + "\">" + esc(w) + "</span>"; }).join(" ");
+  return {hit: hit.filter(Boolean).length, tot: n, html: html};
+}
+function renderD(){
+  var h = "";
+  D.forEach(function(s,k){
+    var res = "";
+    if(st.dsc[k]){
+      var d = diff(s, st.dtx[k]);
+      res = "<div class=\"dres\">" + d.html + "<span class=\"pct\">" + d.hit + " / " + d.tot + " words</span></div>";
+    }
+    h += "<div class=\"drow\"><div class=\"top\"><h3>Sentence " + (k+1) + "</h3><button class=\"btn\" data-dk=\"" + k + "\">Check</button></div>" +
+         "<textarea rows=\"2\" data-dt=\"" + k + "\" autocapitalize=\"sentences\" spellcheck=\"false\" aria-label=\"Sentence " + (k+1) + "\">" + esc(st.dtx[k]) + "</textarea>" + res + "</div>";
+  });
+  $("#dList").innerHTML = h;
+  $("#dT").innerHTML = D.map(function(s){ return "<li>" + esc(s) + "</li>"; }).join("");
+}
+$("#dList").addEventListener("input",function(e){
+  var t = e.target.closest("[data-dt]"); if(!t) return;
+  st.dtx[+t.dataset.dt] = t.value; save();
+});
+$("#dList").addEventListener("click",function(e){
+  var b = e.target.closest("[data-dk]"); if(!b) return;
+  var k = +b.dataset.dk;
+  if(!st.dtx[k].trim()) return;
+  var d = diff(D[k], st.dtx[k]);
+  st.dsc[k] = {hit: d.hit, tot: d.tot}; save(); renderD();
+});
+
+/* ---------- reading ---------- */
+function renderR(){
+  var h = "", ok = 0, done = 0;
+  R.forEach(function(it,k){
+    var a = st.r[k], isTF = it.o===TF;
+    if(a !== undefined){ done++; if(a===it.ans) ok++; }
+    h += "<div class=\"rq\"><p class=\"q\">" + (k+1) + ". " + esc(it.q) + "</p><div" + (isTF ? " class=\"row3\"" : "") + ">";
+    it.o.forEach(function(o,j){
+      var cls = "opt";
+      if(a !== undefined){ if(j===it.ans) cls += " right"; else if(j===a) cls += " wrong"; }
+      h += "<button class=\"" + cls + "\" data-rq=\"" + k + "\" data-ro=\"" + j + "\"" + (a !== undefined ? " disabled" : "") + ">" + esc(o) + "</button>";
+    });
+    h += "</div></div>";
+  });
+  $("#rQs").innerHTML = h;
+  $("#rScore").textContent = "Score so far: " + ok + " / " + done + " answered (of " + R.length + ").";
+}
+$("#rQs").addEventListener("click",function(e){
+  var b = e.target.closest("[data-rq]"); if(!b || b.disabled) return;
+  st.r[+b.dataset.rq] = +b.dataset.ro; save(); renderR();
+});
+function renderPF(){
+  $("#pFlags").innerHTML = PF.map(function(p){
+    return "<button class=\"chip" + (st.pf.indexOf(p) > -1 ? " on" : "") + "\" data-pf=\"" + esc(p) + "\">" + esc(p) + "</button>";
+  }).join("");
+}
+$("#pFlags").addEventListener("click",function(e){
+  var b = e.target.closest("[data-pf]"); if(!b) return;
+  var p = b.dataset.pf, i = st.pf.indexOf(p);
+  if(i > -1) st.pf.splice(i,1); else st.pf.push(p);
+  save(); renderPF();
+});
+
+/* ---------- writing ---------- */
+function wc(s){ return (s.trim().match(/\S+/g) || []).length; }
+function renderW(){
+  document.querySelectorAll(".task").forEach(function(b){ b.classList.toggle("on", b.dataset.task===st.wtask); });
+  var box = $("#wBox");
+  if(!st.wtask){ box.innerHTML = ""; return; }
+  var t = W[st.wtask];
+  box.innerHTML = "<div class=\"prompt\"><div class=\"lab\">" + esc(t.title) + "</div><p>" + esc(t.prompt) + "</p></div>" +
+    "<div class=\"starters\">" + t.st.map(function(s,k){ return "<button class=\"chip\" data-st=\"" + k + "\">" + esc(s) + "</button>"; }).join("") + "</div>" +
+    "<textarea id=\"wTx\" rows=\"9\" aria-label=\"Your text\">" + esc(st.wtx[st.wtask]) + "</textarea><div class=\"wc\" id=\"wCount\"></div>";
+  var ta = $("#wTx");
+  ta.addEventListener("input",function(){ st.wtx[st.wtask] = ta.value; save(); updWC(); });
+  updWC();
+}
+function updWC(){
+  var t = W[st.wtask], n = wc(st.wtx[st.wtask]);
+  $("#wCount").textContent = n + " words (aim for " + t.min + "–" + t.max + ")";
+}
+document.querySelector(".tasks").addEventListener("click",function(e){
+  var b = e.target.closest(".task"); if(!b) return;
+  st.wtask = b.dataset.task; save(); renderW(); renderRub();
+});
+$("#wBox").addEventListener("click",function(e){
+  var b = e.target.closest("[data-st]"); if(!b) return;
+  var ta = $("#wTx"), s = W[st.wtask].st[+b.dataset.st].replace(/…$/,"");
+  ta.value = ta.value.trim() ? ta.value.replace(/\s+$/,"") + "\n" + s + " " : s + " ";
+  st.wtx[st.wtask] = ta.value; save(); updWC();
+  ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length);
+});
+function renderRub(){
+  var h = RUB.map(function(c){
+    var v = st.rub[c], chips = "";
+    for(var n=1;n<=5;n++){ chips += "<button class=\"chip" + (v===n ? " on" : "") + "\" data-rc=\"" + c + "\" data-rv=\"" + n + "\">" + n + "</button>"; }
+    return "<div class=\"rub\"><span>" + c + "</span>" + chips + "</div>";
+  }).join("");
+  $("#wRub").innerHTML = h;
+}
+$("#wRub").addEventListener("click",function(e){
+  var b = e.target.closest("[data-rc]"); if(!b) return;
+  var c = b.dataset.rc, v = +b.dataset.rv;
+  st.rub[c] = st.rub[c]===v ? undefined : v; save(); renderRub();
+});
+
+/* ---------- recap ---------- */
+function gStats(){
+  var s = {A2:{ok:0,n:0},B1:{ok:0,n:0},done:0,miss:[]};
+  G.forEach(function(it,k){
+    s[it.b].n++;
+    var r = st.gres[k]; if(!r) return;
+    s.done++;
+    if(r.ok) s[it.b].ok++;
+    else s.miss.push(it);
+  });
+  return s;
+}
+function gEst(s){
+  if(s.done < G.length) return "incomplete";
+  var a = s.A2.ok / s.A2.n, b = s.B1.ok / s.B1.n;
+  if(a < .5) return "A2-";
+  if(a < .8) return "A2";
+  if(b < .4) return "A2+";
+  if(b < .75) return "B1-";
+  return "B1+";
+}
+function rStats(){ var ok=0,n=0; R.forEach(function(it,k){ if(st.r[k]!==undefined){ n++; if(st.r[k]===it.ans) ok++; } }); return {ok:ok,n:n}; }
+function rEst(r){ if(r.n < R.length) return "incomplete"; return r.ok>=8 ? "B1+" : r.ok>=6 ? "B1" : r.ok>=4 ? "A2+" : "A2"; }
+function dStats(){ var h=0,t=0,n=0; st.dsc.forEach(function(d){ if(d){ h+=d.hit; t+=d.tot; n++; } }); return {pct: t ? Math.round(h/t*100) : 0, n:n}; }
+function dEst(d){ if(!d.n) return "—"; return d.pct>=90 ? "B1+" : d.pct>=75 ? "B1" : d.pct>=55 ? "A2+" : "A2"; }
+function cardOrder(c){ var m = /^(A2|B1)-(\d+)$/.exec(c); return m ? (m[1]==="A2" ? 0 : 100) + +m[2] : 999; }
+function sugCards(s){
+  var seen = {}, out = [];
+  s.miss.forEach(function(it){ if(it.c && !seen[it.c]){ seen[it.c]=1; out.push(it.c); } });
+  return out.sort(function(x,y){ return cardOrder(x)-cardOrder(y); });
+}
+function renderRecap(){
+  var g = gStats(), r = rStats(), d = dStats();
+  var wn = st.wtask ? wc(st.wtx[st.wtask]) : 0;
+  $("#recapList").innerHTML =
+    "<li><span>Grammar run</span><span>" + g.done + " / " + G.length + "</span></li>" +
+    "<li><span>Dictation</span><span>" + d.n + " / " + D.length + " sentences</span></li>" +
+    "<li><span>Reading</span><span>" + r.n + " / " + R.length + " questions</span></li>" +
+    "<li><span>Writing</span><span>" + (st.wtask ? wn + " words" : "next time") + "</span></li>";
+  var cards = sugCards(g);
+  var other = g.miss.filter(function(it){ return !it.c; }).map(function(it){ return it.a; });
+  $("#res").innerHTML =
+    "<table class=\"ttable\">" +
+    "<tr><td>Grammar</td><td>A2 " + g.A2.ok + "/" + g.A2.n + " · B1 " + g.B1.ok + "/" + g.B1.n + "</td><td>" + gEst(g) + "</td></tr>" +
+    "<tr><td>Reading</td><td>" + r.ok + "/" + R.length + "</td><td>" + rEst(r) + "</td></tr>" +
+    "<tr><td>Listening</td><td>" + d.pct + "% words (" + d.n + "/" + D.length + ")</td><td>" + dEst(d) + "</td></tr>" +
+    "<tr><td>Pronunciation flags</td><td colspan=\"2\">" + (st.pf.length ? esc(st.pf.join(", ")) : "—") + "</td></tr>" +
+    "</table>" +
+    "<p style=\"margin:12px 0 4px\">Suggested starting cards</p><div class=\"cards\">" +
+    (cards.length ? cards.map(function(c){ return "<span>" + c + "</span>"; }).join("") : "<em>none yet</em>") + "</div>" +
+    (other.length ? "<p style=\"margin:4px 0\">Also missed: " + esc(other.join(", ")) + "</p>" : "");
+  document.querySelectorAll("select[data-lv]").forEach(function(sel){
+    sel.innerHTML = LEVELS.map(function(l){ return "<option" + (st.lv[sel.dataset.lv]===l ? " selected" : "") + ">" + l + "</option>"; }).join("");
+  });
+}
+document.querySelectorAll("select[data-lv]").forEach(function(sel){
+  sel.addEventListener("change",function(){ st.lv[sel.dataset.lv] = sel.value; save(); });
+});
+function summary(){
+  var g = gStats(), r = rStats(), d = dStats();
+  var lv = function(k){ return st.lv[k] || "—"; };
+  var rub = RUB.map(function(c){ return c + " " + (st.rub[c] || "-"); }).join(", ");
+  var L = [];
+  L.push("Nikola: diagnostic, " + new Date().toLocaleDateString("en-GB"));
+  L.push("Overall: " + lv("all"));
+  L.push("Grammar: A2 " + g.A2.ok + "/" + g.A2.n + ", B1 " + g.B1.ok + "/" + g.B1.n + " (est. " + gEst(g) + ")");
+  if(g.miss.length) L.push("Grammar misses: " + g.miss.map(function(it){ return it.a + (it.c ? " (" + it.c + ")" : ""); }).join("; "));
+  L.push("Reading: " + r.ok + "/" + R.length + " (est. " + rEst(r) + ")");
+  L.push("Listening (dictation): " + d.pct + "% words, " + d.n + "/" + D.length + " sentences (est. " + dEst(d) + ")");
+  L.push("Speaking: " + lv("speak") + " | Pronunciation: " + lv("pron") + " | Writing: " + lv("write"));
+  if(st.pf.length) L.push("Pronunciation flags: " + st.pf.join(", "));
+  if(st.wtask) L.push("Writing task " + st.wtask + " (" + W[st.wtask].title + "), " + wc(st.wtx[st.wtask]) + " words. Rubric: " + rub);
+  var c = sugCards(g); if(c.length) L.push("Suggested starting cards: " + c.join(", "));
+  if(st.notes.warm) L.push("Warm-up notes: " + st.notes.warm);
+  if(st.notes.talk) L.push("Talk notes: " + st.notes.talk);
+  if(st.notes.recap) L.push("Notes: " + st.notes.recap);
+  if(st.wtask && st.wtx[st.wtask].trim()) L.push("", "Writing sample:", st.wtx[st.wtask].trim());
+  return L.join("\n");
+}
+$("#copyBtn").addEventListener("click",function(){
+  var txt = summary(), btn = this;
+  function done(){ btn.textContent = "Copied"; setTimeout(function(){ btn.textContent = "Copy summary"; }, 1500); }
+  function fallback(){
+    var ta = document.createElement("textarea"); ta.value = txt; ta.setAttribute("readonly","");
+    ta.style.position = "absolute"; ta.style.left = "-9999px"; document.body.appendChild(ta);
+    ta.select(); try{ document.execCommand("copy"); done(); }catch(e){} document.body.removeChild(ta);
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done, fallback); } else fallback();
+});
+$("#resetBtn").addEventListener("click",function(){
+  if(!confirm("Clear all answers and notes from this session?")) return;
+  try{ localStorage.removeItem(KEY); }catch(e){}
+  location.reload();
+});
+
+/* ---------- timer ---------- */
+var TOTAL = 50*60, tRem = TOTAL, tEnd = null, tInt = null, lpTimer = null, lpFired = false;
+var tEl = $("#timer");
+function fmt(s){ s = Math.max(0, Math.ceil(s)); return Math.floor(s/60) + ":" + String(s%60).padStart(2,"0"); }
+function tick(){
+  var rem = (tEnd - Date.now()) / 1000;
+  tEl.textContent = fmt(rem);
+  if(rem <= 0){ clearInterval(tInt); tInt = null; tEnd = null; tRem = 0; tEl.classList.remove("run"); tEl.classList.add("over"); }
+}
+function tTap(){
+  if(tInt){
+    clearInterval(tInt); tInt = null; tRem = (tEnd - Date.now()) / 1000; tEnd = null;
+    tEl.classList.remove("run"); tEl.classList.add("paused");
+  } else {
+    if(tRem <= 0) return;
+    tEnd = Date.now() + tRem*1000; tInt = setInterval(tick, 250);
+    tEl.classList.remove("paused"); tEl.classList.add("run"); tick();
+  }
+}
+function tReset(){
+  clearInterval(tInt); tInt = null; tEnd = null; tRem = TOTAL;
+  tEl.className = ""; tEl.textContent = fmt(TOTAL);
+}
+tEl.addEventListener("pointerdown",function(){
+  lpFired = false;
+  lpTimer = setTimeout(function(){ lpFired = true; tReset(); }, 700);
+});
+["pointerup","pointerleave","pointercancel"].forEach(function(ev){
+  tEl.addEventListener(ev,function(){ clearTimeout(lpTimer); });
+});
+tEl.addEventListener("click",function(){ if(lpFired){ lpFired = false; return; } tTap(); });
+tEl.addEventListener("contextmenu",function(e){ e.preventDefault(); });
+
+/* ---------- init ---------- */
+renderG(); renderD(); renderR(); renderPF(); renderW(); renderRub();
+showTab(st.tab || "warm");
+
+})();
+</script>
+</body>
+</html>
